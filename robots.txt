@@ -1,3 +1,15 @@
-# https://www.robotstxt.org/robotstxt.html
+# Lejon të gjitha motorët e kërkimit të indeksuojnë faqen
 User-agent: *
-Disallow:
+
+# Lejon indeksimin e të gjitha faqeve
+Allow: /
+
+# Bllokon indeksimin e disa skedarëve ose dosjeve të ndjeshme
+Disallow: /private/
+Disallow: /admin/
+Disallow: /node_modules/
+Disallow: /build/
+
+# Lejon indeksimin e `sitemap.xml` për SEO më të mirë
+Sitemap: https://ultrawebthinking.com/sitemap.xml
+
