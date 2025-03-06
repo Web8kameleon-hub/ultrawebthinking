@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
+function Home() {
+  return <h2>Kjo është faqja kryesore</h2>;
+}
+
+function About() {
+  return <h2>Rreth nesh</h2>;
+}
+
+function Contact() {
+  return <h2>Kontakto me ne</h2>;
+}
+
 function App() {
-    const [count, setCount] = useState(0);
-    const [darkMode, setDarkMode] = useState(false);
+  return (
+    <Router>
+      <div className="container">
+        <nav>
+          <ul>
+            <li><Link to="/">Kreu</Link></li>
+            <li><Link to="/about">Rreth nesh</Link></li>
+            <li><Link to="/contact">Kontakt</Link></li>
+          </ul>
+        </nav>
 
-    const handleClick = () => {
-        setCount(count + 1);
-    };
-
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
-    };
-
-    return (
-        <div className={`app-container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
-            <div className="content-box">
-                <h1>Ultrawebthinking</h1>
-                <p className="message">Ke klikuar <b>{count}</b> herë!</p>
-                <div className="button-container">
-                    <button className="button click-button" onClick={handleClick}>
-                        Kliko këtu
-                    </button>
-                    <button className="button mode-button" onClick={toggleDarkMode}>
-                        {darkMode ? "Kalo në Light Mode 🌞" : "Kalo në Dark Mode 🌙"}
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
