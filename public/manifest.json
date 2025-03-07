@@ -1,25 +1,23 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "UltraWebThinking",
+  "name": "UltraWebThinking - The Future of Web Navigation",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
+      "src": "/icons/icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "/icons/icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "background_color": "#ffffff",
   "display": "standalone",
+  "scope": "/",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "description": "A high-performance, AI-powered web experience designed for the future.",
+  "orientation": "portrait"
 }

@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# UltraWebThinking 🚀
+
+## Përshkrimi
+UltraWebThinking është një platformë revolucionare që sjell një përvojë të avancuar të navigimit në internet duke kombinuar performancën maksimale, arkitekturën inteligjente dhe integrimin e AI
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

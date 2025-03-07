@@ -1,10 +1,12 @@
-import { create } from 'zustand';
+// src/store/useStore.js
+import { create } from "zustand";
 
 const useStore = create((set) => ({
-  count: 0,
-  increase: () => set((state) => ({ count: state.count + 1 })),
-  decrease: () => set((state) => ({ count: state.count - 1 })),
+  user: null,
+  theme: "light",
+  setUser: (user) => set({ user }),
+  toggleTheme: () =>
+    set((state) => ({ theme: state.theme === "light" ? "dark" : "light" })),
 }));
 
 export default useStore;
-
