@@ -1,66 +1,38 @@
-:root {
-  --bg-light: #f4f4f4;
-  --text-light: #333;
-  --bg-dark: #121212;
-  --text-dark: #f4f4f4;
-  --primary: #34d399;
-}
-
+/* src/App.css */
 body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  text-align: center;
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  padding: 0;
 }
 
-.app-container {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  transition: all 0.3s ease-in-out;
+  height: 100vh;
 }
 
-.light {
-  background-color: var(--bg-light);
-  color: var(--text-light);
-}
-
-.dark {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 800px;
-  padding: 1rem;
+h1 {
+  font-size: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 button {
-  background-color: var(--primary);
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
+  background: #ff6200;
   color: white;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
   transition: transform 0.2s;
 }
 
 button:hover {
-  transform: scale(1.05);
-}
-
-.content {
-  padding: 20px;
-  font-size: 1.2rem;
-  text-align: center;
-}
-
-footer {
-  margin-top: auto;
-  padding: 10px;
-  font-size: 0.8rem;
+  transform: scale(1.1);
+  background: #ff4500;
 }

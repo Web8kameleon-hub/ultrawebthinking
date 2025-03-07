@@ -6,7 +6,7 @@
     "start": "react-scripts start"
   },
   "dependencies": {
-    "react-router-dom": "^7.2.0",
+    "react-router-dom": "^7.3.0",
     "web-vitals": "^4.2.4"
   },
   "browserslist": {
