@@ -1,4 +1,3 @@
-// index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -13,4 +12,4 @@ root.render(
 );
 
 // Për të matur performancën e aplikacionit
-reportWebVitals();
+reportWebVitals(console.log);

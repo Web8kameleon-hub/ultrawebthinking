@@ -7,6 +7,7 @@ const useStore = create((set) => ({
   setUser: (user) => set({ user }),
   toggleTheme: () =>
     set((state) => ({ theme: state.theme === "light" ? "dark" : "light" })),
+  resetUser: () => set({ user: null }),
 }));
 
 export default useStore;
