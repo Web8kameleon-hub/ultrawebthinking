@@ -1,0 +1,110 @@
+# Re-importing required libraries due to execution state reset
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import ace_tools as tools
+
+# -------------------------
+# 1️⃣ PARAMETRAT KRYESORË
+# -------------------------
+total_nodes = 10_000_000_000_000  # 10 trilionë nyje
+attack_nodes = 5_000_000  # 5 milionë nyje sulmuese
+request_rate = 10_000  # 10,000 kërkesa për sekondë nga çdo nyje sulmuese
+attack_duration = 60  # Sulmi zgjat 60 sekonda
+
+# Llogaritja e totalit të kërkesave të dërguara nga sulmi DDoS
+total_requests = attack_nodes * request_rate * attack_duration
+
+# Shpejtësia e përpunimit të Web8 (bazuar në rrjetin Mesh të optimizuar)
+processing_capacity = total_nodes * 0.0001  # Çdo nyje përpunon 0.0001 kërkesa/sek
+
+# Llogaritja e ndikimit të sulmit pa mbrojtje
+requests_handled = min(total_requests, processing_capacity * attack_duration)
+requests_failed = total_requests - requests_handled
+
+# Koha mesatare e përgjigjes për nyjet legjitime (ms)
+response_time_normal = np.random.normal(1.10, 0.05, 1000)
+
+# Koha mesatare e përgjigjes gjatë sulmit DDoS (ms)
+response_time_ddos = np.random.normal(1.50, 0.20, 1000)
+
+# -------------------------
+# 2️⃣ AI PROACTIVE & FIREWALL VETË-RIPARUES
+# -------------------------
+ai_detection_time = 0.5  # AI detekton sulmin për 0.5 sekonda
+ai_base_block = 95  # AI bllokon 95% të sulmit, por mëson dhe adaptuohet
+adaptive_learning_factor = 0.05  # Përmirësimi i AI bazuar në trafikun real
+prediction_factor = 0.8  # AI ka një shans 80% për të parashikuar një sulm përpara se të ndodhë
+
+# AI Parashikon dhe ndalon sulmet përpara se të ndodhin
+ai_predicted_block = total_requests * (prediction_factor * ai_base_block / 100)
+
+# Firewall përdor mekanizmin "soft-block" dhe "hard-block"
+firewall_soft_block_attempts = 3  # Përdoruesit kanë 3 tentativa përpara bllokimit të përhershëm
+firewall_hard_block_efficiency = 99.5  # Firewall bllokon 99.5% të IP-ve të dyshimta
+
+# AI Dynamic & Firewall që Vetë-Përshtatet
+ai_dynamic_block_percentage = ai_base_block + (adaptive_learning_factor * total_requests / 1e12)
+requests_blocked_by_ai = total_requests * (ai_dynamic_block_percentage / 100)
+requests_blocked_by_firewall = requests_blocked_by_ai * (firewall_hard_block_efficiency / 100)
+requests_passed_after_defense = total_requests - requests_blocked_by_firewall
+
+# -------------------------
+# 3️⃣ TOKEN DINAMIK PËR TRANSAKSIONET
+# -------------------------
+transaction_attempts = 1_000_000  # 1 milionë transaksione në rrjet
+fraudulent_transactions = transaction_attempts * 0.001  # 0.1% janë të dyshimta
+
+# Mbrojtje me token dinamik
+dynamic_token_rejection_rate = 99.9  # 99.9% e transaksioneve mashtruese refuzohen nga AI
+fraud_blocked = fraudulent_transactions * (dynamic_token_rejection_rate / 100)
+fraud_passed = fraudulent_transactions - fraud_blocked
+
+# -------------------------
+# 4️⃣ RREGULLIMI AUTOMATIK I RRJETIT
+# -------------------------
+traffic_spikes = 10_000_000  # 10 milionë përdorues të rinj në sekondë
+self_balancing_factor = 0.95  # 95% e trafikut të tepërt ridrejtohet automatikisht
+overload_prevented = traffic_spikes * self_balancing_factor
+overload_unhandled = traffic_spikes - overload_prevented
+
+# -------------------------
+# 5️⃣ KOHA E PËRGJIGJES PAS TË GJITHA MBRONJËVE
+# -------------------------
+response_time_with_advanced_defense = np.random.normal(1.05, 0.02, 1000)
+
+# -------------------------
+# 6️⃣ SHFAQJA E REZULTATEVE
+# -------------------------
+final_results = pd.DataFrame({
+    "Parametri": ["Total Requests", "Requests Handled Before Defense", "Requests Failed",
+                  "Requests Blocked by AI Proactive", "Requests Blocked by Firewall Inteligjent",
+                  "Requests Passed After Adaptive Defense",
+                  "Transactions Attempted", "Fraudulent Transactions",
+                  "Fraud Blocked by Dynamic Token", "Fraud Passed",
+                  "Traffic Spikes", "Traffic Self-Balanced", "Unbalanced Traffic",
+                  "Response Time (Normal)", "Response Time (DDoS)", "Response Time After All Defenses"],
+    "Vlera": [total_requests, requests_handled, requests_failed,
+              requests_blocked_by_ai, requests_blocked_by_firewall, requests_passed_after_defense,
+              transaction_attempts, fraudulent_transactions,
+              fraud_blocked, fraud_passed,
+              traffic_spikes, overload_prevented, overload_unhandled,
+              f"{np.mean(response_time_normal):.2f} ms",
+              f"{np.mean(response_time_ddos):.2f} ms",
+              f"{np.mean(response_time_with_advanced_defense):.2f} ms"]
+})
+
+tools.display_dataframe_to_user(name="Rezultatet e Përmirësuara të Web8", dataframe=final_results)
+
+# -------------------------
+# 7️⃣ VIZUALIZIMI I TË DHËNAVE
+# -------------------------
+plt.figure(figsize=(10, 5))
+plt.hist(response_time_normal, bins=30, alpha=0.7, label="Para Sulmit (Normal)", color="blue")
+plt.hist(response_time_ddos, bins=30, alpha=0.7, label="Gjatë Sulmit DDoS", color="red")
+plt.hist(response_time_with_advanced_defense, bins=30, alpha=0.7, label="Pas AI Proactive & Self-Balancing", color="green")
+plt.xlabel("Koha e Përgjigjes (ms)")
+plt.ylabel("Frekuenca")
+plt.title("Ndikimi i Sulmit DDoS dhe Mbrojtja Inteligjente e Web8")
+plt.legend()
+plt.show()

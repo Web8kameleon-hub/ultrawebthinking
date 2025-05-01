@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ====== Fonts & Base Style ====== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+html, body {
+  @apply bg-black text-white font-sans scroll-smooth;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  @apply text-blue-400 hover:underline transition duration-300;
+}
+
+button {
+  @apply transition duration-300 ease-in-out;
+}
+
+section {
+  @apply py-12 px-4 sm:px-8 md:px-16;
+}
+
+/* ====== Custom Utility Classes ====== */
+.btn-primary {
+  @apply bg-white text-black px-6 py-3 rounded-2xl font-semibold shadow-lg hover:bg-gray-200;
+}
+
+.btn-secondary {
+  @apply border border-white text-white px-6 py-3 rounded-2xl hover:bg-white hover:text-black;
+}
+
+/* ====== Glass Effect (for advanced use) ====== */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  @apply rounded-2xl p-6 shadow-lg;
+}
+
+/* ====== Animations (optional) ====== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+

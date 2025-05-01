@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /
+
+# Për të përmirësuar performancën e indeksimit
+Crawl-delay: 10
+
+# Për të specifikuar vendndodhjen e sitemap-it
+Sitemap: https://ultrawebthinking.com/sitemap.xml

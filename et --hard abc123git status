@@ -1,0 +1,98 @@
+[33m74936bd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mnew-feature-branch[m[33m, [m[1;31morigin/new-feature-branch[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m � Update: Changes to Navbar, Hero, and other components
+[33m927ba4d[m Shtohet Navbar elegant me stil luksoz
+[33mb2fb716[m Ultra commit: Strukturë e pastruar dhe e sinkronizuar
+[33me1fa566[m ✨ Added Hero component with styles
+[33ma938d41[m 🎨 Fixed misplaced CSS in TSX file
+[33m7b82ac5[m 🧹 Removed duplicate index.js to fix Next.js route conflict
+[33me54fe2f[m 💎 Refactored HeroSection to polished diamond version
+[33m7e8d349[m 💠 Integrated Mini AGI Assistant in Home Page
+[33ma6cd10c[m 💠 Added LiveNavigator and full page sections
+[33m2322ccf[m 🧹 Removed ghost import file
+[33m77d04a9[m 💎 Final version of Features component
+[33mfe8a5dd[m 💎 Added Features component with diamond UI
+[33m1638a77[m ✅ Fixed icon reference (Bolt -> Zap) in usage
+[33m0b2dd0f[m ⚡ Fixed lucide-react icon error (Bolt -> Zap)
+[33mdd3a404[m 💎 Added HeroSection with diamond UI and effects
+[33mbe3c2e7[m 💎 Added HeroSection with diamond UI and effects
+[33m25afe48[m 💎 Added HeroSection with diamond UI and effects
+[33mb31eccc[m Add Surfing component and integrate into index.tsx
+[33mcc71e02[m Full feature section with correct icons and golden styling
+[33m0d0a06c[m Fix: replace invalid Bolt icon with Bot
+[33me7139ff[m Fix: moved ayerComponents.js to components and cleaned up structure
+[33m3571714[m Fix: added missing dependency framer-motion
+[33m0b39115[m Fix: removed corrupt TypeScript file
+[33me5664ce[m Fix: remove duplicate css import
+[33mf6ec800[m Cleanup: remove temporary save file
+[33m437939d[m Cleanup: remove temporary save file
+[33mc56d5b2[m Fix: cleaned duplicate imports, stable Features component
+[33m56a1971[m Fix: Final Features component without duplicate import
+[33m6c9ab2f[m Fix: Full Features component with valid icons
+[33me16191f[m Fix: added @styled-system/css for Navbar
+[33m2b44a54[m Fix: Downgrade to React 18.2.0 for full compatibility with Vercel
+[33m59d9e21[m Add .vercel config and block npm usage
+[33m214d933[m Fix deploy: force yarn with vercel-build for React 19
+[33mc2202bb[m Vercel build config with Yarn
+[33mdabf542[m Added AGI-AI advanced, removed src/index.css - cleaning up structure
+[33m9cca3ac[m Working UI: Navbar, Hero, Features, Explore
+[33mcefcc5a[m Initial commit me Panda, Next.js dhe WSL
+[33m61227f1[m Initial commit nga WSL me konfigurim Panda + Next.js
+[33m3a762a1[m fix: pastro node_modules dhe .next nga git
+[33m15d6050[m fix: strukturë e pastër, TailwindCSS i konfiguruar, riparim i rrugëve globale
+[33m4c0cae2[m 🚀 Update: Final push për të gjitha ndryshimet
+[33m7011bd3[m Added ultrawebthinking as a submodule
+[33m7cf22f0[m Removed embedded Git repository
+[33mf08be2e[m Added ultrawebthinking directory
+[33m20f6a7c[m Updated package.json and pages/index.js
+[33mba96633[m Update project
+[33m0b3ad88[m Merge branch 'main' of https://github.com/Web8kameleon-hub/ultrawebthinking
+[33m503db37[m - Përmirësuar stilimin në `App.css` për të siguruar një përvojë më të mirë përdoruesi. - Përditësuar `docker-compose.yml` për të përfshirë shërbime shtesë dhe përmirësuar konfigurimin e rrjetit dhe volumit. - Shtuar një skedar të ri `nginx.conf` për konfigurimin e Nginx, duke përfshirë trajtimin e trafikut HTTP dhe HTTPS. - Përditësuar `package-lock.json` për të reflektuar ndryshimet në varësitë e projektit.
+[33m5fc5dc2[m Ruajtja e ndryshimeve aktuale
+[33m824adeb[m Ignore backend directory
+[33mee8a83f[m Ignore package-lock.json
+[33m85aedc3[m Fixed docker-compose configuration
+[33m552db03[m Përditësim i .gitignore për të përjashtuar skedarët privatë
+[33mdfc490c[m Heqja e submodulit ultrawebthinking
+[33me7f0d2e[m Përditësim i .gitignore për të përjashtuar skedarët privatë
+[33m84fa071[m Finalizimi i heqjes së submodulit dhe rikthimi si folder normal
+[33m0c33e6d[m Shtohet Nodes në .gitignore
+[33m27f1778[m Merge branch 'main' of https://github.com/Web8kameleon-hub/ultrawebthinking
+[33m4170ecc[m Heqja e submodulit ultrawebthinking
+[33m0af88bc[m Përditësim i submodulit ultrawebthinking
+[33meaf5c32[m Përditësime në submodulin ultrawebthinking
+[33m25b5170[m Shtova .gitignore për të përjashtuar skedarët e panevojshëm
+[33mc5221ca[m Përditësimi i skedarëve
+[33m2c16443[m Përditësimi i skedarëve
+[33mbe1d568[m Ruajtja e ndryshimeve për konfigurimin e nyjes
+[33m878001e[m Stable version with Next.js and fixes
+[33m0de3be2[m Added ESLint configuration
+[33mc9c73bc[m Përditësim i projektit
+[33mf862d40[m Final project setup and fixes
+[33m9b25bab[m Setup i plotë i mjedisit dhe sinkronizim
+[33m0572b5e[m Përmirësime në navigim dhe dizajn
+[33mfc6a6e6[m Përditësime të reja
+[33mf884c0a[m Rregulluar dhe përmirësuar Dark/Light Mode
+[33m384c390[m Përmirësuar stilizimin e Ultrawebthinking
+[33m5372443[m Fshirë App.test.js sepse nuk përdoret
+[33mcd0035f[m Përmirësuar dizajnin dhe efektet vizuale
+[33m7803e90[m Shtuar funksionalitete të reja
+[33m8f715e3[m Përditësim i .gitignore
+[33m688915d[m Ndryshim i ri
+[33mc160ac2[m Update App.js
+[33mcb3d7ba[m Create App.css
+[33mb561245[m Create App.js
+[33m9ff3ec9[m Update Git Bash
+[33m0cc8a7e[m Update Git Bash
+[33m231dffa[m Create Git Bash
+[33m7714856[m Delete CNAME
+[33m42338c8[m Create CNAME
+[33mb579d88[m Delete CNAME
+[33m74520cc[m Create CNAME
+[33me1d5080[m Delete CNAME
+[33m8c9df19[m Create CNAME
+[33mdb07e18[m Delete CNAME
+[33m61d6c56[m Create CNAME
+[33m7690585[m Delete CNAME
+[33m00e4f3c[m Create CNAME
+[33ma55abac[m Delete CNAME
+[33m676bfa3[m Create CNAME
+[33m016bc7c[m Initial commit

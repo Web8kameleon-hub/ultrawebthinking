@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* High-Level CSS Variables */
+:root {
+  /* Color System */
+  --primary-color: #007bff;
+  --secondary-color: #2d2d8d;
+  --accent-color: #ff9800;
+  --text-color: #ffffff;
+  --background-color: #1a1a2e;
+  --background-light: #16213e;
+  --border-color: rgba(255, 255, 255, 0.2);
+
+  /* Typography */
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-family: "Poppins", sans-serif;
+
+  /* Spacing & Layout */
+  --padding: 1.5rem;
+  --margin: 1.5rem;
+  --border-radius: 0.75rem;
+  --box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15);
+  --transition-speed: 0.3s;
+}
+
+/* General Styles */
+body {
+  margin: var(--margin);
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+/* Container */
+.app-container {
+  text-align: center;
+  padding: var(--padding);
+}
+
+/* Navigation Bar */
+nav {
+  @apply bg-primary py-4 flex justify-center shadow-lg;
+}
+
+nav ul {
+  @apply flex gap-6 list-none;
+}
+
+nav ul li {
+  margin: 0 0.9375rem;
+}
+
+nav ul li a {
+  @apply text-white text-lg font-bold relative transition-all duration-custom;
+}
+
+nav ul li a::after {
+  content: '';
+  @apply block w-full h-1 bg-white absolute bottom-0 left-0 transform scale-x-0 transition-transform duration-custom;
+}
+
+nav ul li a:hover::after {
+  @apply scale-x-100;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Page Content */
+.page {
+  @apply bg-background-light p-6 mx-auto max-w-2xl shadow-xl rounded-lg transition-transform duration-custom;
+}
+
+.page:hover {
+  @apply -translate-y-1;
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Additional Styles for Responsiveness */
+@media (max-width: 768px) {
+  nav ul {
+    @apply flex-col items-center;
+  }
+
+  .page {
+    @apply max-w-full;
+  }
+}
+
+/* Header, Footer, and Button Styles */
+header, .footer, .button {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.button {
+  @apply inline-block px-6 py-3 text-lg font-semibold text-white bg-accent rounded-lg shadow-md transition-all duration-custom transform hover:scale-105 hover:shadow-xl active:scale-95;
+}
+
+.button:hover {
+  background-color: var(--secondary-color);
+}
+
+.button:active {
+  transform: scale(0.98);
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
+}
