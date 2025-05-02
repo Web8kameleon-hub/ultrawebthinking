@@ -1,4 +1,27 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "pages/**/*.tsx",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/**/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/pages/$1"
+    }
+  ],
   "buildCommand": "yarn build",
-  "installCommand": "yarn install"
+  "installCommand": "yarn install",
+  "outputDirectory": "out",
+  "framework": "nextjs"
 }

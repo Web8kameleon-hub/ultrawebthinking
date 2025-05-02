@@ -1,36 +1,39 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2020", // Për performancë më të mirë dhe mbështetje moderne
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "module": "esnext",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": ".", // <--- shtuar
+    "allowJs": true, // Lejon përdorimin e skedarëve JavaScript
+    "skipLibCheck": true, // Shmang kontrollin e bibliotekave për të përshpejtuar ndërtimin
+    "strict": true, // Aktivizon modalitetin strikt për cilësi më të lartë të kodit
+    "forceConsistentCasingInFileNames": true, // Siguron që emrat e skedarëve të jenë të qëndrueshëm
+    "noEmit": true, // Nuk prodhon skedarë të përpiluar
+    "incremental": true, // Për ndërtim më të shpejtë
+    "module": "esnext", // Përdor modulin më të fundit për mbështetje moderne
+    "esModuleInterop": true, // Mbështetje për importet CommonJS
+    "moduleResolution": "node", // Rezolucion i moduleve për Node.js
+    "resolveJsonModule": true, // Lejon importimin e skedarëve JSON
+    "isolatedModules": true, // Siguron që çdo skedar të trajtohet si modul i izoluar
+    "jsx": "preserve", // Ruajtja e JSX për Next.js
+    "baseUrl": ".", // Lehtëson importet relative
     "paths": {
       "@/*": [
         "./*"
       ]
-    } // <--- shtuar
+    } // Mbështetje për importe absolute
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "next-env.d.ts", // Për Next.js
+    "**/*.ts", // Për TypeScript
+    "**/*.tsx" // Për TypeScript React
   ],
   "exclude": [
-    "node_modules"
+    "node_modules", // Shmang përpilimin e moduleve të jashtme
+    ".next", // Shmang përpilimin e skedarëve të ndërtuar nga Next.js
+    "out", // Shmang përpilimin e skedarëve të prodhimit
+    "dist" // Shmang përpilimin e skedarëve të ndërtuar manualisht
   ]
 }

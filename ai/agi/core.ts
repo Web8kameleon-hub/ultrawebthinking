@@ -78,17 +78,27 @@ export class AGICore {
    */
   private async analyzeWithAPI(text: string): Promise<any> {
     monitor.log("Duke analizuar tekstin me API të jashtme...", "info", { text });
-    const response = await fetch("https://api.openai.com/v1/analyze", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer YOUR_API_KEY`,
-      },
-      body: JSON.stringify({ text }),
-    });
-    const result = await response.json();
-    monitor.log("Rezultati i analizës nga API u kthye me sukses.", "info", { result });
-    return result;
+    try {
+      const response = await fetch("https://api.openai.com/v1/analyze", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer YOUR_API_KEY`,
+        },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Gabim nga API: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      monitor.log("Rezultati i analizës nga API u kthye me sukses.", "info", { result });
+      return result;
+    } catch (error) {
+      monitor.log("Gabim gjatë analizës me API.", "error", { error });
+      throw error;
+    }
   }
 }
 
@@ -99,15 +109,19 @@ export const agi = new AGICore();
  * Funksioni kryesor për të testuar AGI-në.
  */
 async function main() {
-  const input = "Cili është plani për sot?";
-  const response = await agi.run(input);
-  console.log("Përgjigja e AGI-së:", response);
+  try {
+    const input = "Cili është plani për sot?";
+    const response = await agi.run(input);
+    console.log("Përgjigja e AGI-së:", response);
 
-  // Shfaqja e statistikave të sistemit
-  console.log("Statistikat e Sistemit:", monitor.getSystemStats());
+    // Shfaqja e statistikave të sistemit
+    console.log("Statistikat e Sistemit:", monitor.getSystemStats());
 
-  // Eksportimi i log-eve
-  console.log("Log-et e Eksportuara:", monitor.exportLogs());
+    // Eksportimi i log-eve
+    console.log("Log-et e Eksportuara:", monitor.exportLogs());
+  } catch (error) {
+    console.error("Gabim gjatë ekzekutimit të AGI-së:", error);
+  }
 }
 
 main();
