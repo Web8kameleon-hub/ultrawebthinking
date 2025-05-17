@@ -1,0 +1,20 @@
+{
+  // Removed the extends property as the parent configuration is missing
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "types": ["@types/react", "@types/node"],
+    "noEmit": true // E mban pa ndërtim fizik
+    // "outDir": "dist" // Komentuar për të shmangur ndërtimin fizik
+  },
+  "include": ["pages", "components"],
+  "exclude": ["node_modules", "../backend"]
+}

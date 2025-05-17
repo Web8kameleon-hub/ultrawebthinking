@@ -1,39 +1,35 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Për performancë më të mirë dhe mbështetje moderne
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true, // Lejon përdorimin e skedarëve JavaScript
-    "skipLibCheck": true, // Shmang kontrollin e bibliotekave për të përshpejtuar ndërtimin
-    "strict": true, // Aktivizon modalitetin strikt për cilësi më të lartë të kodit
-    "forceConsistentCasingInFileNames": true, // Siguron që emrat e skedarëve të jenë të qëndrueshëm
-    "noEmit": true, // Nuk prodhon skedarë të përpiluar
-    "incremental": true, // Për ndërtim më të shpejtë
-    "module": "esnext", // Përdor modulin më të fundit për mbështetje moderne
-    "esModuleInterop": true, // Mbështetje për importet CommonJS
-    "moduleResolution": "node", // Rezolucion i moduleve për Node.js
-    "resolveJsonModule": true, // Lejon importimin e skedarëve JSON
-    "isolatedModules": true, // Siguron që çdo skedar të trajtohet si modul i izoluar
-    "jsx": "preserve", // Ruajtja e JSX për Next.js
-    "baseUrl": ".", // Lehtëson importet relative
+    "target": "es6", // Target ECMAScript 6 for modern JavaScript features
+    "lib": ["dom", "dom.iterable", "esnext"], // Include DOM and ESNext libraries
+    "allowJs": true, // Allow JavaScript files in the project
+    "skipLibCheck": true, // Skip type checking for library files
+    "strict": true, // Enable strict type checking
+    "forceConsistentCasingInFileNames": true, // Enforce consistent casing in imports
+    "noEmit": true, // Prevent emitting compiled files
+    "esModuleInterop": true, // Enable compatibility with CommonJS modules
+    "module": "esnext", // Use ESNext module resolution
+    "moduleResolution": "node", // Resolve modules using Node.js conventions
+    "resolveJsonModule": true, // Allow importing JSON files
+    "isolatedModules": true, // Ensure each file can be transpiled in isolation
+    "jsx": "preserve", // Preserve JSX for Next.js to handle
+    "baseUrl": ".", // Set the base URL for module resolution
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    } // Mbështetje për importe absolute
+      "@/*": ["./*"] // Define alias for cleaner imports
+    },
+    "incremental": true // Enable incremental compilation for faster builds
   },
   "include": [
-    "next-env.d.ts", // Për Next.js
-    "**/*.ts", // Për TypeScript
-    "**/*.tsx" // Për TypeScript React
+    "next-env.d.ts", // Include Next.js environment types
+    "**/*.ts", // Include TypeScript files
+    "**/*.tsx", // Include TypeScript files with JSX
+    "**/*.js", // Include JavaScript files
+    "**/*.jsx" // Include JavaScript files with JSX
   ],
   "exclude": [
-    "node_modules", // Shmang përpilimin e moduleve të jashtme
-    ".next", // Shmang përpilimin e skedarëve të ndërtuar nga Next.js
-    "out", // Shmang përpilimin e skedarëve të prodhimit
-    "dist" // Shmang përpilimin e skedarëve të ndërtuar manualisht
+    "node_modules", // Exclude dependencies
+    ".next", // Exclude Next.js build directory
+    "out", // Exclude Vercel output directory
+    "dist" // Exclude distribution directory
   ]
 }

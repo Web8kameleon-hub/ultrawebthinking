@@ -1,33 +1,16 @@
-// pages/index.tsx
+"use client";
+
 import React from "react";
+import Navbar from "@/components/Navbar";
 import Head from "next/head";
+import Surfing from "@/components/Surfing";
 
-import Hero from "../components/Hero";
-import Features from "../components/Features";
-import Explore from "../components/Explore";
-import Contact from "../components/Contact";
-import BrowserLayout from "../components/BrowserLayout";
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Features", href: "#features" },
+  { label: "Contact", href: "#contact" },
+];
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Ultrawebthinking</title>
-        <meta
-          name="description"
-          content="Shfletuesi më inteligjent dhe elegant për eksplorim, navigim dhe mendim të përbashkët në Web8."
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <BrowserLayout>
-        <Hero />
-        <Features />
-        <Explore />
-        <Contact />
-      </BrowserLayout>
-    </>
-  );
+export default function HomePage() {
+  return <Surfing />;
 }
-

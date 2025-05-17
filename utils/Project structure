@@ -1,0 +1,36 @@
+ultrawebthinking/
+├── src/
+│   ├── ai/
+│   │   ├── agi/
+│   │   │   ├── core.ts              # Bërthama e AGI-së
+│   │   │   ├── commander.ts         # Komandanti që lidhet me AGICore.run()
+│   │   │   ├── monitor.ts           # Monitorimi i gjendjes dhe logimi
+│   │   │   ├── planner.ts           # Planifikimi i hapave të ardhshëm
+│   │   │   ├── response.ts          # Gjenerimi i përgjigjeve
+│   │   │   ├── sense.ts             # Përpunimi i inputeve
+│   │   │   └── interfaces.ts        # Përshkrimi i kontratave midis moduleve
+│   ├── contracts/                   # Lidhjet mes moduleve (interface zyrtare)
+│   │   ├── mind.d.ts
+│   │   ├── planner.d.ts
+│   │   ├── response.d.ts
+│   │   └── monitor.d.ts
+│   ├── memory/                      # Arkiv për mendime, plane dhe përgjigje
+│   │   ├── history.ts
+│   │   └── memory.json
+│   ├── api/                         # Pikë aksesi për jashtë
+│   │   ├── agi.ts                   # API për AGI (p.sh., për Web8 ose komanda test)
+│   ├── utils/                       # Funksione ndihmëse
+│   │   ├── logger.ts
+│   │   ├── helpers.ts
+│   ├── orchestrator.ts              # Një skedar që orkestron gjithçka
+│   ├── index.ts                     # Pikë hyrëse e aplikacionit
+├── unit-tests/                      # Teste të automatizuara për çdo modul
+│   ├── core.test.ts
+│   ├── commander.test.ts
+│   ├── planner.test.ts
+│   ├── response.test.ts
+│   └── orchestrator.test.ts
+├── package.json
+├── tsconfig.json
+├── jest.config.js
+└── README.md

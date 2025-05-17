@@ -76,3 +76,20 @@ export class Mind {
     return this.memory.length > 0 ? this.memory[this.memory.length - 1] : null;
   }
 }
+
+export const initializeMind = (): Mind => {
+  const mind = new Mind();
+
+  // Shto mendime fillestare në kujtesë (opsionale)
+  mind.think("Mirë se erdhe në AGI!", { context: "fillim" });
+  mind.think("Si mund të ndihmoj sot?", { context: "pyetje" });
+
+  return mind;
+};
+
+import { Mind } from "./types"; // Ose nga vendndodhja e saktë të klasës
+
+// Shembull përdorimi
+const mind = new Mind();
+mind.think("Kjo është një mendim i ri!", { kontekst: "shembull" });
+console.log(mind.recall());

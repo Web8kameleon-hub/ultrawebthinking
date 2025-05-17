@@ -1,4 +1,6 @@
-// components/Navbar.tsx
+"use client";
+
+import Link from "next/link";
 import { css } from "@styled-system/css";
 
 export default function Navbar() {
@@ -13,24 +15,68 @@ export default function Navbar() {
         alignItems: "center",
         paddingX: "6",
         paddingY: "4",
-        background: "rgba(10, 10, 35, 0.6)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-      }).toString()}
+        background: "rgba(10, 10, 35, 0.8)",
+        backdropFilter: "blur(10px)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      })}
     >
-      <div className={css({ fontSize: "2xl", fontWeight: "bold" })}>
+      <div
+        className={css({
+          fontSize: "2xl",
+          fontWeight: "bold",
+          color: "white",
+          cursor: "pointer",
+        })}
+      >
         Ultrawebthinking
       </div>
-      <div className={css({ display: "flex", gap: "6" })}>
-        <a href="#features" className={css({ fontWeight: "medium" })}>
-          Veçoritë
-        </a>
-        <a href="#explore" className={css({ fontWeight: "medium" })}>
-          Eksploro
-        </a>
-        <a href="#contact" className={css({ fontWeight: "medium" })}>
-          Kontakti
-        </a>
+
+      <div
+        className={css({
+          display: "flex",
+          gap: "6",
+        })}
+      >
+        <Link href="#features" passHref>
+          <a
+            className={css({
+              fontWeight: "medium",
+              color: "white",
+              textDecoration: "none",
+              transition: "color 0.2s ease-in-out",
+              "&:hover": { color: "cyan.400" },
+            })}
+          >
+            Veçoritë
+          </a>
+        </Link>
+        <Link href="#explore" passHref>
+          <a
+            className={css({
+              fontWeight: "medium",
+              color: "white",
+              textDecoration: "none",
+              transition: "color 0.2s ease-in-out",
+              "&:hover": { color: "cyan.400" },
+            })}
+          >
+            Eksploro
+          </a>
+        </Link>
+        <Link href="#contact" passHref>
+          <a
+            className={css({
+              fontWeight: "medium",
+              color: "white",
+              textDecoration: "none",
+              transition: "color 0.2s ease-in-out",
+              "&:hover": { color: "cyan.400" },
+            })}
+          >
+            Kontakti
+          </a>
+        </Link>
       </div>
     </nav>
   );

@@ -26,6 +26,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    env_file:
+      - .env
 
   db:
     image: postgres:14.5
@@ -41,11 +43,6 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - ultraweb_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
 
   redis:
     image: redis:6.2
@@ -58,10 +55,41 @@ services:
     networks:
       - ultraweb_network
 
+  agi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=production
+      - MEMORY_PATH=/data/memory.json
+    depends_on:
+      - db
+
+  agi-db:
+    image: mongo:6
+    container_name: agi-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  test-runner:
+    build:
+      context: .
+    volumes:
+      - .:/app
+    command: yarn test
+
 networks:
   ultraweb_network:
 
 volumes:
   db_data:
   redis_data:
+  mongo-data:
 

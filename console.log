@@ -1,0 +1,11 @@
+console.log("🔍 Duke testuar logimin në aplikacionin tuaj!");
+
+const testFunction = () => {
+  console.log("✅ Funksioni u ekzekutua me sukses!");
+};
+
+testFunction();
+
+console.log("ℹ️ Ky është një mesazh informues.");
+console.error("❌ Ky është një mesazh gabimi.");
+console.warn("⚠️ Ky është një paralajmërim.");

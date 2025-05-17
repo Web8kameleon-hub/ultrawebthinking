@@ -1,0 +1,13 @@
+export const monitor = {
+  log,
+  monitorExecution,
+  getSystemStats: () => {
+    return {
+      totalLogs: logs.length,
+      errors: logs.filter((l) => l.level === "error").length,
+      info: logs.filter((l) => l.level === "info").length,
+    };
+  },
+  exportLogs: () => [...logs],
+};
+

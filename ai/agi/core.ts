@@ -1,13 +1,6 @@
 /**
  * Bërthama Qendrore e AGI (Artificial General Intelligence).
  * Përgjegjëse për orkestrimin e moduleve të tjera dhe menaxhimin e rrjedhës së të dhënave.
- * 
- * Funksionalitetet kryesore:
- * - Përpunimi i inputeve përmes modulit të sensorëve.
- * - Inicimi i "mendjes" kolektive për të ruajtur gjendjen.
- * - Planifikimi i hapave të ardhshëm bazuar në gjendjen aktuale.
- * - Gjenerimi i përgjigjeve inteligjente.
- * - Monitorimi i gjendjes dhe performancës së sistemit.
  */
 
 import { initializeMind } from "./mind";
@@ -16,17 +9,20 @@ import { generateResponse } from "./response";
 import { planNextSteps } from "./planner";
 import { monitor } from "./monitor";
 import { Low, JSONFile } from "lowdb";
+import { MindState } from "../types/agi.types";
+import { BlobServiceClient } from "@azure/storage-blob";
 
 // Konfigurimi i bazës së të dhënave për ruajtjen e gjendjes
-const adapter = new JSONFile("memory.json");
+const adapter = new JSONFile<{ memory: any }>("memory.json");
 const db = new Low(adapter);
+
+const blobServiceClient = BlobServiceClient.fromConnectionString("AZURE_STORAGE_CONNECTION_STRING");
+const containerClient = blobServiceClient.getContainerClient("agi-memory");
 
 /**
  * Klasa kryesore që përfaqëson bërthamën e AGI-së.
  */
 export class AGICore {
-  private memory: Record<string, any> = {}; // Memorie për ruajtjen e gjendjes së sistemit
-
   /**
    * Ekzekuton ciklin kryesor të AGI-së.
    * @param input - Inputi i dhënë nga përdoruesi ose sistemi.
@@ -46,13 +42,15 @@ export class AGICore {
     monitor.log(`📥 Input i përpunuar: ${JSON.stringify(sensed)}`, "info");
 
     // Inicimi i mendjes kolektive me memorien dhe të dhënat e përpunuara
-    const state = await monitor.monitorExecution("initializeMind", async () =>
-      initializeMind(db.data.memory, sensed)
+    const state: MindState = await monitor.monitorExecution("initializeMind", async () =>
+      initializeMind(db.data!.memory, sensed)
     );
     monitor.log(`🧠 Gjendja e mendjes: ${JSON.stringify(state)}`, "info");
 
     // Planifikimi i hapave të ardhshëm bazuar në gjendjen aktuale
-    const plan = await monitor.monitorExecution("planNextSteps", async () => planNextSteps(state));
+    const plan = await monitor.monitorExecution("planNextSteps", async () =>
+      planNextSteps(state)
+    );
     monitor.log(`📋 Plani i krijuar: ${JSON.stringify(plan)}`, "info");
 
     // Gjenerimi i përgjigjes bazuar në gjendjen dhe planin
@@ -63,9 +61,11 @@ export class AGICore {
 
     // Ruajtja e gjendjes së përditësuar në bazën e të dhënave
     await monitor.monitorExecution("db.write", async () => {
-      db.data.memory = state;
+      db.data!.memory = state;
       await db.write();
     });
+
+    await this.persistStateToAzure(state);
 
     monitor.log("✅ AGI përfundoi përpunimin.", "info");
     return output;
@@ -99,6 +99,12 @@ export class AGICore {
       monitor.log("Gabim gjatë analizës me API.", "error", { error });
       throw error;
     }
+  }
+
+  private async persistStateToAzure(state: MindState): Promise<void> {
+    const blockBlobClient = containerClient.getBlockBlobClient("memory.json");
+    const data = JSON.stringify({ state, lastUpdated: new Date() });
+    await blockBlobClient.upload(data, data.length);
   }
 }
 

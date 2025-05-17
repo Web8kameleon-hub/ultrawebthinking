@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Panda CSS Reset */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background var(--transition-speed), color var(--transition-speed);
+  }
+}
+
 /* High-Level CSS Variables */
 :root {
   /* Color System */
@@ -34,4 +53,53 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--padding);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: background var(--transition-speed), transform var(--transition-speed);
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-color);
+}
+
+/* Responsive Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: var(--font-size-xl);
+}
+
+h2 {
+  font-size: var(--font-size-lg);
+}
+
+h3 {
+  font-size: var(--font-size-base);
 }

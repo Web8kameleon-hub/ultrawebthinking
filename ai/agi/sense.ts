@@ -135,3 +135,11 @@ export class Sense {
     return "general";
   }
 }
+
+export function someFunction() {
+  console.log("Sense module function");
+}
+
+declare module "../agi/sense" {
+  export function someFunction(): void;
+}

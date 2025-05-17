@@ -1,0 +1,16 @@
+// db/mongAdapter.ts
+import mongoose from "mongoose";
+
+export const connectToMongo = async () => {
+  try {
+    await mongoose.connect("mongodb://localhost:27017/ultrawebthinking", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as any); // `as any` për të shmangur warning te opsionet
+
+    console.log("✅ MongoDB u lidh me sukses.");
+  } catch (error) {
+    console.error("❌ Dështoi lidhja me MongoDB:", error);
+    process.exit(1);
+  }
+};

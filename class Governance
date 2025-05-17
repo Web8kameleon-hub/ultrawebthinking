@@ -1,0 +1,12 @@
+class Governance:
+    def __init__(self):
+        self.proposals = []
+
+    def create_proposal(self, proposal):
+        self.proposals.append({"proposal": proposal, "votes": []})
+
+    def vote(self, proposal_index, vote):
+        if 0 <= proposal_index < len(self.proposals):
+            self.proposals[proposal_index]["votes"].append(vote)
+            return "Vota u regjistrua"
+        return "Propozimi nuk ekziston"

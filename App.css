@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Panda CSS Reset */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background var(--transition-speed), color var(--transition-speed);
+  }
+}
+
 /* High-Level CSS Variables */
 :root {
   /* Color System */
@@ -44,11 +63,20 @@ body {
 
 /* Navigation Bar */
 nav {
-  @apply bg-primary py-4 flex justify-center shadow-lg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  padding: 1rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 nav ul {
-  @apply flex gap-6 list-none;
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 nav ul li {
@@ -56,7 +84,12 @@ nav ul li {
 }
 
 nav ul li a {
-  @apply text-white text-lg font-bold relative transition-all duration-custom;
+  color: var(--text-color);
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  text-decoration: none;
+  position: relative;
+  transition: color var(--transition-speed);
 }
 
 nav ul li a::after {
@@ -70,15 +103,22 @@ nav ul li a:hover::after {
 
 nav ul li a:hover {
   text-decoration: underline;
+  color: var(--accent-color);
 }
 
 /* Page Content */
 .page {
-  @apply bg-background-light p-6 mx-auto max-w-2xl shadow-xl rounded-lg transition-transform duration-custom;
+  background-color: var(--background-light);
+  padding: var(--padding);
+  margin: var(--margin) auto;
+  max-width: 600px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-speed);
 }
 
 .page:hover {
-  @apply -translate-y-1;
+  transform: translateY(-5px);
 }
 
 h1 {
@@ -86,18 +126,19 @@ h1 {
 }
 
 p {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
 }
 
 /* Additional Styles for Responsiveness */
 @media (max-width: 768px) {
   nav ul {
-    @apply flex-col items-center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .page {
-    @apply max-w-full;
+    max-width: 100%;
   }
 }
 
@@ -107,12 +148,31 @@ header, .footer, .button {
   color: white;
 }
 
+header,
+.footer {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: var(--padding);
+  text-align: center;
+}
+
 .button {
-  @apply inline-block px-6 py-3 text-lg font-semibold text-white bg-accent rounded-lg shadow-md transition-all duration-custom transform hover:scale-105 hover:shadow-xl active:scale-95;
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-color);
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-speed), background-color var(--transition-speed);
+  cursor: pointer;
 }
 
 .button:hover {
   background-color: var(--secondary-color);
+  transform: scale(1.05);
 }
 
 .button:active {

@@ -1,5 +1,5 @@
 # Dockerfile për Ultrawebthinking
-FROM node:18-alpine AS builder
+FROM node:18
 
 # Vendos direktorinë e punës
 WORKDIR /app
@@ -8,33 +8,17 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 
 # Instalo varësitë
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 # Kopjo të gjithë kodin e aplikacionit
 COPY . .
 
-# Ndërto aplikacionin
-RUN yarn build
-
-# Faza e prodhimit
-FROM node:18-alpine
-
-# Vendos direktorinë e punës
-WORKDIR /app
-
-# Kopjo skedarët e ndërtuar nga faza e mëparshme
-COPY --from=builder /app ./
-
-# Ekspozo portin
-EXPOSE 3000
-
 # Start aplikacionin
 CMD ["yarn", "start"]
 
-version: '3.8'
+version: "3.9"
 
 services:
-  # Komandantët
   ultrawebthinking:
     image: ultrawebthinking:1.0.0
     build:
@@ -76,15 +60,14 @@ services:
     networks:
       - ultraweb_network
 
-  # Oficerët
   db:
     image: postgres:14.5
     container_name: ultraweb_db
     restart: always
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:
@@ -108,7 +91,6 @@ services:
     networks:
       - ultraweb_network
 
-  # Ushtarët
   prometheus:
     image: prom/prometheus:2.36.2
     container_name: ultraweb_prometheus
