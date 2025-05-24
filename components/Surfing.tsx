@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { agi } from "@/agi/core";
+import { agi } from "../backend/ai/agi/core"; // përdor rrugë relative nëse aliasi nuk punon
 import { motion } from "framer-motion";
 import { css } from "@styled-system/css";
 
@@ -18,14 +18,15 @@ const Surfing: React.FC = () => {
     }
     setError("");
     setLoading(true);
-    setResponse("Thinking...");
+    setResponse("");
 
     try {
       const reply = await agi.run(input);
       setResponse(reply);
+      setInput(""); // opsionale: pastron input-in pas përgjigjes
     } catch (err) {
-      console.error("Error:", err);
-      setResponse("An error occurred while processing your request.");
+      setResponse("");
+      setError("An error occurred while processing your request.");
     } finally {
       setLoading(false);
     }
@@ -67,18 +68,23 @@ const Surfing: React.FC = () => {
           placeholder="Ask a question..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={e => { if (e.key === "Enter") handleAsk(); }}
+          aria-label="Ask a question"
           className={css({
             w: "full",
             p: "3",
             mb: "3",
             borderRadius: "md",
             fontSize: "md",
+            color: "black",
           })}
+          disabled={loading}
         />
 
         {error && <p className={css({ color: "red.400", mb: "2" })}>{error}</p>}
 
         <button
+          type="button"
           onClick={handleAsk}
           disabled={loading}
           className={css({
@@ -91,6 +97,7 @@ const Surfing: React.FC = () => {
             fontWeight: "bold",
             _hover: { bg: loading ? "gray.400" : "yellow.300" },
           })}
+          aria-busy={loading}
         >
           {loading ? "Thinking..." : "Ask AGI"}
         </button>
@@ -106,6 +113,8 @@ const Surfing: React.FC = () => {
               bg: "rgba(255,255,255,0.05)",
               borderRadius: "md",
               fontSize: "md",
+              color: "white",
+              wordBreak: "break-word",
             })}
           >
             {response}

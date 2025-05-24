@@ -1,17 +1,6 @@
 import React from "react";
 import { css } from "../styled-system/css";
 
-const TabManager: React.FC = () => {
-  return (
-    <div className={styles.wrapper}>
-      <h2 className={styles.title}>Menaxhimi i Tabeve</h2>
-      <p className={styles.desc}>
-        Kaloni shpejt mes tabeve, projekteve dhe mendimeve me një ndërfaqe inteligjente.
-      </p>
-    </div>
-  );
-};
-
 const styles = {
   wrapper: css({
     padding: "6",
@@ -30,6 +19,17 @@ const styles = {
     fontSize: "md",
     color: "gray.700",
   }),
+};
+
+const TabManager: React.FC = () => {
+  return (
+    <div className={styles.wrapper}>
+      <h2 className={styles.title}>Menaxhimi i Tabeve</h2>
+      <p className={styles.desc}>
+        Kaloni shpejt mes tabeve, projekteve dhe mendimeve me një ndërfaqe inteligjente.
+      </p>
+    </div>
+  );
 };
 
 export default TabManager;
