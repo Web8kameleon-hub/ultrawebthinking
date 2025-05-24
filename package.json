@@ -14,7 +14,7 @@
     "@fontsource/poppins": "^5.2.6",
     "@styled-system/css": "^5.1.5",
     "framer-motion": "^12.5.0",
-    "next": "^15.3.2",
+    "next": "^15.1.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
@@ -35,7 +35,11 @@
     "yarn": ">=1.22.22"
   },
   "main": "index.js",
-  "repository": "https://github.com/Web8kameleon-hub/ultrawebthinking.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Web8kameleon-hub/ultrawebthinking.git"
+  },
   "author": "Web8kameleon <dealsjona@gmail.com>",
   "license": "MIT"
 }
+
