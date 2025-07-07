@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@monitor/*": ["monitor/*"],
+      "@sense/*": ["sense/*"],
+      "@mind/*": ["mind/*"],
+      "@planner/*": ["planner/*"],
+      "@response/*": ["response/*"],
+      "@utils/*": ["utils/*"]
+    }
+  }
+}
