@@ -1,59 +1,68 @@
 // components/Footer.tsx
-// components/Footer.tsx
-import { css } from "@styled-system/css";
-import { Github, Linkedin, Youtube } from "lucide-react";
+import React from "react";
 
 export default function Footer() {
   return (
     <footer
-      className={css({
-        paddingY: "8",
-        paddingX: "6",
-        background: "rgba(10, 10, 35, 0.6)",
-        backdropFilter: "blur(8px)",
-        borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+      style={{
+        padding: "32px 24px",
+        background: "rgba(248, 250, 252, 0.9)",
+        backdropFilter: "blur(20px)",
+        borderTop: "1px solid rgba(99, 102, 241, 0.1)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "4",
-        color: "white",
+        gap: "20px",
+        color: "#64748b",
         textAlign: "center",
-        fontSize: "sm",
-        mt: "12",
-      }) + ""}
+        fontSize: "14px",
+        marginTop: "48px",
+      }}
     >
-      <div className={css({ fontWeight: "semibold", fontSize: "md" })}>
+      <div style={{ fontWeight: "500", fontSize: "16px" }}>
         Ultrawebthinking © 2025 – Beyond Imagination
       </div>
 
-      <div className={css({ display: "flex", gap: "4" })}>
+      <div style={{ display: "flex", gap: "16px" }}>
         <a
           href="https://github.com/Web8kameleon-hub"
           target="_blank"
           rel="noopener noreferrer"
-          className={css({ _hover: { color: "blue.400" } }) + ""}
+          style={{
+            color: "#4682b4",
+            textDecoration: "none",
+            transition: "color 0.2s ease",
+          }}
         >
-          <Github size={20} />
+          GitHub
         </a>
         <a
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
-          className={css({ _hover: { color: "blue.400" } }) + ""}
+          style={{
+            color: "#4682b4",
+            textDecoration: "none",
+            transition: "color 0.2s ease",
+          }}
         >
-          <Linkedin size={20} />
+          LinkedIn
         </a>
         <a
           href="https://youtube.com"
           target="_blank"
           rel="noopener noreferrer"
-          className={css({ _hover: { color: "blue.400" } }) + ""}
+          style={{
+            color: "#4682b4",
+            textDecoration: "none",
+            transition: "color 0.2s ease",
+          }}
         >
-          <Youtube size={20} />
+          YouTube
         </a>
       </div>
 
-      <div className={css({ color: "gray.400" })}>
+      <div style={{ color: "#6b7280", fontSize: "12px" }}>
         Version 1.0 – Krijuar me pasion & logjikë të pastër
       </div>
     </footer>

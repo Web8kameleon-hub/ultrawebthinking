@@ -11,7 +11,6 @@ export default function Document() {
         />
         {/* Meta Tags for SEO */}
         <meta name="description" content="Ultrawebthinking - Collaborative thinking and advanced exploration." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="theme-color" content="#000000" />

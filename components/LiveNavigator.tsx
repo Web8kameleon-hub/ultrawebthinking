@@ -1,5 +1,5 @@
 // components/LiveNavigator.tsx
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from '../styles/LiveNavigator.module.css';
 
 const sections = [
@@ -10,27 +10,8 @@ const sections = [
 ];
 
 const LiveNavigator = () => {
-  const [active, setActive] = useState('hero');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const sectionOffsets = sections.map(section => {
-        const el = document.getElementById(section.id);
-        return el ? { id: section.id, offset: el.offsetTop } : null;
-      }).filter(Boolean);
-
-      const current = sectionOffsets.reduce((closest, sec) => {
-        if (!sec) return closest;
-        return scrollY >= sec.offset - 100 ? sec.id : closest;
-      }, 'hero');
-
-      setActive(current);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // Static active section
+  const active = 'hero';
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import "../styled-system/styles.css"; // Ensure this path is correct
+// import "../styles/globals.css"; // Temporarily commented out
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,10 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="keywords" content="Ultrawebthinking, Next.js, React, Web Development" />
         <meta name="author" content="Ultrawebthinking Team" />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <Component {...pageProps} />
     </>

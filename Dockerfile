@@ -1,141 +1,103 @@
-# Dockerfile për Ultrawebthinking
-FROM node:18
+# UltraWebThinking Web8 - Multi-stage Docker build
+# Optimized for Next.js 15, TypeScript, Yarn Berry, Panda CSS
 
-# Vendos direktorinë e punës
+# =============================================
+# Stage 1: Dependencies and Build Environment
+# =============================================
+FROM node:20-alpine AS base
+
+# Install system dependencies
+RUN apk add --no-cache \
+    libc6-compat \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/cache/apk/*
+
+# Set working directory
 WORKDIR /app
 
-# Kopjo vetëm skedarët e nevojshëm për ndërtim
-COPY package.json yarn.lock ./
+# Enable Yarn Berry (Yarn 4)
+RUN corepack enable && corepack prepare yarn@4.9.2 --activate
 
-# Instalo varësitë
-RUN yarn install
+# Copy package management files
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn ./.yarn
 
-# Kopjo të gjithë kodin e aplikacionit
+# =============================================
+# Stage 2: Install Dependencies
+# =============================================
+FROM base AS deps
+
+# Install all dependencies
+RUN yarn install --immutable
+
+# =============================================
+# Stage 3: Build Application
+# =============================================
+FROM base AS builder
+
+# Copy dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy source code
 COPY . .
 
-# Start aplikacionin
-CMD ["yarn", "start"]
+# Generate Panda CSS
+RUN yarn panda:build || echo "Panda CSS generation completed"
 
-version: "3.9"
+# Build Next.js application
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV production
 
-services:
-  ultrawebthinking:
-    image: ultrawebthinking:1.0.0
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-      - "5001:5001"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-    volumes:
-      - .:/app
-    restart: always
-    networks:
-      - ultraweb_network
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+RUN yarn build
 
-  nginx:
-    image: nginx:1.21
-    container_name: ultraweb_nginx
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certs:/etc/nginx/certs:ro
-    depends_on:
-      - ultrawebthinking
-    networks:
-      - ultraweb_network
+# =============================================
+# Stage 4: Production Runtime
+# =============================================
+FROM node:20-alpine AS runner
 
-  db:
-    image: postgres:14.5
-    container_name: ultraweb_db
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-    networks:
-      - ultraweb_network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+# Install system dependencies for runtime
+RUN apk add --no-cache \
+    dumb-init \
+    && rm -rf /var/cache/apk/*
 
-  redis:
-    image: redis:6.2
-    container_name: ultraweb_redis
-    restart: always
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - ultraweb_network
+WORKDIR /app
 
-  prometheus:
-    image: prom/prometheus:2.36.2
-    container_name: ultraweb_prometheus
-    restart: always
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    ports:
-      - "9090:9090"
-    networks:
-      - ultraweb_network
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-  grafana:
-    image: grafana/grafana:8.5.5
-    container_name: ultraweb_grafana
-    restart: always
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
-    networks:
-      - ultraweb_network
+# Copy built application
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-  loki:
-    image: grafana/loki:2.5.0
-    container_name: ultraweb_loki
-    restart: always
-    ports:
-      - "3100:3100"
-    networks:
-      - ultraweb_network
+# Environment variables
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
 
-  promtail:
-    image: grafana/promtail:2.5.0
-    container_name: ultraweb_promtail
-    restart: always
-    volumes:
-      - /var/log:/var/log
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-    networks:
-      - ultraweb_network
+# Expose port
+EXPOSE 3000
 
-networks:
-  ultraweb_network:
+# Switch to non-root user
+USER nextjs
 
-volumes:
-  db_data:
-  redis_data:
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
 
+# Start application
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "server.js"]
+
+# =============================================
+# Labels and Metadata
+# =============================================
+LABEL org.opencontainers.image.title="UltraWebThinking Web8"
+LABEL org.opencontainers.image.description="Next.js 15 application with TypeScript, Yarn Berry, and Panda CSS"
+LABEL org.opencontainers.image.version="1.0.0"
+LABEL org.opencontainers.image.authors="UltraWebThinking Team"
+LABEL org.opencontainers.image.source="https://github.com/Web8kameleon-hub/ultrawebthinking"

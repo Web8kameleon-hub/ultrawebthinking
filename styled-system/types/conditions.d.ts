@@ -2,23 +2,27 @@
 import type { AnySelector, Selectors } from './selectors';
 
 export interface Conditions {
-	/** `&:is(:hover, [data-hover])` */
+	/** `[data-color-mode=light] &` */
+	"_light": string
+	/** `[data-color-mode=dark] &` */
+	"_dark": string
+	/** `&:hover` */
 	"_hover": string
-	/** `&:is(:focus, [data-focus])` */
+	/** `&:focus` */
 	"_focus": string
+	/** `&:active` */
+	"_active": string
+	/** `&:disabled` */
+	"_disabled": string
 	/** `&:focus-within` */
 	"_focusWithin": string
 	/** `&:is(:focus-visible, [data-focus-visible])` */
 	"_focusVisible": string
-	/** `&:is(:disabled, [disabled], [data-disabled])` */
-	"_disabled": string
-	/** `&:is(:active, [data-active])` */
-	"_active": string
 	/** `&:visited` */
 	"_visited": string
 	/** `&:target` */
 	"_target": string
-	/** `&:is(:read-only, [data-read-only])` */
+	/** `&:is(:read-only, [data-read-only], [aria-readonly=true])` */
 	"_readOnly": string
 	/** `&:read-write` */
 	"_readWrite": string
@@ -80,7 +84,7 @@ export interface Conditions {
 	"_peerFocusWithin": string
 	/** `.peer:is(:focus-visible, [data-focus-visible]) ~ &` */
 	"_peerFocusVisible": string
-	/** `.peer:is(:disabled, [disabled], [data-disabled]) ~ &` */
+	/** `.peer:is(:disabled, [disabled], [data-disabled], [aria-disabled=true]) ~ &` */
 	"_peerDisabled": string
 	/** `.peer:is(:checked, [data-checked], [aria-checked=true], [data-state="checked"]) ~ &` */
 	"_peerChecked": string
@@ -100,13 +104,13 @@ export interface Conditions {
 	"_groupFocusWithin": string
 	/** `.group:is(:focus-visible, [data-focus-visible]) &` */
 	"_groupFocusVisible": string
-	/** `.group:is(:disabled, [disabled], [data-disabled]) &` */
+	/** `.group:is(:disabled, [disabled], [data-disabled], [aria-disabled=true]) &` */
 	"_groupDisabled": string
 	/** `.group:is(:checked, [data-checked], [aria-checked=true], [data-state="checked"]) &` */
 	"_groupChecked": string
 	/** `.group:is([aria-expanded=true], [data-expanded], [data-state="expanded"]) &` */
 	"_groupExpanded": string
-	/** `.group:is(:invalid, [data-invalid]) &` */
+	/** `.group:is(:invalid, [data-invalid], [aria-invalid=true]) &` */
 	"_groupInvalid": string
 	/** `&:is(:indeterminate, [data-indeterminate], [aria-checked=mixed], [data-state="indeterminate"])` */
 	"_indeterminate": string
@@ -114,7 +118,7 @@ export interface Conditions {
 	"_required": string
 	/** `&:is(:valid, [data-valid])` */
 	"_valid": string
-	/** `&:is(:invalid, [data-invalid])` */
+	/** `&:is(:invalid, [data-invalid], [aria-invalid=true])` */
 	"_invalid": string
 	/** `&:autofill` */
 	"_autofill": string
@@ -180,10 +184,6 @@ export interface Conditions {
 	"_landscape": string
 	/** `@media (orientation: portrait)` */
 	"_portrait": string
-	/** `.dark &` */
-	"_dark": string
-	/** `.light &` */
-	"_light": string
 	/** `@media (prefers-color-scheme: dark)` */
 	"_osDark": string
 	/** `@media (prefers-color-scheme: light)` */

@@ -1,60 +1,34 @@
 import React from "react";
-import { css } from "@styled-system/css";
 
-interface NavbarProps {
-  links?: { label: string; href: string }[]; // Opsionale: Lista e lidhjeve për navigim
-}
-
-const Navbar: React.FC<NavbarProps> = ({ links = [] }) => {
+const Navbar: React.FC = () => {
   return (
     <nav
-      className={css({
+      style={{
         position: "sticky",
         top: 0,
-        zIndex: 999,
+        zIndex: 100,
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
-        paddingX: "6",
-        paddingY: "4",
-        background: "rgba(10, 10, 35, 0.8)",
-        backdropFilter: "blur(10px)",
-        borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-      })}
+        padding: "20px 32px",
+        background: "rgba(70, 130, 180, 0.15)",
+        backdropFilter: "blur(20px)",
+        borderBottom: "2px solid rgba(70, 130, 180, 0.3)",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+      }}
     >
       <div
-        className={css({
-          fontSize: "2xl",
-          fontWeight: "bold",
-          color: "white",
-          cursor: "pointer",
-        })}
+        style={{
+          fontSize: "24px",
+          fontWeight: "400",
+          color: "#1e90ff",
+          letterSpacing: "2px",
+          textAlign: "center",
+          fontFamily: "'Inter', 'Helvetica Neue', sans-serif",
+          textShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+        }}
       >
-        Ultrawebthinking
-      </div>
-
-      <div
-        className={css({
-          display: "flex",
-          gap: "6",
-        })}
-      >
-        {links.map((link, index) => (
-          <a
-            key={index}
-            href={link.href}
-            className={css({
-              fontWeight: "medium",
-              color: "white",
-              textDecoration: "none",
-              transition: "color 0.2s ease-in-out",
-              "&:hover": { color: "cyan.400" },
-            })}
-          >
-            {link.label}
-          </a>
-        ))}
+        ultrawebthinking
       </div>
     </nav>
   );

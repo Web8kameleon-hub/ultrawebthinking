@@ -1,20 +1,80 @@
 {
-  // Removed the extends property as the parent configuration is missing
   "compilerOptions": {
-    "baseUrl": ".",
+    // Target and Module Settings
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "jsx": "preserve",
-    "paths": {
-      "@/*": ["./*"]
-    },
+    "incremental": true,
+    
+    // Compilation Settings
+    "allowJs": true,
+    "skipLibCheck": true,
     "strict": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "types": ["@types/react", "@types/node"],
-    "noEmit": true // E mban pa ndërtim fizik
-    // "outDir": "dist" // Komentuar për të shmangur ndërtimin fizik
+    "forceConsistentCasingInFileNames": true,
+    
+    // Path Resolution
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/components/*": ["../components/*"],
+      "@/pages/*": ["../pages/*"],
+      "@/styles/*": ["../styles/*"],
+      "@/utils/*": ["../utils/*"],
+      "@/lib/*": ["../lib/*"],
+      "@/public/*": ["../public/*"]
+    },
+    
+    // Next.js Plugin
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    
+    // Type Checking
+    "types": ["@types/react", "@types/react-dom", "@types/node", "jest"],
+    "typeRoots": ["../node_modules/@types"],
+    
+    // Strict Type Checking Options
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false
   },
-  "include": ["pages", "components"],
-  "exclude": ["node_modules", "../backend"]
+  
+  "include": [
+    "../next-env.d.ts",
+    "../**/*.ts",
+    "../**/*.tsx",
+    "../.next/types/**/*.ts",
+    "./types/**/*.ts",
+    "../pages/**/*.ts",
+    "../pages/**/*.tsx",
+    "../components/**/*.ts", 
+    "../components/**/*.tsx",
+    "../utils/**/*.ts",
+    "../lib/**/*.ts"
+  ],
+  
+  "exclude": [
+    "../node_modules",
+    "../.next",
+    "../out",
+    "../dist",
+    "../build",
+    "../backend",
+    "../**/*.bak",
+    "../**/*.temp",
+    "../docker-*",
+    "../Dockerfile*"
+  ]
 }

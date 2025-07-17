@@ -1,35 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-import { agi } from "../backend/ai/agi/core"; // përdor rrugë relative nëse aliasi nuk punon
+import React from "react";
 import { motion } from "framer-motion";
-import { css } from "@styled-system/css";
+import { css } from "../styled-system/css";
 
 const Surfing: React.FC = () => {
-  const [input, setInput] = useState<string>("");
-  const [response, setResponse] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  // Static values instead of state
+  const input = "";
+  const response = "";
+  const loading = false;
+  const error = "";
 
-  const handleAsk = async () => {
-    if (!input.trim()) {
-      setError("Please enter a question.");
-      return;
-    }
-    setError("");
-    setLoading(true);
-    setResponse("");
-
-    try {
-      const reply = await agi.run(input);
-      setResponse(reply);
-      setInput(""); // opsionale: pastron input-in pas përgjigjes
-    } catch (err) {
-      setResponse("");
-      setError("An error occurred while processing your request.");
-    } finally {
-      setLoading(false);
-    }
+  const handleAsk = () => {
+    console.log('Surfing functionality disabled');
   };
 
   return (
@@ -65,11 +48,11 @@ const Surfing: React.FC = () => {
 
         <input
           type="text"
-          placeholder="Ask a question..."
+          placeholder="Surfing functionality disabled..."
           value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={e => { if (e.key === "Enter") handleAsk(); }}
-          aria-label="Ask a question"
+          readOnly
+          disabled
+          aria-label="Ask a question (disabled)"
           className={css({
             w: "full",
             p: "3",
@@ -78,7 +61,6 @@ const Surfing: React.FC = () => {
             fontSize: "md",
             color: "black",
           })}
-          disabled={loading}
         />
 
         {error && <p className={css({ color: "red.400", mb: "2" })}>{error}</p>}
@@ -86,40 +68,37 @@ const Surfing: React.FC = () => {
         <button
           type="button"
           onClick={handleAsk}
-          disabled={loading}
+          disabled
           className={css({
-            bg: loading ? "gray.400" : "yellow.400",
+            bg: "gray.400",
             color: "black",
             px: "5",
             py: "2",
             borderRadius: "md",
-            cursor: loading ? "not-allowed" : "pointer",
+            cursor: "not-allowed",
             fontWeight: "bold",
-            _hover: { bg: loading ? "gray.400" : "yellow.300" },
           })}
           aria-busy={loading}
         >
-          {loading ? "Thinking..." : "Ask AGI"}
+          Ask AGI (Disabled)
         </button>
 
-        {response && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className={css({
-              mt: "6",
-              p: "4",
-              bg: "rgba(255,255,255,0.05)",
-              borderRadius: "md",
-              fontSize: "md",
-              color: "white",
-              wordBreak: "break-word",
-            })}
-          >
-            {response}
-          </motion.div>
-        )}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className={css({
+            mt: "6",
+            p: "4",
+            bg: "rgba(255,255,255,0.05)",
+            borderRadius: "md",
+            fontSize: "md",
+            color: "white",
+            wordBreak: "break-word",
+          })}
+        >
+          Surfing functionality has been disabled to remove useState dependencies
+        </motion.div>
       </motion.div>
     </section>
   );

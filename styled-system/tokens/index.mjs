@@ -27,90 +27,6 @@ const tokens = {
     "value": "none",
     "variable": "var(--borders-none)"
   },
-  "easings.default": {
-    "value": "cubic-bezier(0.4, 0, 0.2, 1)",
-    "variable": "var(--easings-default)"
-  },
-  "easings.linear": {
-    "value": "linear",
-    "variable": "var(--easings-linear)"
-  },
-  "easings.in": {
-    "value": "cubic-bezier(0.4, 0, 1, 1)",
-    "variable": "var(--easings-in)"
-  },
-  "easings.out": {
-    "value": "cubic-bezier(0, 0, 0.2, 1)",
-    "variable": "var(--easings-out)"
-  },
-  "easings.in-out": {
-    "value": "cubic-bezier(0.4, 0, 0.2, 1)",
-    "variable": "var(--easings-in-out)"
-  },
-  "durations.fastest": {
-    "value": "50ms",
-    "variable": "var(--durations-fastest)"
-  },
-  "durations.faster": {
-    "value": "100ms",
-    "variable": "var(--durations-faster)"
-  },
-  "durations.fast": {
-    "value": "150ms",
-    "variable": "var(--durations-fast)"
-  },
-  "durations.normal": {
-    "value": "200ms",
-    "variable": "var(--durations-normal)"
-  },
-  "durations.slow": {
-    "value": "300ms",
-    "variable": "var(--durations-slow)"
-  },
-  "durations.slower": {
-    "value": "400ms",
-    "variable": "var(--durations-slower)"
-  },
-  "durations.slowest": {
-    "value": "500ms",
-    "variable": "var(--durations-slowest)"
-  },
-  "radii.xs": {
-    "value": "0.125rem",
-    "variable": "var(--radii-xs)"
-  },
-  "radii.sm": {
-    "value": "0.25rem",
-    "variable": "var(--radii-sm)"
-  },
-  "radii.md": {
-    "value": "0.375rem",
-    "variable": "var(--radii-md)"
-  },
-  "radii.lg": {
-    "value": "0.5rem",
-    "variable": "var(--radii-lg)"
-  },
-  "radii.xl": {
-    "value": "0.75rem",
-    "variable": "var(--radii-xl)"
-  },
-  "radii.2xl": {
-    "value": "1rem",
-    "variable": "var(--radii-2xl)"
-  },
-  "radii.3xl": {
-    "value": "1.5rem",
-    "variable": "var(--radii-3xl)"
-  },
-  "radii.4xl": {
-    "value": "2rem",
-    "variable": "var(--radii-4xl)"
-  },
-  "radii.full": {
-    "value": "9999px",
-    "variable": "var(--radii-full)"
-  },
   "fontWeights.thin": {
     "value": "100",
     "variable": "var(--font-weights-thin)"
@@ -171,18 +87,6 @@ const tokens = {
     "value": "2",
     "variable": "var(--line-heights-loose)"
   },
-  "fonts.sans": {
-    "value": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
-    "variable": "var(--fonts-sans)"
-  },
-  "fonts.serif": {
-    "value": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif",
-    "variable": "var(--fonts-serif)"
-  },
-  "fonts.mono": {
-    "value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
-    "variable": "var(--fonts-mono)"
-  },
   "letterSpacings.tighter": {
     "value": "-0.05em",
     "variable": "var(--letter-spacings-tighter)"
@@ -206,62 +110,6 @@ const tokens = {
   "letterSpacings.widest": {
     "value": "0.1em",
     "variable": "var(--letter-spacings-widest)"
-  },
-  "fontSizes.2xs": {
-    "value": "0.5rem",
-    "variable": "var(--font-sizes-2xs)"
-  },
-  "fontSizes.xs": {
-    "value": "0.75rem",
-    "variable": "var(--font-sizes-xs)"
-  },
-  "fontSizes.sm": {
-    "value": "0.875rem",
-    "variable": "var(--font-sizes-sm)"
-  },
-  "fontSizes.md": {
-    "value": "1rem",
-    "variable": "var(--font-sizes-md)"
-  },
-  "fontSizes.lg": {
-    "value": "1.125rem",
-    "variable": "var(--font-sizes-lg)"
-  },
-  "fontSizes.xl": {
-    "value": "1.25rem",
-    "variable": "var(--font-sizes-xl)"
-  },
-  "fontSizes.2xl": {
-    "value": "1.5rem",
-    "variable": "var(--font-sizes-2xl)"
-  },
-  "fontSizes.3xl": {
-    "value": "1.875rem",
-    "variable": "var(--font-sizes-3xl)"
-  },
-  "fontSizes.4xl": {
-    "value": "2.25rem",
-    "variable": "var(--font-sizes-4xl)"
-  },
-  "fontSizes.5xl": {
-    "value": "3rem",
-    "variable": "var(--font-sizes-5xl)"
-  },
-  "fontSizes.6xl": {
-    "value": "3.75rem",
-    "variable": "var(--font-sizes-6xl)"
-  },
-  "fontSizes.7xl": {
-    "value": "4.5rem",
-    "variable": "var(--font-sizes-7xl)"
-  },
-  "fontSizes.8xl": {
-    "value": "6rem",
-    "variable": "var(--font-sizes-8xl)"
-  },
-  "fontSizes.9xl": {
-    "value": "8rem",
-    "variable": "var(--font-sizes-9xl)"
   },
   "shadows.xs": {
     "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
@@ -290,6 +138,274 @@ const tokens = {
   "shadows.inner": {
     "value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
     "variable": "var(--shadows-inner)"
+  },
+  "blurs.sm": {
+    "value": "4px",
+    "variable": "var(--blurs-sm)"
+  },
+  "blurs.base": {
+    "value": "8px",
+    "variable": "var(--blurs-base)"
+  },
+  "blurs.md": {
+    "value": "12px",
+    "variable": "var(--blurs-md)"
+  },
+  "blurs.lg": {
+    "value": "16px",
+    "variable": "var(--blurs-lg)"
+  },
+  "blurs.xl": {
+    "value": "24px",
+    "variable": "var(--blurs-xl)"
+  },
+  "blurs.2xl": {
+    "value": "40px",
+    "variable": "var(--blurs-2xl)"
+  },
+  "blurs.3xl": {
+    "value": "64px",
+    "variable": "var(--blurs-3xl)"
+  },
+  "sizes.0": {
+    "value": "0rem",
+    "variable": "var(--sizes-0)"
+  },
+  "sizes.1": {
+    "value": "0.25rem",
+    "variable": "var(--sizes-1)"
+  },
+  "sizes.2": {
+    "value": "0.5rem",
+    "variable": "var(--sizes-2)"
+  },
+  "sizes.3": {
+    "value": "0.75rem",
+    "variable": "var(--sizes-3)"
+  },
+  "sizes.4": {
+    "value": "1rem",
+    "variable": "var(--sizes-4)"
+  },
+  "sizes.5": {
+    "value": "1.25rem",
+    "variable": "var(--sizes-5)"
+  },
+  "sizes.6": {
+    "value": "1.5rem",
+    "variable": "var(--sizes-6)"
+  },
+  "sizes.7": {
+    "value": "1.75rem",
+    "variable": "var(--sizes-7)"
+  },
+  "sizes.8": {
+    "value": "2rem",
+    "variable": "var(--sizes-8)"
+  },
+  "sizes.9": {
+    "value": "2.25rem",
+    "variable": "var(--sizes-9)"
+  },
+  "sizes.10": {
+    "value": "2.5rem",
+    "variable": "var(--sizes-10)"
+  },
+  "sizes.11": {
+    "value": "2.75rem",
+    "variable": "var(--sizes-11)"
+  },
+  "sizes.12": {
+    "value": "3rem",
+    "variable": "var(--sizes-12)"
+  },
+  "sizes.14": {
+    "value": "3.5rem",
+    "variable": "var(--sizes-14)"
+  },
+  "sizes.16": {
+    "value": "4rem",
+    "variable": "var(--sizes-16)"
+  },
+  "sizes.20": {
+    "value": "5rem",
+    "variable": "var(--sizes-20)"
+  },
+  "sizes.24": {
+    "value": "6rem",
+    "variable": "var(--sizes-24)"
+  },
+  "sizes.28": {
+    "value": "7rem",
+    "variable": "var(--sizes-28)"
+  },
+  "sizes.32": {
+    "value": "8rem",
+    "variable": "var(--sizes-32)"
+  },
+  "sizes.36": {
+    "value": "9rem",
+    "variable": "var(--sizes-36)"
+  },
+  "sizes.40": {
+    "value": "10rem",
+    "variable": "var(--sizes-40)"
+  },
+  "sizes.44": {
+    "value": "11rem",
+    "variable": "var(--sizes-44)"
+  },
+  "sizes.48": {
+    "value": "12rem",
+    "variable": "var(--sizes-48)"
+  },
+  "sizes.52": {
+    "value": "13rem",
+    "variable": "var(--sizes-52)"
+  },
+  "sizes.56": {
+    "value": "14rem",
+    "variable": "var(--sizes-56)"
+  },
+  "sizes.60": {
+    "value": "15rem",
+    "variable": "var(--sizes-60)"
+  },
+  "sizes.64": {
+    "value": "16rem",
+    "variable": "var(--sizes-64)"
+  },
+  "sizes.72": {
+    "value": "18rem",
+    "variable": "var(--sizes-72)"
+  },
+  "sizes.80": {
+    "value": "20rem",
+    "variable": "var(--sizes-80)"
+  },
+  "sizes.96": {
+    "value": "24rem",
+    "variable": "var(--sizes-96)"
+  },
+  "sizes.0.5": {
+    "value": "0.125rem",
+    "variable": "var(--sizes-0\\.5)"
+  },
+  "sizes.1.5": {
+    "value": "0.375rem",
+    "variable": "var(--sizes-1\\.5)"
+  },
+  "sizes.2.5": {
+    "value": "0.625rem",
+    "variable": "var(--sizes-2\\.5)"
+  },
+  "sizes.3.5": {
+    "value": "0.875rem",
+    "variable": "var(--sizes-3\\.5)"
+  },
+  "sizes.xs": {
+    "value": "20rem",
+    "variable": "var(--sizes-xs)"
+  },
+  "sizes.sm": {
+    "value": "24rem",
+    "variable": "var(--sizes-sm)"
+  },
+  "sizes.md": {
+    "value": "28rem",
+    "variable": "var(--sizes-md)"
+  },
+  "sizes.lg": {
+    "value": "32rem",
+    "variable": "var(--sizes-lg)"
+  },
+  "sizes.xl": {
+    "value": "36rem",
+    "variable": "var(--sizes-xl)"
+  },
+  "sizes.2xl": {
+    "value": "42rem",
+    "variable": "var(--sizes-2xl)"
+  },
+  "sizes.3xl": {
+    "value": "48rem",
+    "variable": "var(--sizes-3xl)"
+  },
+  "sizes.4xl": {
+    "value": "56rem",
+    "variable": "var(--sizes-4xl)"
+  },
+  "sizes.5xl": {
+    "value": "64rem",
+    "variable": "var(--sizes-5xl)"
+  },
+  "sizes.6xl": {
+    "value": "72rem",
+    "variable": "var(--sizes-6xl)"
+  },
+  "sizes.7xl": {
+    "value": "80rem",
+    "variable": "var(--sizes-7xl)"
+  },
+  "sizes.8xl": {
+    "value": "90rem",
+    "variable": "var(--sizes-8xl)"
+  },
+  "sizes.prose": {
+    "value": "65ch",
+    "variable": "var(--sizes-prose)"
+  },
+  "sizes.full": {
+    "value": "100%",
+    "variable": "var(--sizes-full)"
+  },
+  "sizes.min": {
+    "value": "min-content",
+    "variable": "var(--sizes-min)"
+  },
+  "sizes.max": {
+    "value": "max-content",
+    "variable": "var(--sizes-max)"
+  },
+  "sizes.fit": {
+    "value": "fit-content",
+    "variable": "var(--sizes-fit)"
+  },
+  "sizes.breakpoint-sm": {
+    "value": "640px",
+    "variable": "var(--sizes-breakpoint-sm)"
+  },
+  "sizes.breakpoint-md": {
+    "value": "768px",
+    "variable": "var(--sizes-breakpoint-md)"
+  },
+  "sizes.breakpoint-lg": {
+    "value": "1024px",
+    "variable": "var(--sizes-breakpoint-lg)"
+  },
+  "sizes.breakpoint-xl": {
+    "value": "1280px",
+    "variable": "var(--sizes-breakpoint-xl)"
+  },
+  "sizes.breakpoint-2xl": {
+    "value": "1536px",
+    "variable": "var(--sizes-breakpoint-2xl)"
+  },
+  "animations.spin": {
+    "value": "spin 1s linear infinite",
+    "variable": "var(--animations-spin)"
+  },
+  "animations.ping": {
+    "value": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+    "variable": "var(--animations-ping)"
+  },
+  "animations.pulse": {
+    "value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+    "variable": "var(--animations-pulse)"
+  },
+  "animations.bounce": {
+    "value": "bounce 1s infinite",
+    "variable": "var(--animations-bounce)"
   },
   "colors.current": {
     "value": "currentColor",
@@ -1055,50 +1171,6 @@ const tokens = {
     "value": "#450a0a",
     "variable": "var(--colors-red-950)"
   },
-  "colors.neutral.50": {
-    "value": "#fafafa",
-    "variable": "var(--colors-neutral-50)"
-  },
-  "colors.neutral.100": {
-    "value": "#f5f5f5",
-    "variable": "var(--colors-neutral-100)"
-  },
-  "colors.neutral.200": {
-    "value": "#e5e5e5",
-    "variable": "var(--colors-neutral-200)"
-  },
-  "colors.neutral.300": {
-    "value": "#d4d4d4",
-    "variable": "var(--colors-neutral-300)"
-  },
-  "colors.neutral.400": {
-    "value": "#a3a3a3",
-    "variable": "var(--colors-neutral-400)"
-  },
-  "colors.neutral.500": {
-    "value": "#737373",
-    "variable": "var(--colors-neutral-500)"
-  },
-  "colors.neutral.600": {
-    "value": "#525252",
-    "variable": "var(--colors-neutral-600)"
-  },
-  "colors.neutral.700": {
-    "value": "#404040",
-    "variable": "var(--colors-neutral-700)"
-  },
-  "colors.neutral.800": {
-    "value": "#262626",
-    "variable": "var(--colors-neutral-800)"
-  },
-  "colors.neutral.900": {
-    "value": "#171717",
-    "variable": "var(--colors-neutral-900)"
-  },
-  "colors.neutral.950": {
-    "value": "#0a0a0a",
-    "variable": "var(--colors-neutral-950)"
-  },
   "colors.stone.50": {
     "value": "#fafaf9",
     "variable": "var(--colors-stone-50)"
@@ -1275,33 +1347,213 @@ const tokens = {
     "value": "#020617",
     "variable": "var(--colors-slate-950)"
   },
-  "blurs.sm": {
-    "value": "4px",
-    "variable": "var(--blurs-sm)"
+  "colors.primary.50": {
+    "value": "#eef2ff",
+    "variable": "var(--colors-primary-50)"
   },
-  "blurs.base": {
-    "value": "8px",
-    "variable": "var(--blurs-base)"
+  "colors.primary.100": {
+    "value": "#e0e7ff",
+    "variable": "var(--colors-primary-100)"
   },
-  "blurs.md": {
-    "value": "12px",
-    "variable": "var(--blurs-md)"
+  "colors.primary.200": {
+    "value": "#263ea0ff",
+    "variable": "var(--colors-primary-200)"
   },
-  "blurs.lg": {
-    "value": "16px",
-    "variable": "var(--blurs-lg)"
+  "colors.primary.300": {
+    "value": "#182e9bff",
+    "variable": "var(--colors-primary-300)"
   },
-  "blurs.xl": {
-    "value": "24px",
-    "variable": "var(--blurs-xl)"
+  "colors.primary.400": {
+    "value": "#515dccff",
+    "variable": "var(--colors-primary-400)"
   },
-  "blurs.2xl": {
-    "value": "40px",
-    "variable": "var(--blurs-2xl)"
+  "colors.primary.500": {
+    "value": "#6366f1",
+    "variable": "var(--colors-primary-500)"
   },
-  "blurs.3xl": {
-    "value": "64px",
-    "variable": "var(--blurs-3xl)"
+  "colors.primary.600": {
+    "value": "#4f46e5",
+    "variable": "var(--colors-primary-600)"
+  },
+  "colors.primary.700": {
+    "value": "#4338ca",
+    "variable": "var(--colors-primary-700)"
+  },
+  "colors.primary.800": {
+    "value": "#3730a3",
+    "variable": "var(--colors-primary-800)"
+  },
+  "colors.primary.900": {
+    "value": "#312e81",
+    "variable": "var(--colors-primary-900)"
+  },
+  "colors.secondary.50": {
+    "value": "#ecfdf5",
+    "variable": "var(--colors-secondary-50)"
+  },
+  "colors.secondary.100": {
+    "value": "#d1fae5",
+    "variable": "var(--colors-secondary-100)"
+  },
+  "colors.secondary.200": {
+    "value": "#a7f3d0",
+    "variable": "var(--colors-secondary-200)"
+  },
+  "colors.secondary.300": {
+    "value": "#6ee7b7",
+    "variable": "var(--colors-secondary-300)"
+  },
+  "colors.secondary.400": {
+    "value": "#34d399",
+    "variable": "var(--colors-secondary-400)"
+  },
+  "colors.secondary.500": {
+    "value": "#10b981",
+    "variable": "var(--colors-secondary-500)"
+  },
+  "colors.secondary.600": {
+    "value": "#059669",
+    "variable": "var(--colors-secondary-600)"
+  },
+  "colors.secondary.700": {
+    "value": "#047857",
+    "variable": "var(--colors-secondary-700)"
+  },
+  "colors.secondary.800": {
+    "value": "#065f46",
+    "variable": "var(--colors-secondary-800)"
+  },
+  "colors.secondary.900": {
+    "value": "#064e3b",
+    "variable": "var(--colors-secondary-900)"
+  },
+  "colors.neutral.50": {
+    "value": "#f8fafc",
+    "variable": "var(--colors-neutral-50)"
+  },
+  "colors.neutral.100": {
+    "value": "#f1f5f9",
+    "variable": "var(--colors-neutral-100)"
+  },
+  "colors.neutral.200": {
+    "value": "#e2e8f0",
+    "variable": "var(--colors-neutral-200)"
+  },
+  "colors.neutral.300": {
+    "value": "#cbd5e1",
+    "variable": "var(--colors-neutral-300)"
+  },
+  "colors.neutral.400": {
+    "value": "#94a3b8",
+    "variable": "var(--colors-neutral-400)"
+  },
+  "colors.neutral.500": {
+    "value": "#64748b",
+    "variable": "var(--colors-neutral-500)"
+  },
+  "colors.neutral.600": {
+    "value": "#475569",
+    "variable": "var(--colors-neutral-600)"
+  },
+  "colors.neutral.700": {
+    "value": "#334155",
+    "variable": "var(--colors-neutral-700)"
+  },
+  "colors.neutral.800": {
+    "value": "#1e293b",
+    "variable": "var(--colors-neutral-800)"
+  },
+  "colors.neutral.900": {
+    "value": "#0f172a",
+    "variable": "var(--colors-neutral-900)"
+  },
+  "colors.neutral.950": {
+    "value": "#0a0a0a",
+    "variable": "var(--colors-neutral-950)"
+  },
+  "colors.success": {
+    "value": "#10b981",
+    "variable": "var(--colors-success)"
+  },
+  "colors.warning": {
+    "value": "#f59e0b",
+    "variable": "var(--colors-warning)"
+  },
+  "colors.error": {
+    "value": "#ef4444",
+    "variable": "var(--colors-error)"
+  },
+  "colors.info": {
+    "value": "#06b6d4",
+    "variable": "var(--colors-info)"
+  },
+  "fonts.sans": {
+    "value": "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\", Inter, system-ui, sans-serif",
+    "variable": "var(--fonts-sans)"
+  },
+  "fonts.serif": {
+    "value": "ui-serif, Georgia, Cambria, \"Times New Roman\", Times, serif, Georgia, serif",
+    "variable": "var(--fonts-serif)"
+  },
+  "fonts.mono": {
+    "value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace, Fira Code, monospace",
+    "variable": "var(--fonts-mono)"
+  },
+  "fontSizes.2xs": {
+    "value": "0.5rem",
+    "variable": "var(--font-sizes-2xs)"
+  },
+  "fontSizes.6xl": {
+    "value": "3.75rem",
+    "variable": "var(--font-sizes-6xl)"
+  },
+  "fontSizes.7xl": {
+    "value": "4.5rem",
+    "variable": "var(--font-sizes-7xl)"
+  },
+  "fontSizes.8xl": {
+    "value": "6rem",
+    "variable": "var(--font-sizes-8xl)"
+  },
+  "fontSizes.9xl": {
+    "value": "8rem",
+    "variable": "var(--font-sizes-9xl)"
+  },
+  "fontSizes.xs": {
+    "value": "0.75rem",
+    "variable": "var(--font-sizes-xs)"
+  },
+  "fontSizes.sm": {
+    "value": "0.875rem",
+    "variable": "var(--font-sizes-sm)"
+  },
+  "fontSizes.md": {
+    "value": "1rem",
+    "variable": "var(--font-sizes-md)"
+  },
+  "fontSizes.lg": {
+    "value": "1.125rem",
+    "variable": "var(--font-sizes-lg)"
+  },
+  "fontSizes.xl": {
+    "value": "1.25rem",
+    "variable": "var(--font-sizes-xl)"
+  },
+  "fontSizes.2xl": {
+    "value": "1.5rem",
+    "variable": "var(--font-sizes-2xl)"
+  },
+  "fontSizes.3xl": {
+    "value": "1.875rem",
+    "variable": "var(--font-sizes-3xl)"
+  },
+  "fontSizes.4xl": {
+    "value": "2.25rem",
+    "variable": "var(--font-sizes-4xl)"
+  },
+  "fontSizes.5xl": {
+    "value": "3rem",
+    "variable": "var(--font-sizes-5xl)"
   },
   "spacing.0": {
     "value": "0rem",
@@ -1439,245 +1691,141 @@ const tokens = {
     "value": "0.875rem",
     "variable": "var(--spacing-3\\.5)"
   },
-  "sizes.0": {
-    "value": "0rem",
-    "variable": "var(--sizes-0)"
-  },
-  "sizes.1": {
-    "value": "0.25rem",
-    "variable": "var(--sizes-1)"
-  },
-  "sizes.2": {
+  "spacing.xs": {
     "value": "0.5rem",
-    "variable": "var(--sizes-2)"
+    "variable": "var(--spacing-xs)"
   },
-  "sizes.3": {
+  "spacing.sm": {
     "value": "0.75rem",
-    "variable": "var(--sizes-3)"
+    "variable": "var(--spacing-sm)"
   },
-  "sizes.4": {
+  "spacing.md": {
     "value": "1rem",
-    "variable": "var(--sizes-4)"
+    "variable": "var(--spacing-md)"
   },
-  "sizes.5": {
-    "value": "1.25rem",
-    "variable": "var(--sizes-5)"
-  },
-  "sizes.6": {
+  "spacing.lg": {
     "value": "1.5rem",
-    "variable": "var(--sizes-6)"
+    "variable": "var(--spacing-lg)"
   },
-  "sizes.7": {
-    "value": "1.75rem",
-    "variable": "var(--sizes-7)"
-  },
-  "sizes.8": {
+  "spacing.xl": {
     "value": "2rem",
-    "variable": "var(--sizes-8)"
+    "variable": "var(--spacing-xl)"
   },
-  "sizes.9": {
-    "value": "2.25rem",
-    "variable": "var(--sizes-9)"
-  },
-  "sizes.10": {
-    "value": "2.5rem",
-    "variable": "var(--sizes-10)"
-  },
-  "sizes.11": {
-    "value": "2.75rem",
-    "variable": "var(--sizes-11)"
-  },
-  "sizes.12": {
+  "spacing.2xl": {
     "value": "3rem",
-    "variable": "var(--sizes-12)"
+    "variable": "var(--spacing-2xl)"
   },
-  "sizes.14": {
-    "value": "3.5rem",
-    "variable": "var(--sizes-14)"
-  },
-  "sizes.16": {
+  "spacing.3xl": {
     "value": "4rem",
-    "variable": "var(--sizes-16)"
+    "variable": "var(--spacing-3xl)"
   },
-  "sizes.20": {
-    "value": "5rem",
-    "variable": "var(--sizes-20)"
-  },
-  "sizes.24": {
-    "value": "6rem",
-    "variable": "var(--sizes-24)"
-  },
-  "sizes.28": {
-    "value": "7rem",
-    "variable": "var(--sizes-28)"
-  },
-  "sizes.32": {
-    "value": "8rem",
-    "variable": "var(--sizes-32)"
-  },
-  "sizes.36": {
-    "value": "9rem",
-    "variable": "var(--sizes-36)"
-  },
-  "sizes.40": {
-    "value": "10rem",
-    "variable": "var(--sizes-40)"
-  },
-  "sizes.44": {
-    "value": "11rem",
-    "variable": "var(--sizes-44)"
-  },
-  "sizes.48": {
-    "value": "12rem",
-    "variable": "var(--sizes-48)"
-  },
-  "sizes.52": {
-    "value": "13rem",
-    "variable": "var(--sizes-52)"
-  },
-  "sizes.56": {
-    "value": "14rem",
-    "variable": "var(--sizes-56)"
-  },
-  "sizes.60": {
-    "value": "15rem",
-    "variable": "var(--sizes-60)"
-  },
-  "sizes.64": {
-    "value": "16rem",
-    "variable": "var(--sizes-64)"
-  },
-  "sizes.72": {
-    "value": "18rem",
-    "variable": "var(--sizes-72)"
-  },
-  "sizes.80": {
-    "value": "20rem",
-    "variable": "var(--sizes-80)"
-  },
-  "sizes.96": {
-    "value": "24rem",
-    "variable": "var(--sizes-96)"
-  },
-  "sizes.0.5": {
+  "radii.xs": {
     "value": "0.125rem",
-    "variable": "var(--sizes-0\\.5)"
+    "variable": "var(--radii-xs)"
   },
-  "sizes.1.5": {
+  "radii.3xl": {
+    "value": "1.5rem",
+    "variable": "var(--radii-3xl)"
+  },
+  "radii.4xl": {
+    "value": "2rem",
+    "variable": "var(--radii-4xl)"
+  },
+  "radii.none": {
+    "value": "0",
+    "variable": "var(--radii-none)"
+  },
+  "radii.sm": {
     "value": "0.375rem",
-    "variable": "var(--sizes-1\\.5)"
+    "variable": "var(--radii-sm)"
   },
-  "sizes.2.5": {
-    "value": "0.625rem",
-    "variable": "var(--sizes-2\\.5)"
+  "radii.md": {
+    "value": "0.5rem",
+    "variable": "var(--radii-md)"
   },
-  "sizes.3.5": {
-    "value": "0.875rem",
-    "variable": "var(--sizes-3\\.5)"
+  "radii.lg": {
+    "value": "0.75rem",
+    "variable": "var(--radii-lg)"
   },
-  "sizes.xs": {
-    "value": "20rem",
-    "variable": "var(--sizes-xs)"
+  "radii.xl": {
+    "value": "1rem",
+    "variable": "var(--radii-xl)"
   },
-  "sizes.sm": {
-    "value": "24rem",
-    "variable": "var(--sizes-sm)"
+  "radii.2xl": {
+    "value": "1.5rem",
+    "variable": "var(--radii-2xl)"
   },
-  "sizes.md": {
-    "value": "28rem",
-    "variable": "var(--sizes-md)"
+  "radii.full": {
+    "value": "9999px",
+    "variable": "var(--radii-full)"
   },
-  "sizes.lg": {
-    "value": "32rem",
-    "variable": "var(--sizes-lg)"
+  "durations.fastest": {
+    "value": "50ms",
+    "variable": "var(--durations-fastest)"
   },
-  "sizes.xl": {
-    "value": "36rem",
-    "variable": "var(--sizes-xl)"
+  "durations.faster": {
+    "value": "100ms",
+    "variable": "var(--durations-faster)"
   },
-  "sizes.2xl": {
-    "value": "42rem",
-    "variable": "var(--sizes-2xl)"
+  "durations.slowest": {
+    "value": "500ms",
+    "variable": "var(--durations-slowest)"
   },
-  "sizes.3xl": {
-    "value": "48rem",
-    "variable": "var(--sizes-3xl)"
+  "durations.fast": {
+    "value": "150ms",
+    "variable": "var(--durations-fast)"
   },
-  "sizes.4xl": {
-    "value": "56rem",
-    "variable": "var(--sizes-4xl)"
+  "durations.normal": {
+    "value": "300ms",
+    "variable": "var(--durations-normal)"
   },
-  "sizes.5xl": {
-    "value": "64rem",
-    "variable": "var(--sizes-5xl)"
+  "durations.slow": {
+    "value": "500ms",
+    "variable": "var(--durations-slow)"
   },
-  "sizes.6xl": {
-    "value": "72rem",
-    "variable": "var(--sizes-6xl)"
+  "durations.slower": {
+    "value": "750ms",
+    "variable": "var(--durations-slower)"
   },
-  "sizes.7xl": {
-    "value": "80rem",
-    "variable": "var(--sizes-7xl)"
+  "easings.default": {
+    "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "variable": "var(--easings-default)"
   },
-  "sizes.8xl": {
-    "value": "90rem",
-    "variable": "var(--sizes-8xl)"
+  "easings.linear": {
+    "value": "linear",
+    "variable": "var(--easings-linear)"
   },
-  "sizes.prose": {
-    "value": "65ch",
-    "variable": "var(--sizes-prose)"
+  "easings.in": {
+    "value": "cubic-bezier(0.4, 0, 1, 1)",
+    "variable": "var(--easings-in)"
   },
-  "sizes.full": {
-    "value": "100%",
-    "variable": "var(--sizes-full)"
+  "easings.out": {
+    "value": "cubic-bezier(0, 0, 0.2, 1)",
+    "variable": "var(--easings-out)"
   },
-  "sizes.min": {
-    "value": "min-content",
-    "variable": "var(--sizes-min)"
+  "easings.in-out": {
+    "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "variable": "var(--easings-in-out)"
   },
-  "sizes.max": {
-    "value": "max-content",
-    "variable": "var(--sizes-max)"
+  "easings.ease": {
+    "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "variable": "var(--easings-ease)"
   },
-  "sizes.fit": {
-    "value": "fit-content",
-    "variable": "var(--sizes-fit)"
+  "easings.easeIn": {
+    "value": "cubic-bezier(0.4, 0, 1, 1)",
+    "variable": "var(--easings-ease-in)"
   },
-  "sizes.breakpoint-sm": {
-    "value": "640px",
-    "variable": "var(--sizes-breakpoint-sm)"
+  "easings.easeOut": {
+    "value": "cubic-bezier(0, 0, 0.2, 1)",
+    "variable": "var(--easings-ease-out)"
   },
-  "sizes.breakpoint-md": {
-    "value": "768px",
-    "variable": "var(--sizes-breakpoint-md)"
+  "easings.easeInOut": {
+    "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+    "variable": "var(--easings-ease-in-out)"
   },
-  "sizes.breakpoint-lg": {
-    "value": "1024px",
-    "variable": "var(--sizes-breakpoint-lg)"
-  },
-  "sizes.breakpoint-xl": {
-    "value": "1280px",
-    "variable": "var(--sizes-breakpoint-xl)"
-  },
-  "sizes.breakpoint-2xl": {
-    "value": "1536px",
-    "variable": "var(--sizes-breakpoint-2xl)"
-  },
-  "animations.spin": {
-    "value": "spin 1s linear infinite",
-    "variable": "var(--animations-spin)"
-  },
-  "animations.ping": {
-    "value": "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
-    "variable": "var(--animations-ping)"
-  },
-  "animations.pulse": {
-    "value": "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-    "variable": "var(--animations-pulse)"
-  },
-  "animations.bounce": {
-    "value": "bounce 1s infinite",
-    "variable": "var(--animations-bounce)"
+  "easings.spring": {
+    "value": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+    "variable": "var(--easings-spring)"
   },
   "breakpoints.sm": {
     "value": "640px",
@@ -1830,6 +1978,34 @@ const tokens = {
   "spacing.-3.5": {
     "value": "calc(var(--spacing-3\\.5) * -1)",
     "variable": "var(--spacing-3\\.5)"
+  },
+  "spacing.-xs": {
+    "value": "calc(var(--spacing-xs) * -1)",
+    "variable": "var(--spacing-xs)"
+  },
+  "spacing.-sm": {
+    "value": "calc(var(--spacing-sm) * -1)",
+    "variable": "var(--spacing-sm)"
+  },
+  "spacing.-md": {
+    "value": "calc(var(--spacing-md) * -1)",
+    "variable": "var(--spacing-md)"
+  },
+  "spacing.-lg": {
+    "value": "calc(var(--spacing-lg) * -1)",
+    "variable": "var(--spacing-lg)"
+  },
+  "spacing.-xl": {
+    "value": "calc(var(--spacing-xl) * -1)",
+    "variable": "var(--spacing-xl)"
+  },
+  "spacing.-2xl": {
+    "value": "calc(var(--spacing-2xl) * -1)",
+    "variable": "var(--spacing-2xl)"
+  },
+  "spacing.-3xl": {
+    "value": "calc(var(--spacing-3xl) * -1)",
+    "variable": "var(--spacing-3xl)"
   },
   "colors.colorPalette": {
     "value": "var(--colors-color-palette)",

@@ -1,66 +1,133 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useAGI, useAGIState } from '../lib/AGIContext';
+import { motion } from 'framer-motion';
 import styles from '../styles/MiniAGIAssistant.module.css';
 
 const MiniAGIAssistant: React.FC = () => {
-  const [input, setInput] = useState<string>(''); // Për të ruajtur inputin e përdoruesit
-  const [response, setResponse] = useState<string>(''); // Për të ruajtur përgjigjen e AGI-së
-  const [loading, setLoading] = useState<boolean>(false); // Për të treguar statusin e ngarkimit
+  const { actions, ui } = useAGI();
+  
+  // Get AGI state from context (no useState needed!)
+  const agiStatus = useAGIState(memory => memory.agi.status);
+  const lastQuery = useAGIState(memory => memory.agi.lastQuery);
+  const responses = useAGIState(memory => memory.agi.responses);
+  const brainActive = useAGIState(memory => memory.agi.brainActive);
 
-  /**
-   * Funksioni për të dërguar inputin dhe për të marrë përgjigjen nga AGI.
-   */
-  const handleSend = async () => {
-    if (!input.trim()) return; // Mos dërgo input bosh
-    setLoading(true);
-
-    try {
-      // Simuloni një kërkesë API për të marrë përgjigjen nga AGI
-      const res = await fetch('/api/agi', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ input }),
-      });
-
-      const data = await res.json();
-      setResponse(data.response || 'Nuk ka përgjigje nga AGI.');
-    } catch (error) {
-      setResponse('Gabim gjatë komunikimit me AGI.');
-    } finally {
-      setLoading(false);
-      setInput(''); // Pastroni fushën e inputit
-    }
+  const handleQuery = (query: string) => {
+    if (!query.trim()) return;
+    
+    // Add to AGI memory instead of local state
+    actions.addAGIResponse(query, `Processing: ${query}`);
+    actions.setAGIStatus('PROCESSING');
+    
+    // Simulate AGI response
+    setTimeout(() => {
+      const response = `AGI Response: I've analyzed "${query}" and here's my intelligent response.`;
+      actions.addAGIResponse(query, response);
+      actions.setAGIStatus('ACTIVE');
+    }, 2000);
   };
 
+  React.useEffect(() => {
+    // Activate UI element when component mounts
+    ui.activateElement('mini-agi-assistant');
+    
+    // Add pulse effect when brain is active
+    if (brainActive) {
+      ui.pulseElement('agi-brain-indicator');
+    }
+  }, [ui, brainActive]);
+
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Mini AGI Assistant</h2>
-      <div className={styles.chatBox}>
-        <textarea
-          className={styles.input}
-          placeholder="Shkruani pyetjen tuaj këtu..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          disabled={loading}
+    <motion.div 
+      id="mini-agi-assistant"
+      className={`${styles.container} agi-reactive agi-bg`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className={styles.header}>
+        <h3 className="agi-primary">
+          🤖 Mini AGI Assistant
+          <span 
+            id="agi-brain-indicator" 
+            className={`${styles.statusIndicator} ${agiStatus === 'PROCESSING' ? styles.processing : ''}`}
+          >
+            {agiStatus}
+          </span>
+        </h3>
+        <p className="agi-secondary">Intelligent assistance powered by AGI memory</p>
+      </div>
+      
+      <div className={styles.chatArea}>
+        <div className={styles.messages}>
+          {responses.length > 0 ? (
+            responses.slice(-3).map((response, index) => (
+              <motion.div 
+                key={index}
+                className={`${styles.response} agi-accent`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                {response}
+              </motion.div>
+            ))
+          ) : (
+            <div className={styles.systemMessage}>
+              AGI Assistant ready. Memory system active.
+            </div>
+          )}
+          
+          {agiStatus === 'PROCESSING' && (
+            <motion.div 
+              className={styles.loading}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ repeat: Infinity, duration: 1 }}
+            >
+              AGI is thinking...
+            </motion.div>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.inputArea}>
+        <input
+          type="text"
+          placeholder="Ask the AGI something..."
+          className={`${styles.inputField} agi-reactive`}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              const target = e.target as HTMLInputElement;
+              handleQuery(target.value);
+              target.value = '';
+            }
+          }}
+          disabled={agiStatus === 'PROCESSING'}
         />
-        <button
-          className={styles.sendButton}
-          onClick={handleSend}
-          disabled={loading}
+        <button 
+          className={`${styles.sendButton} agi-reactive ${agiStatus === 'PROCESSING' ? styles.disabled : ''}`}
+          onClick={(e) => {
+            const input = (e.target as HTMLElement).previousElementSibling as HTMLInputElement;
+            if (input) {
+              handleQuery(input.value);
+              input.value = '';
+            }
+          }}
+          disabled={agiStatus === 'PROCESSING'}
         >
-          {loading ? 'Duke përpunuar...' : 'Dërgo'}
+          {agiStatus === 'PROCESSING' ? 'Processing...' : 'Send'}
         </button>
       </div>
-      {response && (
-        <div className={styles.response}>
-          <strong>Përgjigja e AGI-së:</strong>
-          <p>{response}</p>
-        </div>
-      )}
-    </div>
+
+      <div className={styles.memoryInfo}>
+        <small className="agi-secondary">
+          Last query: {lastQuery || 'None'} | 
+          Responses: {responses.length} | 
+          Brain: {brainActive ? '🟢 Active' : '🔴 Inactive'}
+        </small>
+      </div>
+    </motion.div>
   );
 };
 
 export default MiniAGIAssistant;
-

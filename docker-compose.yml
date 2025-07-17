@@ -1,95 +1,59 @@
 version: '3.8'
 
 services:
-  ultrawebthinking:
+  # UltraWebThinking Web8 Application
+  web8:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ultrawebthinking:1.0.0
+      target: runner
+    container_name: ultrawebthinking-web8
     ports:
-      - "5000:5000"
-      - "5001:5001"
+      - "3000:3000"
     environment:
-      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-    volumes:
-      - .:/app
-    restart: always
-    networks:
-      - ultraweb_network
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-    env_file:
-      - .env
-
-  db:
-    image: postgres:14.5
-    container_name: ultraweb_db
-    restart: always
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
+      start_period: 40s
     networks:
-      - ultraweb_network
+      - web8_network
 
-  redis:
-    image: redis:6.2
-    container_name: ultraweb_redis
-    restart: always
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - ultraweb_network
-
-  agi-app:
+  # Development Environment (optional)
+  web8-dev:
     build:
       context: .
       dockerfile: Dockerfile
+      target: base
+    container_name: ultrawebthinking-web8-dev
     ports:
-      - "3000:3000"
+      - "3001:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
     volumes:
       - .:/app
       - /app/node_modules
-    environment:
-      - NODE_ENV=production
-      - MEMORY_PATH=/data/memory.json
-    depends_on:
-      - db
-
-  agi-db:
-    image: mongo:6
-    container_name: agi-db
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-
-  test-runner:
-    build:
-      context: .
-    volumes:
-      - .:/app
-    command: yarn test
+      - /app/.next
+    command: yarn dev
+    restart: unless-stopped
+    profiles:
+      - dev
+    networks:
+      - web8_network
 
 networks:
-  ultraweb_network:
+  web8_network:
+    driver: bridge
+    name: ultrawebthinking_network
 
-volumes:
-  db_data:
-  redis_data:
-  mongo-data:
-
+# Health monitoring and logs
+x-logging: &logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "3"
