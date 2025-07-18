@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    // Targ    },
-    
-    // Type Checking
-    "types": ["@types/react", "@types/react-dom", "@types/node", "vitest/globals"],
-    "typeRoots": ["../node_modules/@types"],d Module Settings
+    // Target
     "target": "ES2020",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
@@ -42,8 +38,8 @@
       }
     ],
     
-    // Type Checking
-    "types": ["@types/react", "@types/react-dom", "@types/node", "jest"],
+    // Type Checking - një vetëm entry
+    "types": ["@types/react", "@types/react-dom", "@types/node", "/globals"],
     "typeRoots": ["../node_modules/@types"],
     
     // Strict Type Checking Options

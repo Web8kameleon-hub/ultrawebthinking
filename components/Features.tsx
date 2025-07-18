@@ -1,7 +1,7 @@
 // components/Features.tsx
 import React from "react";
 import { Zap, ShieldCheck, Globe, Brain } from "lucide-react";
-import { css } from "../styled-system/css";
+import { css } from "..//css";
 
 const features = [
   {

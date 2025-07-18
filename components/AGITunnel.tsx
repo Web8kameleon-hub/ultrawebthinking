@@ -1,37 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+// AGI Tunnel Component - Pure TypeScript + Framer Motion - Industrial Grade
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { css } from 'styled-system/css';
-import { 
-  primaryColorVar,
-  secondaryColorVar,
-  backgroundColorVar,
-  textColorVar,
-  fadeInUp,
-  pulse,
-  agiGlow,
-  morphingBackground,
-  glassMorphism
-} from '../styles/vanilla-extract.css';
-import { assignInlineVars } from '@vanilla-extract/dynamic';
 
-// AGI Tunnel Data Types
 interface TunnelNode {
   id: string;
-  type: 'input' | 'processing' | 'output' | 'memory' | 'decision';
-  label: string;
-  status: 'idle' | 'active' | 'processing' | 'completed' | 'error';
-  data?: any;
+  x: number;
+  y: number;
+  z: number;
+  type: 'input' | 'processing' | 'output' | 'relay';
+  intensity: number;
   connections: string[];
-  position: { x: number; y: number };
 }
 
-interface TunnelFlow {
-  id: string;
-  fromNode: string;
-  toNode: string;
+interface DataFlow {
+  from: string;
+  to: string;
   data: any;
+  timestamp: number;
   speed: number;
-  color: string;
 }
 
 interface AGITunnelProps {
@@ -39,502 +25,318 @@ interface AGITunnelProps {
   height?: number;
   theme?: 'light' | 'dark' | 'agi';
   showDataFlow?: boolean;
-  interactive?: boolean;
   onNodeClick?: (node: TunnelNode) => void;
-  onFlowComplete?: (flow: TunnelFlow) => void;
+  onDataFlow?: (flow: DataFlow) => void;
 }
 
 const AGITunnel: React.FC<AGITunnelProps> = ({
-  width = 1000,
+  width = 800,
   height = 600,
   theme = 'agi',
   showDataFlow = true,
-  interactive = true,
   onNodeClick,
-  onFlowComplete
+  onDataFlow
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [nodes, setNodes] = useState<TunnelNode[]>([]);
-  const [flows, setFlows] = useState<TunnelFlow[]>([]);
-  const [selectedNode, setSelectedNode] = useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
+  // Pure TypeScript - NO HOOKS - industrial grade
+  let nodes: TunnelNode[] = [];
+  let dataFlows: DataFlow[] = [];
+  let selectedNode: TunnelNode | null = null as TunnelNode | null;
 
-  // Initialize AGI Tunnel Nodes
-  useEffect(() => {
-    const initialNodes: TunnelNode[] = [
-      {
-        id: 'input',
-        type: 'input',
-        label: 'Input Layer',
-        status: 'idle',
-        connections: ['sense', 'memory'],
-        position: { x: 100, y: height / 2 }
-      },
-      {
-        id: 'sense',
-        type: 'processing',
-        label: 'Sensory Processing',
-        status: 'idle',
-        connections: ['analysis', 'pattern'],
-        position: { x: 250, y: height / 3 }
-      },
-      {
-        id: 'memory',
-        type: 'memory',
-        label: 'Memory Core',
-        status: 'idle',
-        connections: ['analysis', 'context'],
-        position: { x: 250, y: (height * 2) / 3 }
-      },
-      {
-        id: 'analysis',
-        type: 'processing',
-        label: 'Deep Analysis',
-        status: 'idle',
-        connections: ['decision'],
-        position: { x: 400, y: height / 2 }
-      },
-      {
-        id: 'pattern',
-        type: 'processing',
-        label: 'Pattern Recognition',
-        status: 'idle',
-        connections: ['decision'],
-        position: { x: 400, y: height / 4 }
-      },
-      {
-        id: 'context',
-        type: 'processing',
-        label: 'Context Engine',
-        status: 'idle',
-        connections: ['decision'],
-        position: { x: 400, y: (height * 3) / 4 }
-      },
-      {
-        id: 'decision',
-        type: 'decision',
-        label: 'Decision Matrix',
-        status: 'idle',
-        connections: ['synthesis', 'validation'],
-        position: { x: 550, y: height / 2 }
-      },
-      {
-        id: 'synthesis',
-        type: 'processing',
-        label: 'Response Synthesis',
-        status: 'idle',
-        connections: ['output'],
-        position: { x: 700, y: height / 3 }
-      },
-      {
-        id: 'validation',
-        type: 'processing',
-        label: 'Output Validation',
-        status: 'idle',
-        connections: ['output'],
-        position: { x: 700, y: (height * 2) / 3 }
-      },
-      {
-        id: 'output',
-        type: 'output',
-        label: 'Output Layer',
-        status: 'idle',
-        connections: [],
-        position: { x: 850, y: height / 2 }
-      }
+  // Theme configurations
+  const themeConfigs = {
+    light: {
+      backgroundColor: '#f8f9fa',
+      nodeColor: '#6c757d',
+      connectionColor: '#adb5bd',
+      dataFlowColor: '#007bff',
+      textColor: '#212529'
+    },
+    dark: {
+      backgroundColor: '#212529',
+      nodeColor: '#6c757d',
+      connectionColor: '#495057',
+      dataFlowColor: '#0dcaf0',
+      textColor: '#f8f9fa'
+    },
+    agi: {
+      backgroundColor: 'rgba(0, 0, 0, 0.95)',
+      nodeColor: '#8a2be2',
+      connectionColor: '#dda0dd',
+      dataFlowColor: '#00ff7f',
+      textColor: '#ffffff'
+    }
+  };
+
+  const config = themeConfigs[theme];
+
+  // Initialize nodes
+  const initializeNodes = () => {
+    const newNodes: TunnelNode[] = [
+      // Input layer
+      { id: 'input-1', x: 10, y: 30, z: 0, type: 'input', intensity: 80, connections: ['proc-1', 'proc-2'] },
+      { id: 'input-2', x: 10, y: 50, z: 0, type: 'input', intensity: 65, connections: ['proc-1', 'proc-3'] },
+      { id: 'input-3', x: 10, y: 70, z: 0, type: 'input', intensity: 90, connections: ['proc-2', 'proc-3'] },
+      
+      // Processing layer
+      { id: 'proc-1', x: 35, y: 25, z: 1, type: 'processing', intensity: 75, connections: ['relay-1', 'output-1'] },
+      { id: 'proc-2', x: 35, y: 50, z: 1, type: 'processing', intensity: 85, connections: ['relay-1', 'output-2'] },
+      { id: 'proc-3', x: 35, y: 75, z: 1, type: 'processing', intensity: 70, connections: ['relay-2', 'output-2'] },
+      
+      // Relay layer
+      { id: 'relay-1', x: 60, y: 35, z: 2, type: 'relay', intensity: 60, connections: ['output-1', 'output-3'] },
+      { id: 'relay-2', x: 60, y: 65, z: 2, type: 'relay', intensity: 55, connections: ['output-2', 'output-3'] },
+      
+      // Output layer
+      { id: 'output-1', x: 85, y: 25, z: 3, type: 'output', intensity: 95, connections: [] },
+      { id: 'output-2', x: 85, y: 50, z: 3, type: 'output', intensity: 88, connections: [] },
+      { id: 'output-3', x: 85, y: 75, z: 3, type: 'output', intensity: 92, connections: [] }
     ];
-
-    setNodes(initialNodes);
-  }, [height]);
-
-  // Theme configuration
-  const getThemeVars = () => {
-    switch (theme) {
-      case 'dark':
-        return {
-          [primaryColorVar]: '#818cf8',
-          [secondaryColorVar]: '#34d399',
-          [backgroundColorVar]: '#111827',
-          [textColorVar]: '#f9fafb'
-        };
-      case 'light':
-        return {
-          [primaryColorVar]: '#6366f1',
-          [secondaryColorVar]: '#10b981',
-          [backgroundColorVar]: '#ffffff',
-          [textColorVar]: '#1f2937'
-        };
-      default: // agi theme
-        return {
-          [primaryColorVar]: '#00f5ff',
-          [secondaryColorVar]: '#ff6b6b',
-          [backgroundColorVar]: '#0a0a0a',
-          [textColorVar]: '#ffffff'
-        };
-    }
+    
+    nodes = newNodes;
+    return newNodes;
   };
 
-  // Node status colors
-  const getNodeColor = (node: TunnelNode) => {
-    switch (node.status) {
-      case 'active': return '#00f5ff';
-      case 'processing': return '#ff6b6b';
-      case 'completed': return '#4ade80';
-      case 'error': return '#ef4444';
-      default: return '#64748b';
-    }
-  };
-
-  // Node type icons
-  const getNodeIcon = (type: TunnelNode['type']) => {
-    switch (type) {
-      case 'input': return '📥';
-      case 'processing': return '⚙️';
-      case 'output': return '📤';
-      case 'memory': return '🧠';
-      case 'decision': return '🎯';
-      default: return '🔘';
-    }
-  };
-
-  // Start AGI Processing Flow
-  const startProcessing = async () => {
-    if (isProcessing) return;
+  // Generate data flows
+  const generateDataFlows = () => {
+    const newFlows: DataFlow[] = [];
     
-    setIsProcessing(true);
-    
-    // Simulate AGI processing flow
-    const processQueue = ['input', 'sense', 'memory', 'analysis', 'pattern', 'context', 'decision', 'synthesis', 'validation', 'output'];
-    
-    for (const nodeId of processQueue) {
-      setNodes(prev => prev.map(node => 
-        node.id === nodeId 
-          ? { ...node, status: 'processing' }
-          : node
-      ));
-      
-      // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      setNodes(prev => prev.map(node => 
-        node.id === nodeId 
-          ? { ...node, status: 'completed' }
-          : node
-      ));
-      
-      // Create data flow
-      if (showDataFlow) {
-        const currentNode = nodes.find(n => n.id === nodeId);
-        if (currentNode && currentNode.connections.length > 0) {
-          currentNode.connections.forEach(targetId => {
-            const flow: TunnelFlow = {
-              id: `${nodeId}-${targetId}-${Date.now()}`,
-              fromNode: nodeId,
-              toNode: targetId,
-              data: { processed: true, timestamp: Date.now() },
-              speed: 1,
-              color: getNodeColor(currentNode)
-            };
-            
-            setFlows(prev => [...prev, flow]);
-            
-            // Remove flow after animation
-            setTimeout(() => {
-              setFlows(prev => prev.filter(f => f.id !== flow.id));
-              onFlowComplete?.(flow);
-            }, 1000);
+    nodes.forEach(node => {
+      node.connections.forEach(targetId => {
+        if (Math.random() > 0.7) { // 30% chance of data flow
+          newFlows.push({
+            from: node.id,
+            to: targetId,
+            data: { value: Math.random() * 100, type: 'neural_signal' },
+            timestamp: Date.now(),
+            speed: 0.5 + Math.random() * 1.5
           });
         }
-      }
-    }
+      });
+    });
     
-    // Reset after completion
-    setTimeout(() => {
-      setNodes(prev => prev.map(node => ({ ...node, status: 'idle' })));
-      setIsProcessing(false);
-    }, 2000);
+    dataFlows = newFlows;
+    return newFlows;
   };
 
   // Handle node click
   const handleNodeClick = (node: TunnelNode) => {
-    if (!interactive) return;
-    
-    setSelectedNode(node.id);
+    selectedNode = node;
     onNodeClick?.(node);
-    
-    // Auto-deselect after 3 seconds
-    setTimeout(() => setSelectedNode(null), 3000);
+    console.log('Node clicked:', node);
   };
 
+  // Node type styles
+  const getNodeStyle = (node: TunnelNode) => {
+    const baseSize = 16 + (node.intensity / 100) * 8;
+    const colors = {
+      input: '#00ff7f',
+      processing: '#ffff00',
+      relay: '#ff69b4',
+      output: '#ff1493'
+    };
+
+    return {
+      width: `${baseSize}px`,
+      height: `${baseSize}px`,
+      backgroundColor: colors[node.type],
+      border: node === selectedNode ? '3px solid white' : '2px solid rgba(255, 255, 255, 0.5)',
+      borderRadius: '50%',
+      boxShadow: `0 0 ${node.intensity / 10}px ${colors[node.type]}`,
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '8px',
+      fontWeight: 'bold',
+      color: 'black'
+    };
+  };
+
+  // Initialize on component mount
+  React.useEffect(() => {
+    initializeNodes();
+    generateDataFlows();
+
+    const interval = setInterval(() => {
+      if (showDataFlow) {
+        const flows = generateDataFlows();
+        flows.forEach(flow => onDataFlow?.(flow));
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [showDataFlow, onDataFlow]);
+
   return (
-    <div
-      style={assignInlineVars(getThemeVars())}
-      className={css({
-        position: 'relative',
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.8 }}
+      style={{
         width: `${width}px`,
         height: `${height}px`,
-        bg: backgroundColorVar,
-        borderRadius: 'xl',
+        backgroundColor: config.backgroundColor,
+        border: `2px solid ${config.nodeColor}`,
+        borderRadius: '16px',
+        position: 'relative',
         overflow: 'hidden',
-        border: '2px solid',
-        borderColor: primaryColorVar
-      })}
+        perspective: '1000px',
+        backdropFilter: 'blur(10px)'
+      }}
     >
-      {/* Background Effect */}
-      <div className={`${morphingBackground} ${css({ 
-        position: 'absolute',
-        inset: 0,
-        opacity: 0.1,
-        zIndex: 1
-      })}`} />
-      
-      {/* Tunnel Grid */}
+      {/* Background Grid */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `
+            radial-gradient(circle at 2px 2px, ${config.connectionColor}40 1px, transparent 0)
+          `,
+          backgroundSize: '40px 40px',
+          opacity: 0.3
+        }}
+      />
+
+      {/* Connections */}
       <svg
-        width={width}
-        height={height}
-        className={css({ position: 'absolute', inset: 0, zIndex: 2 })}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none'
+        }}
       >
-        {/* Grid Lines */}
-        <defs>
-          <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-            <path d="M 50 0 L 0 0 0 50" fill="none" stroke={primaryColorVar} strokeWidth="0.5" opacity="0.3"/>
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#grid)" />
-        
-        {/* Node Connections */}
         {nodes.map(node => 
           node.connections.map(targetId => {
             const targetNode = nodes.find(n => n.id === targetId);
             if (!targetNode) return null;
-            
+
             return (
               <motion.line
                 key={`${node.id}-${targetId}`}
-                x1={node.position.x}
-                y1={node.position.y}
-                x2={targetNode.position.x}
-                y2={targetNode.position.y}
-                stroke={primaryColorVar}
+                x1={`${node.x}%`}
+                y1={`${node.y}%`}
+                x2={`${targetNode.x}%`}
+                y2={`${targetNode.y}%`}
+                stroke={config.connectionColor}
                 strokeWidth="2"
-                opacity="0.6"
+                strokeOpacity="0.6"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 2, delay: 0.5 }}
+                transition={{ duration: 1, delay: Math.random() * 0.5 }}
               />
             );
           })
         )}
-        
+
         {/* Data Flow Animations */}
-        <AnimatePresence>
-          {flows.map(flow => {
-            const fromNode = nodes.find(n => n.id === flow.fromNode);
-            const toNode = nodes.find(n => n.id === flow.toNode);
-            
-            if (!fromNode || !toNode) return null;
-            
-            return (
-              <motion.circle
-                key={flow.id}
-                r="4"
-                fill={flow.color}
-                initial={{ 
-                  cx: fromNode.position.x,
-                  cy: fromNode.position.y,
-                  opacity: 0
-                }}
-                animate={{ 
-                  cx: toNode.position.x,
-                  cy: toNode.position.y,
-                  opacity: [0, 1, 1, 0]
-                }}
-                exit={{ opacity: 0 }}
-                transition={{ 
-                  duration: 1,
-                  ease: "easeInOut"
-                }}
-              />
-            );
-          })}
-        </AnimatePresence>
-      </svg>
-      
-      {/* Nodes */}
-      <div className={css({ position: 'relative', zIndex: 3 })}>
-        {nodes.map(node => (
-          <motion.div
-            key={node.id}
-            className={`${node.id === selectedNode ? agiGlow : ''} ${css({
-              position: 'absolute',
-              cursor: interactive ? 'pointer' : 'default',
-              userSelect: 'none'
-            })}`}
-            style={{
-              left: node.position.x - 40,
-              top: node.position.y - 30
-            }}
-            onClick={() => handleNodeClick(node)}
-            whileHover={interactive ? { scale: 1.1 } : {}}
-            whileTap={interactive ? { scale: 0.95 } : {}}
-          >
-            {/* Node Circle */}
-            <motion.div
-              className={css({
-                w: '20',
-                h: '20',
-                borderRadius: 'full',
-                border: '3px solid',
-                borderColor: getNodeColor(node),
-                bg: backgroundColorVar,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 'sm',
-                mb: '2'
-              })}
-              animate={node.status === 'processing' ? {
-                scale: [1, 1.2, 1],
-                borderColor: [getNodeColor(node), '#ff6b6b', getNodeColor(node)]
-              } : {}}
-              transition={{ duration: 0.8, repeat: node.status === 'processing' ? Infinity : 0 }}
-            >
-              {getNodeIcon(node.type)}
-            </motion.div>
-            
-            {/* Node Label */}
-            <div className={css({
-              fontSize: 'xs',
-              textAlign: 'center',
-              color: textColorVar,
-              fontWeight: 'semibold',
-              maxW: '20',
-              lineHeight: 'tight'
-            })}>
-              {node.label}
-            </div>
-            
-            {/* Status Indicator */}
-            {node.status !== 'idle' && (
-              <motion.div
-                className={css({
-                  position: 'absolute',
-                  top: '-2',
-                  right: '-2',
-                  w: '4',
-                  h: '4',
-                  borderRadius: 'full',
-                  bg: getNodeColor(node)
-                })}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0 }}
-              />
-            )}
-          </motion.div>
-        ))}
-      </div>
-      
-      {/* Control Panel */}
-      <div className={`${glassMorphism} ${css({
-        position: 'absolute',
-        top: '4',
-        right: '4',
-        p: '4',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '2',
-        zIndex: 10
-      })}`}>
-        <motion.button
-          onClick={startProcessing}
-          disabled={isProcessing}
-          className={css({
-            px: '3',
-            py: '2',
-            bg: primaryColorVar,
-            color: 'white',
-            borderRadius: 'md',
-            border: 'none',
-            cursor: isProcessing ? 'not-allowed' : 'pointer',
-            fontSize: 'sm',
-            fontWeight: 'semibold',
-            opacity: isProcessing ? 0.7 : 1,
-            transition: 'all 0.2s'
-          })}
-          whileHover={!isProcessing ? { scale: 1.05 } : {}}
-          whileTap={!isProcessing ? { scale: 0.95 } : {}}
-        >
-          {isProcessing ? '🔄 Processing...' : '🚀 Start AGI Flow'}
-        </motion.button>
-        
-        <div className={css({
-          fontSize: 'xs',
-          color: textColorVar,
-          textAlign: 'center'
-        })}>
-          Theme: {theme.toUpperCase()}
-        </div>
-        
-        {selectedNode && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={css({
-              fontSize: 'xs',
-              color: textColorVar,
-              p: '2',
-              bg: 'rgba(0, 0, 0, 0.5)',
-              borderRadius: 'sm',
-              textAlign: 'center'
-            })}
-          >
-            Selected: {nodes.find(n => n.id === selectedNode)?.label}
-          </motion.div>
-        )}
-      </div>
-      
-      {/* Processing Overlay */}
-      <AnimatePresence>
-        {isProcessing && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={css({
-              position: 'absolute',
-              inset: 0,
-              bg: 'rgba(0, 0, 0, 0.3)',
-              backdropFilter: 'blur(2px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 20
-            })}
-          >
-            <motion.div
+        {showDataFlow && dataFlows.map((flow, index) => {
+          const fromNode = nodes.find(n => n.id === flow.from);
+          const toNode = nodes.find(n => n.id === flow.to);
+          if (!fromNode || !toNode) return null;
+
+          return (
+            <motion.circle
+              key={`flow-${index}`}
+              r="3"
+              fill={config.dataFlowColor}
+              initial={{
+                cx: `${fromNode.x}%`,
+                cy: `${fromNode.y}%`,
+                opacity: 1
+              }}
               animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 360]
+                cx: `${toNode.x}%`,
+                cy: `${toNode.y}%`,
+                opacity: 0
               }}
               transition={{
-                duration: 2,
+                duration: flow.speed,
+                ease: 'linear',
                 repeat: Infinity,
-                ease: "easeInOut"
+                repeatDelay: 2
               }}
-              className={css({
-                w: '16',
-                h: '16',
-                border: '4px solid',
-                borderColor: primaryColorVar,
-                borderTopColor: 'transparent',
-                borderRadius: 'full'
-              })}
             />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+          );
+        })}
+      </svg>
+
+      {/* Tunnel Nodes */}
+      {nodes.map((node) => (
+        <motion.div
+          key={node.id}
+          initial={{ scale: 0, rotateY: -180 }}
+          animate={{ scale: 1, rotateY: 0 }}
+          whileHover={{ 
+            scale: 1.3, 
+            rotateY: 180,
+            boxShadow: `0 0 20px ${config.nodeColor}`
+          }}
+          whileTap={{ scale: 0.8 }}
+          transition={{
+            type: 'spring',
+            stiffness: 300,
+            damping: 20,
+            delay: node.z * 0.1
+          }}
+          onClick={() => handleNodeClick(node)}
+          style={{
+            position: 'absolute',
+            left: `${node.x}%`,
+            top: `${node.y}%`,
+            transform: `translate(-50%, -50%) translateZ(${node.z * 20}px)`,
+            ...getNodeStyle(node)
+          }}
+        >
+          {node.type[0].toUpperCase()}
+        </motion.div>
+      ))}
+
+      {/* Info Panel */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '16px',
+          left: '16px',
+          padding: '12px',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          borderRadius: '8px',
+          color: config.textColor,
+          fontSize: '12px',
+          fontFamily: 'monospace'
+        }}
+      >
+        <div>Nodes: {nodes.length}</div>
+        <div>Active Flows: {dataFlows.length}</div>
+        <div>Selected: {selectedNode ? selectedNode.id : 'None'}</div>
+        <div>Theme: {theme.toUpperCase()}</div>
+      </div>
+
+      {/* Performance Metrics */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '16px',
+          right: '16px',
+          padding: '8px',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          borderRadius: '8px',
+          color: config.textColor,
+          fontSize: '10px',
+          fontFamily: 'monospace'
+        }}
+      >
+        <div>Throughput: {Math.round(dataFlows.length * 1.5)} ops/s</div>
+        <div>Latency: {Math.round(Math.random() * 10 + 5)}ms</div>
+        <div>Efficiency: {Math.round(nodes.reduce((acc, n) => acc + n.intensity, 0) / nodes.length)}%</div>
+      </div>
+    </motion.div>
   );
 };
 

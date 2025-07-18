@@ -1,0 +1,47 @@
+# EuroWeb DNS Configuration
+# Add these records to your DNS provider (Cloudflare recommended)
+
+# A Records (IPv4)
+A    @              76.76.19.19        # Vercel IP (example)
+A    www            76.76.19.19        # WWW subdomain
+A    api            76.76.19.19        # API subdomain
+A    admin          76.76.19.19        # Admin subdomain
+A    docs           76.76.19.19        # Documentation
+A    chat           76.76.19.19        # Chat interface
+A    ai             76.76.19.19        # AI/OpenMind
+A    cdn            76.76.19.19        # CDN subdomain
+A    dev            76.76.19.19        # Development
+A    staging        76.76.19.19        # Staging
+
+# AAAA Records (IPv6)
+AAAA @              2606:4700::6810:84e5  # Vercel IPv6 (example)
+AAAA www            2606:4700::6810:84e5  # WWW IPv6
+
+# CNAME Records
+CNAME api           euroweb-platform.vercel.app
+CNAME admin         euroweb-platform.vercel.app
+CNAME docs          euroweb-platform.vercel.app
+CNAME chat          euroweb-platform.vercel.app
+CNAME ai            euroweb-platform.vercel.app
+
+# MX Records (Email)
+MX   @              10 mail.euroweb.ai
+MX   @              20 backup-mail.euroweb.ai
+
+# TXT Records
+TXT  @              "v=spf1 include:_spf.google.com ~all"
+TXT  _dmarc         "v=DMARC1; p=quarantine; rua=mailto:dmarc@euroweb.ai"
+TXT  @              "google-site-verification=YOUR_VERIFICATION_CODE"
+
+# Security Headers via DNS
+TXT  @              "security-policy=strict-transport-security"
+
+# Domain Verification (Vercel)
+TXT  _vercel        "vc-domain-verify=euroweb-ai-verification-token"
+
+# Notes:
+# 1. Replace example IPs with actual Vercel IPs
+# 2. Update verification tokens with real values
+# 3. Configure SSL/TLS to "Full (strict)" in Cloudflare
+# 4. Enable HSTS and security features
+# 5. Set up page rules for caching and performance

@@ -1,0 +1,64 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/frontend/*": ["./frontend/*"],
+      "@/backend/*": ["./backend/*"],
+      "@/components/*": ["./frontend/components/*"],
+      "@/agi/*": ["./backend/agi/*"],
+      "@/mesh/*": ["./backend/mesh/*"],
+      "@/ddos/*": ["./backend/ddos/*"],
+      "@/utt/*": ["./backend/utt/*"],
+      "@/governance/*": ["./backend/governance/*"],
+      "@/agisheet/*": ["./agisheet/*"],
+      "@/layers/*": ["./LAYER_*"],
+      "@/types/*": ["./types/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/security/*": ["./backend/security/*"],
+      "@/cli/*": ["./cli/*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "backend/rust/target",
+    ".next"
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}

@@ -1,37 +1,46 @@
 {
   "compilerOptions": {
-    "target": "es6",                             // Përdor funksione moderne të JavaScript
-    "lib": ["dom", "dom.iterable", "esnext"],   // Mbështet DOM dhe funksione moderne
-    "allowJs": true,                             // Lejon skedarët .js
-    "skipLibCheck": true,                        // Mos kontrollo libraritë e jashtme
-    "strict": true,                              // Aktivizo kontrollin strikt të tipeve
-    "forceConsistentCasingInFileNames": true,   // Konsistencë në emërtimin e skedarëve
-    "noEmit": true,                              // Mos gjenero .js nga .ts
-    "esModuleInterop": true,                     // Mbështetje për CommonJS
-    "module": "esnext",                          // Përdor modulet moderne
-    "moduleResolution": "node",                  // Si i gjen NodeJS modulet
-    "resolveJsonModule": true,                   // Lejon importimin e .json
-    "isolatedModules": true,                     // Transpilim i izoluar
-    "jsx": "preserve",                           // JSX e ruajtur për Next.js
-    "baseUrl": ".",                              // Baza për rrugët relative
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES6"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
     "paths": {
-      "@agi/*": ["backend/ai/agi/*"],            // Alias për AGI
-      "@components/*": ["components/*"]          // Alias për komponentët UI
-    },
-    "incremental": true                          // Build më i shpejtë (cache)
+      "@/*": [
+        "./*"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx"
+    "**/*.mts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     ".next",
-    "out",
-    "dist"
+    "dist",
+    "**/*.ts",
+    "**/*.tsx"
   ]
 }
-

@@ -3,7 +3,7 @@ import React from "react";
 const Navbar: React.FC = () => {
   return (
     <nav
-      style={{
+      className={{
         position: "sticky",
         top: 0,
         zIndex: 100,
@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
       }}
     >
       <div
-        style={{
+        className={{
           fontSize: "24px",
           fontWeight: "400",
           color: "#1e90ff",

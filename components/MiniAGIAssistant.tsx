@@ -6,7 +6,7 @@ import styles from '../styles/MiniAGIAssistant.module.css';
 const MiniAGIAssistant: React.FC = () => {
   const { actions, ui } = useAGI();
   
-  // Get AGI state from context (no useState needed!)
+  // Get AGI state from context (no  needed!)
   const agiStatus = useAGIState(memory => memory.agi.status);
   const lastQuery = useAGIState(memory => memory.agi.lastQuery);
   const responses = useAGIState(memory => memory.agi.responses);
@@ -27,7 +27,7 @@ const MiniAGIAssistant: React.FC = () => {
     }, 2000);
   };
 
-  React.useEffect(() => {
+  React.(() => {
     // Activate UI element when component mounts
     ui.activateElement('mini-agi-assistant');
     
@@ -46,7 +46,7 @@ const MiniAGIAssistant: React.FC = () => {
       transition={{ duration: 0.3 }}
     >
       <div className={styles.header}>
-        <h3 className="agi-primary">
+        <h3>
           🤖 Mini AGI Assistant
           <span 
             id="agi-brain-indicator" 
@@ -55,7 +55,7 @@ const MiniAGIAssistant: React.FC = () => {
             {agiStatus}
           </span>
         </h3>
-        <p className="agi-secondary">Intelligent assistance powered by AGI memory</p>
+        <p>Intelligent assistance powered by AGI memory</p>
       </div>
       
       <div className={styles.chatArea}>
@@ -120,7 +120,7 @@ const MiniAGIAssistant: React.FC = () => {
       </div>
 
       <div className={styles.memoryInfo}>
-        <small className="agi-secondary">
+        <small>
           Last query: {lastQuery || 'None'} | 
           Responses: {responses.length} | 
           Brain: {brainActive ? '🟢 Active' : '🔴 Inactive'}

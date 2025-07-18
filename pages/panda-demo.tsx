@@ -1,7 +1,7 @@
 // Demo page për Panda CSS theming system
 import React from 'react';
-import { css } from '../styled-system/css';
-import { stack, container } from '../styled-system/patterns';
+import { css } from '..//css';
+import { stack, container } from '..//patterns';
 import AGIPanel, { AGIMetrics, AGIButton } from '../components/AGIPandaComponents';
 import { agiCore } from '../lib/AGICore';
 

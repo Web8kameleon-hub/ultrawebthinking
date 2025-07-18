@@ -2,7 +2,7 @@ import React from "react";
 
 const SidebarNavigation: React.FC = () => {
   return (
-    <aside style={{ width: "220px", background: "#f4f4f4", padding: "1rem" }}>
+    <aside className={{ width: "220px", background: "#f4f4f4", padding: "1rem" }}>
       <nav>
         <ul>
           <li><a href="#">Tabat</a></li>

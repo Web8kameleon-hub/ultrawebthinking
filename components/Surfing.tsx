@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { css } from "../styled-system/css";
+import { css } from "..//css";
 
 const Surfing: React.FC = () => {
   // Static values instead of state
@@ -97,7 +97,7 @@ const Surfing: React.FC = () => {
             wordBreak: "break-word",
           })}
         >
-          Surfing functionality has been disabled to remove useState dependencies
+          Surfing functionality has been disabled to remove  dependencies
         </motion.div>
       </motion.div>
     </section>

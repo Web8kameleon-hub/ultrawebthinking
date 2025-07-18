@@ -160,16 +160,14 @@ class AGICore {
 // Global AGI instance
 export const agiCore = new AGICore();
 
-// React hook for using AGI memory
-export function useAGIMemory<T>(selector: (memory: AGIMemoryStore) => T): T {
-  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
-
-  React.useEffect(() => {
-    const unsubscribe = agiCore.subscribe(() => forceUpdate());
-    return unsubscribe;
-  }, []);
-
+// Pure TypeScript AGI memory accessor - NO HOOKS
+export function getAGIMemory<T>(selector: (memory: AGIMemoryStore) => T): T {
   return selector(agiCore.getMemory());
+}
+
+// AGI memory subscription for manual updates
+export function subscribeToAGIMemory(callback: () => void): () => void {
+  return agiCore.subscribe(callback);
 }
 
 export default AGICore;

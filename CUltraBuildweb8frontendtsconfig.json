@@ -1,0 +1,82 @@
+{
+  "compilerOptions": {
+    // Target Environment
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    
+    // Type Checking - NO JEST, NO DUPLICATES
+    "types": ["@types/react", "@types/react-dom", "@types/node", "/globals"],
+    "typeRoots": ["../node_modules/@types"],
+    
+    // Compilation Settings - NO JAVASCRIPT
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    
+    // Path Resolution
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/components/*": ["../components/*"],
+      "@/pages/*": ["../pages/*"],
+      "@/styles/*": ["../styles/*"],
+      "@/utils/*": ["../utils/*"],
+      "@/lib/*": ["../lib/*"],
+      "@/public/*": ["../public/*"]
+    },
+    
+    // Next.js Plugin
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    
+    // Strict Type Checking Options
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false
+  },
+  
+  "include": [
+    "../next-env.d.ts",
+    "../**/*.ts",
+    "../**/*.tsx",
+    "../.next/types/**/*.ts",
+    "./types/**/*.ts",
+    "../pages/**/*.ts",
+    "../pages/**/*.tsx",
+    "../components/**/*.ts", 
+    "../components/**/*.tsx",
+    "../utils/**/*.ts",
+    "../lib/**/*.ts"
+  ],
+  
+  "exclude": [
+    "../node_modules",
+    "../.next",
+    "../out",
+    "../dist",
+    "../build",
+    "../backend",
+    "../**/*.ts",
+    "../**/*.tsx",
+    "../**/*.bak",
+    "../**/*.temp",
+    "../docker-*",
+    "../Dockerfile*"
+  ]
+}

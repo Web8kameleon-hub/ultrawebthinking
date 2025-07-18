@@ -12,7 +12,7 @@ interface NavbarProps {
 export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, className = "" }: NavbarProps) {
   const { actions, ui } = useAGI();
   
-  // Get state from AGI memory (no useState needed!)
+  // Get state from AGI memory (no  needed!)
   const scrollPosition = useAGIState(memory => memory.ui.scrollPosition);
   const currentTime = useAGIState(memory => memory.user.currentTime);
   const agiStatus = useAGIState(memory => memory.agi.status);
@@ -21,7 +21,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
   const isScrolled = scrollPosition > 20;
   const notifications = 3; // Could be from memory too
 
-  React.useEffect(() => {
+  React.(() => {
     // Handle scroll position updates
     const handleScroll = () => {
       actions.updateScrollPosition(window.scrollY);
@@ -31,7 +31,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [actions]);
 
-  React.useEffect(() => {
+  React.(() => {
     // Activate navbar UI
     ui.activateElement('navbar');
     
@@ -55,7 +55,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
     <motion.nav 
       id="navbar"
       className={`navbar ${className} agi-reactive agi-bg`} 
-      style={{
+      className={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -74,7 +74,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           ? '0 4px 20px rgba(99, 102, 241, 0.1)' 
           : '0 2px 10px rgba(0, 0, 0, 0.05)'
     }}>
-      <div style={{
+      <div className={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -82,14 +82,14 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
         margin: '0 auto'
       }}>
         {/* Logo and Brand */}
-        <div style={{
+        <div className={{
           display: 'flex',
           alignItems: 'center',
           gap: '1rem'
         }}>
           <button
             onClick={onMenuToggle}
-            style={{
+            className={{
               background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
               border: '1px solid rgba(99, 102, 241, 0.2)',
               borderRadius: '12px',
@@ -126,19 +126,19 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
             ☰
           </button>
 
-          <div style={{
+          <div className={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.75rem'
           }}>
-            <div style={{
+            <div className={{
               fontSize: '1.8rem',
               animation: 'pulse 2s ease-in-out infinite alternate'
             }}>
               🌌
             </div>
             <div>
-              <div style={{
+              <div className={{
                 fontSize: '1.2rem',
                 fontWeight: 'bold',
                 background: 'linear-gradient(45deg, #FFD700, #FFA500)',
@@ -148,7 +148,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
               }}>
                 UltraWebThinking
               </div>
-              <div style={{
+              <div className={{
                 fontSize: '0.7rem',
                 color: '#00FF88',
                 fontWeight: 'bold',
@@ -161,7 +161,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
         </div>
 
         {/* Navigation Links */}
-        <div style={{
+        <div className={{
           display: 'flex',
           alignItems: 'center',
           gap: '0.5rem'
@@ -179,7 +179,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
             <a
               key={index}
               href={item.href}
-              style={{
+              className={{
                 background: item.active 
                   ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.1))' 
                   : 'transparent',
@@ -213,20 +213,20 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
                 }
               }}
             >
-              <span style={{ fontSize: '16px' }}>{item.icon}</span>
+              <span className={{ fontSize: '16px' }}>{item.icon}</span>
               <span>{item.label}</span>
             </a>
           ))}
         </div>
 
         {/* Right Side Controls */}
-        <div style={{
+        <div className={{
           display: 'flex',
           alignItems: 'center',
           gap: '1rem'
         }}>
           {/* Live Clock */}
-          <div style={{
+          <div className={{
             background: 'rgba(0, 255, 136, 0.1)',
             border: '1px solid rgba(0, 255, 136, 0.3)',
             borderRadius: '8px',
@@ -241,7 +241,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
 
           {/* Notifications */}
           <button
-            style={{
+            className={{
               position: 'relative',
               background: 'rgba(255, 215, 0, 0.1)',
               border: '1px solid rgba(255, 215, 0, 0.3)',
@@ -255,7 +255,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           >
             🔔
             {notifications > 0 && (
-              <span style={{
+              <span className={{
                 position: 'absolute',
                 top: '-5px',
                 right: '-5px',
@@ -278,7 +278,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           {/* Settings */}
           <button
             onClick={onSettingsClick}
-            style={{
+            className={{
               background: 'rgba(255, 215, 0, 0.1)',
               border: '1px solid rgba(255, 215, 0, 0.3)',
               borderRadius: '8px',
@@ -295,7 +295,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           {/* Profile */}
           <button
             onClick={onProfileClick}
-            style={{
+            className={{
               background: 'linear-gradient(45deg, #FFD700, #FFA500)',
               border: 'none',
               borderRadius: '50%',

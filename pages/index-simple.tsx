@@ -15,21 +15,21 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main style={{ minHeight: '100vh', backgroundColor: '#f9fafb', fontFamily: 'system-ui, sans-serif' }}>
+      <main className={{ minHeight: '100vh', backgroundColor: '#f9fafb', fontFamily: 'system-ui, sans-serif' }}>
         {/* Header with tabs */}
-        <header style={{ 
+        <header className={{ 
           backgroundColor: 'white', 
           borderBottom: '1px solid #e5e7eb', 
           padding: '1rem' 
         }}>
-          <div style={{ 
+          <div className={{ 
             maxWidth: '72rem', 
             margin: '0 auto', 
             display: 'flex', 
             alignItems: 'center', 
             gap: '1rem' 
           }}>
-            <h1 style={{ 
+            <h1 className={{ 
               fontSize: '1.5rem', 
               fontWeight: 'bold', 
               color: '#2563eb' 
@@ -38,12 +38,12 @@ export default function Home() {
             </h1>
             
             {/* Tab Navigation */}
-            <nav style={{ display: 'flex', gap: '0.5rem', marginLeft: '2rem' }}>
+            <nav className={{ display: 'flex', gap: '0.5rem', marginLeft: '2rem' }}>
               {['web', 'agi', 'search'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => console.log('Tab functionality disabled:', tab)}
-                  style={{
+                  className={{
                     padding: '0.5rem 1rem',
                     borderRadius: '0.375rem',
                     textTransform: 'capitalize',
@@ -62,14 +62,14 @@ export default function Home() {
         </header>
 
         {/* Search Interface */}
-        <div style={{ maxWidth: '64rem', margin: '0 auto', padding: '2rem' }}>
-          <div style={{ 
+        <div className={{ maxWidth: '64rem', margin: '0 auto', padding: '2rem' }}>
+          <div className={{ 
             backgroundColor: 'white', 
             borderRadius: '0.5rem', 
             padding: '1.5rem', 
             boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' 
           }}>
-            <h2 style={{ 
+            <h2 className={{ 
               fontSize: '1.875rem', 
               fontWeight: 'bold', 
               textAlign: 'center', 
@@ -79,13 +79,13 @@ export default function Home() {
               AI-Powered Search & Navigation
             </h2>
 
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div className={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={() => console.log('Search functionality disabled')}
                 placeholder="Search the web with AI assistance..."
-                style={{
+                className={{
                   flex: 1,
                   padding: '0.75rem 1rem',
                   border: '2px solid #d1d5db',
@@ -95,7 +95,7 @@ export default function Home() {
               />
               <button 
                 onClick={() => console.log('Search:', searchQuery)}
-                style={{
+                className={{
                   padding: '0.75rem 1.5rem',
                   backgroundColor: '#3b82f6',
                   color: 'white',
@@ -110,7 +110,7 @@ export default function Home() {
             </div>
 
             {/* Status indicator */}
-            <div style={{ 
+            <div className={{ 
               display: 'flex', 
               alignItems: 'center', 
               gap: '0.5rem', 
@@ -118,7 +118,7 @@ export default function Home() {
               color: '#059669', 
               fontSize: '0.875rem' 
             }}>
-              <div style={{ 
+              <div className={{ 
                 width: '0.5rem', 
                 height: '0.5rem', 
                 borderRadius: '50%', 
@@ -129,20 +129,20 @@ export default function Home() {
           </div>
 
           {/* Feature Cards */}
-          <div style={{ 
+          <div className={{ 
             display: 'grid', 
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
             gap: '1.5rem', 
             marginTop: '2rem' 
           }}>
-            <div style={{ 
+            <div className={{ 
               backgroundColor: 'white', 
               padding: '1.5rem', 
               borderRadius: '0.5rem', 
               boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', 
               textAlign: 'center' 
             }}>
-              <h3 style={{ 
+              <h3 className={{ 
                 fontSize: '1.25rem', 
                 fontWeight: '600', 
                 marginBottom: '0.5rem', 
@@ -150,19 +150,19 @@ export default function Home() {
               }}>
                 Smart Search
               </h3>
-              <p style={{ color: '#6b7280' }}>
+              <p className={{ color: '#6b7280' }}>
                 AI-powered search with contextual understanding
               </p>
             </div>
 
-            <div style={{ 
+            <div className={{ 
               backgroundColor: 'white', 
               padding: '1.5rem', 
               borderRadius: '0.5rem', 
               boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', 
               textAlign: 'center' 
             }}>
-              <h3 style={{ 
+              <h3 className={{ 
                 fontSize: '1.25rem', 
                 fontWeight: '600', 
                 marginBottom: '0.5rem', 
@@ -170,19 +170,19 @@ export default function Home() {
               }}>
                 Real-time AGI
               </h3>
-              <p style={{ color: '#6b7280' }}>
+              <p className={{ color: '#6b7280' }}>
                 Advanced general intelligence assistance
               </p>
             </div>
 
-            <div style={{ 
+            <div className={{ 
               backgroundColor: 'white', 
               padding: '1.5rem', 
               borderRadius: '0.5rem', 
               boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', 
               textAlign: 'center' 
             }}>
-              <h3 style={{ 
+              <h3 className={{ 
                 fontSize: '1.25rem', 
                 fontWeight: '600', 
                 marginBottom: '0.5rem', 
@@ -190,7 +190,7 @@ export default function Home() {
               }}>
                 Multi-Tab Support
               </h3>
-              <p style={{ color: '#6b7280' }}>
+              <p className={{ color: '#6b7280' }}>
                 Seamless browsing experience with tab management
               </p>
             </div>

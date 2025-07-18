@@ -1,5 +1,5 @@
 // components/Explore.tsx
-import { css } from "../styled-system/css";
+import { css } from "..//css";
 
 export default function Explore() {
   return (

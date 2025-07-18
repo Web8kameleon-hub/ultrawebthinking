@@ -6,7 +6,7 @@ interface BrowserLayoutProps {
 
 export default function BrowserLayout({ children }: BrowserLayoutProps) {
   return (
-    <div style={{ border: "2px solid #ccc", padding: "1rem", borderRadius: "1rem" }}>
+    <div className={{ border: "2px solid #ccc", padding: "1rem", borderRadius: "1rem" }}>
       {children}
     </div>
   );

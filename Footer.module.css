@@ -153,6 +153,22 @@ plt.show()
 
 .footer-subtext {
   margin: 0.5rem 0 0;
+  opacity: 0.8;
+}
+
+/* Industrial styling për Web8 */
+.footer-advanced {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+}
+
+.footer-metrics {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
   font-size: 0.8rem;
-  color: #ccc;
+}
+
+.footer-metric {
+  color: #a0aec0;
 }

@@ -4,7 +4,7 @@ import React from "react";
 export default function Footer() {
   return (
     <footer
-      style={{
+      className={{
         padding: "32px 24px",
         background: "rgba(248, 250, 252, 0.9)",
         backdropFilter: "blur(20px)",
@@ -19,16 +19,16 @@ export default function Footer() {
         marginTop: "48px",
       }}
     >
-      <div style={{ fontWeight: "500", fontSize: "16px" }}>
+      <div className={{ fontWeight: "500", fontSize: "16px" }}>
         Ultrawebthinking © 2025 – Beyond Imagination
       </div>
 
-      <div style={{ display: "flex", gap: "16px" }}>
+      <div className={{ display: "flex", gap: "16px" }}>
         <a
           href="https://github.com/Web8kameleon-hub"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
+          className={{
             color: "#4682b4",
             textDecoration: "none",
             transition: "color 0.2s ease",
@@ -40,7 +40,7 @@ export default function Footer() {
           href="https://linkedin.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
+          className={{
             color: "#4682b4",
             textDecoration: "none",
             transition: "color 0.2s ease",
@@ -52,7 +52,7 @@ export default function Footer() {
           href="https://youtube.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
+          className={{
             color: "#4682b4",
             textDecoration: "none",
             transition: "color 0.2s ease",
@@ -62,7 +62,7 @@ export default function Footer() {
         </a>
       </div>
 
-      <div style={{ color: "#6b7280", fontSize: "12px" }}>
+      <div className={{ color: "#6b7280", fontSize: "12px" }}>
         Version 1.0 – Krijuar me pasion & logjikë të pastër
       </div>
     </footer>

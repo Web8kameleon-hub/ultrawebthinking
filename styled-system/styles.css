@@ -1,7 +1,0 @@
-@layer reset, base, tokens, recipes, utilities;
-
-html, body {
-  font-family: Inter, sans-serif;
-  background: white;
-  color: #1a202c;
-}

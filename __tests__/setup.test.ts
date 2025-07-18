@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from ''
 
 describe('Vitest Setup', () => {
   it('should work correctly', () => {
@@ -7,6 +7,6 @@ describe('Vitest Setup', () => {
 
   it('should handle async operations', async () => {
     const promise = Promise.resolve('success')
-    await expect(promise).resolves.toBe('success')
+    expect(promise).resolves.toBe('success')
   })
 })

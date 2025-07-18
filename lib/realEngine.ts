@@ -330,18 +330,6 @@ class RealEngine {
     });
   }
 
-  private setupServiceWorker(): void {
-    // Service Worker registration disabled to avoid 404 errors
-    // navigator.serviceWorker.register('/web8-sw.js')
-    //   .then(registration => {
-    //     console.log('📋 Service Worker registered:', registration);
-    //   })
-    //   .catch(error => {
-    //     console.warn('Service Worker registration failed:', error);
-    //   });
-    console.log('📋 Service Worker disabled to prevent 404 errors');
-  }
-
   private setupNotifications(): void {
     if (Notification.permission === 'default') {
       Notification.requestPermission();

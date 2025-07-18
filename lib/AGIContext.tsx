@@ -1,5 +1,5 @@
 // React Context for inter-component state management
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, , ReactNode } from 'react';
 import { agiCore, useAGIMemory, AGIMemoryStore } from './AGICore';
 import { pandaTokens } from './PandaTokenController';
 
@@ -97,7 +97,7 @@ export function AGIProvider({ children }: AGIProviderProps) {
 
 // Custom hook to use AGI context
 export function useAGI(): AGIContextValue {
-  const context = useContext(AGIContext);
+  const context = (AGIContext);
   if (!context) {
     throw new Error('useAGI must be used within an AGIProvider');
   }
@@ -131,7 +131,7 @@ export function withAGI<P extends object>(
   return function AGIWrappedComponent(props: P) {
     const { ui } = useAGI();
 
-    React.useEffect(() => {
+    React.(() => {
       if (options?.activateOnMount && options?.elementId) {
         ui.activateElement(options.elementId);
       }

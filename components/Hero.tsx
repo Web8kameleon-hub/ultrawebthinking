@@ -3,34 +3,80 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white flex flex-col items-center justify-center px-6">
+    <section className={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #000000 0%, #111827 50%, #1f2937 100%)',
+      color: 'white',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '0 24px'
+    }}>
       <motion.h1 
-        className="text-4xl sm:text-6xl font-extrabold text-center mb-4"
+        className={{
+          fontSize: 'clamp(2rem, 8vw, 4rem)',
+          fontWeight: 800,
+          textAlign: 'center',
+          marginBottom: '16px',
+          background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        Ultrawebthinking
+        EuroWeb Platform
       </motion.h1>
       <motion.p 
-        className="text-xl sm:text-2xl text-gray-300 text-center mb-8"
+        className={{
+          fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
+          color: '#cbd5e1',
+          textAlign: 'center',
+          marginBottom: '32px',
+          maxWidth: '600px'
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        Beyond imagination. Built with purpose. Driven by intelligence.
+        Pure TypeScript Industrial Web8 Architecture with AGI-Core Intelligence
       </motion.p>
       <motion.div 
-        className="flex gap-6"
+        className={{
+          display: 'flex',
+          gap: '24px',
+          flexWrap: 'wrap',
+          justifyContent: 'center'
+        }}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 1 }}
       >
-        <button className="bg-white text-black px-6 py-3 rounded-2xl font-semibold shadow-lg hover:bg-gray-200 transition">
-          Start Now
+        <button className={{
+          background: '#d4af37',
+          color: '#000',
+          padding: '12px 24px',
+          borderRadius: '8px',
+          fontWeight: 600,
+          border: 'none',
+          cursor: 'pointer',
+          transition: 'all 0.2s ease'
+        }}>
+          Start AGI Core
         </button>
-        <button className="border border-white px-6 py-3 rounded-2xl text-white hover:bg-white hover:text-black transition">
-          Learn More
+        <button className={{
+          border: '2px solid #d4af37',
+          background: 'transparent',
+          color: '#d4af37',
+          padding: '12px 24px',
+          borderRadius: '8px',
+          fontWeight: 600,
+          cursor: 'pointer',
+          transition: 'all 0.2s ease'
+        }}>
+          Explore Platform
         </button>
       </motion.div>
     </section>
