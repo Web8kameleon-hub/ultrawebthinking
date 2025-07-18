@@ -169,6 +169,8 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           {[
             { icon: '🏠', label: 'Dashboard', active: true, href: '/' },
             { icon: '🧠', label: 'AGI', active: false, href: '/agi' },
+            { icon: '🚇', label: 'AGI Tunnel', active: false, href: '/agi-tunnel' },
+            { icon: '🧠', label: 'AGI Matrix', active: false, href: '/agi-matrix' },
             { icon: '🎨', label: 'Panda Demo', active: false, href: '/panda-demo' },
             { icon: '📊', label: 'Analytics', active: false, href: '/analytics' },
             { icon: '🌊', label: 'Surfing', active: false, href: '/surfing' },

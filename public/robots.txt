@@ -1,10 +1,12 @@
 User-agent: *
+Disallow: /api/
 Disallow: /admin/
-Disallow: /private/
+Disallow: /_next/
 Allow: /
 
-# Për të përmirësuar performancën e indeksimit
-Crawl-delay: 10
+# UltraBrowser - AGI Web Browser
+# This is a browser application, not a traditional website
 
-# Për të specifikuar vendndodhjen e sitemap-it
-Sitemap: https://ultrawebthinking.com/sitemap.xml
+Crawl-delay: 1
+
+Sitemap: https://ultrabrowser.ai/sitemap.xml

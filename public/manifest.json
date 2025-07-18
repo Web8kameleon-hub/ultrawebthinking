@@ -1,35 +1,22 @@
 {
-  "short_name": "UltraWebThinking",
-  "name": "UltraWebThinking - The Future of Web Navigation",
+  "short_name": "UltraBrowser",
+  "name": "UltraBrowser - AGI-Powered Web Browser",
   "icons": [
     {
-      "src": "/icons/icon-192x192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    },
-    {
-      "src": "/icons/icon-384x384.png",
-      "type": "image/png",
-      "sizes": "384x384"
-    },
-    {
-      "src": "/icons/icon-256x256.png",
-      "type": "image/png",
-      "sizes": "256x256"
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "32x32"
     }
   ],
   "start_url": "/",
-  "background_color": "#ffffff",
-  "display": "standalone",
+  "background_color": "#0f172a",
+  "display": "browser",
   "scope": "/",
-  "theme_color": "#000000",
-  "description": "A high-performance, AI-powered web experience designed for the future.",
-  "orientation": "portrait",
+  "theme_color": "#6366f1",
+  "description": "An advanced AGI-powered web browser with neural network capabilities.",
+  "orientation": "any",
   "lang": "en-US",
-  "dir": "ltr"
+  "dir": "ltr",
+  "categories": ["productivity", "utilities", "browsers"],
+  "display_override": ["browser", "minimal-ui", "standalone"]
 }
