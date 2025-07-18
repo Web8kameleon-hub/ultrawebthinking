@@ -374,7 +374,7 @@ const AGIMatrixPage: NextPage = () => {
               <strong>⚙️ Adjust Size:</strong> Use the slider to change cell size
             </div>
             <div>
-              <strong>🚀 Activate:</strong> Click "Activate Matrix" to trigger processing waves
+              <strong>🚀 Activate:</strong> Click &quot;Activate Matrix&quot; to trigger processing waves
             </div>
           </div>
         </motion.div>

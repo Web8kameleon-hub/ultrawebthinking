@@ -301,9 +301,10 @@ class RealEngine {
 
   private setupBrowserIntegration(): void {
     // Real browser API integration
-    if ('serviceWorker' in navigator) {
-      this.setupServiceWorker();
-    }
+    // Service Worker disabled to avoid 404 errors
+    // if ('serviceWorker' in navigator) {
+    //   this.setupServiceWorker();
+    // }
     
     if ('webkitNotifications' in window) {
       this.setupNotifications();
@@ -330,13 +331,15 @@ class RealEngine {
   }
 
   private setupServiceWorker(): void {
-    navigator.serviceWorker.register('/web8-sw.js')
-      .then(registration => {
-        console.log('📋 Service Worker registered:', registration);
-      })
-      .catch(error => {
-        console.warn('Service Worker registration failed:', error);
-      });
+    // Service Worker registration disabled to avoid 404 errors
+    // navigator.serviceWorker.register('/web8-sw.js')
+    //   .then(registration => {
+    //     console.log('📋 Service Worker registered:', registration);
+    //   })
+    //   .catch(error => {
+    //     console.warn('Service Worker registration failed:', error);
+    //   });
+    console.log('📋 Service Worker disabled to prevent 404 errors');
   }
 
   private setupNotifications(): void {

@@ -232,7 +232,7 @@ const AGITunnelDemo: React.FC = () => {
           })}>
             <div>
               <div className={css({ fontSize: 'lg', mb: '2' })}>🚀</div>
-              <strong>Start Processing:</strong> Click the "Start AGI Flow" button to begin the neural processing simulation
+              <strong>Start Processing:</strong> Click the &quot;Start AGI Flow&quot; button to begin the neural processing simulation
             </div>
             <div>
               <div className={css({ fontSize: 'lg', mb: '2' })}>🖱️</div>
