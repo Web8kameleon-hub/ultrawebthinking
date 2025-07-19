@@ -10,8 +10,10 @@
 
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { AGIXForm } from '../AGIXmed/AGIXForm'
+import { AGIXResults } from '../AGIXmed/AGIXResults'
 
 // Interface definitions for Medical AI
 interface QuantumMedMetrics {
@@ -34,6 +36,18 @@ interface MedicalModule {
   status: 'active' | 'processing' | 'standby'
   accuracy: number
   description: string
+}
+
+interface AGIXmedResult {
+  symptoms: string
+  confidence: number
+  recommendations: string[]
+  possibleConditions: Array<{
+    name: string
+    probability: number
+  }>
+  timestamp: string
+  agixmedVersion: string
 }
 
 // Static medical data
@@ -103,10 +117,44 @@ const medicalModules: MedicalModule[] = [
 
 /**
  * AGI Med Ultra Component
- * Quantum-enhanced medical artificial intelligence
+ * Quantum-enhanced medical artificial intelligence with AGIXmed integration
  */
 const AGIMedUltra: React.FC = () => {
+  const [agixResult, setAgixResult] = useState<AGIXmedResult | null>(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
   const currentTime = new Date().toLocaleTimeString()
+
+  // Handle AGIXmed form submission
+  const handleAGIXSubmit = async (symptoms: string) => {
+    setIsAnalyzing(true)
+    
+    try {
+      const response = await fetch('/api/agixmed/analyze', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ symptoms }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Analysis failed')
+      }
+
+      const result = await response.json()
+      setAgixResult(result)
+    } catch (error) {
+      console.error('AGIXmed analysis error:', error)
+      // Show error message to user
+    } finally {
+      setIsAnalyzing(false)
+    }
+  }
+
+  // Handle new analysis request
+  const handleNewAnalysis = () => {
+    setAgixResult(null)
+  }
 
   return (
     <div style={{
@@ -212,6 +260,19 @@ const AGIMedUltra: React.FC = () => {
             </div>
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* AGIXmed Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+        style={{
+          marginBottom: '32px'
+        }}
+      >
+        <AGIXForm onSubmit={handleAGIXSubmit} isLoading={isAnalyzing} />
+        <AGIXResults result={agixResult} onNewAnalysis={handleNewAnalysis} />
       </motion.div>
 
       {/* Medical Modules Grid */}

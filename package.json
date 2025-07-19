@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --port 3000",
+    "dev:backend": "tsx backend/server.ts",
+    "dev:full": "concurrently \"yarn dev\" \"yarn dev:backend\"",
     "build": "yarn sw:build && next build",
     "start": "next start",
     "test": "vitest run",
@@ -50,6 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
     "@vitest/ui": "^3.2.4",
+    "concurrently": "^9.2.0",
     "jsdom": "^26.1.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
