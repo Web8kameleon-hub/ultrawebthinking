@@ -21,4 +21,4 @@ declare module 'react-dom' {
   export as namespace ReactDOM;
 }
 
-export {}
+export {};

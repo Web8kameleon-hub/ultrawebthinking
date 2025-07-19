@@ -1,2 +1,10 @@
 .vercel
 node_modules
+
+## Panda
+styled-system
+styled-system-studio
+
+## Service Worker
+public/sw.js
+.temp/

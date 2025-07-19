@@ -143,10 +143,10 @@ export interface IntelliContextMetrics {
 export class MemoryLayer {
   private shortTerm: Map<string, MemoryItem> = new Map();
   private longTerm: Map<string, MemoryItem> = new Map();
-  private maxShortTerm: number = 1000;
-  private maxLongTerm: number = 10000;
+  private maxShortTerm = 1000;
+  private maxLongTerm = 10000;
 
-  public store(key: string, value: any, persistent: boolean = false): void {
+  public store(key: string, value: any, persistent = false): void {
     const item: MemoryItem = {
       value,
       timestamp: Date.now(),
@@ -164,7 +164,7 @@ export class MemoryLayer {
   }
 
   public retrieve(key: string): any {
-    let item = this.shortTerm.get(key) || this.longTerm.get(key);
+    const item = this.shortTerm.get(key) || this.longTerm.get(key);
     if (item) {
       item.accessCount++;
       item.lastAccess = Date.now();

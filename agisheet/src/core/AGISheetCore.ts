@@ -1,13 +1,13 @@
-import { EventEmitter } from 'eventemitter3'
-import { Observable, Subject, BehaviorSubject } from 'rxjs'
-import { z } from 'zod'
+import { EventEmitter } from 'eventemitter3';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { z } from 'zod';
 import type { 
   AGISheetConfig, 
   CellData, 
   LayerStatus, 
   KameleonModeType,
   OperationalCommand 
-} from '../types/index.js'
+} from '../types/index.js';
 
 // Validation schemas
 const CellDataSchema = z.object({
@@ -20,7 +20,7 @@ const CellDataSchema = z.object({
   layerRef: z.string().optional(),
   timestamp: z.number(),
   metadata: z.record(z.any()).optional()
-})
+});
 
 const AGISheetConfigSchema = z.object({
   id: z.string(),
@@ -31,22 +31,22 @@ const AGISheetConfigSchema = z.object({
   realTimeUpdates: z.boolean().default(true),
   agiIntegration: z.boolean().default(true),
   securityLevel: z.enum(['basic', 'standard', 'high', 'military']).default('standard')
-})
+});
 
 /**
  * AGISheet Core - Motori kryesor i AGISheet
  * Një Excel me tru AGI që mund të kthehet në çdo gjë
  */
 export class AGISheetCore extends EventEmitter {
-  private config: AGISheetConfig
-  private cells: Map<string, CellData> = new Map()
-  private layers: Map<string, LayerStatus> = new Map()
-  private kameleonMode: BehaviorSubject<KameleonModeType>
-  private commandStream: Subject<OperationalCommand> = new Subject()
-  private isActive: boolean = false
+  private config: AGISheetConfig;
+  private cells: Map<string, CellData> = new Map();
+  private layers: Map<string, LayerStatus> = new Map();
+  private kameleonMode: BehaviorSubject<KameleonModeType>;
+  private commandStream: Subject<OperationalCommand> = new Subject();
+  private isActive = false;
 
   constructor(config: Partial<AGISheetConfig> = {}) {
-    super()
+    super();
     
     // Validate and set configuration
     const validatedConfig = AGISheetConfigSchema.parse({
@@ -58,13 +58,13 @@ export class AGISheetCore extends EventEmitter {
       realTimeUpdates: config.realTimeUpdates ?? true,
       agiIntegration: config.agiIntegration ?? true,
       securityLevel: config.securityLevel || 'standard'
-    })
+    });
 
-    this.config = validatedConfig
-    this.kameleonMode = new BehaviorSubject(validatedConfig.mode)
+    this.config = validatedConfig;
+    this.kameleonMode = new BehaviorSubject(validatedConfig.mode);
     
-    this.initializeGrid()
-    this.setupEventHandlers()
+    this.initializeGrid();
+    this.setupEventHandlers();
   }
 
   /**
@@ -73,22 +73,22 @@ export class AGISheetCore extends EventEmitter {
   private initializeGrid(): void {
     for (let row = 0; row < this.config.rows; row++) {
       for (let col = 0; col < this.config.cols; col++) {
-        const cellId = this.getCellId(row, col)
+        const cellId = this.getCellId(row, col);
         const cell: CellData = {
           id: cellId,
           row,
           col,
           value: null,
           timestamp: Date.now()
-        }
-        this.cells.set(cellId, cell)
+        };
+        this.cells.set(cellId, cell);
       }
     }
     
     this.emit('grid:initialized', { 
       rows: this.config.rows, 
       cols: this.config.cols 
-    })
+    });
   }
 
   /**
@@ -97,14 +97,14 @@ export class AGISheetCore extends EventEmitter {
   private setupEventHandlers(): void {
     // Kameleon mode changes
     this.kameleonMode.subscribe(mode => {
-      this.emit('kameleon:modeChanged', { mode, timestamp: Date.now() })
-      this.adaptToMode(mode)
-    })
+      this.emit('kameleon:modeChanged', { mode, timestamp: Date.now() });
+      this.adaptToMode(mode);
+    });
 
     // Command stream processing
     this.commandStream.subscribe(command => {
-      this.processCommand(command)
-    })
+      this.processCommand(command);
+    });
   }
 
   /**
@@ -113,26 +113,26 @@ export class AGISheetCore extends EventEmitter {
   private adaptToMode(mode: KameleonModeType): void {
     switch (mode) {
       case 'analysis':
-        this.setupAnalysisMode()
-        break
+        this.setupAnalysisMode();
+        break;
       case 'decision':
-        this.setupDecisionMode()
-        break
+        this.setupDecisionMode();
+        break;
       case 'planning':
-        this.setupPlanningMode()
-        break
+        this.setupPlanningMode();
+        break;
       case 'control':
-        this.setupControlMode()
-        break
+        this.setupControlMode();
+        break;
       case 'task':
-        this.setupTaskMode()
-        break
+        this.setupTaskMode();
+        break;
       case 'admin':
-        this.setupAdminMode()
-        break
+        this.setupAdminMode();
+        break;
       case 'industrial':
-        this.setupIndustrialMode()
-        break
+        this.setupIndustrialMode();
+        break;
     }
   }
 
@@ -140,11 +140,11 @@ export class AGISheetCore extends EventEmitter {
    * Vendosja e vlerës në një qelizë
    */
   setCellValue(row: number, col: number, value: any, formula?: string): void {
-    const cellId = this.getCellId(row, col)
-    const existingCell = this.cells.get(cellId)
+    const cellId = this.getCellId(row, col);
+    const existingCell = this.cells.get(cellId);
     
     if (!existingCell) {
-      throw new Error(`Cell ${cellId} does not exist`)
+      throw new Error(`Cell ${cellId} does not exist`);
     }
 
     const updatedCell: CellData = {
@@ -152,17 +152,17 @@ export class AGISheetCore extends EventEmitter {
       value,
       formula,
       timestamp: Date.now()
-    }
+    };
 
     // Validate cell data
-    const validatedCell = CellDataSchema.parse(updatedCell)
-    this.cells.set(cellId, validatedCell)
+    const validatedCell = CellDataSchema.parse(updatedCell);
+    this.cells.set(cellId, validatedCell);
 
-    this.emit('cell:updated', { cellId, cell: validatedCell })
+    this.emit('cell:updated', { cellId, cell: validatedCell });
 
     // AGI processing if enabled
     if (this.config.agiIntegration) {
-      this.processAGIBinding(validatedCell)
+      this.processAGIBinding(validatedCell);
     }
   }
 
@@ -170,20 +170,20 @@ export class AGISheetCore extends EventEmitter {
    * Marrja e vlerës së një qelize
    */
   getCellValue(row: number, col: number): any {
-    const cellId = this.getCellId(row, col)
-    const cell = this.cells.get(cellId)
-    return cell?.value || null
+    const cellId = this.getCellId(row, col);
+    const cell = this.cells.get(cellId);
+    return cell?.value || null;
   }
 
   /**
    * Lidhja e një qelize me AGI layer
    */
   bindCellToAGI(row: number, col: number, layerId: string, binding: string): void {
-    const cellId = this.getCellId(row, col)
-    const cell = this.cells.get(cellId)
+    const cellId = this.getCellId(row, col);
+    const cell = this.cells.get(cellId);
     
     if (!cell) {
-      throw new Error(`Cell ${cellId} does not exist`)
+      throw new Error(`Cell ${cellId} does not exist`);
     }
 
     const updatedCell: CellData = {
@@ -191,45 +191,45 @@ export class AGISheetCore extends EventEmitter {
       agiBinding: binding,
       layerRef: layerId,
       timestamp: Date.now()
-    }
+    };
 
-    this.cells.set(cellId, updatedCell)
-    this.emit('agi:cellBound', { cellId, layerId, binding })
+    this.cells.set(cellId, updatedCell);
+    this.emit('agi:cellBound', { cellId, layerId, binding });
   }
 
   /**
    * Ndryshimi i kameleon mode
    */
   switchKameleonMode(mode: KameleonModeType): void {
-    this.kameleonMode.next(mode)
+    this.kameleonMode.next(mode);
   }
 
   /**
    * Dërgimi i komandës operacionale
    */
   sendCommand(command: OperationalCommand): void {
-    this.commandStream.next(command)
+    this.commandStream.next(command);
   }
 
   /**
    * Aktivizimi i AGISheet
    */
   activate(): void {
-    this.isActive = true
-    this.emit('agisheet:activated', { timestamp: Date.now() })
+    this.isActive = true;
+    this.emit('agisheet:activated', { timestamp: Date.now() });
   }
 
   /**
    * Çaktivizimi i AGISheet
    */
   deactivate(): void {
-    this.isActive = false
-    this.emit('agisheet:deactivated', { timestamp: Date.now() })
+    this.isActive = false;
+    this.emit('agisheet:deactivated', { timestamp: Date.now() });
   }
 
   // Private helper methods
   private getCellId(row: number, col: number): string {
-    return `${String.fromCharCode(65 + col)}${row + 1}`
+    return `${String.fromCharCode(65 + col)}${row + 1}`;
   }
 
   private processAGIBinding(cell: CellData): void {
@@ -239,88 +239,88 @@ export class AGISheetCore extends EventEmitter {
         binding: cell.agiBinding,
         layerId: cell.layerRef,
         value: cell.value
-      })
+      });
     }
   }
 
   private processCommand(command: OperationalCommand): void {
-    this.emit('command:received', command)
+    this.emit('command:received', command);
     
     switch (command.type) {
       case 'layer:control':
-        this.handleLayerCommand(command)
-        break
+        this.handleLayerCommand(command);
+        break;
       case 'cell:bulk-update':
-        this.handleBulkUpdate(command)
-        break
+        this.handleBulkUpdate(command);
+        break;
       case 'mode:switch':
-        this.switchKameleonMode(command.data.mode)
-        break
+        this.switchKameleonMode(command.data.mode);
+        break;
       default:
-        this.emit('command:unknown', command)
+        this.emit('command:unknown', command);
     }
   }
 
   private handleLayerCommand(command: OperationalCommand): void {
     // Implementation for layer control commands
-    this.emit('layer:commandProcessed', command)
+    this.emit('layer:commandProcessed', command);
   }
 
   private handleBulkUpdate(command: OperationalCommand): void {
     // Implementation for bulk cell updates
-    this.emit('cells:bulkUpdated', command)
+    this.emit('cells:bulkUpdated', command);
   }
 
   // Kameleon mode setup methods
   private setupAnalysisMode(): void {
     // Configure for data analysis
-    this.emit('mode:analysis:setup')
+    this.emit('mode:analysis:setup');
   }
 
   private setupDecisionMode(): void {
     // Configure for decision making
-    this.emit('mode:decision:setup')
+    this.emit('mode:decision:setup');
   }
 
   private setupPlanningMode(): void {
     // Configure for planning tasks
-    this.emit('mode:planning:setup')
+    this.emit('mode:planning:setup');
   }
 
   private setupControlMode(): void {
     // Configure for operational control
-    this.emit('mode:control:setup')
+    this.emit('mode:control:setup');
   }
 
   private setupTaskMode(): void {
     // Configure for task management
-    this.emit('mode:task:setup')
+    this.emit('mode:task:setup');
   }
 
   private setupAdminMode(): void {
     // Configure for administrative tasks
-    this.emit('mode:admin:setup')
+    this.emit('mode:admin:setup');
   }
 
   private setupIndustrialMode(): void {
     // Configure for industrial control
-    this.emit('mode:industrial:setup')
+    this.emit('mode:industrial:setup');
   }
 
   // Getters
   get currentMode(): KameleonModeType {
-    return this.kameleonMode.value
+    return this.kameleonMode.value;
   }
 
   get isActiveSheet(): boolean {
-    return this.isActive
+    return this.isActive;
   }
 
   get cellCount(): number {
-    return this.cells.size
+    return this.cells.size;
   }
 
   get configuration(): AGISheetConfig {
-    return { ...this.config }
+    return { ...this.config };
   }
 }

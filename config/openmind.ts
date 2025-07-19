@@ -117,7 +117,7 @@ export const OPENMIND_CONFIG = {
     imageGeneration: false,
     voiceChat: false
   }
-}
+};
 
 export type AIProvider = keyof typeof OPENMIND_CONFIG.providers
 export type AIModel = string

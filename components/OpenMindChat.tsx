@@ -1,8 +1,7 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { OPENMIND_CONFIG, AIProvider } from '../config/openmind'
+import { motion } from 'framer-motion';
+import { OPENMIND_CONFIG, AIProvider } from '../config/openmind';
 
 interface Message {
   id: string
@@ -12,41 +11,42 @@ interface Message {
   timestamp: Date
 }
 
-export default function OpenMindChat() {
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [selectedProvider, setSelectedProvider] = useState<AIProvider>('openmind')
-  const [isLoading, setIsLoading] = useState(false)
+const OpenMindChat = () => {
+  // Pure TypeScript - NO HOOKS - industrial grade
+  let messages: Message[] = [];
+  let input = '';
+  let selectedProvider: AIProvider = 'openmind';
+  let isLoading = false;
 
   const sendMessage = (content: string) => {
-    if (!content.trim()) return
+    if (!content.trim()) {return;}
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
       content,
       timestamp: new Date()
-    }
+    };
 
-    setMessages(prev => [...prev, userMessage])
-    setInput('')
-    setIsLoading(true)
+    messages = [...messages, userMessage]; // Direct assignment - no hooks
+    input = ''; // Direct assignment - no hooks
+    isLoading = true; // Direct assignment - no hooks
 
     // Simulate AI response
     setTimeout(() => {
-      const provider = OPENMIND_CONFIG.providers[selectedProvider]
+      const provider = OPENMIND_CONFIG.providers[selectedProvider];
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         content: `${provider.icon} ${provider.name}: I understand your message "${content}". ${provider.description}. How can I help you further?`,
         provider: selectedProvider,
         timestamp: new Date()
-      }
+      };
       
-      setMessages(prev => [...prev, aiMessage])
-      setIsLoading(false)
-    }, 1000)
-  }
+      messages = [...messages, aiMessage]; // Direct assignment - no hooks
+      isLoading = false; // Direct assignment - no hooks
+    }, 1000);
+  };
 
   return (
     <div style={{
@@ -83,7 +83,10 @@ export default function OpenMindChat() {
           {Object.entries(OPENMIND_CONFIG.providers).map(([key, provider]) => (
             <motion.button
               key={key}
-              onClick={() => setSelectedProvider(key as AIProvider)}
+              onClick={() => { 
+                selectedProvider = key as AIProvider; // Direct assignment - no hooks
+                console.log('Provider changed:', selectedProvider);
+              }}
               style={{
                 padding: '8px 16px',
                 borderRadius: '20px',
@@ -207,7 +210,10 @@ export default function OpenMindChat() {
           <input
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => { 
+              input = e.target.value; // Direct assignment - no hooks
+              console.log('Input changed:', input);
+            }}
             onKeyPress={(e) => e.key === 'Enter' && !isLoading && sendMessage(input)}
             placeholder={`Ask ${OPENMIND_CONFIG.providers[selectedProvider].name} anything...`}
             disabled={isLoading}
@@ -253,5 +259,8 @@ export default function OpenMindChat() {
         }
       `}</style>
     </div>
-  )
-}
+  );
+};
+
+export { OpenMindChat };
+export default OpenMindChat;

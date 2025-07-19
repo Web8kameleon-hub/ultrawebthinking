@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export type Token = `aspectRatios.${AspectRatioToken}` | `borders.${BorderToken}` | `fontWeights.${FontWeightToken}` | `lineHeights.${LineHeightToken}` | `letterSpacings.${LetterSpacingToken}` | `shadows.${ShadowToken}` | `blurs.${BlurToken}` | `sizes.${SizeToken}` | `animations.${AnimationToken}` | `colors.${ColorToken}` | `fonts.${FontToken}` | `fontSizes.${FontSizeToken}` | `spacing.${SpacingToken}` | `radii.${RadiusToken}` | `durations.${DurationToken}` | `easings.${EasingToken}` | `breakpoints.${BreakpointToken}`
 
 export type ColorPalette = "current" | "black" | "white" | "transparent" | "rose" | "pink" | "fuchsia" | "purple" | "violet" | "indigo" | "blue" | "sky" | "cyan" | "teal" | "emerald" | "green" | "lime" | "yellow" | "amber" | "orange" | "red" | "stone" | "zinc" | "gray" | "slate" | "primary" | "secondary" | "neutral" | "success" | "warning" | "error" | "info"

@@ -45,7 +45,7 @@ export interface ScenarioResult {
 class RealScenarioRunner {
   private scenarios: Map<string, Scenario> = new Map();
   private runHistory: ScenarioResult[] = [];
-  private isRunning: boolean = false;
+  private isRunning = false;
 
   constructor() {
     this.initializeDefaultScenarios();
@@ -334,7 +334,7 @@ class RealScenarioRunner {
 
   private analyzeTrends(): any {
     const recentResults = this.runHistory.slice(-10);
-    if (recentResults.length < 2) return null;
+    if (recentResults.length < 2) {return null;}
 
     const scores = recentResults.map(r => r.overallValidation.score);
     const trend = scores[scores.length - 1] - scores[0];
@@ -409,7 +409,7 @@ class RealScenarioRunner {
 
   getSystemMetrics(): any {
     const recentRuns = this.runHistory.slice(-5);
-    if (recentRuns.length === 0) return null;
+    if (recentRuns.length === 0) {return null;}
 
     return {
       successRate: recentRuns.filter(r => r.success).length / recentRuns.length,

@@ -1,12 +1,12 @@
 /// <reference types="/globals" />
-import '@/ui-dom'
-import { cleanup } from '@/uireact'
-import { afterEach, beforeAll, beforeEach, vi } from ''
+import '@/ui-dom';
+import { cleanup } from '@/uireact';
+import { afterEach, beforeAll, beforeEach, vi } from '';
 
 // Global test setup for EuroWeb Platform
 beforeAll(() => {
   // Set timezone for consistent testing
-  process.env.TZ = 'UTC'
+  process.env.TZ = 'UTC';
   
   // Mock window.matchMedia for jsdom
   Object.defineProperty(window, 'matchMedia', {
@@ -21,21 +21,21 @@ beforeAll(() => {
       removeEventListener: vi.fn(),
       dispatchEvent: vi.fn(),
     })),
-  })
+  });
 
   // Mock ResizeObserver
   global.ResizeObserver = vi.fn().mockImplementation(() => ({
     observe: vi.fn(),
     unobserve: vi.fn(),
     disconnect: vi.fn(),
-  }))
+  }));
 
   // Mock IntersectionObserver
   global.IntersectionObserver = vi.fn().mockImplementation(() => ({
     observe: vi.fn(),
     unobserve: vi.fn(),
     disconnect: vi.fn(),
-  }))
+  }));
 
   // Mock next/router
   vi.mock('next/router', () => ({
@@ -56,7 +56,7 @@ beforeAll(() => {
         emit: vi.fn(),
       },
     }),
-  }))
+  }));
 
   // Mock next/navigation for App Router
   vi.mock('next/navigation', () => ({
@@ -70,7 +70,7 @@ beforeAll(() => {
     }),
     usePathname: () => '/',
     useSearchParams: () => new URLSearchParams(),
-  }))
+  }));
 
   // Mock WebSocket for mesh network testing
   global.WebSocket = vi.fn().mockImplementation(() => ({
@@ -81,7 +81,7 @@ beforeAll(() => {
     readyState: 1,
     OPEN: 1,
     CLOSED: 3,
-  }))
+  }));
 
   // Mock crypto for security testing
   Object.defineProperty(global, 'crypto', {
@@ -89,9 +89,9 @@ beforeAll(() => {
       randomUUID: () => 'test-uuid-' + Math.random().toString(36).substr(2, 9),
       getRandomValues: (arr: any) => {
         for (let i = 0; i < arr.length; i++) {
-          arr[i] = Math.floor(Math.random() * 256)
+          arr[i] = Math.floor(Math.random() * 256);
         }
-        return arr
+        return arr;
       },
       subtle: {
         encrypt: vi.fn(),
@@ -104,25 +104,25 @@ beforeAll(() => {
         exportKey: vi.fn(),
       },
     },
-  })
-})
+  });
+});
 
 beforeEach(() => {
   // Clear all mocks before each test
-  vi.clearAllMocks()
+  vi.clearAllMocks();
   
   // Reset console to avoid noise in tests
-  vi.spyOn(console, 'warn').mockImplementation(() => {})
-  vi.spyOn(console, 'error').mockImplementation(() => {})
-})
+  vi.spyOn(console, 'warn').mockImplementation(() => {});
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+});
 
 afterEach(() => {
   // Cleanup React Testing Library
-  cleanup()
+  cleanup();
   
   // Restore console
-  vi.restoreAllMocks()
-})
+  vi.restoreAllMocks();
+});
 
 // Global test utilities
 declare global {
@@ -140,7 +140,7 @@ expect.extend({
                  typeof received === 'object' && 
                  'success' in received && 
                  'data' in received &&
-                 'timestamp' in received
+                 'timestamp' in received;
 
     return {
       message: () => 
@@ -148,12 +148,12 @@ expect.extend({
           ? `Expected ${received} not to be a valid AGI response`
           : `Expected ${received} to be a valid AGI response with success, data, and timestamp fields`,
       pass,
-    }
+    };
   },
 
   toBeValidLayerStatus(received: any) {
-    const validStatuses = ['active', 'inactive', 'processing', 'error', 'optimizing', 'learning']
-    const pass = validStatuses.includes(received)
+    const validStatuses = ['active', 'inactive', 'processing', 'error', 'optimizing', 'learning'];
+    const pass = validStatuses.includes(received);
 
     return {
       message: () => 
@@ -161,13 +161,13 @@ expect.extend({
           ? `Expected ${received} not to be a valid layer status`
           : `Expected ${received} to be one of: ${validStatuses.join(', ')}`,
       pass,
-    }
+    };
   },
 
   toBeSecureHash(received: any) {
     const pass = typeof received === 'string' && 
                  received.length >= 32 && 
-                 /^[a-f0-9]+$/i.test(received)
+                 /^[a-f0-9]+$/i.test(received);
 
     return {
       message: () => 
@@ -175,9 +175,9 @@ expect.extend({
           ? `Expected ${received} not to be a secure hash`
           : `Expected ${received} to be a valid hexadecimal hash of at least 32 characters`,
       pass,
-    }
+    };
   }
-})
+});
 
 // Type declarations for custom matchers
 declare module '' {

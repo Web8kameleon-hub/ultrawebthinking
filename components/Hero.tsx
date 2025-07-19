@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 
-export default function Hero() {
+const Hero = () {
   return (
     <section className={{
       minHeight: '100vh',
@@ -83,3 +83,7 @@ export default function Hero() {
   );
 }
 
+
+
+export { Hero }
+export default Hero

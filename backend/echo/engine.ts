@@ -57,7 +57,7 @@ export interface AGIModule {
 }
 
 export class SignalTrace {
-  private steps: Array<{ step: string; data?: any; timestamp: number }> = []
+  private steps: Array<{ step: string; data?: any; timestamp: number }> = [];
   
   constructor(public id: string) {}
   
@@ -66,15 +66,15 @@ export class SignalTrace {
       step,
       data,
       timestamp: Date.now()
-    })
+    });
   }
   
   complete(): void {
-    this.addStep('complete')
+    this.addStep('complete');
   }
   
   getSteps() {
-    return this.steps
+    return this.steps;
   }
 }
 
@@ -82,37 +82,37 @@ export class SignalTrace {
  * Echo Engine - Advanced Navigation and Routing System
  * Industrial TypeScript architecture without async/*/
 export class EchoEngine {
-  private modules = new Map<string, AGIModule>()
-  private context: any = {}
+  private modules = new Map<string, AGIModule>();
+  private context: any = {};
   private metrics = {
     totalNavigations: 0,
     successfulNavigations: 0,
     totalResponseTime: 0,
     agiNavigations: 0,
     traditionalNavigations: 0
-  }
+  };
 
   constructor() {
-    console.log('🌊 Echo Engine initialized - Industrial TypeScript Architecture')
+    console.log('🌊 Echo Engine initialized - Industrial TypeScript Architecture');
   }
 
   /**
    * AGI-Guided Navigation - System i navigimit të menaxhuar nga AGI
    */
   public navigateWithAGI(params: Web8NavigationParams): NavigationResult {
-    const startTime = Date.now()
-    const trace = new SignalTrace(`navigation-${startTime}`)
+    const startTime = Date.now();
+    const trace = new SignalTrace(`navigation-${startTime}`);
     
     try {
-      trace.addStep('navigation-start', params)
+      trace.addStep('navigation-start', params);
       
       // Validate navigation parameters
-      this.validateNavigationParams(params)
+      this.validateNavigationParams(params);
       
       // Check for URL-specific AGI modules
-      const urlModule = this.modules.get(`url-${params.url}`)
+      const urlModule = this.modules.get(`url-${params.url}`);
       
-      let result: any
+      let result: any;
       if (urlModule && params.agiGuided) {
         // Use AGI module for intelligent navigation
         const execution = urlModule.execute({
@@ -122,24 +122,24 @@ export class EchoEngine {
           timestamp: startTime,
           layer: params.layer,
           context: this.context
-        })
-        result = execution.result
-        trace.addStep('agi-navigation', { moduleUsed: urlModule.name })
-        this.metrics.agiNavigations++
+        });
+        result = execution.result;
+        trace.addStep('agi-navigation', { moduleUsed: urlModule.name });
+        this.metrics.agiNavigations++;
       } else {
         // Traditional navigation
-        result = this.performTraditionalNavigation(params)
-        trace.addStep('traditional-navigation', { method: params.method || 'GET' })
-        this.metrics.traditionalNavigations++
+        result = this.performTraditionalNavigation(params);
+        trace.addStep('traditional-navigation', { method: params.method || 'GET' });
+        this.metrics.traditionalNavigations++;
       }
 
-      const duration = Date.now() - startTime
-      trace.addStep('navigation-complete', { duration })
-      trace.complete()
+      const duration = Date.now() - startTime;
+      trace.addStep('navigation-complete', { duration });
+      trace.complete();
 
-      this.metrics.totalNavigations++
-      this.metrics.successfulNavigations++
-      this.metrics.totalResponseTime += duration
+      this.metrics.totalNavigations++;
+      this.metrics.successfulNavigations++;
+      this.metrics.totalResponseTime += duration;
 
       return {
         success: true,
@@ -148,15 +148,15 @@ export class EchoEngine {
         duration,
         timestamp: startTime,
         trace
-      }
+      };
 
     } catch (error: any) {
-      const duration = Date.now() - startTime
-      trace.addStep('navigation-error', { error: error.message, duration })
-      trace.complete()
+      const duration = Date.now() - startTime;
+      trace.addStep('navigation-error', { error: error.message, duration });
+      trace.complete();
 
-      this.metrics.totalNavigations++
-      this.metrics.totalResponseTime += duration
+      this.metrics.totalNavigations++;
+      this.metrics.totalResponseTime += duration;
 
       return {
         success: false,
@@ -165,7 +165,7 @@ export class EchoEngine {
         duration,
         timestamp: startTime,
         trace
-      }
+      };
     }
   }
 
@@ -173,19 +173,19 @@ export class EchoEngine {
    * Orchestrated Route - Sistema i routing-ut të orkestruar
    */
   public orchestratedRoute(params: OrchestrationParams): OrchestrationResult {
-    const startTime = Date.now()
-    const trace = new SignalTrace(`route-${startTime}`)
+    const startTime = Date.now();
+    const trace = new SignalTrace(`route-${startTime}`);
     
     try {
-      trace.addStep('route-start', params)
+      trace.addStep('route-start', params);
       
       // Validate route parameters
-      this.validateRouteParams(params)
+      this.validateRouteParams(params);
       
       // Check for route-specific modules
-      const routeModule = this.modules.get(`route-${params.route}`)
+      const routeModule = this.modules.get(`route-${params.route}`);
       
-      let result: any
+      let result: any;
       if (routeModule && params.agiGuided) {
         // Use AGI module for intelligent routing
         const execution = routeModule.execute({
@@ -194,18 +194,18 @@ export class EchoEngine {
           timestamp: startTime,
           layer: params.layer,
           context: this.context
-        })
-        result = execution.result
-        trace.addStep('agi-routing', { moduleUsed: routeModule.name })
+        });
+        result = execution.result;
+        trace.addStep('agi-routing', { moduleUsed: routeModule.name });
       } else {
         // Traditional routing
-        result = this.performTraditionalRouting(params)
-        trace.addStep('traditional-routing', { method: params.method })
+        result = this.performTraditionalRouting(params);
+        trace.addStep('traditional-routing', { method: params.method });
       }
 
-      const duration = Date.now() - startTime
-      trace.addStep('route-complete', { duration })
-      trace.complete()
+      const duration = Date.now() - startTime;
+      trace.addStep('route-complete', { duration });
+      trace.complete();
 
       return {
         success: true,
@@ -214,12 +214,12 @@ export class EchoEngine {
         route: params.route,
         timestamp: startTime,
         trace
-      }
+      };
 
     } catch (error: any) {
-      const duration = Date.now() - startTime
-      trace.addStep('route-error', { error: error.message, duration })
-      trace.complete()
+      const duration = Date.now() - startTime;
+      trace.addStep('route-error', { error: error.message, duration });
+      trace.complete();
 
       return {
         success: false,
@@ -228,7 +228,7 @@ export class EchoEngine {
         route: params.route,
         timestamp: startTime,
         trace
-      }
+      };
     }
   }
 
@@ -237,10 +237,10 @@ export class EchoEngine {
    */
   public registerModule(name: string, module: AGIModule): void {
     if (module.validate()) {
-      this.modules.set(name, module)
-      console.log(`✅ AGI Module registered: ${name}`)
+      this.modules.set(name, module);
+      console.log(`✅ AGI Module registered: ${name}`);
     } else {
-      throw new Error(`❌ Invalid AGI Module: ${name}`)
+      throw new Error(`❌ Invalid AGI Module: ${name}`);
     }
   }
 
@@ -258,7 +258,7 @@ export class EchoEngine {
         : 0,
       agiNavigations: this.metrics.agiNavigations,
       traditionalNavigations: this.metrics.traditionalNavigations
-    }
+    };
   }
 
   /**
@@ -266,10 +266,10 @@ export class EchoEngine {
    */
   private validateNavigationParams(params: Web8NavigationParams): void {
     if (!params.url || typeof params.url !== 'string') {
-      throw new Error('Invalid URL parameter')
+      throw new Error('Invalid URL parameter');
     }
     if (params.method && !['GET', 'POST', 'PUT', 'DELETE'].includes(params.method)) {
-      throw new Error('Invalid HTTP method')
+      throw new Error('Invalid HTTP method');
     }
   }
 
@@ -278,10 +278,10 @@ export class EchoEngine {
    */
   private validateRouteParams(params: OrchestrationParams): void {
     if (!params.route || typeof params.route !== 'string') {
-      throw new Error('Invalid route parameter')
+      throw new Error('Invalid route parameter');
     }
     if (params.method && typeof params.method !== 'string') {
-      throw new Error('Invalid method parameter')
+      throw new Error('Invalid method parameter');
     }
   }
 
@@ -289,7 +289,7 @@ export class EchoEngine {
    * Perform Traditional Navigation
    */
   private performTraditionalNavigation(params: Web8NavigationParams): any {
-    console.log(`🔗 Traditional navigation to: ${params.url}`)
+    console.log(`🔗 Traditional navigation to: ${params.url}`);
     
     // Simulate navigation result
     return {
@@ -298,14 +298,14 @@ export class EchoEngine {
       headers: params.headers || {},
       timestamp: Date.now(),
       type: 'traditional'
-    }
+    };
   }
 
   /**
    * Perform Traditional Routing
    */
   private performTraditionalRouting(params: OrchestrationParams): any {
-    console.log(`🛤️ Traditional routing to: ${params.route}`)
+    console.log(`🛤️ Traditional routing to: ${params.route}`);
     
     // Simulate routing result
     return {
@@ -314,10 +314,10 @@ export class EchoEngine {
       method: params.method || 'GET',
       timestamp: Date.now(),
       type: 'traditional'
-    }
+    };
   }
 }
 
 // Export singleton instance
-export const echoEngine = new EchoEngine()
-export default echoEngine
+export const echoEngine = new EchoEngine();
+export default echoEngine;

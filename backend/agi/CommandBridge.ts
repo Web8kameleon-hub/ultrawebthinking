@@ -5,11 +5,11 @@
  * © Web8 UltraThinking – Ledjan Ahmati
  */
 
-import { AGICore } from './core'
-import { SemanticAnalyzer } from './semantic'
-import { Planner } from './planner'
-import { Executor } from './executor'
-import { logger } from './monitor'
+import { AGICore } from './core';
+import { SemanticAnalyzer } from './semantic';
+import { Planner } from './planner';
+import { Executor } from './executor';
+import { logger } from './monitor';
 
 // Komandat e mbështetura
 type AGICommand =
@@ -29,29 +29,29 @@ interface CommandPayload {
 
 export class CommandBridge {
   static async handle(cmd: CommandPayload): Promise<any> {
-    logger.info(`[CommandBridge] Command received: ${cmd.command}`)
+    logger.info(`[CommandBridge] Command received: ${cmd.command}`);
 
     switch (cmd.command) {
       case 'ANALYZE':
-        return SemanticAnalyzer.parse(cmd.input)
+        return SemanticAnalyzer.parse(cmd.input);
 
       case 'CLASSIFY':
-        return SemanticAnalyzer.classify(cmd.input)
+        return SemanticAnalyzer.classify(cmd.input);
 
       case 'PLAN':
-        return Planner.generatePlan(cmd.input)
+        return Planner.generatePlan(cmd.input);
 
       case 'EXECUTE':
-        return Executor.run(cmd.input)
+        return Executor.run(cmd.input);
 
       case 'STATUS':
-        return AGICore.status()
+        return AGICore.status();
 
       case 'RESET':
-        return AGICore.reset()
+        return AGICore.reset();
 
       default:
-        throw new Error(`Unknown command: ${cmd.command}`)
+        throw new Error(`Unknown command: ${cmd.command}`);
     }
   }
 }

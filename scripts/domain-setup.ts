@@ -4,9 +4,9 @@
  * Automatic domain configuration dhe deployment setup
  */
 
-import { writeFileSync, existsSync, readFileSync } from 'fs'
-import { join } from 'path'
-import colors from 'colors'
+import { writeFileSync, existsSync, readFileSync } from 'fs';
+import { join } from 'path';
+import colors from 'colors';
 
 interface DomainConfig {
   primary: string
@@ -38,50 +38,50 @@ const DOMAIN_CONFIG: DomainConfig = {
   },
   ssl: true,
   platform: 'vercel'
-}
+};
 
 function setupDomain(): void {
-  console.log(colors.cyan('\n🌐 EuroWeb Domain Setup\n'))
+  console.log(colors.cyan('\n🌐 EuroWeb Domain Setup\n'));
   
   // Display domain information
-  console.log(colors.yellow('📋 Domain Configuration:'))
-  console.log(colors.white(`Primary Domain: ${colors.green(DOMAIN_CONFIG.primary)}`))
+  console.log(colors.yellow('📋 Domain Configuration:'));
+  console.log(colors.white(`Primary Domain: ${colors.green(DOMAIN_CONFIG.primary)}`));
   
-  console.log(colors.yellow('\n🔗 Alternative Domains:'))
+  console.log(colors.yellow('\n🔗 Alternative Domains:'));
   DOMAIN_CONFIG.alternatives.forEach(domain => {
-    console.log(colors.white(`  • ${colors.cyan(domain)}`))
-  })
+    console.log(colors.white(`  • ${colors.cyan(domain)}`));
+  });
   
-  console.log(colors.yellow('\n🏗️ Subdomains:'))
+  console.log(colors.yellow('\n🏗️ Subdomains:'));
   Object.entries(DOMAIN_CONFIG.subdomains).forEach(([key, domain]) => {
-    console.log(colors.white(`  • ${key}: ${colors.cyan(domain)}`))
-  })
+    console.log(colors.white(`  • ${key}: ${colors.cyan(domain)}`));
+  });
 
   // Create vercel.json for domain configuration
-  createVercelConfig()
+  createVercelConfig();
   
   // Create DNS configuration
-  createDNSConfig()
+  createDNSConfig();
   
   // Create domain verification files
-  createDomainVerification()
+  createDomainVerification();
   
   // Update package.json with domain info
-  updatePackageJson()
+  updatePackageJson();
 
-  console.log(colors.green('\n✅ Domain configuration completed!'))
-  console.log(colors.blue('\n🚀 Next steps for domain setup:'))
-  console.log(colors.cyan('1. Register domain: euroweb.ai'))
-  console.log(colors.cyan('2. Point DNS to Vercel/Cloudflare'))
-  console.log(colors.cyan('3. Add domain in Vercel dashboard'))
-  console.log(colors.cyan('4. Configure SSL certificate'))
-  console.log(colors.cyan('5. Set up CDN and caching'))
+  console.log(colors.green('\n✅ Domain configuration completed!'));
+  console.log(colors.blue('\n🚀 Next steps for domain setup:'));
+  console.log(colors.cyan('1. Register domain: euroweb.ai'));
+  console.log(colors.cyan('2. Point DNS to Vercel/Cloudflare'));
+  console.log(colors.cyan('3. Add domain in Vercel dashboard'));
+  console.log(colors.cyan('4. Configure SSL certificate'));
+  console.log(colors.cyan('5. Set up CDN and caching'));
   
-  console.log(colors.yellow('\n💡 Domain registration recommendations:'))
-  console.log(colors.white('  • Registrar: Namecheap, GoDaddy, Cloudflare'))
-  console.log(colors.white('  • DNS: Cloudflare (free, fast, secure)'))
-  console.log(colors.white('  • SSL: Free via Vercel/Let\'s Encrypt'))
-  console.log(colors.white('  • CDN: Cloudflare + Vercel Edge Network'))
+  console.log(colors.yellow('\n💡 Domain registration recommendations:'));
+  console.log(colors.white('  • Registrar: Namecheap, GoDaddy, Cloudflare'));
+  console.log(colors.white('  • DNS: Cloudflare (free, fast, secure)'));
+  console.log(colors.white('  • SSL: Free via Vercel/Let\'s Encrypt'));
+  console.log(colors.white('  • CDN: Cloudflare + Vercel Edge Network'));
 }
 
 function createVercelConfig(): void {
@@ -146,11 +146,11 @@ function createVercelConfig(): void {
         "destination": "/api/openmind/:path*"
       }
     ]
-  }
+  };
 
-  const vercelPath = join(process.cwd(), 'vercel.json')
-  writeFileSync(vercelPath, JSON.stringify(vercelConfig, null, 2))
-  console.log(colors.green('✅ Created vercel.json with domain configuration'))
+  const vercelPath = join(process.cwd(), 'vercel.json');
+  writeFileSync(vercelPath, JSON.stringify(vercelConfig, null, 2));
+  console.log(colors.green('✅ Created vercel.json with domain configuration'));
 }
 
 function createDNSConfig(): void {
@@ -200,11 +200,11 @@ TXT  _vercel        "vc-domain-verify=euroweb-ai-verification-token"
 # 2. Update verification tokens with real values
 # 3. Configure SSL/TLS to "Full (strict)" in Cloudflare
 # 4. Enable HSTS and security features
-# 5. Set up page rules for caching and performance`
+# 5. Set up page rules for caching and performance`;
 
-  const dnsPath = join(process.cwd(), 'dns-config.txt')
-  writeFileSync(dnsPath, dnsConfig)
-  console.log(colors.green('✅ Created dns-config.txt with DNS records'))
+  const dnsPath = join(process.cwd(), 'dns-config.txt');
+  writeFileSync(dnsPath, dnsConfig);
+  console.log(colors.green('✅ Created dns-config.txt with DNS records'));
 }
 
 function createDomainVerification(): void {
@@ -275,43 +275,43 @@ Allow: /`
   </url>
 </urlset>`
     }
-  ]
+  ];
 
-  const publicDir = join(process.cwd(), 'public')
+  const publicDir = join(process.cwd(), 'public');
   verificationFiles.forEach(file => {
-    const filePath = join(publicDir, file.name)
-    writeFileSync(filePath, file.content)
-    console.log(colors.green(`✅ Created public/${file.name}`))
-  })
+    const filePath = join(publicDir, file.name);
+    writeFileSync(filePath, file.content);
+    console.log(colors.green(`✅ Created public/${file.name}`));
+  });
 }
 
 function updatePackageJson(): void {
-  const packagePath = join(process.cwd(), 'package.json')
-  if (!existsSync(packagePath)) return
+  const packagePath = join(process.cwd(), 'package.json');
+  if (!existsSync(packagePath)) {return;}
 
-  const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'))
+  const packageJson = JSON.parse(readFileSync(packagePath, 'utf8'));
   
   // Add domain info to package.json
-  packageJson.homepage = `https://${DOMAIN_CONFIG.primary}`
-  packageJson.repository = packageJson.repository || {}
-  packageJson.repository.url = 'https://github.com/Web8kameleon-hub/ultrawebthinking'
+  packageJson.homepage = `https://${DOMAIN_CONFIG.primary}`;
+  packageJson.repository = packageJson.repository || {};
+  packageJson.repository.url = 'https://github.com/Web8kameleon-hub/ultrawebthinking';
   
-  packageJson.config = packageJson.config || {}
-  packageJson.config.domain = DOMAIN_CONFIG.primary
-  packageJson.config.subdomains = DOMAIN_CONFIG.subdomains
+  packageJson.config = packageJson.config || {};
+  packageJson.config.domain = DOMAIN_CONFIG.primary;
+  packageJson.config.subdomains = DOMAIN_CONFIG.subdomains;
   
   // Add domain-related scripts
-  packageJson.scripts = packageJson.scripts || {}
-  packageJson.scripts['domain:setup'] = 'tsx scripts/domain-setup.ts'
-  packageJson.scripts['domain:verify'] = 'curl -I https://euroweb.ai'
-  packageJson.scripts['deploy:production'] = 'vercel --prod'
-  packageJson.scripts['deploy:preview'] = 'vercel'
+  packageJson.scripts = packageJson.scripts || {};
+  packageJson.scripts['domain:setup'] = 'tsx scripts/domain-setup.ts';
+  packageJson.scripts['domain:verify'] = 'curl -I https://euroweb.ai';
+  packageJson.scripts['deploy:production'] = 'vercel --prod';
+  packageJson.scripts['deploy:preview'] = 'vercel';
 
-  writeFileSync(packagePath, JSON.stringify(packageJson, null, 2))
-  console.log(colors.green('✅ Updated package.json with domain configuration'))
+  writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
+  console.log(colors.green('✅ Updated package.json with domain configuration'));
 }
 
 // Run domain setup
-setupDomain()
+setupDomain();
 
-export default setupDomain
+export default setupDomain;

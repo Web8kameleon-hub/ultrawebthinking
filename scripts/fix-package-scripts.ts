@@ -4,27 +4,27 @@
  * Adds missing development scripts to package.json
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs'
-import { join } from 'path'
-import chalk from 'chalk'
+import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { join } from 'path';
+import chalk from 'chalk';
 
 class PackageScriptsFixer {
-  private packagePath: string
+  private packagePath: string;
 
   constructor() {
-    this.packagePath = join(process.cwd(), 'package.json')
+    this.packagePath = join(process.cwd(), 'package.json');
   }
 
   async fixScripts(): Promise<void> {
-    console.log(chalk.blue('🔧 EuroWeb Package Scripts Fixer'))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue('🔧 EuroWeb Package Scripts Fixer'));
+    console.log(chalk.gray('─'.repeat(50)));
 
     if (!existsSync(this.packagePath)) {
-      console.log(chalk.red('❌ package.json not found!'))
-      return
+      console.log(chalk.red('❌ package.json not found!'));
+      return;
     }
 
-    const packageJson = JSON.parse(readFileSync(this.packagePath, 'utf8'))
+    const packageJson = JSON.parse(readFileSync(this.packagePath, 'utf8'));
     
     const scriptsToAdd = {
       // Albanian commands
@@ -57,56 +57,56 @@ class PackageScriptsFixer {
       "dev:simple": "next dev",
       "start:simple": "next start",
       "build:simple": "next build"
-    }
+    };
 
-    let modified = false
+    let modified = false;
     
     for (const [script, command] of Object.entries(scriptsToAdd)) {
       if (!packageJson.scripts[script]) {
-        packageJson.scripts[script] = command
-        modified = true
-        console.log(chalk.green(`✅ Added script: ${script}`))
+        packageJson.scripts[script] = command;
+        modified = true;
+        console.log(chalk.green(`✅ Added script: ${script}`));
       } else {
-        console.log(chalk.gray(`⚪ Script exists: ${script}`))
+        console.log(chalk.gray(`⚪ Script exists: ${script}`));
       }
     }
 
     if (modified) {
-      writeFileSync(this.packagePath, JSON.stringify(packageJson, null, 2))
-      console.log(chalk.green('\n🎉 Package.json updated with new scripts!'))
+      writeFileSync(this.packagePath, JSON.stringify(packageJson, null, 2));
+      console.log(chalk.green('\n🎉 Package.json updated with new scripts!'));
       
-      console.log(chalk.blue('\n📋 Available commands:'))
-      console.log(chalk.cyan('Albanian Commands:'))
-      console.log(chalk.yellow('  yarn zhvillo    # Start development'))
-      console.log(chalk.yellow('  yarn testo      # Run tests'))
-      console.log(chalk.yellow('  yarn nderto     # Build project'))
-      console.log(chalk.yellow('  yarn statusi    # Check status'))
+      console.log(chalk.blue('\n📋 Available commands:'));
+      console.log(chalk.cyan('Albanian Commands:'));
+      console.log(chalk.yellow('  yarn zhvillo    # Start development'));
+      console.log(chalk.yellow('  yarn testo      # Run tests'));
+      console.log(chalk.yellow('  yarn nderto     # Build project'));
+      console.log(chalk.yellow('  yarn statusi    # Check status'));
       
-      console.log(chalk.cyan('\nEuroWeb Commands:'))
-      console.log(chalk.yellow('  yarn euroweb:start    # Start platform'))
-      console.log(chalk.yellow('  yarn euroweb:test     # Run tests'))
-      console.log(chalk.yellow('  yarn euroweb:build    # Build all'))
-      console.log(chalk.yellow('  yarn euroweb:routes   # Fix routes'))
+      console.log(chalk.cyan('\nEuroWeb Commands:'));
+      console.log(chalk.yellow('  yarn euroweb:start    # Start platform'));
+      console.log(chalk.yellow('  yarn euroweb:test     # Run tests'));
+      console.log(chalk.yellow('  yarn euroweb:build    # Build all'));
+      console.log(chalk.yellow('  yarn euroweb:routes   # Fix routes'));
       
-      console.log(chalk.cyan('\nQuick Commands:'))
-      console.log(chalk.yellow('  yarn dev:simple      # Simple Next.js dev'))
-      console.log(chalk.yellow('  yarn debug:all       # Complete diagnostic'))
-      console.log(chalk.yellow('  yarn fix:all         # Fix all issues'))
+      console.log(chalk.cyan('\nQuick Commands:'));
+      console.log(chalk.yellow('  yarn dev:simple      # Simple Next.js dev'));
+      console.log(chalk.yellow('  yarn debug:all       # Complete diagnostic'));
+      console.log(chalk.yellow('  yarn fix:all         # Fix all issues'));
       
     } else {
-      console.log(chalk.yellow('\n⚠️ All scripts already exist'))
+      console.log(chalk.yellow('\n⚠️ All scripts already exist'));
     }
   }
 }
 
 // Main execution
 function main() {
-  const fixer = new PackageScriptsFixer()
-  fixer.fixScripts()
+  const fixer = new PackageScriptsFixer();
+  fixer.fixScripts();
 }
 
 if (require.main === module) {
-  main().catch(console.error)
+  main().catch(console.error);
 }
 
-export default PackageScriptsFixer
+export default PackageScriptsFixer;

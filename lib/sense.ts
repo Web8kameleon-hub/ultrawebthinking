@@ -241,10 +241,10 @@ class RealSenseSystem {
 
   private getConnectionSpeed(): 'slow' | 'fast' | 'offline' {
     const connection = (navigator as any).connection;
-    if (!connection) return 'fast';
+    if (!connection) {return 'fast';}
     
-    if (connection.effectiveType === '4g') return 'fast';
-    if (connection.effectiveType === '3g') return 'slow';
+    if (connection.effectiveType === '4g') {return 'fast';}
+    if (connection.effectiveType === '3g') {return 'slow';}
     return 'offline';
   }
 }

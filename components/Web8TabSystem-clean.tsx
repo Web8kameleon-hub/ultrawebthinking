@@ -8,10 +8,10 @@
  * @license MIT
  */
 
-'use client'
+'use client';
 
-import React from 'react'
-import { motion } from 'framer-motion'
+import React from 'react';
+import { motion } from 'framer-motion';
 
 // Interface definitions
 interface Tab {
@@ -42,7 +42,7 @@ const initialTabs: Tab[] = [
     isActive: true,
     isLoading: false
   }
-]
+];
 
 const staticAGIMetrics: AGIMetrics = {
   processingSpeed: '2.5 THz',
@@ -53,20 +53,20 @@ const staticAGIMetrics: AGIMetrics = {
   latency: 12,
   throughput: '1.2 GB/s',
   activeNodes: 28
-}
+};
 
 /**
  * Web8 Tab System Component
  * Industrial architecture without React hooks
  */
-const Web8TabSystem: React.FC = () => {
-  const tabs = initialTabs
-  const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
-  const agiMetrics = staticAGIMetrics
-  const currentTime = new Date().toLocaleTimeString()
+const Web8TabSystem = (): React.ReactElement => {
+  const tabs = initialTabs;
+  const activeTab = tabs.find(tab => tab.isActive) || tabs[0];
+  const agiMetrics = staticAGIMetrics;
+  const currentTime = new Date().toLocaleTimeString();
 
   return (
-    <div className={{
+    <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
       color: '#f8fafc',
@@ -79,7 +79,7 @@ const Web8TabSystem: React.FC = () => {
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className={{
+        style={{
           background: 'rgba(45, 52, 70, 0.9)',
           backdropFilter: 'blur(10px)',
           borderBottom: '1px solid rgba(212, 175, 55, 0.3)',
@@ -90,8 +90,8 @@ const Web8TabSystem: React.FC = () => {
         }}
       >
         {/* Left side - Logo and navigation */}
-        <div className={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div className={{
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{
             fontSize: '24px',
             fontWeight: 700,
             background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
@@ -101,8 +101,8 @@ const Web8TabSystem: React.FC = () => {
             EuroWeb
           </div>
           
-          <nav className={{ display: 'flex', gap: '16px' }}>
-            <button className={{
+          <nav style={{ display: 'flex', gap: '16px' }}>
+            <button style={{
               background: 'rgba(212, 175, 55, 0.2)',
               border: '1px solid #d4af37',
               color: '#d4af37',
@@ -113,7 +113,7 @@ const Web8TabSystem: React.FC = () => {
             }}>
               🧠 AGI Core
             </button>
-            <button className={{
+            <button style={{
               background: 'transparent',
               border: '1px solid rgba(212, 175, 55, 0.3)',
               color: '#cbd5e1',
@@ -128,8 +128,8 @@ const Web8TabSystem: React.FC = () => {
         </div>
 
         {/* Right side - Status and time */}
-        <div className={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div className={{
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
@@ -138,7 +138,7 @@ const Web8TabSystem: React.FC = () => {
             borderRadius: '6px',
             fontSize: '14px'
           }}>
-            <div className={{
+            <div style={{
               width: '8px',
               height: '8px',
               background: '#22c55e',
@@ -146,7 +146,7 @@ const Web8TabSystem: React.FC = () => {
             }} />
             AGI Active
           </div>
-          <div className={{ fontSize: '14px', color: '#cbd5e1' }}>
+          <div style={{ fontSize: '14px', color: '#cbd5e1' }}>
             {currentTime}
           </div>
         </div>
@@ -157,7 +157,7 @@ const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className={{
+        style={{
           background: 'rgba(30, 34, 52, 0.8)',
           borderBottom: '1px solid rgba(212, 175, 55, 0.2)',
           padding: '0 20px',
@@ -170,7 +170,7 @@ const Web8TabSystem: React.FC = () => {
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={{
+            style={{
               background: tab.isActive ? 'rgba(212, 175, 55, 0.2)' : 'transparent',
               border: tab.isActive ? '1px solid #d4af37' : '1px solid transparent',
               borderRadius: '8px',
@@ -186,7 +186,7 @@ const Web8TabSystem: React.FC = () => {
             }}
           >
             {tab.isLoading && (
-              <div className={{
+              <div style={{
                 width: '12px',
                 height: '12px',
                 border: '2px solid rgba(212, 175, 55, 0.3)',
@@ -195,14 +195,14 @@ const Web8TabSystem: React.FC = () => {
                 animation: 'spin 1s linear infinite'
               }} />
             )}
-            <span className={{ 
+            <span style={{ 
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap'
             }}>
               {tab.title}
             </span>
-            <button className={{
+            <button style={{
               background: 'none',
               border: 'none',
               color: 'inherit',
@@ -217,7 +217,7 @@ const Web8TabSystem: React.FC = () => {
           </div>
         ))}
         
-        <button className={{
+        <button style={{
           background: 'none',
           border: '1px solid rgba(212, 175, 55, 0.3)',
           borderRadius: '6px',
@@ -236,19 +236,19 @@ const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        className={{
+        style={{
           background: 'rgba(26, 29, 41, 0.9)',
           padding: '12px 20px',
           borderBottom: '1px solid rgba(212, 175, 55, 0.2)'
         }}
       >
-        <div className={{
+        <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '12px'
         }}>
-          <div className={{ display: 'flex', gap: '8px' }}>
-            <button className={{
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button style={{
               background: 'rgba(212, 175, 55, 0.2)',
               border: 'none',
               borderRadius: '4px',
@@ -259,7 +259,7 @@ const Web8TabSystem: React.FC = () => {
             }}>
               ←
             </button>
-            <button className={{
+            <button style={{
               background: 'rgba(212, 175, 55, 0.2)',
               border: 'none',
               borderRadius: '4px',
@@ -270,7 +270,7 @@ const Web8TabSystem: React.FC = () => {
             }}>
               →
             </button>
-            <button className={{
+            <button style={{
               background: 'rgba(212, 175, 55, 0.2)',
               border: 'none',
               borderRadius: '4px',
@@ -287,7 +287,7 @@ const Web8TabSystem: React.FC = () => {
             type="text"
             value={activeTab.url}
             readOnly
-            className={{
+            style={{
               flex: 1,
               background: 'rgba(45, 52, 70, 0.8)',
               border: '1px solid rgba(212, 175, 55, 0.3)',
@@ -298,7 +298,7 @@ const Web8TabSystem: React.FC = () => {
             }}
           />
 
-          <button className={{
+          <button style={{
             background: 'rgba(34, 197, 94, 0.2)',
             border: '1px solid #22c55e',
             borderRadius: '6px',
@@ -317,25 +317,25 @@ const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className={{
+        style={{
           flex: 1,
           display: 'flex',
           overflow: 'hidden'
         }}
       >
         {/* Content Area */}
-        <div className={{
+        <div style={{
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
           background: 'rgba(15, 20, 25, 0.8)'
         }}>
           {/* AGI Dashboard */}
-          <div className={{
+          <div style={{
             padding: '40px',
             textAlign: 'center'
           }}>
-            <h1 className={{
+            <h1 style={{
               fontSize: '48px',
               fontWeight: 800,
               marginBottom: '20px',
@@ -346,7 +346,7 @@ const Web8TabSystem: React.FC = () => {
               AGI Core Dashboard
             </h1>
             
-            <p className={{
+            <p style={{
               fontSize: '20px',
               color: '#cbd5e1',
               marginBottom: '40px',
@@ -357,7 +357,7 @@ const Web8TabSystem: React.FC = () => {
             </p>
 
             {/* AGI Metrics Grid */}
-            <div className={{
+            <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
               gap: '20px',
@@ -368,7 +368,7 @@ const Web8TabSystem: React.FC = () => {
                 <motion.div
                   key={key}
                   whileHover={{ scale: 1.05 }}
-                  className={{
+                  style={{
                     background: 'rgba(45, 52, 70, 0.8)',
                     border: '1px solid rgba(212, 175, 55, 0.3)',
                     borderRadius: '12px',
@@ -376,7 +376,7 @@ const Web8TabSystem: React.FC = () => {
                     textAlign: 'center'
                   }}
                 >
-                  <div className={{
+                  <div style={{
                     fontSize: '24px',
                     fontWeight: 600,
                     color: '#d4af37',
@@ -384,7 +384,7 @@ const Web8TabSystem: React.FC = () => {
                   }}>
                     {value}
                   </div>
-                  <div className={{
+                  <div style={{
                     fontSize: '14px',
                     color: '#cbd5e1',
                     textTransform: 'uppercase',
@@ -397,7 +397,7 @@ const Web8TabSystem: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className={{
+            <div style={{
               display: 'flex',
               gap: '20px',
               justifyContent: 'center',
@@ -407,7 +407,7 @@ const Web8TabSystem: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={{
+                style={{
                   background: '#d4af37',
                   color: '#000',
                   border: 'none',
@@ -424,7 +424,7 @@ const Web8TabSystem: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={{
+                style={{
                   background: 'transparent',
                   color: '#d4af37',
                   border: '2px solid #d4af37',
@@ -441,7 +441,7 @@ const Web8TabSystem: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className={{
+                style={{
                   background: 'rgba(34, 197, 94, 0.2)',
                   color: '#22c55e',
                   border: '2px solid #22c55e',
@@ -459,7 +459,8 @@ const Web8TabSystem: React.FC = () => {
         </div>
       </motion.main>
     </div>
-  )
-}
+  );
+};
 
-export default Web8TabSystem
+export { Web8TabSystem };
+export default Web8TabSystem;

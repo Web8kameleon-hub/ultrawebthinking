@@ -4,18 +4,18 @@
  * Konfigurimi i plotë për të gjitha AI providers
  */
 
-import { writeFileSync, existsSync, mkdirSync } from 'fs'
-import { join } from 'path'
-import colors from 'colors'
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
+import colors from 'colors';
 
 function setupOpenMind(): void {
-  console.log(colors.cyan('\n🧠 EuroWeb OpenMind AI Setup\n'))
-  console.log(colors.yellow('Konfigurimi i AI providers...'))
+  console.log(colors.cyan('\n🧠 EuroWeb OpenMind AI Setup\n'));
+  console.log(colors.yellow('Konfigurimi i AI providers...'));
 
   // Create openmind page
-  const pagesDir = join(process.cwd(), 'pages')
+  const pagesDir = join(process.cwd(), 'pages');
   if (!existsSync(pagesDir)) {
-    mkdirSync(pagesDir, { recursive: true })
+    mkdirSync(pagesDir, { recursive: true });
   }
 
   const openmindPageContent = `'use client'
@@ -58,18 +58,18 @@ export default function OpenMindPage() {
     </Suspense>
   )
 }
-`
+`;
 
-  const openmindPagePath = join(pagesDir, 'openmind.tsx')
-  writeFileSync(openmindPagePath, openmindPageContent)
-  console.log(colors.green('✅ Created pages/openmind.tsx'))
+  const openmindPagePath = join(pagesDir, 'openmind.tsx');
+  writeFileSync(openmindPagePath, openmindPageContent);
+  console.log(colors.green('✅ Created pages/openmind.tsx'));
 
   // Create app route version too
-  const appDir = join(process.cwd(), 'app')
-  const openmindAppDir = join(appDir, 'openmind')
+  const appDir = join(process.cwd(), 'app');
+  const openmindAppDir = join(appDir, 'openmind');
   
   if (!existsSync(openmindAppDir)) {
-    mkdirSync(openmindAppDir, { recursive: true })
+    mkdirSync(openmindAppDir, { recursive: true });
   }
 
   const appPageContent = `'use client'
@@ -79,14 +79,14 @@ import OpenMindChat from '../../components/OpenMindChat'
 export default function OpenMindPage() {
   return <OpenMindChat />
 }
-`
+`;
 
-  const appPagePath = join(openmindAppDir, 'page.tsx')
-  writeFileSync(appPagePath, appPageContent)
-  console.log(colors.green('✅ Created app/openmind/page.tsx'))
+  const appPagePath = join(openmindAppDir, 'page.tsx');
+  writeFileSync(appPagePath, appPageContent);
+  console.log(colors.green('✅ Created app/openmind/page.tsx'));
 
   // Show available AI providers
-  console.log(colors.cyan('\n🤖 Available AI Providers:'))
+  console.log(colors.cyan('\n🤖 Available AI Providers:'));
   const providers = [
     '🧠 OpenMind AI - https://openmind.ai',
     '🤖 Anthropic Claude - https://claude.ai', 
@@ -96,24 +96,24 @@ export default function OpenMindPage() {
     '🦙 LlamaGPT - https://llama.ai',
     '💎 Google Gemini - https://gemini.google.com',
     '🔎 Perplexity AI - https://perplexity.ai'
-  ]
+  ];
 
   providers.forEach(provider => {
-    console.log(colors.white('  ' + provider))
-  })
+    console.log(colors.white('  ' + provider));
+  });
 
-  console.log(colors.green('\n✅ OpenMind AI setup completed!'))
-  console.log(colors.blue('\n🚀 Next steps:'))
-  console.log(colors.cyan('1. yarn dev'))
-  console.log(colors.cyan('2. Visit: http://localhost:3000/openmind'))
-  console.log(colors.cyan('3. Chat with any AI provider!'))
+  console.log(colors.green('\n✅ OpenMind AI setup completed!'));
+  console.log(colors.blue('\n🚀 Next steps:'));
+  console.log(colors.cyan('1. yarn dev'));
+  console.log(colors.cyan('2. Visit: http://localhost:3000/openmind'));
+  console.log(colors.cyan('3. Chat with any AI provider!'));
   
-  console.log(colors.yellow('\n💡 Available commands:'))
-  console.log(colors.white('  yarn ai:chat    - Start AI chat interface'))
-  console.log(colors.white('  yarn openmind   - Run this setup again'))
+  console.log(colors.yellow('\n💡 Available commands:'));
+  console.log(colors.white('  yarn ai:chat    - Start AI chat interface'));
+  console.log(colors.white('  yarn openmind   - Run this setup again'));
 }
 
 // Run setup
-setupOpenMind()
+setupOpenMind();
 
-export default setupOpenMind
+export default setupOpenMind;

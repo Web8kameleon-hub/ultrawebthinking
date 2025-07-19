@@ -93,7 +93,7 @@ class PandaTokenController {
   }
 
   private applyTokens(tokens: Partial<DynamicTokens>): void {
-    if (!this.root) return;
+    if (!this.root) {return;}
 
     Object.entries(tokens).forEach(([key, value]) => {
       if (this.currentTokens[key as keyof DynamicTokens] !== value) {
@@ -106,7 +106,7 @@ class PandaTokenController {
 
   // Manual token updates
   public setToken(key: keyof DynamicTokens, value: string): void {
-    if (!this.root) return;
+    if (!this.root) {return;}
     
     const cssVar = `--${key.replace('.', '-')}`;
     this.root.style.setProperty(cssVar, value);

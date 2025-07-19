@@ -10,13 +10,13 @@
  * @license MIT
  */
 
-import fs from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import colors from 'colors'
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import colors from 'colors';
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Lista e teknologjive te NDALUARA
 const FORBIDDEN_TECHNOLOGIES = [
@@ -74,7 +74,7 @@ const FORBIDDEN_TECHNOLOGIES = [
   // Magic & Auto-generation
   'auto-import', 'unplugin', 'magic-string', 'code-generator',
   'swagger-codegen', 'openapi-generator'
-]
+];
 
 interface CommandOptions {
   [key: string]: boolean | string | undefined;

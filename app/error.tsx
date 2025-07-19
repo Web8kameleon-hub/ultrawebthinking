@@ -1,6 +1,6 @@
 'use client'
 
-import {  } from 'react'
+import { useEffect } from 'react'
 
 export default function Error({
   error,
@@ -9,155 +9,52 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
-  (() => {
-    console.error('EuroWeb Platform Error:', error)
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error)
   }, [error])
 
   return (
-    <div className={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      background: 'linear-gradient(135deg, #1a1d29 0%, #2d2a45 30%, #1e2a4a 70%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'Playfair Display, serif',
-      textAlign: 'center',
-      padding: '20px'
-    }}>
-      <div className={{ maxWidth: '600px' }}>
-        <div className={{
-          fontSize: '64px',
-          marginBottom: '20px'
-        }}>
-          ⚠️
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
+        <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
+          <svg
+            className="w-6 h-6 text-red-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+            />
+          </svg>
         </div>
         
-        <h1 className={{
-          fontSize: '32px',
-          color: '#ef4444',
-          margin: '0 0 20px 0',
-          fontWeight: 700,
-          textShadow: '0 2px 4px rgba(0, 0, 0, 0.6)'
-        }}>
-          AGI System Error
-        </h1>
-        
-        <h2 className={{
-          fontSize: '24px',
-          color: '#f8fafc',
-          margin: '0 0 15px 0',
-          fontWeight: 600
-        }}>
-          🧠 Neural Network Disruption
-        </h2>
-        
-        <p className={{
-          fontSize: '16px',
-          color: '#cbd5e1',
-          margin: '0 0 25px 0',
-          lineHeight: '1.6'
-        }}>
-          Një gabim i papritur ndodhi në sistemin e EuroWeb Platform. 
-          AGI Core po përpiqet të rikthejë stabilitetin e shtresave të inteligjencës.
-        </p>
-        
-        {process.env.NODE_ENV === 'development' && (
-          <div className={{
-            background: 'rgba(239, 68, 68, 0.1)',
-            border: '1px solid rgba(239, 68, 68, 0.3)',
-            borderRadius: '8px',
-            padding: '15px',
-            marginBottom: '25px',
-            textAlign: 'left'
-          }}>
-            <h3 className={{ color: '#ef4444', fontSize: '14px', marginBottom: '10px' }}>
-              Debug Info:
-            </h3>
-            <pre className={{
-              fontSize: '12px',
-              color: '#fca5a5',
-              whiteSpace: 'pre-wrap',
-              wordBreak: 'break-word'
-            }}>
-              {error.message}
-            </pre>
-          </div>
-        )}
-        
-        <div className={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button
-            onClick={reset}
-            className={{
-              padding: '12px 24px',
-              background: 'linear-gradient(135deg, #d4af37, #b8982d)',
-              color: '#1a1d29',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: 600,
-              fontSize: '16px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              fontFamily: 'Inter, sans-serif'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(212, 175, 55, 0.3)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = 'none'
-            }}
-          >
-            🔄 Restart AGI Core
-          </button>
+        <div className="mt-4 text-center">
+          <h1 className="text-lg font-medium text-gray-900">
+            Something went wrong!
+          </h1>
+          <p className="mt-2 text-sm text-gray-500">
+            An error occurred while loading this page.
+          </p>
           
-          <button
-            onClick={() => window.location.href = '/'}
-            className={{
-              padding: '12px 24px',
-              background: 'transparent',
-              color: '#d4af37',
-              border: '2px solid #d4af37',
-              borderRadius: '8px',
-              fontWeight: 600,
-              fontSize: '16px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              fontFamily: 'Inter, sans-serif'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(212, 175, 55, 0.1)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent'
-            }}
-          >
-            🏠 Return Home
-          </button>
-        </div>
-        
-        <div className={{
-          marginTop: '40px',
-          padding: '20px',
-          background: 'rgba(45, 52, 70, 0.6)',
-          border: '1px solid rgba(212, 175, 55, 0.2)',
-          borderRadius: '12px'
-        }}>
-          <h3 className={{ color: '#d4af37', marginBottom: '15px', fontSize: '16px' }}>
-            🛠️ Sistema e Diagnozës
-          </h3>
-          <div className={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
-            gap: '10px', 
-            fontSize: '14px',
-            color: '#cbd5e1'
-          }}>
-            <div>🧠 AGI Core: Checking...</div>
-            <div>📋 AGISheet: Standby</div>
-            <div>🌐 Mesh Network: Active</div>
-            <div>🔒 Security: Protected</div>
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <button
+              onClick={reset}
+              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Try again
+            </button>
+            
+            <button
+              onClick={() => window.location.href = '/'}
+              className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Go home
+            </button>
           </div>
         </div>
       </div>

@@ -152,10 +152,9 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
     };
   };
 
-  // Initialize on component mount
-  React.useEffect(() => {
-    initializeNodes();
-    generateDataFlows();
+  // Initialize immediately - NO useEffect
+  initializeNodes();
+  generateDataFlows();
 
     const interval = setInterval(() => {
       if (showDataFlow) {
@@ -163,9 +162,6 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
         flows.forEach(flow => onDataFlow?.(flow));
       }
     }, 1000);
-
-    return () => clearInterval(interval);
-  }, [showDataFlow, onDataFlow]);
 
   return (
     <motion.div
@@ -215,7 +211,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
         {nodes.map(node => 
           node.connections.map(targetId => {
             const targetNode = nodes.find(n => n.id === targetId);
-            if (!targetNode) return null;
+            if (!targetNode) {return null;}
 
             return (
               <motion.line
@@ -239,7 +235,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
         {showDataFlow && dataFlows.map((flow, index) => {
           const fromNode = nodes.find(n => n.id === flow.from);
           const toNode = nodes.find(n => n.id === flow.to);
-          if (!fromNode || !toNode) return null;
+          if (!fromNode || !toNode) {return null;}
 
           return (
             <motion.circle

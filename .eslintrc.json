@@ -1,19 +1,91 @@
 {
-  "extends": ["next/core-web-vitals"],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": "warn",
-    "no-console": "warn",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "react/no-unescaped-entities": "off",
-    "react/display-name": "off",
-    "@next/next/no-img-element": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "prefer-const": "off",
-    "no-var": "off"
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
   },
+  "extends": [
+    "eslint:recommended",
+    "@typescript-eslint/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
-  }
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "rules": {
+    // TypeScript specifike
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-inferrable-types": "error",
+    "@typescript-eslint/prefer-const": "error",
+    
+    // Vanilla JS/TS + Panda CSS
+    "no-console": "warn",
+    "no-debugger": "error",
+    "no-unused-vars": "off",
+    "prefer-const": "error",
+    "no-var": "error",
+    
+    // Import/Export
+    "no-duplicate-imports": "error",
+    
+    // Framer Motion compatibility
+    "prefer-arrow-callback": "error",
+    "arrow-spacing": "error",
+    
+    // Code quality
+    "eqeqeq": "error",
+    "curly": "error",
+    "brace-style": ["error", "1tbs"],
+    "indent": ["error", 2],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    
+    // Next.js compatibility
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "dist/",
+    "build/",
+    "coverage/",
+    "styled-system/",
+    "*.config.js",
+    "*.config.mjs",
+    "*.config.ts",
+    "*.config.mts"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": ["error", { 
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }]
+      }
+    },
+    {
+      "files": ["app/**/*", "pages/**/*"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    }
+  ]
 }

@@ -71,15 +71,15 @@ interface AGICoreConfig {
 }
 
 class AGICore extends SimpleEventEmitter {
-  private layers: Map<string, AGILayer> = new Map()
-  private config: AGICoreConfig
-  private logger: Logger = createLogger()
-  private isInitialized: boolean = false
-  private processingSpeed: number = 2500 // THz
-  private startTime: number
+  private layers: Map<string, AGILayer> = new Map();
+  private config: AGICoreConfig;
+  private logger: Logger = createLogger();
+  private isInitialized = false;
+  private processingSpeed = 2500; // THz
+  private startTime: number;
 
   constructor(config: Partial<AGICoreConfig> = {}) {
-    super()
+    super();
     
     this.config = {
       layers: config.layers || 7,
@@ -87,19 +87,19 @@ class AGICore extends SimpleEventEmitter {
       memoryOptimal: config.memoryOptimal ?? true,
       realTimeUpdates: config.realTimeUpdates ?? true,
       securityLevel: config.securityLevel || 'standard'
-    }
+    };
 
-    this.startTime = Date.now()
-    this.setupLogger()
-    this.initializeLayers()
+    this.startTime = Date.now();
+    this.setupLogger();
+    this.initializeLayers();
   }
 
   private setupLogger(): void {
-    this.logger = createLogger()
+    this.logger = createLogger();
   }
 
   private initializeLayers(): void {
-    this.logger.info('🧠 Initializing AGI Core layers...')
+    this.logger.info('🧠 Initializing AGI Core layers...');
 
     const layerDefinitions = [
       { id: 'LAYER_1', name: 'Perception Layer', type: 'sense' },
@@ -109,7 +109,7 @@ class AGICore extends SimpleEventEmitter {
       { id: 'LAYER_5', name: 'Learning Layer', type: 'monitor' },
       { id: 'LAYER_6', name: 'Memory Layer', type: 'mind' },
       { id: 'LAYER_7', name: 'Integration Layer', type: 'orchestrator' }
-    ]
+    ];
 
     layerDefinitions.forEach((def, index) => {
       const layer: AGILayer = {
@@ -124,44 +124,44 @@ class AGICore extends SimpleEventEmitter {
           initialized: true,
           version: '1.0.0'
         }
-      }
+      };
 
-      this.layers.set(def.id, layer)
-      this.logger.info(`✅ ${def.name} (${def.id}) initialized`)
-    })
+      this.layers.set(def.id, layer);
+      this.logger.info(`✅ ${def.name} (${def.id}) initialized`);
+    });
 
-    this.isInitialized = true
-    this.startRealTimeUpdates()
-    this.emit('core:initialized', { layers: this.layers.size })
+    this.isInitialized = true;
+    this.startRealTimeUpdates();
+    this.emit('core:initialized', { layers: this.layers.size });
     
-    this.logger.info(`🎉 AGI Core fully initialized with ${this.layers.size} layers`)
+    this.logger.info(`🎉 AGI Core fully initialized with ${this.layers.size} layers`);
   }
 
   private startRealTimeUpdates(): void {
-    if (!this.config.realTimeUpdates) return
+    if (!this.config.realTimeUpdates) {return;}
 
     setInterval(() => {
-      this.updateLayerMetrics()
-      this.emit('core:metrics:updated', this.getMetrics())
-    }, 3000)
+      this.updateLayerMetrics();
+      this.emit('core:metrics:updated', this.getMetrics());
+    }, 3000);
 
-    this.logger.info('📡 Real-time updates started')
+    this.logger.info('📡 Real-time updates started');
   }
 
   private updateLayerMetrics(): void {
     this.layers.forEach((layer, id) => {
       // Simulate realistic load fluctuations
-      const loadChange = (Math.random() - 0.5) * 10
-      layer.load = Math.max(10, Math.min(95, layer.load + loadChange))
+      const loadChange = (Math.random() - 0.5) * 10;
+      layer.load = Math.max(10, Math.min(95, layer.load + loadChange));
       
       // Update connections
-      const connectionChange = Math.floor((Math.random() - 0.5) * 20)
-      layer.connections = Math.max(50, layer.connections + connectionChange)
+      const connectionChange = Math.floor((Math.random() - 0.5) * 20);
+      layer.connections = Math.max(50, layer.connections + connectionChange);
       
-      layer.lastUpdate = Date.now()
+      layer.lastUpdate = Date.now();
       
-      this.layers.set(id, layer)
-    })
+      this.layers.set(id, layer);
+    });
   }
 
   public getMetrics() {
@@ -175,42 +175,42 @@ class AGICore extends SimpleEventEmitter {
       totalConnections: this.getTotalConnections(),
       memoryOptimal: this.config.memoryOptimal,
       timestamp: Date.now()
-    }
+    };
   }
 
   public getLayerStatus(layerId: string): AGILayer | null {
-    return this.layers.get(layerId) || null
+    return this.layers.get(layerId) || null;
   }
 
   public getAllLayers(): AGILayer[] {
-    return Array.from(this.layers.values())
+    return Array.from(this.layers.values());
   }
 
   private getAverageLoad(): number {
-    const loads = Array.from(this.layers.values()).map(l => l.load)
-    return loads.reduce((sum, load) => sum + load, 0) / loads.length
+    const loads = Array.from(this.layers.values()).map(l => l.load);
+    return loads.reduce((sum, load) => sum + load, 0) / loads.length;
   }
 
   private getTotalConnections(): number {
-    return Array.from(this.layers.values()).reduce((sum, layer) => sum + layer.connections, 0)
+    return Array.from(this.layers.values()).reduce((sum, layer) => sum + layer.connections, 0);
   }
 
   public processAGICommand(command: string, data: any): any {
-    this.logger.info(`Processing AGI command: ${command}`)
+    this.logger.info(`Processing AGI command: ${command}`);
     
     switch (command) {
       case 'analyze':
-        return this.performAnalysis(data)
+        return this.performAnalysis(data);
       case 'decide':
-        return this.makeDecision(data)
+        return this.makeDecision(data);
       case 'plan':
-        return this.createPlan(data)
+        return this.createPlan(data);
       case 'execute':
-        return this.executeAction(data)
+        return this.executeAction(data);
       case 'learn':
-        return this.learnFromData(data)
+        return this.learnFromData(data);
       default:
-        throw new Error(`Unknown AGI command: ${command}`)
+        throw new Error(`Unknown AGI command: ${command}`);
     }
   }
 
@@ -221,7 +221,7 @@ class AGICore extends SimpleEventEmitter {
       insights: ['Pattern detected', 'Anomaly found', 'Optimization possible'],
       confidence: 0.95,
       timestamp: Date.now()
-    }
+    };
   }
 
   private makeDecision(data: any): any {
@@ -231,7 +231,7 @@ class AGICore extends SimpleEventEmitter {
       reasoning: 'Based on current data patterns and risk assessment',
       confidence: 0.88,
       timestamp: Date.now()
-    }
+    };
   }
 
   private createPlan(data: any): any {
@@ -241,7 +241,7 @@ class AGICore extends SimpleEventEmitter {
       steps: ['Initialize', 'Process', 'Validate', 'Execute'],
       timeline: '5 minutes',
       timestamp: Date.now()
-    }
+    };
   }
 
   private executeAction(data: any): any {
@@ -251,7 +251,7 @@ class AGICore extends SimpleEventEmitter {
       result: 'success',
       duration: '2.3 seconds',
       timestamp: Date.now()
-    }
+    };
   }
 
   private learnFromData(data: any): any {
@@ -261,7 +261,7 @@ class AGICore extends SimpleEventEmitter {
       newKnowledge: 'Pattern recognition improved by 3%',
       modelUpdated: true,
       timestamp: Date.now()
-    }
+    };
   }
 }
 
@@ -272,12 +272,12 @@ const agiCore = new AGICore({
   memoryOptimal: true,
   realTimeUpdates: true,
   securityLevel: 'high'
-})
+});
 
 // Log startup
-console.log('🧠 AGI Core Module Started')
-console.log('📊 Metrics:', agiCore.getMetrics())
+console.log('🧠 AGI Core Module Started');
+console.log('📊 Metrics:', agiCore.getMetrics());
 
 // Export for use in other modules
-export default agiCore
-export { AGICore, type AGILayer, type AGICoreConfig }
+export default agiCore;
+export { AGICore, type AGILayer, type AGICoreConfig };

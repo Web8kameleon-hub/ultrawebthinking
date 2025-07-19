@@ -360,7 +360,7 @@ class RealValidator {
 
   private validateResponseCoherence(response: any, memory: AGIMemoryStore): boolean {
     // Check if response aligns with current memory state
-    if (!response || typeof response !== 'object') return false;
+    if (!response || typeof response !== 'object') {return false;}
     
     // Check if response references known context
     const responseText = JSON.stringify(response);
@@ -375,7 +375,7 @@ class RealValidator {
 
   getSystemHealth(): { overall: number; components: Record<string, number> } {
     const recent = this.validationHistory.slice(-10);
-    if (recent.length === 0) return { overall: 0, components: {} };
+    if (recent.length === 0) {return { overall: 0, components: {} };}
 
     const overall = recent.reduce((sum, r) => sum + r.score, 0) / recent.length;
     

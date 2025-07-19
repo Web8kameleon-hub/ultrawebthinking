@@ -24,7 +24,7 @@ export interface EngineMetrics {
 
 class RealEngine {
   private config: RealEngineConfig;
-  private isRunning: boolean = false;
+  private isRunning = false;
   private metrics: EngineMetrics;
   private modules: Map<string, any> = new Map();
   private meshNodes: Set<string> = new Set();
@@ -55,7 +55,7 @@ class RealEngine {
 
   // Start real engine with real components
   start(): void {
-    if (this.isRunning) return;
+    if (this.isRunning) {return;}
 
     console.log('🚀 Starting Web8 Real Engine...');
     this.isRunning = true;
@@ -86,7 +86,7 @@ class RealEngine {
 
   // Stop real engine
   stop(): void {
-    if (!this.isRunning) return;
+    if (!this.isRunning) {return;}
 
     console.log('🛑 Stopping Web8 Real Engine...');
     this.isRunning = false;
@@ -136,7 +136,7 @@ class RealEngine {
   }
 
   // Real LoRa network communication
-  sendLoRa(message: string, frequency: number = 868): boolean {
+  sendLoRa(message: string, frequency = 868): boolean {
     if (!this.config.loraEnabled || !this.isRunning) {
       return false;
     }
@@ -285,7 +285,7 @@ class RealEngine {
     const startTime = Date.now();
     
     setInterval(() => {
-      if (!this.isRunning) return;
+      if (!this.isRunning) {return;}
       
       this.metrics.uptime = Date.now() - startTime;
       
@@ -312,7 +312,7 @@ class RealEngine {
   }
 
   private setupEventListeners(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {return;}
     
     // Real event listeners for mesh network
     window.addEventListener('online', () => {

@@ -4,10 +4,10 @@
  * Kontrollo i plotë i projektit: teste, build, dev, push
  */
 
-import { spawn, spawnSync } from 'child_process'
-import { existsSync, readFileSync } from 'fs'
-import { join } from 'path'
-import chalk from 'chalk'
+import { spawn, spawnSync } from 'child_process';
+import { existsSync, readFileSync } from 'fs';
+import { join } from 'path';
+import chalk from 'chalk';
 
 interface ProjectConfig {
   name: string
@@ -33,63 +33,63 @@ interface BuildResult {
 }
 
 class EuroWebProjectControl {
-  private config: ProjectConfig
-  private rootDir: string
+  private config: ProjectConfig;
+  private rootDir: string;
 
   constructor() {
-    this.rootDir = process.cwd()
-    this.config = this.loadProjectConfig()
+    this.rootDir = process.cwd();
+    this.config = this.loadProjectConfig();
   }
 
   private loadProjectConfig(): ProjectConfig {
-    const packagePath = join(this.rootDir, 'package.json')
+    const packagePath = join(this.rootDir, 'package.json');
     if (!existsSync(packagePath)) {
-      throw new Error('package.json not found')
+      throw new Error('package.json not found');
     }
-    return JSON.parse(readFileSync(packagePath, 'utf-8'))
+    return JSON.parse(readFileSync(packagePath, 'utf-8'));
   }
 
   /**
    * Kontrollo statusin e projektit
    */
   async checkStatus(): Promise<void> {
-    console.log(chalk.blue('🔍 EuroWeb Project Status Check'))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue('🔍 EuroWeb Project Status Check'));
+    console.log(chalk.gray('─'.repeat(50)));
 
     // Check Yarn Berry
-    this.checkYarnBerry()
+    this.checkYarnBerry();
     
     // Check TypeScript
-    this.checkTypeScript()
+    this.checkTypeScript();
     
     // Check workspaces
-    this.checkWorkspaces()
+    this.checkWorkspaces();
     
     // Check dependencies
-    this.checkDependencies()
+    this.checkDependencies();
     
     // Check AGISheet
-    this.checkAGISheet()
+    this.checkAGISheet();
 
-    console.log(chalk.green('✅ Project status check completed'))
+    console.log(chalk.green('✅ Project status check completed'));
   }
 
   /**
    * Ekzekuto testet e plota
    */
   async runTests(): Promise<TestResult[]> {
-    console.log(chalk.blue('🧪 Running EuroWeb Tests'))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue('🧪 Running EuroWeb Tests'));
+    console.log(chalk.gray('─'.repeat(50)));
 
-    const results: TestResult[] = []
+    const results: TestResult[] = [];
 
     // Test each workspace
     for (const workspace of this.config.workspaces) {
-      console.log(chalk.yellow(`Testing ${workspace}...`))
+      console.log(chalk.yellow(`Testing ${workspace}...`));
       
-      const startTime = Date.now()
-      const result = this.testWorkspace(workspace)
-      const duration = Date.now() - startTime
+      const startTime = Date.now();
+      const result = this.testWorkspace(workspace);
+      const duration = Date.now() - startTime;
 
       results.push({
         workspace,
@@ -97,44 +97,44 @@ class EuroWebProjectControl {
         coverage: result.coverage,
         duration,
         errors: result.errors
-      })
+      });
 
       if (result.success) {
-        console.log(chalk.green(`✅ ${workspace} tests passed (${duration}ms)`))
+        console.log(chalk.green(`✅ ${workspace} tests passed (${duration}ms)`));
       } else {
-        console.log(chalk.red(`❌ ${workspace} tests failed`))
-        result.errors.forEach(error => console.log(chalk.red(`   ${error}`)))
+        console.log(chalk.red(`❌ ${workspace} tests failed`));
+        result.errors.forEach(error => console.log(chalk.red(`   ${error}`)));
       }
     }
 
     // AGI-specific tests
-    this.runAGITests()
+    this.runAGITests();
     
     // Industrial tests
-    this.runIndustrialTests()
+    this.runIndustrialTests();
 
-    return results
+    return results;
   }
 
   /**
    * Build i projektit
    */
   async buildProject(): Promise<BuildResult[]> {
-    console.log(chalk.blue('🏗️ Building EuroWeb Platform'))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue('🏗️ Building EuroWeb Platform'));
+    console.log(chalk.gray('─'.repeat(50)));
 
-    const results: BuildResult[] = []
+    const results: BuildResult[] = [];
 
     // Pre-build validation
-    this.preBuildValidation()
+    this.preBuildValidation();
 
     // Build each workspace
     for (const workspace of this.config.workspaces) {
-      console.log(chalk.yellow(`Building ${workspace}...`))
+      console.log(chalk.yellow(`Building ${workspace}...`));
       
-      const startTime = Date.now()
-      const result = this.buildWorkspace(workspace)
-      const duration = Date.now() - startTime
+      const startTime = Date.now();
+      const result = this.buildWorkspace(workspace);
+      const duration = Date.now() - startTime;
 
       results.push({
         workspace,
@@ -142,31 +142,31 @@ class EuroWebProjectControl {
         outputSize: result.outputSize,
         duration,
         warnings: result.warnings
-      })
+      });
 
       if (result.success) {
-        console.log(chalk.green(`✅ ${workspace} built successfully (${duration}ms)`))
-        console.log(chalk.gray(`   Output size: ${this.formatBytes(result.outputSize)}`))
+        console.log(chalk.green(`✅ ${workspace} built successfully (${duration}ms)`));
+        console.log(chalk.gray(`   Output size: ${this.formatBytes(result.outputSize)}`));
       } else {
-        console.log(chalk.red(`❌ ${workspace} build failed`))
+        console.log(chalk.red(`❌ ${workspace} build failed`));
       }
     }
 
     // Post-build validation
-    this.postBuildValidation()
+    this.postBuildValidation();
 
-    return results
+    return results;
   }
 
   /**
    * Start development server
    */
   async startDev(): Promise<void> {
-    console.log(chalk.blue('🚀 Starting EuroWeb Development Server'))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue('🚀 Starting EuroWeb Development Server'));
+    console.log(chalk.gray('─'.repeat(50)));
 
     // Pre-dev checks
-    this.preDevValidation()
+    this.preDevValidation();
 
     // Start services concurrently
     const services = [
@@ -174,137 +174,137 @@ class EuroWebProjectControl {
       { name: 'Backend', command: 'yarn', args: ['dev:backend'] },
       { name: 'AGISheet', command: 'yarn', args: ['agisheet:server'] },
       { name: 'Mesh Network', command: 'yarn', args: ['mesh:start'] }
-    ]
+    ];
 
-    console.log(chalk.yellow('Starting services...'))
+    console.log(chalk.yellow('Starting services...'));
     
     services.forEach(service => {
-      console.log(chalk.cyan(`🔄 Starting ${service.name}...`))
+      console.log(chalk.cyan(`🔄 Starting ${service.name}...`));
       spawn(service.command, service.args, {
         stdio: 'inherit',
         shell: true
-      })
-    })
+      });
+    });
 
-    console.log(chalk.green('🎉 Development environment ready!'))
-    console.log(chalk.blue('🌐 Frontend: http://localhost:3000'))
-    console.log(chalk.blue('🔧 Backend: http://localhost:8080'))
-    console.log(chalk.blue('📊 AGISheet: http://localhost:8081'))
+    console.log(chalk.green('🎉 Development environment ready!'));
+    console.log(chalk.blue('🌐 Frontend: http://localhost:3000'));
+    console.log(chalk.blue('🔧 Backend: http://localhost:8080'));
+    console.log(chalk.blue('📊 AGISheet: http://localhost:8081'));
   }
 
   /**
    * Git push me validime
    */
   async pushChanges(message: string): Promise<void> {
-    console.log(chalk.blue('📤 EuroWeb Git Push Process'))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue('📤 EuroWeb Git Push Process'));
+    console.log(chalk.gray('─'.repeat(50)));
 
     // Pre-push validation
-    this.prePushValidation()
+    this.prePushValidation();
 
     // Run tests
-    console.log(chalk.yellow('Running tests before push...'))
-    const testResults = this.runTests()
-    const failedTests = testResults.filter(r => !r.passed)
+    console.log(chalk.yellow('Running tests before push...'));
+    const testResults = this.runTests();
+    const failedTests = testResults.filter(r => !r.passed);
     
     if (failedTests.length > 0) {
-      console.log(chalk.red('❌ Tests failed. Push aborted.'))
-      return
+      console.log(chalk.red('❌ Tests failed. Push aborted.'));
+      return;
     }
 
     // Type check
-    console.log(chalk.yellow('Type checking...'))
-    this.runTypeCheck()
+    console.log(chalk.yellow('Type checking...'));
+    this.runTypeCheck();
 
     // Linting
-    console.log(chalk.yellow('Linting code...'))
-    this.runLinting()
+    console.log(chalk.yellow('Linting code...'));
+    this.runLinting();
 
     // Security check
-    console.log(chalk.yellow('Security audit...'))
-    this.runSecurityAudit()
+    console.log(chalk.yellow('Security audit...'));
+    this.runSecurityAudit();
 
     // Git operations
-    console.log(chalk.yellow('Committing changes...'))
-    this.runCommand('git', ['add', '.'])
-    this.runCommand('git', ['commit', '-m', message])
+    console.log(chalk.yellow('Committing changes...'));
+    this.runCommand('git', ['add', '.']);
+    this.runCommand('git', ['commit', '-m', message]);
     
-    console.log(chalk.yellow('Pushing to remote...'))
-    this.runCommand('git', ['push'])
+    console.log(chalk.yellow('Pushing to remote...'));
+    this.runCommand('git', ['push']);
 
-    console.log(chalk.green('✅ Changes pushed successfully!'))
+    console.log(chalk.green('✅ Changes pushed successfully!'));
   }
 
   /**
    * Full project deployment
    */
   async deploy(environment: 'staging' | 'production' = 'production'): Promise<void> {
-    console.log(chalk.blue(`🚀 Deploying EuroWeb to ${environment}`))
-    console.log(chalk.gray('─'.repeat(50)))
+    console.log(chalk.blue(`🚀 Deploying EuroWeb to ${environment}`));
+    console.log(chalk.gray('─'.repeat(50)));
 
     // Pre-deployment checks
-    this.preDeploymentChecks()
+    this.preDeploymentChecks();
 
     // Build for production
-    this.buildProject()
+    this.buildProject();
 
     // Security validation
-    this.runSecurityValidation()
+    this.runSecurityValidation();
 
     // Deploy based on environment
     if (environment === 'production') {
-      this.deployProduction()
+      this.deployProduction();
     } else {
-      this.deployStaging()
+      this.deployStaging();
     }
 
-    console.log(chalk.green(`✅ Deployment to ${environment} completed!`))
+    console.log(chalk.green(`✅ Deployment to ${environment} completed!`));
   }
 
   // Private helper methods
   private async checkYarnBerry(): Promise<void> {
-    const result = this.runCommand('yarn', ['--version'], { silent: true })
+    const result = this.runCommand('yarn', ['--version'], { silent: true });
     if (result.success && result.output.startsWith('4.')) {
-      console.log(chalk.green('✅ Yarn Berry 4 detected'))
+      console.log(chalk.green('✅ Yarn Berry 4 detected'));
     } else {
-      throw new Error('Yarn Berry 4 required')
+      throw new Error('Yarn Berry 4 required');
     }
   }
 
   private async checkTypeScript(): Promise<void> {
-    const result = this.runCommand('yarn', ['tsc', '--version'], { silent: true })
+    const result = this.runCommand('yarn', ['tsc', '--version'], { silent: true });
     if (result.success) {
-      console.log(chalk.green('✅ TypeScript compiler ready'))
+      console.log(chalk.green('✅ TypeScript compiler ready'));
     } else {
-      throw new Error('TypeScript not found')
+      throw new Error('TypeScript not found');
     }
   }
 
   private async checkWorkspaces(): Promise<void> {
     for (const workspace of this.config.workspaces) {
       if (existsSync(join(this.rootDir, workspace))) {
-        console.log(chalk.green(`✅ Workspace ${workspace} found`))
+        console.log(chalk.green(`✅ Workspace ${workspace} found`));
       } else {
-        console.log(chalk.yellow(`⚠️ Workspace ${workspace} missing`))
+        console.log(chalk.yellow(`⚠️ Workspace ${workspace} missing`));
       }
     }
   }
 
   private async checkDependencies(): Promise<void> {
-    const result = this.runCommand('yarn', ['install', '--check-cache'], { silent: true })
+    const result = this.runCommand('yarn', ['install', '--check-cache'], { silent: true });
     if (result.success) {
-      console.log(chalk.green('✅ Dependencies validated'))
+      console.log(chalk.green('✅ Dependencies validated'));
     } else {
-      console.log(chalk.yellow('⚠️ Dependencies need update'))
+      console.log(chalk.yellow('⚠️ Dependencies need update'));
     }
   }
 
   private async checkAGISheet(): Promise<void> {
-    const agisheetPath = join(this.rootDir, 'agisheet', 'src', 'index.ts')
+    const agisheetPath = join(this.rootDir, 'agisheet', 'src', 'index.ts');
     if (existsSync(agisheetPath)) {
-      console.log(chalk.green('✅ AGISheet core found'))
+      console.log(chalk.green('✅ AGISheet core found'));
     } else {
-      console.log(chalk.red('❌ AGISheet core missing'))
+      console.log(chalk.red('❌ AGISheet core missing'));
     }
   }
 
@@ -316,13 +316,13 @@ class EuroWebProjectControl {
     const result = this.runCommand('yarn', ['workspace', workspace, 'test'], { 
       silent: true,
       cwd: this.rootDir
-    })
+    });
 
     return {
       success: result.success,
       coverage: this.extractCoverage(result.output),
       errors: result.success ? [] : [result.error || 'Test failed']
-    }
+    };
   }
 
   private async buildWorkspace(workspace: string): Promise<{
@@ -333,85 +333,85 @@ class EuroWebProjectControl {
     const result = this.runCommand('yarn', ['workspace', workspace, 'build'], {
       silent: true,
       cwd: this.rootDir
-    })
+    });
 
     return {
       success: result.success,
       outputSize: this.calculateOutputSize(workspace),
       warnings: this.extractWarnings(result.output)
-    }
+    };
   }
 
   private async runAGITests(): Promise<void> {
-    console.log(chalk.yellow('Running AGI-specific tests...'))
-    this.runCommand('yarn', ['test:agi'])
+    console.log(chalk.yellow('Running AGI-specific tests...'));
+    this.runCommand('yarn', ['test:agi']);
   }
 
   private async runIndustrialTests(): Promise<void> {
-    console.log(chalk.yellow('Running industrial tests...'))
-    this.runCommand('yarn', ['test:industrial'])
+    console.log(chalk.yellow('Running industrial tests...'));
+    this.runCommand('yarn', ['test:industrial']);
   }
 
   private async preBuildValidation(): Promise<void> {
-    console.log(chalk.yellow('Pre-build validation...'))
-    this.runTypeCheck()
+    console.log(chalk.yellow('Pre-build validation...'));
+    this.runTypeCheck();
   }
 
   private async postBuildValidation(): Promise<void> {
-    console.log(chalk.yellow('Post-build validation...'))
+    console.log(chalk.yellow('Post-build validation...'));
     // Validate build outputs
   }
 
   private async preDevValidation(): Promise<void> {
-    console.log(chalk.yellow('Pre-dev validation...'))
-    this.checkDependencies()
+    console.log(chalk.yellow('Pre-dev validation...'));
+    this.checkDependencies();
   }
 
   private async prePushValidation(): Promise<void> {
-    console.log(chalk.yellow('Pre-push validation...'))
+    console.log(chalk.yellow('Pre-push validation...'));
     // Check git status, branches, etc.
   }
 
   private async preDeploymentChecks(): Promise<void> {
-    console.log(chalk.yellow('Pre-deployment checks...'))
+    console.log(chalk.yellow('Pre-deployment checks...'));
     // Environment validation, secrets check, etc.
   }
 
   private async runTypeCheck(): Promise<void> {
-    const result = this.runCommand('yarn', ['type-check'])
+    const result = this.runCommand('yarn', ['type-check']);
     if (!result.success) {
-      throw new Error('TypeScript type check failed')
+      throw new Error('TypeScript type check failed');
     }
   }
 
   private async runLinting(): Promise<void> {
-    const result = this.runCommand('yarn', ['lint'])
+    const result = this.runCommand('yarn', ['lint']);
     if (!result.success) {
-      throw new Error('Linting failed')
+      throw new Error('Linting failed');
     }
   }
 
   private async runSecurityAudit(): Promise<void> {
-    const result = this.runCommand('yarn', ['audit'])
+    const result = this.runCommand('yarn', ['audit']);
     if (!result.success) {
-      console.log(chalk.yellow('⚠️ Security audit warnings found'))
+      console.log(chalk.yellow('⚠️ Security audit warnings found'));
     }
   }
 
   private async runSecurityValidation(): Promise<void> {
-    const result = this.runCommand('yarn', ['security:scan'])
+    const result = this.runCommand('yarn', ['security:scan']);
     if (!result.success) {
-      throw new Error('Security validation failed')
+      throw new Error('Security validation failed');
     }
   }
 
   private async deployProduction(): Promise<void> {
-    console.log(chalk.yellow('Deploying to production...'))
-    this.runCommand('yarn', ['deploy:vercel'])
+    console.log(chalk.yellow('Deploying to production...'));
+    this.runCommand('yarn', ['deploy:vercel']);
   }
 
   private async deployStaging(): Promise<void> {
-    console.log(chalk.yellow('Deploying to staging...'))
+    console.log(chalk.yellow('Deploying to staging...'));
     // Staging deployment logic
   }
 
@@ -424,95 +424,95 @@ class EuroWebProjectControl {
         cwd: options.cwd || this.rootDir,
         encoding: 'utf8',
         shell: true
-      })
+      });
 
       if (!options.silent && result.stdout) {
-        console.log(result.stdout)
+        console.log(result.stdout);
       }
 
       return {
         success: result.status === 0,
         output: result.stdout || '',
         error: result.stderr
-      }
+      };
     } catch (error) {
       return {
         success: false,
         output: '',
         error: error instanceof Error ? error.message : 'Unknown error'
-      }
+      };
     }
   }
 
   private extractCoverage(output: string): number {
-    const match = output.match(/(\d+(?:\.\d+)?)%/)
-    return match ? parseFloat(match[1]) : 0
+    const match = output.match(/(\d+(?:\.\d+)?)%/);
+    return match ? parseFloat(match[1]) : 0;
   }
 
   private extractWarnings(output: string): string[] {
-    const warnings = output.match(/warning: .+/gi)
-    return warnings || []
+    const warnings = output.match(/warning: .+/gi);
+    return warnings || [];
   }
 
   private calculateOutputSize(workspace: string): number {
     // Calculate build output size
-    return 0 // Placeholder
+    return 0; // Placeholder
   }
 
   private formatBytes(bytes: number): string {
-    if (bytes === 0) return '0 Bytes'
-    const k = 1024
-    const sizes = ['Bytes', 'KB', 'MB', 'GB']
-    const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+    if (bytes === 0) {return '0 Bytes';}
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 }
 
 // CLI Interface
 function main() {
-  const control = new EuroWebProjectControl()
-  const command = process.argv[2]
+  const control = new EuroWebProjectControl();
+  const command = process.argv[2];
 
   try {
     switch (command) {
       case 'status':
-        control.checkStatus()
-        break
+        control.checkStatus();
+        break;
       case 'test':
-        control.runTests()
-        break
+        control.runTests();
+        break;
       case 'build':
-        control.buildProject()
-        break
+        control.buildProject();
+        break;
       case 'dev':
-        control.startDev()
-        break
+        control.startDev();
+        break;
       case 'push':
-        const message = process.argv[3] || 'feat: automated commit'
-        control.pushChanges(message)
-        break
+        const message = process.argv[3] || 'feat: automated commit';
+        control.pushChanges(message);
+        break;
       case 'deploy':
-        const env = (process.argv[3] as 'staging' | 'production') || 'production'
-        control.deploy(env)
-        break
+        const env = (process.argv[3] as 'staging' | 'production') || 'production';
+        control.deploy(env);
+        break;
       default:
-        console.log(chalk.blue('EuroWeb Project Control'))
-        console.log(chalk.gray('Available commands:'))
-        console.log(chalk.yellow('  status  - Check project status'))
-        console.log(chalk.yellow('  test    - Run all tests'))
-        console.log(chalk.yellow('  build   - Build project'))
-        console.log(chalk.yellow('  dev     - Start development'))
-        console.log(chalk.yellow('  push    - Git push with validation'))
-        console.log(chalk.yellow('  deploy  - Deploy to production'))
+        console.log(chalk.blue('EuroWeb Project Control'));
+        console.log(chalk.gray('Available commands:'));
+        console.log(chalk.yellow('  status  - Check project status'));
+        console.log(chalk.yellow('  test    - Run all tests'));
+        console.log(chalk.yellow('  build   - Build project'));
+        console.log(chalk.yellow('  dev     - Start development'));
+        console.log(chalk.yellow('  push    - Git push with validation'));
+        console.log(chalk.yellow('  deploy  - Deploy to production'));
     }
   } catch (error) {
-    console.error(chalk.red('Error:'), error instanceof Error ? error.message : error)
-    process.exit(1)
+    console.error(chalk.red('Error:'), error instanceof Error ? error.message : error);
+    process.exit(1);
   }
 }
 
 if (require.main === module) {
-  main()
+  main();
 }
 
-export default EuroWebProjectControl
+export default EuroWebProjectControl;

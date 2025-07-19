@@ -42,11 +42,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}) => {
   return (
     <html lang="sq" suppressHydrationWarning>
       <head>
@@ -58,17 +58,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#d4af37" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body
-        className={{
-          margin: 0,
-          padding: 0,
-          fontFamily:
-            'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-          backgroundColor: '#1a1d29',
-          color: '#f8fafc',
-        }}
-        suppressHydrationWarning
-      >
+      <body suppressHydrationWarning>
         <div id="euroweb-root">{children}</div>
         <script
           dangerouslySetInnerHTML={{
@@ -82,4 +72,7 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export { RootLayout };
+export default RootLayout;

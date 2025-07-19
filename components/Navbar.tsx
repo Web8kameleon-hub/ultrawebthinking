@@ -325,3 +325,6 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
     </motion.nav>
   );
 }
+
+export { Navbar }
+export default Navbar

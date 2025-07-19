@@ -73,7 +73,7 @@ class AGICore {
 
   // Save memory to localStorage
   private saveMemory(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {return;}
 
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(this.memory));
@@ -119,7 +119,7 @@ class AGICore {
 
   // Start automatic time updates
   private startTimeUpdate(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') {return;}
 
     setInterval(() => {
       this.updateMemory('user.currentTime', new Date().toISOString());

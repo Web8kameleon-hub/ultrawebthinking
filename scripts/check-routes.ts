@@ -4,9 +4,18 @@
  * Debugs routing issues in the platform
  */
 
-import { readdirSync, statSync, existsSync, writeFileSync, mkdirSync } from 'fs'
-import { join, dirname } from 'path'
-import colors from 'colors'
+import { readdirSync, statSync, existsSync, writeFileSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
+
+// Simple console colors without dependencies
+const colors = {
+  blue: (text: string) => `\x1b[34m${text}\x1b[0m`,
+  green: (text: string) => `\x1b[32m${text}\x1b[0m`,
+  yellow: (text: string) => `\x1b[33m${text}\x1b[0m`,
+  red: (text: string) => `\x1b[31m${text}\x1b[0m`,
+  cyan: (text: string) => `\x1b[36m${text}\x1b[0m`,
+  gray: (text: string) => `\x1b[90m${text}\x1b[0m`
+};
 
 interface RouteInfo {
   path: string
@@ -16,39 +25,39 @@ interface RouteInfo {
 }
 
 class RouteChecker {
-  private routes: RouteInfo[] = []
-  private appDir: string
+  private routes: RouteInfo[] = [];
+  private appDir: string;
 
   constructor() {
-    this.appDir = join(process.cwd(), 'app')
+    this.appDir = join(process.cwd(), 'app');
   }
 
   checkRoutes(): void {
-    console.log(colors.blue('🔍 EuroWeb Route Checker'))
-    console.log(colors.gray('─'.repeat(50)))
+    console.log(colors.blue('🔍 EuroWeb Route Checker'));
+    console.log(colors.gray('─'.repeat(50)));
 
     if (!existsSync(this.appDir)) {
-      console.log(colors.red('❌ App directory not found!'))
-      console.log(colors.yellow('📁 Creating app directory...'))
-      this.createAppDirectory()
-      return
+      console.log(colors.red('❌ App directory not found!'));
+      console.log(colors.yellow('📁 Creating app directory...'));
+      this.createAppDirectory();
+      return;
     }
 
-    this.scanDirectory(this.appDir, '')
-    this.printRoutes()
-    this.checkRequiredFiles()
-    this.checkServerComponentIssues()
-    this.suggestFixes()
-    this.autoFix()
+    this.scanDirectory(this.appDir, '');
+    this.printRoutes();
+    this.checkRequiredFiles();
+    this.checkServerComponentIssues();
+    this.suggestFixes();
+    this.autoFix();
   }
 
   private createAppDirectory(): void {
     try {
-      mkdirSync(this.appDir, { recursive: true })
-      console.log(colors.green('✅ Created app directory'))
-      this.createBasicFiles()
+      mkdirSync(this.appDir, { recursive: true });
+      console.log(colors.green('✅ Created app directory'));
+      this.createBasicFiles();
     } catch (error) {
-      console.log(colors.red('❌ Failed to create app directory: ' + error))
+      console.log(colors.red('❌ Failed to create app directory: ' + error));
     }
   }
 
@@ -144,95 +153,95 @@ html, body {
 }
 `
       }
-    ]
+    ];
 
     for (const file of files) {
-      const filePath = join(this.appDir, file.path)
+      const filePath = join(this.appDir, file.path);
       try {
-        writeFileSync(filePath, file.content)
-        console.log(colors.green(`✅ Created ${file.path}`))
+        writeFileSync(filePath, file.content);
+        console.log(colors.green(`✅ Created ${file.path}`));
       } catch (error) {
-        console.log(colors.red(`❌ Failed to create ${file.path}: ` + error))
+        console.log(colors.red(`❌ Failed to create ${file.path}: ` + error));
       }
     }
   }
 
   private scanDirectory(dir: string, relativePath: string): void {
     try {
-      const items = readdirSync(dir)
+      const items = readdirSync(dir);
       
       for (const item of items) {
-        const fullPath = join(dir, item)
-        const itemRelativePath = join(relativePath, item)
-        const stat = statSync(fullPath)
+        const fullPath = join(dir, item);
+        const itemRelativePath = join(relativePath, item);
+        const stat = statSync(fullPath);
 
         if (stat.isDirectory()) {
-          this.scanDirectory(fullPath, itemRelativePath)
+          this.scanDirectory(fullPath, itemRelativePath);
         } else if (item.endsWith('.tsx') || item.endsWith('.ts')) {
-          const routeType = this.determineRouteType(item)
+          const routeType = this.determineRouteType(item);
           if (routeType) {
             this.routes.push({
               path: itemRelativePath,
               type: routeType,
               exists: true,
               isDirectory: false
-            })
+            });
           }
         }
       }
     } catch (error) {
-      console.log(colors.red(`Error scanning ${dir}: ` + error))
+      console.log(colors.red(`Error scanning ${dir}: ` + error));
     }
   }
 
   private determineRouteType(filename: string): RouteInfo['type'] | null {
-    if (filename === 'page.tsx' || filename === 'page.ts') return 'page'
-    if (filename === 'layout.tsx' || filename === 'layout.ts') return 'layout'
-    if (filename === 'loading.tsx' || filename === 'loading.ts') return 'loading'
-    if (filename === 'error.tsx' || filename === 'error.ts') return 'error'
-    if (filename === 'not-found.tsx' || filename === 'not-found.ts') return 'not-found'
-    return null
+    if (filename === 'page.tsx' || filename === 'page.ts') {return 'page';}
+    if (filename === 'layout.tsx' || filename === 'layout.ts') {return 'layout';}
+    if (filename === 'loading.tsx' || filename === 'loading.ts') {return 'loading';}
+    if (filename === 'error.tsx' || filename === 'error.ts') {return 'error';}
+    if (filename === 'not-found.tsx' || filename === 'not-found.ts') {return 'not-found';}
+    return null;
   }
 
   private printRoutes(): void {
-    console.log(colors.yellow('\n📋 Found Routes:'))
+    console.log(colors.yellow('\n📋 Found Routes:'));
     
     if (this.routes.length === 0) {
-      console.log(colors.red('❌ No routes found!'))
-      return
+      console.log(colors.red('❌ No routes found!'));
+      return;
     }
 
-    const groupedRoutes = this.groupRoutesByType()
+    const groupedRoutes = this.groupRoutesByType();
     
     for (const [type, routes] of Object.entries(groupedRoutes)) {
-      console.log(colors.cyan(`\n${this.getTypeIcon(type as RouteInfo['type'])} ${type.toUpperCase()}:`))
+      console.log(colors.cyan(`\n${this.getTypeIcon(type as RouteInfo['type'])} ${type.toUpperCase()}:`));
       routes.forEach(route => {
-        console.log(colors.green(`  ✅ ${route.path}`))
-      })
+        console.log(colors.green(`  ✅ ${route.path}`));
+      });
     }
   }
 
   private groupRoutesByType(): Record<string, RouteInfo[]> {
     return this.routes.reduce((acc, route) => {
-      if (!acc[route.type]) acc[route.type] = []
-      acc[route.type].push(route)
-      return acc
-    }, {} as Record<string, RouteInfo[]>)
+      if (!acc[route.type]) {acc[route.type] = [];}
+      acc[route.type].push(route);
+      return acc;
+    }, {} as Record<string, RouteInfo[]>);
   }
 
   private getTypeIcon(type: RouteInfo['type']): string {
     switch (type) {
-      case 'page': return '📄'
-      case 'layout': return '🏗️'
-      case 'loading': return '⏳'
-      case 'error': return '❌'
-      case 'not-found': return '🚫'
-      default: return '📁'
+      case 'page': return '📄';
+      case 'layout': return '🏗️';
+      case 'loading': return '⏳';
+      case 'error': return '❌';
+      case 'not-found': return '🚫';
+      default: return '📁';
     }
   }
 
   private checkRequiredFiles(): void {
-    console.log(colors.yellow('\n🔍 Checking Required Files:'))
+    console.log(colors.yellow('\n🔍 Checking Required Files:'));
 
     const requiredFiles = [
       { path: 'app/layout.tsx', required: true, description: 'Root layout' },
@@ -241,67 +250,67 @@ html, body {
       { path: 'app/error.tsx', required: false, description: 'Error boundary' },
       { path: 'app/loading.tsx', required: false, description: 'Loading UI' },
       { path: 'components/Web8TabSystem.tsx', required: true, description: 'Main component' }
-    ]
+    ];
 
     for (const file of requiredFiles) {
-      const fullPath = join(process.cwd(), file.path)
-      const exists = existsSync(fullPath)
-      const icon = exists ? '✅' : (file.required ? '❌' : '⚠️')
-      const status = exists ? 'Found' : (file.required ? 'MISSING' : 'Optional')
+      const fullPath = join(process.cwd(), file.path);
+      const exists = existsSync(fullPath);
+      const icon = exists ? '✅' : (file.required ? '❌' : '⚠️');
+      const status = exists ? 'Found' : (file.required ? 'MISSING' : 'Optional');
       
-      console.log(`${icon} ${file.path} - ${status} (${file.description})`)
+      console.log(`${icon} ${file.path} - ${status} (${file.description})`);
     }
   }
 
   private checkServerComponentIssues(): void {
-    console.log(colors.yellow('\n🔍 Checking Server Component Issues:'))
+    console.log(colors.yellow('\n🔍 Checking Server Component Issues:'));
     
-    const loadingFile = join(this.appDir, 'loading.tsx')
+    const loadingFile = join(this.appDir, 'loading.tsx');
     if (existsSync(loadingFile)) {
-      const content = require('fs').readFileSync(loadingFile, 'utf8')
+      const content = require('fs').readFileSync(loadingFile, 'utf8');
       if (content.includes('styled-jsx') || content.includes('style jsx')) {
-        console.log(colors.red('❌ loading.tsx uses styled-jsx (not allowed in Server Components)'))
+        console.log(colors.red('❌ loading.tsx uses styled-jsx (not allowed in Server Components)'));
       } else {
-        console.log(colors.green('✅ loading.tsx is Server Component compatible'))
+        console.log(colors.green('✅ loading.tsx is Server Component compatible'));
       }
     }
     
-    const layoutFile = join(this.appDir, 'layout.tsx')
+    const layoutFile = join(this.appDir, 'layout.tsx');
     if (existsSync(layoutFile)) {
-      const content = require('fs').readFileSync(layoutFile, 'utf8')
+      const content = require('fs').readFileSync(layoutFile, 'utf8');
       if (content.includes("'use client'")) {
-        console.log(colors.yellow('⚠️ layout.tsx uses client directive (consider server-side rendering)'))
+        console.log(colors.yellow('⚠️ layout.tsx uses client directive (consider server-side rendering)'));
       } else {
-        console.log(colors.green('✅ layout.tsx is Server Component'))
+        console.log(colors.green('✅ layout.tsx is Server Component'));
       }
     }
   }
 
   private suggestFixes(): void {
-    console.log(colors.yellow('\n🛠️ Suggested Fixes:'))
+    console.log(colors.yellow('\n🛠️ Suggested Fixes:'));
 
-    const hasRootPage = this.routes.some(r => r.type === 'page' && r.path === 'page.tsx')
-    const hasRootLayout = this.routes.some(r => r.type === 'layout' && r.path === 'layout.tsx')
+    const hasRootPage = this.routes.some(r => r.type === 'page' && r.path === 'page.tsx');
+    const hasRootLayout = this.routes.some(r => r.type === 'layout' && r.path === 'layout.tsx');
 
     if (!hasRootLayout) {
-      console.log(colors.red('❌ Missing app/layout.tsx'))
-      console.log(colors.gray('   Will auto-create server-compatible layout'))
+      console.log(colors.red('❌ Missing app/layout.tsx'));
+      console.log(colors.gray('   Will auto-create server-compatible layout'));
     }
 
     if (!hasRootPage) {
-      console.log(colors.red('❌ Missing app/page.tsx'))
-      console.log(colors.gray('   Will auto-create with client-side Web8TabSystem'))
+      console.log(colors.red('❌ Missing app/page.tsx'));
+      console.log(colors.gray('   Will auto-create with client-side Web8TabSystem'));
     }
 
     if (!existsSync(join(process.cwd(), 'components', 'Web8TabSystem.tsx'))) {
-      console.log(colors.red('❌ Missing Web8TabSystem component'))
-      console.log(colors.gray('   Component needed for main functionality'))
+      console.log(colors.red('❌ Missing Web8TabSystem component'));
+      console.log(colors.gray('   Component needed for main functionality'));
     }
 
     // Check package.json scripts
-    const packageJsonPath = join(process.cwd(), 'package.json')
+    const packageJsonPath = join(process.cwd(), 'package.json');
     if (existsSync(packageJsonPath)) {
-      const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'))
+      const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
       const missingScripts = [
         'dev:quick',
         'check:routes', 
@@ -309,58 +318,58 @@ html, body {
         'push',
         'kontroll',
         'teste'
-      ]
+      ];
       
-      const missing = missingScripts.filter(script => !packageJson.scripts[script])
+      const missing = missingScripts.filter(script => !packageJson.scripts[script]);
       if (missing.length > 0) {
-        console.log(colors.red(`❌ Missing package.json scripts: ${missing.join(', ')}`))
-        console.log(colors.gray('   Will add missing scripts'))
+        console.log(colors.red(`❌ Missing package.json scripts: ${missing.join(', ')}`));
+        console.log(colors.gray('   Will add missing scripts'));
       }
     }
 
-    console.log(colors.green('\n✅ Auto-fix available:'))
-    console.log(colors.cyan('Run this checker with --fix flag to auto-repair'))
+    console.log(colors.green('\n✅ Auto-fix available:'));
+    console.log(colors.cyan('Run this checker with --fix flag to auto-repair'));
   }
 
   private autoFix(): void {
-    const shouldFix = process.argv.includes('--fix') || process.argv.includes('-f')
+    const shouldFix = process.argv.includes('--fix') || process.argv.includes('-f');
     
     if (!shouldFix) {
-      console.log(colors.blue('\n💡 Add --fix flag to auto-repair issues'))
-      return
+      console.log(colors.blue('\n💡 Add --fix flag to auto-repair issues'));
+      return;
     }
 
-    console.log(colors.blue('\n🔧 Auto-fixing issues...'))
+    console.log(colors.blue('\n🔧 Auto-fixing issues...'));
 
     // Fix missing app files
-    this.fixMissingAppFiles()
+    this.fixMissingAppFiles();
     
     // Fix package.json scripts
-    this.fixPackageJsonScripts()
+    this.fixPackageJsonScripts();
     
     // Fix server component issues
-    this.fixServerComponentIssues()
+    this.fixServerComponentIssues();
 
-    console.log(colors.green('\n🎉 Auto-fix completed!'))
+    console.log(colors.green('\n🎉 Auto-fix completed!'));
   }
 
   private fixMissingAppFiles(): void {
-    const hasRootPage = this.routes.some(r => r.type === 'page' && r.path === 'page.tsx')
-    const hasRootLayout = this.routes.some(r => r.type === 'layout' && r.path === 'layout.tsx')
+    const hasRootPage = this.routes.some(r => r.type === 'page' && r.path === 'page.tsx');
+    const hasRootLayout = this.routes.some(r => r.type === 'layout' && r.path === 'layout.tsx');
 
     if (!hasRootLayout || !hasRootPage) {
-      this.createBasicFiles()
+      this.createBasicFiles();
     }
   }
 
   private fixPackageJsonScripts(): void {
-    const packageJsonPath = join(process.cwd(), 'package.json')
-    if (!existsSync(packageJsonPath)) return
+    const packageJsonPath = join(process.cwd(), 'package.json');
+    if (!existsSync(packageJsonPath)) {return;}
 
-    const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'))
+    const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
     
     const scriptsToAdd = {
-      'dev:quick': 'next dev --port 3000',
+      'dev:quick': 'next dev --port 3001',
       'check:routes': 'tsx scripts/check-routes.ts',
       'debug:routes': 'tsx scripts/check-routes.ts --fix',
       'push': 'tsx scripts/project-control.ts push',
@@ -369,32 +378,39 @@ html, body {
       'ts:check': 'tsx scripts/ts-only-check.ts',
       'fix:routes': 'tsx scripts/check-routes.ts --fix',
       'openmind': 'tsx scripts/openmind-setup.ts',
-      'ai:chat': 'next dev --port 3000 && open http://localhost:3000/openmind',
+      'ai:chat': 'next dev --port 3001 && open http://localhost:3001/openmind',
       'domain:setup': 'tsx scripts/domain-setup.ts',
       'domain:verify': 'curl -I https://euroweb.ai',
       'deploy:production': 'vercel --prod',
-      'deploy:preview': 'vercel'
-    }
+      'deploy:preview': 'vercel',
+      'deploy': 'tsx scripts/deploy.ts',
+      'deploy:vercel': 'tsx scripts/deploy.ts vercel production',
+      'deploy:docker': 'tsx scripts/deploy.ts docker production',
+      'docker:build': 'docker build -t euroweb-platform .',
+      'docker:run': 'docker run -d -p 3001:3000 --name euroweb euroweb-platform',
+      'docker:stop': 'docker stop euroweb && docker rm euroweb',
+      'docker:logs': 'docker logs euroweb -f'
+    };
 
-    let modified = false
+    let modified = false;
     for (const [script, command] of Object.entries(scriptsToAdd)) {
       if (!packageJson.scripts[script]) {
-        packageJson.scripts[script] = command
-        modified = true
-        console.log(colors.green(`✅ Added script: ${script}`))
+        packageJson.scripts[script] = command;
+        modified = true;
+        console.log(colors.green(`✅ Added script: ${script}`));
       }
     }
 
     if (modified) {
-      writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
-      console.log(colors.green('✅ Updated package.json scripts'))
+      writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+      console.log(colors.green('✅ Updated package.json scripts'));
     }
   }
 
   private fixServerComponentIssues(): void {
-    const loadingFile = join(this.appDir, 'loading.tsx')
+    const loadingFile = join(this.appDir, 'loading.tsx');
     if (existsSync(loadingFile)) {
-      const content = require('fs').readFileSync(loadingFile, 'utf8')
+      const content = require('fs').readFileSync(loadingFile, 'utf8');
       if (content.includes('styled-jsx') || content.includes('style jsx')) {
         const fixedContent = `export default function Loading() {
   return (
@@ -422,9 +438,9 @@ html, body {
     </div>
   )
 }
-`
-        writeFileSync(loadingFile, fixedContent)
-        console.log(colors.green('✅ Fixed loading.tsx server component issue'))
+`;
+        writeFileSync(loadingFile, fixedContent);
+        console.log(colors.green('✅ Fixed loading.tsx server component issue'));
       }
     }
   }
@@ -432,12 +448,12 @@ html, body {
 
 // Run the checker
 function main() {
-  const checker = new RouteChecker()
-  checker.checkRoutes()
+  const checker = new RouteChecker();
+  checker.checkRoutes();
 }
 
 if (require.main === module) {
-  main()
+  main();
 }
 
-export default RouteChecker
+export default RouteChecker;

@@ -4,44 +4,43 @@
  * Creates PWA service worker and fixes 404 issues
  */
 
-import { writeFileSync, existsSync, mkdirSync } from 'fs'
-import { join } from 'path'
-import colors from 'colors'
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { join } from 'path';
 
 class ServiceWorkerCreator {
-  private publicDir: string
+  private publicDir: string;
 
   constructor() {
-    this.publicDir = join(process.cwd(), 'public')
+    this.publicDir = join(process.cwd(), 'public');
   }
 
   async createServiceWorker(): Promise<void> {
-    console.log(colors.blue('🔧 Creating EuroWeb Service Worker'))
-    console.log(colors.gray('─'.repeat(50)))
+    console.log('🔧 Creating EuroWeb Service Worker');
+    console.log('─'.repeat(50));
 
     // Ensure public directory exists
     if (!existsSync(this.publicDir)) {
-      mkdirSync(this.publicDir, { recursive: true })
-      console.log(colors.green('✅ Created public directory'))
+      mkdirSync(this.publicDir, { recursive: true });
+      console.log('✅ Created public directory');
     }
 
     // Create service worker
-    this.createSW()
+    this.createSW();
     
     // Create manifest
-    this.createManifest()
+    this.createManifest();
     
     // Create favicon
-    this.createFavicon()
+    this.createFavicon();
     
     // Fix routing issues
-    this.createRouteHandlers()
+    this.createRouteHandlers();
 
-    console.log(colors.green('\n🎉 Service Worker setup completed!'))
+    console.log('\n🎉 Service Worker setup completed!');
   }
 
   private async createSW(): Promise<void> {
-    const swPath = join(this.publicDir, 'sw.js')
+    const swPath = join(this.publicDir, 'sw.js');
     
     const swContent = `/**
  * EuroWeb Platform Service Worker
@@ -257,14 +256,14 @@ function performAGISync() {
 }
 
 console.log('🚀 EuroWeb Service Worker loaded - AGI ready!')
-`
+`;
 
-    writeFileSync(swPath, swContent)
-    console.log(colors.green('✅ Created /public/sw.js'))
+    writeFileSync(swPath, swContent);
+    console.log('✅ Created /public/sw.js');
   }
 
   private async createManifest(): Promise<void> {
-    const manifestPath = join(this.publicDir, 'manifest.json')
+    const manifestPath = join(this.publicDir, 'manifest.json');
     
     const manifest = {
       "name": "EuroWeb Platform",
@@ -297,27 +296,27 @@ console.log('🚀 EuroWeb Service Worker loaded - AGI ready!')
       "lang": "sq",
       "scope": "/",
       "prefer_related_applications": false
-    }
+    };
     
-    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2))
-    console.log(colors.green('✅ Created /public/manifest.json'))
+    writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+    console.log('✅ Created /public/manifest.json');
   }
 
   private async createFavicon(): Promise<void> {
     // Create a simple favicon placeholder
-    const faviconPath = join(this.publicDir, 'favicon.ico')
+    const faviconPath = join(this.publicDir, 'favicon.ico');
     
     if (!existsSync(faviconPath)) {
       // Create a minimal ICO file (this is a placeholder - in production you'd use a real icon)
-      const faviconContent = Buffer.from('AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-      writeFileSync(faviconPath, faviconContent, 'base64')
-      console.log(colors.green('✅ Created /public/favicon.ico'))
+      const faviconContent = Buffer.from('AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+      writeFileSync(faviconPath, faviconContent, 'base64');
+      console.log('✅ Created /public/favicon.ico');
     }
   }
 
   private async createRouteHandlers(): Promise<void> {
     // Create a catch-all route handler for better 404s
-    const routeHandlerPath = join(process.cwd(), 'app', 'not-found.tsx')
+    const routeHandlerPath = join(process.cwd(), 'app', 'not-found.tsx');
     
     if (!existsSync(routeHandlerPath)) {
       const notFoundContent = `export default function NotFound() {
@@ -360,27 +359,27 @@ console.log('🚀 EuroWeb Service Worker loaded - AGI ready!')
     </div>
   )
 }
-`
+`;
       
-      writeFileSync(routeHandlerPath, notFoundContent)
-      console.log(colors.green('✅ Created app/not-found.tsx'))
+      writeFileSync(routeHandlerPath, notFoundContent);
+      console.log('✅ Created app/not-found.tsx');
     }
   }
 }
 
 // Main execution
-function main() {
-  const creator = new ServiceWorkerCreator()
-  creator.createServiceWorker()
+const main = (): void => {
+  const creator = new ServiceWorkerCreator();
+  creator.createServiceWorker();
   
-  console.log(colors.blue('\n🚀 Next steps:'))
-  console.log(colors.cyan('1. yarn clean:cache'))
-  console.log(colors.cyan('2. yarn dev:start'))
-  console.log(colors.cyan('3. Test PWA features'))
-}
+  console.log('\n🚀 Next steps:');
+  console.log('1. yarn clean:cache');
+  console.log('2. yarn dev:start');
+  console.log('3. Test PWA features');
+};
 
 if (require.main === module) {
-  main().catch(console.error)
+  main().catch(console.error);
 }
 
-export default ServiceWorkerCreator
+export default ServiceWorkerCreator;

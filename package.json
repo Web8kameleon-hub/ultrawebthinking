@@ -6,34 +6,55 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "next build",
+    "build": "yarn sw:build && next build",
     "start": "next start",
-    "test": " run",
-    "test:watch": "",
-    "test:ui": " --ui",
-    "test:coverage": " --coverage",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
     "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:check": "eslint . --ext .ts,.tsx",
     "tech:guard": "tsx scripts/tech-guard.ts",
     "clean": "rimraf dist .next coverage",
-    "clean:all": "yarn clean && rimraf node_modules && yarn install"
+    "clean:all": "yarn clean && rimraf node_modules && yarn install",
+    "sw:build": "tsx scripts/build-sw.ts build",
+    "sw:watch": "tsx scripts/build-sw.ts watch",
+    "sw:dev": "tsx scripts/build-sw.ts dev"
   },
   "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "eslint": "^9.31.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
     "framer-motion": "^11.5.0",
+    "helmet": "^8.1.0",
+    "lucide-react": "^0.525.0",
     "next": "^14.2.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
-    "typescript": "^5.8.3"
+    "socket.io": "^4.8.1",
+    "typescript": "^5.8.3",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.54.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/helmet": "^4.0.0",
     "@types/node": "^22.15.18",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
     "@typescript-eslint/parser": "^8.15.0",
-    "jsdom": "^25.0.0",
+    "@vitest/ui": "^3.2.4",
+    "jsdom": "^26.1.0",
     "rimraf": "^6.0.1",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=18.0.0",
@@ -44,5 +65,6 @@
     "name": "Ledjan Ahmati",
     "email": "dealsjona@gmail.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@4.9.2"
 }

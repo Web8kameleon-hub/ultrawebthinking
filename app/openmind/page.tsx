@@ -1,7 +1,10 @@
-'use client'
+'use client';
 
-import OpenMindChat from '../../components/OpenMindChat'
+import { OpenMindChat } from '../../components/OpenMindChat';
 
-export default function OpenMindPage() {
-  return <OpenMindChat />
-}
+const OpenMindPage = () => {
+  return <OpenMindChat />;
+};
+
+export { OpenMindPage };
+export default OpenMindPage;

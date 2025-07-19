@@ -8,8 +8,8 @@
  * @license MIT
  */
 
-import fs from 'fs'
-import path from 'path'
+import fs from 'fs';
+import path from 'path';
 
 // Files qe duhet te fshihen plotesisht
 const FILES_TO_DELETE = [
@@ -53,13 +53,13 @@ const FILES_TO_DELETE = [
   // Duplicate configs
   'CUltraBuildweb8frontendtsconfig.json', 'CUltraBuildweb8package.json',
   'package-fresh.json', 'tsconfig.clean.json', 'next.config.old.mts'
-]
+];
 
 // Directories te plota qe duhet te fshihen
 const DIRS_TO_DELETE = [
   '',
   'ultrawebthinking'
-]
+];
 
 // Zëvendësimet ne përmbajtje
 const CONTENT_REPLACEMENTS = [
@@ -101,129 +101,129 @@ const CONTENT_REPLACEMENTS = [
   { from: '.tsx"', to: '.tsx"' },
   { from: '.mts"', to: '.mts"' },
   { from: '.cts"', to: '.cts"' }
-]
+];
 
 class EuroWebCleaner {
-  private deletedFiles = 0
-  private cleanedFiles = 0
-  private errors: string[] = []
+  private deletedFiles = 0;
+  private cleanedFiles = 0;
+  private errors: string[] = [];
 
   public async clean(): Promise<void> {
-    console.log('🧹 EuroWeb Web8 - AUTOMATIC CLEANER')
-    console.log('🚀 Transforming to Pure Industrial Architecture')
-    console.log('👨‍💻 Autor: Ledjan Ahmati (100% Pronar)')
-    console.log('')
+    console.log('🧹 EuroWeb Web8 - AUTOMATIC CLEANER');
+    console.log('🚀 Transforming to Pure Industrial Architecture');
+    console.log('👨‍💻 Autor: Ledjan Ahmati (100% Pronar)');
+    console.log('');
 
     // 1. Delete forbidden files
-    this.deleteFiles()
+    this.deleteFiles();
     
     // 2. Delete forbidden directories
-    this.deleteDirectories()
+    this.deleteDirectories();
     
     // 3. Clean file contents
-    this.cleanContents()
+    this.cleanContents();
     
     // 4. Generate clean package.json
-    this.cleanPackageJson()
+    this.cleanPackageJson();
     
     // 5. Generate clean tsconfig.json
-    this.cleanTsConfig()
+    this.cleanTsConfig();
     
     // 6. Clean globals.css
-    this.cleanGlobalsCss()
+    this.cleanGlobalsCss();
     
-    this.showResults()
+    this.showResults();
   }
 
   private async deleteFiles(): Promise<void> {
-    console.log('🗑️  Deleting forbidden files...')
+    console.log('🗑️  Deleting forbidden files...');
     
     for (const file of FILES_TO_DELETE) {
       try {
-        const fullPath = path.resolve(file)
+        const fullPath = path.resolve(file);
         if (fs.existsSync(fullPath)) {
-          fs.unlinkSync(fullPath)
-          console.log(`   ✅ Deleted: ${file}`)
-          this.deletedFiles++
+          fs.unlinkSync(fullPath);
+          console.log(`   ✅ Deleted: ${file}`);
+          this.deletedFiles++;
         }
       } catch (error) {
-        this.errors.push(`Failed to delete ${file}: ${error}`)
+        this.errors.push(`Failed to delete ${file}: ${error}`);
       }
     }
   }
 
   private async deleteDirectories(): Promise<void> {
-    console.log('📁 Deleting forbidden directories...')
+    console.log('📁 Deleting forbidden directories...');
     
     for (const dir of DIRS_TO_DELETE) {
       try {
-        const fullPath = path.resolve(dir)
+        const fullPath = path.resolve(dir);
         if (fs.existsSync(fullPath)) {
-          fs.rmSync(fullPath, { recursive: true, force: true })
-          console.log(`   ✅ Deleted directory: ${dir}`)
-          this.deletedFiles++
+          fs.rmSync(fullPath, { recursive: true, force: true });
+          console.log(`   ✅ Deleted directory: ${dir}`);
+          this.deletedFiles++;
         }
       } catch (error) {
-        this.errors.push(`Failed to delete directory ${dir}: ${error}`)
+        this.errors.push(`Failed to delete directory ${dir}: ${error}`);
       }
     }
   }
 
   private async cleanContents(): Promise<void> {
-    console.log('🧼 Cleaning file contents...')
+    console.log('🧼 Cleaning file contents...');
     
-    this.cleanDirectory('.')
+    this.cleanDirectory('.');
   }
 
   private cleanDirectory(dir: string): void {
-    const items = fs.readdirSync(dir)
+    const items = fs.readdirSync(dir);
     
     for (const item of items) {
-      const fullPath = path.join(dir, item)
-      const stat = fs.statSync(fullPath)
+      const fullPath = path.join(dir, item);
+      const stat = fs.statSync(fullPath);
       
       if (stat.isDirectory() && !this.shouldIgnoreDir(item)) {
-        this.cleanDirectory(fullPath)
+        this.cleanDirectory(fullPath);
       } else if (stat.isFile() && this.shouldCleanFile(fullPath)) {
-        this.cleanFileContent(fullPath)
+        this.cleanFileContent(fullPath);
       }
     }
   }
 
   private shouldIgnoreDir(name: string): boolean {
-    const ignoreDirs = ['node_modules', '.git', '.next', 'dist', 'coverage', '.yarn']
-    return ignoreDirs.includes(name) || name.startsWith('.')
+    const ignoreDirs = ['node_modules', '.git', '.next', 'dist', 'coverage', '.yarn'];
+    return ignoreDirs.includes(name) || name.startsWith('.');
   }
 
   private shouldCleanFile(filePath: string): boolean {
-    const ext = path.extname(filePath)
-    return ['.ts', '.tsx', '.mts', '.json', '.css'].includes(ext)
+    const ext = path.extname(filePath);
+    return ['.ts', '.tsx', '.mts', '.json', '.css'].includes(ext);
   }
 
   private cleanFileContent(filePath: string): void {
     try {
-      let content = fs.readFileSync(filePath, 'utf-8')
-      let changed = false
+      let content = fs.readFileSync(filePath, 'utf-8');
+      let changed = false;
 
       for (const replacement of CONTENT_REPLACEMENTS) {
         if (content.includes(replacement.from)) {
-          content = content.replaceAll(replacement.from, replacement.to)
-          changed = true
+          content = content.replaceAll(replacement.from, replacement.to);
+          changed = true;
         }
       }
 
       if (changed) {
-        fs.writeFileSync(filePath, content, 'utf-8')
-        console.log(`   🧼 Cleaned: ${path.relative('.', filePath)}`)
-        this.cleanedFiles++
+        fs.writeFileSync(filePath, content, 'utf-8');
+        console.log(`   🧼 Cleaned: ${path.relative('.', filePath)}`);
+        this.cleanedFiles++;
       }
     } catch (error) {
-      this.errors.push(`Failed to clean ${filePath}: ${error}`)
+      this.errors.push(`Failed to clean ${filePath}: ${error}`);
     }
   }
 
   private async cleanPackageJson(): Promise<void> {
-    console.log('📦 Generating clean package.json...')
+    console.log('📦 Generating clean package.json...');
     
     const cleanPackage = {
       "name": "euroweb-platform",
@@ -275,14 +275,14 @@ class EuroWebCleaner {
         "email": "dealsjona@gmail.com"
       },
       "license": "MIT"
-    }
+    };
 
-    fs.writeFileSync('package.json', JSON.stringify(cleanPackage, null, 2))
-    console.log('   ✅ Generated clean package.json')
+    fs.writeFileSync('package.json', JSON.stringify(cleanPackage, null, 2));
+    console.log('   ✅ Generated clean package.json');
   }
 
   private async cleanTsConfig(): Promise<void> {
-    console.log('🔧 Generating clean tsconfig.json...')
+    console.log('🔧 Generating clean tsconfig.json...');
     
     const cleanTsConfig = {
       "compilerOptions": {
@@ -319,14 +319,14 @@ class EuroWebCleaner {
         "**/*.ts",
         "**/*.tsx"
       ]
-    }
+    };
 
-    fs.writeFileSync('tsconfig.json', JSON.stringify(cleanTsConfig, null, 2))
-    console.log('   ✅ Generated clean tsconfig.json')
+    fs.writeFileSync('tsconfig.json', JSON.stringify(cleanTsConfig, null, 2));
+    console.log('   ✅ Generated clean tsconfig.json');
   }
 
   private async cleanGlobalsCss(): Promise<void> {
-    console.log('🎨 Generating clean globals.css...')
+    console.log('🎨 Generating clean globals.css...');
     
     const cleanCss = `/* EuroWeb Web8 Platform - Pure CSS Styling */
 /* Pure TypeScript Industrial Architecture - No Tailwind */
@@ -513,47 +513,47 @@ input:focus, textarea:focus, select:focus {
     font-size: 14px;
   }
 }
-`
+`;
 
-    fs.writeFileSync('app/globals.css', cleanCss)
-    console.log('   ✅ Generated clean globals.css')
+    fs.writeFileSync('app/globals.css', cleanCss);
+    console.log('   ✅ Generated clean globals.css');
   }
 
   private showResults(): void {
-    console.log('')
-    console.log('📊 CLEANING RESULTS:')
-    console.log('='.repeat(50))
-    console.log(`🗑️  Files/dirs deleted: ${this.deletedFiles}`)
-    console.log(`🧼 Files cleaned: ${this.cleanedFiles}`)
-    console.log(`❌ Errors: ${this.errors.length}`)
+    console.log('');
+    console.log('📊 CLEANING RESULTS:');
+    console.log('='.repeat(50));
+    console.log(`🗑️  Files/dirs deleted: ${this.deletedFiles}`);
+    console.log(`🧼 Files cleaned: ${this.cleanedFiles}`);
+    console.log(`❌ Errors: ${this.errors.length}`);
     
     if (this.errors.length > 0) {
-      console.log('')
-      console.log('❌ ERRORS:')
-      this.errors.forEach(error => console.log(`   ${error}`))
+      console.log('');
+      console.log('❌ ERRORS:');
+      this.errors.forEach(error => console.log(`   ${error}`));
     }
     
-    console.log('')
-    console.log('🎉 CLEANING COMPLETE!')
-    console.log('')
-    console.log('✅ EuroWeb Web8 Industrial Architecture:')
-    console.log('   🔹 Pure TypeScript + ESM')
-    console.log('   🔹 No JavaScript files')
-    console.log('   🔹 No React hooks')
-    console.log('   🔹 No Tailwind CSS')
-    console.log('   🔹 No Jest (Vitest only)')
-    console.log('   🔹 No async/await')
-    console.log('   🔹 Vanilla CSS + Framer Motion')
-    console.log('')
-    console.log('🚀 Ready for AGI Development!')
-    console.log('')
-    console.log('⚡ Next Steps:')
-    console.log('   1. yarn install')
-    console.log('   2. yarn tech:guard')
-    console.log('   3. yarn dev')
+    console.log('');
+    console.log('🎉 CLEANING COMPLETE!');
+    console.log('');
+    console.log('✅ EuroWeb Web8 Industrial Architecture:');
+    console.log('   🔹 Pure TypeScript + ESM');
+    console.log('   🔹 No JavaScript files');
+    console.log('   🔹 No React hooks');
+    console.log('   🔹 No Tailwind CSS');
+    console.log('   🔹 No Jest (Vitest only)');
+    console.log('   🔹 No async/await');
+    console.log('   🔹 Vanilla CSS + Framer Motion');
+    console.log('');
+    console.log('🚀 Ready for AGI Development!');
+    console.log('');
+    console.log('⚡ Next Steps:');
+    console.log('   1. yarn install');
+    console.log('   2. yarn tech:guard');
+    console.log('   3. yarn dev');
   }
 }
 
 // Run the cleaner
-const cleaner = new EuroWebCleaner()
-cleaner.clean().catch(console.error)
+const cleaner = new EuroWebCleaner();
+cleaner.clean().catch(console.error);
