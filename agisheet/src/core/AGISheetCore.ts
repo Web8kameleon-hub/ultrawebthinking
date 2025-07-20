@@ -19,7 +19,7 @@ const CellDataSchema = z.object({
   agiBinding: z.string().optional(),
   layerRef: z.string().optional(),
   timestamp: z.number(),
-  metadata: z.record(z.any()).optional()
+  metadata: z.record(z.string(), z.any()).optional()
 });
 
 const AGISheetConfigSchema = z.object({

@@ -37,3 +37,4 @@ export const HeroSectionSimple = () => {
     </section>
   );
 };
+

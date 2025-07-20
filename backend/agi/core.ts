@@ -279,5 +279,5 @@ console.log('🧠 AGI Core Module Started');
 console.log('📊 Metrics:', agiCore.getMetrics());
 
 // Export for use in other modules
-export default agiCore;
+export { agiCore }
 export { AGICore, type AGILayer, type AGICoreConfig };

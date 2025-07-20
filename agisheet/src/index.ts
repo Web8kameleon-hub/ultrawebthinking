@@ -4,13 +4,6 @@
  */
 
 export { AGISheetCore } from './core/AGISheetCore.js';
-export { AGISheetEngine } from './engine/AGISheetEngine.js';
-export { AGISheetUI } from './ui/AGISheetUI.js';
-export { KameleonMode } from './core/KameleonMode.js';
-export { AGIBinder } from './core/AGIBinder.js';
-export { LayerController } from './controllers/LayerController.js';
-export { DecisionChain } from './controllers/DecisionChain.js';
-export { OperationalDashboard } from './controllers/OperationalDashboard.js';
 
 // Types
 export type {

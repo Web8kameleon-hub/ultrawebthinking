@@ -9,7 +9,7 @@ interface NavbarProps {
   className?: string;
 }
 
-export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, className = "" }: NavbarProps) {
+export function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, className = "" }: NavbarProps) {
   const { actions, ui } = useAGI();
   
   // Get state from AGI memory (no  needed!)
@@ -21,7 +21,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
   const isScrolled = scrollPosition > 20;
   const notifications = 3; // Could be from memory too
 
-  React.(() => {
+  React.useEffect(() => {
     // Handle scroll position updates
     const handleScroll = () => {
       actions.updateScrollPosition(window.scrollY);
@@ -31,7 +31,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [actions]);
 
-  React.(() => {
+  React.useEffect(() => {
     // Activate navbar UI
     ui.activateElement('navbar');
     
@@ -55,7 +55,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
     <motion.nav 
       id="navbar"
       className={`navbar ${className} agi-reactive agi-bg`} 
-      className={{
+      style={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -74,7 +74,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           ? '0 4px 20px rgba(99, 102, 241, 0.1)' 
           : '0 2px 10px rgba(0, 0, 0, 0.05)'
     }}>
-      <div className={{
+      <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -82,14 +82,14 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
         margin: '0 auto'
       }}>
         {/* Logo and Brand */}
-        <div className={{
+        <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '1rem'
         }}>
           <button
             onClick={onMenuToggle}
-            className={{
+            style={{
               background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
               border: '1px solid rgba(99, 102, 241, 0.2)',
               borderRadius: '12px',
@@ -126,19 +126,19 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
             ☰
           </button>
 
-          <div className={{
+          <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.75rem'
           }}>
-            <div className={{
+            <div style={{
               fontSize: '1.8rem',
               animation: 'pulse 2s ease-in-out infinite alternate'
             }}>
               🌌
             </div>
             <div>
-              <div className={{
+              <div style={{
                 fontSize: '1.2rem',
                 fontWeight: 'bold',
                 background: 'linear-gradient(45deg, #FFD700, #FFA500)',
@@ -148,7 +148,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
               }}>
                 UltraWebThinking
               </div>
-              <div className={{
+              <div style={{
                 fontSize: '0.7rem',
                 color: '#00FF88',
                 fontWeight: 'bold',
@@ -161,7 +161,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
         </div>
 
         {/* Navigation Links */}
-        <div className={{
+        <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '0.5rem'
@@ -171,7 +171,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
             { icon: '🧠', label: 'AGI', active: false, href: '/agi' },
             { icon: '🚇', label: 'AGI Tunnel', active: false, href: '/agi-tunnel' },
             { icon: '🧠', label: 'AGI Matrix', active: false, href: '/agi-matrix' },
-            { icon: '🎨', label: 'Panda Demo', active: false, href: '/panda-demo' },
+            { icon: '🎨', label: 'CVA Demo', active: false, href: '/cva-demo' },
             { icon: '📊', label: 'Analytics', active: false, href: '/analytics' },
             { icon: '🌊', label: 'Surfing', active: false, href: '/surfing' },
             { icon: '⚡', label: 'Tools', active: false, href: '/tools' }
@@ -179,7 +179,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
             <a
               key={index}
               href={item.href}
-              className={{
+              style={{
                 background: item.active 
                   ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.1))' 
                   : 'transparent',
@@ -213,20 +213,20 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
                 }
               }}
             >
-              <span className={{ fontSize: '16px' }}>{item.icon}</span>
+              <span style={{ fontSize: '16px' }}>{item.icon}</span>
               <span>{item.label}</span>
             </a>
           ))}
         </div>
 
         {/* Right Side Controls */}
-        <div className={{
+        <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '1rem'
         }}>
           {/* Live Clock */}
-          <div className={{
+          <div style={{
             background: 'rgba(0, 255, 136, 0.1)',
             border: '1px solid rgba(0, 255, 136, 0.3)',
             borderRadius: '8px',
@@ -241,7 +241,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
 
           {/* Notifications */}
           <button
-            className={{
+            style={{
               position: 'relative',
               background: 'rgba(255, 215, 0, 0.1)',
               border: '1px solid rgba(255, 215, 0, 0.3)',
@@ -255,7 +255,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           >
             🔔
             {notifications > 0 && (
-              <span className={{
+              <span style={{
                 position: 'absolute',
                 top: '-5px',
                 right: '-5px',
@@ -278,7 +278,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           {/* Settings */}
           <button
             onClick={onSettingsClick}
-            className={{
+            style={{
               background: 'rgba(255, 215, 0, 0.1)',
               border: '1px solid rgba(255, 215, 0, 0.3)',
               borderRadius: '8px',
@@ -295,7 +295,7 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
           {/* Profile */}
           <button
             onClick={onProfileClick}
-            className={{
+            style={{
               background: 'linear-gradient(45deg, #FFD700, #FFA500)',
               border: 'none',
               borderRadius: '50%',
@@ -326,5 +326,5 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
   );
 }
 
-export { Navbar }
-export default Navbar
+// Named export only - no default exports in Web8
+

@@ -263,4 +263,5 @@ const OpenMindChat = () => {
 };
 
 export { OpenMindChat };
-export default OpenMindChat;
+// Removed default export: OpenMindChat;
+

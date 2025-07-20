@@ -250,4 +250,4 @@ class RealSenseSystem {
 }
 
 export const realSense = new RealSenseSystem();
-export default RealSenseSystem;
+export { RealSenseSystem }

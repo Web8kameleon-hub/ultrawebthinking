@@ -68,7 +68,7 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
   };
 
   return (
-    <div data-web8-core="true" className={{
+    <div data-web8-core="true" style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
       color: '#f8fafc',
@@ -76,13 +76,13 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
     }}>
       
       {/* EuroWeb Web8 Header */}
-      <header className={{
+      <header style={{
         background: 'rgba(15, 20, 25, 0.95)',
         backdropFilter: 'blur(10px)',
         borderBottom: '2px solid #d4af37',
         padding: '16px 24px'
       }}>
-        <h1 className={{
+        <h1 style={{
           color: '#d4af37',
           fontSize: '24px',
           fontWeight: 'bold',
@@ -91,7 +91,7 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
           {title}
         </h1>
         
-        <div className={{
+        <div style={{
           color: '#cbd5e1',
           fontSize: '14px'
         }}>
@@ -100,7 +100,7 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
       </header>
 
       {/* Web8 Layer Navigation */}
-      <nav className={{
+      <nav style={{
         background: 'rgba(45, 52, 70, 0.8)',
         padding: '12px 24px',
         display: 'flex',
@@ -111,7 +111,7 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
           <button
             key={layer.id}
             onClick={() => handleLayerActivation(layer.id)}
-            className={{
+            style={{
               background: layer.status === 'active' ? '#d4af37' : 'rgba(100, 116, 139, 0.3)',
               border: `1px solid ${layer.status === 'active' ? '#d4af37' : '#64748b'}`,
               borderRadius: '6px',
@@ -129,7 +129,7 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
       </nav>
 
       {/* Web8 Content Area */}
-      <main className={{
+      <main style={{
         padding: '24px',
         minHeight: 'calc(100vh - 160px)'
       }}>
@@ -137,7 +137,7 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
       </main>
 
       {/* EuroWeb Footer */}
-      <footer className={{
+      <footer style={{
         background: 'rgba(15, 20, 25, 0.95)',
         borderTop: '1px solid rgba(212, 175, 55, 0.3)',
         padding: '12px 24px',
@@ -150,3 +150,4 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
     </div>
   );
 }
+

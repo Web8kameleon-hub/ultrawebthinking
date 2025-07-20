@@ -11,32 +11,18 @@
 'use client';
 
 import React from 'react';
-import dynamic from 'next/dynamic';
-
-// Dynamically import Web8TabSystem with no SSR to prevent hydration issues
-const Web8TabSystem = dynamic(() => import('./Web8TabSystem'), {
-  ssr: false,
-  loading: () => (
-    <div className="loading-container">
-      <div className="loading-content">
-        <div className="loading-spinner"></div>
-        <h2>🚀 EuroWeb Web8 Loading...</h2>
-        <p>AGI-Powered Browser Interface Initializing</p>
-      </div>
-    </div>
-  )
-});
+import { SimpleDemo } from './SimpleDemo';
 
 /**
- * Client-side wrapper component without hooks
- * Pure functional component for proper TypeScript compliance
+ * Web8 Client Wrapper with Static Import
  */
 const Web8ClientWrapper: React.FC = () => {
   return (
-    <div className="web8-client-wrapper">
-      <Web8TabSystem />
+    <div>
+      <SimpleDemo />
     </div>
   );
 };
 
 export { Web8ClientWrapper };
+

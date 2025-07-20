@@ -1,9 +1,9 @@
 'use client';
 import { motion } from 'framer-motion';
 
-const Hero = () {
+const Hero = () => {
   return (
-    <section className={{
+    <section style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #000000 0%, #111827 50%, #1f2937 100%)',
       color: 'white',
@@ -14,7 +14,7 @@ const Hero = () {
       padding: '0 24px'
     }}>
       <motion.h1 
-        className={{
+        style={{
           fontSize: 'clamp(2rem, 8vw, 4rem)',
           fontWeight: 800,
           textAlign: 'center',
@@ -30,7 +30,7 @@ const Hero = () {
         EuroWeb Platform
       </motion.h1>
       <motion.p 
-        className={{
+        style={{
           fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
           color: '#cbd5e1',
           textAlign: 'center',
@@ -44,7 +44,7 @@ const Hero = () {
         Pure TypeScript Industrial Web8 Architecture with AGI-Core Intelligence
       </motion.p>
       <motion.div 
-        className={{
+        style={{
           display: 'flex',
           gap: '24px',
           flexWrap: 'wrap',
@@ -54,7 +54,7 @@ const Hero = () {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 1 }}
       >
-        <button className={{
+        <button style={{
           background: '#d4af37',
           color: '#000',
           padding: '12px 24px',
@@ -66,7 +66,7 @@ const Hero = () {
         }}>
           Start AGI Core
         </button>
-        <button className={{
+        <button style={{
           border: '2px solid #d4af37',
           background: 'transparent',
           color: '#d4af37',
@@ -86,4 +86,5 @@ const Hero = () {
 
 
 export { Hero }
-export default Hero
+// Removed default export: Hero
+

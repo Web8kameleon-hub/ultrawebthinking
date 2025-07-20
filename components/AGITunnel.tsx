@@ -336,4 +336,5 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
   );
 };
 
-export default AGITunnel;
+// Removed default export: AGITunnel;
+

@@ -349,4 +349,5 @@ export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysis 
   )
 }
 
-export default AGIXResults
+// Removed default export: AGIXResults
+

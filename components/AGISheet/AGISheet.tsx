@@ -1,6 +1,6 @@
 'use client'
 
-import React, { , , ,  } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 
 interface Cell {
   id: string
@@ -31,22 +31,23 @@ interface AGISheetProps {
   height?: number
 }
 
-const AGISheet: React.FC<AGISheetProps> = ({ 
+// Named export for AGISheet
+export const AGISheet: React.FC<AGISheetProps> = ({ 
   mode = 'analysis', 
   width = 20, 
   height = 50 
 }) => {
-  const [cells, setCells] = <Map<string, Cell>>(new Map())
-  const [selectedCell, setSelectedCell] = <string | null>(null)
-  const [formulaBar, setFormulaBar] = <string>('')
-  const [agiLayers, setAgiLayers] = <AGILayer[]>([])
-  const [isAGIActive, setIsAGIActive] = (true)
-  const [currentMode, setCurrentMode] = (mode)
-  const containerRef = <HTMLDivElement>(null)
-  const [scrollPosition, setScrollPosition] = ({ x: 0, y: 0 })
+  const [cells, setCells] = useState<Map<string, Cell>>(new Map())
+  const [selectedCell, setSelectedCell] = useState<string | null>(null)
+  const [formulaBar, setFormulaBar] = useState<string>('')
+  const [agiLayers, setAgiLayers] = useState<AGILayer[]>([])
+  const [isAGIActive, setIsAGIActive] = useState(true)
+  const [currentMode, setCurrentMode] = useState(mode)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 })
 
   // Initialize AGI Layers
-  (() => {
+  useEffect(() => {
     const initialLayers: AGILayer[] = [
       {
         id: 'core',
@@ -154,7 +155,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.name,
         type: 'text',
         agiBinding: layer.id,
-        status: layer.status
+        status: layer.status === 'inactive' ? 'idle' : layer.status
       })
       
       // Status
@@ -165,7 +166,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.status.toUpperCase(),
         type: 'agi-status',
         agiBinding: layer.id,
-        status: layer.status
+        status: layer.status === 'inactive' ? 'idle' : layer.status
       })
       
       // Type
@@ -314,7 +315,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
     }
   }
 
-  const getCellStyle = (row: number, col: number) => {
+  const getCellStyle = (row: number, col: number): React.CSSProperties => {
     const cell = cells.get(getCellId(row, col))
     const isSelected = selectedCell === getCellId(row, col)
     const isHeader = row === 0
@@ -336,13 +337,13 @@ const AGISheet: React.FC<AGISheetProps> = ({
       fontSize: '12px',
       fontWeight: isHeader ? 600 : 400,
       cursor: 'pointer',
-      position: 'relative',
+      position: 'relative' as const,
       borderLeft: cell?.agiBinding ? `3px solid ${getStatusColor(cell.status)}` : undefined
     }
   }
 
   return (
-    <div className={{
+    <div style={{
       width: '100%',
       height: '100%',
       background: '#0f172a',
@@ -352,7 +353,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
       fontFamily: 'Inter, monospace'
     }}>
       {/* AGISheet Header */}
-      <div className={{
+      <div style={{
         background: 'linear-gradient(135deg, #1e293b, #334155)',
         padding: '12px 16px',
         borderBottom: '2px solid #d4af37',
@@ -361,7 +362,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
         alignItems: 'center'
       }}>
         <div>
-          <h2 className={{ 
+          <h2 style={{ 
             color: '#d4af37', 
             fontSize: '18px', 
             margin: 0,
@@ -369,7 +370,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
           }}>
             📋 AGISheet - Kameleoni i Inteligjencës Operacionale
           </h2>
-          <p className={{ 
+          <p style={{ 
             color: '#cbd5e1', 
             fontSize: '12px', 
             margin: '4px 0 0 0' 
@@ -378,11 +379,11 @@ const AGISheet: React.FC<AGISheetProps> = ({
           </p>
         </div>
         
-        <div className={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <select
             value={currentMode}
             onChange={(e) => setCurrentMode(e.target.value as any)}
-            className={{
+            style={{
               background: '#334155',
               border: '1px solid #d4af37',
               color: '#f8fafc',
@@ -401,7 +402,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
           
           <button
             onClick={() => setIsAGIActive(!isAGIActive)}
-            className={{
+            style={{
               background: isAGIActive ? '#22c55e' : '#64748b',
               border: 'none',
               color: 'white',
@@ -417,7 +418,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
       </div>
 
       {/* Formula Bar */}
-      <div className={{
+      <div style={{
         background: '#1e293b',
         padding: '8px 16px',
         borderBottom: '1px solid rgba(100, 116, 139, 0.3)',
@@ -425,7 +426,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
         alignItems: 'center',
         gap: '12px'
       }}>
-        <span className={{ color: '#d4af37', fontSize: '12px', fontWeight: 600 }}>
+        <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 600 }}>
           {selectedCell || 'A1'}
         </span>
         <input
@@ -433,7 +434,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
           value={formulaBar}
           onChange={(e) => setFormulaBar(e.target.value)}
           placeholder="Enter formula, AGI command, or value..."
-          className={{
+          style={{
             flex: 1,
             background: '#334155',
             border: '1px solid rgba(100, 116, 139, 0.3)',
@@ -448,19 +449,19 @@ const AGISheet: React.FC<AGISheetProps> = ({
       {/* AGISheet Grid */}
       <div
         ref={containerRef}
-        className={{
+        style={{
           flex: 1,
           overflow: 'auto',
           background: '#0f172a'
         }}
       >
-        <div className={{
+        <div style={{
           display: 'inline-block',
           minWidth: '100%'
         }}>
           {/* Column Headers */}
-          <div className={{ display: 'flex', position: 'sticky', top: 0, zIndex: 10 }}>
-            <div className={{
+          <div style={{ display: 'flex', position: 'sticky', top: 0, zIndex: 10 }}>
+            <div style={{
               ...getCellStyle(-1, -1),
               backgroundColor: '#0a0f1a',
               color: '#64748b',
@@ -471,7 +472,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
             {Array.from({ length: width }, (_, colIndex) => (
               <div
                 key={`col-${colIndex}`}
-                className={{
+                style={{
                   ...getCellStyle(-1, colIndex),
                   backgroundColor: '#0a0f1a',
                   color: '#d4af37',
@@ -486,9 +487,9 @@ const AGISheet: React.FC<AGISheetProps> = ({
 
           {/* Rows */}
           {Array.from({ length: height }, (_, rowIndex) => (
-            <div key={`row-${rowIndex}`} className={{ display: 'flex' }}>
+            <div key={`row-${rowIndex}`} style={{ display: 'flex' }}>
               {/* Row Header */}
-              <div className={{
+              <div style={{
                 ...getCellStyle(rowIndex, -1),
                 backgroundColor: '#0a0f1a',
                 color: '#d4af37',
@@ -502,11 +503,11 @@ const AGISheet: React.FC<AGISheetProps> = ({
               {Array.from({ length: width }, (_, colIndex) => (
                 <div
                   key={getCellId(rowIndex, colIndex)}
-                  className={getCellStyle(rowIndex, colIndex)}
+                  style={getCellStyle(rowIndex, colIndex)}
                   onClick={() => handleCellClick(rowIndex, colIndex)}
                   onDoubleClick={() => handleCellDoubleClick(rowIndex, colIndex)}
                 >
-                  <span className={{
+                  <span style={{
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
@@ -517,7 +518,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
                   
                   {/* AGI Status Indicator */}
                   {cells.get(getCellId(rowIndex, colIndex))?.agiBinding && (
-                    <div className={{
+                    <div style={{
                       position: 'absolute',
                       top: '2px',
                       right: '2px',
@@ -535,7 +536,7 @@ const AGISheet: React.FC<AGISheetProps> = ({
       </div>
 
       {/* AGI Status Bar */}
-      <div className={{
+      <div style={{
         background: '#1e293b',
         padding: '8px 16px',
         borderTop: '1px solid rgba(100, 116, 139, 0.3)',
@@ -544,13 +545,13 @@ const AGISheet: React.FC<AGISheetProps> = ({
         alignItems: 'center',
         fontSize: '12px'
       }}>
-        <span className={{ color: '#22c55e' }}>
+        <span style={{ color: '#22c55e' }}>
           ✅ AGI Layers: {agiLayers.filter(l => l.status === 'active').length}/{agiLayers.length} Active
         </span>
-        <span className={{ color: '#cbd5e1' }}>
+        <span style={{ color: '#cbd5e1' }}>
           📊 Cells: {cells.size} | 🧠 AGI Bindings: {Array.from(cells.values()).filter(c => c.agiBinding).length}
         </span>
-        <span className={{ color: '#d4af37' }}>
+        <span style={{ color: '#d4af37' }}>
           ⚡ EuroWeb AGISheet v1.0 | Web8 Kameleon Mode
         </span>
       </div>
@@ -558,4 +559,5 @@ const AGISheet: React.FC<AGISheetProps> = ({
   )
 }
 
-export default AGISheet
+// Removed default export: AGISheet
+

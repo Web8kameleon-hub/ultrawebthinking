@@ -438,4 +438,5 @@ const AGIElUltra: React.FC = () => {
 }
 
 export { AGIElUltra }
-export default AGIElUltra
+// Removed default export: AGIElUltra
+

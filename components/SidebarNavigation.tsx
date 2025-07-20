@@ -2,7 +2,7 @@ import React from "react";
 
 const SidebarNavigation: React.FC = () => {
   return (
-    <aside className={{ width: "220px", background: "#f4f4f4", padding: "1rem" }}>
+    <aside style={{ width: "220px", background: "#f4f4f4", padding: "1rem" }}>
       <nav>
         <ul>
           <li><a href="#">Tabat</a></li>
@@ -15,4 +15,4 @@ const SidebarNavigation: React.FC = () => {
   );
 };
 
-export default SidebarNavigation;
+// Removed default export: SidebarNavigation;

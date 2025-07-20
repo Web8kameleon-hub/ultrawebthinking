@@ -10,14 +10,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { css } from '../css';
 
 // Pure TypeScript Industrial Types
 export interface IndustrialPage {
   readonly id: string;
   readonly title: string;
   readonly content: React.ReactNode;
-  readonly cssClasses: string;
+  readonly cssStyles: React.CSSProperties;
   motionConfig: MotionSettings;
   readonly metadata: PageMeta;
   lastAccessed: number;
@@ -80,34 +79,31 @@ class IndustrialMemory {
 }
 
 /**
- * CSS Class Generator - Pure Vanilla CSS with Panda CSS
+ * CSS Class Generator - Pure React Style Props
  */
 class CSSClassEngine {
-  private readonly cache = new Map<string, string>();
+  private readonly cache = new Map<string, React.CSSProperties>();
 
-  generateClasses(pageId: string): string {
+  generateClasses(pageId: string): React.CSSProperties {
     if (this.cache.has(pageId)) {
       return this.cache.get(pageId)!;
     }
 
-    const classes = css({
-      minH: '100vh',
-      w: 'full',
+    const styles: React.CSSProperties = {
+      minHeight: '100vh',
+      width: '100%',
       position: 'relative',
-      bg: 'gradient-to-br',
-      from: 'gray.900',
-      via: 'blue.900',
-      to: 'purple.900',
+      background: 'linear-gradient(to bottom right, #1f2937, #1e3a8a, #7c3aed)',
       color: 'white',
       fontFamily: 'Inter, system-ui, sans-serif',
-    });
+    };
 
-    this.cache.set(pageId, classes);
-    return classes;
+    this.cache.set(pageId, styles);
+    return styles;
   }
 
-  apply(classes: string): string {
-    return classes;
+  apply(styles: React.CSSProperties): React.CSSProperties {
+    return styles;
   }
 }
 
@@ -195,7 +191,7 @@ export class IndustrialPageService {
       id: pageId,
       title: `EuroWeb Web8 - ${pageId}`,
       content: content || this.createDefaultContent(pageId),
-      cssClasses: this.cssEngine.generateClasses(pageId),
+      cssStyles: this.cssEngine.generateClasses(pageId),
       motionConfig: this.motionEngine.getMotion('standard'),
       metadata: {
         description: `Industrial page for ${pageId}`,
@@ -221,7 +217,7 @@ export class IndustrialPageService {
    */
   private createDefaultContent(pageId: string): React.ReactNode {
     return React.createElement('div', 
-      { className: css({ p: '8', textAlign: 'center' }) },
+      { style: { padding: '2rem', textAlign: 'center' } },
       React.createElement('h1', null, `🚀 ${pageId}`),
       React.createElement('p', null, 'Industrial page ready')
     );
@@ -273,7 +269,7 @@ export class IndustrialPageService {
 const IndustrialPageFrame: React.FC<{ page: IndustrialPage }> = ({ page }) => {
   return React.createElement(motion.div, {
     id: `page-${page.id}`,
-    className: page.cssClasses,
+    style: page.cssStyles,
     initial: page.motionConfig.initial,
     animate: page.motionConfig.animate,
     exit: page.motionConfig.exit,
@@ -326,27 +322,28 @@ export const IndustrialTemplates = {
    */
   AGIPage: (title: string, children: React.ReactNode): React.ReactNode => {
     return React.createElement('div', {
-      className: css({
-        minH: '100vh',
-        bg: 'black',
+      style: {
+        minHeight: '100vh',
+        background: 'black',
         color: 'white',
-        p: '8',
+        padding: '2rem',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center'
-      })
+      }
     }, [
       React.createElement('h1', {
         key: 'title',
-        className: css({
-          fontSize: '4xl',
-          mb: '8',
+        style: {
+          fontSize: '4rem',
+          marginBottom: '2rem',
           textAlign: 'center',
           background: 'linear-gradient(45deg, #00f5ff, #ff6b6b)',
           backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
           color: 'transparent'
-        })
+        }
       }, title),
       children
     ]);
@@ -357,22 +354,20 @@ export const IndustrialTemplates = {
    */
   PerformancePage: (title: string, children: React.ReactNode): React.ReactNode => {
     return React.createElement('div', {
-      className: css({
-        minH: '100vh',
-        bg: 'gradient-to-br',
-        from: 'blue.900',
-        to: 'purple.900',
+      style: {
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom right, #1e3a8a, #7c3aed)',
         color: 'white',
-        p: '8'
-      })
+        padding: '2rem'
+      }
     }, [
       React.createElement('h1', {
         key: 'title',
-        className: css({
-          fontSize: '3xl',
-          mb: '8',
+        style: {
+          fontSize: '3rem',
+          marginBottom: '2rem',
           textAlign: 'center'
-        })
+        }
       }, title),
       children
     ]);

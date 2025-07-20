@@ -40,4 +40,4 @@ const SearchInterface: React.FC = () => {
   );
 };
 
-export default SearchInterface;
+// Removed default export: SearchInterface;

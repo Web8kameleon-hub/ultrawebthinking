@@ -442,4 +442,6 @@ const GuardianMonitor: React.FC = () => {
   )
 }
 
-export default GuardianMonitor
+// Named export only (no default exports allowed)
+export { GuardianMonitor }
+

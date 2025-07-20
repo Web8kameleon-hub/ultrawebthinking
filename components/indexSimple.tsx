@@ -1,93 +1,67 @@
 /**
  * EuroWeb Web8 - Simple Index Component
- * Pure Panda CSS - No styled-system - Industrial Grade
+ * CSS Modules + CVA + Framer Motion Implementation
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
- * @version 8.0.0 Industrial
+ * @version 8.0.1 Industrial
  * @license MIT
  */
 
 'use client';
 
 import React from 'react';
-import { css } from '../styled-system/css';
+import { motion } from 'framer-motion';
+import { fadeInUp, staggerContainer } from '../lib/motion';
+import styles from './IndexSimple.module.css';
 
 // Pure TypeScript component - NO default export (forbidden)
 const IndexSimple = (): React.ReactElement => {
   return (
-    <div
-      className={css({
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        fontSize: '2xl',
-        fontWeight: 'bold',
-        color: 'white',
-        backgroundColor: 'blue.700',
-        backgroundImage: 'linear-gradient(135deg, blue.700, blue.900)',
-        textAlign: 'center',
-        padding: '8',
-        fontFamily: 'Inter, sans-serif'
-      })}
+    <motion.div
+      variants={staggerContainer}
+      initial="initial"
+      animate="animate"
+      className={styles.container}
     >
-      <div
-        className={css({
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '4'
-        })}
+      <motion.div
+        variants={fadeInUp}
+        className={styles.content}
       >
-        <h1
-          className={css({
-            fontSize: '4xl',
-            fontWeight: 'bold',
-            color: 'white',
-            textShadow: '0 2px 4px rgba(0,0,0,0.3)'
-          })}
+        <motion.h1
+          variants={fadeInUp}
+          className={styles.title}
         >
           Web8 UltraThinking
-        </h1>
-        <p
-          className={css({
-            fontSize: 'xl',
-            color: 'blue.100',
-            fontWeight: 'medium'
-          })}
+        </motion.h1>
+        
+        <motion.p
+          variants={fadeInUp}
+          className={styles.subtitle}
         >
           Kristal Engine Ready
-        </p>
-        <div
-          className={css({
-            display: 'flex',
-            gap: '2',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '4'
-          })}
+        </motion.p>
+        
+        <motion.div
+          variants={fadeInUp}
+          className={styles.statusContainer}
         >
-          <div
-            className={css({
-              width: '3',
-              height: '3',
-              backgroundColor: 'green.500',
-              borderRadius: 'full',
-              animation: 'pulse 2s infinite'
-            })}
+          <motion.div
+            animate={{
+              opacity: [1, 0.5, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+            }}
+            className={styles.statusIndicator}
           />
-          <span
-            className={css({
-              fontSize: 'sm',
-              color: 'green.300',
-              fontWeight: 'medium'
-            })}
-          >
+          <span className={styles.statusText}>
             System Active
           </span>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 

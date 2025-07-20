@@ -27,7 +27,7 @@ const MiniAGIAssistant: React.FC = () => {
     }, 2000);
   };
 
-  React.(() => {
+  React.useEffect(() => {
     // Activate UI element when component mounts
     ui.activateElement('mini-agi-assistant');
     
@@ -130,4 +130,5 @@ const MiniAGIAssistant: React.FC = () => {
   );
 };
 
-export default MiniAGIAssistant;
+// Removed default export: MiniAGIAssistant;
+

@@ -431,4 +431,5 @@ const Surfing: React.FC = () => {
   );
 };
 
-export default Surfing;
+// Removed default export: Surfing;
+

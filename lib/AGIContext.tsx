@@ -1,7 +1,6 @@
 // React Context for inter-component state management
-import React, { createContext, , ReactNode } from 'react';
-import { agiCore, useAGIMemory, AGIMemoryStore } from './AGICore';
-import { pandaTokens } from './PandaTokenController';
+import React, { createContext, ReactNode, useEffect, useState } from 'react';
+import { agiCore, getAGIMemory, AGIMemoryStore, subscribeToAGIMemory } from './AGICore';
 
 interface AGIContextValue {
   memory: AGIMemoryStore;
@@ -29,7 +28,14 @@ interface AGIProviderProps {
 }
 
 export function AGIProvider({ children }: AGIProviderProps) {
-  const memory = useAGIMemory(state => state);
+  const [memory, setMemory] = useState<AGIMemoryStore>(getAGIMemory(state => state));
+
+  useEffect(() => {
+    const unsubscribe = subscribeToAGIMemory(() => {
+      setMemory(getAGIMemory(state => state));
+    });
+    return unsubscribe;
+  }, []);
 
   const actions = {
     setActiveTab: (tab: string) => {
@@ -70,15 +76,27 @@ export function AGIProvider({ children }: AGIProviderProps) {
 
   const ui = {
     activateElement: (elementId: string) => {
-      pandaTokens.activateElement(elementId);
+      // Pure CSS approach - add active class
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.classList.add('active');
+      }
     },
 
     pulseElement: (elementId: string) => {
-      pandaTokens.pulseElement(elementId);
+      // Pure CSS approach - add pulse class
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.classList.add('pulse');
+        setTimeout(() => element.classList.remove('pulse'), 1000);
+      }
     },
 
     setDynamicStyle: (key: string, value: string) => {
-      pandaTokens.setToken(key as any, value);
+      // Pure CSS variables approach
+      if (typeof document !== 'undefined') {
+        document.documentElement.style.setProperty(`--${key}`, value);
+      }
     }
   };
 
@@ -97,7 +115,7 @@ export function AGIProvider({ children }: AGIProviderProps) {
 
 // Custom hook to use AGI context
 export function useAGI(): AGIContextValue {
-  const context = (AGIContext);
+  const context = React.useContext(AGIContext);
   if (!context) {
     throw new Error('useAGI must be used within an AGIProvider');
   }
@@ -131,7 +149,7 @@ export function withAGI<P extends object>(
   return function AGIWrappedComponent(props: P) {
     const { ui } = useAGI();
 
-    React.(() => {
+    React.useEffect(() => {
       if (options?.activateOnMount && options?.elementId) {
         ui.activateElement(options.elementId);
       }
@@ -141,4 +159,4 @@ export function withAGI<P extends object>(
   };
 }
 
-export default AGIProvider;
+

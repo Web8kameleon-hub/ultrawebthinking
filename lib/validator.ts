@@ -391,4 +391,4 @@ class RealValidator {
 }
 
 export const realValidator = new RealValidator();
-export default RealValidator;
+export { RealValidator }

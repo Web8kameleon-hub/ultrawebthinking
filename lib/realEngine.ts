@@ -392,4 +392,4 @@ export function sendData(data: any, target: string): boolean {
 
 // Global real engine instance
 export const realEngine = new RealEngine();
-export default RealEngine;
+export { RealEngine }

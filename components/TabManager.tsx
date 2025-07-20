@@ -32,4 +32,4 @@ const TabManager: React.FC = () => {
   );
 };
 
-export default TabManager;
+// Removed default export: TabManager;

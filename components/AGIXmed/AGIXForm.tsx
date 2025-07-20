@@ -231,4 +231,5 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
   )
 }
 
-export default AGIXForm
+// Removed default export: AGIXForm
+

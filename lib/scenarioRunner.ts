@@ -421,4 +421,4 @@ class RealScenarioRunner {
 }
 
 export const realScenarioRunner = new RealScenarioRunner();
-export default RealScenarioRunner;
+export { RealScenarioRunner }

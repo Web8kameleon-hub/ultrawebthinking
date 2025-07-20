@@ -4,11 +4,12 @@ interface BrowserLayoutProps {
   children: React.ReactNode;
 }
 
-export default function BrowserLayout({ children }: BrowserLayoutProps) {
+export function BrowserLayout({ children }: BrowserLayoutProps) {
   return (
-    <div className={{ border: "2px solid #ccc", padding: "1rem", borderRadius: "1rem" }}>
+    <div style={{ border: "2px solid #ccc", padding: "1rem", borderRadius: "1rem" }}>
       {children}
     </div>
   );
 }
+
 

@@ -22,7 +22,7 @@ const LiveNavigator = () => {
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.indicator} className={{ top: `${sections.findIndex(sec => sec.id === active) * 50}px` }} />
+      <div className={styles.indicator} style={{ top: `${sections.findIndex(sec => sec.id === active) * 50}px` }} />
       {sections.map((sec) => (
         <button
           key={sec.id}
@@ -36,4 +36,5 @@ const LiveNavigator = () => {
   );
 };
 
-export default LiveNavigator;
+// Removed default export: LiveNavigator;
+

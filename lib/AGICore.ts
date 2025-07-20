@@ -170,4 +170,4 @@ export function subscribeToAGIMemory(callback: () => void): () => void {
   return agiCore.subscribe(callback);
 }
 
-export default AGICore;
+export { AGICore }

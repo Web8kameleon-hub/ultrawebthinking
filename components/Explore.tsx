@@ -1,7 +1,7 @@
 // components/Explore.tsx
 import { css } from "..//css";
 
-export default function Explore() {
+export function Explore() {
   return (
     <section className={styles.section}>
       <h2 className={styles.heading}>Eksploro Dimensione të Reja</h2>
@@ -76,3 +76,4 @@ const styles = {
     color: "gray.700",
   }),
 };
+

@@ -50,4 +50,5 @@ const Features = () => {
   );
 };
 
-export default Features;
+// Removed default export: Features;
+

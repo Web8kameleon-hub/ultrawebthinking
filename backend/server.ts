@@ -218,4 +218,4 @@ server.listen(PORT, () => {
   logger.info(`🔒 DDoS defense system operational`);
 });
 
-export default app;
+export { app }

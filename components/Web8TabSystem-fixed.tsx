@@ -1,31 +1,53 @@
 /**
- * EuroWeb Web8 Platform - Tab System Component (Fixed)
- * Pure TypeScript Industrial Architecture - No Hooks
+ * EuroWeb Web8 Platform - Ultra Intelligent Tab System
+ * Industrial-Grade TypeScript Architecture with Neural Optimization
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
- * @version 8.0.0 Industrial
+ * @version 8.0.0 Ultra
  * @license MIT
  */
 
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { AGIMedUltra } from './AGISheet/AGIMedUltra'
 import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
 import { AGIEcoUltra } from './AGISheet/AGIEcoUltra'
 import { AGIElUltra } from './AGISheet/AGIElUltra'
 import { AGICoreUltra } from './AGISheet/AGICoreUltra'
-import GuardianMonitor from './GuardianMonitor'
+import { GuardianMonitor } from './GuardianMonitor'
+import { cva, type VariantProps } from 'class-variance-authority'
+import styles from './Web8TabSystem.module.css'
 
-// Interface definitions
+// Neural Network Interface
+interface NeuralNode {
+  id: string
+  activation: number
+  connections: string[]
+  lastFired: Date
+}
+
+interface AGIContext {
+  activeNeuralPath: string[]
+  cognitiveLoad: number
+  memoryRecall: {
+    shortTerm: any[]
+    longTerm: any[]
+  }
+}
+
+// Enhanced Tab Interface with Neural Properties
 interface Tab {
   id: string
   title: string
   url: string
   isActive: boolean
   isLoading: boolean
+  neuralWeight: number
+  associatedNodes: NeuralNode[]
+  lastAccessed: Date
 }
 
 interface AGIMetrics {
@@ -37,404 +59,519 @@ interface AGIMetrics {
   latency: number
   throughput: string
   activeNodes: number
+  predictionAccuracy: string
+  contextualUnderstanding: string
 }
 
-// Static initial data
+// Tab variants using CVA me Panda CSS
+const tabVariants = cva(
+  'tab-base',
+  {
+    variants: {
+      intent: {
+        active: 'tab-active',
+        inactive: 'tab-inactive',
+        premium: 'tab-premium',
+        loading: 'tab-loading'
+      },
+      size: {
+        small: 'tab-size-small',
+        medium: 'tab-size-medium',
+        large: 'tab-size-large'
+      }
+    },
+    defaultVariants: {
+      intent: 'inactive',
+      size: 'medium'
+    }
+  }
+)
+
+// Static initial data with neural enhancements
 const initialTabs: Tab[] = [
   {
     id: 'dashboard',
     title: '🧠 AGI Dashboard',
     url: 'euroweb://dashboard',
-    isActive: true,
-    isLoading: false
+    isActive: false,
+    isLoading: false,
+    neuralWeight: 0.8,
+    associatedNodes: [
+      { id: 'n1', activation: 0.9, connections: ['n2', 'n3'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'agi-core',
     title: '🤖 AGI Core (Premium)',
     url: 'euroweb://agi-core-premium',
     isActive: false,
-    isLoading: false
+    isLoading: false,
+    neuralWeight: 1.0,
+    associatedNodes: [
+      { id: 'n4', activation: 1.0, connections: ['n1', 'n5'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'agi-office',
     title: '💼 AGI×Office',
     url: 'euroweb://agi-office',
     isActive: false,
-    isLoading: false
+    isLoading: false,
+    neuralWeight: 0.7,
+    associatedNodes: [
+      { id: 'n6', activation: 0.75, connections: ['n3'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'agi-med',
-    title: '🏥 AGI×Med',
+    title: '🏥 AGI×Med Professional',
     url: 'euroweb://agi-med',
-    isActive: false,
-    isLoading: false
+    isActive: true,
+    isLoading: false,
+    neuralWeight: 0.9,
+    associatedNodes: [
+      { id: 'n7', activation: 0.95, connections: ['n1', 'n4'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'agi-el',
     title: '⚡ AGI×El',
     url: 'euroweb://agi-el',
     isActive: false,
-    isLoading: false
+    isLoading: false,
+    neuralWeight: 0.75,
+    associatedNodes: [
+      { id: 'n8', activation: 0.8, connections: ['n2'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'agi-eco',
     title: '🌱 AGI×Eco',
     url: 'euroweb://agi-eco',
     isActive: false,
-    isLoading: false
+    isLoading: false,
+    neuralWeight: 0.85,
+    associatedNodes: [
+      { id: 'n9', activation: 0.88, connections: ['n1', 'n7'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'search',
     title: '🔍 AGI Search',
     url: 'euroweb://search',
     isActive: false,
-    isLoading: false
+    isLoading: false,
+    neuralWeight: 0.95,
+    associatedNodes: [
+      { id: 'n10', activation: 0.98, connections: ['n1', 'n4', 'n7'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   },
   {
     id: 'guardian',
     title: '🛡️ Guardian',
     url: 'euroweb://guardian',
     isActive: false,
-    isLoading: false
+    isLoading: false,
+    neuralWeight: 0.9,
+    associatedNodes: [
+      { id: 'n11', activation: 0.92, connections: ['n4', 'n5'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   }
-];
+]
 
-const staticAGIMetrics: AGIMetrics = {
-  processingSpeed: '2.5 THz',
-  memoryUsage: 'Optimal',
-  neuralConnections: 3847,
-  learningRate: 0.97,
-  securityLevel: 'Quantum Protected',
-  latency: 12,
-  throughput: '1.2 GB/s',
-  activeNodes: 28
-};
+const ultraAGIMetrics: AGIMetrics = {
+  processingSpeed: '4.2 THz (Quantum Boosted)',
+  memoryUsage: 'Optimal (Neural Compression Active)',
+  neuralConnections: 8921,
+  learningRate: 0.99,
+  securityLevel: 'Quantum-Encrypted Tier 5',
+  latency: 4,
+  throughput: '5.8 GB/s (Neural Optimized)',
+  activeNodes: 42,
+  predictionAccuracy: '98.7% Contextual',
+  contextualUnderstanding: 'Multi-Domain Cross-Referencing'
+}
 
 /**
- * Web8 Tab System Component
- * Industrial architecture without React hooks
+ * Ultra Intelligent Web8 Tab System
+ * Industrial architecture with neural network integration
  */
-const Web8TabSystem: React.FC = () => {
-  const tabs = initialTabs
+const Web8TabSystemUltra: React.FC = () => {
+  const [tabs, setTabs] = React.useState<Tab[]>(initialTabs)
+  const [agiMetrics, setAgiMetrics] = React.useState<AGIMetrics>(ultraAGIMetrics)
+  const [neuralContext, setNeuralContext] = React.useState<AGIContext>({
+    activeNeuralPath: ['n1', 'n7'],
+    cognitiveLoad: 0.65,
+    memoryRecall: {
+      shortTerm: [],
+      longTerm: []
+    }
+  })
+  const [searchQuery, setSearchQuery] = React.useState('')
+  const [searchResults, setSearchResults] = React.useState<any[]>([])
+  const [isNeuralProcessing, setIsNeuralProcessing] = React.useState(false)
+
   const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
-  const agiMetrics = staticAGIMetrics
   const currentTime = new Date().toLocaleTimeString()
 
-  // Search functionality
+  // Neural processing simulation
+  const simulateNeuralProcessing = (tabId: string) => {
+    setIsNeuralProcessing(true)
+    
+    // Find the tab being activated
+    const targetTab = tabs.find(tab => tab.id === tabId)
+    if (!targetTab) return
+    
+    // Update neural context
+    const newNeuralPath = [
+      ...targetTab.associatedNodes.map(node => node.id),
+      ...neuralContext.activeNeuralPath
+    ].slice(0, 5)
+    
+    setNeuralContext(prev => ({
+      ...prev,
+      activeNeuralPath: newNeuralPath,
+      cognitiveLoad: Math.min(0.9, prev.cognitiveLoad + 0.15)
+    }))
+    
+    // Simulate processing delay
+    setTimeout(() => {
+      setIsNeuralProcessing(false)
+      
+      // Update metrics to show increased activity
+      setAgiMetrics(prev => ({
+        ...prev,
+        neuralConnections: prev.neuralConnections + 50,
+        activeNodes: prev.activeNodes + 2
+      }))
+    }, 300)
+  }
+
+  // Enhanced search with neural prediction
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = event.currentTarget
-    const searchInput = form.querySelector('input[name="search"]') as HTMLInputElement
-    const searchTerm = searchInput.value.trim()
+    if (!searchQuery.trim()) return
     
-    if (searchTerm) {
-      // Switch to search tab and show results
-      switchTab('search')
+    setIsNeuralProcessing(true)
+    switchTab('search')
+    
+    // Simulate neural search processing
+    setTimeout(() => {
+      const results = generateNeuralSearchResults(searchQuery)
+      setSearchResults(results)
+      setIsNeuralProcessing(false)
       
-      // Update search results
-      const searchResults = document.getElementById('search-results')
-      if (searchResults) {
-        searchResults.innerHTML = `
-          <div style="margin-bottom: 24px;">
-            <h3 style="color: #d4af37; margin-bottom: 16px;">Rezultatet e kërkimit për: "${searchTerm}"</h3>
-            <div style="display: grid; gap: 16px;">
-              <div style="background: rgba(45, 52, 70, 0.8); border: 1px solid #d4af37; border-radius: 8px; padding: 16px;">
-                <h4 style="color: #22c55e; margin: 0 0 8px 0;">🏥 AGI×Med - Diagnostic Tools</h4>
-                <p style="color: #cbd5e1; margin: 0; font-size: 14px;">Advanced AI diagnostic systems match your search criteria.</p>
-              </div>
-              <div style="background: rgba(45, 52, 70, 0.8); border: 1px solid #d4af37; border-radius: 8px; padding: 16px;">
-                <h4 style="color: #3b82f6; margin: 0 0 8px 0;">🌱 AGI×Eco - Environmental Data</h4>
-                <p style="color: #cbd5e1; margin: 0; font-size: 14px;">Climate monitoring and sustainability metrics related to your search.</p>
-              </div>
-              <div style="background: rgba(45, 52, 70, 0.8); border: 1px solid #d4af37; border-radius: 8px; padding: 16px;">
-                <h4 style="color: #8b5cf6; margin: 0 0 8px 0;">⚡ AGI×El - Energy Systems</h4>
-                <p style="color: #cbd5e1; margin: 0; font-size: 14px;">Smart energy grid data and optimization results.</p>
-              </div>
-              <div style="background: rgba(45, 52, 70, 0.8); border: 1px solid #d4af37; border-radius: 8px; padding: 16px;">
-                <h4 style="color: #f59e0b; margin: 0 0 8px 0;">💼 AGI×Office - Documents</h4>
-                <p style="color: #cbd5e1; margin: 0; font-size: 14px;">Office documents and productivity tools matching your query.</p>
-              </div>
-            </div>
-          </div>
-        `
-      }
-      
-      // Clear search
-      searchInput.value = ''
-    }
+      // Update neural context
+      setNeuralContext(prev => ({
+        ...prev,
+        activeNeuralPath: ['n10', ...prev.activeNeuralPath].slice(0, 5),
+        memoryRecall: {
+          shortTerm: [...prev.memoryRecall.shortTerm, { query: searchQuery, results }],
+          longTerm: [...prev.memoryRecall.longTerm, { query: searchQuery, timestamp: new Date() }]
+        }
+      }))
+    }, 500)
   }
 
-  const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = event.target.value
-    // Real-time search feedback could be added here
-    console.log('Searching for:', searchTerm)
+  // Neural search result generation
+  const generateNeuralSearchResults = (query: string) => {
+    const relatedTabs = tabs.filter(tab => 
+      tab.title.toLowerCase().includes(query.toLowerCase()) || 
+      tab.id.toLowerCase().includes(query.toLowerCase())
+    )
+    
+    return [
+      {
+        type: 'medical',
+        title: `🏥 AGI×Med - ${query} Diagnostic Tools`,
+        content: `Advanced AI diagnostic systems for ${query} with 98.3% accuracy.`,
+        relevance: 0.92,
+        neuralPath: ['n7', 'n1']
+      },
+      {
+        type: 'eco',
+        title: `🌱 AGI×Eco - ${query} Environmental Impact`,
+        content: `Environmental analysis and sustainability metrics for ${query}.`,
+        relevance: 0.85,
+        neuralPath: ['n9', 'n1']
+      },
+      {
+        type: 'office',
+        title: `💼 AGI×Office - ${query} Documents`,
+        content: `Productivity tools and document templates related to ${query}.`,
+        relevance: 0.78,
+        neuralPath: ['n6', 'n3']
+      },
+      ...relatedTabs.map(tab => ({
+        type: 'system',
+        title: `System Tab: ${tab.title}`,
+        content: `Direct access to ${tab.title} module.`,
+        relevance: 0.95,
+        neuralPath: tab.associatedNodes.map(n => n.id)
+      }))
+    ].sort((a, b) => b.relevance - a.relevance)
   }
 
-  // Tab switching function
+  // Enhanced tab switching with neural activation
   const switchTab = (targetId: string) => {
-    // Hide all content
-    const allContent = document.querySelectorAll('[data-content-id]');
-    allContent.forEach(content => {
-      (content as HTMLElement).style.display = 'none';
-    });
+    setTabs(prevTabs => 
+      prevTabs.map(tab => ({
+        ...tab,
+        isActive: tab.id === targetId,
+        lastAccessed: tab.id === targetId ? new Date() : tab.lastAccessed
+      }))
+    )
     
-    // Show target content
-    const targetContent = document.querySelector(`[data-content-id="${targetId}"]`);
-    if (targetContent) {
-      (targetContent as HTMLElement).style.display = 'block';
-    }
+    simulateNeuralProcessing(targetId)
     
-    // Update tab styles
-    const allTabs = document.querySelectorAll('[data-tab-id]');
-    allTabs.forEach(tab => {
-      const tabElement = tab as HTMLElement;
-      tabElement.style.background = 'transparent';
-      tabElement.style.border = '1px solid transparent';
-      tabElement.style.color = '#cbd5e1';
-    });
-    
-    const activeTabElement = document.querySelector(`[data-tab-id="${targetId}"]`) as HTMLElement;
-    if (activeTabElement) {
-      activeTabElement.style.background = 'rgba(212, 175, 55, 0.2)';
-      activeTabElement.style.border = '1px solid #d4af37';
-      activeTabElement.style.color = '#d4af37';
-    }
-  };
+    // Update metrics
+    setAgiMetrics(prev => ({
+      ...prev,
+      processingSpeed: `${(4.2 + Math.random() * 0.3).toFixed(1)} THz`,
+      latency: Math.max(2, prev.latency - 1)
+    }))
+  }
+
+  // Neural activity visualization component
+  const NeuralActivityIndicator = () => (
+    <div style={{
+      position: 'relative'
+    }}>
+      <div style={{
+        position: 'absolute',
+        inset: '-4px',
+        borderRadius: '8px',
+        background: 'rgba(212, 175, 55, 0.2)',
+        filter: 'blur(4px)'
+      }}></div>
+      <div style={{
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '4px',
+        padding: '8px 12px',
+        borderRadius: '8px',
+        background: 'rgba(15, 20, 25, 0.8)',
+        border: '1px solid rgba(212, 175, 55, 0.3)'
+      }}>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          {[0.3, 0.6, 0.9, 0.6, 0.3].map((height, i) => (
+            <motion.div
+              key={i}
+              animate={{ height: [height * 10, height * 16, height * 10] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              style={{
+                width: '4px',
+                background: '#d4af37',
+                borderRadius: '2px',
+                height: height * 10
+              }}
+            />
+          ))}
+        </div>
+        <span style={{
+          fontSize: '12px',
+          color: '#d4af37'
+        }}>
+          {Math.round(neuralContext.cognitiveLoad * 100)}% Neural Load
+        </span>
+      </div>
+    </div>
+  )
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
+    <div className={styles.container}>
       {/* Top Navigation Bar */}
       <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        style={{
-          background: 'rgba(45, 52, 70, 0.9)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.3)',
-          padding: '12px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
+        className={styles.header}
       >
         {/* Left side - Logo and navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            EuroWeb
+          <div className={styles.logo}>
+            EuroWeb Ultra
           </div>
           
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* Enhanced Search with Neural Prediction */}
+          <form onSubmit={handleSearch} className={styles['search-form']}>
             <div style={{ position: 'relative' }}>
               <input
                 type="text"
                 name="search"
-                placeholder="🔍 Kërko në AGI Platform..."
-                onChange={handleSearchInput}
-                style={{
-                  background: 'rgba(45, 52, 70, 0.8)',
-                  border: '1px solid rgba(212, 175, 55, 0.3)',
-                  borderRadius: '6px',
-                  padding: '8px 12px',
-                  color: '#f8fafc',
-                  fontSize: '14px',
-                  width: '280px',
-                  outline: 'none'
-                }}
-                onFocus={(e) => {
-                  e.target.style.border = '1px solid #d4af37'
-                  e.target.style.boxShadow = '0 0 0 2px rgba(212, 175, 55, 0.2)'
-                }}
-                onBlur={(e) => {
-                  e.target.style.border = '1px solid rgba(212, 175, 55, 0.3)'
-                  e.target.style.boxShadow = 'none'
-                }}
+                value={searchQuery}
+                placeholder="🔍 Neural Search..."
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles['search-input']}
               />
+              {searchQuery && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  style={{
+                    position: 'absolute',
+                    zIndex: 10,
+                    marginTop: '4px',
+                    width: '100%',
+                    background: 'rgba(45, 52, 70, 0.8)',
+                    border: '1px solid rgba(212, 175, 55, 0.3)',
+                    borderRadius: '8px',
+                    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.3)',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div style={{ padding: '8px', fontSize: '12px', color: '#94a3b8' }}>Neural Predictions:</div>
+                  {generateNeuralSearchResults(searchQuery)
+                    .slice(0, 3)
+                    .map((result, i) => (
+                      <div 
+                        key={i}
+                        style={{
+                          padding: '12px',
+                          borderTop: i > 0 ? '1px solid rgba(71, 85, 105, 0.5)' : 'none',
+                          cursor: 'pointer',
+                          transition: 'background 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = 'rgba(71, 85, 105, 0.5)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'transparent'
+                        }}
+                        onClick={() => {
+                          setSearchQuery(result.title)
+                          setTimeout(() => {
+                            const form = document.querySelector('form') as HTMLFormElement
+                            form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))
+                          }, 0)
+                        }}
+                      >
+                        <div style={{ fontWeight: 500, color: '#e2e8f0' }}>{result.title}</div>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
+                          {result.content.length > 60 ? result.content.substring(0, 60) + '...' : result.content}
+                        </div>
+                      </div>
+                    ))}
+                </motion.div>
+              )}
             </div>
             <button
               type="submit"
-              style={{
-                background: 'rgba(212, 175, 55, 0.2)',
-                border: '1px solid #d4af37',
-                color: '#d4af37',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                fontSize: '14px',
-                cursor: 'pointer',
-                fontWeight: 600
-              }}
+              className={styles['search-button']}
             >
-              Kërko
+              {isNeuralProcessing ? (
+                <>
+                  <svg style={{ animation: 'spin 1s linear infinite', width: '16px', height: '16px', color: '#d4af37' }} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Processing...
+                </>
+              ) : (
+                'Neural Search'
+              )}
             </button>
           </form>
           
-          <nav style={{ display: 'flex', gap: '16px' }}>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: '1px solid #d4af37',
-              color: '#d4af37',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+          <nav className={styles['nav-section']}>
+            <button className={styles['nav-button-primary']}>
               🧠 AGI Core
             </button>
-            <button style={{
-              background: 'transparent',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              color: '#cbd5e1',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
-              📊 Analytics
+            <button className={styles['nav-button-secondary']}>
+              📊 Neural Analytics
             </button>
           </nav>
         </div>
 
-        {/* Right side - Status and time */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
-            background: 'rgba(34, 197, 94, 0.2)',
-            borderRadius: '6px',
-            fontSize: '14px'
-          }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              background: '#22c55e',
-              borderRadius: '50%'
-            }} />
-            AGI Active
+          <NeuralActivityIndicator />
+          
+          <div className={styles['status-indicator']}>
+            <div className={styles['status-dot']}></div>
+            <span style={{ color: '#22c55e' }}>AGI Active</span>
           </div>
-          <div style={{ fontSize: '14px', color: '#cbd5e1' }}>
-            {currentTime}
+          
+          <div className={styles['time-display']}>
+            {currentTime} | Neural v8.0.0
           </div>
         </div>
       </motion.header>
 
-      {/* Tab Bar */}
+      {/* Tab Bar with Neural Weights */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        style={{
-          background: 'rgba(30, 34, 52, 0.8)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)',
-          padding: '0 20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          minHeight: '48px'
-        }}
+        className={styles['tab-bar']}
       >
-        {tabs.map((tab) => {
-          const isPremiumTab = tab.id === 'agi-core';
-          return (
-            <div
-              key={tab.id}
-              data-tab-id={tab.id}
-              onClick={() => switchTab(tab.id)}
-              style={{
-                background: tab.isActive ? 'rgba(212, 175, 55, 0.2)' : 
-                           isPremiumTab ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
-                border: tab.isActive ? '1px solid #d4af37' : 
-                        isPremiumTab ? '1px solid rgba(212, 175, 55, 0.5)' : '1px solid transparent',
-                borderRadius: '8px',
-                padding: '8px 16px',
-                fontSize: '14px',
-                color: tab.isActive ? '#d4af37' : 
-                       isPremiumTab ? '#f7e08b' : '#cbd5e1',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                maxWidth: '200px',
-                position: 'relative'
-              }}
-            >
-              {isPremiumTab && (
-                <div style={{
-                  position: 'absolute',
-                  top: '-4px',
-                  right: '-4px',
-                  background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-                  borderRadius: '50%',
-                  width: '12px',
-                  height: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '8px'
-                }}>
-                  👑
-                </div>
-              )}
-              {tab.isLoading && (
-                <div style={{
-                  width: '12px',
-                  height: '12px',
-                  border: '2px solid rgba(212, 175, 55, 0.3)',
-                  borderTop: '2px solid #d4af37',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite'
-                }} />
-              )}
-              <span style={{ 
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-              }}>
-                {tab.title}
-              </span>
-              <button style={{
-                background: 'none',
-                border: 'none',
-                color: 'inherit',
-                fontSize: '12px',
-                cursor: 'pointer',
-                opacity: 0.7,
-                padding: '0',
-                marginLeft: 'auto'
-              }}>
-                ×
-              </button>
-            </div>
-          );
-        })}
+        <AnimatePresence>
+          {tabs.map((tab) => {
+            const isPremium = tab.id === 'agi-core'
+            const isLoading = tab.isLoading || (tab.isActive && isNeuralProcessing)
+            
+            return (
+              <motion.div
+                key={tab.id}
+                layout
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                className={`${styles['tab-base']} ${
+                  tab.isActive ? styles['tab-active'] : 
+                  isPremium ? styles['tab-premium'] : 
+                  styles['tab-inactive']
+                } ${styles['tab-size-medium']} ${styles['tab-item']}`}
+                onClick={() => !isLoading && switchTab(tab.id)}
+              >
+                {isLoading ? (
+                  <div className={styles['loading-spinner']} />
+                ) : (
+                  <span>{tab.title.split(' ')[0]}</span> // Emoji
+                )}
+                
+                <span className={styles['tab-title']}>
+                  {tab.title.split(' ').slice(1).join(' ')}
+                </span>
+                
+                {isPremium && (
+                  <div className={styles['premium-indicator']}>
+                    ∞
+                  </div>
+                )}
+                
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: tab.neuralWeight }}
+                  transition={{ duration: 0.5 }}
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: '2px',
+                    background: 'rgba(212, 175, 55, 0.5)',
+                    transformOrigin: 'left'
+                  }}
+                />
+                
+                <button className={styles['tab-close']}>×</button>
+              </motion.div>
+            )
+          })}
+        </AnimatePresence>
         
-        <button style={{
-          background: 'none',
-          border: '1px solid rgba(212, 175, 55, 0.3)',
-          borderRadius: '6px',
-          color: '#cbd5e1',
-          padding: '6px 12px',
-          fontSize: '14px',
-          cursor: 'pointer',
-          marginLeft: '8px'
-        }}>
-          + New Tab
+        <button className={styles['new-tab-button']}>
+          + New Neural Tab
         </button>
       </motion.div>
 
@@ -443,78 +580,57 @@ const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        style={{
-          background: 'rgba(26, 29, 41, 0.9)',
-          padding: '12px 20px',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)'
-        }}
+        className={styles['address-bar']}
       >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px'
-        }}>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
-              ←
-            </button>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
-              →
-            </button>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
-              ↻
-            </button>
+        <div className={styles['address-controls']}>
+          <div className={styles['nav-buttons']}>
+            <button className={styles['nav-button']}>←</button>
+            <button className={styles['nav-button']}>→</button>
+            <button className={styles['nav-button']}>↻</button>
           </div>
 
-          <input
-            type="text"
-            value={activeTab.url}
-            readOnly
-            style={{
-              flex: 1,
-              background: 'rgba(45, 52, 70, 0.8)',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              borderRadius: '6px',
-              padding: '8px 12px',
-              color: '#f8fafc',
-              fontSize: '14px'
-            }}
-          />
+          <div style={{ flex: 1, position: 'relative' }}>
+            <input
+              type="text"
+              value={activeTab.url}
+              readOnly
+              className={styles['address-input']}
+            />
+            <div style={{
+              position: 'absolute',
+              right: '8px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              <span style={{
+                fontSize: '12px',
+                background: 'rgba(34, 197, 94, 0.2)',
+                color: '#22c55e',
+                padding: '2px 6px',
+                borderRadius: '4px'
+              }}>
+                Quantum Secure
+              </span>
+              <span style={{
+                fontSize: '12px',
+                background: 'rgba(59, 130, 246, 0.2)',
+                color: '#60a5fa',
+                padding: '2px 6px',
+                borderRadius: '4px'
+              }}>
+                Neural v8
+              </span>
+            </div>
+          </div>
 
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            borderRadius: '6px',
-            color: '#22c55e',
-            padding: '8px 12px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
-            🛡️ Secure
+          <button className={styles['secure-indicator']}>
+            <svg xmlns="http://www.w3.org/2000/svg" style={{ width: '16px', height: '16px', marginRight: '4px' }} viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+            </svg>
+            Secure
           </button>
         </div>
       </motion.div>
@@ -524,346 +640,379 @@ const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        style={{
-          flex: 1,
-          display: 'flex',
-          overflow: 'hidden'
-        }}
+        className={styles['main-content']}
       >
-        {/* Content Area */}
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          background: 'rgba(15, 20, 25, 0.8)'
-        }}>
-          {/* Dashboard Content */}
-          <div data-content-id="dashboard" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'block'
+        {/* Neural Context Sidebar */}
+        <motion.div 
+          initial={{ width: 0 }}
+          animate={{ width: 280 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          style={{
+            background: 'rgba(15, 20, 25, 0.8)',
+            borderRight: '1px solid rgba(212, 175, 55, 0.2)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <div style={{
+            padding: '16px',
+            borderBottom: '1px solid rgba(71, 85, 105, 1)'
           }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              AGI Core Dashboard
-            </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Advanced General Intelligence System - Industrial Grade TypeScript Architecture
-            </p>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
-              maxWidth: '800px',
-              margin: '0 auto'
-            }}>
-              {Object.entries(agiMetrics).map(([key, value]) => (
-                <motion.div key={key} whileHover={{ scale: 1.05 }} style={{
-                  background: 'rgba(45, 52, 70, 0.8)',
-                  border: '1px solid rgba(212, 175, 55, 0.3)',
-                  borderRadius: '12px',
-                  padding: '20px',
-                  textAlign: 'center'
+            <h3 style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#d4af37',
+              marginBottom: '8px'
+            }}>Neural Context</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#94a3b8',
+                  marginBottom: '4px'
+                }}>Active Path</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                  {neuralContext.activeNeuralPath.map((node, i) => (
+                    <span key={i} style={{
+                      fontSize: '12px',
+                      background: 'rgba(45, 52, 70, 0.5)',
+                      color: '#d4af37',
+                      padding: '2px 8px',
+                      borderRadius: '4px'
+                    }}>
+                      {node}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#94a3b8',
+                  marginBottom: '4px'
+                }}>Cognitive Load</div>
+                <div style={{
+                  width: '100%',
+                  background: 'rgba(45, 52, 70, 0.5)',
+                  borderRadius: '999px',
+                  height: '8px'
                 }}>
-                  <div style={{ fontSize: '24px', fontWeight: 600, color: '#d4af37', marginBottom: '8px' }}>
-                    {value}
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  <div 
+                    style={{
+                      background: 'linear-gradient(to right, #d4af37, #f59e0b)',
+                      height: '8px',
+                      borderRadius: '999px',
+                      width: `${neuralContext.cognitiveLoad * 100}%`,
+                      transition: 'width 0.3s ease'
+                    }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div style={{
+            padding: '16px',
+            borderBottom: '1px solid rgba(71, 85, 105, 1)'
+          }}>
+            <h3 style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#d4af37',
+              marginBottom: '8px'
+            }}>AGI Metrics</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {Object.entries(agiMetrics).map(([key, value]) => (
+                <div key={key} style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    fontSize: '12px',
+                    color: '#94a3b8',
+                    textTransform: 'capitalize'
+                  }}>
                     {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
-                  </div>
-                </motion.div>
+                  </span>
+                  <span style={{
+                    fontSize: '12px',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    color: '#d4af37'
+                  }}>
+                    {typeof value === 'string' ? (value.length > 15 ? value.substring(0, 15) + '...' : value) : value}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
-
-          {/* AGI Core Content - Premium Only */}
-          <div data-content-id="agi-core" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto',
-            padding: '40px',
-            textAlign: 'center',
-            background: 'rgba(15, 20, 25, 0.9)'
+          
+          <div style={{
+            padding: '16px',
+            flex: 1,
+            overflowY: 'auto'
           }}>
-            <div style={{
-              background: 'rgba(45, 52, 70, 0.8)',
-              border: '2px solid rgba(212, 175, 55, 0.3)',
-              borderRadius: '16px',
-              padding: '48px',
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}>
-              <div style={{ fontSize: '64px', marginBottom: '24px' }}>🔒</div>
-              <h1 style={{
-                fontSize: '36px',
-                fontWeight: 700,
-                marginBottom: '16px',
-                background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
-                AGI Core Premium
-              </h1>
-              <p style={{ 
-                fontSize: '18px', 
-                color: '#cbd5e1', 
-                marginBottom: '32px',
-                lineHeight: '1.6'
-              }}>
-                AGI Core është i disponueshëm vetëm për përdoruesit Premium. 
-                Kjo është zona më e avancuar e sistemit tonë të inteligjencës artificiale.
-              </p>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr',
-                gap: '16px',
-                marginBottom: '32px',
-                textAlign: 'left'
-              }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  color: '#22c55e'
+            <h3 style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#d4af37',
+              marginBottom: '8px'
+            }}>Memory Recall</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {neuralContext.memoryRecall.shortTerm.slice(0, 5).map((item, i) => (
+                <div key={i} style={{
+                  padding: '8px',
+                  background: 'rgba(45, 52, 70, 0.5)',
+                  borderRadius: '8px',
+                  border: '1px solid rgba(71, 85, 105, 0.5)'
                 }}>
-                  <span>✓</span>
-                  <span>Quantum Neural Networks</span>
+                  <div style={{
+                    fontSize: '12px',
+                    color: '#e2e8f0',
+                    fontWeight: 500
+                  }}>{item.query}</div>
+                  <div style={{
+                    fontSize: '12px',
+                    color: '#64748b',
+                    marginTop: '4px',
+                    lineClamp: 2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>
+                    {item.results[0]?.content}
+                  </div>
                 </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  color: '#22c55e'
-                }}>
-                  <span>✓</span>
-                  <span>Advanced Learning Algorithms</span>
-                </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  color: '#22c55e'
-                }}>
-                  <span>✓</span>
-                  <span>Unlimited Processing Power</span>
-                </div>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  color: '#22c55e'
-                }}>
-                  <span>✓</span>
-                  <span>Real-time Global Intelligence</span>
-                </div>
-              </div>
-              <button style={{
-                background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-                border: 'none',
-                borderRadius: '12px',
-                color: '#000',
-                padding: '16px 32px',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                marginRight: '16px'
-              }}>
-                🚀 Upgrade to Premium
-              </button>
-              <button style={{
-                background: 'transparent',
-                border: '2px solid rgba(212, 175, 55, 0.5)',
-                borderRadius: '12px',
-                color: '#d4af37',
-                padding: '14px 32px',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer'
-              }}>
-                📋 Learn More
-              </button>
+              ))}
             </div>
           </div>
+        </motion.div>
 
-          {/* AGI×Office Content */}
-          <div data-content-id="agi-office" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
-            <AGIOfficeUltra />
-          </div>
-
-          {/* AGI×Med Content */}
-          <div data-content-id="agi-med" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
-            <AGIMedUltra />
-          </div>
-
-          {/* AGI×El Content */}
-          <div data-content-id="agi-el" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
-            <AGIElUltra />
-          </div>
-
-          {/* AGI×Eco Content */}
-          <div data-content-id="agi-eco" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
-            <AGIEcoUltra />
-          </div>
-
-          {/* AGI Search Content */}
-          <div data-content-id="search" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto',
-            padding: '40px'
-          }}>
-            <div style={{
-              textAlign: 'center',
-              marginBottom: '32px'
-            }}>
-              <h1 style={{
-                fontSize: '48px',
-                fontWeight: 800,
-                marginBottom: '12px',
-                background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>
-                🔍 AGI Search Ultra
-              </h1>
-              <p style={{ 
-                fontSize: '20px', 
-                color: '#cbd5e1', 
-                marginBottom: '32px' 
-              }}>
-                Kërko në të gjithë platformën AGI - Përdor search bar në krye të faqes
-              </p>
-            </div>
-
-            {/* Search Interface */}
-            <div style={{
-              background: 'rgba(15, 20, 25, 0.9)',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              borderRadius: '16px',
-              padding: '24px',
-              marginBottom: '32px'
-            }}>
-              <h3 style={{
-                fontSize: '20px',
-                fontWeight: 600,
-                color: '#d4af37',
-                marginBottom: '16px'
-              }}>
-                Si të përdorësh AGI Search:
-              </h3>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '16px',
-                marginBottom: '24px'
-              }}>
-                <div style={{
-                  background: 'rgba(34, 197, 94, 0.1)',
-                  border: '1px solid #22c55e',
-                  borderRadius: '8px',
-                  padding: '16px'
-                }}>
-                  <div style={{ color: '#22c55e', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
-                    🏥 Medical Search
-                  </div>
-                  <div style={{ color: '#f8fafc', fontSize: '14px' }}>
-                    Kërko për diagnostikime, trajtim mjekësor, dhe hulumtime
-                  </div>
-                </div>
-                
-                <div style={{
-                  background: 'rgba(59, 130, 246, 0.1)',
-                  border: '1px solid #3b82f6',
-                  borderRadius: '8px',
-                  padding: '16px'
-                }}>
-                  <div style={{ color: '#3b82f6', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
-                    🌱 Environmental Search
-                  </div>
-                  <div style={{ color: '#f8fafc', fontSize: '14px' }}>
-                    Kërko për klimë, mjedis, dhe qëndrueshmëri
-                  </div>
-                </div>
-                
-                <div style={{
-                  background: 'rgba(139, 92, 246, 0.1)',
-                  border: '1px solid #8b5cf6',
-                  borderRadius: '8px',
-                  padding: '16px'
-                }}>
-                  <div style={{ color: '#8b5cf6', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
-                    ⚡ Energy Search
-                  </div>
-                  <div style={{ color: '#f8fafc', fontSize: '14px' }}>
-                    Kërko për energji, rrjete të mençura, dhe optimizim
-                  </div>
-                </div>
-                
-                <div style={{
-                  background: 'rgba(245, 158, 11, 0.1)',
-                  border: '1px solid #f59e0b',
-                  borderRadius: '8px',
-                  padding: '16px'
-                }}>
-                  <div style={{ color: '#f59e0b', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
-                    💼 Office Search
-                  </div>
-                  <div style={{ color: '#f8fafc', fontSize: '14px' }}>
-                    Kërko për dokumente, tabela, dhe vegla zyre
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Search Results */}
-            <div id="search-results" style={{
-              background: 'rgba(15, 20, 25, 0.9)',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              borderRadius: '16px',
-              padding: '24px'
-            }}>
-              <div style={{ textAlign: 'center', color: '#cbd5e1' }}>
-                <p>Shkruaj diçka në search bar për të parë rezultatet...</p>
-                <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔍</div>
-                <p style={{ fontSize: '14px' }}>AGI Search do të kërkojë në të gjitha modulet e platformës</p>
-              </div>
-            </div>
-          </div>
-          {/* Guardian Content */}
-          <div data-content-id="guardian" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
-            <GuardianMonitor />
-          </div>
+        {/* Content Area */}
+        <div className={styles['content-area']}>
+          <AnimatePresence mode="wait">
+            {tabs.map((tab) => (
+              tab.isActive && (
+                <motion.div
+                  key={tab.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ flex: 1, overflowY: 'auto' }}
+                >
+                  {tab.id === 'dashboard' && (
+                    <div className={styles['content-panel']}>
+                      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+                        <motion.h1 
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className={styles['dashboard-title']}
+                        >
+                          Neural AGI Dashboard
+                        </motion.h1>
+                        <motion.p 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                          className={styles['dashboard-subtitle']}
+                          style={{ maxWidth: '800px', margin: '0 auto' }}
+                        >
+                          Advanced General Intelligence System with Quantum Neural Network
+                        </motion.p>
+                      </div>
+                      
+                      <div className={styles['metrics-grid']}>
+                        {Object.entries(agiMetrics).map(([key, value]) => (
+                          <motion.div
+                            key={key}
+                            whileHover={{ y: -5 }}
+                            className={styles['metric-card']}
+                          >
+                            <div className={styles['metric-value']}>
+                              {value}
+                            </div>
+                            <div className={styles['metric-label']}>
+                              {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
+                            </div>
+                            <div style={{
+                              marginTop: '16px',
+                              height: '4px',
+                              background: 'linear-gradient(to right, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.5), transparent)',
+                              borderRadius: '999px'
+                            }}></div>
+                          </motion.div>
+                        ))}
+                      </div>
+                      
+                      <div style={{ marginTop: '64px', maxWidth: '1200px', margin: '64px auto 0' }}>
+                        <h3 style={{
+                          fontSize: '20px',
+                          fontWeight: 600,
+                          color: '#d4af37',
+                          marginBottom: '24px'
+                        }}>Neural Activity Map</h3>
+                        <div style={{
+                          background: 'rgba(15, 20, 25, 0.5)',
+                          border: '1px solid rgba(212, 175, 55, 0.2)',
+                          borderRadius: '12px',
+                          padding: '24px'
+                        }}>
+                          <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(8, 1fr)',
+                            gap: '16px'
+                          }}>
+                            {Array.from({ length: 64 }).map((_, i) => {
+                              const isActive = neuralContext.activeNeuralPath.includes(`n${i % 12 + 1}`)
+                              return (
+                                <motion.div
+                                  key={i}
+                                  animate={{
+                                    scale: isActive ? [1, 1.1, 1] : 1,
+                                    backgroundColor: isActive 
+                                      ? 'rgba(212, 175, 55, 0.2)' 
+                                      : 'rgba(30, 41, 59, 0.5)'
+                                  }}
+                                  transition={{ duration: 0.5, repeat: Infinity }}
+                                  style={{
+                                    width: '100%',
+                                    aspectRatio: '1',
+                                    borderRadius: '8px',
+                                    border: '1px solid rgba(212, 175, 55, 0.2)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                  }}
+                                >
+                                  <span style={{
+                                    fontSize: '12px',
+                                    color: '#94a3b8'
+                                  }}>n{i % 12 + 1}</span>
+                                </motion.div>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {tab.id === 'agi-core' && <AGICoreUltra />}
+                  {tab.id === 'agi-office' && <AGIOfficeUltra />}
+                  {tab.id === 'agi-med' && <AGIMedUltra />}
+                  {tab.id === 'agi-el' && <AGIElUltra />}
+                  {tab.id === 'agi-eco' && <AGIEcoUltra />}
+                  
+                  {tab.id === 'search' && (
+                    <div className={styles['content-panel']}>
+                      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+                        <h1 className={styles['dashboard-title']}>
+                          Neural Search Results
+                        </h1>
+                        {searchQuery && (
+                          <p className={styles['dashboard-subtitle']}>
+                            Results for: <span style={{ color: '#d4af37' }}>"{searchQuery}"</span>
+                          </p>
+                        )}
+                      </div>
+                      
+                      <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        {searchResults.length > 0 ? (
+                          searchResults.map((result, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ delay: i * 0.1 }}
+                              style={{
+                                background: 'rgba(15, 20, 25, 0.8)',
+                                border: '1px solid rgba(71, 85, 105, 1)',
+                                borderRadius: '12px',
+                                padding: '24px',
+                                cursor: 'pointer',
+                                transition: 'border-color 0.2s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.5)'
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = 'rgba(71, 85, 105, 1)'
+                              }}
+                            >
+                              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+                                <div style={{ fontSize: '32px' }}>
+                                  {result.type === 'medical' ? '🏥' : 
+                                   result.type === 'eco' ? '🌱' : 
+                                   result.type === 'office' ? '💼' : '🤖'}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <h3 style={{
+                                    fontSize: '18px',
+                                    fontWeight: 600,
+                                    color: '#d4af37',
+                                    marginBottom: '4px'
+                                  }}>
+                                    {result.title}
+                                  </h3>
+                                  <p style={{
+                                    color: '#94a3b8',
+                                    marginBottom: '12px'
+                                  }}>
+                                    {result.content}
+                                  </p>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <span style={{
+                                      fontSize: '12px',
+                                      background: 'rgba(45, 52, 70, 0.5)',
+                                      color: '#d4af37',
+                                      padding: '2px 8px',
+                                      borderRadius: '4px'
+                                    }}>
+                                      Relevance: {(result.relevance * 100).toFixed(1)}%
+                                    </span>
+                                    <span style={{
+                                      fontSize: '12px',
+                                      background: 'rgba(45, 52, 70, 0.5)',
+                                      color: '#94a3b8',
+                                      padding: '2px 8px',
+                                      borderRadius: '4px'
+                                    }}>
+                                      Neural Path: {result.neuralPath.join('→')}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </motion.div>
+                          ))
+                        ) : (
+                          <div style={{ textAlign: 'center', padding: '64px' }}>
+                            <div style={{ fontSize: '96px', marginBottom: '24px' }}>🔍</div>
+                            <h3 style={{
+                              fontSize: '20px',
+                              color: '#94a3b8',
+                              marginBottom: '8px'
+                            }}>
+                              Enter a search query to begin neural analysis
+                            </h3>
+                            <p style={{ color: '#64748b' }}>
+                              The AGI system will search across all knowledge domains
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {tab.id === 'guardian' && <GuardianMonitor />}
+                </motion.div>
+              )
+            ))}
+          </AnimatePresence>
         </div>
       </motion.main>
 
       {/* CSS for animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
@@ -873,4 +1022,6 @@ const Web8TabSystem: React.FC = () => {
   )
 }
 
-export default Web8TabSystem
+// Export the component as named export
+export { Web8TabSystemUltra as Web8TabSystemFixed }
+
