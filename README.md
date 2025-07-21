@@ -134,7 +134,18 @@ UltraWebThinking mund të vendoset në server privat ose cloud:
 
 ## Licenca 📜
 **MIT License**  
-Ky projekt është i hapur dhe mund të përdoret nga kushdo, duke respektuar kushtet e licencës.
+UltraWebThinking & Web8 – Proprietary License Agreement
+
+© 2025 Ledjan Ahmati. All rights reserved.
+
+This software, its code, architecture, structure, and all components (including AI, AGI, UI, Mesh, DDoS, and AGISheet) are protected intellectual property of the creator.
+
+This is **NOT open-source**. Usage, duplication, redistribution, or reverse-engineering is strictly forbidden without written consent.
+
+Violations will be prosecuted under international intellectual property laws.
+
+License Type: Web8-Ultra Proprietary Industrial
+
 
 ---
 
