@@ -74,7 +74,7 @@ export default function OpenMindPage() {
 
   const appPageContent = `'use client'
 
-import { OpenMindChat } from '../../components/OpenMindChat'
+import { OpenMindChat } from '../components/OpenMindChat'
 
 export default function OpenMindPage() {
   return <OpenMindChat />

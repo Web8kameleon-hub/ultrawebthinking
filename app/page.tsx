@@ -11,7 +11,7 @@
 import dynamic from 'next/dynamic'
 
 const Web8TabSystemFixed = dynamic(
-  () => import('@/components/Web8TabSystem-fixed').then(mod => ({ default: mod.Web8TabSystemFixed })),
+  () => import('../components/Web8TabSystem-fixed').then(mod => ({ default: mod.Web8TabSystemFixed })),
   { 
     ssr: false,
     loading: () => (

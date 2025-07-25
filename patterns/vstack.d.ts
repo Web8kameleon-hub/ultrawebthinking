@@ -1,20 +1,20 @@
 /* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface VstackProperties {
    justify?: SystemProperties["justifyContent"]
-	gap?: SystemProperties["gap"]
+	gap?: string | number
 }
 
-interface VstackStyles extends VstackProperties, DistributiveOmit<SystemStyleObject, keyof VstackProperties > {}
+interface VstackStyles extends VstackProperties, Omit<Record<string, any>, keyof VstackProperties > {}
 
 interface VstackPatternFn {
   (styles?: VstackStyles): string
-  raw: (styles?: VstackStyles) => SystemStyleObject
+  raw: (styles?: VstackStyles) => Record<string, any>
 }
 
 

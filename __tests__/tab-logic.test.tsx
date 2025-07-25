@@ -64,7 +64,7 @@ describe('Tab Logic Industrial Tests', () => {
   });
 });
 
-export const createTabTestSuite = () => ({
+// Removed unused export: export const createTabTestSuite = () => ({
   tabUtils: {
     createTab: (id: string, title: string) => ({ id, title, isActive: false }),
     switchTab: (tabs: readonly any[], id: string) => 

@@ -1,19 +1,19 @@
 /* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface ContainerProperties {
    
 }
 
-interface ContainerStyles extends ContainerProperties, DistributiveOmit<SystemStyleObject, keyof ContainerProperties > {}
+interface ContainerStyles extends ContainerProperties, Omit<Record<string, any>, keyof ContainerProperties > {}
 
 interface ContainerPatternFn {
   (styles?: ContainerStyles): string
-  raw: (styles?: ContainerStyles) => SystemStyleObject
+  raw: (styles?: ContainerStyles) => Record<string, any>
 }
 
 

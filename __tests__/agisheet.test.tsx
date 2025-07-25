@@ -43,7 +43,7 @@ describe('AGISheet Industrial Excel Tests', () => {
   });
 });
 
-export const createExcelTestSuite = () => ({
+// Removed unused export: export const createExcelTestSuite = () => ({
   formulas: {
     SUM: (...values: number[]) => values.reduce((a, b) => a + b, 0),
     AVERAGE: (...values: number[]) => values.reduce((a, b) => a + b, 0) / values.length,

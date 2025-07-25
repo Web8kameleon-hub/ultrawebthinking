@@ -1,19 +1,19 @@
 /* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface CenterProperties {
    inline?: ConditionalValue<boolean>
 }
 
-interface CenterStyles extends CenterProperties, DistributiveOmit<SystemStyleObject, keyof CenterProperties > {}
+interface CenterStyles extends CenterProperties, Omit<Record<string, any>, keyof CenterProperties > {}
 
 interface CenterPatternFn {
   (styles?: CenterStyles): string
-  raw: (styles?: CenterStyles) => SystemStyleObject
+  raw: (styles?: CenterStyles) => Record<string, any>
 }
 
 

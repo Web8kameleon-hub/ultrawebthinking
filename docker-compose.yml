@@ -1,47 +1,69 @@
+
 version: '3.8'
 
 services:
-  euroweb-platform:
+  ultraweb:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
-      - "8080:8080"
+      - "3000:3000"
     environment:
       - NODE_ENV=production
-      - PORT=3001
-      - AGI_MODE=active
+      - NEXT_TELEMETRY_DISABLED=1
     volumes:
-      - ./public:/app/public
+      - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
-      - euroweb-network
+      - ultraweb-network
 
-  euroweb-backend:
-    build:
-      context: ./backend
-      dockerfile: ../Dockerfile
-      target: backend
+  redis:
+    image: redis:7-alpine
     ports:
-      - "8080:8080"
-    environment:
-      - NODE_ENV=production
-      - PORT=8080
-      - AGI_CORE=enabled
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
     restart: unless-stopped
     networks:
-      - euroweb-network
+      - ultraweb-network
 
-networks:
-  euroweb-network:
-    driver: bridge
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ultraweb
+      POSTGRES_USER: ultraweb
+      POSTGRES_PASSWORD: ultraweb_secure_2024
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - ultraweb-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - ultraweb
+    restart: unless-stopped
+    networks:
+      - ultraweb-network
 
 volumes:
-  euroweb-data:
-    driver: local
+  postgres_data:
+  redis_data:
+
+networks:
+  ultraweb-network:
+    driver: bridge

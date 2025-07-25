@@ -71,7 +71,7 @@ describe('AGIxBioNature Pure Logic Tests', () => {
 });
 
 // Export pure utility functions (no React components)
-export const BiologyUtils = {
+// Removed unused export: export const BiologyUtils = {
   formatNumber: (value: number, decimals: number = 2): string => value.toFixed(decimals),
   formatPopulation: (value: number): string => {
     if (value >= 1e9) return `${(value / 1e9).toFixed(1)}B`;

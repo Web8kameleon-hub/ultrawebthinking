@@ -92,7 +92,7 @@ describe('Utilities Industrial Tests', () => {
   });
 });
 
-export const createUtilsTestSuite = () => ({
+// Removed unused export: // Removed unused export: export const createUtilsTestSuite = () => ({
   cache: new Map<string, any>(),
   formatters: {
     bytes: (bytes: number) => bytes + ' bytes',
