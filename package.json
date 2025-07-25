@@ -38,12 +38,18 @@
     "modules:check": "tsx scripts/dependency-auditor.ts",
     "paths:check": "tsx scripts/path-validator.ts",
     "paths:validate": "tsx scripts/path-validator.ts",
+    "vercel:optimize": "tsx scripts/vercel-optimizer.ts",
+    "vercel:ready": "yarn vercel:optimize",
+    "vercel:deploy": "vercel --prod",
+    "vercel:preview": "vercel",
     "project:purity": "powershell -ExecutionPolicy Bypass -File scripts/project-manager.ps1 purity",
     "project:protect": "powershell -ExecutionPolicy Bypass -File scripts/project-manager.ps1 protect",
     "project:full": "powershell -ExecutionPolicy Bypass -File scripts/project-manager.ps1 full",
     "project:fix-paths": "powershell -ExecutionPolicy Bypass -File scripts/project-manager.ps1 fix-paths",
     "css:check": "tsx scripts/css-check.ts",
     "css:verify": "tsx scripts/css-check.ts",
+    "ts:strict": "tsx scripts/ts-strict-enforcer.ts",
+    "ts:enforce": "tsx scripts/ts-strict-enforcer.ts",
     "clean": "yarn cache clean && rm -rf .next && rm -rf node_modules/.cache",
     "clean:all": "yarn clean && rm -rf node_modules && yarn install",
     "sw:build": "tsx scripts/build-sw.ts build",
@@ -69,7 +75,11 @@
     "system:health": "tsx scripts/system-health.ts",
     "docker:clean": "docker system prune -f",
     "postman:test": "newman run postman/ultraweb-collection.json -e postman/development-environment.json",
-    "git:clean": "git gc --aggressive --prune=now"
+    "git:clean": "git gc --aggressive --prune=now",
+    "vercel:build": "yarn type-check && next build",
+    "vercel:dev": "next dev",
+    "vercel:start": "next start",
+    "postinstall": "next telemetry disable"
   },
   "dependencies": {
     "@huggingface/inference": "4.5.3",
@@ -164,11 +174,14 @@
     "ts-node": "10.9.2",
     "tsx": "^4.19.0",
     "typescript": "^5.7.2",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "@vercel/analytics": "^1.0.0",
+    "@vercel/speed-insights": "^1.0.0"
   },
   "engines": {
     "node": ">=18.0.0",
-    "yarn": ">=4.9.2"
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
   },
   "author": {
     "name": "Ledjan Ahmati",

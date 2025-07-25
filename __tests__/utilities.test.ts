@@ -92,10 +92,11 @@ describe('Utilities Industrial Tests', () => {
   });
 });
 
-// Removed unused export: // Removed unused export: export const createUtilsTestSuite = () => ({
+// Removed unused export: createUtilsTestSuite
+const utilsTestSuite = {
   cache: new Map<string, any>(),
   formatters: {
     bytes: (bytes: number) => bytes + ' bytes',
     date: (date: Date) => date.toISOString()
   }
-});
+};

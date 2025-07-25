@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { AGICoreComponent } from '../../lib/AGICoreComponent';
+import { AGICoreComponent } from '@/lib/AGICoreComponent';
 
 export default function AGIPage() {
   return (

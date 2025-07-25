@@ -1,6 +1,6 @@
 "use client";
 
-import { AGIxBioNatureDemo } from '../../components/AGISheet/AGIxBioNatureDemo';
+import { AGIxBioNatureDemo } from '@/components/AGISheet/AGIxBioNatureDemo';
 import type { ReactElement } from 'react';
 
 // Named function for better debugging and consistency

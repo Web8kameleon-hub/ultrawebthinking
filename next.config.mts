@@ -1,74 +1,99 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Pure TypeScript + Vanilla CSS + CVA + Framer Motion
+  // Vercel optimizations
+  output: 'standalone',
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
+  
+  // TypeScript optimizations
   experimental: {
     typedRoutes: true,
-    serverComponentsExternalPackages: [],
-    // Optimize package imports to reduce chunk sizes
     optimizePackageImports: ['framer-motion', 'class-variance-authority'],
+    serverComponentsExternalPackages: []
   },
+  
   typescript: {
     tsconfigPath: './tsconfig.json',
+    ignoreBuildErrors: false
   },
+  
+  // Image optimization for Vercel
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'ultraweb.ai', 'api.ultraweb.ai'],
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 31536000,
+    dangerouslyAllowSVG: false
   },
-  // CSS Modules support për vanilla CSS
+  
+  // CSS optimizations
   cssModules: true,
-  // Enforce që të mos ketë JS files
   pageExtensions: ['ts', 'tsx', 'mts'],
-  // Disable prerendering/static generation që po shkakton error
   trailingSlash: false,
   
-  // Bundle optimization for better First Load JS
+  // Bundle optimization for Vercel Edge
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Only apply optimizations in production builds
     if (!dev && !isServer) {
-      // Split chunks more efficiently
+      // Optimize for smaller bundle sizes
       config.optimization.splitChunks = {
         chunks: 'all',
         cacheGroups: {
-          default: false,
-          vendors: false,
-          // Framework chunk (React, Next.js core)
-          framework: {
-            chunks: 'all',
-            name: 'framework',
-            test: /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]/,
-            priority: 40,
-            enforce: true,
-          },
-          // Framer Motion in separate chunk (it's heavy)
-          framerMotion: {
-            chunks: 'all',
-            name: 'framer-motion',
-            test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
-            priority: 30,
-            enforce: true,
-          },
-          // AGI Engines in separate chunks (lazy loaded)
-          agiEngines: {
-            chunks: 'async',
-            name: 'agi-engines',
-            test: /[\\/]components[\\/]AGISheet[\\/].*Engine\.ts$/,
-            priority: 20,
-            enforce: true,
-          },
-          // Common utilities
-          lib: {
+          vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'lib',
-            priority: 10,
-            minChunks: 1,
-            reuseExistingChunk: true,
+            name: 'vendors',
+            chunks: 'all',
+            priority: 10
           },
-        },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            priority: 5,
+            reuseExistingChunk: true
+          }
+        }
       };
+
+      // Reduce bundle size
+      config.optimization.usedExports = true;
+      config.optimization.sideEffects = false;
     }
-    
+
     return config;
   },
+
+  // Environment variables
+  env: {
+    NODE_ENV: process.env.NODE_ENV || 'production',
+    VERCEL_ENV: process.env.VERCEL_ENV || 'production'
+  },
+
+  // Performance optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn']
+    } : false
+  },
+
+  // Security headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on'
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
+          }
+        ]
+      }
+    ];
+  }
 }
 
-export default nextConfig
+export default nextConfig;

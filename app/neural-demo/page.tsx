@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import NeuralDashboard from '../../components/NeuralDashboard';
+import NeuralDashboard from '@/components/NeuralDashboard';
 
 export default function NeuralDemo() {
   return (

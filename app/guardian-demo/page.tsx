@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import GuardianDashboard from '../../components/GuardianDashboard';
+import GuardianDashboard from '@/components/GuardianDashboard';
 
 export default function GuardianDemo() {
   return (

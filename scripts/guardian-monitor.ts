@@ -41,8 +41,17 @@ class GuardianMonitor {
   constructor(guardian: Guardian, config: MonitoringConfig) {
     this.guardian = guardian;
     this.monitor = new ProductionMonitor({
-      enableSlackAlerts: true,
-      slackWebhookUrl: config.notifications.slack?.webhook || ''
+      enableMetrics: true,
+      enableTracing: true,
+      enableLogging: true,
+      sampleRate: 1.0,
+      alerting: {
+        errorThreshold: 5,
+        responseTimeThreshold: 1000,
+        cpuThreshold: 80,
+        memoryThreshold: 90,
+        webhooks: [config.notifications.slack?.webhook || '']
+      }
     });
     this.config = config;
   }
@@ -135,7 +144,7 @@ class GuardianMonitor {
    */
   private async getSystemMetrics(): Promise<any> {
     const used = process.memoryUsage();
-    const loadAvg = process.loadavg ? process.loadavg() : [0, 0, 0];
+    const loadAvg = (process as any).loadavg ? (process as any).loadavg() : [0, 0, 0];
 
     return {
       memory: {

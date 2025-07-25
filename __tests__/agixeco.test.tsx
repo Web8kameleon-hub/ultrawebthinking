@@ -49,10 +49,11 @@ describe('AGIxEco Industrial Tests', () => {
   });
 });
 
-// Removed unused export: export const createEcoTestSuite = () => ({
+// Removed unused export: createEcoTestSuite
+const ecoIndicators = {
   indicators: {
     GDP: 25000000000,
     INFLATION: 0.025,
     UNEMPLOYMENT: 0.042
   } as const
-});
+};

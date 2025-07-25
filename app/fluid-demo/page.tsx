@@ -8,7 +8,7 @@
 'use client';
 
 import React from 'react';
-import { FluidMonitor } from '../../components/FluidMonitor';
+import { FluidMonitor } from '@/components/FluidMonitor';
 
 export default function FluidFlowDemo() {
   return (
