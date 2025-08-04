@@ -13,8 +13,8 @@ import { NeuralPlanner } from './NeuralPlanner';
  * FluidFlow System - Creates seamless transitions between all components
  */
 export class FluidArchitecture {
-  private neuralPlanner: any; // Simple mock for natural flow
-  private flowStreams: Map<string, FlowStream> = new Map();
+  private readonly neuralPlanner: any; // Simple mock for natural flow
+  private readonly flowStreams: Map<string, FlowStream> = new Map();
   private globalFlowState: FlowState = {
     turbulence: 0,
     clarity: 100,
@@ -335,7 +335,7 @@ export class FluidArchitecture {
   /**
    * Boost flow velocity for a specific stream
    */
-  public boostFlowVelocity(streamName: string, increment: number = 10): boolean {
+  public boostFlowVelocity(streamName: string, increment = 10): boolean {
     const stream = this.flowStreams.get(streamName);
     if (stream) {
       stream.velocity = Math.min(100, stream.velocity + increment);

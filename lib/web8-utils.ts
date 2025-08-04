@@ -63,7 +63,7 @@ export function throttle<T extends (...args: any[]) => any>(
  * 📊 FORMAT BYTES UTILITY
  * Converts bytes to human readable format
  */
-export function formatBytes(bytes: number, decimals: number = 2): string {
+export function formatBytes(bytes: number, decimals = 2): string {
   if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
@@ -72,14 +72,14 @@ export function formatBytes(bytes: number, decimals: number = 2): string {
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))  } ${  sizes[i]}`;
 }
 
 /**
  * 🎲 GENERATE ID UTILITY
  * Generates unique ID për components
  */
-export function generateId(prefix: string = 'id'): string {
+export function generateId(prefix = 'id'): string {
   return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
@@ -144,7 +144,7 @@ export const colorUtils = {
   /**
    * Converts hex to rgba
    */
-  hexToRgba(hex: string, alpha: number = 1): string {
+  hexToRgba(hex: string, alpha = 1): string {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
@@ -155,7 +155,7 @@ export const colorUtils = {
    * Generates random hex color
    */
   randomHex(): string {
-    return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    return `#${  Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
   },
 
   /**
@@ -328,7 +328,7 @@ export const dateUtils = {
   /**
    * Formats date to readable string
    */
-  format(date: Date, locale: string = 'en-US'): string {
+  format(date: Date, locale = 'en-US'): string {
     return new Intl.DateTimeFormat(locale, {
       year: 'numeric',
       month: 'long',
@@ -341,7 +341,7 @@ export const dateUtils = {
   /**
    * Gets relative time (e.g., "2 hours ago")
    */
-  relative(date: Date, locale: string = 'en-US'): string {
+  relative(date: Date, locale = 'en-US'): string {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
     

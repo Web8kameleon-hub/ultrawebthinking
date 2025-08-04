@@ -53,9 +53,9 @@ export interface PerformanceMetrics {
  */
 export class LaserController extends EventEmitter {
   private config: LaserConfiguration;
-  private activeBeams: Map<string, LaserBeam> = new Map();
-  private targets: Map<string, LaserTarget> = new Map();
-  private metrics: PerformanceMetrics = {
+  private readonly activeBeams: Map<string, LaserBeam> = new Map();
+  private readonly targets: Map<string, LaserTarget> = new Map();
+  private readonly metrics: PerformanceMetrics = {
     loadTime: 0,
     renderTime: 0,
     memoryUsage: 0,
@@ -65,8 +65,8 @@ export class LaserController extends EventEmitter {
     lazyLoadSuccess: 0,
     totalOptimizations: 0
   };
-  private isActive: boolean = false;
-  private lastOptimization: number = 0;
+  private isActive = false;
+  private lastOptimization = 0;
 
   constructor(config?: Partial<LaserConfiguration>) {
     super();

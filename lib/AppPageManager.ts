@@ -86,8 +86,8 @@ export const pageDefinitions: PageDefinition[] = [
 
 // App Page Manager Class
 export class AppPageManager {
-  private currentPage: string = '/';
-  private pages: Map<string, PageDefinition> = new Map();
+  private currentPage = '/';
+  private readonly pages: Map<string, PageDefinition> = new Map();
 
   constructor() {
     this.initializePages();

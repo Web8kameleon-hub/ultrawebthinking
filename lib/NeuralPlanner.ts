@@ -43,12 +43,12 @@ interface NeuralActivity {
 }
 
 class NeuralPlanner extends EventEmitter {
-  private nodes: Map<string, NeuralNode>;
-  private config: PlannerConfig;
+  private readonly nodes: Map<string, NeuralNode>;
+  private readonly config: PlannerConfig;
   private activityLog: NeuralActivity[] = [];
   private isRunning = false;
   private monitoringInterval?: NodeJS.Timeout;
-  private throttledNodes: Set<string> = new Set();
+  private readonly throttledNodes: Set<string> = new Set();
   private safeThinkActive = false;
 
   constructor(config: Partial<PlannerConfig> = {}) {
@@ -430,7 +430,7 @@ class NeuralPlanner extends EventEmitter {
   /**
    * Advanced logging system
    */
-  private log = {
+  private readonly log = {
     info: (message: string) => {
       console.log(`ℹ️ [Neural] ${new Date().toISOString()} ${message}`);
     },

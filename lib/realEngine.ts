@@ -25,10 +25,10 @@ export interface EngineMetrics {
 class RealEngine {
   private config: RealEngineConfig;
   private isRunning = false;
-  private metrics: EngineMetrics;
-  private modules: Map<string, any> = new Map();
-  private meshNodes: Set<string> = new Set();
-  private loraNetwork: Map<string, number> = new Map();
+  private readonly metrics: EngineMetrics;
+  private readonly modules: Map<string, any> = new Map();
+  private readonly meshNodes: Set<string> = new Set();
+  private readonly loraNetwork: Map<string, number> = new Map();
 
   constructor(config: Partial<RealEngineConfig> = {}) {
     this.config = {

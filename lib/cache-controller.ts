@@ -40,7 +40,7 @@ interface CacheMetrics {
  * 🎯 CACHE CONTROLLER CLASS
  */
 export class CacheController {
-  private memoryManager: MemoryManager;
+  private readonly memoryManager: MemoryManager;
   private metrics: CacheMetrics = {
     hits: 0,
     misses: 0,
@@ -242,7 +242,7 @@ export class CacheController {
 
     // Clear by pattern (simplified implementation)
     const regex = new RegExp(pattern.replace(/\*/g, '.*'));
-    let clearedCount = 0;
+    const clearedCount = 0;
     
     // Note: This is a simplified implementation
     // In a real scenario, you'd need to track all keys

@@ -22,9 +22,9 @@ export interface AGIMemoryStore {
 }
 
 class AGICore {
-  private memory: AGIMemoryStore;
-  private listeners: Set<() => void> = new Set();
-  private storageKey = 'web8-agi-memory';
+  private readonly memory: AGIMemoryStore;
+  private readonly listeners: Set<() => void> = new Set();
+  private readonly storageKey = 'web8-agi-memory';
 
   constructor() {
     this.memory = this.loadMemory();

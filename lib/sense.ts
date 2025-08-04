@@ -34,8 +34,8 @@ export interface SenseCapture {
 }
 
 class RealSenseSystem {
-  private activeCaptures: Map<string, SenseCapture> = new Map();
-  private realTimeData: any[] = [];
+  private readonly activeCaptures: Map<string, SenseCapture> = new Map();
+  private readonly realTimeData: any[] = [];
 
   // Capture real user interactions
   captureRealInput(): RealInputPayload {

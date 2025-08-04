@@ -44,10 +44,10 @@ type Reducer<T> = (state: T, action: Action) => T;
 export class StateManager<T = any> {
   private state: T;
   private reducer: Reducer<T>;
-  private subscribers: Set<Subscriber> = new Set();
+  private readonly subscribers: Set<Subscriber> = new Set();
   private history: StateSnapshot[] = [];
-  private config: StateManagerConfig;
-  private cache?: CacheController;
+  private readonly config: StateManagerConfig;
+  private readonly cache?: CacheController;
   private middlewares: Middleware[] = [];
   private isDispatching = false;
 

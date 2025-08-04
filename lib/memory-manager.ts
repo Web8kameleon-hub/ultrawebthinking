@@ -34,7 +34,7 @@ interface CacheEntry<T> {
  * 🧠 MEMORY MANAGER CLASS
  */
 export class MemoryManager {
-  private cache = new Map<string, CacheEntry<any>>();
+  private readonly cache = new Map<string, CacheEntry<any>>();
   private stats: MemoryStats = {
     totalAllocated: 0,
     totalFreed: 0,

@@ -80,9 +80,9 @@ export interface UserMetrics {
 }
 
 export class ProductionMonitor {
-  private config: MonitoringConfig;
+  private readonly config: MonitoringConfig;
   private metricsBuffer: SystemMetrics[] = [];
-  private alertTriggered: Set<string> = new Set();
+  private readonly alertTriggered: Set<string> = new Set();
 
   constructor(config: MonitoringConfig) {
     this.config = config;

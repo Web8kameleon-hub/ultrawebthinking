@@ -13,7 +13,7 @@ import { NeuralPlanner } from './NeuralPlanner';
  * Enhanced Ethical Neural Planner with strict compliance
  */
 export class EthicalNeuralPlanner {
-  private planner: NeuralPlanner;
+  private readonly planner: NeuralPlanner;
   private readonly strictConfig = {
     maxPulseRate: 80,  // Increased for better performance
     flickeringThreshold: 10.0,  // More realistic threshold for natural flow
