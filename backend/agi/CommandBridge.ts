@@ -25,7 +25,7 @@ interface CommandPayload {
 }
 
 export class CommandBridge {
-  private agiCore: AGICore;
+  private readonly agiCore: AGICore;
 
   constructor() {
     this.agiCore = new AGICore();

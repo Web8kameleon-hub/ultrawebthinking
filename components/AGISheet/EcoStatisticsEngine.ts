@@ -34,9 +34,9 @@ interface SeasonalAnalysis {
 }
 
 export class EcoStatisticsEngine {
-  private debugMode: boolean;
+  private readonly debugMode: boolean;
 
-  constructor(debugMode: boolean = false) {
+  constructor(debugMode = false) {
     this.debugMode = debugMode;
   }
 
@@ -332,7 +332,7 @@ export class EcoStatisticsEngine {
   /**
    * Advanced statistical forecasting
    */
-  async forecast(data: EcoDataPoint[], periods: number = 10): Promise<{ predictions: number[]; confidence: number[] }> {
+  async forecast(data: EcoDataPoint[], periods = 10): Promise<{ predictions: number[]; confidence: number[] }> {
     const values = data.map(d => d.value);
     
     // Simple exponential smoothing for forecasting
@@ -348,7 +348,7 @@ export class EcoStatisticsEngine {
     // Generate predictions
     const predictions: number[] = [];
     const confidence: number[] = [];
-    let lastValue = smoothedValues[smoothedValues.length - 1];
+    const lastValue = smoothedValues[smoothedValues.length - 1];
     const error = this.calculateForecastError(values, smoothedValues);
 
     for (let i = 0; i < periods; i++) {

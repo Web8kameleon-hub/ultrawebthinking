@@ -37,7 +37,7 @@ interface VercelOptimizationReport {
 }
 
 class VercelOptimizer {
-  private report: VercelOptimizationReport = {
+  private readonly report: VercelOptimizationReport = {
     config: {
       vercelJson: false,
       nextConfig: false,
@@ -584,7 +584,7 @@ Sitemap: https://ultraweb.ai/sitemap.xml`;
    * 📋 PRINT VERCEL REPORT
    */
   public printReport(report: VercelOptimizationReport): void {
-    console.log('\\n' + '='.repeat(80));
+    console.log(`\\n${  '='.repeat(80)}`);
     console.log('🚀 VERCEL DEPLOYMENT OPTIMIZATION REPORT');
     console.log('='.repeat(80));
 
@@ -623,12 +623,12 @@ Sitemap: https://ultraweb.ai/sitemap.xml`;
     console.log('   4. Configure custom domain in Vercel dashboard');
     console.log('   5. Set up environment variables');
 
-    console.log('\\n' + '='.repeat(80));
+    console.log(`\\n${  '='.repeat(80)}`);
     console.log(report.deployment.ready ? 
       '✅ READY FOR VERCEL DEPLOYMENT!' : 
       '⚠️ REQUIRES FIXES BEFORE DEPLOYMENT'
     );
-    console.log('='.repeat(80) + '\\n');
+    console.log(`${'='.repeat(80)  }\\n`);
   }
 }
 

@@ -167,11 +167,11 @@ interface EcologyAnalysisResult {
 }
 
 export class EcologyEngine {
-  private habitatTypes = [
+  private readonly habitatTypes = [
     'forest', 'grassland', 'wetland', 'desert', 'mountain', 'coastal', 'marine', 'urban', 'agricultural'
   ];
 
-  private threatTypes = [
+  private readonly threatTypes = [
     'habitat_loss', 'pollution', 'climate_change', 'invasive_species', 'overexploitation',
     'disease', 'human_disturbance', 'fragmentation', 'infrastructure'
   ];

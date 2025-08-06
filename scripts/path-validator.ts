@@ -64,7 +64,7 @@ interface PathIssue {
  * 🛣️ PATH VALIDATOR CLASS
  */
 class PathValidator {
-  private report: PathValidationReport = {
+  private readonly report: PathValidationReport = {
     files: {
       total: 0,
       valid: 0,
@@ -99,7 +99,7 @@ class PathValidator {
 
   private tsConfigPaths: Record<string, string[]> = {};
   private allFiles: string[] = [];
-  private importGraph: Map<string, Set<string>> = new Map();
+  private readonly importGraph: Map<string, Set<string>> = new Map();
 
   /**
    * 🔍 MAIN VALIDATION EXECUTION
@@ -695,7 +695,7 @@ class PathValidator {
    * 📋 PRINT VALIDATION REPORT
    */
   public printReport(report: PathValidationReport): void {
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('🛣️ COMPREHENSIVE PATH VALIDATION REPORT');
     console.log('='.repeat(80));
 
@@ -776,9 +776,9 @@ class PathValidator {
       console.log(`   ${index + 1}. ${suggestion}`);
     });
 
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('✅ PATH VALIDATION COMPLETE');
-    console.log('='.repeat(80) + '\n');
+    console.log(`${'='.repeat(80)  }\n`);
   }
 }
 

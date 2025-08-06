@@ -1,17 +1,22 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Vercel optimizations
+  // === DYNAMIC AGI SYSTEM CONFIGURATION ===
+  // Optimized for real-time, live, interactive intelligence
+  
+  // Disable static optimizations for dynamic content
   output: 'standalone',
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
   
-  // TypeScript optimizations
+  // Dynamic features enabled
   experimental: {
     typedRoutes: true,
     optimizePackageImports: ['framer-motion', 'class-variance-authority'],
-    serverComponentsExternalPackages: []
+    serverComponentsExternalPackages: [],
+    // Enable partial prerendering for hybrid static/dynamic
+    ppr: false // Disabled for full dynamic behavior
   },
   
   typescript: {

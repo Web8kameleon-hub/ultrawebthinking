@@ -11,8 +11,8 @@ import { EthicalNeuralPlanner } from '../lib/EthicalNeuralPlanner';
 import { FluidArchitecture } from '../lib/FluidArchitecture';
 
 class NeuralBooster {
-  private neural: EthicalNeuralPlanner;
-  private fluid: FluidArchitecture;
+  private readonly neural: EthicalNeuralPlanner;
+  private readonly fluid: FluidArchitecture;
 
   constructor() {
     this.neural = new EthicalNeuralPlanner();

@@ -143,7 +143,7 @@ app.post('/api/agixmed/analyze', (req, res) => {
 
   // Mock AGIXmed analysis response
   const analysis = {
-    symptoms: symptoms,
+    symptoms,
     confidence: 0.85,
     recommendations: [
       'Konsultohuni me një mjek nëse simptomat vazhdojnë',

@@ -56,7 +56,7 @@ interface LayerStatus {
  * 🎯 MAIN AUDITOR CLASS
  */
 class ProjectLayerAuditor {
-  private report: LayerAuditReport = {
+  private readonly report: LayerAuditReport = {
     layers: {
       neural: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
       ethical: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
@@ -421,7 +421,7 @@ class ProjectLayerAuditor {
    * 📋 PRINT COMPREHENSIVE REPORT
    */
   public printReport(report: LayerAuditReport): void {
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('🔍 PROJECT LAYER & TYPESCRIPT AUDIT REPORT');
     console.log('='.repeat(80));
 
@@ -474,9 +474,9 @@ class ProjectLayerAuditor {
       console.log(`   ${index + 1}. ${rec}`);
     });
 
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('✅ AUDIT COMPLETE - Reviewed project layers and TypeScript compliance');
-    console.log('='.repeat(80) + '\n');
+    console.log(`${'='.repeat(80)  }\n`);
   }
 }
 

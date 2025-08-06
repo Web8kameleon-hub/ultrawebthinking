@@ -49,12 +49,12 @@ export interface GuardianStats {
 }
 
 export class Guardian {
-  private config: GuardianConfig;
-  private requestMap = new Map<string, number>();
-  private ipConnections = new Map<string, number>();
-  private blockedIPs = new Set<string>();
+  private readonly config: GuardianConfig;
+  private readonly requestMap = new Map<string, number>();
+  private readonly ipConnections = new Map<string, number>();
+  private readonly blockedIPs = new Set<string>();
   private threatLogs: ThreatLog[] = [];
-  private stats: GuardianStats;
+  private readonly stats: GuardianStats;
   private isActive = true;
 
   constructor(config: Partial<GuardianConfig> = {}) {

@@ -38,11 +38,11 @@ const AGISheetConfigSchema = z.object({
  * Një Excel me tru AGI që mund të kthehet në çdo gjë
  */
 export class AGISheetCore extends EventEmitter {
-  private config: AGISheetConfig;
-  private cells: Map<string, CellData> = new Map();
-  private layers: Map<string, LayerStatus> = new Map();
-  private kameleonMode: BehaviorSubject<KameleonModeType>;
-  private commandStream: Subject<OperationalCommand> = new Subject();
+  private readonly config: AGISheetConfig;
+  private readonly cells: Map<string, CellData> = new Map();
+  private readonly layers: Map<string, LayerStatus> = new Map();
+  private readonly kameleonMode: BehaviorSubject<KameleonModeType>;
+  private readonly commandStream: Subject<OperationalCommand> = new Subject();
   private isActive = false;
 
   constructor(config: Partial<AGISheetConfig> = {}) {

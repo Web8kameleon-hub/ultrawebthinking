@@ -72,7 +72,7 @@ scenarios:
             X-Request-ID: '{{ $randomString(16) }}'
       - think: 3
       - get:
-          url: "/agixeco-demo"
+          url: "/agi-eco-demo"
 
   - name: "AGI Core Functionality"
     weight: 25

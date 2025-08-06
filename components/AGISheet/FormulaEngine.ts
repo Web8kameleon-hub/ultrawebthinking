@@ -19,8 +19,8 @@ interface FormulaResult {
 }
 
 export class FormulaEngine {
-  private parser: Parser;
-  private customFunctions: Map<string, Function>;
+  private readonly parser: Parser;
+  private readonly customFunctions: Map<string, Function>;
 
   constructor() {
     this.parser = new Parser();
@@ -147,12 +147,12 @@ export class FormulaEngine {
     });
 
     // Math functions
-    this.customFunctions.set('ROUND', (num: number, decimals: number = 0) => {
+    this.customFunctions.set('ROUND', (num: number, decimals = 0) => {
       const factor = Math.pow(10, decimals);
       return Math.round(Number(num) * factor) / factor;
     });
 
-    this.customFunctions.set('RANDOM', (min: number = 0, max: number = 1) => {
+    this.customFunctions.set('RANDOM', (min = 0, max = 1) => {
       return Math.random() * (Number(max) - Number(min)) + Number(min);
     });
 

@@ -99,7 +99,7 @@ export default function OpenMindPage() {
   ];
 
   providers.forEach(provider => {
-    console.log(colors.white('  ' + provider));
+    console.log(colors.white(`  ${  provider}`));
   });
 
   console.log(colors.green('\n✅ OpenMind AI setup completed!'));

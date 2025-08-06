@@ -32,8 +32,8 @@ interface ComplianceReport {
 }
 
 class TypeScriptStrictEnforcer {
-  private projectRoot: string;
-  private report: ComplianceReport;
+  private readonly projectRoot: string;
+  private readonly report: ComplianceReport;
 
   constructor() {
     this.projectRoot = process.cwd();

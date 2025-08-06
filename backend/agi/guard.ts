@@ -8,10 +8,10 @@
 import type { AGIModule, EuroWebConfig } from '../agi/types';
 
 export class AGIModuleGuard {
-  private allowedModules: Set<string> = new Set();
-  private trustedModules: Map<string, TrustedModule> = new Map();
-  private securityLevel: 'standard' | 'high' | 'military' | 'post-quantum';
-  private moduleLimits: ModuleLimits;
+  private readonly allowedModules: Set<string> = new Set();
+  private readonly trustedModules: Map<string, TrustedModule> = new Map();
+  private readonly securityLevel: 'standard' | 'high' | 'military' | 'post-quantum';
+  private readonly moduleLimits: ModuleLimits;
   private auditLog: SecurityEvent[] = [];
   
   constructor(config: Partial<EuroWebConfig> = {}) {

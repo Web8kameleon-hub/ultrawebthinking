@@ -61,7 +61,7 @@ export class RouteChecker {
       console.log(colors.green('✅ Created app directory'));
       this.createBasicFiles();
     } catch (error) {
-      console.log(colors.red('❌ Failed to create app directory: ' + error));
+      console.log(colors.red(`❌ Failed to create app directory: ${  error}`));
     }
   }
 
@@ -165,7 +165,7 @@ html, body {
         writeFileSync(filePath, file.content);
         console.log(colors.green(`✅ Created ${file.path}`));
       } catch (error) {
-        console.log(colors.red(`❌ Failed to create ${file.path}: ` + error));
+        console.log(colors.red(`❌ Failed to create ${file.path}: ${  error}`));
       }
     }
   }
@@ -194,7 +194,7 @@ html, body {
         }
       }
     } catch (error) {
-      console.log(colors.red(`Error scanning ${dir}: ` + error));
+      console.log(colors.red(`Error scanning ${dir}: ${  error}`));
     }
   }
 

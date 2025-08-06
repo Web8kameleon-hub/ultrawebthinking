@@ -22,8 +22,8 @@ interface AGICommand {
 }
 
 export class CellEngine {
-  private hf?: HfInference;
-  private nlp = compromise;
+  private readonly hf?: HfInference;
+  private readonly nlp = compromise;
 
   constructor() {
     // Initialize HuggingFace if API key is available
@@ -147,7 +147,7 @@ export class CellEngine {
           organizations,
           numbers
         },
-        summary: text.length > 100 ? text.substring(0, 97) + '...' : text
+        summary: text.length > 100 ? `${text.substring(0, 97)  }...` : text
       };
       
       return JSON.stringify(analysis, null, 2);
@@ -272,7 +272,7 @@ export class CellEngine {
       // Basic classification based on content analysis
       const hasNumbers = /\d+/.test(text);
       const hasQuestions = text.includes('?');
-      const hasEmails = /@/.test(text);
+      const hasEmails = text.includes('@');
       const hasUrls = /https?:\/\//.test(text);
       
       const categories = [];

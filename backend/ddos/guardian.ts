@@ -401,7 +401,7 @@ export function resetStats(): void {
 /**
  * Manual IP block/unblock functions
  */
-export function manualBlockIP(ip: string, reason: string = 'Manual block'): void {
+export function manualBlockIP(ip: string, reason = 'Manual block'): void {
   blockIP(ip, reason)
 }
 

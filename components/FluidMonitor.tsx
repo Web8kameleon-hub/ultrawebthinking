@@ -125,7 +125,7 @@ export const FluidMonitor: React.FC = () => {
         body: JSON.stringify({
           action: 'remove_obstacle',
           stream: streamName,
-          obstacle: obstacle
+          obstacle
         })
       });
       

@@ -24,7 +24,7 @@ interface CleanupReport {
 }
 
 class ProjectCleaner {
-  private report: CleanupReport = {
+  private readonly report: CleanupReport = {
     deletedFiles: [],
     fixedImports: [],
     removedExports: [],
@@ -118,7 +118,7 @@ class ProjectCleaner {
         const content = readFileSync(join(PROJECT_ROOT, patternFile), 'utf-8');
         
         // Fix broken imports after removing system-types
-        let fixedContent = content
+        const fixedContent = content
           .replace(/import type { SystemStyleObject, ConditionalValue } from ['"]..\/types\/index['"];/g, 
                   "// Simplified: removed system-styles dependency")
           .replace(/import type { SystemProperties } from ['"]..\/types\/style-props['"];/g,
@@ -158,7 +158,7 @@ class ProjectCleaner {
           const content = readFileSync(fullPath, 'utf-8');
           
           // Remove specific unused exports
-          let cleanedContent = content
+          const cleanedContent = content
             .replace(/export const WEB8_CONFIG = {[\s\S]*?};/g, '// Removed unused export: WEB8_CONFIG')
             .replace(/export const logWeb8Status = [\s\S]*?};/g, '// Removed unused export: logWeb8Status')
             .replace(/export const combineClasses = [\s\S]*?};/g, '// Removed unused export: combineClasses');
@@ -191,7 +191,7 @@ class ProjectCleaner {
         const content = readFileSync(join(PROJECT_ROOT, file), 'utf-8');
         
         // Convert relative imports to absolute where beneficial
-        let updatedContent = content
+        const updatedContent = content
           .replace(/from ['"]\.\.\/\.\.\/lib\//g, "from '@/lib/")
           .replace(/from ['"]\.\.\/\.\.\/components\//g, "from '@/components/")
           .replace(/from ['"]\.\.\/\.\.\/types\//g, "from '@/types/")
@@ -238,7 +238,7 @@ class ProjectCleaner {
    * 📋 PRINT CLEANUP REPORT
    */
   public printReport(report: CleanupReport): void {
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('🧹 PROJECT CLEANUP REPORT');
     console.log('='.repeat(80));
 
@@ -256,9 +256,9 @@ class ProjectCleaner {
       report.errors.forEach(error => console.log(`   ⚠️ ${error}`));
     }
 
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('✅ PROJECT CLEANUP COMPLETE');
-    console.log('='.repeat(80) + '\n');
+    console.log(`${'='.repeat(80)  }\n`);
   }
 }
 

@@ -71,11 +71,11 @@ interface CryptoPortfolioAnalysis {
 }
 
 export class CryptoAnalysisEngine {
-  private debugMode: boolean;
-  private priceHistory: Map<string, number[]>;
-  private technicalIndicators: Map<string, any>;
+  private readonly debugMode: boolean;
+  private readonly priceHistory: Map<string, number[]>;
+  private readonly technicalIndicators: Map<string, any>;
 
-  constructor(debugMode: boolean = false) {
+  constructor(debugMode = false) {
     this.debugMode = debugMode;
     this.priceHistory = new Map();
     this.technicalIndicators = new Map();
@@ -484,7 +484,7 @@ export class CryptoAnalysisEngine {
   }
 
   // Technical analysis helper methods
-  private generatePriceHistory(currentPrice: number, volatility: number, periods: number = 50): number[] {
+  private generatePriceHistory(currentPrice: number, volatility: number, periods = 50): number[] {
     const history = [currentPrice];
     
     for (let i = 1; i < periods; i++) {
@@ -515,7 +515,7 @@ export class CryptoAnalysisEngine {
     return { support, resistance };
   }
 
-  private calculateRSI(prices: number[], period: number = 14): number {
+  private calculateRSI(prices: number[], period = 14): number {
     if (prices.length < period + 1) return 50; // Default neutral RSI
     
     const gains = [];
@@ -564,7 +564,7 @@ export class CryptoAnalysisEngine {
     return ema;
   }
 
-  private calculateBollingerBands(prices: number[], period: number = 20, stdDev: number = 2): {
+  private calculateBollingerBands(prices: number[], period = 20, stdDev = 2): {
     upper: number;
     middle: number;
     lower: number;
@@ -616,7 +616,7 @@ export class CryptoAnalysisEngine {
     return weightedReturn * 365; // Annualized
   }
 
-  private calculateVaR(cryptoData: CryptoMetrics[], allocation: Record<string, number>, confidence: number = 0.95): number {
+  private calculateVaR(cryptoData: CryptoMetrics[], allocation: Record<string, number>, confidence = 0.95): number {
     // Simplified VaR calculation
     const portfolioVolatility = this.calculatePortfolioRisk(cryptoData, allocation);
     const zScore = confidence === 0.95 ? 1.645 : confidence === 0.99 ? 2.33 : 1.28;

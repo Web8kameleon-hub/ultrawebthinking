@@ -43,7 +43,7 @@ interface IntegrationReport {
 }
 
 class IntegrationCleaner {
-  private report: IntegrationReport = {
+  private readonly report: IntegrationReport = {
     git: { status: '', commits: 0, branch: '', clean: false },
     docker: { running: false, containers: [], images: [], networks: [] },
     postman: { collections: [], environments: [], tests: 0 },
@@ -708,7 +708,7 @@ export async function GET() {
    * 📋 PRINT INTEGRATION REPORT
    */
   public printReport(report: IntegrationReport): void {
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('🧹 INTEGRATION & CLEANUP REPORT');
     console.log('='.repeat(80));
 
@@ -742,9 +742,9 @@ export async function GET() {
     console.log('   3. Run: yarn postman:test (to test APIs)');
     console.log('   4. Use: yarn optimize (for future cleanups)');
 
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('✅ INTEGRATION & CLEANUP COMPLETE');
-    console.log('='.repeat(80) + '\n');
+    console.log(`${'='.repeat(80)  }\n`);
   }
 }
 

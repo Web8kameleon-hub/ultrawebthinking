@@ -457,7 +457,7 @@ const Web8TabSystemUltra: React.FC = () => {
                       >
                         <div style={{ fontWeight: 500, color: '#e2e8f0' }}>{result.title}</div>
                         <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
-                          {result.content.length > 60 ? result.content.substring(0, 60) + '...' : result.content}
+                          {result.content.length > 60 ? `${result.content.substring(0, 60)  }...` : result.content}
                         </div>
                       </div>
                     ))}
@@ -740,7 +740,7 @@ const Web8TabSystemUltra: React.FC = () => {
                     fontFamily: 'JetBrains Mono, monospace',
                     color: '#d4af37'
                   }}>
-                    {typeof value === 'string' ? (value.length > 15 ? value.substring(0, 15) + '...' : value) : value}
+                    {typeof value === 'string' ? (value.length > 15 ? `${value.substring(0, 15)  }...` : value) : value}
                   </span>
                 </div>
               ))}

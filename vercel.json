@@ -3,21 +3,8 @@
   "version": 2,
   "name": "ultraweb-platform",
   "alias": [
-    "ultraweb.ai",
-    "www.ultraweb.ai"
+    "localhost:3000"
   ],
-  "domains": [
-    "ultraweb.ai",
-    "www.ultraweb.ai",
-    "api.ultraweb.ai"
-  ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production",
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "SKIP_ENV_VALIDATION": "true"
-    }
-  },
   "functions": {
     "app/api/**/*.ts": {
       "runtime": "nodejs18.x",

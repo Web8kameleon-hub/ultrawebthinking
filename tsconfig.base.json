@@ -36,6 +36,8 @@
     "**/*.js",
     "**/*.jsx",
     "**/*.cjs",
-    "**/*.mjs"
+    "**/*.mjs",
+    "eslint.config.*",
+    "**/eslint.config.*"
   ]
 }

@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: result,
       message,
-      action: action,
+      action,
       updatedMetrics: metrics,
       waterQuality: metrics.waterQuality
     });

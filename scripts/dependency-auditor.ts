@@ -51,7 +51,7 @@ interface DependencyAuditReport {
  * 🎯 DEPENDENCY AUDITOR CLASS
  */
 class DependencyAuditor {
-  private report: DependencyAuditReport = {
+  private readonly report: DependencyAuditReport = {
     missingFiles: {
       core: [],
       components: [],
@@ -490,7 +490,7 @@ class DependencyAuditor {
    * 📋 PRINT COMPREHENSIVE REPORT
    */
   public printReport(report: DependencyAuditReport): void {
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('🔍 COMPREHENSIVE DEPENDENCY AUDIT REPORT');
     console.log('='.repeat(80));
 
@@ -551,9 +551,9 @@ class DependencyAuditor {
       console.log(`   ${index + 1}. ${rec}`);
     });
 
-    console.log('\n' + '='.repeat(80));
+    console.log(`\n${  '='.repeat(80)}`);
     console.log('✅ DEPENDENCY AUDIT COMPLETE');
-    console.log('='.repeat(80) + '\n');
+    console.log(`${'='.repeat(80)  }\n`);
   }
 }
 

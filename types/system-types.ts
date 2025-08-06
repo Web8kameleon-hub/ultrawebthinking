@@ -63,9 +63,9 @@ export type ResponsiveValue<T> = T | {
 
 export type ConditionalValue<T> = T | ResponsiveValue<T>;
 
-export type SystemStyleObject = {
+export interface SystemStyleObject {
   [property: string]: StyleValue | ResponsiveValue<StyleValue>;
-};
+}
 
 // CVA Variant Types
 export type VariantProps<T> = T extends (...args: any[]) => any

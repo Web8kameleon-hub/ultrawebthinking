@@ -98,9 +98,9 @@ export interface SignalStep {
 
 // Intelligence Context
 export class IntelliContext {
-  private traces: Map<string, SignalTrace> = new Map();
-  private memory: Map<string, any> = new Map();
-  private startTime: number = Date.now();
+  private readonly traces: Map<string, SignalTrace> = new Map();
+  private readonly memory: Map<string, any> = new Map();
+  private readonly startTime: number = Date.now();
 
   public addTrace(trace: SignalTrace): void {
     this.traces.set(trace.id, trace);
@@ -141,10 +141,10 @@ export interface IntelliContextMetrics {
 
 // Memory Layer
 export class MemoryLayer {
-  private shortTerm: Map<string, MemoryItem> = new Map();
-  private longTerm: Map<string, MemoryItem> = new Map();
-  private maxShortTerm = 1000;
-  private maxLongTerm = 10000;
+  private readonly shortTerm: Map<string, MemoryItem> = new Map();
+  private readonly longTerm: Map<string, MemoryItem> = new Map();
+  private readonly maxShortTerm = 1000;
+  private readonly maxLongTerm = 10000;
 
   public store(key: string, value: any, persistent = false): void {
     const item: MemoryItem = {

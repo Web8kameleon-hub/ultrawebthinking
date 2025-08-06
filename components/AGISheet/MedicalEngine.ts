@@ -149,7 +149,7 @@ interface MedicalAnalysisResult {
 }
 
 export class MedicalEngine {
-  private therapeuticAreas = [
+  private readonly therapeuticAreas = [
     'oncology', 'cardiovascular', 'neurology', 'immunology', 'infectious_diseases',
     'endocrinology', 'respiratory', 'gastroenterology', 'dermatology', 'ophthalmology'
   ];

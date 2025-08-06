@@ -54,9 +54,9 @@ export class TestFixer {
 
     this.scanTestFiles();
     this.analyzeIssues();
-    this.fixAGIxBioNature();
+    this.fixAGIBioNature();
     this.fixAGISheet();
-    this.fixAGIxEco();
+    this.fixAGIEco();
     this.fixBasicTests();
     this.fixTabLogicTests();
     this.fixUtilities();
@@ -146,19 +146,19 @@ export class TestFixer {
     }
   }
 
-  private fixAGIxBioNature(): void {
-    console.log('\\n🧬 Fixing AGIxBioNature (275 problems)...');
+  private fixAGIBioNature(): void {
+    console.log('\\n🧬 Fixing AGIBioNature (275 problems)...');
     
-    const testPath = join(this.rootDir, '__tests__', 'agixbionature.test.ts');
+    const testPath = join(this.rootDir, '__tests__', 'AGIBioNature.test.ts');
     const fixedContent = `/**
- * AGIxBioNature Tests - Pure TypeScript Industrial
+ * AGIBioNature Tests - Pure TypeScript Industrial
  * ZERO useState, ZERO jest, ZERO chunks, ZERO default exports
  */
 
 import { test, expect, describe, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AGIxBioNature } from '../components/AGISheet/AGIxBioNature-pure';
+import { AGIBioNature } from '../components/AGISheet/AGIBioNature-pure';
 
 // Pure TypeScript test data - readonly immutable
 const MOCK_BIOLOGICAL_DATA = {
@@ -179,14 +179,14 @@ const MOCK_BIOLOGICAL_DATA = {
   ]
 } as const;
 
-describe('AGIxBioNature Industrial Tests', () => {
+describe('AGIBioNature Industrial Tests', () => {
   beforeEach(() => {
     // Pure setup - no useState
   });
 
   test('renders without useState violations', () => {
     const { container } = render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="comprehensive" 
         theme="forest" 
         dataSource="simulation" 
@@ -201,7 +201,7 @@ describe('AGIxBioNature Industrial Tests', () => {
     const user = userEvent.setup();
     
     render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="biology" 
         theme="laboratory" 
         dataSource="simulation" 
@@ -217,7 +217,7 @@ describe('AGIxBioNature Industrial Tests', () => {
     const user = userEvent.setup();
     
     render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="comprehensive" 
         theme="ecosystem" 
         dataSource="simulation" 
@@ -245,7 +245,7 @@ describe('AGIxBioNature Industrial Tests', () => {
 
   test('CVA variants work correctly', () => {
     const { rerender } = render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="biology" 
         theme="forest" 
         dataSource="simulation" 
@@ -256,7 +256,7 @@ describe('AGIxBioNature Industrial Tests', () => {
     
     // Test theme switching
     rerender(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="medical" 
         theme="laboratory" 
         dataSource="simulation" 
@@ -274,13 +274,13 @@ export const createMockSpecimen = (overrides = {}) => ({
 });
 
 export const createBiologyTestSuite = () => ({
-  renderComponent: (props = {}) => render(<AGIxBioNature {...props} />),
+  renderComponent: (props = {}) => render(<AGIBioNature {...props} />),
   mockData: MOCK_BIOLOGICAL_DATA
 });
 `;
 
     writeFileSync(testPath, fixedContent);
-    console.log('✅ Fixed AGIxBioNature tests (275 → 0 problems)');
+    console.log('✅ Fixed AGIBioNature tests (275 → 0 problems)');
   }
 
   private fixAGISheet(): void {
@@ -349,12 +349,12 @@ export const createExcelTestSuite = () => ({
     console.log('✅ Fixed AGISheet tests (48 → 0 problems)');
   }
 
-  private fixAGIxEco(): void {
-    console.log('\\n🌱 Fixing AGIxEco (210 problems)...');
+  private fixAGIEco(): void {
+    console.log('\\n🌱 Fixing AGIEco (210 problems)...');
     
-    const testPath = join(this.rootDir, '__tests__', 'agixeco.test.ts');
+    const testPath = join(this.rootDir, '__tests__', 'AGIEco.test.ts');
     const fixedContent = `/**
- * AGIxEco Tests - Pure TypeScript Economic Engine
+ * AGIEco Tests - Pure TypeScript Economic Engine
  * Dynamic imports + Lazy loading + Vector cache
  */
 
@@ -367,7 +367,7 @@ const loadEcoEngine = async () => {
   return new EconomicsEngine();
 };
 
-describe('AGIxEco Industrial Tests', () => {
+describe('AGIEco Industrial Tests', () => {
   test('economic calculations are pure functions', () => {
     const calculateGDP = (consumption: number, investment: number, government: number, netExports: number): number => {
       return consumption + investment + government + netExports;
@@ -413,7 +413,7 @@ export const createEcoTestSuite = () => ({
 `;
 
     writeFileSync(testPath, fixedContent);
-    console.log('✅ Fixed AGIxEco tests (210 → 0 problems)');
+    console.log('✅ Fixed AGIEco tests (210 → 0 problems)');
   }
 
   private fixBasicTests(): void {

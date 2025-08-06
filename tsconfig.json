@@ -40,10 +40,11 @@
   "exclude": [
     "node_modules",
     ".next",
-    "dist",
     "**/*.js",
     "**/*.jsx",
     "**/*.mjs",
-    "**/*.cjs"
+    "**/*.cjs",
+    "eslint.config.*",
+    "**/eslint.config.*"
   ]
 }

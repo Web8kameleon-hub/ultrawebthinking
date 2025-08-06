@@ -18,7 +18,7 @@ export interface AGIProvider {
 }
 
 export class RealAGI {
-  private providers: AGIProvider[] = [];
+  private readonly providers: AGIProvider[] = [];
   private currentProvider: AGIProvider | null = null;
 
   constructor(providers: AGIProvider[] = []) {

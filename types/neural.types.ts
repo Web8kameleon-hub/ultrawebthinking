@@ -115,11 +115,11 @@ export interface NeuralComputation {
 /**
  * 🎨 ACTIVATION FUNCTIONS
  */
-export type ActivationFunction = {
+export interface ActivationFunction {
   forward: (x: number) => number;
   backward: (x: number) => number;
   name: string;
-};
+}
 
 /**
  * 📈 OPTIMIZER STATE

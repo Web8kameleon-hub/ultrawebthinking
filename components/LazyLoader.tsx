@@ -53,9 +53,9 @@ export interface LazyComponentConfig {
 // Neural Lazy Loading Engine
 class NeuralLazyEngine {
   public componentCache = new Map<string, React.LazyExoticComponent<React.ComponentType<any>>>()
-  private loadingStates = new Map<string, boolean>()
-  private preloadQueue: string[] = []
-  private observers = new Map<string, IntersectionObserver>()
+  private readonly loadingStates = new Map<string, boolean>()
+  private readonly preloadQueue: string[] = []
+  private readonly observers = new Map<string, IntersectionObserver>()
 
   // Dynamic Component Registration
   register(config: LazyComponentConfig): React.LazyExoticComponent<React.ComponentType<any>> {

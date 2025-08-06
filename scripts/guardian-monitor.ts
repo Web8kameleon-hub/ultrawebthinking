@@ -32,9 +32,9 @@ interface MonitoringConfig {
 }
 
 class GuardianMonitor {
-  private guardian: Guardian;
-  private monitor: ProductionMonitor;
-  private config: MonitoringConfig;
+  private readonly guardian: Guardian;
+  private readonly monitor: ProductionMonitor;
+  private readonly config: MonitoringConfig;
   private isRunning = false;
   private intervalId?: NodeJS.Timeout;
 

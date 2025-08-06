@@ -10,10 +10,10 @@
 
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { AGIXForm } from '../AGIXmed/AGIXForm'
-import { AGIXResults } from '../AGIXmed/AGIXResults'
+import { AGIXForm } from '../AGImed/AGIForm'
+import { AGIXResults } from '../AGImed/AGIResults'
 
 // Professional Medical AI Interface
 interface ProfessionalMedicalAccess {
@@ -35,6 +35,132 @@ interface ProfessionalMedModule {
   description: string
   requiredClearance: number
   specialty: string[]
+}
+
+// Patient Memory System Interface
+interface PatientMemory {
+  patientId: string
+  name: string
+  dateOfBirth: string
+  medicalHistory: MedicalRecord[]
+  allergies: string[]
+  currentMedications: Medication[]
+  lastVisit: string
+  doctorNotes: string[]
+  riskFactors: string[]
+}
+
+// Doctor Memory System Interface
+interface DoctorMemory {
+  doctorId: string
+  name: string
+  specialty: string[]
+  licenseNumber: string
+  experience: number
+  successRate: number
+  patientCount: number
+  researchPapers: number
+  specializations: string[]
+  languages: string[]
+}
+
+// Medical Library Interface
+interface MedicalLibrary {
+  drugDatabase: DrugInfo[]
+  procedures: MedicalProcedure[]
+  protocols: TreatmentProtocol[]
+  diseases: DiseaseInfo[]
+  naturalTreatments: NaturalTreatment[]
+}
+
+// Lab Analysis Interface
+interface LabAnalysis {
+  testType: string
+  patientId: string
+  results: LabResult[]
+  interpretation: string
+  recommendations: string[]
+  flaggedValues: string[]
+  aiConfidence: number
+}
+
+// Medical News Interface
+interface MedicalNews {
+  id: string
+  title: string
+  summary: string
+  source: string
+  publishDate: string
+  category: string
+  importance: 'high' | 'medium' | 'low'
+  relevantSpecialties: string[]
+}
+
+// Supporting interfaces
+interface MedicalRecord {
+  date: string
+  diagnosis: string
+  treatment: string
+  outcome: string
+}
+
+interface Medication {
+  name: string
+  dosage: string
+  frequency: string
+  startDate: string
+  endDate?: string
+}
+
+interface DrugInfo {
+  name: string
+  genericName: string
+  category: string
+  indications: string[]
+  contraindications: string[]
+  sideEffects: string[]
+  interactions: string[]
+}
+
+interface MedicalProcedure {
+  name: string
+  category: string
+  description: string
+  risks: string[]
+  recovery: string
+  success_rate: number
+}
+
+interface TreatmentProtocol {
+  condition: string
+  steps: string[]
+  medications: string[]
+  duration: string
+  monitoring: string[]
+}
+
+interface DiseaseInfo {
+  name: string
+  symptoms: string[]
+  causes: string[]
+  treatments: string[]
+  prevention: string[]
+}
+
+interface NaturalTreatment {
+  name: string
+  type: string
+  indications: string[]
+  preparation: string
+  dosage: string
+  cautions: string[]
+}
+
+interface LabResult {
+  parameter: string
+  value: string
+  normalRange: string
+  status: 'normal' | 'high' | 'low' | 'critical'
 }
 
 // Quantum Medical Metrics for Professionals
@@ -65,7 +191,7 @@ const quantumMedMetrics: QuantumMedMetrics = {
   drugInteractions: 'Monitored'
 }
 
-// Professional medical modules
+// Professional medical modules - Expanded with all services
 const professionalMedModules: ProfessionalMedModule[] = [
   {
     id: 'clinical_diagnostics',
@@ -78,6 +204,66 @@ const professionalMedModules: ProfessionalMedModule[] = [
     specialty: ['Radiology', 'Pathology', 'Internal Medicine']
   },
   {
+    id: 'patient_memory',
+    title: 'Patient Memory System',
+    icon: '📋',
+    status: 'active',
+    accuracy: 99.9,
+    description: 'Comprehensive patient history tracking and medical records management',
+    requiredClearance: 4,
+    specialty: ['All Specialties']
+  },
+  {
+    id: 'doctor_memory',
+    title: 'Doctor Profiles & Expertise',
+    icon: '👨‍⚕️',
+    status: 'active',
+    accuracy: 98.5,
+    description: 'Doctor credential verification and expertise tracking system',
+    requiredClearance: 3,
+    specialty: ['Administration', 'Human Resources']
+  },
+  {
+    id: 'medical_library',
+    title: 'Medical Knowledge Library',
+    icon: '📚',
+    status: 'active',
+    accuracy: 99.7,
+    description: 'Comprehensive drug database, procedures, and treatment protocols',
+    requiredClearance: 2,
+    specialty: ['All Specialties']
+  },
+  {
+    id: 'lab_analysis',
+    title: 'AI Lab Analysis',
+    icon: '🧪',
+    status: 'active',
+    accuracy: 98.9,
+    description: 'Automated lab result interpretation and flagging system',
+    requiredClearance: 5,
+    specialty: ['Laboratory Medicine', 'Pathology', 'Internal Medicine']
+  },
+  {
+    id: 'nature_health',
+    title: 'Nature & Health Analysis',
+    icon: '🌿',
+    status: 'active',
+    accuracy: 96.8,
+    description: 'Natural medicine and herbal treatment analysis system',
+    requiredClearance: 4,
+    specialty: ['Integrative Medicine', 'Naturopathy', 'Pharmacognosy']
+  },
+  {
+    id: 'medical_news',
+    title: 'Medical News & Research',
+    icon: '📰',
+    status: 'active',
+    accuracy: 97.5,
+    description: 'Real-time medical news, research papers, and clinical trial updates',
+    requiredClearance: 2,
+    specialty: ['All Specialties']
+  },
+  {
     id: 'pharmacology',
     title: 'Clinical Pharmacology',
     icon: '💊',
@@ -86,6 +272,26 @@ const professionalMedModules: ProfessionalMedModule[] = [
     description: 'Drug interaction analysis and personalized dosing protocols',
     requiredClearance: 4,
     specialty: ['Pharmacology', 'Internal Medicine', 'Emergency Medicine']
+  },
+  {
+    id: 'genetic_analysis',
+    title: 'Genetic Analysis AI',
+    icon: '🧬',
+    status: 'active',
+    accuracy: 97.2,
+    description: 'Genetic testing interpretation and personalized medicine recommendations',
+    requiredClearance: 6,
+    specialty: ['Genetics', 'Oncology', 'Internal Medicine']
+  },
+  {
+    id: 'radiology_ai',
+    title: 'Advanced Radiology AI',
+    icon: '📷',
+    status: 'active',
+    accuracy: 99.1,
+    description: 'AI-powered medical imaging analysis and anomaly detection',
+    requiredClearance: 6,
+    specialty: ['Radiology', 'Nuclear Medicine', 'Interventional Radiology']
   },
   {
     id: 'research_analytics',
@@ -114,13 +320,51 @@ export const AGIMedUltra: React.FC = () => {
   const [showAGIXForm, setShowAGIXForm] = useState<boolean>(false)
   const [agixResults, setAGIXResults] = useState<any>(null)
 
+  // Live medical news (mock)
+  const [medicalNews, setMedicalNews] = useState<Array<{ title: string; summary: string; url: string }>>([]);
+  useEffect(() => {
+    const news = [
+      { title: 'FDA Approves New Cancer Drug', summary: 'A breakthrough in oncology treatment...', url: '#' },
+      { title: 'AI Diagnoses Rare Disease', summary: 'AGI×Med system identifies rare genetic disorder...', url: '#' },
+      { title: 'Global Health Alert: Virus Update', summary: 'Latest updates on global health situation...', url: '#' }
+    ];
+    setMedicalNews(news);
+  }, []);
+
+  // --- TABLES FOR PATIENTS & DOCTORS ---
+  const [patients, setPatients] = useState<Array<{ id: string; name: string; age: number; diagnosis: string; lastVisit: string }>>([
+    { id: 'P001', name: 'Arben D.', age: 54, diagnosis: 'Hypertension', lastVisit: '2025-07-21' },
+    { id: 'P002', name: 'Elira S.', age: 32, diagnosis: 'Asthma', lastVisit: '2025-08-01' }
+  ]);
+  const [doctors, setDoctors] = useState<Array<{ id: string; name: string; specialty: string; experience: number }>>([
+    { id: 'D001', name: 'Dr. Ledjan Ahmati', specialty: 'Cardiology', experience: 12 },
+    { id: 'D002', name: 'Dr. Erion K.', specialty: 'Radiology', experience: 8 }
+  ]);
+
+  // --- PRESCRIPTION FORM ---
+  const [prescription, setPrescription] = useState({
+    patientId: '',
+    doctorId: '',
+    medication: '',
+    dosage: '',
+    instructions: ''
+  });
+  const handlePrescriptionChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setPrescription({ ...prescription, [e.target.name]: e.target.value });
+  };
+  const handlePrescriptionSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Save prescription logic here
+    alert('Receta u ruajt me sukses!');
+  };
+
   const handleAGIXSubmit = (data: any) => {
     // Professional medical AI analysis
     const professionalAnalysis = {
       timestamp: new Date().toISOString(),
       analysisType: 'Professional Medical Assessment',
       clearanceLevel: 'Restricted - Medical Professionals Only',
-      data: data,
+      data,
       aiConfidence: quantumMedMetrics.aiConfidence,
       complianceFlags: ['HIPAA', 'GDPR', 'HL7-FHIR']
     }
@@ -411,62 +655,156 @@ export const AGIMedUltra: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Security & Compliance */}
+        {/* --- LIVE MEDICAL INFO & ANALYSIS --- */}
+        {/* --- LIVE MEDICAL NEWS --- */}
+        <motion.div className="bg-blue-50 rounded-xl p-6 mb-8">
+          <h2 className="text-xl font-bold text-blue-800 mb-4">📰 Lajmet Mjekësore Live</h2>
+          <ul className="space-y-2">
+            {medicalNews.map((news, idx) => (
+              <li key={idx} className="bg-white rounded p-3 shadow">
+                <a href={news.url} className="font-semibold text-blue-700 hover:underline">{news.title}</a>
+                <p className="text-gray-600 text-sm">{news.summary}</p>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        {/* --- PATIENTS TABLE --- */}
+        <motion.div className="bg-white rounded-xl p-6 mb-8 shadow">
+          <h2 className="text-xl font-bold text-blue-800 mb-4">🩺 Tabela e Pacientëve</h2>
+          <table className="w-full text-left">
+            <thead>
+              <tr>
+                <th>ID</th><th>Emri</th><th>Mosha</th><th>Diagnoza</th><th>Vizita e Fundit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {patients.map(p => (
+                <tr key={p.id} className="border-b">
+                  <td>{p.id}</td><td>{p.name}</td><td>{p.age}</td><td>{p.diagnosis}</td><td>{p.lastVisit}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+
+        {/* --- DOCTORS TABLE --- */}
+        <motion.div className="bg-white rounded-xl p-6 mb-8 shadow">
+          <h2 className="text-xl font-bold text-blue-800 mb-4">👨‍⚕️ Tabela e Doktorëve</h2>
+          <table className="w-full text-left">
+            <thead>
+              <tr>
+                <th>ID</th><th>Emri</th><th>Specialiteti</th><th>Eksperienca (vite)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doctors.map(d => (
+                <tr key={d.id} className="border-b">
+                  <td>{d.id}</td><td>{d.name}</td><td>{d.specialty}</td><td>{d.experience}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+
+        {/* --- PRESCRIPTION FORM --- */}
+        <motion.div className="bg-white rounded-xl p-6 mb-8 shadow">
+          <h2 className="text-xl font-bold text-blue-800 mb-4">💊 Recetë e Re</h2>
+          <form onSubmit={handlePrescriptionSubmit} className="space-y-4">
+            <input 
+              name="patientId" 
+              value={prescription.patientId} 
+              onChange={handlePrescriptionChange} 
+              placeholder="ID Pacienti" 
+              className="border p-2 rounded w-full" 
+              required 
+            />
+            <input 
+              name="doctorId" 
+              value={prescription.doctorId} 
+              onChange={handlePrescriptionChange} 
+              placeholder="ID Doktori" 
+              className="border p-2 rounded w-full" 
+              required 
+            />
+            <input 
+              name="medication" 
+              value={prescription.medication} 
+              onChange={handlePrescriptionChange} 
+              placeholder="Ilaci" 
+              className="border p-2 rounded w-full" 
+              required 
+            />
+            <input 
+              name="dosage" 
+              value={prescription.dosage} 
+              onChange={handlePrescriptionChange} 
+              placeholder="Dozimi" 
+              className="border p-2 rounded w-full" 
+              required 
+            />
+            <textarea 
+              name="instructions" 
+              value={prescription.instructions} 
+              onChange={handlePrescriptionChange} 
+              placeholder="Udhëzime për përdorim" 
+              className="border p-2 rounded w-full h-24" 
+              required 
+            />
+            <button 
+              type="submit" 
+              className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
+            >
+              💊 Ruaj Recetën
+            </button>
+          </form>
+        </motion.div>
+
+        {/* Professional Quantum Medical Metrics */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-          className="bg-slate-900 rounded-2xl shadow-2xl p-8 text-white"
-        >
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-4">🛡️ Siguria dhe Privatësia</h2>
-            <p className="text-slate-300">
-              AGI×Med respekton standardet më të larta të sigurisë dhe privatësisë mjekësore
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-3xl mb-3">🔐</div>
-              <h4 className="font-bold mb-2">HIPAA Compliant</h4>
-              <p className="text-slate-400 text-sm">Përputhshmëri e plotë me standardet ndërkombëtare</p>
+          transition={{ delay: 0.6 }}
+          style={{
+            background: 'white',
+            borderRadius: '1rem',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            border: '1px solid #dbeafe',
+            padding: '2rem'
+          }}>
+          <h2 style={{
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: '#1e293b',
+            textAlign: 'center',
+            marginBottom: '1.5rem'
+          }}>⚡ Metrikat Kuantike Mjekësore</h2>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1rem'
+          }}>
+            <div style={{ textAlign: 'center', padding: '1rem' }}>
+              <div style={{ fontSize: '2rem', color: '#2563eb' }}>🔬</div>
+              <div style={{ fontWeight: 'bold', color: '#1e293b' }}>Analizë Klinike</div>
+              <div style={{ color: '#059669', fontWeight: '600' }}>{quantumMedMetrics.clinicalAnalysis}</div>
             </div>
-            
-            <div className="text-center">
-              <div className="text-3xl mb-3">🏥</div>
-              <h4 className="font-bold mb-2">HL7 FHIR</h4>
-              <p className="text-slate-400 text-sm">Integrim me sistemet e spitaleve</p>
+            <div style={{ textAlign: 'center', padding: '1rem' }}>
+              <div style={{ fontSize: '2rem', color: '#2563eb' }}>🎯</div>
+              <div style={{ fontWeight: 'bold', color: '#1e293b' }}>Saktësia Diagnostike</div>
+              <div style={{ color: '#059669', fontWeight: '600' }}>{quantumMedMetrics.diagnosticAccuracy}</div>
             </div>
-            
-            <div className="text-center">
-              <div className="text-3xl mb-3">🌍</div>
-              <h4 className="font-bold mb-2">GDPR Ready</h4>
-              <p className="text-slate-400 text-sm">Mbrojtje e të dhënave personale</p>
+            <div style={{ textAlign: 'center', padding: '1rem' }}>
+              <div style={{ fontSize: '2rem', color: '#2563eb' }}>💾</div>
+              <div style={{ fontWeight: 'bold', color: '#1e293b' }}>Baza e të Dhënave</div>
+              <div style={{ color: '#059669', fontWeight: '600' }}>{quantumMedMetrics.medicalDatabase}</div>
             </div>
-            
-            <div className="text-center">
-              <div className="text-3xl mb-3">🔒</div>
-              <h4 className="font-bold mb-2">End-to-End</h4>
-              <p className="text-slate-400 text-sm">Enkriptim i plotë i të dhënave</p>
+            <div style={{ textAlign: 'center', padding: '1rem' }}>
+              <div style={{ fontSize: '2rem', color: '#2563eb' }}>🧬</div>
+              <div style={{ fontWeight: 'bold', color: '#1e293b' }}>Biomarkerët</div>
+              <div style={{ color: '#059669', fontWeight: '600' }}>{quantumMedMetrics.biomarkers.toLocaleString()}</div>
             </div>
-          </div>
-        </motion.div>
-
-        {/* Professional Contact */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center mt-8 p-6 bg-blue-50 rounded-xl"
-        >
-          <h3 className="text-xl font-bold text-blue-800 mb-2">Për Informacion Profesional</h3>
-          <p className="text-blue-700 mb-4">
-            Kontaktoni departamentin tonë të marrëdhënieve me profesionistët mjekësorë
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-blue-700">
-            <span>📧 medical-professionals@euroweb.al</span>
-            <span>📞 +355 4X XXX XXX</span>
-            <span>🏥 Departamenti Mjekësor</span>
           </div>
         </motion.div>
       </div>

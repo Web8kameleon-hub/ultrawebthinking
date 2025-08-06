@@ -164,7 +164,7 @@ function printReport(report: CSSReport) {
     )
   }
 
-  console.log('\n' + '═'.repeat(50))
+  console.log(`\n${  '═'.repeat(50)}`)
   
   if (report.success) {
     console.log('🎉 SUCCESS: Perfect CSS approach!')

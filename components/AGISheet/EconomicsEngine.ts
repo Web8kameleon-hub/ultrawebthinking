@@ -45,10 +45,10 @@ interface MacroeconomicIndicators {
 }
 
 export class EconomicsEngine {
-  private debugMode: boolean;
-  private economicModels: Map<string, any>;
+  private readonly debugMode: boolean;
+  private readonly economicModels: Map<string, any>;
 
-  constructor(debugMode: boolean = false) {
+  constructor(debugMode = false) {
     this.debugMode = debugMode;
     this.economicModels = new Map();
     this.initializeModels();

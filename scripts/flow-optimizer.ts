@@ -10,7 +10,7 @@
 import { FluidArchitecture } from '../lib/FluidArchitecture';
 
 class FlowOptimizer {
-  private fluid: FluidArchitecture;
+  private readonly fluid: FluidArchitecture;
 
   constructor() {
     this.fluid = new FluidArchitecture();

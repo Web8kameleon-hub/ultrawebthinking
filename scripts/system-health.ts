@@ -11,8 +11,8 @@ import { FluidArchitecture } from '../lib/FluidArchitecture';
 import { EthicalNeuralPlanner } from '../lib/EthicalNeuralPlanner';
 
 class SystemHealthMonitor {
-  private fluid: FluidArchitecture;
-  private neural: EthicalNeuralPlanner;
+  private readonly fluid: FluidArchitecture;
+  private readonly neural: EthicalNeuralPlanner;
 
   constructor() {
     this.fluid = new FluidArchitecture();

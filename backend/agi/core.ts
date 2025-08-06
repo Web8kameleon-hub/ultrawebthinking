@@ -28,7 +28,7 @@ const createLogger = (): Logger => ({
 type EventCallback = (...args: any[]) => void;
 
 class SimpleEventEmitter {
-  private events: Map<string, EventCallback[]> = new Map();
+  private readonly events: Map<string, EventCallback[]> = new Map();
 
   emit(event: string, ...args: any[]): void {
     const callbacks = this.events.get(event) || [];
@@ -71,12 +71,12 @@ interface AGICoreConfig {
 }
 
 class AGICore extends SimpleEventEmitter {
-  private layers: Map<string, AGILayer> = new Map();
-  private config: AGICoreConfig;
+  private readonly layers: Map<string, AGILayer> = new Map();
+  private readonly config: AGICoreConfig;
   private logger: Logger = createLogger();
   private isInitialized = false;
-  private processingSpeed = 2500; // THz
-  private startTime: number;
+  private readonly processingSpeed = 2500; // THz
+  private readonly startTime: number;
 
   constructor(config: Partial<AGICoreConfig> = {}) {
     super();

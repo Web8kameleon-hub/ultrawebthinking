@@ -57,7 +57,7 @@ export interface AGIModule {
 }
 
 export class SignalTrace {
-  private steps: Array<{ step: string; data?: any; timestamp: number }> = [];
+  private readonly steps: Array<{ step: string; data?: any; timestamp: number }> = [];
   
   constructor(public id: string) {}
   
@@ -82,9 +82,9 @@ export class SignalTrace {
  * Echo Engine - Advanced Navigation and Routing System
  * Industrial TypeScript architecture without async/*/
 export class EchoEngine {
-  private modules = new Map<string, AGIModule>();
-  private context: any = {};
-  private metrics = {
+  private readonly modules = new Map<string, AGIModule>();
+  private readonly context: any = {};
+  private readonly metrics = {
     totalNavigations: 0,
     successfulNavigations: 0,
     totalResponseTime: 0,
