@@ -4,11 +4,6 @@
   "description": "EuroWeb - Pure TypeScript Industrial Web8 Platform",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "agisheet",
-    "backend",
-    "security"
-  ],
   "scripts": {
     "dev": "next dev --port 3000",
     "lint": "eslint . --fix",
