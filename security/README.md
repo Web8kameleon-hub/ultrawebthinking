@@ -22,13 +22,13 @@ security/
 ```bash
 # Install dependencies (if needed)
 yarn add @types/node typescript ts-node
-npx install socket.io-client
+yarn add socket.io-client
 
 # Test security modules
-npx ts-node security/test-security.ts
+yarn tsx security/test-security.ts
 
 # Apply security (optional)
-npx ts-node security/apply-security.ts
+yarn tsx security/apply-security.ts
 ```
 
 **Created by:** Ledjan Ahmati  

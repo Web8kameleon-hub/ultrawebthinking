@@ -20,7 +20,7 @@ $CreatorEmail = "dealsjona@gmail.com"
 $CreatorSignature = "100% Owner & Creator"
 
 # Absolute Paths
-$ProjectRoot = "c:\UltraBuild\EuroWeb"
+$ProjectRoot = "c:\Users\pc\UltraBuild\ultrawebthinking"
 $ComponentsDir = "$ProjectRoot\components"
 $LibDir = "$ProjectRoot\lib"
 $TypesDir = "$ProjectRoot\types"
@@ -34,18 +34,25 @@ $AllowedDeps = @(
     "framer-motion", "class-variance-authority",
     "@testing-library/react", "@testing-library/jest-dom", "@testing-library/user-event",
     "vitest", "@vitejs/plugin-react", "jsdom",
-    "@popperjs/core", "@next/bundle-analyzer"
+    "@popperjs/core", "@next/bundle-analyzer",
+    "tailwindcss", "postcss", "autoprefixer",
+    "lucide-react", "clsx", "sonner", "cmdk",
+    "@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu",
+    "@radix-ui/react-slot", "@radix-ui/react-toast",
+    "ws", "socket.io", "socket.io-client",
+    "eslint", "@typescript-eslint/eslint-plugin", "@typescript-eslint/parser",
+    "@next/eslint-plugin-next", "eslint-config-next",
+    "tsx", "concurrently", "@types/node", "@types/react", "@types/react-dom"
 )
 
 $ForbiddenDeps = @(
     "jest", "babel", "webpack", "styled-components", "emotion",
     "@emotion/react", "@emotion/styled", "styled-jsx",
-    "tailwindcss", "postcss", "autoprefixer",
     "panda", "@pandacss/dev", "styled-system",
-    "sass", "less", "stylus", "styled-jsx",
+    "sass", "less", "stylus",
     "chakra-ui", "material-ui", "@mui/material",
     "antd", "react-bootstrap", "semantic-ui-react",
-    "css-in-js", "styled-components", "styled-system"
+    "css-in-js", "styled-system"
 )
 
 $ProtectedFiles = @(
@@ -400,7 +407,7 @@ function Deploy-Vercel {
     
     if (-not (Get-Command vercel -ErrorAction SilentlyContinue)) {
         Write-Warning "Vercel CLI not found, installing..."
-        & npm i -g vercel
+        & yarn global add vercel
     }
     
     & vercel --prod

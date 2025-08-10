@@ -4,6 +4,7 @@
  */
 
 import js from '@eslint/js';
+// @ts-ignore - typescript-eslint import issue
 import typescript from 'typescript-eslint';
 
 export default [

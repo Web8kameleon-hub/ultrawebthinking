@@ -281,8 +281,8 @@ export const AGISheetLazy = registerLazyComponent({
 export const AGIxEcoLazy = registerLazyComponent({
   name: 'AGIxEco',
   loader: async () => {
-    const module = await import('./AGISheet/AGIxEco')
-    return { default: module.AGIxEco }
+    const module = await import('./AGISheet/AGIEco')
+    return { default: module.AGIEco }
   },
   priority: 'normal',
   chunk: 'agi-eco'
@@ -291,8 +291,8 @@ export const AGIxEcoLazy = registerLazyComponent({
 export const AGIxBioNatureLazy = registerLazyComponent({
   name: 'AGIxBioNature',
   loader: async () => {
-    const module = await import('./AGISheet/AGIxBioNature')
-    return { default: module.AGIxBioNature }
+    const module = await import('./AGISheet/AGIBioNature')
+    return { default: module.AGIBioNature }
   },
   priority: 'normal',
   chunk: 'agi-bio'
@@ -310,3 +310,4 @@ export const Web8TabSystemLazy = registerLazyComponent({
 })
 
 export default LazyLoader
+

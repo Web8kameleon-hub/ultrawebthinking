@@ -5,7 +5,7 @@
 ### 1. Vercel (Recommended)
 ```bash
 # Install Vercel CLI (if not installed)
-npm i -g vercel
+yarn global add vercel
 
 # Deploy using our script
 yarn deploy:vercel

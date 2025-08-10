@@ -1,13 +1,15 @@
 /**
  * Web8 Main Interface with Central Search Tab
  * Interface kryesore me tab-in e kërkimit në qendër
+ * REAL 12-LAYER BACKEND CONNECTION
  */
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import WebSearchTab from './WebSearchTab';
+import { LazyLoader } from '@components/LazyLoader';
 
 interface Tab {
   id: string;
@@ -16,8 +18,50 @@ interface Tab {
   isMain?: boolean;
 }
 
+interface Web8Status {
+  web8Status: string;
+  layers: number;
+  agiCore: {
+    initialized: boolean;
+    totalLayers: number;
+    activeLayers: number;
+    averageLoad: number;
+    totalConnections: number;
+    processingSpeed: number;
+  };
+  lightningPool: string;
+  message: string;
+  timestamp: string;
+}
+
 export default function Web8MainInterface() {
   const [activeTab, setActiveTab] = useState('search');
+  const [web8Status, setWeb8Status] = useState<Web8Status | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Connect to Web8 12-Layer Backend
+  useEffect(() => {
+    const fetchWeb8Status = async () => {
+      try {
+        const response = await fetch('http://localhost:4000');
+        const data = await response.json();
+        setWeb8Status(data);
+        setError(null);
+      } catch (err) {
+        setError('Cannot connect to Web8 Backend');
+        console.error('Web8 Backend connection failed:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWeb8Status();
+    
+    // Update every 5 seconds
+    const interval = setInterval(fetchWeb8Status, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const tabs: Tab[] = [
     { id: 'search', label: 'Web Search', icon: '🔍', isMain: true },
@@ -62,6 +106,38 @@ export default function Web8MainInterface() {
         }}>
           Advanced Neural Search & AI Platform
         </p>
+        
+        {/* Web8 12-Layer Status Display */}
+        <div style={{
+          marginTop: '20px',
+          padding: '15px',
+          background: 'rgba(255,255,255,0.1)',
+          borderRadius: '12px',
+          border: web8Status?.web8Status === 'ACTIVE' ? '2px solid #4ade80' : '2px solid #ef4444'
+        }}>
+          {isLoading ? (
+            <p style={{ margin: 0, opacity: 0.8 }}>🔄 Connecting to Web8 Backend...</p>
+          ) : error ? (
+            <p style={{ margin: 0, color: '#ef4444' }}>❌ {error}</p>
+          ) : web8Status ? (
+            <div style={{ textAlign: 'left' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <span style={{ fontWeight: 'bold' }}>
+                  ⚡ Web8 Status: <span style={{ color: '#4ade80' }}>{web8Status.web8Status}</span>
+                </span>
+                <span>🧠 Layers: {web8Status.layers}/12</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', fontSize: '0.9rem' }}>
+                <div>🔗 Connections: {web8Status.agiCore.totalConnections}</div>
+                <div>⚡ Speed: {web8Status.agiCore.processingSpeed} THz</div>
+                <div>🎯 Load: {web8Status.agiCore.averageLoad.toFixed(1)}%</div>
+              </div>
+              <div style={{ marginTop: '8px', fontSize: '0.8rem', opacity: 0.7 }}>
+                {web8Status.message} | {new Date(web8Status.timestamp).toLocaleTimeString()}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </motion.header>
 
       {/* Tab Navigation */}
@@ -132,19 +208,40 @@ export default function Web8MainInterface() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             style={{
-              background: 'rgba(255,255,255,0.1)',
+              background: 'rgba(255,255,255,0.05)',
               borderRadius: '12px',
-              padding: '40px',
-              textAlign: 'center',
-              color: 'white'
+              padding: '20px',
+              minHeight: '500px'
             }}
           >
-            <h2 style={{ fontSize: '2rem', marginBottom: '20px' }}>
-              🧠 Neural AI Processing
-            </h2>
-            <p style={{ fontSize: '1.1rem', opacity: 0.9 }}>
-              Advanced neural network processing capabilities
-            </p>
+            <LazyLoader
+              component="Web812LayerDashboard"
+              variant="neural"
+              priority="high"
+              preload={true}
+              fallback={
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: '400px',
+                  color: 'white'
+                }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      border: '3px solid rgba(255,255,255,0.3)',
+                      borderTop: '3px solid rgba(255,255,255,0.8)',
+                      borderRadius: '50%',
+                      animation: 'spin 1s linear infinite',
+                      margin: '0 auto 15px'
+                    }}></div>
+                    <div>🧠 Loading Web8 12-Layer Neural System...</div>
+                  </div>
+                </div>
+              }
+            />
           </motion.div>
         )}
 

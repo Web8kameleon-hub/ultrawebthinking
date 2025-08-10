@@ -10,7 +10,7 @@ echo "🔧 Backend Port: $BACKEND_PORT"
 
 # Start backend server in background
 echo "🔧 Starting AGI Backend Server..."
-npx tsx backend/server.ts &
+yarn tsx backend/server.ts &
 BACKEND_PID=$!
 
 # Start frontend server

@@ -201,8 +201,8 @@ GUARDIAN_BLOCKED_COUNTRIES=CN,RU,KP,IR
 FROM node:18-alpine
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
+COPY package*.json yarn.lock ./
+RUN yarn install --frozen-lockfile --production
 
 # Krijoni direktoriet për logs dhe data
 RUN mkdir -p logs data
@@ -210,7 +210,7 @@ RUN mkdir -p logs data
 COPY . .
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
 ```
 
 ### Kubernetes Deployment
@@ -305,7 +305,7 @@ Konfigurimi i dashboard në Grafana:
 ### Unit Tests
 
 ```bash
-npm test guardian
+yarn test guardian
 ```
 
 ### Load Testing
@@ -465,7 +465,7 @@ const guardian = new Guardian({
 
 ```bash
 # Përditësimi i Guardian
-npm update @euroweb/guardian
+yarn add @euroweb/guardian@latest
 
 # Restart i sistemit
 pm2 restart euroweb-app

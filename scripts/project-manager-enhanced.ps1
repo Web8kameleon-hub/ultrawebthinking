@@ -731,7 +731,7 @@ function Deploy-Vercel {
         
         if (-not (Get-Command vercel -ErrorAction SilentlyContinue)) {
             Write-Log "Vercel CLI not found, installing..." -Level INFO
-            & npm i -g vercel
+            & yarn global add vercel
         }
         
         if (-not (Test-Path "$($ProjectConfig.ProjectRoot)\vercel.json")) {

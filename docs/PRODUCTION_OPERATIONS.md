@@ -116,7 +116,7 @@ kubectl apply -f k8s/production.yaml
 kubectl top pods -n euroweb-production
 
 # Check database connections
-kubectl exec -it deployment/euroweb-app -- npm run db:check
+kubectl exec -it deployment/euroweb-app -- yarn db:check
 
 # Check cache hit ratio
 kubectl exec -it deployment/euroweb-app -- redis-cli info stats

@@ -1,568 +1,450 @@
 /**
- * EuroWeb Guardian - Advanced DDoS & Threat Protection System
- * Industrial-grade security middleware for Web8 platform
+ * Guardian Security System
+ * Advanced threat detection and real-time monitoring
  * 
- * @author Ledjan Ahmati
- * @version 8.0.0
+ * @version 8.0.0 Ultra
+ * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
  */
 
-import fs from 'fs';
-import path from 'path';
-import crypto from 'crypto';
-import { Request, Response, NextFunction } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as crypto from 'crypto';
 
-export interface ThreatLog {
-  timestamp: string;
-  ip: string;
+interface BlockedIPData {
   reason: string;
+  blockedAt: number;
+  attempts: number;
   userAgent?: string;
-  path?: string;
-  payloadSize?: number;
-  severity: 'low' | 'medium' | 'high' | 'critical';
   country?: string;
-  blocked: boolean;
+  threatLevel: 'low' | 'medium' | 'high' | 'critical';
 }
 
-export interface GuardianConfig {
-  maxRequestsPerMinute: number;
-  maxPayloadSize: number;
-  blockDuration: number;
-  logPath: string;
-  blocklistPath: string;
-  enableGeoBlocking: boolean;
-  blockedCountries: string[];
-  suspiciousUserAgents: RegExp[];
-  rateLimitWindowMs: number;
-  maxConnections: number;
+export interface SecurityEvent {
+  id: string;
+  timestamp: number;
+  type: 'block' | 'unblock' | 'attack_attempt' | 'suspicious_activity' | 'login_failure' | 'rate_limit';
+  ip: string;
+  details: string;
+  severity: 'info' | 'warning' | 'danger' | 'critical';
+  userAgent?: string;
+  endpoint?: string;
 }
 
-export interface GuardianStats {
-  totalRequests: number;
-  blockedRequests: number;
-  uniqueIPs: number;
-  blockedIPs: number;
-  avgResponseTime: number;
-  topThreats: Array<{ type: string; count: number }>;
-  activeConnections: number;
-  systemHealth: 'healthy' | 'degraded' | 'critical';
+export interface GuardianSettings {
+  maxAttempts: number;
+  timeWindow: number; // milliseconds
+  blockDuration: number; // milliseconds
+  autoUnblock: boolean;
+  threatDetection: boolean;
+  geoBlocking: boolean;
+  logRetention: number; // days
 }
 
 export class Guardian {
-  private readonly config: GuardianConfig;
-  private readonly requestMap = new Map<string, number>();
-  private readonly ipConnections = new Map<string, number>();
-  private readonly blockedIPs = new Set<string>();
-  private threatLogs: ThreatLog[] = [];
-  private readonly stats: GuardianStats;
-  private isActive = true;
+  private isActive: boolean = true;
+  private blockedIPs: Map<string, BlockedIPData> = new Map();
+  private recentActivity: SecurityEvent[] = [];
+  private ipAttempts: Map<string, number[]> = new Map();
+  
+  // 🛡️ Advanced Security Settings
+  private settings: GuardianSettings = {
+    maxAttempts: 5,
+    timeWindow: 15 * 60 * 1000, // 15 minutes
+    blockDuration: 60 * 60 * 1000, // 1 hour
+    autoUnblock: true,
+    threatDetection: true,
+    geoBlocking: false,
+    logRetention: 30 // 30 days
+  };
 
-  constructor(config: Partial<GuardianConfig> = {}) {
-    this.config = {
-      maxRequestsPerMinute: 100,
-      maxPayloadSize: 512000, // 500KB
-      blockDuration: 3600000, // 1 hour in ms
-      logPath: path.join(process.cwd(), 'logs', 'guardian.log'),
-      blocklistPath: path.join(process.cwd(), 'data', 'blocklist.json'),
-      enableGeoBlocking: true,
-      blockedCountries: ['CN', 'RU', 'KP'], // Example blocked countries
-      suspiciousUserAgents: [
-        /python|curl|wget|scanner|bot|crawler/i,
-        /sqlmap|nikto|nmap|masscan/i,
-        /burp|zap|metasploit/i
-      ],
-      rateLimitWindowMs: 60000, // 1 minute
-      maxConnections: 1000,
-      ...config
-    };
+  // 🚨 Threat patterns for detection
+  private threatPatterns = [
+    /\/admin/i,
+    /\/wp-admin/i,
+    /\.php$/i,
+    /\/api\/.*\/.*\/.*\/.*\//, // Deep API probing
+    /sql|union|select|drop|delete|insert|update/i,
+    /<script|javascript:|vbscript:/i,
+    /\.\.\/|\.\.\\/
+  ];
 
-    this.stats = this.initializeStats();
-    this.initializeGuardian();
+  // 📍 Geo-blocking (high-risk countries)
+  private blockedCountries = ['CN', 'RU', 'KP', 'IR'];
+
+  constructor() {
+    this.startCleanupTimer();
+    this.loadPersistedData();
   }
 
-  /**
-   * Initialize Guardian system
-   */
-  private initializeGuardian(): void {
-    this.ensureDirectories();
-    this.loadBlocklist();
-    this.startCleanupInterval();
-    this.logActivity('Guardian initialized', 'system', 'low');
-  }
+  // 🔍 THREAT DETECTION & ANALYSIS
+  public analyzeRequest(ip: string, userAgent: string, url: string, headers: Record<string, string>): boolean {
+    if (!this.isActive) return false;
 
-  /**
-   * Create necessary directories
-   */
-  private ensureDirectories(): void {
-    const logsDir = path.dirname(this.config.logPath);
-    const dataDir = path.dirname(this.config.blocklistPath);
+    const threatLevel = this.calculateThreatLevel(ip, userAgent, url, headers);
     
-    if (!fs.existsSync(logsDir)) {
-      fs.mkdirSync(logsDir, { recursive: true });
+    if (threatLevel >= 3) {
+      this.blockIP(ip, `High threat level detected: ${threatLevel}/5`, userAgent);
+      return true;
     }
-    
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
+
+    return this.checkRateLimit(ip, userAgent, url);
+  }
+
+  private calculateThreatLevel(ip: string, userAgent: string, url: string, headers: Record<string, string>): number {
+    let threatLevel = 0;
+
+    // Check for malicious patterns in URL
+    if (this.threatPatterns.some(pattern => pattern.test(url))) {
+      threatLevel += 2;
     }
-  }
 
-  /**
-   * Load blocked IPs from persistent storage
-   */
-  private loadBlocklist(): void {
-    try {
-      if (fs.existsSync(this.config.blocklistPath)) {
-        const raw = fs.readFileSync(this.config.blocklistPath, 'utf-8');
-        const list = JSON.parse(raw) as string[];
-        list.forEach(ip => this.blockedIPs.add(ip));
-        console.log(`🛡️ Guardian: Loaded ${list.length} blocked IPs`);
-      }
-    } catch (error) {
-      console.error('Guardian: Failed to load blocklist:', error);
+    // Suspicious user agents
+    if (!userAgent || userAgent.length < 10 || /bot|crawler|spider|scan/i.test(userAgent)) {
+      threatLevel += 1;
     }
-  }
 
-  /**
-   * Save blocklist to persistent storage
-   */
-  private saveBlocklist(): void {
-    try {
-      const list = Array.from(this.blockedIPs);
-      fs.writeFileSync(this.config.blocklistPath, JSON.stringify(list, null, 2));
-    } catch (error) {
-      console.error('Guardian: Failed to save blocklist:', error);
+    // Missing essential headers
+    if (!headers['accept'] || !headers['accept-language']) {
+      threatLevel += 1;
     }
+
+    // Rate limiting check
+    if (this.isRateLimited(ip)) {
+      threatLevel += 1;
+    }
+
+    return Math.min(threatLevel, 5);
   }
 
-  /**
-   * Initialize statistics
-   */
-  private initializeStats(): GuardianStats {
-    return {
-      totalRequests: 0,
-      blockedRequests: 0,
-      uniqueIPs: 0,
-      blockedIPs: 0,
-      avgResponseTime: 0,
-      topThreats: [],
-      activeConnections: 0,
-      systemHealth: 'healthy'
-    };
-  }
-
-  /**
-   * Main middleware function
-   */
-  public middleware() {
-    return (req: Request, res: Response, next: NextFunction) => {
-      if (!this.isActive) {
-        return next();
-      }
-
-      const startTime = Date.now();
-      const ip = this.getClientIP(req);
-      const userAgent = req.get('User-Agent') || '';
-      const urlPath = req.path;
-
-      // Update statistics
-      this.stats.totalRequests++;
-      this.updateConnectionCount(ip, 1);
-
-      try {
-        // Check if IP is blocked
-        if (this.isIPBlocked(ip)) {
-          this.logThreat(ip, 'IP Blacklisted', urlPath, userAgent, 'high', true);
-          this.stats.blockedRequests++;
-          return this.sendBlockedResponse(res, 'IP Blacklisted');
-        }
-
-        // Rate limiting check
-        if (this.isRateLimited(ip)) {
-          this.blockIP(ip, 'Rate Limit Exceeded');
-          this.logThreat(ip, 'Rate Limit Exceeded', urlPath, userAgent, 'medium', true);
-          this.stats.blockedRequests++;
-          return this.sendBlockedResponse(res, 'Rate Limit Exceeded');
-        }
-
-        // User agent check
-        if (this.isSuspiciousUserAgent(userAgent)) {
-          this.blockIP(ip, `Suspicious User Agent: ${userAgent}`);
-          this.logThreat(ip, 'Suspicious User Agent', urlPath, userAgent, 'medium', true);
-          this.stats.blockedRequests++;
-          return this.sendBlockedResponse(res, 'Suspicious User Agent');
-        }
-
-        // Payload size check
-        req.on('data', (chunk: Buffer) => {
-          const currentSize = (req as any).payloadSize || 0;
-          (req as any).payloadSize = currentSize + chunk.length;
-
-          if ((req as any).payloadSize > this.config.maxPayloadSize) {
-            this.blockIP(ip, 'Large Payload Attack');
-            this.logThreat(ip, 'Large Payload Attack', urlPath, userAgent, 'high', true);
-            this.stats.blockedRequests++;
-            req.destroy();
-            return;
-          }
-        });
-
-        // SQL Injection detection
-        if (this.detectSQLInjection(req)) {
-          this.blockIP(ip, 'SQL Injection Attempt');
-          this.logThreat(ip, 'SQL Injection Attempt', urlPath, userAgent, 'critical', true);
-          this.stats.blockedRequests++;
-          return this.sendBlockedResponse(res, 'Security Violation');
-        }
-
-        // XSS detection
-        if (this.detectXSS(req)) {
-          this.blockIP(ip, 'XSS Attempt');
-          this.logThreat(ip, 'XSS Attempt', urlPath, userAgent, 'high', true);
-          this.stats.blockedRequests++;
-          return this.sendBlockedResponse(res, 'Security Violation');
-        }
-
-        // Path traversal detection
-        if (this.detectPathTraversal(urlPath)) {
-          this.blockIP(ip, 'Path Traversal Attempt');
-          this.logThreat(ip, 'Path Traversal Attempt', urlPath, userAgent, 'high', true);
-          this.stats.blockedRequests++;
-          return this.sendBlockedResponse(res, 'Security Violation');
-        }
-
-        // Log normal request
-        this.logActivity(`Request from ${ip}`, urlPath, 'low');
-
-        // Add security headers
-        this.addSecurityHeaders(res);
-
-        // Override end to measure response time
-        const originalEnd = res.end;
-        const guardian = this;
-        res.end = function(this: Response, ...args: any[]) {
-          const responseTime = Date.now() - startTime;
-          guardian.updateResponseTime(responseTime);
-          guardian.updateConnectionCount(ip, -1);
-          return originalEnd.apply(this, args as any);
-        };
-        next();
-
-      } catch (error) {
-        console.error('Guardian middleware error:', error);
-        next();
-      }
-    };
-  }
-
-  /**
-   * Get client IP address
-   */
-  private getClientIP(req: Request): string {
-    return (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
-           req.headers['x-real-ip'] as string ||
-           req.ip ||
-           req.connection.remoteAddress ||
-           'unknown';
-  }
-
-  /**
-   * Check if IP is blocked
-   */
-  private isIPBlocked(ip: string): boolean {
-    return this.blockedIPs.has(ip);
-  }
-
-  /**
-   * Check rate limiting
-   */
-  private isRateLimited(ip: string): boolean {
+  // ⚡ RATE LIMITING
+  private checkRateLimit(ip: string, userAgent: string, url: string): boolean {
     const now = Date.now();
-    const windowStart = now - this.config.rateLimitWindowMs;
-    const key = `${ip}-${Math.floor(now / this.config.rateLimitWindowMs)}`;
+    const attempts = this.ipAttempts.get(ip) || [];
     
-    const count = this.requestMap.get(key) || 0;
-    this.requestMap.set(key, count + 1);
-
-    // Clean old entries
-    for (const [mapKey] of this.requestMap) {
-      const keyTime = parseInt(mapKey.split('-')[1]) * this.config.rateLimitWindowMs;
-      if (keyTime < windowStart) {
-        this.requestMap.delete(mapKey);
-      }
+    // Clean old attempts
+    const recentAttempts = attempts.filter(time => now - time < this.settings.timeWindow);
+    
+    if (recentAttempts.length >= this.settings.maxAttempts) {
+      this.blockIP(ip, `Rate limit exceeded: ${recentAttempts.length} requests in ${this.settings.timeWindow / 1000}s`, userAgent);
+      return true;
     }
 
-    return count >= this.config.maxRequestsPerMinute;
+    // Track this attempt
+    recentAttempts.push(now);
+    this.ipAttempts.set(ip, recentAttempts);
+    
+    return false;
   }
 
-  /**
-   * Check for suspicious user agents
-   */
-  private isSuspiciousUserAgent(userAgent: string): boolean {
-    return this.config.suspiciousUserAgents.some(pattern => pattern.test(userAgent));
+  private isRateLimited(ip: string): boolean {
+    const attempts = this.ipAttempts.get(ip) || [];
+    const now = Date.now();
+    const recentAttempts = attempts.filter(time => now - time < this.settings.timeWindow);
+    return recentAttempts.length >= this.settings.maxAttempts;
   }
 
-  /**
-   * Detect SQL injection attempts
-   */
-  private detectSQLInjection(req: Request): boolean {
-    const sqlPatterns = [
-      /(\b(union|select|insert|update|delete|drop|create|alter|exec|execute)\b)/i,
-      /(--|\/\*|\*\/|;|'|"|\||&)/,
-      /(\b(or|and)\b.*=.*)/i,
-      /(1=1|1=0|true|false)/i
-    ];
+  // 🚫 IP BLOCKING SYSTEM
+  public blockIP(ip: string, reason: string, userAgent?: string): void {
+    if (!this.isValidIP(ip)) return;
 
-    const checkString = JSON.stringify(req.query) + JSON.stringify(req.body) + req.url;
-    return sqlPatterns.some(pattern => pattern.test(checkString));
-  }
-
-  /**
-   * Detect XSS attempts
-   */
-  private detectXSS(req: Request): boolean {
-    const xssPatterns = [
-      /<script[^>]*>.*?<\/script>/gi,
-      /javascript:/gi,
-      /vbscript:/gi,
-      /onload|onerror|onclick|onmouseover/gi,
-      /<iframe[^>]*>.*?<\/iframe>/gi
-    ];
-
-    const checkString = JSON.stringify(req.query) + JSON.stringify(req.body) + req.url;
-    return xssPatterns.some(pattern => pattern.test(checkString));
-  }
-
-  /**
-   * Detect path traversal attempts
-   */
-  private detectPathTraversal(path: string): boolean {
-    const traversalPatterns = [
-      /\.\.\//g,
-      /\.\.\\/g,
-      /%2e%2e%2f/gi,
-      /%2e%2e\//gi,
-      /\.\.%2f/gi
-    ];
-
-    return traversalPatterns.some(pattern => pattern.test(path));
-  }
-
-  /**
-   * Block an IP address
-   */
-  private blockIP(ip: string, reason: string): void {
-    if (!this.blockedIPs.has(ip)) {
-      this.blockedIPs.add(ip);
-      this.saveBlocklist();
-      this.stats.blockedIPs++;
-      console.log(`🚫 Guardian: Blocked IP ${ip} - ${reason}`);
-      
-      // Auto-unblock after configured duration
-      setTimeout(() => {
-        this.unblockIP(ip);
-      }, this.config.blockDuration);
+    const threatLevel = this.assessThreatLevel(reason);
+    
+    const blockedData: BlockedIPData = {
+      reason,
+      blockedAt: Date.now(),
+      attempts: (this.blockedIPs.get(ip)?.attempts || 0) + 1,
+      threatLevel
+    };
+    
+    if (userAgent) {
+      blockedData.userAgent = userAgent;
     }
+    
+    this.blockedIPs.set(ip, blockedData);
+
+    const securityEvent: SecurityEvent = {
+      id: this.generateEventId(),
+      timestamp: Date.now(),
+      type: 'block',
+      ip,
+      details: reason,
+      severity: this.getSeverityFromThreatLevel(threatLevel),
+    };
+    
+    if (userAgent) {
+      securityEvent.userAgent = userAgent;
+    }
+    
+    this.addSecurityEvent(securityEvent);
+
+    console.log(`🛡️ Guardian: Blocked IP ${ip} - ${reason}`);
   }
 
-  /**
-   * Unblock an IP address
-   */
-  private unblockIP(ip: string): void {
+  public unblockIP(ip: string): boolean {
     if (this.blockedIPs.has(ip)) {
       this.blockedIPs.delete(ip);
-      this.saveBlocklist();
-      this.stats.blockedIPs--;
-      console.log(`✅ Guardian: Unblocked IP ${ip}`);
+      this.ipAttempts.delete(ip);
+      
+      this.addSecurityEvent({
+        id: this.generateEventId(),
+        timestamp: Date.now(),
+        type: 'unblock',
+        ip,
+        details: 'IP manually unblocked',
+        severity: 'info'
+      });
+
+      console.log(`🛡️ Guardian: Unblocked IP ${ip}`);
+      return true;
     }
+    return false;
   }
 
-  /**
-   * Log threat activity
-   */
-  private logThreat(
-    ip: string, 
-    reason: string, 
-    path?: string, 
-    userAgent?: string, 
-    severity: ThreatLog['severity'] = 'medium',
-    blocked = false
-  ): void {
-    const threat: ThreatLog = {
-      timestamp: new Date().toISOString(),
-      ip,
-      reason,
-      path,
-      userAgent,
-      severity,
-      blocked
-    };
-
-    this.threatLogs.push(threat);
+  public isBlocked(ip: string): boolean {
+    if (!this.isActive) return false;
     
-    // Keep only last 1000 logs in memory
-    if (this.threatLogs.length > 1000) {
-      this.threatLogs = this.threatLogs.slice(-1000);
+    const blockedData = this.blockedIPs.get(ip);
+    if (!blockedData) return false;
+
+    // Auto-unblock if duration has passed
+    if (this.settings.autoUnblock && 
+        Date.now() - blockedData.blockedAt > this.settings.blockDuration) {
+      this.unblockIP(ip);
+      return false;
     }
 
-    // Write to log file
-    const logLine = `[${threat.timestamp}] ${severity.toUpperCase()} ${blocked ? 'BLOCKED' : 'DETECTED'} ${ip} - ${reason} ${path || ''} ${userAgent || ''}\n`;
-    fs.appendFileSync(this.config.logPath, logLine);
+    return true;
   }
 
-  /**
-   * Log normal activity
-   */
-  private logActivity(message: string, context?: string, level: 'low' | 'medium' | 'high' = 'low'): void {
-    if (level !== 'low') { // Only log medium and high level activities
-      const logLine = `[${new Date().toISOString()}] ${level.toUpperCase()} ${message} ${context || ''}\n`;
-      fs.appendFileSync(this.config.logPath, logLine);
-    }
+  // 📊 DASHBOARD DATA
+  public getDashboard() {
+    const now = Date.now();
+    const last24h = now - (24 * 60 * 60 * 1000);
+    const last1h = now - (60 * 60 * 1000);
+
+    return {
+      status: this.isActive ? 'active' : 'inactive',
+      timestamp: now,
+      
+      // 📈 Statistics
+      stats: {
+        totalBlocked: this.blockedIPs.size,
+        blockedLast24h: this.countBlockedSince(last24h),
+        blockedLastHour: this.countBlockedSince(last1h),
+        activeThreats: this.getActiveThreats(),
+        topThreatCountries: this.getTopThreatCountries(),
+        riskLevel: this.calculateOverallRiskLevel()
+      },
+
+      // 🚫 Blocked IPs
+      blockedIPs: Array.from(this.blockedIPs.entries())
+        .map(([ip, data]) => ({
+          ip,
+          reason: data.reason,
+          blockedAt: data.blockedAt,
+          attempts: data.attempts,
+          threatLevel: data.threatLevel,
+          timeRemaining: this.settings.autoUnblock 
+            ? Math.max(0, this.settings.blockDuration - (now - data.blockedAt))
+            : null,
+          userAgent: data.userAgent
+        }))
+        .sort((a, b) => b.blockedAt - a.blockedAt),
+
+      // 📋 Recent Activity
+      recentActivity: this.getRecentActivity(50),
+
+      // ⚙️ Settings
+      settings: this.settings,
+
+      // 🔧 System Health
+      systemHealth: {
+        memoryUsage: this.getMemoryUsage(),
+        uptime: this.getUptime(),
+        lastCleanup: this.lastCleanup || 0,
+        eventsRetained: this.recentActivity.length
+      }
+    };
   }
 
-  /**
-   * Add security headers to response
-   */
-  private addSecurityHeaders(res: Response): void {
-    res.setHeader('X-Guardian-Status', 'Active');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'");
+  private getRecentActivity(limit: number = 20): SecurityEvent[] {
+    return this.recentActivity
+      .sort((a, b) => b.timestamp - a.timestamp)
+      .slice(0, limit);
   }
 
-  /**
-   * Send blocked response
-   */
-  private sendBlockedResponse(res: Response, reason: string): void {
-    res.status(403).json({
-      error: 'Access Denied',
-      reason,
-      guardian: 'EuroWeb Guardian v8.0.0',
-      timestamp: new Date().toISOString()
+  // 🎛️ CONFIGURATION METHODS
+  public setActive(active: boolean): void {
+    this.isActive = active;
+    this.addSecurityEvent({
+      id: this.generateEventId(),
+      timestamp: Date.now(),
+      type: active ? 'block' : 'unblock',
+      ip: 'system',
+      details: `Guardian ${active ? 'activated' : 'deactivated'}`,
+      severity: 'info'
     });
   }
 
-  /**
-   * Update connection count
-   */
-  private updateConnectionCount(ip: string, delta: number): void {
-    const current = this.ipConnections.get(ip) || 0;
-    const newCount = Math.max(0, current + delta);
-    
-    if (newCount === 0) {
-      this.ipConnections.delete(ip);
-    } else {
-      this.ipConnections.set(ip, newCount);
-    }
-
-    this.stats.activeConnections = Array.from(this.ipConnections.values()).reduce((sum, count) => sum + count, 0);
+  public updateSettings(newSettings: Partial<GuardianSettings>): void {
+    this.settings = { ...this.settings, ...newSettings };
+    this.addSecurityEvent({
+      id: this.generateEventId(),
+      timestamp: Date.now(),
+      type: 'suspicious_activity',
+      ip: 'system',
+      details: 'Guardian settings updated',
+      severity: 'info'
+    });
   }
 
-  /**
-   * Update response time statistics
-   */
-  private updateResponseTime(responseTime: number): void {
-    // Simple moving average
-    this.stats.avgResponseTime = (this.stats.avgResponseTime * 0.9) + (responseTime * 0.1);
-  }
+  // 🧹 MAINTENANCE METHODS
+  private lastCleanup: number = 0;
 
-  /**
-   * Start cleanup interval
-   */
-  private startCleanupInterval(): void {
+  private startCleanupTimer(): void {
     setInterval(() => {
-      this.cleanupOldData();
-      this.updateSystemHealth();
-    }, 300000); // Every 5 minutes
+      this.cleanup();
+    }, 60 * 60 * 1000); // Run every hour
   }
 
-  /**
-   * Cleanup old data
-   */
-  private cleanupOldData(): void {
+  private cleanup(): void {
     const now = Date.now();
-    const cutoff = now - this.config.rateLimitWindowMs * 2;
+    this.lastCleanup = now;
 
-    // Clean request map
-    for (const [key] of this.requestMap) {
-      const keyTime = parseInt(key.split('-')[1]) * this.config.rateLimitWindowMs;
-      if (keyTime < cutoff) {
-        this.requestMap.delete(key);
-      }
+    // Auto-unblock expired IPs
+    if (this.settings.autoUnblock) {
+      const toUnblock: string[] = [];
+      this.blockedIPs.forEach((data, ip) => {
+        if (now - data.blockedAt > this.settings.blockDuration) {
+          toUnblock.push(ip);
+        }
+      });
+      toUnblock.forEach(ip => this.unblockIP(ip));
     }
 
-    // Update unique IPs count
-    this.stats.uniqueIPs = this.ipConnections.size;
+    // Clean old events
+    const retentionTime = this.settings.logRetention * 24 * 60 * 60 * 1000;
+    this.recentActivity = this.recentActivity.filter(
+      event => now - event.timestamp < retentionTime
+    );
+
+    // Clean old rate limit data
+    this.ipAttempts.forEach((attempts, ip) => {
+      const recentAttempts = attempts.filter(time => now - time < this.settings.timeWindow);
+      if (recentAttempts.length === 0) {
+        this.ipAttempts.delete(ip);
+      } else {
+        this.ipAttempts.set(ip, recentAttempts);
+      }
+    });
+
+    console.log(`🧹 Guardian: Cleanup completed. Events: ${this.recentActivity.length}, Blocked IPs: ${this.blockedIPs.size}`);
   }
 
-  /**
-   * Update system health
-   */
-  private updateSystemHealth(): void {
-    const errorRate = this.stats.totalRequests > 0 ? this.stats.blockedRequests / this.stats.totalRequests : 0;
+  // 🔧 UTILITY METHODS
+  private addSecurityEvent(event: SecurityEvent): void {
+    this.recentActivity.push(event);
     
-    if (errorRate > 0.5 || this.stats.avgResponseTime > 5000) {
-      this.stats.systemHealth = 'critical';
-    } else if (errorRate > 0.2 || this.stats.avgResponseTime > 2000) {
-      this.stats.systemHealth = 'degraded';
-    } else {
-      this.stats.systemHealth = 'healthy';
+    // Keep only recent events in memory (last 1000)
+    if (this.recentActivity.length > 1000) {
+      this.recentActivity = this.recentActivity.slice(-1000);
     }
   }
 
-  /**
-   * Get Guardian statistics
-   */
-  public getStats(): GuardianStats {
-    return { ...this.stats };
+  private generateEventId(): string {
+    return `evt_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
-  /**
-   * Get recent threat logs
-   */
-  public getThreatLogs(limit = 100): ThreatLog[] {
-    return this.threatLogs.slice(-limit);
+  private isValidIP(ip: string): boolean {
+    const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$/;
+    const ipv6Regex = /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+    return ipv4Regex.test(ip) || ipv6Regex.test(ip);
   }
 
-  /**
-   * Get dashboard data
-   */
-  public getDashboard() {
+  private assessThreatLevel(reason: string): 'low' | 'medium' | 'high' | 'critical' {
+    if (reason.includes('SQL') || reason.includes('XSS') || reason.includes('critical')) {
+      return 'critical';
+    }
+    if (reason.includes('High threat') || reason.includes('attack')) {
+      return 'high';
+    }
+    if (reason.includes('Rate limit') || reason.includes('suspicious')) {
+      return 'medium';
+    }
+    return 'low';
+  }
+
+  private getSeverityFromThreatLevel(threatLevel: 'low' | 'medium' | 'high' | 'critical'): 'info' | 'warning' | 'danger' | 'critical' {
+    const mapping = {
+      'low': 'info' as const,
+      'medium': 'warning' as const,
+      'high': 'danger' as const,
+      'critical': 'critical' as const
+    };
+    return mapping[threatLevel];
+  }
+
+  private countBlockedSince(timestamp: number): number {
+    return Array.from(this.blockedIPs.values())
+      .filter(data => data.blockedAt >= timestamp).length;
+  }
+
+  private getActiveThreats(): number {
+    return Array.from(this.blockedIPs.values())
+      .filter(data => data.threatLevel === 'high' || data.threatLevel === 'critical').length;
+  }
+
+  private getTopThreatCountries(): string[] {
+    // Simplified - in reality you'd use GeoIP lookup
+    return ['Unknown'];
+  }
+
+  private calculateOverallRiskLevel(): 'low' | 'medium' | 'high' | 'critical' {
+    const activeThreats = this.getActiveThreats();
+    const totalBlocked = this.blockedIPs.size;
+    
+    if (activeThreats > 10 || totalBlocked > 100) return 'critical';
+    if (activeThreats > 5 || totalBlocked > 50) return 'high';
+    if (activeThreats > 2 || totalBlocked > 20) return 'medium';
+    return 'low';
+  }
+
+  private getMemoryUsage(): number {
+    // Simplified memory usage calculation
+    return (this.blockedIPs.size + this.recentActivity.length) * 0.1; // KB estimate
+  }
+
+  private getUptime(): number {
+    return Date.now() - (this.startTime || Date.now());
+  }
+
+  private startTime: number = Date.now();
+
+  private loadPersistedData(): void {
+    // In a real implementation, load from database or file
+    console.log('🛡️ Guardian: Initialized security system');
+  }
+
+  // 📤 EXPORT/IMPORT METHODS
+  exportData() {
     return {
-      status: this.isActive ? 'active' : 'inactive',
-      stats: this.getStats(),
-      recentThreats: this.getThreatLogs(10),
-      blockedIPs: Array.from(this.blockedIPs).slice(0, 20),
-      config: {
-        maxRequestsPerMinute: this.config.maxRequestsPerMinute,
-        maxPayloadSize: this.config.maxPayloadSize,
-        blockDuration: this.config.blockDuration
-      }
+      blockedIPs: Array.from(this.blockedIPs.entries()),
+      recentActivity: this.recentActivity,
+      settings: this.settings,
+      timestamp: Date.now()
     };
   }
 
-  /**
-   * Activate/Deactivate Guardian
-   */
-  public setActive(active: boolean): void {
-    this.isActive = active;
-    this.logActivity(`Guardian ${active ? 'activated' : 'deactivated'}`, 'system', 'medium');
-  }
-
-  /**
-   * Manual IP management
-   */
-  public manualBlockIP(ip: string, reason: string): void {
-    this.blockIP(ip, `Manual block: ${reason}`);
-  }
-
-  public manualUnblockIP(ip: string): void {
-    this.unblockIP(ip);
-    this.logActivity(`Manual unblock: ${ip}`, 'system', 'medium');
+  importData(data: any): void {
+    if (data.blockedIPs) {
+      this.blockedIPs = new Map(data.blockedIPs);
+    }
+    if (data.recentActivity) {
+      this.recentActivity = data.recentActivity;
+    }
+    if (data.settings) {
+      this.settings = { ...this.settings, ...data.settings };
+    }
   }
 }
-
-// Export singleton instance
-export const guardian = new Guardian();
-export default guardian;

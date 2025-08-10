@@ -6,7 +6,10 @@
 import express from 'express';
 import cors from 'cors';
 import { createServer } from 'http';
+// @ts-ignore - socket.io type import issue
 import { Server } from 'socket.io';
+// @ts-ignore - socket.io type import issue  
+import type { Socket } from 'socket.io';
 
 const app = express();
 const server = createServer(app);
@@ -69,7 +72,7 @@ app.post('/api/agimed/analyze', (req, res) => {
 });
 
 // Socket.IO për real-time communication
-io.on('connection', (socket) => {
+io.on('connection', (socket: Socket) => {
   console.log(`🔗 Client connected: ${socket.id}`);
   
   socket.emit('welcome', {
@@ -77,7 +80,7 @@ io.on('connection', (socket) => {
     timestamp: new Date().toISOString()
   });
 
-  socket.on('agi-request', (data) => {
+  socket.on('agi-request', (data: any) => {
     console.log('📡 AGI Request:', data);
     
     socket.emit('agi-response', {

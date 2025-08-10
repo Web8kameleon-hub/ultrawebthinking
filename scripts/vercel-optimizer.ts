@@ -617,7 +617,7 @@ Sitemap: https://ultraweb.ai/sitemap.xml`;
     );
 
     console.log('\\n📝 NEXT STEPS:');
-    console.log('   1. Install Vercel CLI: npm i -g vercel');
+    console.log('   1. Install Vercel CLI: yarn global add vercel');
     console.log('   2. Login to Vercel: vercel login');
     console.log('   3. Deploy: yarn vercel:deploy');
     console.log('   4. Configure custom domain in Vercel dashboard');

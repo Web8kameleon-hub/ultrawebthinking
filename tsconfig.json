@@ -24,9 +24,16 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"],
+      "@app/*": ["./app/*"],
+      "@components/*": ["./components/*"],
+      "@lib/*": ["./lib/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@backend/*": ["./backend/*"],
+      "@agisheet/*": ["./agisheet/*"],
+      "@security/*": ["./security/*"],
+      "@utils/*": ["./utils/*"],
+      "@types/*": ["./types/*"]
     }
   },
   "include": [

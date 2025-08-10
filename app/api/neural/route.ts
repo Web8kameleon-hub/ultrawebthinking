@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
     const planner = getNeuralPlanner();
 
     switch (action) {
-      case 'setActivity':
+      case 'setActivity': {
         if (!nodeId || value === undefined) {
           return NextResponse.json(
             { success: false, error: 'Node ID and value required' },
@@ -76,8 +76,8 @@ export async function POST(request: NextRequest) {
           message: success ? `Node ${nodeId} activity set to ${value}%` : `Failed to set activity for ${nodeId}`,
           timestamp: new Date().toISOString()
         });
+      }
 
-      case 'resetNetwork':
         planner.resetNetwork();
         return NextResponse.json({
           success: true,

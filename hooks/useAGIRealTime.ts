@@ -176,7 +176,7 @@ export function useAGIRealTime(options: UseAGIRealTimeOptions = {}): UseAGIRealT
       }
     });
     
-    socket.on('disconnect', (reason) => {
+    socket.on('disconnect', (reason: string) => {
       console.log('🔌 Disconnected from AGI Real-Time Server, reason:', reason);
       setIsConnected(false);
       
@@ -209,21 +209,21 @@ export function useAGIRealTime(options: UseAGIRealTimeOptions = {}): UseAGIRealT
       }
     });
     
-    socket.on('reconnect', (attemptNumber) => {
+    socket.on('reconnect', (attemptNumber: number) => {
       console.log('🔄 Reconnected after', attemptNumber, 'attempts');
       setIsConnected(true);
       setError(null);
     });
     
-    socket.on('reconnect_attempt', (attemptNumber) => {
+    socket.on('reconnect_attempt', (attemptNumber: number) => {
       console.log('🔄 Reconnection attempt', attemptNumber);
     });
     
-    socket.on('reconnect_error', (error) => {
+    socket.on('reconnect_error', (error: Error) => {
       console.error('❌ Reconnection error:', error);
     });
     
-    socket.on('connect_error', (err) => {
+    socket.on('connect_error', (err: Error) => {
       console.error('❌ Connection error:', err);
       setError(`Connection failed: ${err.message}`);
       setIsConnected(false);

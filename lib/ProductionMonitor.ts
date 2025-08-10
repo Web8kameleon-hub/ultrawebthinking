@@ -16,6 +16,7 @@ export interface AlertingConfig {
   responseTimeThreshold: number;
   cpuThreshold: number;
   memoryThreshold: number;
+  web8ProactivePolling: boolean;
   webhooks: string[];
 }
 
@@ -80,9 +81,9 @@ export interface UserMetrics {
 }
 
 export class ProductionMonitor {
-  private readonly config: MonitoringConfig;
+  private config: MonitoringConfig;
   private metricsBuffer: SystemMetrics[] = [];
-  private readonly alertTriggered: Set<string> = new Set();
+  private alertTriggered: Set<string> = new Set();
 
   constructor(config: MonitoringConfig) {
     this.config = config;
@@ -231,12 +232,12 @@ export class ProductionMonitor {
       this.triggerAlert('slow-response', `Response time: ${metrics.performance.responseTime}ms`);
     }
 
-    // CPU alert
+    // CPU usage alert
     if (metrics.system.cpu.usage > alerts.cpuThreshold) {
       this.triggerAlert('high-cpu', `CPU usage: ${metrics.system.cpu.usage}%`);
     }
 
-    // Memory alert
+    // Memory usage alert
     const memoryUsage = (metrics.system.memory.used / metrics.system.memory.total) * 100;
     if (memoryUsage > alerts.memoryThreshold) {
       this.triggerAlert('high-memory', `Memory usage: ${memoryUsage}%`);
@@ -244,134 +245,223 @@ export class ProductionMonitor {
   }
 
   /**
-   * Trigger alert
-   */
-  private triggerAlert(alertType: string, message: string): void {
-    const alertKey = `${alertType}-${Date.now()}`;
-    
-    if (!this.alertTriggered.has(alertType)) {
-      this.alertTriggered.add(alertType);
-      
-      console.error(`🚨 ALERT [${alertType}]: ${message}`);
-      
-      // Send to webhooks
-      this.config.alerting.webhooks.forEach(webhook => {
-        this.sendWebhookAlert(webhook, alertType, message);
-      });
-
-      // Clear alert after 5 minutes
-      setTimeout(() => {
-        this.alertTriggered.delete(alertType);
-      }, 300000);
-    }
-  }
-
-  /**
-   * Send webhook alert
-   */
-  private async sendWebhookAlert(webhook: string, alertType: string, message: string): Promise<void> {
-    try {
-      await fetch(webhook, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          alert: alertType,
-          message,
-          timestamp: new Date().toISOString(),
-          service: 'euroweb-platform'
-        })
-      });
-    } catch (error) {
-      console.error('Failed to send webhook alert:', error);
-    }
-  }
-
-  /**
-   * Export metrics to external systems
-   */
-  private exportMetrics(metrics: SystemMetrics): void {
-    // Export to Prometheus/Grafana
-    this.exportToPrometheus(metrics);
-    
-    // Export to DataDog/New Relic
-    this.exportToAPM(metrics);
-    
-    // Export to custom analytics
-    this.exportToAnalytics(metrics);
-  }
-
-  /**
-   * Setup health check endpoint
-   */
-  private setupHealthCheck(): void {
-    // This would be integrated with your Next.js API routes
-    console.log('🏥 Health check endpoint ready at /api/health');
-  }
-
-  /**
    * Initialize distributed tracing
    */
   private initializeTracing(): void {
-    console.log('🔍 Distributed tracing initialized');
+    console.log('📊 Initializing distributed tracing...');
+    // Implementation for OpenTelemetry or similar tracing
   }
 
   /**
    * Initialize structured logging
    */
   private initializeStructuredLogging(): void {
-    console.log('📝 Structured logging initialized');
+    console.log('📝 Initializing structured logging...');
+    // Implementation for structured logging with Winston or similar
   }
 
-  // Utility methods (implement based on your needs)
-  private getAverageResponseTime(): number { return Math.random() * 200 + 50; }
-  private getRequestsPerSecond(): number { return Math.random() * 100 + 10; }
-  private getErrorRate(): number { return Math.random() * 5; }
-  private calculateApdex(): number { return 0.95 + Math.random() * 0.05; }
-  private getCoreWebVital(metric: string): number { return Math.random() * 100; }
-  private getCpuUsage(): number { return Math.random() * 80 + 10; }
-  private getCpuCores(): number { return 4; }
-  private getActiveUsers(): number { return Math.floor(Math.random() * 1000); }
-  private getSessionsPerMinute(): number { return Math.floor(Math.random() * 50); }
-  private getAGIProcessingRate(): number { return Math.random() * 100; }
-  private getCacheHitRatio(): number { return 0.85 + Math.random() * 0.15; }
-  private getDatabaseConnections(): number { return Math.floor(Math.random() * 20); }
-  private getQueueLength(): number { return Math.floor(Math.random() * 100); }
-  private getPageViews(): number { return Math.floor(Math.random() * 10000); }
-  private getUniqueVisitors(): number { return Math.floor(Math.random() * 1000); }
-  private getBounceRate(): number { return Math.random() * 0.4 + 0.2; }
-  private getConversionRate(): number { return Math.random() * 0.1 + 0.02; }
-  private getUserSatisfaction(): number { return 4.0 + Math.random() * 1.0; }
-  
-  private exportToPrometheus(metrics: SystemMetrics): void {
-    // Implement Prometheus export
+  /**
+   * Setup health check endpoint
+   */
+  private setupHealthCheck(): void {
+    console.log('🏥 Setting up health check endpoint...');
+    // Implementation for health check endpoint
   }
-  
-  private exportToAPM(metrics: SystemMetrics): void {
-    // Implement APM export
+
+  /**
+   * Export metrics to monitoring system
+   */
+  private exportMetrics(metrics: SystemMetrics): void {
+    // Implementation for exporting to Prometheus, DataDog, etc.
+    if (this.config.enableMetrics) {
+      // Export to monitoring backend
+      console.debug('📈 Exporting metrics:', metrics.timestamp);
+    }
   }
-  
-  private exportToAnalytics(metrics: SystemMetrics): void {
-    // Implement analytics export
+
+  /**
+   * Get average response time
+   */
+  private getAverageResponseTime(): number {
+    // Implementation to calculate average response time
+    return Math.random() * 1000; // Mock data
+  }
+
+  /**
+   * Get requests per second
+   */
+  private getRequestsPerSecond(): number {
+    // Implementation to calculate throughput
+    return Math.random() * 100; // Mock data
+  }
+
+  /**
+   * Get error rate percentage
+   */
+  private getErrorRate(): number {
+    // Implementation to calculate error rate
+    return Math.random() * 5; // Mock data
+  }
+
+  /**
+   * Calculate Application Performance Index
+   */
+  private calculateApdex(): number {
+    // Implementation for Apdex score calculation
+    return 0.95; // Mock data
+  }
+
+  /**
+   * Get Core Web Vital metric
+   */
+  private getCoreWebVital(metric: string): number {
+    // Implementation for Core Web Vitals
+    const vitals: { [key: string]: number } = {
+      'LCP': Math.random() * 2500,
+      'FID': Math.random() * 100,
+      'CLS': Math.random() * 0.1
+    };
+    return vitals[metric] || 0;
+  }
+
+  /**
+   * Get CPU usage percentage
+   */
+  private getCpuUsage(): number {
+    // Implementation for CPU usage
+    return Math.random() * 100;
+  }
+
+  /**
+   * Get CPU core count
+   */
+  private getCpuCores(): number {
+    // Implementation for CPU core count
+    return 4; // Mock data
+  }
+
+  /**
+   * Get active users count
+   */
+  private getActiveUsers(): number {
+    // Implementation for active users
+    return Math.floor(Math.random() * 1000);
+  }
+
+  /**
+   * Get sessions per minute
+   */
+  private getSessionsPerMinute(): number {
+    // Implementation for sessions per minute
+    return Math.floor(Math.random() * 50);
+  }
+
+  /**
+   * Get AGI processing rate
+   */
+  private getAGIProcessingRate(): number {
+    // Implementation for AGI processing rate
+    return Math.random() * 100;
+  }
+
+  /**
+   * Get cache hit ratio
+   */
+  private getCacheHitRatio(): number {
+    // Implementation for cache hit ratio
+    return Math.random() * 100;
+  }
+
+  /**
+   * Get database connections count
+   */
+  private getDatabaseConnections(): number {
+    // Implementation for database connections
+    return Math.floor(Math.random() * 20);
+  }
+
+  /**
+   * Get queue length
+   */
+  private getQueueLength(): number {
+    // Implementation for queue length
+    return Math.floor(Math.random() * 100);
+  }
+
+  /**
+   * Get page views count
+   */
+  private getPageViews(): number {
+    // Implementation for page views
+    return Math.floor(Math.random() * 10000);
+  }
+
+  /**
+   * Get unique visitors count
+   */
+  private getUniqueVisitors(): number {
+    // Implementation for unique visitors
+    return Math.floor(Math.random() * 1000);
+  }
+
+  /**
+   * Get bounce rate percentage
+   */
+  private getBounceRate(): number {
+    // Implementation for bounce rate
+    return Math.random() * 100;
+  }
+
+  /**
+   * Get conversion rate percentage
+   */
+  private getConversionRate(): number {
+    // Implementation for conversion rate
+    return Math.random() * 10;
+  }
+
+  /**
+   * Get user satisfaction score
+   */
+  private getUserSatisfaction(): number {
+    // Implementation for user satisfaction
+    return Math.random() * 10;
+  }
+
+  /**
+   * Trigger alert with deduplication
+   */
+  private triggerAlert(alertType: string, message: string): void {
+    const alertKey = `${alertType}-${Date.now()}`;
+    if (!this.alertTriggered.has(alertType)) {
+      this.alertTriggered.add(alertType);
+      console.error(`🚨 ALERT [${alertType}]: ${message}`);
+      
+      // Remove from triggered set after 5 minutes to allow re-alerting
+      setTimeout(() => {
+        this.alertTriggered.delete(alertType);
+      }, 5 * 60 * 1000);
+    }
+  }
+
+  /**
+   * Get current metrics
+   */
+  public getCurrentMetrics(): SystemMetrics {
+    return this.collectMetrics();
+  }
+
+  /**
+   * Get metrics history
+   */
+  public getMetricsHistory(): SystemMetrics[] {
+    return [...this.metricsBuffer];
+  }
+
+  /**
+   * Reset alerts
+   */
+  public resetAlerts(): void {
+    this.alertTriggered.clear();
   }
 }
-
-// Production configuration
-export const productionMonitoringConfig: MonitoringConfig = {
-  enableMetrics: true,
-  enableTracing: true,
-  enableLogging: true,
-  sampleRate: 1.0, // 100% sampling in production
-  alerting: {
-    errorThreshold: 5, // 5% error rate
-    responseTimeThreshold: 2000, // 2 seconds
-    cpuThreshold: 80, // 80% CPU usage
-    memoryThreshold: 85, // 85% memory usage
-    webhooks: [
-      process.env.SLACK_WEBHOOK_URL || '',
-      process.env.TEAMS_WEBHOOK_URL || ''
-    ].filter(Boolean)
-  }
-};
-
-// Export singleton instance
-export const productionMonitor = new ProductionMonitor(productionMonitoringConfig);

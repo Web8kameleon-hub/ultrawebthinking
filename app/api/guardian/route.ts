@@ -8,7 +8,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { guardian } from '../../../backend/guardian/Guardian';
+import { Guardian, GuardianSettings, SecurityEvent } from '@/backend/guardian/Guardian';
+
+const guardian = new Guardian();
 
 export async function GET() {
   try {
@@ -47,7 +49,7 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-        guardian.manualBlockIP(ip, reason);
+        guardian.blockIP(ip, reason);
         return NextResponse.json({
           success: true,
           message: `IP ${ip} blocked successfully`,
@@ -61,14 +63,14 @@ export async function POST(request: NextRequest) {
             { status: 400 }
           );
         }
-        guardian.manualUnblockIP(ip);
+        guardian.unblockIP(ip);
         return NextResponse.json({
           success: true,
           message: `IP ${ip} unblocked successfully`,
           timestamp: new Date().toISOString()
         });
 
-      case 'toggle':
+      case 'toggle': {
         const { active } = body;
         guardian.setActive(active);
         return NextResponse.json({
@@ -76,6 +78,7 @@ export async function POST(request: NextRequest) {
           message: `Guardian ${active ? 'activated' : 'deactivated'}`,
           timestamp: new Date().toISOString()
         });
+      }
 
       default:
         return NextResponse.json(

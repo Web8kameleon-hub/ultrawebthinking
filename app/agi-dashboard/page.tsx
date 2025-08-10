@@ -5,39 +5,39 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cva } from 'class-variance-authority';
 import dynamic from 'next/dynamic';
 
-// Next.js Dynamic imports - Pure TypeScript 
-const AGICore = dynamic(() => import('@/components/AGISheet/AGICoreUltra').then(m => ({ default: m.AGICoreUltra })), {
+// Next.js Dynamic imports - Pure TypeScript with named exports
+const AGICore = dynamic(() => import('@/components/AGISheet/AGICoreUltra').then(mod => ({ default: mod.AGICoreUltra })), {
   loading: () => <div className="animate-pulse">Loading AGI Core...</div>
 });
 
-const AGISheet = dynamic(() => import('@/components/AGISheet/AGISheet').then(m => ({ default: m.AGISheet })), {
+const AGISheet = dynamic(() => import('@/components/AGISheet/AGISheet').then(mod => ({ default: mod.AGISheet })), {
   loading: () => <div className="animate-pulse">Loading AGI Sheet...</div>
 });
 
-const AGIMed = dynamic(() => import('@/components/AGImed/AGIForm').then(m => ({ default: m.AGIXForm })), {
+const AGIMed = dynamic(() => import('@/components/AGImed/AGIForm').then(mod => ({ default: mod.AGIXForm })), {
   loading: () => <div className="animate-pulse">Loading AGI Med...</div>
 });
 
-const AGIBioNature = dynamic(() => import('@/components/AGISheet/AGIBioNature').then(m => ({ default: m.AGIBioNature })), {
+const AGIBioNature = dynamic(() => import('@/components/AGISheet/AGIBioNature').then(mod => ({ default: mod.AGIBioNature })), {
   loading: () => <div className="animate-pulse">Loading AGI Bio...</div>
 });
 
-const AGIEco = dynamic(() => import('@/components/AGISheet/AGIEco').then(m => ({ default: m.AGIEco })), {
+const AGIEco = dynamic(() => import('@/components/AGISheet/AGIEco').then(mod => ({ default: mod.AGIEco })), {
   loading: () => <div className="animate-pulse">Loading AGI Eco...</div>
 });
 
-const OpenMindChat = dynamic(() => import('@/components/chat/OpenMindChat').then(m => ({ default: m.OpenMindChat })), {
+const OpenMindChat = dynamic(() => import('@/components/OpenMindChat').then(mod => ({ default: mod.OpenMindChat })), {
   loading: () => <div className="animate-pulse">Loading Chat...</div>
 });
 
 // CVA për royal design styling
 const tabVariants = cva(
-  "relative px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer border border-transparent group overflow-hidden text-sm",
+  "relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer border-2 group overflow-hidden",
   {
     variants: {
       variant: {
-        active: "bg-gradient-to-r from-purple-600 to-blue-600 text-white border-purple-400 shadow-lg",
-        inactive: "bg-white text-gray-700 border-gray-200 hover:border-purple-300 hover:shadow-md hover:bg-purple-50",
+        active: "bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white border-purple-400 shadow-2xl scale-105 transform",
+        inactive: "bg-gradient-to-br from-white to-gray-50 text-gray-700 border-gray-200 hover:border-purple-300 hover:shadow-lg hover:scale-102 transform",
       }
     }
   }
@@ -206,26 +206,25 @@ const AGIDashboard: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Sticky Top Tab Navigation */}
-        <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-200 mb-8">
-          <div className="flex gap-2 p-4 overflow-x-auto">
-            {tabs.map((tab, index) => (
-              <motion.button
-                key={tab.id}
-                onClick={() => handleTabClick(tab.id)}
-                className={tabVariants({ 
-                  variant: activeTab === tab.id ? 'active' : 'inactive' 
-                })}
-                whileHover={{ 
-                  scale: 1.02,
-                  boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
-                }}
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.05 }}
-                disabled={loading}
-              >
+        {/* Royal Tab Navigation */}
+        <div className="flex flex-wrap gap-4 mb-12 justify-center">
+          {tabs.map((tab, index) => (
+            <motion.button
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className={tabVariants({ 
+                variant: activeTab === tab.id ? 'active' : 'inactive' 
+              })}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+              }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              disabled={loading}
+            >
               {/* Royal Background Effect */}
               {activeTab === tab.id && (
                 <motion.div
@@ -259,107 +258,35 @@ const AGIDashboard: React.FC = () => {
           ))}
         </div>
 
-        {/* Main Layout: Sidebar + Content */}
-        <div className="flex gap-8">
-          {/* Left Sidebar - Activity Table */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="w-80 flex-shrink-0"
-          >
-            <div className={cardVariants({ variant: 'glass' }) + " p-6 sticky top-24"}>
-              <h3 className="text-xl font-bold text-purple-700 mb-4 flex items-center">
-                📊 Live Activity
-              </h3>
-              
-              {/* Live Stats Table */}
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-purple-500 to-blue-600 text-white p-3 rounded-lg">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm opacity-90">Search Results</span>
-                    <span className="font-bold">{searchResults.toLocaleString()}</span>
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 rounded-lg">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm opacity-90">Live Connections</span>
-                    <span className="font-bold">{liveData.connections?.toLocaleString() || '...'}</span>
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-3 rounded-lg">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm opacity-90">AI Processing</span>
-                    <span className="font-bold">{liveData.processing || '...'}%</span>
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-r from-green-500 to-teal-600 text-white p-3 rounded-lg">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm opacity-90">Active Queries</span>
-                    <span className="font-bold">{liveData.queries?.toLocaleString() || '...'}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Activity Log */}
-              <div className="mt-6">
-                <h4 className="font-semibold text-gray-700 mb-3">Recent Activity</h4>
-                <div className="space-y-2 max-h-60 overflow-y-auto">
-                  <div className="text-xs text-gray-600 p-2 bg-gray-50 rounded">
-                    🧠 AGI Core: Neural analysis started
-                  </div>
-                  <div className="text-xs text-gray-600 p-2 bg-gray-50 rounded">
-                    📊 AGI Sheet: Data processing complete
-                  </div>
-                  <div className="text-xs text-gray-600 p-2 bg-gray-50 rounded">
-                    🏥 AGI Med: Medical scan initiated
-                  </div>
-                  <div className="text-xs text-gray-600 p-2 bg-gray-50 rounded">
-                    🌿 AGI Bio: Nature analysis running
-                  </div>
-                  <div className="text-xs text-gray-600 p-2 bg-gray-50 rounded">
-                    💰 AGI Eco: Economic data updated
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Content Area */}
-          <div className="flex-1">
-            {/* Loading State */}
-            {loading && (
-              <div className="flex justify-center items-center h-64">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full"
-                />
-              </div>
-            )}
-
-            {/* Component Container */}
-            {!loading && activeComponent && (
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className={cardVariants({ variant: 'royal' }) + " p-8 min-h-[600px]"}
-              >
-                {React.createElement(activeComponent, {
-                  mode: 'dashboard',
-                  theme: 'royal',
-                  enableRealTime: true,
-                  searchResults: searchResults,
-                  liveData: liveData
-                })}
-              </motion.div>
-            )}
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center h-64">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full"
+            />
           </div>
-        </div>
+        )}
+
+        {/* Component Container */}
+        {!loading && activeComponent && (
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className={cardVariants({ variant: 'royal' }) + " p-8 min-h-[600px]"}
+          >
+            {React.createElement(activeComponent, {
+              mode: 'dashboard',
+              theme: 'royal',
+              enableRealTime: true,
+              searchResults: searchResults,
+              liveData: liveData
+            })}
+          </motion.div>
+        )}
 
         {/* Footer Info */}
         <div className="text-center mt-8 text-sm text-gray-500">
