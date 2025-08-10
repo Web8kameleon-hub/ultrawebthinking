@@ -1,6 +1,6 @@
 /**
- * EuroWeb Ultra - Web8 Search Platform Homepage
- * Central Search Interface with Neural AI
+ * EuroWeb Ultra - Web8 Neural Dashboard Platform
+ * Advanced AGI Dashboard with Real-time Metrics
  * DYNAMIC PAGE - Real-time AGI Intelligence
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -14,8 +14,8 @@ import nextDynamic from 'next/dynamic'
 // Force dynamic rendering - no static generation
 export const dynamic = 'force-dynamic'
 
-const Web8MainInterface = nextDynamic(
-  () => import('../components/Web8MainInterface'),
+const EuroWebDashboard = nextDynamic(
+  () => import('../components/EuroWebDashboard'),
   { 
     ssr: false,
     loading: () => (
@@ -56,5 +56,5 @@ const Web8MainInterface = nextDynamic(
 )
 
 export default function Home() {
-  return <Web8MainInterface />
+  return <EuroWebDashboard />
 }
