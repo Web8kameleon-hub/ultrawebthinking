@@ -11,6 +11,14 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cva } from 'class-variance-authority';
 
+// Tab interfaces
+interface Tab {
+  id: string;
+  label: string;
+  icon: string;
+  component: React.ComponentType;
+}
+
 // Neural Dashboard Variants
 const dashboardVariants = cva(
   "min-h-screen w-full relative overflow-hidden",
@@ -58,7 +66,66 @@ interface NeuralMetrics {
   knowledge_base: number;
 }
 
-export default function EuroWebDashboard() {
+// Tab Components
+const NeuralSearchTab = () => (
+  <div className="space-y-6">
+    <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 backdrop-blur-xl border border-purple-500/30 rounded-xl p-8">
+      <h2 className="text-3xl font-bold text-white mb-6">🔍 Neural Search Engine</h2>
+      <div className="space-y-4">
+        <input 
+          type="text" 
+          placeholder="Search the neural knowledge base..."
+          className="w-full p-4 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:border-purple-500"
+        />
+        <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105">
+          🚀 Neural Search
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+const AGIAnalyticsTab = () => (
+  <div className="space-y-6">
+    <div className="bg-gradient-to-r from-blue-900/50 to-cyan-900/50 backdrop-blur-xl border border-blue-500/30 rounded-xl p-8">
+      <h2 className="text-3xl font-bold text-white mb-6">📊 AGI Analytics Dashboard</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white/10 rounded-lg p-4">
+          <h3 className="text-white font-bold mb-2">Real-time Processing</h3>
+          <div className="text-green-400 text-2xl font-bold">98.7%</div>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4">
+          <h3 className="text-white font-bold mb-2">Neural Efficiency</h3>
+          <div className="text-blue-400 text-2xl font-bold">99.2%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const SecurityHubTab = () => (
+  <div className="space-y-6">
+    <div className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 backdrop-blur-xl border border-green-500/30 rounded-xl p-8">
+      <h2 className="text-3xl font-bold text-white mb-6">🛡️ Guardian Security Hub</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white/10 rounded-lg p-4 text-center">
+          <div className="text-green-400 text-3xl mb-2">🔒</div>
+          <h3 className="text-white font-bold">Secure</h3>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4 text-center">
+          <div className="text-green-400 text-3xl mb-2">🛡️</div>
+          <h3 className="text-white font-bold">Protected</h3>
+        </div>
+        <div className="bg-white/10 rounded-lg p-4 text-center">
+          <div className="text-green-400 text-3xl mb-2">⚡</div>
+          <h3 className="text-white font-bold">Active</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const OverviewTab = () => {
   const [systemStats, setSystemStats] = useState<SystemStats>({
     cpu: 0,
     memory: 0,
@@ -74,9 +141,6 @@ export default function EuroWebDashboard() {
     tokens_processed: 0,
     knowledge_base: 0
   });
-
-  const [isConnected, setIsConnected] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   // Real-time data simulation
   useEffect(() => {
@@ -96,9 +160,6 @@ export default function EuroWebDashboard() {
         tokens_processed: Math.floor(Math.random() * 10000),
         knowledge_base: 98.2 + Math.random() * 1.8
       });
-
-      setCurrentTime(new Date());
-      setIsConnected(Math.random() > 0.1); // 90% uptime simulation
     }, 2000);
 
     return () => clearInterval(interval);
@@ -112,7 +173,12 @@ export default function EuroWebDashboard() {
     glow: "purple" | "blue" | "green" | "orange";
   }) => (
     <motion.div
-      className={cardVariants({ glow })}
+      className={`backdrop-blur-xl border rounded-xl p-6 shadow-2xl transition-all duration-300 ${
+        glow === 'purple' ? 'bg-purple-500/20 hover:bg-purple-500/30 border-purple-500/50' :
+        glow === 'blue' ? 'bg-blue-500/20 hover:bg-blue-500/30 border-blue-500/50' :
+        glow === 'green' ? 'bg-green-500/20 hover:bg-green-500/30 border-green-500/50' :
+        'bg-orange-500/20 hover:bg-orange-500/30 border-orange-500/50'
+      }`}
       whileHover={{ scale: 1.05, y: -5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
@@ -131,9 +197,10 @@ export default function EuroWebDashboard() {
         <div className="mt-4 w-full bg-white/10 rounded-full h-2">
           <motion.div
             className={`h-2 rounded-full ${
-              glow === 'purple' ? 'bg-purple-500' :
-              glow === 'blue' ? 'bg-blue-500' :
-              glow === 'green' ? 'bg-green-500' : 'bg-orange-500'
+              glow === 'purple' ? 'bg-gradient-to-r from-purple-500 to-purple-400' :
+              glow === 'blue' ? 'bg-gradient-to-r from-blue-500 to-blue-400' :
+              glow === 'green' ? 'bg-gradient-to-r from-green-500 to-green-400' : 
+              'bg-gradient-to-r from-orange-500 to-orange-400'
             }`}
             initial={{ width: 0 }}
             animate={{ width: `${value}%` }}
@@ -145,7 +212,99 @@ export default function EuroWebDashboard() {
   );
 
   return (
-    <div className={dashboardVariants({ theme: "neural" })}>
+    <div className="space-y-8">
+      {/* Main Dashboard Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <MetricCard
+          title="CPU Usage"
+          value={systemStats.cpu}
+          unit="%"
+          icon="🧠"
+          glow="purple"
+        />
+        <MetricCard
+          title="Memory"
+          value={systemStats.memory}
+          unit="%"
+          icon="💾"
+          glow="blue"
+        />
+        <MetricCard
+          title="Network"
+          value={systemStats.network}
+          unit="MB/s"
+          icon="🌐"
+          glow="green"
+        />
+        <MetricCard
+          title="AGI Processing"
+          value={systemStats.agiProcessing}
+          unit="%"
+          icon="⚡"
+          glow="orange"
+        />
+      </div>
+
+      {/* Neural Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <MetricCard
+          title="AI Accuracy"
+          value={neuralMetrics.accuracy}
+          unit="%"
+          icon="🎯"
+          glow="green"
+        />
+        <MetricCard
+          title="Learning Rate"
+          value={neuralMetrics.learning_rate}
+          icon="📈"
+          glow="blue"
+        />
+        <MetricCard
+          title="Tokens/Min"
+          value={neuralMetrics.tokens_processed}
+          icon="🔤"
+          glow="purple"
+        />
+        <MetricCard
+          title="Knowledge Base"
+          value={neuralMetrics.knowledge_base}
+          unit="%"
+          icon="📚"
+          glow="orange"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default function EuroWebDashboard() {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isConnected, setIsConnected] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Tab configuration
+  const tabs: Tab[] = [
+    { id: 'overview', label: 'Overview', icon: '📊', component: OverviewTab },
+    { id: 'search', label: 'Neural Search', icon: '🔍', component: NeuralSearchTab },
+    { id: 'analytics', label: 'AGI Analytics', icon: '🧠', component: AGIAnalyticsTab },
+    { id: 'security', label: 'Security Hub', icon: '🛡️', component: SecurityHubTab },
+  ];
+
+  // Connection status simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+      setIsConnected(Math.random() > 0.1); // 90% uptime simulation
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const ActiveTabComponent = tabs.find(tab => tab.id === activeTab)?.component || OverviewTab;
+
+  return (
+    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
       {/* Neural Grid Background */}
       <div className="absolute inset-0 opacity-10">
         <div className="grid grid-cols-20 grid-rows-20 h-full w-full">
@@ -202,115 +361,40 @@ export default function EuroWebDashboard() {
           </motion.div>
         </motion.div>
 
-        {/* Main Dashboard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <MetricCard
-            title="CPU Usage"
-            value={systemStats.cpu}
-            unit="%"
-            icon="🧠"
-            glow="purple"
-          />
-          <MetricCard
-            title="Memory"
-            value={systemStats.memory}
-            unit="%"
-            icon="💾"
-            glow="blue"
-          />
-          <MetricCard
-            title="Network"
-            value={systemStats.network}
-            unit="MB/s"
-            icon="🌐"
-            glow="green"
-          />
-          <MetricCard
-            title="AGI Processing"
-            value={systemStats.agiProcessing}
-            unit="%"
-            icon="⚡"
-            glow="orange"
-          />
+        {/* Tab Navigation */}
+        <div className="flex justify-center mb-8">
+          <div className="bg-white/10 backdrop-blur-xl rounded-xl p-2 border border-white/20">
+            <div className="flex space-x-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
+                      : 'text-white/70 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <span className="mr-2">{tab.icon}</span>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Neural Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <MetricCard
-            title="AI Accuracy"
-            value={neuralMetrics.accuracy}
-            unit="%"
-            icon="🎯"
-            glow="green"
-          />
-          <MetricCard
-            title="Learning Rate"
-            value={neuralMetrics.learning_rate}
-            icon="📈"
-            glow="blue"
-          />
-          <MetricCard
-            title="Tokens/Min"
-            value={neuralMetrics.tokens_processed}
-            icon="🔤"
-            glow="purple"
-          />
-          <MetricCard
-            title="Knowledge Base"
-            value={neuralMetrics.knowledge_base}
-            unit="%"
-            icon="📚"
-            glow="orange"
-          />
-        </div>
-
-        {/* Action Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Tab Content */}
+        <AnimatePresence mode="wait">
           <motion.div
-            className={cardVariants({ glow: "purple" })}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="text-center">
-              <div className="text-5xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold text-white mb-2">Neural Search</h3>
-              <p className="text-white/70 mb-4">Advanced AI-powered search engine</p>
-              <button className="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                Launch Search
-              </button>
-            </div>
+            <ActiveTabComponent />
           </motion.div>
-
-          <motion.div
-            className={cardVariants({ glow: "blue" })}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="text-center">
-              <div className="text-5xl mb-4">📊</div>
-              <h3 className="text-xl font-bold text-white mb-2">AGI Analytics</h3>
-              <p className="text-white/70 mb-4">Real-time intelligence analysis</p>
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                View Analytics
-              </button>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className={cardVariants({ glow: "green" })}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <div className="text-center">
-              <div className="text-5xl mb-4">🛡️</div>
-              <h3 className="text-xl font-bold text-white mb-2">Security Hub</h3>
-              <p className="text-white/70 mb-4">Guardian protection system</p>
-              <button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-                Security Center
-              </button>
-            </div>
-          </motion.div>
-        </div>
+        </AnimatePresence>
 
         {/* Footer */}
         <motion.div

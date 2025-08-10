@@ -14,8 +14,8 @@ import nextDynamic from 'next/dynamic'
 // Force dynamic rendering - no static generation
 export const dynamic = 'force-dynamic'
 
-const EuroWebDashboard = nextDynamic(
-  () => import('../components/EuroWebDashboard'),
+const Web8Dashboard = nextDynamic(
+  () => import('../components/Web8Dashboard'),
   { 
     ssr: false,
     loading: () => (
@@ -56,5 +56,5 @@ const EuroWebDashboard = nextDynamic(
 )
 
 export default function Home() {
-  return <EuroWebDashboard />
+  return <Web8Dashboard />
 }
