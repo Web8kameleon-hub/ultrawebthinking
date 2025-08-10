@@ -14,7 +14,7 @@ const AGISheet = dynamic(() => import('@/components/AGISheet/AGISheet').then(mod
   loading: () => <div className="animate-pulse">Loading AGI Sheet...</div>
 });
 
-const AGIMed = dynamic(() => import('@/components/AGImed/AGIForm').then(mod => ({ default: mod.AGIXForm })), {
+const AGIMed = dynamic(() => import('@/components/AGISheet/AGIMedUltra').then(mod => ({ default: mod.AGIMedUltra })), {
   loading: () => <div className="animate-pulse">Loading AGI Med...</div>
 });
 

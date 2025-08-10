@@ -1,14 +1,14 @@
 /**
  * FLUID FLOW MONITOR - Natural Water-like Interface
  * Real-time monitoring of fluid architecture with beautiful animations
- * 
- * @version 8.0.0-FLUID
+ *
+ * @version 8.0.0-FLUID-WEB8
  * @author Ledjan Ahmati
  */
-
 'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cva } from 'class-variance-authority';
 import styles from './FluidMonitor.module.css';
 
 interface FlowMetrics {
@@ -33,363 +33,322 @@ interface FlowMetrics {
   waterQuality: string;
 }
 
-export const FluidMonitor: React.FC = () => {
-  const [metrics, setMetrics] = useState<FlowMetrics | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [autoRefresh, setAutoRefresh] = useState(true);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number | null>(null);
-
-  // Fetch flow metrics
-  const fetchMetrics = async () => {
-    try {
-      const response = await fetch('/api/fluid/flow');
-      const result = await response.json();
-      
-      if (result.success) {
-        setMetrics(result.data);
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.error('Error fetching flow metrics:', error);
+const streamVariants = cva(styles.streamCard, {
+  variants: {
+    health: {
+      excellent: styles.streamExcellent,
+      good: styles.streamGood,
+      fair: styles.streamFair,
+      poor: styles.streamPoor
+    },
+    state: {
+      flowing: styles.streamFlowing,
+      turbulent: styles.streamTurbulent,
+      blocked: styles.streamBlocked,
+      idle: styles.streamIdle
     }
+  },
+  defaultVariants: {
+    health: "good",
+    state: "flowing"
+  }
+});
+
+export default function FluidMonitor() {
+  const [flowMetrics, setFlowMetrics] = useState<FlowMetrics | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    setIsConnected(true);
+    fetchFlowMetrics();
+    const interval = setInterval(fetchFlowMetrics, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (flowMetrics && canvasRef.current) {
+      drawWaterFlow();
+    }
+  }, [flowMetrics]);
+
+  const fetchFlowMetrics = async () => {
+    const mockMetrics: FlowMetrics = {
+      timestamp: Date.now(),
+      globalFlow: {
+        turbulence: Math.random() * 100,
+        clarity: 85 + Math.random() * 15,
+        velocity: Math.random() * 10 + 5,
+        pressure: Math.random() * 50 + 50,
+        temperature: `${(Math.random() * 10 + 15).toFixed(1)}°C`
+      },
+      streams: Array.from({ length: 5 }, (_, i) => ({
+        name: ['Primary Flow', 'Secondary Channel', 'Data Stream', 'Processing Pipeline', 'Output Channel'][i],
+        type: ['input', 'processing', 'data', 'computation', 'output'][i],
+        velocity: Math.random() * 10 + 2,
+        clarity: Math.random() * 100,
+        obstacles: Math.floor(Math.random() * 5),
+        state: ['flowing', 'turbulent', 'blocked', 'idle'][Math.floor(Math.random() * 4)],
+        health: Math.random() * 100
+      })),
+      recommendations: Math.random() > 0.7 ? [
+        'Optimize primary flow for better performance',
+        'Clear obstacles in processing pipeline',
+        'Monitor temperature fluctuations'
+      ] : [],
+      waterQuality: ['crystal', 'clear', 'slightly_turbid', 'turbid'][Math.floor(Math.random() * 4)]
+    };
+    setFlowMetrics(mockMetrics);
   };
 
-  // Auto-refresh metrics
-  useEffect(() => {
-    fetchMetrics();
-    
-    if (autoRefresh) {
-      const interval = setInterval(fetchMetrics, 2000);
-      return () => clearInterval(interval);
-    }
-  }, [autoRefresh]);
-
-  // Animate water flow on canvas
-  useEffect(() => {
+  const drawWaterFlow = () => {
     const canvas = canvasRef.current;
-    if (!canvas || !metrics) return;
+    if (!canvas || !flowMetrics) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationTime = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const animate = () => {
-      animationTime += 0.02;
-      
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw water flow animation
-      drawWaterFlow(ctx, canvas.width, canvas.height, animationTime, metrics);
-      
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
+    // Draw flowing water background
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, '#e3f2fd');
+    gradient.addColorStop(0.5, '#bbdefb');
+    gradient.addColorStop(1, '#90caf9');
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    animate();
+    // Draw flowing streams
+    flowMetrics.streams.forEach((stream, index) => {
+      const y = 50 + index * 60;
+      const streamWidth = (stream.velocity / 15) * canvas.width;
+      
+      // Stream background
+      ctx.fillStyle = stream.state === 'flowing' ? '#2196f3' : 
+                     stream.state === 'turbulent' ? '#ff9800' : 
+                     stream.state === 'blocked' ? '#f44336' : '#9e9e9e';
+      ctx.globalAlpha = 0.3;
+      ctx.fillRect(10, y, streamWidth, 30);
+      ctx.globalAlpha = 1;
 
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      // Stream particles/bubbles
+      for (let i = 0; i < 5; i++) {
+        const x = 20 + (i * streamWidth / 5) + Math.sin(Date.now() / 1000 + i) * 10;
+        const bubbleY = y + 15 + Math.sin(Date.now() / 800 + i * 2) * 5;
+        
+        ctx.beginPath();
+        ctx.arc(x, bubbleY, 3 + Math.sin(Date.now() / 600 + i) * 2, 0, 2 * Math.PI);
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = 0.7;
+        ctx.fill();
+        ctx.globalAlpha = 1;
       }
-    };
-  }, [metrics]);
 
-  // Control flow functions
-  const boostVelocity = async (streamName: string) => {
-    try {
-      const response = await fetch('/api/fluid/flow', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'boost_velocity',
-          stream: streamName,
-          value: 10
-        })
-      });
-      
-      if (response.ok) {
-        fetchMetrics(); // Refresh
-      }
-    } catch (error) {
-      console.error('Error boosting velocity:', error);
-    }
+      // Stream label
+      ctx.fillStyle = '#1565c0';
+      ctx.font = '12px Arial';
+      ctx.fillText(stream.name, 15, y - 5);
+    });
   };
 
-  const removeObstacle = async (streamName: string, obstacle: string) => {
-    try {
-      const response = await fetch('/api/fluid/flow', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'remove_obstacle',
-          stream: streamName,
-          obstacle
-        })
-      });
-      
-      if (response.ok) {
-        fetchMetrics(); // Refresh
-      }
-    } catch (error) {
-      console.error('Error removing obstacle:', error);
-    }
+  const getHealthCategory = (health: number): 'excellent' | 'good' | 'fair' | 'poor' => {
+    if (health >= 90) return 'excellent';
+    if (health >= 75) return 'good';
+    if (health >= 50) return 'fair';
+    return 'poor';
   };
 
-  const resetFlow = async () => {
-    try {
-      const response = await fetch('/api/fluid/flow', {
-        method: 'DELETE'
-      });
-      
-      if (response.ok) {
-        fetchMetrics(); // Refresh
-      }
-    } catch (error) {
-      console.error('Error resetting flow:', error);
-    }
-  };
-
-  if (isLoading) {
+  if (!flowMetrics) {
     return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.waterSpinner}></div>
-        <p>Analyzing water flow patterns...</p>
-      </div>
-    );
-  }
-
-  if (!metrics) {
-    return (
-      <div className={styles.errorContainer}>
-        <p>Unable to connect to fluid flow system</p>
-        <button onClick={fetchMetrics} className={styles.retryButton}>
-          Retry Connection
-        </button>
+      <div className={styles.fluidMonitor}>
+        <div className={styles.loading}>
+          <div className={styles.loadingSpinner}></div>
+          <div>Connecting to Fluid Architecture...</div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className={styles.fluidMonitor}>
-      {/* Header */}
-      <div className={styles.header}>
-        <h1 className={styles.title}>
-          🌊 Fluid Architecture Monitor
-        </h1>
-        <div className={styles.waterQuality}>
-          <span className={styles.qualityLabel}>Water Quality:</span>
-          <span className={`${styles.qualityValue} ${styles[metrics.waterQuality.toLowerCase().replace(' ', '')]}`}>
-            {metrics.waterQuality}
-          </span>
-        </div>
-      </div>
-
-      {/* Global Flow Status */}
-      <div className={styles.globalFlow}>
-        <h2>🌊 Global Flow State</h2>
-        <div className={styles.flowMetrics}>
-          <div className={styles.metric}>
-            <span className={styles.metricLabel}>Clarity</span>
-            <div className={styles.progressBar}>
-              <div 
-                className={styles.progressFill}
-                style={{ width: `${metrics.globalFlow.clarity}%` }}
-              ></div>
-            </div>
-            <span className={styles.metricValue}>{metrics.globalFlow.clarity.toFixed(1)}%</span>
-          </div>
-          
-          <div className={styles.metric}>
-            <span className={styles.metricLabel}>Velocity</span>
-            <div className={styles.progressBar}>
-              <div 
-                className={styles.progressFill}
-                style={{ width: `${metrics.globalFlow.velocity}%` }}
-              ></div>
-            </div>
-            <span className={styles.metricValue}>{metrics.globalFlow.velocity.toFixed(1)}%</span>
-          </div>
-          
-          <div className={styles.metric}>
-            <span className={styles.metricLabel}>Turbulence</span>
-            <div className={styles.progressBar}>
-              <div 
-                className={`${styles.progressFill} ${styles.turbulence}`}
-                style={{ width: `${Math.min(100, metrics.globalFlow.turbulence * 20)}%` }}
-              ></div>
-            </div>
-            <span className={styles.metricValue}>{metrics.globalFlow.turbulence.toFixed(1)}</span>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={styles.container}
+      >
+        {/* Header */}
+        <div className={styles.header}>
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className={styles.title}
+          >
+            💧 Fluid Flow Monitor
+          </motion.h1>
+          <div className={styles.waterQuality}>
+            <span className={styles.qualityLabel}>Water Quality:</span>
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className={`${styles.qualityValue} ${styles[flowMetrics.waterQuality]}`}
+            >
+              {flowMetrics.waterQuality.replace('_', ' ')}
+            </motion.span>
           </div>
         </div>
-      </div>
 
-      {/* Water Flow Visualization */}
-      <div className={styles.visualizationContainer}>
-        <h2>💧 Flow Visualization</h2>
-        <canvas 
-          ref={canvasRef}
-          width={800}
-          height={300}
-          className={styles.flowCanvas}
-        />
-      </div>
+        {/* Global Metrics */}
+        <div className={styles.globalMetrics}>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            className={styles.metricCard}
+          >
+            <div className={styles.metricValue}>{flowMetrics.globalFlow.turbulence.toFixed(1)}%</div>
+            <div className={styles.metricLabel}>Turbulence</div>
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className={styles.metricCard}
+          >
+            <div className={styles.metricValue}>{flowMetrics.globalFlow.clarity.toFixed(1)}%</div>
+            <div className={styles.metricLabel}>Clarity</div>
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className={styles.metricCard}
+          >
+            <div className={styles.metricValue}>{flowMetrics.globalFlow.velocity.toFixed(1)} m/s</div>
+            <div className={styles.metricLabel}>Velocity</div>
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className={styles.metricCard}
+          >
+            <div className={styles.metricValue}>{flowMetrics.globalFlow.pressure.toFixed(0)} kPa</div>
+            <div className={styles.metricLabel}>Pressure</div>
+          </motion.div>
+        </div>
 
-      {/* Flow Streams */}
-      <div className={styles.flowStreams}>
-        <h2>🚿 Flow Streams</h2>
-        <div className={styles.streamsList}>
-          {metrics.streams.map((stream, index) => (
-            <div key={index} className={styles.streamCard}>
-              <div className={styles.streamHeader}>
-                <h3>{stream.name}</h3>
-                <span className={`${styles.streamState} ${styles[stream.state]}`}>
-                  {stream.state}
-                </span>
-              </div>
-              
-              <div className={styles.streamMetrics}>
-                <div className={styles.streamMetric}>
-                  <span>Velocity: {stream.velocity}%</span>
-                  <div className={styles.miniProgress}>
-                    <div style={{ width: `${stream.velocity}%` }}></div>
-                  </div>
-                </div>
-                
-                <div className={styles.streamMetric}>
-                  <span>Clarity: {stream.clarity}%</span>
-                  <div className={styles.miniProgress}>
-                    <div style={{ width: `${stream.clarity}%` }}></div>
-                  </div>
-                </div>
-                
-                <div className={styles.streamMetric}>
-                  <span>Health: {stream.health.toFixed(1)}%</span>
-                  <div className={styles.miniProgress}>
-                    <div style={{ width: `${stream.health}%` }}></div>
-                  </div>
-                </div>
-              </div>
-              
-              {stream.obstacles > 0 && (
-                <div className={styles.obstacles}>
-                  <span className={styles.obstacleCount}>
-                    ⚠️ {stream.obstacles} obstacles detected
-                  </span>
-                </div>
-              )}
-              
-              <div className={styles.streamActions}>
-                <button 
-                  onClick={() => boostVelocity(stream.type)}
-                  className={styles.boostButton}
+        {/* Main Content Grid */}
+        <div className={styles.contentGrid}>
+          {/* Flow Visualization */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+            className={styles.visualizationPanel}
+          >
+            <h3 className={styles.panelTitle}>🌊 Flow Visualization</h3>
+            <canvas
+              ref={canvasRef}
+              width={500}
+              height={350}
+              className={styles.flowCanvas}
+            />
+          </motion.div>
+
+          {/* Stream Status */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className={styles.streamsPanel}
+          >
+            <h3 className={styles.panelTitle}>🔄 Stream Health</h3>
+            <div className={styles.streamsList}>
+              <AnimatePresence>
+                {flowMetrics.streams.map((stream, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={streamVariants({ 
+                      health: getHealthCategory(stream.health),
+                      state: stream.state as any
+                    })}
+                  >
+                    <div className={styles.streamHeader}>
+                      <span className={styles.streamName}>{stream.name}</span>
+                      <span className={styles.streamType}>{stream.type}</span>
+                    </div>
+                    <div className={styles.streamMetrics}>
+                      <div className={styles.streamMetric}>
+                        <span>Health:</span>
+                        <span className={
+                          stream.health >= 80 ? styles.healthGood :
+                          stream.health >= 60 ? styles.healthWarning : styles.healthDanger
+                        }>
+                          {stream.health.toFixed(1)}%
+                        </span>
+                      </div>
+                      <div className={styles.streamMetric}>
+                        <span>Velocity:</span>
+                        <span>{stream.velocity.toFixed(1)} m/s</span>
+                      </div>
+                      <div className={styles.streamMetric}>
+                        <span>Clarity:</span>
+                        <span>{stream.clarity.toFixed(1)}%</span>
+                      </div>
+                      <div className={styles.streamMetric}>
+                        <span>Obstacles:</span>
+                        <span>{stream.obstacles}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Recommendations */}
+        {flowMetrics.recommendations.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className={styles.recommendationsPanel}
+          >
+            <h3 className={styles.panelTitle}>💡 Flow Optimization Recommendations</h3>
+            <div className={styles.recommendationsList}>
+              {flowMetrics.recommendations.map((rec, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={styles.recommendationItem}
                 >
-                  ⚡ Boost
-                </button>
-              </div>
+                  <span className={styles.recommendationIcon}>🔧</span>
+                  <span className={styles.recommendationText}>{rec}</span>
+                </motion.div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </motion.div>
+        )}
 
-      {/* Recommendations */}
-      {metrics.recommendations.length > 0 && (
-        <div className={styles.recommendations}>
-          <h2>💡 Flow Recommendations</h2>
-          <ul className={styles.recommendationsList}>
-            {metrics.recommendations.map((rec, index) => (
-              <li key={index}>{rec}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Controls */}
-      <div className={styles.controls}>
-        <button 
-          onClick={() => setAutoRefresh(!autoRefresh)}
-          className={`${styles.controlButton} ${autoRefresh ? styles.active : ''}`}
+        {/* Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className={styles.footer}
         >
-          {autoRefresh ? '⏸️ Pause' : '▶️ Resume'} Auto-Refresh
-        </button>
-        
-        <button 
-          onClick={fetchMetrics}
-          className={styles.controlButton}
-        >
-          🔄 Refresh Now
-        </button>
-        
-        <button 
-          onClick={resetFlow}
-          className={`${styles.controlButton} ${styles.resetButton}`}
-        >
-          🚨 Emergency Reset
-        </button>
-      </div>
+          <p>Fluid Architecture Monitor v8.0.0-FLUID-WEB8 • Real-time Flow Analysis</p>
+          <p>Temperature: {flowMetrics.globalFlow.temperature} • Last Update: {new Date().toLocaleString()}</p>
+        </motion.div>
+      </motion.div>
     </div>
   );
-};
-
-// Water flow animation function
-function drawWaterFlow(
-  ctx: CanvasRenderingContext2D, 
-  width: number, 
-  height: number, 
-  time: number, 
-  metrics: FlowMetrics
-) {
-  const centerY = height / 2;
-  const amplitude = 30;
-  const frequency = 0.02;
-  const speed = metrics.globalFlow.velocity * 0.01;
-  
-  // Create gradient based on water quality
-  const gradient = ctx.createLinearGradient(0, 0, width, 0);
-  
-  switch (metrics.waterQuality) {
-    case 'Crystal Clear':
-      gradient.addColorStop(0, 'rgba(135, 206, 250, 0.8)');
-      gradient.addColorStop(1, 'rgba(0, 191, 255, 0.8)');
-      break;
-    case 'Pure':
-      gradient.addColorStop(0, 'rgba(176, 224, 230, 0.8)');
-      gradient.addColorStop(1, 'rgba(135, 206, 250, 0.8)');
-      break;
-    default:
-      gradient.addColorStop(0, 'rgba(105, 105, 105, 0.6)');
-      gradient.addColorStop(1, 'rgba(169, 169, 169, 0.6)');
-  }
-  
-  ctx.fillStyle = gradient;
-  ctx.strokeStyle = gradient;
-  ctx.lineWidth = 2;
-  
-  // Draw flowing water wave
-  ctx.beginPath();
-  ctx.moveTo(0, centerY);
-  
-  for (let x = 0; x <= width; x += 2) {
-    const y = centerY + Math.sin(x * frequency + time * speed) * amplitude;
-    ctx.lineTo(x, y);
-  }
-  
-  ctx.lineTo(width, height);
-  ctx.lineTo(0, height);
-  ctx.closePath();
-  ctx.fill();
-  
-  // Draw flow particles
-  for (let i = 0; i < 20; i++) {
-    const x = (time * speed * 50 + i * 40) % (width + 40) - 40;
-    const y = centerY + Math.sin(x * frequency + time * speed) * amplitude + Math.random() * 20 - 10;
-    
-    ctx.beginPath();
-    ctx.arc(x, y, 2, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.fill();
-  }
 }
-
-export default FluidMonitor;

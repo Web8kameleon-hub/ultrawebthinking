@@ -10,6 +10,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cva } from 'class-variance-authority';
+import NeuralDashboard from './NeuralDashboard';
+import FluidMonitor from './FluidMonitor';
 
 // Tab interfaces
 interface Tab {
@@ -289,6 +291,8 @@ export default function EuroWebDashboard() {
     { id: 'search', label: 'Neural Search', icon: '🔍', component: NeuralSearchTab },
     { id: 'analytics', label: 'AGI Analytics', icon: '🧠', component: AGIAnalyticsTab },
     { id: 'security', label: 'Security Hub', icon: '🛡️', component: SecurityHubTab },
+    { id: 'neural', label: 'Advanced Neural', icon: '🔬', component: NeuralDashboard },
+    { id: 'fluid', label: 'Fluid Monitor', icon: '🌊', component: FluidMonitor }
   ];
 
   // Connection status simulation

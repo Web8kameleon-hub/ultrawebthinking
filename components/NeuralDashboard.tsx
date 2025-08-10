@@ -1,15 +1,15 @@
 /**
  * Neural Activity Dashboard Component
  * Real-time visualization of AGI neural network activity
- * 
- * @version 8.0.0
+ *
+ * @version 8.0.0-WEB8-ADVANCED
  * @author Ledjan Ahmati
  * @contact dealsjona@gmail.com
  */
-
 'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cva } from 'class-variance-authority';
 import styles from './NeuralDashboard.module.css';
 
 interface NodeStatus {
@@ -52,6 +52,26 @@ interface ActivityMap {
   alerts: string[];
 }
 
+const nodeVariants = cva(styles.nodeBase, {
+  variants: {
+    status: {
+      active: styles.nodeActive,
+      throttled: styles.nodeThrottled,
+      error: styles.nodeError,
+      inactive: styles.nodeInactive
+    },
+    activity: {
+      low: styles.activityLow,
+      medium: styles.activityMedium,
+      high: styles.activityHigh
+    }
+  },
+  defaultVariants: {
+    status: "active",
+    activity: "medium"
+  }
+});
+
 export default function NeuralDashboard() {
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | null>(null);
   const [activityMap, setActivityMap] = useState<ActivityMap | null>(null);
@@ -63,11 +83,10 @@ export default function NeuralDashboard() {
     // Simulate neural planner connection
     setIsConnected(true);
     fetchNetworkStatus();
-    
     const interval = setInterval(() => {
       fetchNetworkStatus();
       fetchActivityMap();
-    }, 500); // Update every 500ms for real-time feel
+    }, 1000); // Update every second for real-time feel
 
     return () => clearInterval(interval);
   }, []);
@@ -79,119 +98,47 @@ export default function NeuralDashboard() {
   }, [activityMap]);
 
   const fetchNetworkStatus = async () => {
-    try {
-      // Simulate network status data
-      const mockStatus: NetworkStatus = {
-        timestamp: Date.now(),
-        isRunning: true,
-        safeThinkActive: Math.random() < 0.1, // 10% chance SafeThink is active
-        throttledNodes: Math.random() < 0.2 ? ['n1'] : [], // 20% chance n1 is throttled
-        totalNodes: 8,
-        activeNodes: 8,
-        nodes: [
-          {
-            id: 'n1',
-            name: 'Primary Input Processor',
-            type: 'input',
-            activity: Math.random() * 40 + 60, // High activity for input
-            pulseRate: Math.random() * 50 + 50,
-            flickering: Math.random() * 2,
-            status: Math.random() < 0.2 ? 'throttled' : 'active',
-            connections: 3,
-            errorCount: Math.floor(Math.random() * 5)
-          },
-          {
-            id: 'n7',
-            name: 'Ethical Oversight Controller',
-            type: 'ethical',
-            activity: Math.random() * 30 + 40,
-            pulseRate: Math.random() * 40 + 30,
-            flickering: Math.random() * 5, // Higher chance of flickering for ethical monitoring
-            status: 'active',
-            connections: 1,
-            errorCount: 0
-          },
-          // Add other nodes...
-          ...['n2', 'n3', 'n4', 'n5', 'n6', 'n8'].map(id => ({
-            id,
-            name: `Neural Node ${id.toUpperCase()}`,
-            type: 'processing',
-            activity: Math.random() * 60 + 20,
-            pulseRate: Math.random() * 60 + 20,
-            flickering: Math.random() * 3,
-            status: 'active' as const,
-            connections: Math.floor(Math.random() * 4) + 1,
-            errorCount: Math.floor(Math.random() * 3)
-          }))
-        ],
-        recentActivity: []
-      };
-      
-      setNetworkStatus(mockStatus);
-    } catch (error) {
-      console.error('Failed to fetch network status:', error);
-    }
+    // Mock data - replace with actual API call
+    const mockStatus: NetworkStatus = {
+      timestamp: Date.now(),
+      isRunning: Math.random() > 0.1,
+      safeThinkActive: Math.random() > 0.7,
+      throttledNodes: Math.random() > 0.8 ? ['node1', 'node3'] : [],
+      totalNodes: 8,
+      activeNodes: Math.floor(Math.random() * 3) + 6,
+      nodes: Array.from({ length: 8 }, (_, i) => ({
+        id: `node${i + 1}`,
+        name: `Neural Processor ${i + 1}`,
+        type: ['cognitive', 'memory', 'processing', 'analysis'][Math.floor(Math.random() * 4)],
+        activity: Math.random() * 100,
+        pulseRate: Math.random() * 5 + 1,
+        flickering: Math.random() * 2,
+        status: Math.random() > 0.8 ? 'throttled' : Math.random() > 0.95 ? 'error' : 'active',
+        connections: Math.floor(Math.random() * 5) + 2,
+        errorCount: Math.floor(Math.random() * 3)
+      })),
+      recentActivity: []
+    };
+    setNetworkStatus(mockStatus);
   };
 
   const fetchActivityMap = async () => {
-    try {
-      // Simulate activity map data
-      const mockMap: ActivityMap = {
-        timestamp: Date.now(),
-        map: {
-          n1: {
-            name: 'Primary Input Processor',
-            activity: Math.random() * 40 + 60,
-            pulseRate: Math.random() * 50 + 50,
-            flickering: Math.random() * 2,
-            status: Math.random() < 0.2 ? 'throttled' : 'active',
-            coordinates: { x: 100, y: 200 },
-            connections: ['n2', 'n3', 'n7']
-          },
-          n7: {
-            name: 'Ethical Oversight Controller',
-            activity: Math.random() * 30 + 40,
-            pulseRate: Math.random() * 40 + 30,
-            flickering: Math.random() * 5,
-            status: 'active',
-            coordinates: { x: 700, y: 350 },
-            connections: ['n8']
-          },
-          // Add other nodes...
-          ...Object.fromEntries(['n2', 'n3', 'n4', 'n5', 'n6', 'n8'].map(id => [
-            id,
-            {
-              name: `Neural Node ${id.toUpperCase()}`,
-              activity: Math.random() * 60 + 20,
-              pulseRate: Math.random() * 60 + 20,
-              flickering: Math.random() * 3,
-              status: 'active',
-              coordinates: { 
-                x: Math.random() * 800 + 100, 
-                y: Math.random() * 400 + 100 
-              },
-              connections: []
-            }
-          ]))
-        },
-        safeThinkActive: Math.random() < 0.1,
-        alerts: []
-      };
-
-      // Generate alerts based on node conditions
-      Object.entries(mockMap.map).forEach(([nodeId, node]) => {
-        if (nodeId === 'n1' && node.pulseRate > 80) {
-          mockMap.alerts.push(`${nodeId}: High pulse rate (${node.pulseRate.toFixed(1)}Hz)`);
-        }
-        if (nodeId === 'n7' && node.flickering > 3) {
-          mockMap.alerts.push(`${nodeId}: Excessive flickering (${node.flickering.toFixed(1)})`);
-        }
-      });
-
-      setActivityMap(mockMap);
-    } catch (error) {
-      console.error('Failed to fetch activity map:', error);
-    }
+    const mockMap: ActivityMap = {
+      timestamp: Date.now(),
+      safeThinkActive: Math.random() > 0.7,
+      alerts: Math.random() > 0.8 ? ['High memory usage detected', 'Connection timeout on node 3'] : [],
+      map: {
+        'node1': { name: 'Input Processor', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 100, y: 100 }, connections: ['node2', 'node3'] },
+        'node2': { name: 'Memory Core', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 200, y: 100 }, connections: ['node1', 'node4'] },
+        'node3': { name: 'Logic Engine', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 150, y: 200 }, connections: ['node1', 'node5'] },
+        'node4': { name: 'Pattern Matcher', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 300, y: 150 }, connections: ['node2', 'node6'] },
+        'node5': { name: 'Decision Tree', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 100, y: 300 }, connections: ['node3', 'node7'] },
+        'node6': { name: 'Output Buffer', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 350, y: 250 }, connections: ['node4', 'node8'] },
+        'node7': { name: 'Safety Monitor', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 200, y: 350 }, connections: ['node5', 'node8'] },
+        'node8': { name: 'Response Gen', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 300, y: 300 }, connections: ['node6', 'node7'] }
+      }
+    };
+    setActivityMap(mockMap);
   };
 
   const drawNeuralNetwork = () => {
@@ -212,97 +159,50 @@ export default function NeuralDashboard() {
           ctx.beginPath();
           ctx.moveTo(node.coordinates.x, node.coordinates.y);
           ctx.lineTo(targetNode.coordinates.x, targetNode.coordinates.y);
-          ctx.strokeStyle = `rgba(0, 255, 100, ${node.activity / 200})`;
+          ctx.strokeStyle = '#00ff64';
           ctx.lineWidth = 2;
+          ctx.globalAlpha = 0.6;
           ctx.stroke();
+          ctx.globalAlpha = 1;
         }
       });
     });
 
     // Draw nodes
     Object.entries(activityMap.map).forEach(([nodeId, node]) => {
-      const x = node.coordinates.x;
-      const y = node.coordinates.y;
-      const radius = 15 + (node.activity / 100) * 10; // Size based on activity
+      const { x, y } = node.coordinates;
+      const nodeRadius = 15 + (node.activity / 100) * 10;
 
-      // Node circle
+      // Draw node glow
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, nodeRadius * 2);
+      gradient.addColorStop(0, 'rgba(0, 255, 100, 0.8)');
+      gradient.addColorStop(1, 'rgba(0, 255, 100, 0)');
+      ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.arc(x, y, radius, 0, 2 * Math.PI);
-      
-      // Color based on status and activity
-      let color = '#00ff64'; // Default green
-      if (node.status === 'throttled') color = '#ff8800';
-      if (node.status === 'safethink') color = '#0088ff';
-      if (node.status === 'offline') color = '#ff4444';
-      
-      // Pulse effect based on pulse rate
-      const pulseAlpha = 0.3 + (Math.sin(Date.now() * node.pulseRate / 1000) + 1) * 0.35;
-      ctx.fillStyle = color.replace(')', `, ${pulseAlpha})`).replace('#', 'rgba(').replace(/(..)(..)(..)/, '$1, $2, $3');
+      ctx.arc(x, y, nodeRadius * 2, 0, 2 * Math.PI);
       ctx.fill();
 
-      // Border for special nodes
-      if (nodeId === 'n1' || nodeId === 'n7') {
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 3;
-        ctx.stroke();
-      }
+      // Draw main node
+      ctx.beginPath();
+      ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
+      ctx.fillStyle = node.status === 'active' ? '#00ff64' : 
+                     node.status === 'throttled' ? '#ff6400' : '#ff0064';
+      ctx.fill();
 
-      // Flickering effect for n7
-      if (nodeId === 'n7' && node.flickering > 3) {
-        ctx.beginPath();
-        ctx.arc(x, y, radius + 5, 0, 2 * Math.PI);
-        ctx.strokeStyle = `rgba(255, 68, 68, ${Math.random()})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-
-      // Node label
+      // Draw node label
       ctx.fillStyle = '#ffffff';
-      ctx.font = '12px monospace';
-      ctx.textAlign = 'center';
-      ctx.fillText(nodeId.toUpperCase(), x, y + 4);
-
-      // Activity indicator
       ctx.font = '10px monospace';
-      ctx.fillText(`${node.activity.toFixed(0)}%`, x, y + radius + 15);
-    });
-
-    // Draw SafeThink overlay if active
-    if (activityMap.safeThinkActive) {
-      ctx.fillStyle = 'rgba(0, 136, 255, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      ctx.fillStyle = '#0088ff';
-      ctx.font = 'bold 16px monospace';
       ctx.textAlign = 'center';
-      ctx.fillText('SAFETHINK MODE ACTIVE', canvas.width / 2, 30);
-    }
+      ctx.fillText(nodeId, x, y + nodeRadius + 15);
+    });
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return '#00ff64';
-      case 'throttled': return '#ff8800';
-      case 'safethink': return '#0088ff';
-      case 'offline': return '#ff4444';
-      default: return '#666666';
-    }
-  };
-
-  const getActivityLevel = (activity: number) => {
-    if (activity > 80) return 'Very High';
-    if (activity > 60) return 'High';
-    if (activity > 40) return 'Medium';
-    if (activity > 20) return 'Low';
-    return 'Very Low';
-  };
-
-  if (!isConnected) {
+  if (!networkStatus) {
     return (
       <div className={styles.container}>
         <div className={styles.loading}>
           <div className={styles.spinner}></div>
-          <p>Connecting to Neural Planner...</p>
+          <div>Connecting to Neural Network...</div>
         </div>
       </div>
     );
@@ -310,169 +210,187 @@ export default function NeuralDashboard() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1>🧠 Neural Activity Dashboard</h1>
-        <div className={styles.statusIndicators}>
-          <div className={`${styles.indicator} ${networkStatus?.isRunning ? styles.online : styles.offline}`}>
-            <span className={styles.dot}></span>
-            {networkStatus?.isRunning ? 'Neural Network Online' : 'Neural Network Offline'}
-          </div>
-          {networkStatus?.safeThinkActive && (
-            <div className={`${styles.indicator} ${styles.safethink}`}>
-              <span className={styles.dot}></span>
-              SafeThink Mode Active
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className={styles.mainGrid}>
-        {/* Neural Network Visualization */}
-        <div className={styles.networkView}>
-          <h3>Neural Network Map</h3>
-          <canvas
-            ref={canvasRef}
-            width={1000}
-            height={500}
-            className={styles.canvas}
-            onClick={(e) => {
-              // Handle node selection based on click coordinates
-              // Implementation would map coordinates to nodes
-            }}
-          />
-        </div>
-
-        {/* Control Panel */}
-        <div className={styles.controlPanel}>
-          <h3>Network Control</h3>
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span>Total Nodes:</span>
-              <span>{networkStatus?.totalNodes || 0}</span>
-            </div>
-            <div className={styles.stat}>
-              <span>Active Nodes:</span>
-              <span className={styles.active}>{networkStatus?.activeNodes || 0}</span>
-            </div>
-            <div className={styles.stat}>
-              <span>Throttled:</span>
-              <span className={styles.throttled}>{networkStatus?.throttledNodes.length || 0}</span>
-            </div>
-          </div>
-
-          {/* Critical Node Monitoring */}
-          <div className={styles.criticalNodes}>
-            <h4>Critical Node Status</h4>
-            {networkStatus?.nodes.filter(n => n.id === 'n1' || n.id === 'n7').map(node => (
-              <div key={node.id} className={styles.criticalNode}>
-                <div className={styles.nodeHeader}>
-                  <span className={styles.nodeId}>{node.id.toUpperCase()}</span>
-                  <span 
-                    className={styles.nodeStatus}
-                    style={{ color: getStatusColor(node.status) }}
-                  >
-                    {node.status.toUpperCase()}
-                  </span>
-                </div>
-                <div className={styles.nodeMetrics}>
-                  <div className={styles.metric}>
-                    <span>Activity:</span>
-                    <span>{node.activity.toFixed(1)}%</span>
-                  </div>
-                  <div className={styles.metric}>
-                    <span>Pulse Rate:</span>
-                    <span>{node.pulseRate.toFixed(1)}Hz</span>
-                  </div>
-                  <div className={styles.metric}>
-                    <span>Flickering:</span>
-                    <span className={node.flickering > 3 ? styles.warning : ''}>
-                      {node.flickering.toFixed(1)}
-                    </span>
-                  </div>
-                </div>
-                
-                {/* Special alerts for n1 and n7 */}
-                {node.id === 'n1' && node.pulseRate > 80 && (
-                  <div className={styles.alert}>
-                    ⚠️ n1 overload detected — input throttled
-                  </div>
-                )}
-                {node.id === 'n7' && node.flickering > 3 && (
-                  <div className={styles.alert}>
-                    🚨 n7 ethical pulse anomaly — fallback activated
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Node Details Grid */}
-      <div className={styles.nodeGrid}>
-        <h3>All Neural Nodes</h3>
-        <div className={styles.grid}>
-          {networkStatus?.nodes.map(node => (
-            <div 
-              key={node.id} 
-              className={`${styles.nodeCard} ${selectedNode === node.id ? styles.selected : ''}`}
-              onClick={() => setSelectedNode(node.id)}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={styles.mainContainer}
+      >
+        {/* Header */}
+        <div className={styles.header}>
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className={styles.title}
+          >
+            🧠 Neural Activity Monitor
+          </motion.h1>
+          <div className={styles.statusBar}>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className={`${styles.statusBadge} ${isConnected ? styles.statusConnected : styles.statusDisconnected}`}
             >
-              <div className={styles.nodeCardHeader}>
-                <span className={styles.nodeId}>{node.id.toUpperCase()}</span>
-                <span 
-                  className={styles.nodeType}
-                  style={{ color: getStatusColor(node.status) }}
-                >
-                  {node.type}
-                </span>
-              </div>
-              <div className={styles.nodeCardContent}>
-                <p className={styles.nodeName}>{node.name}</p>
-                <div className={styles.nodeMetrics}>
-                  <div className={styles.metric}>
-                    <span>Activity:</span>
-                    <span className={styles.activityBar}>
-                      <div 
-                        className={styles.activityFill}
-                        style={{ 
-                          width: `${node.activity}%`,
-                          backgroundColor: getStatusColor(node.status)
-                        }}
-                      ></div>
-                      <span className={styles.activityText}>{node.activity.toFixed(1)}%</span>
-                    </span>
-                  </div>
-                  <div className={styles.metric}>
-                    <span>Pulse:</span>
-                    <span>{node.pulseRate.toFixed(1)}Hz</span>
-                  </div>
-                  <div className={styles.metric}>
-                    <span>Status:</span>
-                    <span style={{ color: getStatusColor(node.status) }}>
-                      {node.status.toUpperCase()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Alerts Panel */}
-      {activityMap?.alerts && activityMap.alerts.length > 0 && (
-        <div className={styles.alertsPanel}>
-          <h3>🚨 Active Alerts</h3>
-          <div className={styles.alerts}>
-            {activityMap.alerts.map((alert, index) => (
-              <div key={index} className={styles.alert}>
-                {alert}
-              </div>
-            ))}
+              <div className={`${styles.statusDot} ${isConnected ? styles.dotConnected : styles.dotDisconnected}`}></div>
+              {isConnected ? 'Neural Network Connected' : 'Connection Lost'}
+            </motion.div>
+            {networkStatus.safeThinkActive && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+                className={`${styles.statusBadge} ${styles.statusSafeThink}`}
+              >
+                <div className={`${styles.statusDot} ${styles.dotSafeThink}`}></div>
+                🛡️ SafeThink Guardian Active
+              </motion.div>
+            )}
+            {networkStatus.throttledNodes.length > 0 && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className={`${styles.statusBadge} ${styles.statusThrottled}`}
+              >
+                <div className={`${styles.statusDot} ${styles.dotThrottled}`}></div>
+                ⚡ {networkStatus.throttledNodes.length} Node(s) Throttled
+              </motion.div>
+            )}
           </div>
         </div>
-      )}
+
+        {/* Main Grid */}
+        <div className={styles.dashboardGrid}>
+          {/* Network Visualization */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5 }}
+            className={styles.visualizationCard}
+          >
+            <h3 className={styles.cardTitle}>🌐 Neural Network Topology</h3>
+            <canvas
+              ref={canvasRef}
+              width={500}
+              height={400}
+              className={styles.networkCanvas}
+            />
+          </motion.div>
+
+          {/* Nodes List */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6 }}
+            className={styles.nodesList}
+          >
+            <h3 className={styles.cardTitle}>🔗 Active Nodes</h3>
+            <div className={styles.scrollContainer}>
+              <AnimatePresence>
+                {networkStatus.nodes.map((node, index) => (
+                  <motion.div
+                    key={node.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`${styles.nodeItem} ${
+                      node.status === 'active' ? styles.nodeItemActive :
+                      node.status === 'throttled' ? styles.nodeItemThrottled :
+                      node.status === 'error' ? styles.nodeItemError : styles.nodeItemInactive
+                    }`}
+                    onClick={() => setSelectedNode(selectedNode === node.id ? null : node.id)}
+                  >
+                    <div className={styles.nodeHeader}>
+                      <span className={styles.nodeName}>{node.name}</span>
+                      <span className={styles.nodeType}>{node.type}</span>
+                    </div>
+                    <div className={styles.nodeMetrics}>
+                      <span className={styles.nodeActivity}>{node.activity.toFixed(1)}%</span>
+                      <span className={styles.nodePulse}>{node.pulseRate.toFixed(1)} Hz</span>
+                    </div>
+                    
+                    {selectedNode === node.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className={styles.nodeDetails}
+                      >
+                        <div className={styles.detailRow}>
+                          <span>Node Type:</span>
+                          <span>{node.type}</span>
+                        </div>
+                        <div className={styles.detailRow}>
+                          <span>Flickering Index:</span>
+                          <span>{node.flickering.toFixed(2)}</span>
+                        </div>
+                        <div className={styles.detailRow}>
+                          <span>Node ID:</span>
+                          <span>{node.id}</span>
+                        </div>
+                        <div className={styles.detailRow}>
+                          <span>Connections:</span>
+                          <span>{node.connections}</span>
+                        </div>
+                        <div className={styles.detailRow}>
+                          <span>Errors:</span>
+                          <span>{node.errorCount}</span>
+                        </div>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* System Alerts */}
+        {activityMap?.alerts && activityMap.alerts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className={styles.alertsContainer}
+          >
+            <h3 className={styles.alertsTitle}>
+              <span>⚠️</span>
+              System Alerts & Notifications
+            </h3>
+            <div className={styles.alertsList}>
+              {activityMap.alerts.map((alert, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={styles.alertItem}
+                >
+                  <span className={styles.alertIcon}>🔴</span>
+                  <div className={styles.alertContent}>
+                    <p className={styles.alertMessage}>{alert}</p>
+                    <p className={styles.alertTime}>
+                      {new Date().toLocaleTimeString()} - Priority: High
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Footer Info */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className={styles.footer}
+        >
+          <p>Neural Activity Monitor v8.0.0-WEB8-ADVANCED • Real-time AGI Network Visualization</p>
+          <p>Last Update: {new Date().toLocaleString()}</p>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
