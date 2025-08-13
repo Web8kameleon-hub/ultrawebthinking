@@ -54,28 +54,28 @@ const initialTabs: Tab[] = [
   },
   {
     id: 'agi-office',
-    title: '💼 AGI×Office',
+    title: '💼 AGIOffice',
     url: 'euroweb://agi-office',
     isActive: false,
     isLoading: false
   },
   {
     id: 'agi-med',
-    title: '🏥 AGI×Med',
+    title: '🏥 AGIMed',
     url: 'euroweb://agi-med',
     isActive: false,
     isLoading: false
   },
   {
     id: 'agi-el',
-    title: '⚡ AGI×El',
+    title: '⚡ AGIEl',
     url: 'euroweb://agi-el',
     isActive: false,
     isLoading: false
   },
   {
     id: 'agi-eco',
-    title: '🌱 AGI×Eco',
+    title: '🌱 AGIEco',
     url: 'euroweb://agi-eco',
     isActive: false,
     isLoading: false
@@ -467,7 +467,7 @@ export const Web8TabSystem: React.FC = () => {
             </p>
           </div>
 
-          {/* AGI×Office Content */}
+          {/* AGIOffice Content */}
           <div data-content-id="agi-office" style={{
             display: 'none',
             height: '100%',
@@ -475,12 +475,12 @@ export const Web8TabSystem: React.FC = () => {
           }}>
             {/* <AGIOfficeUltra /> */}
             <div style={{ padding: '40px', textAlign: 'center' }}>
-              <h2>🏢 AGI×Office Ultra</h2>
+              <h2>🏢 AGIOffice Ultra</h2>
               <p>Professional Office AI - Coming Soon</p>
             </div>
           </div>
 
-          {/* AGI×Med Content */}
+          {/* AGIMed Content */}
           <div data-content-id="agi-med" style={{
             display: 'none',
             height: '100%',
@@ -488,12 +488,12 @@ export const Web8TabSystem: React.FC = () => {
           }}>
             {/* <AGIMedUltra /> */}
             <div style={{ padding: '40px', textAlign: 'center' }}>
-              <h2>⚕️ AGI×Med Ultra</h2>
+              <h2>⚕️ AGIMed Ultra</h2>
               <p>Medical AI System - Coming Soon</p>
             </div>
           </div>
 
-          {/* AGI×El Content */}
+          {/* AGIEl Content */}
           <div data-content-id="agi-el" style={{
             padding: '40px',
             textAlign: 'center',
@@ -507,14 +507,14 @@ export const Web8TabSystem: React.FC = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              ⚡ AGI×El Energy
+              ⚡ AGIEl Energy
             </h1>
             <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
               Electrical Systems - Smart Grid & Automation
             </p>
           </div>
 
-          {/* AGI×Eco Content */}
+          {/* AGIEco Content */}
           <div data-content-id="agi-eco" style={{
             padding: '40px',
             textAlign: 'center',
@@ -528,7 +528,7 @@ export const Web8TabSystem: React.FC = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              🌱 AGI×Eco Environment
+              🌱 AGIEco Environment
             </h1>
             <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
               Environmental AI - Climate & Sustainability
@@ -547,5 +547,6 @@ export const Web8TabSystem: React.FC = () => {
     </div>
   )
 }
+
 
 

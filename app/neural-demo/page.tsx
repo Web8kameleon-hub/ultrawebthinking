@@ -7,9 +7,11 @@
  * @contact dealsjona@gmail.com
  */
 
-import React from 'react';
-import NeuralDashboard from '@/components/NeuralDashboard';
+import * as React from 'react';
 
+import NeuralDashboard from '../../frontend/src/components/NeuralDashboard';
+
+// Web8 Functional Component
 export default function NeuralDemo() {
   return (
     <div>

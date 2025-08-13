@@ -1,0 +1,29 @@
+{
+  /**
+   * 📦 Shared Module TypeScript Configuration
+   * Kod i përbashkët për frontend dhe backend
+   * @author Ledjan Ahmati
+   * @version 8.1.0-SHARED
+   */
+  
+  // Zgjeroj nga baza
+  "extends": "../tsconfig.base.json",
+  
+  // Composite për project references
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": false
+  },
+  
+  // Include vetëm source files
+  "include": [
+    "src/**/*"
+  ],
+  
+  // No references (base module)
+  "references": []
+}

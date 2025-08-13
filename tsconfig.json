@@ -1,57 +1,24 @@
 {
+  /**
+   * 🏗️ UltraWeb Root TypeScript Configuration
+   * @author Ledjan Ahmati
+   * @version 8.1.0-WEB8
+   */
+  // Zgjeroj nga baza
+  "extends": "./tsconfig.base.json",
+  // Next.js specifics për root
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES6"
-    ],
-    "allowJs": false,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-      "@app/*": ["./app/*"],
-      "@components/*": ["./components/*"],
-      "@lib/*": ["./lib/*"],
-      "@hooks/*": ["./hooks/*"],
-      "@backend/*": ["./backend/*"],
-      "@agisheet/*": ["./agisheet/*"],
-      "@security/*": ["./security/*"],
-      "@utils/*": ["./utils/*"],
-      "@types/*": ["./types/*"]
-    }
+    "jsx": "preserve",
+    "strictNullChecks": true
   },
+  // Include Next.js specifics
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mts",
-    ".next/types/**/*.ts",
-    "types/**/*.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.mjs",
-    "**/*.cjs",
-    "eslint.config.*",
-    "**/eslint.config.*"
+    ".next/types/**/*.ts"
   ]
 }

@@ -7,8 +7,11 @@
  * @contact dealsjona@gmail.com
  */
 
-import { Guardian } from '../backend/guardian/Guardian';
-import { ProductionMonitor, AlertingConfig } from '../lib/ProductionMonitor';
+import { Guardian } from '../backend/src/guardian/Guardian-web8';
+import { ProductionMonitor } from '../lib/ProductionMonitor';
+
+// Type for Guardian instance
+type GuardianInstance = ReturnType<typeof Guardian>;
 
 interface MonitoringConfig {
   checkInterval: number;
@@ -33,13 +36,13 @@ interface MonitoringConfig {
 }
 
 class GuardianMonitor {
-  private guardian: Guardian;
+  private guardian: GuardianInstance;
   private monitor: ProductionMonitor;
   private config: MonitoringConfig;
   private isRunning = false;
   private intervalId: NodeJS.Timeout | undefined;
 
-  constructor(guardian: Guardian, config: MonitoringConfig) {
+  constructor(guardian: GuardianInstance, config: MonitoringConfig) {
     this.guardian = guardian;
     this.monitor = new ProductionMonitor({
       enableMetrics: true,
@@ -51,9 +54,8 @@ class GuardianMonitor {
         responseTimeThreshold: 1000,
         cpuThreshold: 80,
         memoryThreshold: 90,
-        web8ProactivePolling: false,
-        webhooks: []
-      } as AlertingConfig
+        web8ProactivePolling: config.notifications.slack?.proactivePolling || false
+      }
     });
     this.config = config;
   }
@@ -97,9 +99,6 @@ class GuardianMonitor {
    */
   private async performHealthCheck(): Promise<void> {
     try {
-      // Get Guardian dashboard data
-      const dashboard = this.guardian.getDashboard();
-      
       // Mock stats object since getStats doesn't exist yet
       const stats = {
         status: 'active',
@@ -117,11 +116,11 @@ class GuardianMonitor {
       const healthReport = {
         timestamp: new Date().toISOString(),
         guardian: {
-          status: dashboard.status || 'unknown',
-          systemHealth: 'healthy',
-          totalRequests: dashboard.stats?.totalBlocked || 0,
-          blockedRequests: dashboard.stats?.blockedLast24h || 0,
-          blockRate: dashboard.stats?.totalBlocked > 0 ? (dashboard.stats?.blockedLast24h / dashboard.stats?.totalBlocked) * 100 : 0,
+          status: stats.status || 'unknown',
+          systemHealth: stats.systemHealth || 'unknown',
+          totalRequests: stats.totalRequests || 0,
+          blockedRequests: stats.blockedRequests || 0,
+          blockRate: stats.totalRequests > 0 ? (stats.blockedRequests / stats.totalRequests) * 100 : 0,
           avgResponseTime: stats.avgResponseTime || 0,
           activeConnections: stats.activeConnections || 0,
           blockedIPs: stats.blockedIPs || 0

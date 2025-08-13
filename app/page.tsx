@@ -1,6 +1,6 @@
 /**
- * EuroWeb Ultra - Web8 Neural Dashboard Platform
- * Advanced AGI Dashboard with Real-time Metrics
+ * EuroWeb Ultra - Web8 Search Platform Homepage
+ * Central Search Interface with Neural AI
  * DYNAMIC PAGE - Real-time AGI Intelligence
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -14,8 +14,8 @@ import nextDynamic from 'next/dynamic'
 // Force dynamic rendering - no static generation
 export const dynamic = 'force-dynamic'
 
-const Web8Dashboard = nextDynamic(
-  () => import('../components/Web8Dashboard'),
+const Web8TabSystem = nextDynamic(
+  () => import('../frontend/src/components/Web8TabSystem'),
   { 
     ssr: false,
     loading: () => (
@@ -38,17 +38,19 @@ const Web8Dashboard = nextDynamic(
             margin: '0 auto 20px'
           }}></div>
           <h1 style={{ fontSize: '2rem', marginBottom: '10px', color: 'white' }}>
-            🔍 Web8 Search Loading...
+            � Web8 Tab System Loading...
           </h1>
           <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)' }}>
-            Initializing Neural Search Engine...
+            Initializing Web8 Command Center...
           </p>
-          <style>{`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-          `}</style>
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `
+          }} />
         </div>
       </div>
     )
@@ -56,5 +58,5 @@ const Web8Dashboard = nextDynamic(
 )
 
 export default function Home() {
-  return <Web8Dashboard />
+  return <Web8TabSystem />
 }

@@ -3,26 +3,26 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import styles from './AGIBioNature.module.css';
+import styles from '../../frontend/src/components/AGISheet/AGIBioNature.module.css';
 
 // Lazy import functions for analysis engines to reduce First Load JS
 const loadBiologyEngine = async () => {
-  const { BiologyEngine } = await import('./BiologyEngine');
+  const { BiologyEngine } = await import('../../frontend/src/components/AGISheet/BiologyEngine');
   return new BiologyEngine();
 };
 
 const loadNatureEngine = async () => {
-  const { NatureEngine } = await import('./NatureEngine');
+  const { NatureEngine } = await import('../../frontend/src/components/AGISheet/NatureEngine');
   return new NatureEngine();
 };
 
 const loadMedicalEngine = async () => {
-  const { MedicalEngine } = await import('./MedicalEngine');
+  const { MedicalEngine } = await import('../../frontend/src/components/AGISheet/MedicalEngine');
   return new MedicalEngine();
 };
 
 const loadEcologyEngine = async () => {
-  const { EcologyEngine } = await import('./EcologyEngine');
+  const { EcologyEngine } = await import('../../frontend/src/components/AGISheet/EcologyEngine');
   return new EcologyEngine();
 };
 
@@ -508,7 +508,7 @@ export const AGIBioNature = ({
             >
               🧬
             </motion.span>
-            AGI×BioNature Intelligence
+            AGI BioNature Intelligence
           </h1>
           <div className={styles.controls}>
             <select 

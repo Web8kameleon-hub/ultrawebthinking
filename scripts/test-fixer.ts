@@ -194,7 +194,7 @@ describe('AGIBioNature Industrial Tests', () => {
     );
     
     expect(container).toBeDefined();
-    expect(screen.getByText(/AGI×BioNature Intelligence/)).toBeInTheDocument();
+    expect(screen.getByText(/AGIBioNature Intelligence/)).toBeInTheDocument();
   });
 
   test('specimen gallery displays correctly', async () => {
@@ -252,7 +252,7 @@ describe('AGIBioNature Industrial Tests', () => {
       />
     );
     
-    expect(screen.getByText(/AGI×BioNature Intelligence/)).toBeInTheDocument();
+    expect(screen.getByText(/AGIBioNature Intelligence/)).toBeInTheDocument();
     
     // Test theme switching
     rerender(
@@ -263,7 +263,7 @@ describe('AGIBioNature Industrial Tests', () => {
       />
     );
     
-    expect(screen.getByText(/AGI×BioNature Intelligence/)).toBeInTheDocument();
+    expect(screen.getByText(/AGIBioNature Intelligence/)).toBeInTheDocument();
   });
 });
 
@@ -742,3 +742,4 @@ export default defineConfig({
 // ES Module execution
 const fixer = new TestFixer();
 fixer.fixAllTests();
+

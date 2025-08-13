@@ -246,9 +246,9 @@ Guardian Engine → lidhet me firewall log real (/var/log/).
 
 AGI Search → lidhet me Vector DB për kërkime semantike.
 
-AGI×Eco & AGI×El → lidhen me API energjie/klime (OSE, OpenWeather, sensorët lokalë).
+AGIEco & AGIEl → lidhen me API energjie/klime (OSE, OpenWeather, sensorët lokalë).
 
-AGI×Office → lidhet me database dokumentesh (MongoDB/PostgreSQL).
+AGIOffice → lidhet me database dokumentesh (MongoDB/PostgreSQL).
 
 Nëse do, mund të ta bëj skedarin e plotë të zinxhirit ku çdo modul është i lidhur me backend dhe backend me UI, në mënyrë që kur të hapësh dashboard-in të marrë live data dhe jo placeholder.
 Kjo do e bëjë platformën 100% funksionale.
@@ -312,7 +312,7 @@ export async function getAllMetrics() {
   };
 }
 3️⃣ Lidhja me Frontend
-Në çdo komponent React të dashboard-it (AGI×Eco, AGI×El, Guardian, etj.), thjesht bëjmë:
+Në çdo komponent React të dashboard-it (AGIEco, AGIEl, Guardian, etj.), thjesht bëjmë:
 
 ts
 Kopieren
@@ -489,3 +489,4 @@ export function getEthicalComplianceReport(planner: NeuralPlanner): any {
     }
   };
 }
+

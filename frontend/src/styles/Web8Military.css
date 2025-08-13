@@ -1,0 +1,340 @@
+/**
+ * Web8 Military Color System - Ushtarake dhe Madhështore
+ * Sistema e ngjyrave ushtarake me gradientë të avancuar
+ * 
+ * @author Ledjan Ahmati (100% Owner)
+ * @version 8.0.0 Military
+ */
+
+:root {
+  /* 🪖 MILITARY COMMAND COLORS - Ngjyrat Komandë Ushtarake */
+  --military-command-primary: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+  --military-command-secondary: linear-gradient(45deg, #7c3aed 0%, #8b5cf6 50%, #a855f7 100%);
+  --military-command-accent: linear-gradient(90deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+
+  /* 👑 ROYAL GRADIENTS - Gradientë Mbretërore */
+  --royal-purple: linear-gradient(135deg, #581c87 0%, #7c3aed 25%, #8b5cf6 50%, #a855f7 75%, #c084fc 100%);
+  --royal-blue: linear-gradient(135deg, #1e3a8a 0%, #2563eb 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%);
+  --royal-gold: linear-gradient(135deg, #b45309 0%, #d97706 25%, #f59e0b 50%, #fbbf24 75%, #fde047 100%);
+
+  /* ⚔️ BATTLE ZONE COLORS - Ngjyrat Zonë Beteje */
+  --battle-red: linear-gradient(135deg, #7f1d1d 0%, #dc2626 25%, #ef4444 50%, #f87171 75%, #fca5a5 100%);
+  --battle-green: linear-gradient(135deg, #14532d 0%, #16a34a 25%, #22c55e 50%, #4ade80 75%, #86efac 100%);
+  --battle-orange: linear-gradient(135deg, #9a3412 0%, #ea580c 25%, #f97316 50%, #fb923c 75%, #fdba74 100%);
+
+  /* 🌟 NEURAL COSMIC GRADIENTS - Gradientë Kozmike Neural */
+  --neural-galaxy: linear-gradient(135deg, #0c0a09 0%, #1c1917 10%, #44403c 20%, #78716c 30%, #a8a29e 40%, #e7e5e4 50%, #a855f7 60%, #7c3aed 70%, #5b21b6 80%, #4c1d95 90%, #1e1b4b 100%);
+  --neural-aurora: linear-gradient(45deg, #065f46 0%, #047857 10%, #059669 20%, #10b981 30%, #34d399 40%, #6ee7b7 50%, #3b82f6 60%, #2563eb 70%, #1d4ed8 80%, #1e40af 90%, #1e3a8a 100%);
+  --neural-plasma: linear-gradient(90deg, #7c2d12 0%, #dc2626 15%, #f59e0b 30%, #eab308 45%, #84cc16 60%, #22c55e 75%, #06b6d4 90%, #3b82f6 100%);
+
+  /* 🔥 CYBER WARFARE EFFECTS - Efekte Cyber Luftë */
+  --cyber-matrix: 
+    radial-gradient(circle at 25% 25%, #00ff41 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, #0084ff 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+
+  --cyber-ghost: 
+    conic-gradient(from 0deg at 50% 50%, #667eea 0deg, #764ba2 72deg, #f093fb 144deg, #f5576c 216deg, #4facfe 288deg, #00f2fe 360deg);
+
+  --cyber-stealth: 
+    linear-gradient(45deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 25%, rgba(51, 65, 85, 0.7) 50%, rgba(71, 85, 105, 0.6) 75%, rgba(100, 116, 139, 0.5) 100%),
+    linear-gradient(135deg, #1e293b 0%, #334155 100%);
+
+  /* 🛡️ SHIELD & PROTECTION COLORS - Ngjyrat Mbrojtje */
+  --shield-platinum: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 25%, #94a3b8 50%, #64748b 75%, #475569 100%);
+  --shield-titanium: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+  --shield-diamond: 
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(191, 219, 254, 0.6) 0%, transparent 50%),
+    linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+
+  /* ⚡ LIGHTNING STRIKE EFFECTS - Efekte Rrufeje */
+  --lightning-strike: 
+    linear-gradient(90deg, 
+      transparent 0%, 
+      #fbbf24 20%, 
+      #f59e0b 25%, 
+      #ffffff 30%, 
+      #f59e0b 35%, 
+      #fbbf24 40%, 
+      transparent 60%);
+
+  --thunder-storm: 
+    radial-gradient(ellipse at center, #1e40af 0%, #1e3a8a 25%, #1e293b 50%, #0f172a 75%, #000000 100%),
+    linear-gradient(45deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.2) 100%);
+
+  /* 🌊 OCEAN DEPTHS - Thellësitë e Oqeanit */
+  --ocean-abyss: linear-gradient(180deg, #0c4a6e 0%, #075985 25%, #0284c7 50%, #0ea5e9 75%, #38bdf8 100%);
+  --ocean-storm: 
+    radial-gradient(circle at 20% 20%, #164e63 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, #155e75 0%, transparent 40%),
+    linear-gradient(135deg, #083344 0%, #0c4a6e 100%);
+
+  /* 🏔️ MOUNTAIN PEAK COLORS - Ngjyrat e Majave */
+  --mountain-peak: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 20%, #cbd5e1 40%, #94a3b8 60%, #64748b 80%, #475569 100%);
+  --mountain-shadow: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+
+  /* 🔮 MYSTICAL ENCHANTMENTS - Magjitë Mistike */
+  --mystic-crystal: 
+    conic-gradient(from 180deg at 50% 50%, #a855f7 0deg, #c084fc 60deg, #e879f9 120deg, #f0abfc 180deg, #fbb6ce 240deg, #fecaca 300deg, #a855f7 360deg);
+
+  --mystic-void: 
+    radial-gradient(circle at center, transparent 30%, #1e1b4b 70%),
+    linear-gradient(45deg, #0f0f23 0%, #1e1b4b 50%, #312e81 100%);
+
+  /* 🎯 PRECISION TARGETING - Synime Precize */
+  --target-lock: 
+    radial-gradient(circle at center, transparent 40%, #dc2626 45%, #ef4444 55%, transparent 60%),
+    linear-gradient(0deg, transparent 49%, #dc2626 50%, transparent 51%),
+    linear-gradient(90deg, transparent 49%, #dc2626 50%, transparent 51%);
+
+  /* 🌟 GLOWING EFFECTS - Efekte Shkëlqimi */
+  --glow-soft: 0 0 20px rgba(124, 58, 237, 0.3), 0 0 40px rgba(124, 58, 237, 0.2), 0 0 60px rgba(124, 58, 237, 0.1);
+  --glow-medium: 0 0 30px rgba(59, 130, 246, 0.4), 0 0 60px rgba(59, 130, 246, 0.3), 0 0 90px rgba(59, 130, 246, 0.2);
+  --glow-intense: 0 0 40px rgba(245, 158, 11, 0.5), 0 0 80px rgba(245, 158, 11, 0.4), 0 0 120px rgba(245, 158, 11, 0.3);
+
+  /* 🎨 THEME COMBINATIONS - Kombinime Temash */
+  --theme-royal-command: 
+    linear-gradient(135deg, var(--royal-purple) 0%, var(--military-command-primary) 100%);
+  
+  --theme-battle-ready: 
+    linear-gradient(45deg, var(--battle-red) 0%, var(--battle-orange) 50%, var(--royal-gold) 100%);
+  
+  --theme-neural-matrix: 
+    var(--cyber-matrix),
+    var(--neural-galaxy);
+
+  /* 📱 RESPONSIVE INTENSITIES - Intensitete Responsive */
+  --intensity-subtle: 0.6;
+  --intensity-normal: 0.8;
+  --intensity-strong: 1.0;
+  --intensity-extreme: 1.2;
+}
+
+/* 🎭 ANIMATION KEYFRAMES - Animacione Ushtarake */
+@keyframes militaryPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    filter: brightness(1) saturate(1);
+  }
+  50% { 
+    transform: scale(1.05); 
+    filter: brightness(1.2) saturate(1.3);
+  }
+}
+
+@keyframes neuralSpark {
+  0% { 
+    background-position: 0% 50%; 
+    filter: hue-rotate(0deg);
+  }
+  50% { 
+    background-position: 100% 50%; 
+    filter: hue-rotate(180deg);
+  }
+  100% { 
+    background-position: 0% 50%; 
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes battleCharge {
+  0% { 
+    box-shadow: var(--glow-soft); 
+    transform: translateY(0);
+  }
+  50% { 
+    box-shadow: var(--glow-intense); 
+    transform: translateY(-2px);
+  }
+  100% { 
+    box-shadow: var(--glow-soft); 
+    transform: translateY(0);
+  }
+}
+
+@keyframes royalAscension {
+  0% { 
+    background: var(--royal-purple);
+    transform: rotate(0deg) scale(1);
+  }
+  33% { 
+    background: var(--royal-blue);
+    transform: rotate(120deg) scale(1.1);
+  }
+  66% { 
+    background: var(--royal-gold);
+    transform: rotate(240deg) scale(1.05);
+  }
+  100% { 
+    background: var(--royal-purple);
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* 🏛️ COMPONENT CLASSES - Klasa Komponentësh */
+.military-button {
+  background: var(--military-command-primary);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.military-button:hover {
+  background: var(--royal-purple);
+  box-shadow: var(--glow-medium);
+  transform: translateY(-2px);
+  animation: militaryPulse 1.5s ease-in-out infinite;
+}
+
+.military-button:active {
+  background: var(--battle-red);
+  transform: translateY(0) scale(0.98);
+  animation: battleCharge 0.6s ease-in-out;
+}
+
+.royal-card {
+  background: var(--theme-royal-command);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--glow-soft);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.royal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--lightning-strike);
+  animation: neuralSpark 3s ease-in-out infinite;
+}
+
+.neural-tab {
+  background: var(--neural-galaxy);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background-size: 300% 300%;
+  animation: neuralSpark 8s ease-in-out infinite;
+}
+
+.neural-tab:hover {
+  background: var(--cyber-ghost);
+  box-shadow: var(--glow-medium);
+  transform: scale(1.05);
+}
+
+.neural-tab.active {
+  background: var(--royal-purple);
+  box-shadow: var(--glow-intense);
+  animation: royalAscension 4s ease-in-out infinite;
+}
+
+.battle-status {
+  background: var(--theme-battle-ready);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: var(--glow-soft);
+  animation: militaryPulse 2s ease-in-out infinite;
+}
+
+.command-panel {
+  background: var(--cyber-stealth);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  padding: 20px;
+  box-shadow: var(--glow-soft);
+  position: relative;
+}
+
+.command-panel::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: var(--cyber-ghost);
+  border-radius: 14px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+/* 🌓 DARK MODE OVERRIDES */
+[data-theme="dark"] {
+  --military-command-primary: var(--neural-galaxy);
+  --royal-purple: var(--cyber-ghost);
+  --battle-red: var(--lightning-strike);
+}
+
+/* 📱 RESPONSIVE ADAPTATIONS */
+@media (max-width: 768px) {
+  .military-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .royal-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .neural-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* ⚡ HIGH PERFORMANCE OPTIMIZATIONS */
+.military-button,
+.royal-card,
+.neural-tab,
+.battle-status,
+.command-panel {
+  will-change: transform, filter, background;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* 🎯 ACCESSIBILITY ENHANCEMENTS */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (prefers-high-contrast: high) {
+  .military-button {
+    border: 3px solid white;
+  }
+  
+  .royal-card {
+    border: 2px solid white;
+  }
+}

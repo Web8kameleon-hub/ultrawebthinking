@@ -5,13 +5,43 @@
  * @version 8.0.0 Industrial
  */
 
-import type { AGIModule, EuroWebConfig } from '../agi/types';
+import type { AGIModule, EuroWebConfig } from '../src/agi/types';
+
+interface TrustedModule {
+  name: string;
+  trustLevel: 'core' | 'trusted' | 'standard' | 'restricted';
+  permissions: string[];
+  lastValidated: number;
+  validationHash: string;
+}
+
+interface ModuleLimits {
+  maxConcurrentModules: number;
+  maxMemoryUsage: number;
+  maxCpuUsage: number;
+}
+
+interface SecurityEvent {
+  timestamp: number;
+  type: string;
+  moduleName: string;
+  severity: 'low' | 'medium' | 'high' | 'critical';
+}
+
+interface SecurityValidation {
+  isValid: boolean;
+  moduleName: string;
+  timestamp: number;
+  securityLevel: string;
+  threats: string[];
+  recommendations: string[];
+}
 
 export class AGIModuleGuard {
-  private readonly allowedModules: Set<string> = new Set();
-  private readonly trustedModules: Map<string, TrustedModule> = new Map();
-  private readonly securityLevel: 'standard' | 'high' | 'military' | 'post-quantum';
-  private readonly moduleLimits: ModuleLimits;
+  private allowedModules: Set<string> = new Set();
+  private trustedModules: Map<string, TrustedModule> = new Map();
+  private securityLevel: 'standard' | 'high' | 'military' | 'post-quantum';
+  private moduleLimits: ModuleLimits;
   private auditLog: SecurityEvent[] = [];
   
   constructor(config: Partial<EuroWebConfig> = {}) {
@@ -41,7 +71,84 @@ export class AGIModuleGuard {
       });
     });
 
-    console.log(`🛡️ AGIModuleGuard: ${coreModules.length} core modules u autorizuan`);
+  }
+
+  /**
+   * Get default security limits for modules
+   */
+  private getDefaultLimits(): ModuleLimits {
+    return {
+      maxConcurrentModules: 10,
+      maxMemoryUsage: 512 * 1024 * 1024, // 512MB
+      maxCpuUsage: 70 // 70% CPU
+    };
+  }
+
+  /**
+   * Get core module permissions
+   */
+  private getCorePermissions(): string[] {
+    return ['read', 'write', 'execute', 'network', 'memory'];
+  }
+
+  /**
+   * Generate validation hash for module
+   */
+  private generateValidationHash(data: string): string {
+    // Simple hash generation for validation
+    let hash = 0;
+    for (let i = 0; i < data.length; i++) {
+      const char = data.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return hash.toString(16);
+  }
+
+  /**
+   * Start security monitoring
+   */
+  private startSecurityMonitoring(): void {
+    console.log('🛡️ AGI Module Guard security monitoring started');
+  }
+
+  /**
+   * Log security events
+   */
+  private logSecurityEvent(type: string, moduleName: string, severity: 'low' | 'medium' | 'high' | 'critical' = 'medium'): void {
+    const event: SecurityEvent = {
+      timestamp: Date.now(),
+      type,
+      moduleName,
+      severity
+    };
+    this.auditLog.push(event);
+    console.warn(`🔒 Security Event: ${type} for module ${moduleName}`);
+  }
+
+  /**
+   * Check if security level is compatible
+   */
+  private isSecurityLevelCompatible(trustLevel: string): boolean {
+    const securityMatrix = {
+      'standard': ['core', 'trusted', 'standard'],
+      'high': ['core', 'trusted'],
+      'military': ['core'],
+      'post-quantum': ['core']
+    };
+    return securityMatrix[this.securityLevel]?.includes(trustLevel) || false;
+  }
+
+  /**
+   * Check resource limits for module
+   */
+  private checkResourceLimits(moduleName: string): { allowed: boolean; reason?: string } {
+    // Simplified resource check
+    const activeModules = this.trustedModules.size;
+    if (activeModules >= this.moduleLimits.maxConcurrentModules) {
+      return { allowed: false, reason: 'Too many active modules' };
+    }
+    return { allowed: true };
   }
 
   /**
@@ -100,345 +207,32 @@ export class AGIModuleGuard {
         return validation;
       }
 
+      // All checks passed
       validation.isValid = true;
-      validation.recommendations.push('Module validated successfully');
-      this.logSecurityEvent('module_validated', moduleName);
-      
+      validation.recommendations.push('Module is secure and validated');
       return validation;
 
-    } catch (error: any) {
-      validation.threats.push(`Validation error: ${error.message}`);
-      this.logSecurityEvent('validation_error', moduleName, error.message);
+    } catch (error) {
+      validation.threats.push(`Validation error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error(`❌ AGIModuleGuard: Dështoi autorizimi i modulit '${moduleName}': ${error instanceof Error ? error.message : 'Unknown error'}`);
       return validation;
     }
   }
 
   /**
-   * Add Authorized Module - Shton modul të ri në listën e autorizuar
+   * Get security audit summary
    */
-  public addAuthorizedModule(
-    moduleName: string, 
-    module: AGIModule,
-    trustLevel: TrustLevel = 'third-party'
-  ): boolean {
-    try {
-      // Validate module structure
-      if (!this.validateModuleStructure(module)) {
-        throw new Error('Invalid module structure');
-      }
-
-      // Check permissions
-      const permissions = this.getPermissionsForTrustLevel(trustLevel);
-      
-      // Add to allowed modules
-      this.allowedModules.add(moduleName);
-      
-      // Add to trusted registry
-      this.trustedModules.set(moduleName, {
-        name: moduleName,
-        trustLevel,
-        permissions,
-        lastValidated: Date.now(),
-        validationHash: this.generateValidationHash(module.toString())
-      });
-
-      this.logSecurityEvent('module_authorized', moduleName);
-      console.log(`🛡️ AGIModuleGuard: Moduli '${moduleName}' u autorizua me trust level '${trustLevel}'`);
-      
-      return true;
-
-    } catch (error: any) {
-      this.logSecurityEvent('authorization_failed', moduleName, error.message);
-      console.error(`❌ AGIModuleGuard: Dështoi autorizimi i modulit '${moduleName}': ${error.message}`);
-      return false;
-    }
-  }
-
-  /**
-   * Revoke Module Access - Heq aksesin e modulit
-   */
-  public revokeModuleAccess(moduleName: string, reason: string): void {
-    if (this.isCoreModule(moduleName)) {
-      console.warn(`⚠️ Cannot revoke core module: ${moduleName}`);
-      return;
-    }
-
-    this.allowedModules.delete(moduleName);
-    this.trustedModules.delete(moduleName);
+  public getSecurityAudit(): { threats: string[]; warnings: number } {
+    const threats = this.auditLog.filter(event => event.severity === 'high' || event.severity === 'critical')
+                                 .map(event => `${event.type} in ${event.moduleName}`);
     
-    this.logSecurityEvent('module_revoked', moduleName, reason);
-    console.log(`🛡️ AGIModuleGuard: Aksesi i modulit '${moduleName}' u hoq: ${reason}`);
-  }
-
-  /**
-   * Get Security Report - Raporti i sigurisë
-   */
-  public getSecurityReport(): SecurityReport {
-    return {
-      totalModules: this.allowedModules.size,
-      trustedModules: this.trustedModules.size,
-      securityLevel: this.securityLevel,
-      recentEvents: this.auditLog.slice(-10),
-      resourceUsage: this.getResourceUsage(),
-      lastAudit: Date.now(),
-      threats: this.detectActiveThreats(),
-      recommendations: this.generateSecurityRecommendations()
-    };
-  }
-
-  private getDefaultLimits(): ModuleLimits {
-    const limits = {
-      standard: { maxModules: 50, maxMemory: 100, maxCpu: 70 },
-      high: { maxModules: 30, maxMemory: 80, maxCpu: 50 },
-      military: { maxModules: 15, maxMemory: 60, maxCpu: 30 },
-      'post-quantum': { maxModules: 10, maxMemory: 40, maxCpu: 20 }
-    };
-    
-    return limits[this.securityLevel];
-  }
-
-  private getCorePermissions(): ModulePermissions {
-    return {
-      canAccessMemory: true,
-      canModifyState: true,
-      canNetworkAccess: true,
-      canFileAccess: true,
-      canExecuteCode: true,
-      securityLevel: 'core'
-    };
-  }
-
-  private getPermissionsForTrustLevel(trustLevel: TrustLevel): ModulePermissions {
-    const permissions = {
-      core: {
-        canAccessMemory: true,
-        canModifyState: true,
-        canNetworkAccess: true,
-        canFileAccess: true,
-        canExecuteCode: true,
-        securityLevel: 'core'
-      },
-      trusted: {
-        canAccessMemory: true,
-        canModifyState: false,
-        canNetworkAccess: true,
-        canFileAccess: false,
-        canExecuteCode: true,
-        securityLevel: 'trusted'
-      },
-      'third-party': {
-        canAccessMemory: false,
-        canModifyState: false,
-        canNetworkAccess: false,
-        canFileAccess: false,
-        canExecuteCode: false,
-        securityLevel: 'restricted'
-      }
-    };
-
-    return permissions[trustLevel];
-  }
-
-  private generateValidationHash(input: string): string {
-    // Simple hash function - në production do të përdoret crypto
-    let hash = 0;
-    for (let i = 0; i < input.length; i++) {
-      const char = input.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return hash.toString(16);
-  }
-
-  private validateModuleStructure(module: AGIModule): boolean {
-    return !!(
-      module.id &&
-      module.name &&
-      module.type &&
-      typeof module.execute === 'function' &&
-      typeof module.validate === 'function' &&
-      typeof module.getMetrics === 'function'
-    );
-  }
-
-  private isSecurityLevelCompatible(trustLevel: TrustLevel): boolean {
-    const compatibility = {
-      standard: ['core', 'trusted', 'third-party'],
-      high: ['core', 'trusted'],
-      military: ['core'],
-      'post-quantum': ['core']
-    };
-    
-    return compatibility[this.securityLevel].includes(trustLevel);
-  }
-
-  private checkResourceLimits(moduleName: string): ResourceCheck {
-    // Simulate resource checking
-    return {
-      allowed: true,
-      reason: 'Within limits',
-      usage: {
-        memory: Math.random() * 30,
-        cpu: Math.random() * 20,
-        modules: this.allowedModules.size
-      }
-    };
-  }
-
-  private isCoreModule(moduleName: string): boolean {
-    const trustedModule = this.trustedModules.get(moduleName);
-    return trustedModule?.trustLevel === 'core';
-  }
-
-  private logSecurityEvent(
-    type: SecurityEventType, 
-    moduleName: string, 
-    details?: string
-  ): void {
-    const event: SecurityEvent = {
-      type,
-      moduleName,
-      details,
-      timestamp: Date.now(),
-      securityLevel: this.securityLevel
-    };
-
-    this.auditLog.push(event);
-    
-    // Keep only last 1000 events
-    if (this.auditLog.length > 1000) {
-      this.auditLog = this.auditLog.slice(-1000);
-    }
-  }
-
-  private startSecurityMonitoring(): void {
-    setInterval(() => {
-      this.performSecurityAudit();
-    }, 60000); // Every minute
-  }
-
-  private performSecurityAudit(): void {
-    // Perform periodic security checks
-    const threats = this.detectActiveThreats();
     if (threats.length > 0) {
       console.warn(`⚠️ Security audit detected ${threats.length} threats`);
     }
-  }
-
-  private detectActiveThreats(): string[] {
-    const threats: string[] = [];
     
-    // Check for suspicious activity
-    const recentEvents = this.auditLog.slice(-100);
-    const failedValidations = recentEvents.filter(e => e.type === 'validation_error').length;
-    
-    if (failedValidations > 10) {
-      threats.push('High number of validation failures');
-    }
-
-    return threats;
-  }
-
-  private generateSecurityRecommendations(): string[] {
-    const recommendations: string[] = [];
-    
-    if (this.allowedModules.size > this.moduleLimits.maxModules) {
-      recommendations.push('Reduce number of active modules');
-    }
-    
-    if (this.securityLevel === 'standard') {
-      recommendations.push('Consider upgrading to higher security level');
-    }
-
-    return recommendations;
-  }
-
-  private getResourceUsage(): ResourceUsage {
     return {
-      memory: Math.random() * this.moduleLimits.maxMemory,
-      cpu: Math.random() * this.moduleLimits.maxCpu,
-      modules: this.allowedModules.size,
-      maxModules: this.moduleLimits.maxModules
+      threats,
+      warnings: this.auditLog.filter(event => event.severity === 'medium').length
     };
   }
 }
-
-// Type definitions
-type TrustLevel = 'core' | 'trusted' | 'third-party';
-type SecurityEventType = 'module_authorized' | 'module_revoked' | 'unauthorized_module_access' | 'module_tampering_detected' | 'validation_error' | 'module_validated' | 'authorization_failed';
-
-interface TrustedModule {
-  name: string;
-  trustLevel: TrustLevel;
-  permissions: ModulePermissions;
-  lastValidated: number;
-  validationHash: string;
-}
-
-interface ModulePermissions {
-  canAccessMemory: boolean;
-  canModifyState: boolean;
-  canNetworkAccess: boolean;
-  canFileAccess: boolean;
-  canExecuteCode: boolean;
-  securityLevel: string;
-}
-
-interface SecurityValidation {
-  isValid: boolean;
-  moduleName: string;
-  timestamp: number;
-  securityLevel: string;
-  threats: string[];
-  recommendations: string[];
-}
-
-interface SecurityEvent {
-  type: SecurityEventType;
-  moduleName: string;
-  details?: string;
-  timestamp: number;
-  securityLevel: string;
-}
-
-interface ModuleLimits {
-  maxModules: number;
-  maxMemory: number;
-  maxCpu: number;
-}
-
-interface ResourceCheck {
-  allowed: boolean;
-  reason: string;
-  usage: ResourceUsage;
-}
-
-interface ResourceUsage {
-  memory: number;
-  cpu: number;
-  modules: number;
-  maxModules?: number;
-}
-
-interface SecurityReport {
-  totalModules: number;
-  trustedModules: number;
-  securityLevel: string;
-  recentEvents: SecurityEvent[];
-  resourceUsage: ResourceUsage;
-  lastAudit: number;
-  threats: string[];
-  recommendations: string[];
-}
-
-// Create and export global instance
-export const agiModuleGuard = new AGIModuleGuard();
-
-// Export types
-export type { 
-  SecurityValidation, 
-  SecurityReport, 
-  TrustedModule, 
-  ModulePermissions,
-  TrustLevel 
-};

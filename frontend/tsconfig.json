@@ -1,12 +1,34 @@
 {
+  /**
+   * 🎨 Frontend TypeScript Configuration  
+   * Next.js React components dhe pages
+   * @author Ledjan Ahmati
+   * @version 8.1.0-FRONTEND-CLEAN
+   */
+  
+  // Zgjeroj nga baza
   "extends": "../tsconfig.base.json",
+  
+  // Frontend specifics
   "compilerOptions": {
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "composite": true,
+    "rootDir": "./src",
+    "jsx": "preserve", // Next.js handles JSX
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "plugins": [
+      { "name": "next" }
+    ],
+    "declaration": true,
+    "declarationMap": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
-  "exclude": ["node_modules", ".next", "dist"]
+  
+  // Include frontend source + Next.js
+  "include": [
+    "next-env.d.ts",
+    "src/**/*",
+    "../.next/types/**/*.ts"
+  ],
+  
+  // Disable references for now to fix build issues
+  "tsBuildInfoFile": "./dist/.tsbuildinfo"
 }

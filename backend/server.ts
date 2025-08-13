@@ -4,18 +4,15 @@
  * Integrated with Guardian Engine DDoS Protection
  */
 
-// @ts-ignore - import compatibility fixes
 import express from 'express';
-// @ts-ignore - import compatibility fixes
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { createServer } from 'http';
-// @ts-ignore - socket.io type import issue
 import { Server } from 'socket.io';
 import * as winston from 'winston';
-// @ts-ignore - import compatibility fixes
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
+import meshRoutes from './api/mesh.js';
 
 // Load environment variables
 dotenv.config();
@@ -76,15 +73,14 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP'
 });
-// Apply rate limiting to all routes
-app.use(limiter as any);
+app.use(limiter);
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Health check endpoint
-app.get('/api/health', (req: any, res: any) => {
+app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
@@ -95,7 +91,7 @@ app.get('/api/health', (req: any, res: any) => {
 });
 
 // AGI Status endpoint
-app.get('/api/agi/status', (req: any, res: any) => {
+app.get('/api/agi/status', (req, res) => {
   res.json({
     agi: {
       status: 'active',
@@ -109,7 +105,7 @@ app.get('/api/agi/status', (req: any, res: any) => {
 });
 
 // AGISheet endpoint
-app.get('/api/agisheet/info', (req: any, res: any) => {
+app.get('/api/agisheet/info', (req, res) => {
   res.json({
     name: 'AGISheet Kameleon',
     version: '1.0.0',
@@ -120,20 +116,23 @@ app.get('/api/agisheet/info', (req: any, res: any) => {
 });
 
 // Guardian Engine API endpoints (mock implementations)
-app.get('/api/guardian/dashboard', (req: any, res: any) => {
+app.get('/api/guardian/dashboard', (req, res) => {
   res.json({ guardian: 'dashboard', status: 'active' });
 });
 
-app.get('/api/guardian/logs', (req: any, res: any) => {
+// Use mesh API routes
+app.use('/api/mesh', meshRoutes);
+
+app.get('/api/guardian/logs', (req, res) => {
   res.json({ logs: [], status: 'active' });
 });
 
-app.get('/api/guardian/stats', (req: any, res: any) => {
+app.get('/api/guardian/stats', (req, res) => {
   res.json({ stats: {}, status: 'active' });
 });
 
 // Guardian status endpoint
-app.get('/api/guardian/status', (req: any, res: any) => {
+app.get('/api/guardian/status', (req, res) => {
   res.json({
     guardian: 'active',
     protection: 'enabled',
@@ -142,8 +141,62 @@ app.get('/api/guardian/status', (req: any, res: any) => {
   });
 });
 
+// OpenMind AI API endpoint
+app.post('/api/openmind', (req, res) => {
+  const { query, mode = 'chat', provider = 'openmind' } = req.body;
+  
+  if (!query || !query.trim()) {
+    return res.status(400).json({
+      error: 'Query required',
+      message: 'Please provide a query for OpenMind AI'
+    });
+  }
+
+  // Mock OpenMind AI response
+  const response = {
+    id: `openmind_${Date.now()}`,
+    query: query,
+    response: `🧠 OpenMind AI Analysis: ${query}`,
+    confidence: 0.95,
+    reasoning: [
+      'Advanced neural pattern recognition',
+      'Multi-provider AI integration',
+      'Contextual understanding and processing'
+    ],
+    suggestions: [
+      'Try more specific queries for better results',
+      'Use voice commands for natural interaction',
+      'Explore our AGI modules for specialized tasks'
+    ],
+    metadata: {
+      model: 'OpenMind-8.0',
+      provider: provider,
+      processingTime: Math.floor(Math.random() * 500) + 100,
+      tokensUsed: Math.floor(Math.random() * 1000) + 50,
+      mode: mode
+    },
+    timestamp: new Date().toISOString()
+  };
+
+  res.json({
+    success: true,
+    ...response
+  });
+});
+
+// OpenMind status endpoint
+app.get('/api/openmind/status', (req, res) => {
+  res.json({
+    status: 'operational',
+    providers: ['OpenMind', 'Claude', 'Copilot', 'DeepSeek', 'OpenAI', 'Gemini'],
+    version: '8.0.0',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
+  });
+});
+
 // AGI Medical API endpoints
-app.post('/api/agimed/analyze', (req: any, res: any) => {
+app.post('/api/agimed/analyze', (req, res) => {
   const { symptoms } = req.body;
   
   if (!symptoms || !symptoms.trim()) {
@@ -175,7 +228,7 @@ app.post('/api/agimed/analyze', (req: any, res: any) => {
 });
 
 // Socket.IO for real-time communication
-io.on('connection', (socket: any) => {
+io.on('connection', (socket) => {
   logger.info(`Client connected: ${socket.id}`);
 
   // AGISheet subscription handler
@@ -197,23 +250,42 @@ io.on('connection', (socket: any) => {
   });
 
   // AGI Med events
-  socket.on('agimed:analyze', (data: any) => {
+  socket.on('agimed:analyze', (data) => {
     socket.emit('agimed:result', { analysis: 'Medical analysis completed', data });
   });
 
   // AGI Bio Nature events
-  socket.on('agibio:scan', (data: any) => {
+  socket.on('agibio:scan', (data) => {
     socket.emit('agibio:result', { scan: 'Biological scan completed', data });
   });
 
   // AGI Eco events
-  socket.on('agiei:calculate', (data: any) => {
+  socket.on('agiei:calculate', (data) => {
     socket.emit('agiei:result', { calculation: 'Economic calculation completed', data });
   });
 
   // OpenMind Chat events
-  socket.on('openmind:message', (data: any) => {
-    socket.broadcast.to('openmind:chat').emit('openmind:response', data);
+  socket.on('openmind:message', (data) => {
+    // Enhanced OpenMind response with AI processing
+    const response = {
+      ...data,
+      response: `🧠 OpenMind AI: ${data.message || data.query}`,
+      timestamp: new Date().toISOString(),
+      confidence: 0.95,
+      reasoning: ['Advanced AI processing', 'Contextual understanding', 'Multi-provider integration'],
+      suggestions: ['Try more specific queries', 'Use voice commands', 'Explore AGI modules']
+    };
+    socket.broadcast.to('openmind:chat').emit('openmind:response', response);
+  });
+
+  // OpenMind chat room subscription
+  socket.on('openmind:join', () => {
+    socket.join('openmind:chat');
+    socket.emit('openmind:joined', { 
+      status: 'connected',
+      providers: ['OpenMind', 'Claude', 'Copilot', 'DeepSeek', 'OpenAI', 'Gemini'],
+      timestamp: new Date().toISOString()
+    });
   });
 
   // Handle disconnection
@@ -222,25 +294,8 @@ io.on('connection', (socket: any) => {
   });
 });
 
-// Error handling middleware
-app.use((err: any, req: any, res: any, next: any) => {
-  logger.error('❌ API Error:', err);
-  res.status(500).json({
-    success: false,
-    error: 'Internal server error'
-  });
-});
-
-// 404 handler
-app.use('*', (req: any, res: any) => {
-  res.status(404).json({
-    success: false,
-    error: 'Endpoint not found'
-  });
-});
-
 // Server startup
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3002;
 
 server.listen(PORT, () => {
   logger.info(`🚀 EuroWeb Backend Server started on port ${PORT}`);
@@ -249,15 +304,5 @@ server.listen(PORT, () => {
   logger.info(`🌐 Socket.IO server active`);
   logger.info(`🛡️ Guardian Engine protection enabled`);
   logger.info(`🔒 DDoS defense system operational`);
+  logger.info(`🌐 Mesh Network API ready on /api/mesh/*`);
 });
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  logger.info('🛑 Shutting down server...');
-  server.close(() => {
-    logger.info('✅ Server shutdown complete');
-    process.exit(0);
-  });
-});
-
-export { app, server, io };

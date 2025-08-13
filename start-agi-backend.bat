@@ -10,6 +10,6 @@ echo 🔌 WebSocket endpoint: ws://localhost:4000
 echo.
 
 echo 🔧 Starting TypeScript backend server...
-yarn ts-node backend/realtime-server.ts
+yarn tsx backend/src/realtime-server.ts
 
 pause

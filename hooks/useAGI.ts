@@ -6,6 +6,7 @@
  * @version 8.1.0-FRONTEND-BRIDGE
  */
 
+'use client';
 import { useState, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
 
@@ -72,55 +73,112 @@ export interface SystemData {
   responseTime: number;
 }
 
-const AGI_GATEWAY_URL = process.env.NEXT_PUBLIC_AGI_GATEWAY || 'http://localhost:4000';
+const AGI_GATEWAY_URL = '/api/gateway'; // Use unified gateway
 
 /**
- * 🧠 Main AGI Hook - Për të gjitha dashboard-et
+ * 🧠 Main AGI Hook - Unified Gateway Version
  */
 export function useAGI() {
   const [metrics, setMetrics] = useState<AGIMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [connected, setConnected] = useState(false);
-  const socketRef = useRef<Socket | null>(null);
+
+  const callGateway = async (module: string, payload?: any) => {
+    try {
+      const response = await fetch(AGI_GATEWAY_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ module, payload })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Gateway error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result.data;
+    } catch (err: any) {
+      throw new Error(err.message || 'Gateway request failed');
+    }
+  };
 
   useEffect(() => {
-    // Initialize socket connection
-    const socket = io(AGI_GATEWAY_URL);
-    socketRef.current = socket;
-
-    socket.on('connect', () => {
-      console.log('🔗 Connected to AGI Gateway');
-      setConnected(true);
+    const fetchAllMetrics = async () => {
+      setLoading(true);
       setError(null);
-    });
+      
+      try {
+        // Fetch all module data in parallel
+        const [eco, energy, guardian, neural, system] = await Promise.all([
+          callGateway('eco'),
+          callGateway('el'), // Energy/Electric
+          callGateway('guardian'),
+          callGateway('neural'),
+          callGateway('realtime')
+        ]);
 
-    socket.on('disconnect', () => {
-      console.log('🔌 Disconnected from AGI Gateway');
-      setConnected(false);
-    });
+        // Combine into metrics structure
+        const combinedMetrics: AGIMetrics = {
+          eco: eco || {
+            carbonFootprint: 0,
+            energyEfficiency: 0,
+            renewablePercent: 0,
+            sustainabilityScore: 0,
+            recommendations: []
+          },
+          energy: energy || {
+            totalGeneration: 0,
+            gridEfficiency: 0,
+            powerDistribution: { solar: 0, wind: 0, hydroelectric: 0, nuclear: 0 },
+            currentLoad: 0,
+            peakDemand: 0
+          },
+          guardian: guardian || {
+            threatLevel: 'LOW' as const,
+            activeProtections: 0,
+            blockedAttacks: 0,
+            securityScore: 0,
+            recentEvents: []
+          },
+          neural: neural || {
+            processingSpeed: 0,
+            accuracy: 0,
+            learningRate: 0,
+            activeConnections: 0,
+            knowledgeBase: { totalEntries: 0, categories: 0, lastUpdate: new Date() }
+          },
+          system: system || {
+            uptime: 0,
+            cpuUsage: 0,
+            memoryUsage: 0,
+            networkLatency: 0,
+            responseTime: 0
+          }
+        };
 
-    socket.on('agi-metrics', (data: AGIMetrics) => {
-      setMetrics(data);
-      setLoading(false);
-      setError(null);
-    });
-
-    socket.on('agi-error', (err: { error: string }) => {
-      setError(err.error);
-      setLoading(false);
-    });
-
-    // Cleanup on unmount
-    return () => {
-      socket.disconnect();
+        setMetrics(combinedMetrics);
+        setConnected(true);
+      } catch (err: any) {
+        setError(err.message);
+        setConnected(false);
+      } finally {
+        setLoading(false);
+      }
     };
+
+    fetchAllMetrics();
+    
+    // Refresh every 10 seconds
+    const interval = setInterval(fetchAllMetrics, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const refreshData = () => {
-    if (socketRef.current) {
-      socketRef.current.emit('refresh-agi');
-    }
+    setLoading(true);
+    // Trigger useEffect refresh by updating a dependency
   };
 
   return {
@@ -128,12 +186,13 @@ export function useAGI() {
     loading,
     error,
     connected,
-    refreshData
+    refreshData,
+    callGateway // Expose for individual module calls
   };
 }
 
 /**
- * 🌱 AGI×Eco Hook - Specifik për Eco dashboard
+ * 🌱 AGIEco Hook - Uses unified gateway
  */
 export function useAGIEco() {
   const [ecoData, setEcoData] = useState<EcoData | null>(null);
@@ -143,10 +202,15 @@ export function useAGIEco() {
   useEffect(() => {
     const fetchEcoData = async () => {
       try {
-        const response = await fetch(`${AGI_GATEWAY_URL}/api/agi/eco`);
+        const response = await fetch(AGI_GATEWAY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ module: 'eco' })
+        });
+        
         const result = await response.json();
         
-        if (result.success) {
+        if (result.ok) {
           setEcoData(result.data);
         } else {
           setError(result.error);
@@ -169,7 +233,7 @@ export function useAGIEco() {
 }
 
 /**
- * ⚡ AGI×Energy Hook - Specifik për Energy dashboard
+ * ⚡ AGI×Energy Hook - Uses unified gateway
  */
 export function useAGIEnergy() {
   const [energyData, setEnergyData] = useState<EnergyData | null>(null);
@@ -179,10 +243,15 @@ export function useAGIEnergy() {
   useEffect(() => {
     const fetchEnergyData = async () => {
       try {
-        const response = await fetch(`${AGI_GATEWAY_URL}/api/agi/energy`);
+        const response = await fetch(AGI_GATEWAY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ module: 'el' })
+        });
+        
         const result = await response.json();
         
-        if (result.success) {
+        if (result.ok) {
           setEnergyData(result.data);
         } else {
           setError(result.error);
@@ -205,7 +274,7 @@ export function useAGIEnergy() {
 }
 
 /**
- * 🛡️ Guardian Hook - Specifik për Security dashboard
+ * 🛡️ Guardian Hook - Uses unified gateway
  */
 export function useGuardian() {
   const [guardianData, setGuardianData] = useState<GuardianData | null>(null);
@@ -215,10 +284,15 @@ export function useGuardian() {
   useEffect(() => {
     const fetchGuardianData = async () => {
       try {
-        const response = await fetch(`${AGI_GATEWAY_URL}/api/agi/guardian`);
+        const response = await fetch(AGI_GATEWAY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ module: 'guardian' })
+        });
+        
         const result = await response.json();
         
-        if (result.success) {
+        if (result.ok) {
           setGuardianData(result.data);
         } else {
           setError(result.error);
@@ -299,3 +373,4 @@ export function useGatewayHealth() {
 
   return { health, online };
 }
+

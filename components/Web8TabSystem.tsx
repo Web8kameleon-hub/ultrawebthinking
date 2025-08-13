@@ -211,7 +211,7 @@ export const Web8TabSystem: React.FC = () => {
   const changeTheme = useCallback(() => {
     const themes = ['nature', 'dark', 'cyberpunk', 'ocean', 'forest']
     const currentIndex = themes.indexOf(currentTheme)
-    const nextTheme = themes[(currentIndex + 1) % themes.length]
+    const nextTheme = themes[(currentIndex + 1) % themes.length] || themes[0]
     setCurrentTheme(nextTheme)
     console.log(`🎨 Theme changed to: ${nextTheme}`)
   }, [currentTheme])
@@ -447,56 +447,696 @@ export const Web8TabSystem: React.FC = () => {
       case 'agi-eco':
         return (
           <div style={{
-            padding: '40px',
-            textAlign: 'center'
-          }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #22c55e, #16a34a)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              🌱 AGI×Eco Environment
-            </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Environmental AI - Climate Monitoring & Sustainability
-            </p>
+            padding: '20px',
+            background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+            minHeight: '100vh'
+          } as any}>
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '20px',
-              maxWidth: '1000px',
+              maxWidth: '1400px',
               margin: '0 auto'
-            }}>
-              <motion.div style={{
-                background: 'rgba(45, 52, 70, 0.8)',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
-                borderRadius: '12px',
-                padding: '20px'
-              }}>
-                <h3 style={{ color: '#22c55e', marginBottom: '10px' }}>🌡️ Climate AI</h3>
-                <p style={{ color: '#cbd5e1', fontSize: '14px' }}>Advanced weather prediction</p>
-              </motion.div>
-              <motion.div style={{
-                background: 'rgba(45, 52, 70, 0.8)',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
-                borderRadius: '12px',
-                padding: '20px'
-              }}>
-                <h3 style={{ color: '#22c55e', marginBottom: '10px' }}>♻️ Sustainability</h3>
-                <p style={{ color: '#cbd5e1', fontSize: '14px' }}>Green energy optimization</p>
-              </motion.div>
-              <motion.div style={{
-                background: 'rgba(45, 52, 70, 0.8)',
-                border: '1px solid rgba(34, 197, 94, 0.3)',
-                borderRadius: '12px',
-                padding: '20px'
-              }}>
-                <h3 style={{ color: '#22c55e', marginBottom: '10px' }}>🌍 Carbon AI</h3>
-                <p style={{ color: '#cbd5e1', fontSize: '14px' }}>Carbon footprint tracking</p>
-              </motion.div>
+            } as any}>
+              {/* Header */}
+              <div style={{
+                textAlign: 'center',
+                marginBottom: '40px'
+              } as any}>
+                <h1 style={{
+                  fontSize: '48px',
+                  fontWeight: 800,
+                  marginBottom: '10px',
+                  background: 'linear-gradient(45deg, #22c55e, #16a34a)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                } as any}>
+                  🌱 AGIEco Ultra
+                </h1>
+                <p style={{ 
+                  fontSize: '18px', 
+                  color: '#166534', 
+                  marginBottom: '20px' 
+                } as any}>
+                  Advanced Environmental AI - Climate Analysis, Sustainability & Carbon Intelligence
+                </p>
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '8px 16px',
+                  background: isConnected ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                  border: `1px solid ${isConnected ? '#22c55e' : '#ef4444'}`,
+                  borderRadius: '20px',
+                  fontSize: '14px',
+                  fontWeight: 600
+                } as any}>
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: isConnected ? '#22c55e' : '#ef4444',
+                    animation: isConnected ? 'pulse 2s infinite' : 'none'
+                  } as any}></div>
+                  Environmental AI {isConnected ? 'Connected' : 'Offline'}
+                </div>
+              </div>
+
+              {/* Main Environmental Tools Grid */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+                gap: '30px',
+                marginBottom: '40px'
+              } as any}>
+                
+                {/* Climate Analysis AI */}
+                <div style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  padding: '30px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #dcfce7',
+                  transition: 'all 0.3s ease'
+                } as any}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '20px'
+                  } as any}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '12px',
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: '15px',
+                      fontSize: '18px'
+                    } as any}>🌡️</div>
+                    <h3 style={{ color: '#166534', fontSize: '18px', fontWeight: 700 } as any}>
+                      Climate Analysis AI
+                    </h3>
+                  </div>
+                  
+                  <div style={{ marginBottom: '20px' } as any}>
+                    <input
+                      type="text"
+                      placeholder="Location (e.g., 'New York, USA')"
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        border: '1px solid #bbf7d0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        marginBottom: '10px'
+                      } as any}
+                    />
+                    <select style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '1px solid #bbf7d0',
+                      borderRadius: '8px',
+                      fontSize: '14px'
+                    } as any}>
+                      <option>7-Day Forecast</option>
+                      <option>30-Day Climate Trends</option>
+                      <option>Seasonal Analysis</option>
+                      <option>Extreme Weather Prediction</option>
+                    </select>
+                  </div>
+                  
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '10px'
+                  } as any}>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 15px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      🌤️ Analyze Climate
+                    </button>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 15px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      📊 View Trends
+                    </button>
+                  </div>
+                  
+                  <div style={{
+                    marginTop: '15px',
+                    padding: '12px',
+                    background: '#f0f9ff',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    color: '#0c4a6e'
+                  } as any}>
+                    🌐 AI weather models processing global data
+                  </div>
+                </div>
+
+                {/* Carbon Footprint AI */}
+                <div style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  padding: '30px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #dcfce7',
+                  transition: 'all 0.3s ease'
+                } as any}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '20px'
+                  } as any}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '12px',
+                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: '15px',
+                      fontSize: '18px'
+                    } as any}>🌍</div>
+                    <h3 style={{ color: '#166534', fontSize: '18px', fontWeight: 700 } as any}>
+                      Carbon Intelligence AI
+                    </h3>
+                  </div>
+                  
+                  <div style={{ marginBottom: '20px' } as any}>
+                    <select style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '1px solid #bbf7d0',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      marginBottom: '10px'
+                    } as any}>
+                      <option>Personal Carbon Footprint</option>
+                      <option>Corporate Emissions</option>
+                      <option>Supply Chain Analysis</option>
+                      <option>Product Lifecycle</option>
+                    </select>
+                    <input
+                      type="number"
+                      placeholder="Monthly Energy Usage (kWh)"
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        border: '1px solid #bbf7d0',
+                        borderRadius: '8px',
+                        fontSize: '14px'
+                      } as any}
+                    />
+                  </div>
+                  
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '10px'
+                  } as any}>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 15px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      📈 Calculate CO₂
+                    </button>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 15px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      🌱 Offset Plan
+                    </button>
+                  </div>
+                  
+                  <div style={{
+                    marginTop: '15px',
+                    padding: '12px',
+                    background: '#fef3c7',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    color: '#92400e'
+                  } as any}>
+                    📊 Real-time emissions tracking active
+                  </div>
+                </div>
+
+                {/* Sustainability Optimizer */}
+                <div style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  padding: '30px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #dcfce7',
+                  transition: 'all 0.3s ease'
+                } as any}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginBottom: '20px'
+                  } as any}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '12px',
+                      background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginRight: '15px',
+                      fontSize: '18px'
+                    } as any}>♻️</div>
+                    <h3 style={{ color: '#166534', fontSize: '18px', fontWeight: 700 } as any}>
+                      Sustainability AI
+                    </h3>
+                  </div>
+                  
+                  <div style={{ marginBottom: '20px' } as any}>
+                    <input
+                      type="text"
+                      placeholder="Organization or Project Name"
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        border: '1px solid #bbf7d0',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        marginBottom: '10px'
+                      } as any}
+                    />
+                    <select style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '1px solid #bbf7d0',
+                      borderRadius: '8px',
+                      fontSize: '14px'
+                    } as any}>
+                      <option>Energy Efficiency Audit</option>
+                      <option>Waste Management Plan</option>
+                      <option>Renewable Energy Strategy</option>
+                      <option>Sustainable Supply Chain</option>
+                    </select>
+                  </div>
+                  
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '10px'
+                  } as any}>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 15px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      🔍 Analyze
+                    </button>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '10px 15px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      📋 Report
+                    </button>
+                  </div>
+                  
+                  <div style={{
+                    marginTop: '15px',
+                    padding: '12px',
+                    background: '#f0fdf4',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                    color: '#166534'
+                  } as any}>
+                    🎯 Optimization algorithms ready
+                  </div>
+                </div>
+              </div>
+
+              {/* Environmental Analytics & TypeScript Engine */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '2fr 1fr',
+                gap: '30px',
+                marginBottom: '40px'
+              } as any}>
+                
+                {/* Environmental TypeScript Scripts */}
+                <div style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  padding: '30px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #dcfce7'
+                } as any}>
+                  <h3 style={{
+                    color: '#166534',
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    marginBottom: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px'
+                  } as any}>
+                    🧮 Environmental TypeScript Engine
+                  </h3>
+                  
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '15px',
+                    marginBottom: '20px'
+                  } as any}>
+                    <div style={{
+                      padding: '15px',
+                      background: '#f0fdf4',
+                      borderRadius: '12px',
+                      border: '1px solid #bbf7d0'
+                    } as any}>
+                      <h4 style={{ color: '#166534', fontSize: '14px', fontWeight: 600, marginBottom: '8px' } as any}>
+                        🌍 Global Climate Models
+                      </h4>
+                      <div style={{ fontSize: '12px', color: '#15803d' } as any}>
+                        • Temperature Prediction AI<br/>
+                        • Sea Level Analysis<br/>
+                        • Weather Pattern Recognition
+                      </div>
+                    </div>
+                    
+                    <div style={{
+                      padding: '15px',
+                      background: '#f0f9ff',
+                      borderRadius: '12px',
+                      border: '1px solid #bae6fd'
+                    } as any}>
+                      <h4 style={{ color: '#0c4a6e', fontSize: '14px', fontWeight: 600, marginBottom: '8px' } as any}>
+                        💧 Resource Management
+                      </h4>
+                      <div style={{ fontSize: '12px', color: '#0369a1' } as any}>
+                        • Water Conservation AI<br/>
+                        • Energy Optimization<br/>
+                        • Waste Reduction Models
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div style={{
+                    background: '#1e293b',
+                    borderRadius: '8px',
+                    padding: '15px',
+                    marginBottom: '15px'
+                  } as any}>
+                    <div style={{ color: '#94a3b8', fontSize: '12px', marginBottom: '8px' } as any}>
+                      Environmental AI TypeScript Engine:
+                    </div>
+                    <div style={{ 
+                      fontFamily: 'monospace', 
+                      color: '#10b981', 
+                      fontSize: '11px',
+                      lineHeight: '1.4'
+                    } as any}>
+                      {`// Environmental AI Analysis
+interface ClimateData {
+  temperature: number[]
+  humidity: number[]
+  co2Levels: number
+  location: GeoCoordinates
+}
+
+const analyzeEnvironmentalData = (data: ClimateData): EcoAnalysis => {
+  const aiModel = new EnvironmentalNeuralNetwork()
+  const predictions = aiModel.predict(data)
+  
+  return {
+    climateRisk: predictions.riskLevel,
+    sustainability: predictions.sustainabilityScore,
+    recommendations: predictions.actionPlan
+  }
+}`}
+                    </div>
+                  </div>
+                  
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr 1fr',
+                    gap: '10px'
+                  } as any}>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '8px 12px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      🌡️ Climate Model
+                    </button>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '8px 12px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      ▶️ Run Analysis
+                    </button>
+                    <button style={{
+                      background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '8px',
+                      padding: '8px 12px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer'
+                    } as any}>
+                      📊 Export Data
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Real-time Environmental Metrics */}
+                <div style={{
+                  background: '#ffffff',
+                  borderRadius: '16px',
+                  padding: '30px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid #dcfce7'
+                } as any}>
+                  <h3 style={{
+                    color: '#166534',
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    marginBottom: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  } as any}>
+                    ⚡ Live Eco AI
+                    <div style={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: isConnected ? '#22c55e' : '#ef4444',
+                      animation: isConnected ? 'pulse 2s infinite' : 'none'
+                    } as any}></div>
+                  </h3>
+                  
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '15px'
+                  } as any}>
+                    <div style={{
+                      textAlign: 'center',
+                      padding: '12px',
+                      background: '#f0fdf4',
+                      borderRadius: '8px'
+                    } as any}>
+                      <div style={{ fontSize: '18px', fontWeight: 700, color: '#22c55e' } as any}>
+                        {agiMetrics.neuralConnections}
+                      </div>
+                      <div style={{ fontSize: '10px', color: '#166534' } as any}>Climate Sensors</div>
+                    </div>
+                    
+                    <div style={{
+                      textAlign: 'center',
+                      padding: '12px',
+                      background: '#f0f9ff',
+                      borderRadius: '8px'
+                    } as any}>
+                      <div style={{ fontSize: '18px', fontWeight: 700, color: '#3b82f6' } as any}>
+                        {agiMetrics.processingSpeed}
+                      </div>
+                      <div style={{ fontSize: '10px', color: '#1d4ed8' } as any}>Processing Speed</div>
+                    </div>
+                    
+                    <div style={{
+                      textAlign: 'center',
+                      padding: '12px',
+                      background: '#fef3c7',
+                      borderRadius: '8px'
+                    } as any}>
+                      <div style={{ fontSize: '18px', fontWeight: 700, color: '#f59e0b' } as any}>
+                        {(parseFloat(agiMetrics.learningRate) * 100).toFixed(1)}%
+                      </div>
+                      <div style={{ fontSize: '10px', color: '#92400e' } as any}>Accuracy Rate</div>
+                    </div>
+                    
+                    <div style={{
+                      textAlign: 'center',
+                      padding: '12px',
+                      background: '#f8fafc',
+                      borderRadius: '8px'
+                    } as any}>
+                      <div style={{ fontSize: '18px', fontWeight: 700, color: '#64748b' } as any}>
+                        {agiMetrics.latency}ms
+                      </div>
+                      <div style={{ fontSize: '10px', color: '#475569' } as any}>Response Time</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Advanced Environmental AI Concepts */}
+              <div style={{
+                background: '#ffffff',
+                borderRadius: '16px',
+                padding: '30px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                border: '1px solid #dcfce7'
+              } as any}>
+                <h3 style={{
+                  color: '#166534',
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  marginBottom: '20px'
+                } as any}>
+                  🌍 Advanced Environmental AI Systems
+                </h3>
+                
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '20px'
+                } as any}>
+                  <div style={{
+                    padding: '20px',
+                    background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
+                    borderRadius: '12px',
+                    border: '1px solid #bbf7d0'
+                  } as any}>
+                    <h4 style={{ color: '#166534', fontSize: '16px', fontWeight: 600, marginBottom: '10px' } as any}>
+                      🌊 Ocean AI Intelligence
+                    </h4>
+                    <p style={{ color: '#15803d', fontSize: '12px', marginBottom: '10px' } as any}>
+                      Advanced marine ecosystem monitoring, sea level prediction, and ocean health analysis
+                    </p>
+                    <div style={{ fontSize: '11px', color: '#166534' } as any}>
+                      • Marine biodiversity tracking<br/>
+                      • Ocean temperature analysis<br/>
+                      • Coral reef health monitoring
+                    </div>
+                  </div>
+                  
+                  <div style={{
+                    padding: '20px',
+                    background: 'linear-gradient(135deg, #f0f9ff, #dbeafe)',
+                    borderRadius: '12px',
+                    border: '1px solid #bae6fd'
+                  } as any}>
+                    <h4 style={{ color: '#0c4a6e', fontSize: '16px', fontWeight: 600, marginBottom: '10px' } as any}>
+                      🌱 Ecosystem AI Guardian
+                    </h4>
+                    <p style={{ color: '#0369a1', fontSize: '12px', marginBottom: '10px' } as any}>
+                      Forest health monitoring, biodiversity protection, and ecosystem restoration planning
+                    </p>
+                    <div style={{ fontSize: '11px', color: '#0c4a6e' } as any}>
+                      • Deforestation detection<br/>
+                      • Species population tracking<br/>
+                      • Habitat restoration AI
+                    </div>
+                  </div>
+                  
+                  <div style={{
+                    padding: '20px',
+                    background: 'linear-gradient(135deg, #fef3c7, #fde68a)',
+                    borderRadius: '12px',
+                    border: '1px solid #fcd34d'
+                  } as any}>
+                    <h4 style={{ color: '#92400e', fontSize: '16px', fontWeight: 600, marginBottom: '10px' } as any}>
+                      ⚡ Smart Grid Eco AI
+                    </h4>
+                    <p style={{ color: '#a16207', fontSize: '12px', marginBottom: '10px' } as any}>
+                      Renewable energy optimization, smart grid management, and clean energy distribution
+                    </p>
+                    <div style={{ fontSize: '11px', color: '#92400e' } as any}>
+                      • Solar/wind optimization<br/>
+                      • Energy storage management<br/>
+                      • Grid stability analysis
+                    </div>
+                  </div>
+                  
+                  <div style={{
+                    padding: '20px',
+                    background: 'linear-gradient(135deg, #fdf2f8, #fce7f3)',
+                    borderRadius: '12px',
+                    border: '1px solid #f9a8d4'
+                  } as any}>
+                    <h4 style={{ color: '#be185d', fontSize: '16px', fontWeight: 600, marginBottom: '10px' } as any}>
+                      🏙️ Urban Sustainability AI
+                    </h4>
+                    <p style={{ color: '#be185d', fontSize: '12px', marginBottom: '10px' } as any}>
+                      Smart city environmental management, air quality monitoring, and urban planning optimization
+                    </p>
+                    <div style={{ fontSize: '11px', color: '#be185d' } as any}>
+                      • Air quality prediction<br/>
+                      • Traffic emission analysis<br/>
+                      • Green infrastructure planning
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )

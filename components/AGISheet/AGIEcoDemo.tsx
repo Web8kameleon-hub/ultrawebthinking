@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import { AGIEco } from './AGIEco';
+import { AGIEco } from '../../frontend/src/components/AGISheet/AGIEco';
 import styles from './AGIEcoDemo.module.css';
 
 const containerVariants = cva(styles.container, {

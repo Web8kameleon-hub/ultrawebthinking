@@ -5,30 +5,34 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cva } from 'class-variance-authority';
 import dynamic from 'next/dynamic';
 
-// Next.js Dynamic imports - Pure TypeScript with named exports
-const AGICore = dynamic(() => import('@/components/AGISheet/AGICoreUltra').then(mod => ({ default: mod.AGICoreUltra })), {
-  loading: () => <div className="animate-pulse">Loading AGI Core...</div>
-});
+// Next.js Dynamic imports - Pure TypeScript 
+// Update the import path and export to match the actual file/component name
+// Removed AGICore dynamic import due to missing module
 
-const AGISheet = dynamic(() => import('@/components/AGISheet/AGISheet').then(mod => ({ default: mod.AGISheet })), {
+const AGISheet = dynamic(() => import('../../frontend/src/components/AGISheet/AGISheet').then(m => ({ default: m.AGISheet })), {
   loading: () => <div className="animate-pulse">Loading AGI Sheet...</div>
 });
 
-const AGIMed = dynamic(() => import('@/components/AGISheet/AGIMedUltra').then(mod => ({ default: mod.AGIMedUltra })), {
+const AGIMedUltra = dynamic(() => import('../../frontend/src/components/AGISheet/AGIMedUltra').then(m => ({ default: m.AGIMedUltra })), {
   loading: () => <div className="animate-pulse">Loading AGI Med...</div>
 });
 
-const AGIBioNature = dynamic(() => import('@/components/AGISheet/AGIBioNature').then(mod => ({ default: mod.AGIBioNature })), {
+const AGIBioNatureDemo = dynamic(() => import('../../frontend/src/components/AGISheet/AGIBioNatureDemo').then(m => ({ default: m.AGIBioNatureDemo })), {
   loading: () => <div className="animate-pulse">Loading AGI Bio...</div>
 });
 
-const AGIEco = dynamic(() => import('@/components/AGISheet/AGIEco').then(mod => ({ default: mod.AGIEco })), {
+const AGIEco = dynamic(() => import('../../frontend/src/components/AGISheet/AGIEco').then(m => ({ default: m.AGIEco })), {
   loading: () => <div className="animate-pulse">Loading AGI Eco...</div>
 });
 
-const OpenMindChat = dynamic(() => import('@/components/OpenMindChat').then(mod => ({ default: mod.OpenMindChat })), {
-  loading: () => <div className="animate-pulse">Loading Chat...</div>
+const AGICoreUltra = dynamic(() => import('../../frontend/src/components/AGISheet/AGICoreUltra').then(m => ({ default: m.AGICoreUltra })), {
+  loading: () => <div className="animate-pulse">Loading AGI Core...</div>
 });
+
+// TODO: Fix import path if OpenMindChat exists, or remove this dynamic import and related tab if not needed.
+// const OpenMindChat = dynamic(() => import('@/components/chat/OpenMindChat').then(m => ({ default: m.OpenMindChat })), {
+//   loading: () => <div className="animate-pulse">Loading Chat...</div>
+// });
 
 // CVA për royal design styling
 const tabVariants = cva(
@@ -68,10 +72,9 @@ const cardVariants = cva(
     }
   }
 );
-
-type TabType = 'agimed' | 'agicore' | 'agiei' | 'agisheet' | 'agibionature' | 'openmind-chat';
-
-interface TabConfig {
+type TabType = 'agimed' | 'agiei' | 'agisheet' | 'agibionature' | 'agicore';
+// Updated to include 'agicore' since AGICoreUltra component exists
+type TabConfig = {
   id: TabType;
   label: string;
   icon: string;
@@ -79,7 +82,7 @@ interface TabConfig {
 }
 
 const AGIDashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('agicore');
+  const [activeTab, setActiveTab] = useState<TabType>('agisheet');
   const [loading, setLoading] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState<number>(0);
   const [liveData, setLiveData] = useState<any>({});
@@ -113,12 +116,12 @@ const AGIDashboard: React.FC = () => {
   }, []);
 
   const tabs: TabConfig[] = [
-    { id: 'agicore', label: 'AGI Core', icon: '🧠', component: AGICore },
     { id: 'agisheet', label: 'AGI Sheet', icon: '📊', component: AGISheet },
-    { id: 'agimed', label: 'AGI Med', icon: '🏥', component: AGIMed },
-    { id: 'agibionature', label: 'AGI Bio Nature', icon: '🌿', component: AGIBioNature },
+    { id: 'agimed', label: 'AGI Med', icon: '🏥', component: AGIMedUltra },
+    { id: 'agibionature', label: 'AGI Bio Nature', icon: '🌿', component: AGIBioNatureDemo },
     { id: 'agiei', label: 'AGI Eco Intelligence', icon: '💰', component: AGIEco },
-    { id: 'openmind-chat', label: 'OpenMind Chat', icon: '💬', component: OpenMindChat }
+    { id: 'agicore', label: 'AGI Core', icon: '🧠', component: AGICoreUltra }
+    // Removed OpenMind Chat tab due to missing component
   ];
 
   const handleTabClick = async (tabId: TabType) => {

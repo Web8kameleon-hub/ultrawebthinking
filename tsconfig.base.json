@@ -1,43 +1,87 @@
 {
+  /**
+   * 🏗️ UltraWeb Base TypeScript Configuration
+   * Konfigurimi qendror për monorepo të pastër pa dist/
+   * @author Ledjan Ahmati
+   * @version 8.1.0-MONOREPO-CLEAN
+   */
   "compilerOptions": {
+    // Target dhe libs
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "ES2022"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strict": true,
-    "noEmit": true,
-    "allowJs": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    
+    // Module system (optimized për monorepo)
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
     "checkJs": false,
+    
+    // React/JSX
     "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    
+    // Type checking (strict për cilësi)
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    
+    // Emit behavior (PA DISK OUTPUT)
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    
+    // Resolution
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
+    
+    // Incremental builds për performance
+    "incremental": true,
+    "tsBuildInfoFile": ".tsbuildinfo",
+    
+    // Path mapping (MONOREPO ALIASES)
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@components/*": ["components/*"],
-      "@lib/*": ["lib/*"],
-      "@styles/*": ["styles/*"],
+      "@agi/*": ["backend/src/agi/*"],
+      "@api/*": ["backend/src/api/*"],
+      "@shared/*": ["shared/src/*"],
+      "@lib/*": ["shared/src/lib/*"],
+      "@types/*": ["shared/src/types/*"],
+      "@components/*": ["frontend/src/components/*", "components/*"],
+      "@pages/*": ["frontend/src/pages/*"],
+      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["shared/src/utils/*"],
+      "@styles/*": ["frontend/src/styles/*", "styles/*"],
       "@app/*": ["app/*"]
     }
   },
+  
+  // Global includes (gjithçka TypeScript)
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "**/*.mts"
+    "**/*.mts",
+    "next-env.d.ts"
   ],
+  
+  // Global excludes (PA DIST/BUILD)
   "exclude": [
     "node_modules",
     ".next",
-    "dist",
+    "out",
+    "coverage",
     "**/*.js",
-    "**/*.jsx",
+    "**/*.jsx", 
     "**/*.cjs",
     "**/*.mjs",
+    "**/_archive/**",
+    "**/blocked/**",
     "eslint.config.*",
-    "**/eslint.config.*"
+    "**/eslint.config.*",
+    "**/.tsbuildinfo"
   ]
 }

@@ -6,14 +6,14 @@
  * @version 8.0.0 Ultra
  */
 
-import { LoadingSpinner } from '../components/LoadingSpinner'
+import { LoadingSpinner } from '../frontend/src/components/LoadingSpinner'
 import styles from './loading.module.css'
 
 export default function Loading() {
   return (
-    <div className={styles.container}>
+    <div className={styles['container']}>
       <LoadingSpinner size="large" />
-      <p className={styles.text}>Loading EuroWeb Ultra Platform...</p>
+      <p className={styles['text']}>Loading EuroWeb Ultra Platform...</p>
     </div>
   )
 }

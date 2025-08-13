@@ -9,6 +9,36 @@
 
 import NeuralPlanner from './NeuralPlanner';
 
+// Event interfaces for type safety
+interface EthicalViolationData {
+  nodeId: string;
+  severity: string;
+  action: string;
+}
+
+interface SafeThinkActivatedData {
+  duration: number;
+  reason: string;
+}
+
+interface NodeOverloadData {
+  nodeId: string;
+  pulseRate: number;
+}
+
+interface NetworkNode {
+  id: string;
+  activity?: number;
+  pulseRate?: number;
+  flickering?: number;
+  status?: string;
+}
+
+interface NetworkStatus {
+  nodes: NetworkNode[];
+  safeThinkActive?: boolean;
+}
+
 // Types for ethical system
 export interface Web8EthicalContext {
   action: string;
@@ -179,7 +209,7 @@ function calculateComplianceScore(action: string): number {
 }
 
 function generateRecommendations(action: string, riskLevel: number): string[] {
-  const recommendations = [];
+  const recommendations: string[] = [];
   
   if (riskLevel > 70) {
     recommendations.push('Consider alternative approaches');
@@ -196,7 +226,7 @@ function generateRecommendations(action: string, riskLevel: number): string[] {
 }
 
 function generateSafeguards(action: string, riskLevel: number): string[] {
-  const safeguards = ['Audit logging enabled'];
+  const safeguards: string[] = ['Audit logging enabled'];
   
   if (riskLevel > 50) {
     safeguards.push('Rate limiting active');
@@ -248,7 +278,7 @@ export class EthicalNeuralPlanner {
    */
   private setupEthicalMonitoring(): void {
     // Monitor for ethical violations
-    this.planner.on('ethicalViolation', (data: any) => {
+    this.planner.on('ethicalViolation', (data: EthicalViolationData) => {
       console.error('🚨 STRICT ETHICAL VIOLATION DETECTED:');
       console.error(`   Node: ${data.nodeId}`);
       console.error(`   Severity: ${data.severity}`);
@@ -257,7 +287,7 @@ export class EthicalNeuralPlanner {
     });
 
     // Monitor SafeThink activation
-    this.planner.on('strictSafeThinkActivated', (data: any) => {
+    this.planner.on('strictSafeThinkActivated', (data: SafeThinkActivatedData) => {
       console.log('🛡️ STRICT SAFETHINK MODE ACTIVE:');
       console.log(`   Duration: ${data.duration}ms`);
       console.log(`   Reason: ${data.reason}`);
@@ -265,7 +295,7 @@ export class EthicalNeuralPlanner {
     });
 
     // Monitor input overload
-    this.planner.on('nodeOverload', (data: any) => {
+    this.planner.on('nodeOverload', (data: NodeOverloadData) => {
       if (data.nodeId === 'n1') {
         console.warn(`⚠️ N1 INPUT OVERLOAD: ${data.pulseRate.toFixed(2)}Hz`);
       }
@@ -275,9 +305,9 @@ export class EthicalNeuralPlanner {
   /**
    * Get network status with ethical analysis
    */
-  public getNetworkStatus(): any {
+  public getNetworkStatus(): NetworkStatus & { ethicalCompliance: any } {
     const status = this.planner.getNetworkStatus();
-    const n7 = status.nodes.find((n: any) => n.id === 'n7');
+    const n7 = status.nodes.find((n: NetworkNode) => n.id === 'n7');
     
     return {
       ...status,
@@ -300,6 +330,7 @@ export class EthicalNeuralPlanner {
     
     // Create n7Data structure from available data
     const n7Data = {
+      id: 'n7',
       activity: n7Activity,
       flickering: n7Activity > 90 ? n7Activity - 85 : 0, // Simulate flickering based on activity
     };
@@ -320,7 +351,7 @@ export class EthicalNeuralPlanner {
   /**
    * Calculate ethical risk level
    */
-  private calculateEthicalRisk(n7Data: any): string {
+  private calculateEthicalRisk(n7Data: NetworkNode | null | undefined): string {
     if (!n7Data) return 'UNKNOWN';
     
     const flickering = n7Data.flickering || 0;
@@ -335,7 +366,7 @@ export class EthicalNeuralPlanner {
   /**
    * Get ethical recommendations
    */
-  private getEthicalRecommendations(n7Data: any): string[] {
+  private getEthicalRecommendations(n7Data: NetworkNode | null | undefined): string[] {
     const recommendations: string[] = [];
     
     if (!n7Data) {
