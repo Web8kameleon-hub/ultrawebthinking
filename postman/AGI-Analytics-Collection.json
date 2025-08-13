@@ -1,0 +1,436 @@
+{
+  "info": {
+    "name": "AGI Analytics - Professional API Collection",
+    "description": "Complete API collection for UltraWeb AGI Analytics Platform with 27+ advanced functions",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "8.0.0-WEB8"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{auth_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "vercel_url",
+      "value": "https://ultrawebthinking.vercel.app",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "AGI Analytics - POST Endpoints",
+      "item": [
+        {
+          "name": "Add Data Point",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"add_data_point\",\n  \"category\": \"sales\",\n  \"value\": 1250.75,\n  \"metadata\": {\n    \"region\": \"Europe\",\n    \"product\": \"AGI Analytics Pro\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Advanced Statistics",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"advanced_statistics\",\n  \"dataset\": [12, 15, 18, 22, 25, 28, 32, 35, 38, 42]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Correlation Analysis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"correlation_analysis\",\n  \"datasetX\": [1, 2, 3, 4, 5],\n  \"datasetY\": [2, 4, 6, 8, 10]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Trend Detection",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"trend_detection\",\n  \"timeSeries\": [100, 105, 103, 108, 112, 115, 118, 120, 125],\n  \"algorithm\": \"linear\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Anomaly Detection",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"anomaly_detection\",\n  \"data\": [10, 12, 11, 13, 45, 12, 11, 14, 13],\n  \"threshold\": 2.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Data Clustering",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"data_clustering\",\n  \"points\": [[1, 2], [2, 3], [3, 4], [8, 9], [9, 10], [10, 11]],\n  \"clusters\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Predictive Modeling",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"predictive_modeling\",\n  \"trainingData\": [[1, 100], [2, 200], [3, 300], [4, 400]],\n  \"modelType\": \"linear_regression\",\n  \"features\": [\"time\", \"sales\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Sentiment Analysis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"sentiment_analysis\",\n  \"textData\": \"I absolutely love this AGI Analytics platform! It's amazing and very powerful.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        },
+        {
+          "name": "Monte Carlo Simulation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"monte_carlo_simulation\",\n  \"parameters\": {\n    \"mean\": 100,\n    \"stdDev\": 15,\n    \"trials\": 1000\n  },\n  \"iterations\": 10000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AGI Analytics - GET Endpoints",
+      "item": [
+        {
+          "name": "Get Prediction Models",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics?action=get_models",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "get_models"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Analytics Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics?action=get_analytics_dashboard",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "get_analytics_dashboard"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Available Algorithms",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics?action=get_algorithms",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "get_algorithms"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get System Metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics?action=get_system_metrics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "get_system_metrics"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/agi-analytics?action=health_check",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-analytics"],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "health_check"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AGI Office API",
+      "item": [
+        {
+          "name": "Mathematical Calculation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"calculate\",\n  \"expression\": \"2 + 3 * 4 - 1\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-office",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-office"]
+            }
+          }
+        },
+        {
+          "name": "Text Analysis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"analyze_text\",\n  \"text\": \"This is a professional business email that requires careful analysis for sentiment and tone.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-office",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-office"]
+            }
+          }
+        },
+        {
+          "name": "Document Scanning",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"scan_document\",\n  \"quality\": \"high\",\n  \"colorMode\": \"color\",\n  \"format\": \"pdf\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-office",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-office"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AGI Electronics API",
+      "item": [
+        {
+          "name": "Add Electronic Device",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"add_device\",\n  \"device\": {\n    \"name\": \"Smart Sensor Pro\",\n    \"type\": \"sensor\",\n    \"model\": \"SSP-2024\",\n    \"manufacturer\": \"TechCorp\",\n    \"location\": \"Building A - Floor 2\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-electronics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-electronics"]
+            }
+          }
+        },
+        {
+          "name": "Analyze Circuit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"analyze_circuit\",\n  \"circuit\": {\n    \"type\": \"dc\",\n    \"voltage\": 12,\n    \"current\": 2.5,\n    \"resistance\": 4.8\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/agi-electronics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "agi-electronics"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
