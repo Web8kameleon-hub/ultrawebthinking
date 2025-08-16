@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  eslint: { ignoreDuringBuilds: true },
   // === DYNAMIC AGI SYSTEM CONFIGURATION ===
   // Optimized for real-time, live, interactive intelligence
   

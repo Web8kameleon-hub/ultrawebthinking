@@ -23,3 +23,5 @@ export const metadata = {
   description: 'Industrial-grade DDoS protection and threat monitoring for Web8 platform',
   keywords: 'security, ddos protection, threat monitoring, guardian, cybersecurity'
 };
+
+

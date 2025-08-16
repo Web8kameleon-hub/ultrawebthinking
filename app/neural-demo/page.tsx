@@ -9,7 +9,7 @@
 
 import * as React from 'react';
 
-import NeuralDashboard from '../../frontend/src/components/NeuralDashboard';
+import NeuralDashboard from '@/components/NeuralDashboard';
 
 // Web8 Functional Component
 export default function NeuralDemo() {
@@ -25,3 +25,4 @@ export const metadata = {
   description: 'Real-time AGI neural network monitoring with n1 and n7 pulse detection',
   keywords: 'neural network, agi, artificial intelligence, monitoring, n1, n7, pulse detection'
 };
+

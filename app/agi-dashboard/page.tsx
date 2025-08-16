@@ -9,23 +9,23 @@ import dynamic from 'next/dynamic';
 // Update the import path and export to match the actual file/component name
 // Removed AGICore dynamic import due to missing module
 
-const AGISheet = dynamic(() => import('../../frontend/src/components/AGISheet/AGISheet').then(m => ({ default: m.AGISheet })), {
+const AGISheet = dynamic(() => import('@/components/AGISheet/AGISheet').then(m => ({ default: m.AGISheet })), {
   loading: () => <div className="animate-pulse">Loading AGI Sheet...</div>
 });
 
-const AGIMedUltra = dynamic(() => import('../../frontend/src/components/AGISheet/AGIMedUltra').then(m => ({ default: m.AGIMedUltra })), {
+const AGIMedUltra = dynamic(() => import('@/components/AGISheet/AGIMedUltra').then(m => ({ default: m.AGIMedUltra })), {
   loading: () => <div className="animate-pulse">Loading AGI Med...</div>
 });
 
-const AGIBioNatureDemo = dynamic(() => import('../../frontend/src/components/AGISheet/AGIBioNatureDemo').then(m => ({ default: m.AGIBioNatureDemo })), {
+const AGIBioNatureDemo = dynamic(() => import('@/components/AGISheet/AGIBioNatureDemo').then(m => ({ default: m.AGIBioNatureDemo })), {
   loading: () => <div className="animate-pulse">Loading AGI Bio...</div>
 });
 
-const AGIEco = dynamic(() => import('../../frontend/src/components/AGISheet/AGIEco').then(m => ({ default: m.AGIEco })), {
+const AGIEco = dynamic(() => import('@/components/AGISheet/AGIEco').then(m => ({ default: m.AGIEco })), {
   loading: () => <div className="animate-pulse">Loading AGI Eco...</div>
 });
 
-const AGICoreUltra = dynamic(() => import('../../frontend/src/components/AGISheet/AGICoreUltra').then(m => ({ default: m.AGICoreUltra })), {
+const AGICoreUltra = dynamic(() => import('@/components/AGISheet/AGICoreUltra').then(m => ({ default: m.AGICoreUltra })), {
   loading: () => <div className="animate-pulse">Loading AGI Core...</div>
 });
 
@@ -301,3 +301,6 @@ const AGIDashboard: React.FC = () => {
 };
 
 export default AGIDashboard;
+
+
+

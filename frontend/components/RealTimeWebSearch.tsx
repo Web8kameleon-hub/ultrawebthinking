@@ -9,7 +9,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
-import { useAGIRealTime } from '../hooks/useAGIRealTime'
+import { useAGIRealTime } from '@/hooks/useAGIRealTime'
 
 interface SearchResult {
   id: string
@@ -480,3 +480,4 @@ export const RealTimeWebSearch: React.FC = () => {
 }
 
 export default RealTimeWebSearch
+

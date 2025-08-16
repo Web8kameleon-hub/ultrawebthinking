@@ -122,3 +122,4 @@ bower_components/
 .yarn/install-state.gz
 .pnp.*
 .vercel
+.env*.local

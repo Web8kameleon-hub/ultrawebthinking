@@ -1,12 +1,5 @@
 {
-  /**
-   * 🏗️ UltraWeb Root TypeScript Configuration
-   * @author Ledjan Ahmati
-   * @version 8.1.0-WEB8
-   */
-  // Zgjeroj nga baza
   "extends": "./tsconfig.base.json",
-  // Next.js specifics për root
   "compilerOptions": {
     "plugins": [
       {
@@ -14,9 +7,17 @@
       }
     ],
     "jsx": "preserve",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "paths": {
+      "@/components/*": [
+        "./frontend/components/*",
+        "./frontend/src/components/*"
+      ],
+      "@/*": [
+        "./*"
+      ]
+    }
   },
-  // Include Next.js specifics
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts"

@@ -1,6 +1,6 @@
 "use client";
 
-import { AGIBioNatureDemo } from '../../frontend/src/components/AGISheet/AGIBioNatureDemo';
+import { AGIBioNatureDemo } from '@/components/AGISheet/AGIBioNatureDemo';
 import type { ReactElement } from 'react';
 
 // Named function for better debugging and consistency
@@ -10,3 +10,4 @@ const AGIBioNatureDemoPage = (): ReactElement => {
 
 // Next.js requires default export for pages
 export default AGIBioNatureDemoPage;
+

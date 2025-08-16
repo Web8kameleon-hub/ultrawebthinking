@@ -6,7 +6,7 @@
 'use client'
 
 import React from 'react'
-import { useAGIRealTime } from '../hooks/useAGIRealTime'
+import { useAGIRealTime } from '@/hooks/useAGIRealTime'
 
 export function RealTimeDataTest() {
   const {
@@ -145,3 +145,4 @@ export function RealTimeDataTest() {
     </div>
   )
 }
+
