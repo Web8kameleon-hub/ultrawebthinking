@@ -442,7 +442,7 @@ deploy_vercel() {
     
     if ! command -v vercel &> /dev/null; then
         log_warning "Vercel CLI not found, installing..."
-        npm i -g vercel
+        yarn global add vercel
     fi
     
     vercel --prod

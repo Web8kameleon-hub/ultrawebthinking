@@ -1,5 +1,5 @@
 import { EventEmitter } from 'eventemitter3';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+// import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { z } from 'zod';
 import type { 
   AGISheetConfig, 
@@ -38,11 +38,11 @@ const AGISheetConfigSchema = z.object({
  * Një Excel me tru AGI që mund të kthehet në çdo gjë
  */
 export class AGISheetCore extends EventEmitter {
-  private config: AGISheetConfig;
-  private cells: Map<string, CellData> = new Map();
-  private layers: Map<string, LayerStatus> = new Map();
-  private kameleonMode: BehaviorSubject<KameleonModeType>;
-  private commandStream: Subject<OperationalCommand> = new Subject();
+  private readonly config: AGISheetConfig;
+  private readonly cells: Map<string, CellData> = new Map();
+  private readonly layers: Map<string, LayerStatus> = new Map();
+  private kameleonMode: KameleonModeType;
+  private commandQueue: OperationalCommand[] = [];
   private isActive = false;
 
   constructor(config: Partial<AGISheetConfig> = {}) {
@@ -61,8 +61,7 @@ export class AGISheetCore extends EventEmitter {
     });
 
     this.config = validatedConfig;
-    this.kameleonMode = new BehaviorSubject(validatedConfig.mode);
-    
+    this.kameleonMode = validatedConfig.mode;
     this.initializeGrid();
     this.setupEventHandlers();
   }
@@ -96,15 +95,8 @@ export class AGISheetCore extends EventEmitter {
    */
   private setupEventHandlers(): void {
     // Kameleon mode changes
-    this.kameleonMode.subscribe(mode => {
-      this.emit('kameleon:modeChanged', { mode, timestamp: Date.now() });
-      this.adaptToMode(mode);
-    });
-
-    // Command stream processing
-    this.commandStream.subscribe(command => {
-      this.processCommand(command);
-    });
+    // No rxjs: use direct method for mode changes
+    // No rxjs: process command queue manually if needed
   }
 
   /**
@@ -149,13 +141,13 @@ export class AGISheetCore extends EventEmitter {
 
     const updatedCell: CellData = {
       ...existingCell,
-      value,
+      value: value !== undefined ? value : existingCell?.value || null,
       formula,
       timestamp: Date.now()
     };
 
     // Validate cell data
-    const validatedCell = CellDataSchema.parse(updatedCell);
+    const validatedCell = CellDataSchema.parse(updatedCell) as CellData;
     this.cells.set(cellId, validatedCell);
 
     this.emit('cell:updated', { cellId, cell: validatedCell });
@@ -201,14 +193,17 @@ export class AGISheetCore extends EventEmitter {
    * Ndryshimi i kameleon mode
    */
   switchKameleonMode(mode: KameleonModeType): void {
-    this.kameleonMode.next(mode);
+    this.kameleonMode = mode;
+    this.emit('kameleon:modeChanged', { mode, timestamp: Date.now() });
+    this.adaptToMode(mode);
   }
 
   /**
    * Dërgimi i komandës operacionale
    */
   sendCommand(command: OperationalCommand): void {
-    this.commandStream.next(command);
+    this.commandQueue.push(command);
+    this.processCommand(command);
   }
 
   /**
@@ -309,7 +304,7 @@ export class AGISheetCore extends EventEmitter {
 
   // Getters
   get currentMode(): KameleonModeType {
-    return this.kameleonMode.value;
+    return this.kameleonMode;
   }
 
   get isActiveSheet(): boolean {

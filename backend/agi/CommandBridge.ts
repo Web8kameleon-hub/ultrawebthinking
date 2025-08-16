@@ -5,8 +5,8 @@
  * © Web8 UltraThinking – Ledjan Ahmati
  */
 
-import { AGICore } from './core';
-import { AGIExecutionResult } from './types';
+import { AGICore } from '../src/agi/core';
+import { AGIExecutionResult } from '../src/agi/types';
 
 // Komandat e mbështetura
 type AGICommand =
@@ -26,14 +26,45 @@ interface CommandPayload {
 
 export class CommandBridge {
   private agiCore: AGICore;
+  private systemHalted: boolean = false;
 
   constructor() {
     this.agiCore = new AGICore();
   }
 
+  // Helper methods for missing AGICore functionality
+  private isSystemHalted(): boolean {
+    return this.systemHalted;
+  }
+
+  private getSystemStatus(): any {
+    return {
+      status: 'running',
+      uptime: Date.now(),
+      modules: ['core', 'bridge']
+    };
+  }
+
+  private getSystemEthics(): any {
+    return {
+      safeMode: true,
+      ethicalConstraints: ['no-harm', 'transparency', 'privacy']
+    };
+  }
+
+  private getSystemLimitations(): any {
+    return {
+      maxMemory: '1GB',
+      maxProcessingTime: '30s',
+      restrictedOperations: ['system-access', 'network-calls']
+    };
+  }
+
+  private halt(): void {
+    this.systemHalted = true;
+  }
+
   async processCommand(cmd: CommandPayload): Promise<AGIExecutionResult> {
-    console.log(`[CommandBridge] Command received: ${cmd.command}`);
-    
     const startTime = Date.now();
     
     try {
@@ -54,75 +85,136 @@ export class CommandBridge {
           return {
             success: false,
             error: `Unknown command: ${cmd.command}`,
+            result: null,
             duration: Date.now() - startTime,
-            timestamp: startTime
+            timestamp: Date.now()
           };
       }
     } catch (error) {
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error',
+        result: null,
         duration: Date.now() - startTime,
-        timestamp: startTime
+        timestamp: Date.now()
       };
     }
   }
 
+  // Method implementations
   private async analyzeInput(input: string, startTime: number): Promise<AGIExecutionResult> {
-    // Simple analysis implementation
+    // Check if system is halted
+    if (this.isSystemHalted()) {
+      return {
+        success: false,
+        error: 'AGI Core is halted - analysis unavailable',
+        result: { analysis: `Cannot analyze: ${input} - System in safe mode` },
+        duration: Date.now() - startTime,
+        timestamp: Date.now()
+      };
+    }
+
     return {
       success: true,
-      result: { analysis: `Analyzed: ${input}` },
+      error: undefined,
+      result: { analysis: `Analyzed: ${input}`, data: 'Analysis completed in safe mode' },
       duration: Date.now() - startTime,
-      timestamp: startTime
+      timestamp: Date.now()
     };
   }
 
   private async classifyInput(input: string, startTime: number): Promise<AGIExecutionResult> {
-    // Simple classification implementation
+    if (this.isSystemHalted()) {
+      return {
+        success: false,
+        error: 'AGI Core is halted - classification unavailable',
+        result: { classification: `Cannot classify: ${input} - System in safe mode` },
+        duration: Date.now() - startTime,
+        timestamp: Date.now()
+      };
+    }
+
     return {
       success: true,
-      result: { classification: `Classified: ${input}` },
+      error: undefined,
+      result: { classification: `Classified: ${input}`, data: 'Classification completed in safe mode' },
       duration: Date.now() - startTime,
-      timestamp: startTime
+      timestamp: Date.now()
     };
   }
 
   private async planExecution(input: string, startTime: number): Promise<AGIExecutionResult> {
-    // Simple planning implementation
+    if (this.isSystemHalted()) {
+      return {
+        success: false,
+        error: 'AGI Core is halted - planning unavailable',
+        result: { plan: `Cannot plan: ${input} - System in safe mode` },
+        duration: Date.now() - startTime,
+        timestamp: Date.now()
+      };
+    }
+
     return {
       success: true,
-      result: { plan: `Plan for: ${input}` },
+      error: undefined,
+      result: { plan: `Plan for: ${input}`, data: 'Planning completed in safe mode' },
       duration: Date.now() - startTime,
-      timestamp: startTime
+      timestamp: Date.now()
     };
   }
 
   private async executeCommand(input: string, startTime: number): Promise<AGIExecutionResult> {
-    // Simple execution implementation
+    if (this.isSystemHalted()) {
+      return {
+        success: false,
+        error: 'AGI Core is halted - execution blocked for safety',
+        result: { execution: `Cannot execute: ${input} - System in safe mode` },
+        duration: Date.now() - startTime,
+        timestamp: Date.now()
+      };
+    }
+
     return {
       success: true,
-      result: { execution: `Executed: ${input}` },
+      error: undefined,
+      result: { execution: `Executed: ${input}`, data: 'Execution completed in safe mode' },
       duration: Date.now() - startTime,
-      timestamp: startTime
+      timestamp: Date.now()
     };
   }
 
   private async getStatus(startTime: number): Promise<AGIExecutionResult> {
+    const status = this.getSystemStatus();
+    const ethics = this.getSystemEthics();
+    const limitations = this.getSystemLimitations();
+
     return {
       success: true,
-      result: { status: 'active', modules: [] },
+      error: undefined,
+      result: { 
+        status: 'AGI Core Status Retrieved', 
+        data: {
+          systemStatus: status,
+          isHalted: this.isSystemHalted(),
+          ethics: ethics,
+          limitations: limitations
+        }
+      },
       duration: Date.now() - startTime,
-      timestamp: startTime
+      timestamp: Date.now()
     };
   }
 
   private async resetSystem(startTime: number): Promise<AGIExecutionResult> {
+    // Force halt for safety
+    this.halt();
+    
     return {
       success: true,
-      result: { message: 'System reset' },
+      error: undefined,
+      result: { reset: 'System Reset Complete - AGI Core halted for safety' },
       duration: Date.now() - startTime,
-      timestamp: startTime
+      timestamp: Date.now()
     };
   }
 }

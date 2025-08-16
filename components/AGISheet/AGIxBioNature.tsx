@@ -1,46 +1,47 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import styles from './AGIxBioNature.module.css';
+import styles from '../../frontend/src/components/AGISheet/AGIBioNature.module.css';
 
 // Lazy import functions for analysis engines to reduce First Load JS
 const loadBiologyEngine = async () => {
-  const { BiologyEngine } = await import('./BiologyEngine');
+  const { BiologyEngine } = await import('../../frontend/src/components/AGISheet/BiologyEngine');
   return new BiologyEngine();
 };
 
 const loadNatureEngine = async () => {
-  const { NatureEngine } = await import('./NatureEngine');
+  const { NatureEngine } = await import('../../frontend/src/components/AGISheet/NatureEngine');
   return new NatureEngine();
 };
 
 const loadMedicalEngine = async () => {
-  const { MedicalEngine } = await import('./MedicalEngine');
+  const { MedicalEngine } = await import('../../frontend/src/components/AGISheet/MedicalEngine');
   return new MedicalEngine();
 };
 
 const loadEcologyEngine = async () => {
-  const { EcologyEngine } = await import('./EcologyEngine');
+  const { EcologyEngine } = await import('../../frontend/src/components/AGISheet/EcologyEngine');
   return new EcologyEngine();
 };
 
-const containerVariants = cva(styles.container, {
+const containerVariants = cva(styles['container'], {
   variants: {
     mode: {
-      biology: styles.biologyMode,
-      nature: styles.natureMode,
-      medical: styles.medicalMode,
-      ecology: styles.ecologyMode,
-      comprehensive: styles.comprehensiveMode
+      biology: styles['biologyMode'],
+      nature: styles['natureMode'],
+      medical: styles['medicalMode'],
+      ecology: styles['ecologyMode'],
+      comprehensive: styles['comprehensiveMode']
     },
     theme: {
-      forest: styles.forestTheme,
-      ocean: styles.oceanTheme,
-      laboratory: styles.laboratoryTheme,
-      ecosystem: styles.ecosystemTheme,
-      medical: styles.medicalTheme
+      forest: styles['forestTheme'],
+      ocean: styles['oceanTheme'],
+      laboratory: styles['laboratoryTheme'],
+      ecosystem: styles['ecosystemTheme'],
+      medical: styles['medicalTheme']
     }
   },
   defaultVariants: {
@@ -49,20 +50,20 @@ const containerVariants = cva(styles.container, {
   }
 });
 
-const panelVariants = cva(styles.panel, {
+const panelVariants = cva(styles['panel'], {
   variants: {
     type: {
-      specimen: styles.specimenPanel,
-      analysis: styles.analysisPanel,
-      research: styles.researchPanel,
-      ecosystem: styles.ecosystemPanel,
-      medical: styles.medicalPanel
+      specimen: styles['specimenPanel'],
+      analysis: styles['analysisPanel'],
+      research: styles['researchPanel'],
+      ecosystem: styles['ecosystemPanel'],
+      medical: styles['medicalPanel']
     },
     status: {
-      active: styles.active,
-      processing: styles.processing,
-      completed: styles.completed,
-      critical: styles.critical
+      active: styles['active'],
+      processing: styles['processing'],
+      completed: styles['completed'],
+      critical: styles['critical']
     }
   }
 });
@@ -153,6 +154,7 @@ export const AGIxBioNature = ({
       const interval = setInterval(updateLiveData, 60000); // Update every minute
       return () => clearInterval(interval);
     }
+    return undefined;
   }, [dataSource]);
 
   // Lazy load engines only when needed for analysis
@@ -417,7 +419,7 @@ export const AGIxBioNature = ({
     }
   }, [biologicalData, ecosystemMetrics, biologyEngine, natureEngine, medicalEngine, ecologyEngine, enginesLoaded, initializeEngines]);
 
-  const calculateCrossCorrelations = async (biology: any, nature: any, medical: any, ecology: any) => {
+  const calculateCrossCorrelations = async (biology: unknown, nature: unknown, medical: unknown, ecology: unknown) => {
     // Calculate correlations between different analysis results
     return {
       biodiversityHealthCorrelation: 0.78,
@@ -443,7 +445,7 @@ export const AGIxBioNature = ({
     try {
       // Simulate research analysis
       const results = await biologyEngine.performResearch(query, biologicalData);
-      setAnalysisResults((prev: any) => ({ ...(prev || {}), research: results }));
+      setAnalysisResults((prev: unknown) => ({ ...(prev || {}), research: results }));
     } catch (error) {
       console.error('Research failed:', error);
     } finally {
@@ -466,412 +468,78 @@ export const AGIxBioNature = ({
     return value.toString();
   };
 
-  const getHealthStatusColor = (status: string): string => {
-    switch (status) {
-      case 'healthy': return '#10b981';
-      case 'endangered': return '#f59e0b';
-      case 'critical': return '#ef4444';
-      case 'extinct': return '#6b7280';
-      default: return '#6b7280';
-    }
-  };
-
-  const getThreatLevelColor = (level: string): string => {
-    switch (level) {
-      case 'low': return '#10b981';
-      case 'medium': return '#f59e0b';
-      case 'high': return '#ef4444';
-      case 'critical': return '#dc2626';
-      default: return '#6b7280';
-    }
-  };
-
   return (
-    <motion.div
-      className={containerVariants({ mode, theme })}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      {/* Header */}
-      <motion.header 
-        className={styles.header}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        <div className={styles.headerContent}>
-          <h1 className={styles.title}>
-            <motion.span
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              🧬
-            </motion.span>
-            AGI×BioNature Intelligence
-          </h1>
-          <div className={styles.controls}>
-            <select 
-              className={styles.categoryFilter}
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-            >
-              <option value="all">All Categories</option>
-              <option value="plant">Plants</option>
-              <option value="animal">Animals</option>
-              <option value="microorganism">Microorganisms</option>
-              <option value="fungi">Fungi</option>
-              <option value="virus">Viruses</option>
-            </select>
-            
-            <div className={styles.researchBox}>
-              <input
-                type="text"
-                className={styles.researchInput}
-                placeholder="Enter research query..."
-                value={researchQuery}
-                onChange={(e) => setResearchQuery(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && performSpecimenResearch(researchQuery)}
-              />
-              <motion.button
-                className={styles.researchButton}
-                onClick={() => performSpecimenResearch(researchQuery)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                🔬 Research
-              </motion.button>
-            </div>
-
-            <motion.button
-              className={styles.analyzeButton}
-              onClick={runComprehensiveAnalysis}
-              disabled={isAnalyzing}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {isAnalyzing ? 
-                (!enginesLoaded ? '⚡ Loading Engines...' : '🧬 Analyzing...') : 
-                '🧠 Run Analysis'
-              }
-            </motion.button>
-          </div>
-        </div>
-      </motion.header>
-
-      {/* Ecosystem Overview */}
-      {ecosystemMetrics && (
-        <motion.section
-          className={styles.ecosystemSection}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
+    <div className={containerVariants({ mode, theme })}>
+      <div className="agi-bionature-header">
+        <h1>AGI × BioNature Research Platform</h1>
+        <p>Advanced biological and ecological analysis system</p>
+      </div>
+      
+      <div className="analysis-controls">
+        <button 
+          onClick={runComprehensiveAnalysis} 
+          disabled={isAnalyzing}
+          className="btn-primary"
         >
-          <h2 className={styles.sectionTitle}>🌍 Ecosystem Overview</h2>
-          <div className={styles.ecosystemGrid}>
-            <motion.div
-              className={panelVariants({ type: 'ecosystem', status: 'active' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className={styles.metricHeader}>
-                <span className={styles.metricName}>Biodiversity Index</span>
-                <span className={styles.metricValue}>{formatNumber(ecosystemMetrics.biodiversityIndex)}</span>
-              </div>
-              <div className={styles.progressBar}>
-                <motion.div 
-                  className={styles.progressFill}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${ecosystemMetrics.biodiversityIndex * 100}%` }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                  style={{ backgroundColor: '#10b981' }}
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              className={panelVariants({ type: 'ecosystem', status: 'active' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className={styles.metricHeader}>
-                <span className={styles.metricName}>Carbon Footprint</span>
-                <span className={styles.metricValue}>{formatNumber(ecosystemMetrics.carbonFootprint)} ppm</span>
-              </div>
-              <div className={styles.carbonIndicator}>
-                <span className={ecosystemMetrics.carbonFootprint > 400 ? styles.high : styles.normal}>
-                  {ecosystemMetrics.carbonFootprint > 400 ? '⚠️ High' : '✅ Normal'}
-                </span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className={panelVariants({ type: 'ecosystem', status: 'active' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className={styles.metricHeader}>
-                <span className={styles.metricName}>Threat Level</span>
-                <span 
-                  className={styles.threatLevel}
-                  style={{ color: getThreatLevelColor(ecosystemMetrics.threatLevel) }}
-                >
-                  {ecosystemMetrics.threatLevel.toUpperCase()}
-                </span>
-              </div>
-            </motion.div>
-
-            <motion.div
-              className={panelVariants({ type: 'ecosystem', status: 'active' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <div className={styles.speciesCount}>
-                <h3>Species Count</h3>
-                {Object.entries(ecosystemMetrics.speciesCount).map(([category, count]) => (
-                  <div key={category} className={styles.speciesItem}>
-                    <span>{category}:</span>
-                    <span>{formatPopulation(count)}</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
-      )}
-
-      {/* Specimen Gallery */}
-      <motion.section
-        className={styles.specimenSection}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <h2 className={styles.sectionTitle}>🔬 Specimen Gallery</h2>
-        <div className={styles.specimenGrid}>
-          {filteredData.map((specimen, index) => (
-            <motion.div
-              key={specimen.id}
-              className={panelVariants({ 
-                type: 'specimen', 
-                status: selectedSpecimen?.id === specimen.id ? 'active' : 'completed' 
-              })}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 + index * 0.1 }}
-              whileHover={{ scale: 1.03, rotateY: 5 }}
-              onClick={() => setSelectedSpecimen(specimen)}
-            >
-              <div className={styles.specimenHeader}>
-                <div className={styles.specimenInfo}>
-                  <h3 className={styles.specimenName}>{specimen.species}</h3>
-                  <span className={styles.specimenCategory}>{specimen.category}</span>
-                </div>
-                <div 
-                  className={styles.healthStatus}
-                  style={{ color: getHealthStatusColor(specimen.properties.healthStatus) }}
-                >
-                  {specimen.properties.healthStatus === 'healthy' ? '🟢' : 
-                   specimen.properties.healthStatus === 'endangered' ? '🟡' :
-                   specimen.properties.healthStatus === 'critical' ? '🔴' : '⚫'}
-                </div>
-              </div>
-
-              <div className={styles.specimenStats}>
-                <div className={styles.stat}>
-                  <span>Population:</span>
-                  <span>{formatPopulation(specimen.properties.population)}</span>
-                </div>
-                <div className={styles.stat}>
-                  <span>Genetic Diversity:</span>
-                  <span>{formatNumber(specimen.properties.geneticDiversity)}</span>
-                </div>
-                <div className={styles.stat}>
-                  <span>Habitat:</span>
-                  <span>{specimen.location.habitat}</span>
-                </div>
-                {specimen.medicalRelevance && (
-                  <div className={styles.stat}>
-                    <span>Medical Potential:</span>
-                    <span>{formatNumber(specimen.medicalRelevance.therapeuticPotential)}</span>
-                  </div>
-                )}
-              </div>
-
-              <div className={styles.environmentalFactors}>
-                <h4>Environmental Conditions</h4>
-                <div className={styles.factorGrid}>
-                  <div className={styles.factor}>
-                    <span>🌡️ {formatNumber(specimen.environmentalFactors.temperature)}°C</span>
-                  </div>
-                  <div className={styles.factor}>
-                    <span>💧 {formatNumber(specimen.environmentalFactors.humidity)}%</span>
-                  </div>
-                  <div className={styles.factor}>
-                    <span>🧪 pH {formatNumber(specimen.environmentalFactors.ph)}</span>
-                  </div>
-                  <div className={styles.factor}>
-                    <span>☣️ Pollution {formatNumber(specimen.environmentalFactors.pollution * 100)}%</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* Medical Insights */}
-      {medicalInsights.length > 0 && (
-        <motion.section
-          className={styles.medicalSection}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6 }}
+          {isAnalyzing ? 'Analyzing...' : 'Run Analysis'}
+        </button>
+        
+        <input
+          type="text"
+          placeholder="Research query..."
+          value={researchQuery}
+          onChange={(e) => setResearchQuery(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && performSpecimenResearch(researchQuery)}
+          className="research-input"
+        />
+        
+        <select 
+          value={filterCategory} 
+          onChange={(e) => setFilterCategory(e.target.value)}
+          className="filter-select"
         >
-          <h2 className={styles.sectionTitle}>💊 Medical Insights</h2>
-          <div className={styles.medicalGrid}>
-            {medicalInsights.map((insight, index) => (
-              <motion.div
-                key={insight.compound}
-                className={panelVariants({ type: 'medical', status: 'completed' })}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 + index * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <div className={styles.compoundHeader}>
-                  <h3 className={styles.compoundName}>{insight.compound}</h3>
-                  <span className={styles.clinicalPhase}>{insight.clinicalTrialPhase}</span>
-                </div>
-                
-                <div className={styles.compoundDetails}>
-                  <div className={styles.detail}>
-                    <span>Source:</span>
-                    <span>{insight.source}</span>
-                  </div>
-                  <div className={styles.detail}>
-                    <span>Class:</span>
-                    <span>{insight.therapeuticClass}</span>
-                  </div>
-                  <div className={styles.detail}>
-                    <span>Efficacy:</span>
-                    <span>{formatNumber(insight.efficacy * 100)}%</span>
-                  </div>
-                  <div className={styles.detail}>
-                    <span>Market Potential:</span>
-                    <span>{formatNumber(insight.marketPotential)}/10</span>
-                  </div>
-                </div>
+          <option value="all">All Categories</option>
+          <option value="plant">Plants</option>
+          <option value="animal">Animals</option>
+          <option value="microorganism">Microorganisms</option>
+          <option value="fungi">Fungi</option>
+          <option value="virus">Viruses</option>
+        </select>
+      </div>
 
-                <div className={styles.sideEffects}>
-                  <h4>Side Effects:</h4>
-                  <div className={styles.effectsList}>
-                    {insight.sideEffects.map(effect => (
-                      <span key={effect} className={styles.effect}>{effect}</span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Analysis Results */}
-      {analysisResults && (
-        <motion.section
-          className={styles.resultsSection}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-        >
-          <h2 className={styles.sectionTitle}>🎯 Analysis Results</h2>
-          <div className={styles.resultsGrid}>
-            <motion.div
-              className={panelVariants({ type: 'analysis', status: 'completed' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3>🧬 Biology Analysis</h3>
-              <pre className={styles.analysisData}>
-                {JSON.stringify(analysisResults.biology, null, 2)}
-              </pre>
-            </motion.div>
-            
-            <motion.div
-              className={panelVariants({ type: 'analysis', status: 'completed' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3>🌿 Nature Assessment</h3>
-              <pre className={styles.analysisData}>
-                {JSON.stringify(analysisResults.nature, null, 2)}
-              </pre>
-            </motion.div>
-            
-            <motion.div
-              className={panelVariants({ type: 'analysis', status: 'completed' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3>💊 Medical Analysis</h3>
-              <pre className={styles.analysisData}>
-                {JSON.stringify(analysisResults.medical, null, 2)}
-              </pre>
-            </motion.div>
-            
-            <motion.div
-              className={panelVariants({ type: 'analysis', status: 'completed' })}
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3>🌍 Ecology Report</h3>
-              <pre className={styles.analysisData}>
-                {JSON.stringify(analysisResults.ecology, null, 2)}
-              </pre>
-            </motion.div>
-
-            {analysisResults.correlations && (
-              <motion.div
-                className={panelVariants({ type: 'analysis', status: 'active' })}
-                whileHover={{ scale: 1.02 }}
-              >
-                <h3>🔗 Cross-Correlations</h3>
-                <div className={styles.correlationsList}>
-                  {Object.entries(analysisResults.correlations).map(([key, value]) => (
-                    <div key={key} className={styles.correlation}>
-                      <span>{key.replace(/([A-Z])/g, ' $1').toLowerCase()}:</span>
-                      <span className={styles.correlationValue}>{formatNumber(value as number)}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </div>
-        </motion.section>
-      )}
-
-      {/* Status Footer */}
-      <motion.footer
-        className={styles.footer}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <div className={styles.statusIndicators}>
-          <motion.div 
-            className={styles.statusItem}
-            animate={{ opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 2, repeat: Infinity }}
+      <div className="data-grid">
+        {filteredData.map((specimen) => (
+          <div 
+            key={specimen.id} 
+            className={panelVariants({ type: 'specimen', status: 'active' })}
+            onClick={() => setSelectedSpecimen(specimen)}
           >
-            🔬 Analysis Engines: Active
-          </motion.div>
-          <div className={styles.statusItem}>
-            📊 Data Source: {dataSource}
+            <h3>{specimen.species}</h3>
+            <p>Category: {specimen.category}</p>
+            <p>Population: {formatPopulation(specimen.properties.population)}</p>
+            <p>Health: {specimen.properties.healthStatus}</p>
           </div>
-          <div className={styles.statusItem}>
-            🧬 Specimens: {biologicalData.length}
-          </div>
-          <div className={styles.statusItem}>
-            💊 Medical Insights: {medicalInsights.length}
-          </div>
-          <div className={styles.statusItem}>
-            🕒 Last Update: {new Date().toLocaleTimeString()}
+        ))}
+      </div>
+
+      {ecosystemMetrics && (
+        <div className="ecosystem-overview">
+          <h2>Ecosystem Metrics</h2>
+          <div className="metrics-grid">
+            <div>Biodiversity Index: {formatNumber(ecosystemMetrics.biodiversityIndex)}</div>
+            <div>Water Quality: {formatNumber(ecosystemMetrics.waterQuality)}</div>
+            <div>Soil Health: {formatNumber(ecosystemMetrics.soilHealth)}</div>
+            <div>Air Quality: {formatNumber(ecosystemMetrics.airQuality)}</div>
           </div>
         </div>
-      </motion.footer>
-    </motion.div>
+      )}
+
+      {analysisResults && (
+        <div className="analysis-results">
+          <h2>Analysis Results</h2>
+          <pre>{JSON.stringify(analysisResults, null, 2)}</pre>
+        </div>
+      )}
+    </div>
   );
 };

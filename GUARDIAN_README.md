@@ -45,7 +45,7 @@ app.get('/api/guardian/stats', guardianStatsHandler);
 Komponentet e frontend-it për monitoring:
 
 - `GuardianMonitor.tsx` - Dashboard kryesor
-- `AGIXForm.tsx` - Formular për analizë mjekësore
+- `AGIForm.tsx` - Formular për analizë mjekësore
 - `AGIXResults.tsx` - Shfaqje e rezultateve
 
 ### API Endpoints
@@ -128,7 +128,7 @@ backend/
 
 components/
 ├── AGIXmed/
-│   ├── AGIXForm.tsx     # Medical analysis form
+│   ├── AGIForm.tsx     # Medical analysis form
 │   └── AGIXResults.tsx  # Results display
 ├── GuardianMonitor.tsx  # Security dashboard
 └── ui/                  # Reusable UI components

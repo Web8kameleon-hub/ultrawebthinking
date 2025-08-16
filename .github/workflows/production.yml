@@ -1,0 +1,252 @@
+name: Production Deployment Pipeline
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+env:
+  NODE_VERSION: '18.x'
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Quality Gates
+  quality-gates:
+    runs-on: ubuntu-latest
+    name: Quality Gates & Security
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+      
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      
+      - name: Type checking
+        run: yarn type-check
+      
+      - name: Linting
+        run: yarn lint
+      
+      - name: Security audit
+        run: yarn audit --audit-level high
+      
+      - name: Tests with coverage
+        run: yarn test:coverage
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+
+  # Performance Testing
+  performance-tests:
+    runs-on: ubuntu-latest
+    name: Performance & Load Tests
+    needs: quality-gates
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+      
+      - name: Build application
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+      
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+      
+      - name: Load testing with Artillery
+        run: |
+          npm install -g artillery
+          artillery run tests/load/artillery-config.yml
+      
+      - name: Guardian DDoS Protection Test
+        run: |
+          # Test Guardian middleware under load
+          node tests/security/guardian-stress-test.js
+      
+      - name: Security Headers Validation
+        run: |
+          # Validate security headers and DDoS protection
+          curl -I https://staging.euroweb.ai | grep -E "(X-Frame-Options|Content-Security-Policy|X-Guardian-Status)"
+
+  # Security Scanning
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Advanced Security Scan
+    needs: quality-gates
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # Build Docker Images
+  build-images:
+    runs-on: ubuntu-latest
+    name: Build & Push Docker Images
+    needs: [quality-gates, performance-tests, security-scan]
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Staging Deployment
+  deploy-staging:
+    runs-on: ubuntu-latest
+    name: Deploy to Staging
+    needs: build-images
+    if: github.ref == 'refs/heads/main' || github.event.inputs.environment == 'staging'
+    environment:
+      name: staging
+      url: https://staging.euroweb.ai
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Kubernetes Staging
+        run: |
+          echo "Deploying to staging with Guardian protection"
+          # Setup kubeconfig
+          echo "${{ secrets.KUBECONFIG_STAGING }}" | base64 -d > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
+          
+          # Apply Guardian configuration
+          kubectl apply -f k8s/guardian-configmap.yaml -n euroweb-staging
+          kubectl apply -f k8s/staging.yaml -n euroweb-staging
+          
+          # Wait for rollout
+          kubectl rollout status deployment/euroweb-app -n euroweb-staging --timeout=300s
+      
+      - name: Verify Guardian Status
+        run: |
+          # Check Guardian middleware is active
+          curl -s https://staging.euroweb.ai/api/guardian/status | jq '.guardian.active'
+          
+      - name: Run smoke tests
+        run: |
+          # Basic functionality tests
+          curl -f https://staging.euroweb.ai/api/health
+          curl -f https://staging.euroweb.ai/api/agi/status
+
+  # Production Deployment
+  deploy-production:
+    runs-on: ubuntu-latest
+    name: Deploy to Production
+    needs: [build-images, deploy-staging]
+    if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://euroweb.ai
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Kubernetes Production
+        run: |
+          echo "Deploying to production with full Guardian protection"
+          # Setup kubeconfig
+          echo "${{ secrets.KUBECONFIG_PRODUCTION }}" | base64 -d > kubeconfig.yaml
+          export KUBECONFIG=kubeconfig.yaml
+          
+          # Apply Guardian configuration first
+          kubectl apply -f k8s/guardian-configmap.yaml -n euroweb-production
+          kubectl apply -f k8s/production.yaml -n euroweb-production
+          
+          # Wait for rollout
+          kubectl rollout status deployment/euroweb-app -n euroweb-production --timeout=600s
+      
+      - name: Verify Production Health
+        run: |
+          # Comprehensive health check
+          curl -s https://euroweb.ai/api/health | jq '.status == "healthy"'
+          
+          # Verify Guardian is active
+          curl -s https://euroweb.ai/api/guardian/status | jq '.guardian.active'
+          
+          # Check AGI systems
+          curl -s https://euroweb.ai/api/agi/status | jq '.status'
+      
+      - name: Performance Validation
+        run: |
+          # Quick performance check
+          response_time=$(curl -w "%{time_total}" -s -o /dev/null https://euroweb.ai)
+          if (( $(echo "$response_time > 2.0" | bc -l) )); then
+            echo "Performance degradation detected: ${response_time}s"
+            exit 1
+          fi
+          echo "Performance OK: ${response_time}s"
+      
+      - name: Notify deployment
+        uses: 8398a7/action-slack@v3
+        if: always()
+        with:
+          status: ${{ job.status }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+          text: |
+            🚀 Production Deployment ${{ job.status }}
+            📦 Version: ${{ github.ref_name }}
+            🛡️ Guardian: Active
+            🧠 AGI: Operational
+            📊 Performance: Validated

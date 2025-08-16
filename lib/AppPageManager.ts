@@ -44,9 +44,9 @@ export const Loader = (): ReactNode =>
   );
 
 // Lazy loaded components - using named exports
-const LazyHome = lazy(() => import("@/components/pages/Home").then(module => ({ default: module.Home })));
-const LazySettings = lazy(() => import("@/components/pages/Settings").then(module => ({ default: module.Settings })));
-const LazyAGI = lazy(() => import("@/components/pages/AGICore").then(module => ({ default: module.AGICore })));
+const LazyHome = lazy(() => import("../components/pages/Home").then(module => ({ default: module.Home })));
+const LazySettings = lazy(() => import("../components/pages/Settings").then(module => ({ default: module.Settings })));
+const LazyAGI = lazy(() => import("./AGICoreComponent").then(module => ({ default: module.AGICoreComponent })));
 
 // Motion wrapper for page transitions
 export const withMotion = (component: ReactNode, layout: PageDefinition['layout'] = 'default'): ReactNode => 
@@ -86,8 +86,8 @@ export const pageDefinitions: PageDefinition[] = [
 
 // App Page Manager Class
 export class AppPageManager {
-  private currentPage: string = '/';
-  private pages: Map<string, PageDefinition> = new Map();
+  private currentPage = '/';
+  private readonly pages: Map<string, PageDefinition> = new Map();
 
   constructor() {
     this.initializePages();

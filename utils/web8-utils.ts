@@ -43,7 +43,7 @@ export function formatTimestamp(date: Date): string {
 /**
  * Generate unique ID 
  */
-export function generateId(prefix: string = 'web8'): string {
+export function generateId(prefix = 'web8'): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
@@ -62,7 +62,7 @@ export function isProduction(): boolean {
  * Performance measurement utility
  */
 export class PerformanceTracker {
-  private startTime: number = 0;
+  private startTime = 0;
   
   start(): void {
     this.startTime = performance.now();

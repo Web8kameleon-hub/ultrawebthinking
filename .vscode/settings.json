@@ -153,5 +153,6 @@
     "editor.guides.bracketPairs": "active",
     "window.autoDetectColorScheme": false,
     "workbench.preferredHighContrastColorTheme": "Dark+ (default dark)",
-    "workbench.detectColorScheme": false
+    "workbench.detectColorScheme": false,
+    "chat.sendElementsToChat.enabled": true
 }

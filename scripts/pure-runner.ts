@@ -132,7 +132,7 @@ Commands:
   dev           - Start dev server
 
 Example:
-  yarn tsx scripts/pure-runner.ts check components/AGISheet/AGIxBioNature.tsx
+  yarn tsx scripts/pure-runner.ts check components/AGISheet/AGIBioNature.tsx
   yarn tsx scripts/pure-runner.ts build
     `);
 }

@@ -1,8 +1,8 @@
 /* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface BleedProperties {
@@ -10,11 +10,11 @@ export interface BleedProperties {
 	block?: SystemProperties["marginBlock"]
 }
 
-interface BleedStyles extends BleedProperties, DistributiveOmit<SystemStyleObject, keyof BleedProperties > {}
+interface BleedStyles extends BleedProperties, Omit<Record<string, any>, keyof BleedProperties > {}
 
 interface BleedPatternFn {
   (styles?: BleedStyles): string
-  raw: (styles?: BleedStyles) => SystemStyleObject
+  raw: (styles?: BleedStyles) => Record<string, any>
 }
 
 

@@ -12,6 +12,7 @@ import React from 'react';
 import { test, expect, describe, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import { AGISheet } from '../components/AGISheet/AGISheet';
 
 describe('AGISheet Industrial Excel Tests', () => {
@@ -43,10 +44,11 @@ describe('AGISheet Industrial Excel Tests', () => {
   });
 });
 
-export const createExcelTestSuite = () => ({
+// Removed unused export: createExcelTestSuite
+const testFormulas = {
   formulas: {
     SUM: (...values: number[]) => values.reduce((a, b) => a + b, 0),
     AVERAGE: (...values: number[]) => values.reduce((a, b) => a + b, 0) / values.length,
     COUNT: (...values: any[]) => values.length
   }
-});
+};

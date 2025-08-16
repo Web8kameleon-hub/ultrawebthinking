@@ -1,37 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-  "name": "euroweb-platform",
-  "alias": [
-    "euroweb.ai",
-    "www.euroweb.ai",
-    "eurowebplatform.com",
-    "web8browser.ai",
-    "eurowebagi.com",
-    "euroweb.com",
-    "euroweb.net"
-  ],
-  "domains": [
-    "euroweb.ai",
-    "www.euroweb.ai",
-    "api.euroweb.ai",
-    "admin.euroweb.ai",
-    "docs.euroweb.ai",
-    "chat.euroweb.ai",
-    "ai.euroweb.ai",
-    "cdn.euroweb.ai",
-    "dev.euroweb.ai",
-    "staging.euroweb.ai",
-    "eurowebplatform.com",
-    "web8browser.ai",
-    "eurowebagi.com",
-    "euroweb.com",
-    "euroweb.net"
-  ],
-  "build": {
-    "env": {
-      "DOMAIN": "euroweb.ai",
-      "NODE_ENV": "production"
+  "functions": {
+    "app/api/**/*.ts": {
+      "runtime": "nodejs18.x",
+      "memory": 1024,
+      "maxDuration": 30
     }
   },
   "headers": [
@@ -53,6 +27,23 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
         }
       ]
     }
@@ -62,17 +53,12 @@
       "source": "/home",
       "destination": "/",
       "permanent": true
-    },
-    {
-      "source": "/ai",
-      "destination": "/openmind",
-      "permanent": false
     }
   ],
   "rewrites": [
     {
-      "source": "/api/ai/:path*",
-      "destination": "/api/openmind/:path*"
+      "source": "/health",
+      "destination": "/api/health"
     }
   ]
 }

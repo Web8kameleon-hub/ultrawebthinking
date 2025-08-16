@@ -4,7 +4,7 @@
  */
 
 import type { Metadata } from 'next'
-import '../styles/theme-vars.css'
+import '../frontend/src/styles/theme-vars.css'
 import '../app/globals.css'
 
 export const metadata: Metadata = {

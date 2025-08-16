@@ -14,7 +14,6 @@ export default defineConfig({
     include: ['**/*.{test,spec}.{ts,tsx}'],
     exclude: [
       '**/node_modules/**',
-      '**/dist/**',
       '**/*.js', // NO .js files allowed
       '**/*jest*', // NO jest files
       '**/*chunk*' // NO chunk files

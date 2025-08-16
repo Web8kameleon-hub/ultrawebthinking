@@ -76,7 +76,7 @@ const pageMotionPresets: Record<string, PageMotionConfig> = {
 
 // Page Manager Class
 export class AppPageManager {
-  private pages: Map<string, PageConfig> = new Map();
+  private readonly pages: Map<string, PageConfig> = new Map();
   private currentPage: string | null = null;
 
   registerPage(config: PageConfig): void {

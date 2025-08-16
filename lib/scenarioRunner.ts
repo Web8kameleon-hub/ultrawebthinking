@@ -43,8 +43,8 @@ export interface ScenarioResult {
 }
 
 class RealScenarioRunner {
-  private scenarios: Map<string, Scenario> = new Map();
-  private runHistory: ScenarioResult[] = [];
+  private readonly scenarios: Map<string, Scenario> = new Map();
+  private readonly runHistory: ScenarioResult[] = [];
   private isRunning = false;
 
   constructor() {

@@ -1,0 +1,888 @@
+/**
+ * Neural Dashboard Styles
+ * Futuristic AGI neural network visualization
+ */
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  font-family: 'Consolas', 'Monaco', monospace;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.mainContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: #00ff64;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 255, 100, 0.3);
+  border-top: 3px solid #00ff64;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: rgba(0, 255, 100, 0.1);
+  border: 1px solid #00ff64;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0, 255, 100, 0.2);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #00ff64, #64ff00, #ffff00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(0, 255, 100, 0.5);
+  margin: 0;
+}
+
+.statusBar {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid;
+  backdrop-filter: blur(10px);
+}
+
+.statusConnected {
+  background: rgba(0, 255, 100, 0.2);
+  border-color: #00ff64;
+  color: #00ff64;
+}
+
+.statusDisconnected {
+  background: rgba(255, 0, 100, 0.2);
+  border-color: #ff0064;
+  color: #ff0064;
+}
+
+.statusSafeThink {
+  background: rgba(255, 100, 0, 0.2);
+  border-color: #ff6400;
+  color: #ff6400;
+}
+
+.statusThrottled {
+  background: rgba(255, 255, 0, 0.2);
+  border-color: #ffff00;
+  color: #ffff00;
+}
+
+.statusDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.dotConnected {
+  background: #00ff64;
+  animation: pulse 2s infinite;
+}
+
+.dotDisconnected {
+  background: #ff0064;
+}
+
+.dotSafeThink {
+  background: #ff6400;
+  animation: pulse 2s infinite;
+}
+
+.dotThrottled {
+  background: #ffff00;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.visualizationCard {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #00ff64;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 0 30px rgba(0, 255, 100, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.nodesList {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid #00ff64;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 0 30px rgba(0, 255, 100, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.cardTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #00ff64;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(0, 255, 100, 0.5);
+}
+
+.networkCanvas {
+  width: 100%;
+  height: 400px;
+  background: #000;
+  border: 1px solid #333;
+  border-radius: 10px;
+}
+
+.scrollContainer {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.nodeItem {
+  background: rgba(0, 255, 100, 0.1);
+  border: 1px solid rgba(0, 255, 100, 0.3);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nodeItem:hover {
+  background: rgba(0, 255, 100, 0.2);
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(0, 255, 100, 0.3);
+}
+
+.nodeItemActive {
+  border-left: 4px solid #00ff64;
+}
+
+.nodeItemThrottled {
+  border-left: 4px solid #ff6400;
+}
+
+.nodeItemError {
+  border-left: 4px solid #ff0064;
+}
+
+.nodeItemInactive {
+  border-left: 4px solid #666;
+}
+
+.nodeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.nodeName {
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.nodeType {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.nodeMetrics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nodeActivity {
+  font-weight: bold;
+  color: #00ff64;
+}
+
+.nodePulse {
+  font-size: 0.9rem;
+  color: #64ff00;
+}
+
+.nodeDetails {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 100, 0.2);
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.detailRow span:first-child {
+  color: #aaa;
+}
+
+.detailRow span:last-child {
+  color: #00ff64;
+  font-weight: bold;
+}
+
+.alertsContainer {
+  background: rgba(255, 0, 100, 0.1);
+  border: 1px solid rgba(255, 0, 100, 0.3);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+}
+
+.alertsTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ff0064;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alertsList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.alertItem {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px;
+  background: rgba(255, 0, 100, 0.2);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 0, 100, 0.2);
+}
+
+.alertIcon {
+  margin-right: 15px;
+  margin-top: 2px;
+}
+
+.alertContent {
+  flex: 1;
+}
+
+.alertMessage {
+  color: #ffccdd;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.alertTime {
+  color: #ff6699;
+  font-size: 0.8rem;
+}
+
+.footer {
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  padding: 20px;
+  border-top: 1px solid #333;
+}
+
+.footer p {
+  margin: 5px 0;
+}
+
+/* Node variants for CVA */
+.nodeBase {
+  position: relative;
+  border-radius: 50%;
+  border: 2px solid;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nodeActive {
+  border-color: #00ff64;
+  background: rgba(0, 255, 100, 0.1);
+  box-shadow: 0 0 20px rgba(0, 255, 100, 0.5);
+}
+
+.nodeThrottled {
+  border-color: #ff6400;
+  background: rgba(255, 100, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255, 100, 0, 0.5);
+}
+
+.nodeError {
+  border-color: #ff0064;
+  background: rgba(255, 0, 100, 0.1);
+  box-shadow: 0 0 20px rgba(255, 0, 100, 0.5);
+}
+
+.nodeInactive {
+  border-color: #666;
+  background: rgba(102, 102, 102, 0.1);
+  box-shadow: 0 0 10px rgba(102, 102, 102, 0.3);
+}
+
+.activityLow {
+  width: 48px;
+  height: 48px;
+}
+
+.activityMedium {
+  width: 64px;
+  height: 64px;
+}
+
+.activityHigh {
+  width: 80px;
+  height: 80px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboardGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .statusBar {
+    justify-content: center;
+  }
+}
+.header h1 {
+  margin: 0;
+  color: #00ff64;
+  text-shadow: 0 0 15px rgba(0, 255, 100, 0.5);
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+.statusIndicators {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.indicator.online {
+  background: rgba(0, 255, 100, 0.2);
+  border: 1px solid #00ff64;
+  color: #00ff64;
+}
+
+.indicator.offline {
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid #ff4444;
+  color: #ff4444;
+}
+
+.indicator.safethink {
+  background: rgba(0, 136, 255, 0.2);
+  border: 1px solid #0088ff;
+  color: #0088ff;
+  animation: pulse 2s infinite;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor; }
+  100% { box-shadow: 0 0 5px currentColor; }
+}
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.networkView {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.networkView h3 {
+  margin: 0 0 20px 0;
+  color: #00ff64;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.canvas {
+  width: 100%;
+  height: 500px;
+  border: 1px solid #333;
+  border-radius: 10px;
+  background: radial-gradient(circle at center, rgba(0, 255, 100, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+  cursor: crosshair;
+}
+
+.controlPanel {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.controlPanel h3 {
+  margin: 0 0 20px 0;
+  color: #00ff64;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.stats {
+  margin-bottom: 30px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat:last-child {
+  border-bottom: none;
+}
+
+.stat span:first-child {
+  color: #ccc;
+}
+
+.stat span:last-child {
+  font-weight: bold;
+}
+
+.active {
+  color: #00ff64 !important;
+}
+
+.throttled {
+  color: #ff8800 !important;
+}
+
+.criticalNodes {
+  border-top: 1px solid #333;
+  padding-top: 20px;
+}
+
+.criticalNodes h4 {
+  margin: 0 0 15px 0;
+  color: #ff8800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.criticalNode {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.criticalNode:hover {
+  border-color: #00ff64;
+  box-shadow: 0 0 15px rgba(0, 255, 100, 0.1);
+}
+
+.nodeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.nodeId {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #00ff64;
+  text-shadow: 0 0 5px rgba(0, 255, 100, 0.5);
+}
+
+.nodeStatus {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.nodeMetrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.metric span:first-child {
+  color: #aaa;
+}
+
+.warning {
+  color: #ff4444 !important;
+  animation: blink 1s infinite;
+}
+
+.alert {
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid #ff4444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #ff4444;
+  animation: pulse 2s infinite;
+}
+
+.nodeGrid {
+  margin-bottom: 40px;
+}
+
+.nodeGrid h3 {
+  margin: 0 0 20px 0;
+  color: #00ff64;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.nodeCard {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nodeCard:hover {
+  border-color: #00ff64;
+  box-shadow: 0 0 20px rgba(0, 255, 100, 0.1);
+  transform: translateY(-5px);
+}
+
+.nodeCard.selected {
+  border-color: #00ff64;
+  box-shadow: 0 0 25px rgba(0, 255, 100, 0.3);
+  background: rgba(0, 255, 100, 0.05);
+}
+
+.nodeCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.nodeCardHeader .nodeId {
+  font-size: 1.5rem;
+}
+
+.nodeType {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.nodeCardContent {
+  min-height: 100px;
+}
+
+.nodeName {
+  color: #ccc;
+  margin: 0 0 15px 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.nodeCardContent .nodeMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nodeCardContent .metric {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nodeCardContent .metric span:first-child {
+  min-width: 60px;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.activityBar {
+  flex: 1;
+  position: relative;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.activityFill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.activityText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.alertsPanel {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid #ff4444;
+  border-radius: 15px;
+  padding: 20px;
+  animation: pulse 3s infinite;
+}
+
+.alertsPanel h3 {
+  margin: 0 0 15px 0;
+  color: #ff4444;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.alerts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alertsPanel .alert {
+  background: rgba(255, 68, 68, 0.2);
+  border: 1px solid #ff4444;
+  border-radius: 8px;
+  padding: 12px 15px;
+  color: #ff4444;
+  font-weight: bold;
+  animation: blink 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .canvas {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .statusIndicators {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nodeMetrics {
+    grid-template-columns: 1fr;
+  }
+
+  .canvas {
+    height: 300px;
+  }
+}
+
+/* Special effects for critical nodes */
+.nodeCard[data-node-id="n1"] {
+  border-color: #ff8800;
+}
+
+.nodeCard[data-node-id="n1"]:hover {
+  box-shadow: 0 0 20px rgba(255, 136, 0, 0.3);
+}
+
+.nodeCard[data-node-id="n7"] {
+  border-color: #0088ff;
+}
+
+.nodeCard[data-node-id="n7"]:hover {
+  box-shadow: 0 0 20px rgba(0, 136, 255, 0.3);
+}
+
+/* Neural network visualization enhancements */
+.canvas:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 100, 0.3);
+}
+
+/* Glitch effect for errors */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.nodeCard.error {
+  animation: glitch 0.5s infinite;
+}
+
+/* Pulsing effects for active states */
+@keyframes neuralPulse {
+  0% { 
+    box-shadow: 0 0 5px currentColor;
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 25px currentColor;
+    transform: scale(1.02);
+  }
+  100% { 
+    box-shadow: 0 0 5px currentColor;
+    transform: scale(1);
+  }
+}
+
+.nodeCard.highActivity {
+  animation: neuralPulse 2s infinite;
+}

@@ -1,65 +1,57 @@
-# EuroWeb Platform - Docker Configuration
-# Multi-stage build for production optimization
 
-# Stage 1: Dependencies
-FROM node:18-alpine AS deps
-RUN apk add --no-cache libc6-compat
+# UltraWeb Platform - Production Docker Image
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat git
 WORKDIR /app
 
-# Copy package files
-COPY package.json yarn.lock* ./
-COPY .yarnrc.yml ./
-COPY .yarn ./.yarn
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then yarn install --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-# Install dependencies with Yarn 4
-RUN yarn --frozen-lockfile
-
-# Stage 2: Builder
-FROM node:18-alpine AS builder
+# Rebuild the source code only when needed
+FROM base AS builder
 WORKDIR /app
-
-# Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/.yarn ./.yarn
-
-# Copy source code
 COPY . .
 
-# Set environment variables for build
+# Next.js collects completely anonymous telemetry data about general usage.
 ENV NEXT_TELEMETRY_DISABLED 1
-ENV NODE_ENV production
 
-# Build the application
 RUN yarn build
 
-# Stage 3: Runner (Production)
-FROM node:18-alpine AS runner
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-# Create non-root user for security
-RUN addgroup --system --gid 1001 euroweb
-RUN adduser --system --uid 1001 euroweb
-
-# Copy necessary files
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-# Set permissions
-RUN chown -R euroweb:euroweb /app
-USER euroweb
-
-# Expose port
-EXPOSE 3000
-
-# Set environment variables
-ENV PORT 3000
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Start the application
+COPY --from=builder /app/public ./public
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
 CMD ["node", "server.js"]

@@ -1,8 +1,8 @@
 /* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface GridItemProperties {
@@ -14,11 +14,11 @@ export interface GridItemProperties {
 	rowEnd?: ConditionalValue<number>
 }
 
-interface GridItemStyles extends GridItemProperties, DistributiveOmit<SystemStyleObject, keyof GridItemProperties > {}
+interface GridItemStyles extends GridItemProperties, Omit<Record<string, any>, keyof GridItemProperties > {}
 
 interface GridItemPatternFn {
   (styles?: GridItemStyles): string
-  raw: (styles?: GridItemStyles) => SystemStyleObject
+  raw: (styles?: GridItemStyles) => Record<string, any>
 }
 
 

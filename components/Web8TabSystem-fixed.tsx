@@ -12,14 +12,14 @@
 
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AGIMedUltra } from './AGISheet/AGIMedUltra'
-import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
-import { AGIEcoUltra } from './AGISheet/AGIEcoUltra'
-import { AGIElUltra } from './AGISheet/AGIElUltra'
-import { AGICoreUltra } from './AGISheet/AGICoreUltra'
-import { GuardianMonitor } from './GuardianMonitor'
+import { AGIMedUltra } from '../frontend/src/components/AGISheet/AGIMedUltra'
+import { AGIOfficeUltra } from '../frontend/src/components/AGISheet/AGIOfficeUltra'
+import { AGIEcoUltra } from '../frontend/src/components/AGISheet/AGIEcoUltra'
+import { AGIElUltra } from '../frontend/src/components/AGISheet/AGIElUltra'
+import { AGICoreUltra } from '../frontend/src/components/AGISheet/AGICoreUltra'
+import { GuardianMonitor } from '../frontend/src/components/GuardianMonitor'
 import { cva, type VariantProps } from 'class-variance-authority'
-import styles from './Web8TabSystem.module.css'
+import styles from '../frontend/src/components/Web8TabSystem.module.css'
 
 // Neural Network Interface
 interface NeuralNode {
@@ -457,7 +457,7 @@ const Web8TabSystemUltra: React.FC = () => {
                       >
                         <div style={{ fontWeight: 500, color: '#e2e8f0' }}>{result.title}</div>
                         <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
-                          {result.content.length > 60 ? result.content.substring(0, 60) + '...' : result.content}
+                          {result.content.length > 60 ? `${result.content.substring(0, 60)  }...` : result.content}
                         </div>
                       </div>
                     ))}
@@ -740,7 +740,7 @@ const Web8TabSystemUltra: React.FC = () => {
                     fontFamily: 'JetBrains Mono, monospace',
                     color: '#d4af37'
                   }}>
-                    {typeof value === 'string' ? (value.length > 15 ? value.substring(0, 15) + '...' : value) : value}
+                    {typeof value === 'string' ? (value.length > 15 ? `${value.substring(0, 15)  }...` : value) : value}
                   </span>
                 </div>
               ))}

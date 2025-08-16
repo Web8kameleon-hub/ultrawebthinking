@@ -1,11 +1,27 @@
 {
+  /**
+   * ⚙️ Backend TypeScript Configuration
+   * Server-side AGI dhe API modules
+   * @author Ledjan Ahmati
+   * @version 8.1.0-BACKEND
+   */
+  
+  // Zgjeroj nga baza
   "extends": "../tsconfig.base.json",
+  
+  // Backend specifics
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"]
-    }
+    "composite": true,
+    "rootDir": "./src",
+    "lib": ["ES2022"], // Pa DOM për backend
+    "types": ["node"],
+    "moduleResolution": "Node", // Node.js resolution
+    "declaration": true,
+    "declarationMap": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
-  "exclude": ["node_modules", ".next", "dist"]
+  
+  // Include backend source
+  "include": [
+    "src/**/*"
+  ]
 }

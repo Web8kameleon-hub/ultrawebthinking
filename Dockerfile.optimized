@@ -1,0 +1,86 @@
+# EuroWeb Platform - Optimized Multi-Stage Docker Build
+# Industrial-grade container for Web8 AGI Platform
+
+# Stage 1: Base Dependencies
+FROM node:18-alpine AS base
+RUN apk add --no-cache libc6-compat git python3 make g++
+WORKDIR /app
+
+# Stage 2: Dependency Installation
+FROM base AS deps
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile --production=false; \
+  elif [ -f package-lock.json ]; then yarn install --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Stage 3: Runtime Dependencies
+FROM base AS runtime-deps
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY backend/ ./backend/
+COPY lib/ ./lib/
+COPY types/ ./types/
+COPY tsconfig.json ./
+COPY package.json ./
+
+# Stage 4: Build Frontend
+FROM base AS frontend-builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Disable Next.js telemetry
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+
+# Build the application
+RUN yarn build
+
+# Stage 5: Production Runner
+FROM base AS runner
+WORKDIR /app
+
+# Environment variables
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV WEB8_VERSION=8.0.0
+ENV PORT=3000
+ENV BACKEND_PORT=8080
+
+# Create system user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy backend files
+COPY --from=runtime-deps --chown=nextjs:nodejs /app/backend ./backend/
+COPY --from=runtime-deps --chown=nextjs:nodejs /app/lib ./lib/
+COPY --from=runtime-deps --chown=nextjs:nodejs /app/types ./types/
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules ./node_modules
+
+# Copy frontend files
+COPY --from=frontend-builder /app/public ./public
+COPY --from=frontend-builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=frontend-builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Create directories with proper permissions
+RUN mkdir -p logs && chown nextjs:nodejs logs
+RUN mkdir -p .next && chown nextjs:nodejs .next
+
+# Copy startup script
+COPY --chown=nextjs:nodejs scripts/docker-start.sh ./start.sh
+RUN chmod +x ./start.sh
+
+USER nextjs
+
+# Expose ports
+EXPOSE 3000 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000/api/health || exit 1
+
+# Start both frontend and backend
+CMD ["./start.sh"]

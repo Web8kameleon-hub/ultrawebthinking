@@ -36,8 +36,8 @@ export interface ValidationRules {
 }
 
 class RealValidator {
-  private rules: ValidationRules;
-  private validationHistory: ValidationResult[] = [];
+  private readonly rules: ValidationRules;
+  private readonly validationHistory: ValidationResult[] = [];
 
   constructor() {
     this.rules = {

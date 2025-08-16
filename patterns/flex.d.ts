@@ -1,8 +1,8 @@
 /* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface FlexProperties {
@@ -15,11 +15,11 @@ export interface FlexProperties {
 	shrink?: SystemProperties["flexShrink"]
 }
 
-interface FlexStyles extends FlexProperties, DistributiveOmit<SystemStyleObject, keyof FlexProperties > {}
+interface FlexStyles extends FlexProperties, Omit<Record<string, any>, keyof FlexProperties > {}
 
 interface FlexPatternFn {
   (styles?: FlexStyles): string
-  raw: (styles?: FlexStyles) => SystemStyleObject
+  raw: (styles?: FlexStyles) => Record<string, any>
 }
 
 
