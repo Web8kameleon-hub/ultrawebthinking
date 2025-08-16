@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --port 3000",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
     "lint:check": "eslint .",
     "lint:app": "eslint --config eslint.config.apponly.ts app/",
     "lint:app:fix": "eslint --config eslint.config.apponly.ts app/ --fix",
@@ -272,5 +272,8 @@
     "email": "dealsjona@gmail.com"
   },
   "license": "MIT",
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.9.2",
+  "resolutions": {
+    "eslint": "8.57.0"
+  }
 }
