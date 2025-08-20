@@ -1,53 +1,87 @@
 /**
- * EuroWeb Ultra - Industrial Tab System Homepage
- * Pure TypeScript + CSS Modules + AGI Integration
+ * EuroWeb Ultra Platform - Main Dashboard Page
+ * Pure TypeScript Implementation - No JSX
  * 
  * @author Ledjan Ahmati (100% Owner)
- * @version 8.0.0 Ultra
+ * @contact dealsjona@gmail.com
+ * @version Ultra 1.0.0 Production
+ * @license MIT
  */
 
 'use client'
 
+import React from 'react'
 import dynamic from 'next/dynamic'
 
-const Web8TabSystemFixed = dynamic(
-  () => import('@/components/Web8TabSystem-fixed').then(mod => ({ default: mod.Web8TabSystemFixed })),
-  { 
-    ssr: false,
-    loading: () => (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #0f172a, #1e293b)',
-        color: 'white'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            width: '60px',
-            height: '60px',
-            border: '3px solid rgba(212, 175, 55, 0.3)',
-            borderTop: '3px solid #d4af37',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 20px'
-          }}></div>
-          <p style={{ fontSize: '1.2rem', color: '#d4af37' }}>
-            Loading EuroWeb Ultra...
-          </p>
-          <style>{`
+// Pure TypeScript loading component factory
+const createLoadingElement = (): React.ReactElement => {
+  return React.createElement('div', {
+    style: {
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#f8fafc',
+      fontFamily: 'Inter, sans-serif'
+    }
+  }, 
+    React.createElement('div', {
+      style: { textAlign: 'center' }
+    },
+      React.createElement('div', {
+        style: {
+          width: '80px',
+          height: '80px',
+          border: '4px solid #d4af37',
+          borderTop: '4px solid transparent',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+          margin: '0 auto 20px'
+        }
+      }),
+      React.createElement('h2', {
+        style: {
+          fontSize: '24px',
+          marginBottom: '10px',
+          background: 'linear-gradient(45deg, #d4af37, #f59e0b)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }
+      }, '🧠 EuroWeb Ultra Loading...'),
+      React.createElement('p', {
+        style: { color: '#cbd5e1', fontSize: '16px' }
+      }, 'Initializing Neural Networks & AGI Modules'),
+      React.createElement('style', {
+        dangerouslySetInnerHTML: {
+          __html: `
             @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
             }
-          `}</style>
-        </div>
-      </div>
+          `
+        }
+      })
     )
+  )
+}
+
+// Dynamic import me alias - Pure TypeScript
+const TabSystemComponent = dynamic(
+  () => import('../components/Web8TabSystem'),
+  {
+    ssr: false,
+    loading: createLoadingElement
   }
 )
 
-export default function Home() {
-  return <Web8TabSystemFixed />
+// Alias për komponentin
+const Web8TabSystem = TabSystemComponent
+
+/**
+ * Main page component for EuroWeb Ultra Platform
+ * Pure TypeScript implementation without JSX
+ */
+export default function HomePage(): React.ReactElement {
+  return React.createElement(Web8TabSystem)
 }

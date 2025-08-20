@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "search": "Buscar",
+    "close": "Cerrar",
+    "open": "Abrir",
+    "yes": "Sí",
+    "no": "No",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "home": "Inicio",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "submit": "Enviar",
+    "reset": "Restablecer",
+    "clear": "Limpiar",
+    "select": "Seleccionar",
+    "all": "Todo",
+    "none": "Ninguno",
+    "more": "Más",
+    "less": "Menos",
+    "view": "Ver",
+    "download": "Descargar",
+    "upload": "Subir",
+    "copy": "Copiar",
+    "paste": "Pegar",
+    "cut": "Cortar"
+  },
+  "navigation": {
+    "dashboard": "Panel de Control",
+    "projects": "Proyectos",
+    "analytics": "Analíticas",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "logout": "Cerrar Sesión",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "help": "Ayuda",
+    "documentation": "Documentación"
+  },
+  "agi": {
+    "title": "AGI (Inteligencia Artificial General)",
+    "description": "Sistema avanzado de inteligencia artificial",
+    "modules": {
+      "core": "Núcleo",
+      "semantic": "Semántico",
+      "planner": "Planificador",
+      "executor": "Ejecutor",
+      "monitor": "Monitor"
+    },
+    "features": {
+      "real_time_analysis": "Análisis en Tiempo Real",
+      "pattern_recognition": "Reconocimiento de Patrones",
+      "predictive_analytics": "Analíticas Predictivas",
+      "automated_optimization": "Optimización Automatizada",
+      "natural_language": "Lenguaje Natural"
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "processing": "Procesando",
+      "completed": "Completado",
+      "error": "Error",
+      "pending": "Pendiente"
+    }
+  },
+  "economics": {
+    "title": "Análisis Económico",
+    "metrics": {
+      "revenue": "Ingresos",
+      "profit": "Beneficio",
+      "growth_rate": "Tasa de Crecimiento",
+      "market_share": "Cuota de Mercado",
+      "roi": "Retorno de Inversión",
+      "expenses": "Gastos",
+      "budget": "Presupuesto",
+      "forecast": "Pronóstico"
+    },
+    "indicators": {
+      "bullish": "Alcista",
+      "bearish": "Bajista",
+      "neutral": "Neutral",
+      "volatile": "Volátil",
+      "stable": "Estable"
+    }
+  },
+  "crypto": {
+    "title": "Análisis de Criptomonedas",
+    "assets": {
+      "bitcoin": "Bitcoin",
+      "ethereum": "Ethereum",
+      "portfolio": "Portafolio",
+      "trading": "Trading",
+      "wallet": "Billetera"
+    },
+    "metrics": {
+      "price": "Precio",
+      "volume": "Volumen",
+      "market_cap": "Capitalización de Mercado",
+      "change_24h": "Cambio 24h",
+      "volatility": "Volatilidad",
+      "liquidity": "Liquidez"
+    },
+    "signals": {
+      "buy": "Comprar",
+      "sell": "Vender",
+      "hold": "Mantener",
+      "strong_buy": "Compra Fuerte",
+      "strong_sell": "Venta Fuerte"
+    }
+  },
+  "ecology": {
+    "title": "Análisis Ecológico",
+    "metrics": {
+      "carbon_footprint": "Huella de Carbono",
+      "energy_efficiency": "Eficiencia Energética",
+      "sustainability": "Sostenibilidad",
+      "emissions": "Emisiones",
+      "renewable_energy": "Energía Renovable",
+      "biodiversity": "Biodiversidad"
+    },
+    "status": {
+      "excellent": "Excelente",
+      "good": "Bueno",
+      "fair": "Regular",
+      "poor": "Pobre",
+      "critical": "Crítico"
+    }
+  },
+  "market": {
+    "title": "Análisis de Mercado",
+    "segments": {
+      "technology": "Tecnología",
+      "healthcare": "Salud",
+      "finance": "Finanzas",
+      "education": "Educación",
+      "retail": "Venta al Detalle"
+    },
+    "competition": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "trends": {
+      "growing": "Creciente",
+      "declining": "En Declive",
+      "stable": "Estable",
+      "emerging": "Emergente"
+    }
+  },
+  "patterns": {
+    "title": "Reconocimiento de Patrones",
+    "types": {
+      "trend": "Tendencia",
+      "cycle": "Ciclo",
+      "anomaly": "Anomalía",
+      "correlation": "Correlación",
+      "seasonal": "Estacional"
+    },
+    "confidence": {
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "predictions": {
+      "title": "Predicciones",
+      "accuracy": "Precisión",
+      "timeframe": "Marco Temporal",
+      "probability": "Probabilidad"
+    }
+  },
+  "errors": {
+    "network_error": "Error de Red",
+    "server_error": "Error del Servidor",
+    "validation_error": "Error de Validación",
+    "permission_denied": "Permiso Denegado",
+    "not_found": "No Encontrado",
+    "timeout": "Tiempo Agotado",
+    "unknown_error": "Error Desconocido",
+    "connection_failed": "Falló la Conexión",
+    "data_corrupted": "Datos Corruptos",
+    "insufficient_permissions": "Permisos Insuficientes"
+  },
+  "messages": {
+    "welcome": "Bienvenido a EuroWeb",
+    "data_saved": "Datos guardados",
+    "operation_completed": "Operación completada",
+    "please_wait": "Por favor espera",
+    "processing_request": "Procesando solicitud",
+    "no_data_available": "No hay datos disponibles",
+    "select_option": "Selecciona una opción",
+    "confirm_action": "Confirmar acción",
+    "changes_saved": "Cambios guardados",
+    "data_updated": "Datos actualizados"
+  },
+  "forms": {
+    "required_field": "Campo requerido",
+    "invalid_email": "Email inválido",
+    "password_too_short": "Contraseña muy corta",
+    "passwords_dont_match": "Las contraseñas no coinciden",
+    "invalid_format": "Formato inválido",
+    "field_too_long": "Campo muy largo",
+    "field_too_short": "Campo muy corto",
+    "invalid_number": "Número inválido",
+    "invalid_date": "Fecha inválida",
+    "invalid_url": "URL inválida"
+  },
+  "time": {
+    "seconds": "segundos",
+    "minutes": "minutos",
+    "hours": "horas",
+    "days": "días",
+    "weeks": "semanas",
+    "months": "meses",
+    "years": "años",
+    "ago": "hace",
+    "from_now": "desde ahora",
+    "just_now": "ahora mismo"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "€",
+    "temperature": "°C",
+    "distance": "km",
+    "weight": "kg",
+    "volume": "L"
+  }
+}

@@ -48,12 +48,12 @@ export const AGICore = () => {
               <div className={styles.engineStatus}>Ready</div>
             </div>
             <div className={styles.engine}>
-              <h3>🌿 AGIxBioNature</h3>
+              <h3>🌿 AGIBioNature</h3>
               <p>Biology & Nature Analysis</p>
               <div className={styles.engineStatus}>Ready</div>
             </div>
             <div className={styles.engine}>
-              <h3>💰 AGIxEco</h3>
+              <h3>💰 AGIEco</h3>
               <p>Economic & Crypto Analysis</p>
               <div className={styles.engineStatus}>Ready</div>
             </div>

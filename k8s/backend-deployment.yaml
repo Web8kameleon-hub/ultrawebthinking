@@ -1,0 +1,73 @@
+# k8s/backend-deployment.yaml
+# EuroWeb Ultra Backend AGI Deployment
+# © Web8 UltraThinking – Ledjan Ahmati
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: euroweb-backend
+  namespace: euroweb-ultra
+  labels:
+    app: euroweb-backend
+    component: agi-core
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: euroweb-backend
+  template:
+    metadata:
+      labels:
+        app: euroweb-backend
+    spec:
+      containers:
+      - name: agi-backend
+        image: euroweb-ultra/backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: AGI_MODE
+          value: "cluster"
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: euroweb-secrets
+              key: database-url
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: euroweb-backend-service
+  namespace: euroweb-ultra
+spec:
+  selector:
+    app: euroweb-backend
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP

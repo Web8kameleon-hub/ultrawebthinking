@@ -278,21 +278,21 @@ export const AGISheetLazy = registerLazyComponent({
   chunk: 'agi-core'
 })
 
-export const AGIxEcoLazy = registerLazyComponent({
-  name: 'AGIxEco',
+export const AGIEcoLazy = registerLazyComponent({
+  name: 'AGIEco',
   loader: async () => {
-    const module = await import('./AGISheet/AGIxEco')
-    return { default: module.AGIxEco }
+    const module = await import('./AGISheet/AGIEco')
+    return { default: module.AGIEco }
   },
   priority: 'normal',
   chunk: 'agi-eco'
 })
 
-export const AGIxBioNatureLazy = registerLazyComponent({
-  name: 'AGIxBioNature',
+export const AGIBioNatureLazy = registerLazyComponent({
+  name: 'AGIBioNature',
   loader: async () => {
-    const module = await import('./AGISheet/AGIxBioNature')
-    return { default: module.AGIxBioNature }
+    const module = await import('./AGISheet/AGIBioNature')
+    return { default: module.AGIBioNature }
   },
   priority: 'normal',
   chunk: 'agi-bio'

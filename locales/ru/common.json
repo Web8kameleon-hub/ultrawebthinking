@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успех",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "add": "Добавить",
+    "search": "Поиск",
+    "close": "Закрыть",
+    "open": "Открыть",
+    "yes": "Да",
+    "no": "Нет",
+    "next": "Следующий",
+    "previous": "Предыдущий",
+    "home": "Главная",
+    "back": "Назад",
+    "continue": "Продолжить",
+    "submit": "Отправить",
+    "reset": "Сбросить",
+    "clear": "Очистить",
+    "select": "Выбрать",
+    "all": "Все",
+    "none": "Ничего",
+    "more": "Больше",
+    "less": "Меньше",
+    "view": "Просмотр",
+    "download": "Скачать",
+    "upload": "Загрузить",
+    "copy": "Копировать",
+    "paste": "Вставить",
+    "cut": "Вырезать"
+  },
+  "navigation": {
+    "dashboard": "Панель управления",
+    "projects": "Проекты",
+    "analytics": "Аналитика",
+    "settings": "Настройки",
+    "profile": "Профиль",
+    "logout": "Выйти",
+    "login": "Войти",
+    "register": "Регистрация",
+    "about": "О нас",
+    "contact": "Контакты",
+    "help": "Помощь",
+    "documentation": "Документация"
+  },
+  "agi": {
+    "title": "AGI (Общий искусственный интеллект)",
+    "description": "Продвинутая система искусственного интеллекта",
+    "modules": {
+      "core": "Ядро",
+      "semantic": "Семантический",
+      "planner": "Планировщик",
+      "executor": "Исполнитель",
+      "monitor": "Монитор"
+    },
+    "features": {
+      "real_time_analysis": "Анализ в реальном времени",
+      "pattern_recognition": "Распознавание паттернов",
+      "predictive_analytics": "Прогностическая аналитика",
+      "automated_optimization": "Автоматизированная оптимизация",
+      "natural_language": "Естественный язык"
+    },
+    "status": {
+      "active": "Активный",
+      "inactive": "Неактивный",
+      "processing": "Обработка",
+      "completed": "Завершено",
+      "error": "Ошибка",
+      "pending": "Ожидание"
+    }
+  },
+  "economics": {
+    "title": "Экономический анализ",
+    "metrics": {
+      "revenue": "Выручка",
+      "profit": "Прибыль",
+      "growth_rate": "Темп роста",
+      "market_share": "Доля рынка",
+      "roi": "Рентабельность инвестиций",
+      "expenses": "Расходы",
+      "budget": "Бюджет",
+      "forecast": "Прогноз"
+    },
+    "indicators": {
+      "bullish": "Бычий",
+      "bearish": "Медвежий",
+      "neutral": "Нейтральный",
+      "volatile": "Волатильный",
+      "stable": "Стабильный"
+    }
+  },
+  "crypto": {
+    "title": "Анализ криптовалют",
+    "assets": {
+      "bitcoin": "Биткоин",
+      "ethereum": "Эфириум",
+      "portfolio": "Портфель",
+      "trading": "Торговля",
+      "wallet": "Кошелек"
+    },
+    "metrics": {
+      "price": "Цена",
+      "volume": "Объем",
+      "market_cap": "Рыночная капитализация",
+      "change_24h": "Изменение за 24ч",
+      "volatility": "Волатильность",
+      "liquidity": "Ликвидность"
+    },
+    "signals": {
+      "buy": "Покупать",
+      "sell": "Продавать",
+      "hold": "Держать",
+      "strong_buy": "Сильная покупка",
+      "strong_sell": "Сильная продажа"
+    }
+  },
+  "ecology": {
+    "title": "Экологический анализ",
+    "metrics": {
+      "carbon_footprint": "Углеродный след",
+      "energy_efficiency": "Энергоэффективность",
+      "sustainability": "Устойчивость",
+      "emissions": "Выбросы",
+      "renewable_energy": "Возобновляемая энергия",
+      "biodiversity": "Биоразнообразие"
+    },
+    "status": {
+      "excellent": "Отлично",
+      "good": "Хорошо",
+      "fair": "Удовлетворительно",
+      "poor": "Плохо",
+      "critical": "Критично"
+    }
+  },
+  "market": {
+    "title": "Анализ рынка",
+    "segments": {
+      "technology": "Технологии",
+      "healthcare": "Здравоохранение",
+      "finance": "Финансы",
+      "education": "Образование",
+      "retail": "Розничная торговля"
+    },
+    "competition": {
+      "high": "Высокая",
+      "medium": "Средняя",
+      "low": "Низкая"
+    },
+    "trends": {
+      "growing": "Растущий",
+      "declining": "Снижающийся",
+      "stable": "Стабильный",
+      "emerging": "Развивающийся"
+    }
+  },
+  "patterns": {
+    "title": "Распознавание паттернов",
+    "types": {
+      "trend": "Тренд",
+      "cycle": "Цикл",
+      "anomaly": "Аномалия",
+      "correlation": "Корреляция",
+      "seasonal": "Сезонный"
+    },
+    "confidence": {
+      "high": "Высокая",
+      "medium": "Средняя",
+      "low": "Низкая"
+    },
+    "predictions": {
+      "title": "Прогнозы",
+      "accuracy": "Точность",
+      "timeframe": "Временные рамки",
+      "probability": "Вероятность"
+    }
+  },
+  "errors": {
+    "network_error": "Ошибка сети",
+    "server_error": "Ошибка сервера",
+    "validation_error": "Ошибка валидации",
+    "permission_denied": "Доступ запрещен",
+    "not_found": "Не найдено",
+    "timeout": "Превышено время ожидания",
+    "unknown_error": "Неизвестная ошибка",
+    "connection_failed": "Соединение не удалось",
+    "data_corrupted": "Данные повреждены",
+    "insufficient_permissions": "Недостаточно прав"
+  },
+  "messages": {
+    "welcome": "Добро пожаловать в EuroWeb",
+    "data_saved": "Данные сохранены",
+    "operation_completed": "Операция завершена",
+    "please_wait": "Пожалуйста, подождите",
+    "processing_request": "Обработка запроса",
+    "no_data_available": "Нет доступных данных",
+    "select_option": "Выберите опцию",
+    "confirm_action": "Подтвердите действие",
+    "changes_saved": "Изменения сохранены",
+    "data_updated": "Данные обновлены"
+  },
+  "forms": {
+    "required_field": "Обязательное поле",
+    "invalid_email": "Неверный email",
+    "password_too_short": "Пароль слишком короткий",
+    "passwords_dont_match": "Пароли не совпадают",
+    "invalid_format": "Неверный формат",
+    "field_too_long": "Поле слишком длинное",
+    "field_too_short": "Поле слишком короткое",
+    "invalid_number": "Неверное число",
+    "invalid_date": "Неверная дата",
+    "invalid_url": "Неверный URL"
+  },
+  "time": {
+    "seconds": "секунд",
+    "minutes": "минут",
+    "hours": "часов",
+    "days": "дней",
+    "weeks": "недель",
+    "months": "месяцев",
+    "years": "лет",
+    "ago": "назад",
+    "from_now": "с настоящего момента",
+    "just_now": "только что"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "₽",
+    "temperature": "°C",
+    "distance": "км",
+    "weight": "кг",
+    "volume": "л"
+  }
+}

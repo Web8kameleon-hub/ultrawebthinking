@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "close": "Close",
+    "open": "Open",
+    "yes": "Yes",
+    "no": "No",
+    "next": "Next",
+    "previous": "Previous",
+    "home": "Home",
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Submit",
+    "reset": "Reset",
+    "clear": "Clear",
+    "select": "Select",
+    "all": "All",
+    "none": "None",
+    "more": "More",
+    "less": "Less",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "copy": "Copy",
+    "paste": "Paste",
+    "cut": "Cut"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "analytics": "Analytics",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register",
+    "about": "About",
+    "contact": "Contact",
+    "help": "Help",
+    "documentation": "Documentation"
+  },
+  "agi": {
+    "title": "AGI (Artificial General Intelligence)",
+    "description": "Advanced artificial intelligence system",
+    "modules": {
+      "core": "Core",
+      "semantic": "Semantic",
+      "planner": "Planner",
+      "executor": "Executor",
+      "monitor": "Monitor"
+    },
+    "features": {
+      "real_time_analysis": "Real-time Analysis",
+      "pattern_recognition": "Pattern Recognition",
+      "predictive_analytics": "Predictive Analytics",
+      "automated_optimization": "Automated Optimization",
+      "natural_language": "Natural Language"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "processing": "Processing",
+      "completed": "Completed",
+      "error": "Error",
+      "pending": "Pending"
+    }
+  },
+  "economics": {
+    "title": "Economic Analysis",
+    "metrics": {
+      "revenue": "Revenue",
+      "profit": "Profit",
+      "growth_rate": "Growth Rate",
+      "market_share": "Market Share",
+      "roi": "Return on Investment",
+      "expenses": "Expenses",
+      "budget": "Budget",
+      "forecast": "Forecast"
+    },
+    "indicators": {
+      "bullish": "Bullish",
+      "bearish": "Bearish",
+      "neutral": "Neutral",
+      "volatile": "Volatile",
+      "stable": "Stable"
+    }
+  },
+  "crypto": {
+    "title": "Cryptocurrency Analysis",
+    "assets": {
+      "bitcoin": "Bitcoin",
+      "ethereum": "Ethereum",
+      "portfolio": "Portfolio",
+      "trading": "Trading",
+      "wallet": "Wallet"
+    },
+    "metrics": {
+      "price": "Price",
+      "volume": "Volume",
+      "market_cap": "Market Cap",
+      "change_24h": "24h Change",
+      "volatility": "Volatility",
+      "liquidity": "Liquidity"
+    },
+    "signals": {
+      "buy": "Buy",
+      "sell": "Sell",
+      "hold": "Hold",
+      "strong_buy": "Strong Buy",
+      "strong_sell": "Strong Sell"
+    }
+  },
+  "ecology": {
+    "title": "Ecological Analysis",
+    "metrics": {
+      "carbon_footprint": "Carbon Footprint",
+      "energy_efficiency": "Energy Efficiency",
+      "sustainability": "Sustainability",
+      "emissions": "Emissions",
+      "renewable_energy": "Renewable Energy",
+      "biodiversity": "Biodiversity"
+    },
+    "status": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor",
+      "critical": "Critical"
+    }
+  },
+  "market": {
+    "title": "Market Analysis",
+    "segments": {
+      "technology": "Technology",
+      "healthcare": "Healthcare",
+      "finance": "Finance",
+      "education": "Education",
+      "retail": "Retail"
+    },
+    "competition": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "trends": {
+      "growing": "Growing",
+      "declining": "Declining",
+      "stable": "Stable",
+      "emerging": "Emerging"
+    }
+  },
+  "patterns": {
+    "title": "Pattern Recognition",
+    "types": {
+      "trend": "Trend",
+      "cycle": "Cycle",
+      "anomaly": "Anomaly",
+      "correlation": "Correlation",
+      "seasonal": "Seasonal"
+    },
+    "confidence": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "predictions": {
+      "title": "Predictions",
+      "accuracy": "Accuracy",
+      "timeframe": "Timeframe",
+      "probability": "Probability"
+    }
+  },
+  "errors": {
+    "network_error": "Network Error",
+    "server_error": "Server Error",
+    "validation_error": "Validation Error",
+    "permission_denied": "Permission Denied",
+    "not_found": "Not Found",
+    "timeout": "Timeout",
+    "unknown_error": "Unknown Error",
+    "connection_failed": "Connection Failed",
+    "data_corrupted": "Data Corrupted",
+    "insufficient_permissions": "Insufficient Permissions"
+  },
+  "messages": {
+    "welcome": "Welcome to EuroWeb",
+    "data_saved": "Data saved successfully",
+    "operation_completed": "Operation completed",
+    "please_wait": "Please wait",
+    "processing_request": "Processing request",
+    "no_data_available": "No data available",
+    "select_option": "Select an option",
+    "confirm_action": "Confirm action",
+    "changes_saved": "Changes saved",
+    "data_updated": "Data updated"
+  },
+  "forms": {
+    "required_field": "Required field",
+    "invalid_email": "Invalid email",
+    "password_too_short": "Password too short",
+    "passwords_dont_match": "Passwords don't match",
+    "invalid_format": "Invalid format",
+    "field_too_long": "Field too long",
+    "field_too_short": "Field too short",
+    "invalid_number": "Invalid number",
+    "invalid_date": "Invalid date",
+    "invalid_url": "Invalid URL"
+  },
+  "time": {
+    "seconds": "seconds",
+    "minutes": "minutes",
+    "hours": "hours",
+    "days": "days",
+    "weeks": "weeks",
+    "months": "months",
+    "years": "years",
+    "ago": "ago",
+    "from_now": "from now",
+    "just_now": "just now"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "€",
+    "temperature": "°C",
+    "distance": "km",
+    "weight": "kg",
+    "volume": "L"
+  }
+}

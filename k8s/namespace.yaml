@@ -1,0 +1,13 @@
+# k8s/namespace.yaml
+# EuroWeb Ultra Kubernetes Namespace
+# © Web8 UltraThinking – Ledjan Ahmati
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: euroweb-ultra
+  labels:
+    name: euroweb-ultra
+    project: UltraThinking
+    environment: production
+    version: "1.0"

@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import { AGIxEco } from './AGIxEco';
-import styles from './AGIxEcoDemo.module.css';
+import { AGIEco } from './AGIEco';
+import styles from './AGIEcoDemo.module.css';
 
 const containerVariants = cva(styles.container, {
   variants: {
@@ -33,15 +33,15 @@ const controlVariants = cva(styles.control, {
   }
 });
 
-interface AGIxEcoDemoProps {
+interface AGIEcoDemoProps {
   layout?: 'fullscreen' | 'windowed' | 'embedded';
   showControls?: boolean;
 }
 
-export const AGIxEcoDemo = ({ 
+export const AGIEcoDemo = ({ 
   layout = 'windowed',
   showControls = true 
-}: AGIxEcoDemoProps) => {
+}: AGIEcoDemoProps) => {
   const [mode, setMode] = useState<'statistics' | 'economics' | 'crypto' | 'comprehensive'>('comprehensive');
   const [theme, setTheme] = useState<'green' | 'blue' | 'gold' | 'dark'>('green');
   const [autoUpdate, setAutoUpdate] = useState(true);
@@ -218,14 +218,14 @@ export const AGIxEcoDemo = ({
         </motion.div>
       )}
 
-      {/* Main AGIxEco Component */}
+      {/* Main AGIEco Component */}
       <motion.div
         className={styles.ecoContainer}
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <AGIxEco
+        <AGIEco
           mode={mode}
           theme={theme}
           autoUpdate={autoUpdate}

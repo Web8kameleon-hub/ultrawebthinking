@@ -1,5 +1,5 @@
 /**
- * AGIxEco Tests - Pure TypeScript Economic Engine
+ * AGIEco Tests - Pure TypeScript Economic Engine
  * Dynamic imports + Lazy loading + Vector cache
  */
 
@@ -13,7 +13,7 @@ const loadEcoEngine = async () => {
   return new EconomicsEngine();
 };
 
-describe('AGIxEco Industrial Tests', () => {
+describe('AGIEco Industrial Tests', () => {
   test('economic calculations are pure functions', () => {
     const calculateGDP = (consumption: number, investment: number, government: number, netExports: number): number => {
       return consumption + investment + government + netExports;

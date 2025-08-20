@@ -1,554 +1,391 @@
-interface CryptoMetrics {
+/**
+ * CryptoAnalysisEngine.ts
+ * Advanced cryptocurrency analysis and trading engine
+ * © Web8 UltraThinking – Ledjan Ahmati
+ */
+
+export interface CryptoAsset {
   symbol: string;
+  name: string;
   price: number;
-  volume: number;
   marketCap: number;
+  volume24h: number;
+  change1h: number;
   change24h: number;
+  change7d: number;
   volatility: number;
-  sentiment: 'bullish' | 'bearish' | 'neutral';
+  liquidity: number;
+  timestamp: Date;
 }
 
-interface CryptoAnalysis {
-  marketOverview: {
-    totalMarketCap: number;
-    dominanceIndex: Record<string, number>;
-    fearGreedIndex: number;
-    marketPhase: 'accumulation' | 'markup' | 'distribution' | 'markdown';
-  };
-  technicalAnalysis: {
-    support: number;
-    resistance: number;
-    rsi: number;
-    macd: { signal: 'buy' | 'sell' | 'hold'; strength: number };
-    bollingerBands: { upper: number; middle: number; lower: number };
-  };
-  sentimentAnalysis: {
-    socialSentiment: number; // -1 to 1
-    newsImpact: number; // -1 to 1
-    whaleActivity: 'accumulating' | 'distributing' | 'neutral';
-    institutionalFlow: number;
-  };
-  riskMetrics: {
-    volatilityRank: number; // 1-10
-    liquidityScore: number; // 0-1
-    correlationRisk: number; // 0-1
-    regulatoryRisk: 'low' | 'medium' | 'high';
-  };
-  predictions: {
-    shortTerm: { target: number; probability: number; timeframe: '24h' };
-    mediumTerm: { target: number; probability: number; timeframe: '7d' };
-    longTerm: { target: number; probability: number; timeframe: '30d' };
-  };
-  tradingSignals: Array<{
-    type: 'buy' | 'sell' | 'hold';
-    strength: number;
-    reasoning: string;
-    confidence: number;
-  }>;
-  deFiMetrics?: {
-    tvl: number;
-    yieldRate: number;
-    liquidityPools: number;
-    activeUsers: number;
-  };
+export interface TechnicalIndicator {
+  name: string;
+  value: number;
+  signal: 'buy' | 'sell' | 'hold';
+  strength: number;
+  timeframe: string;
 }
 
-interface BlockchainMetrics {
-  networkHash: number;
-  transactionCount: number;
-  activeAddresses: number;
-  fees: { average: number; median: number };
-  congestion: number; // 0-1
-}
-
-interface CryptoPortfolioAnalysis {
-  allocation: Record<string, number>;
-  riskScore: number;
-  diversificationIndex: number;
-  expectedReturn: number;
-  valueAtRisk: number;
-  recommendations: string[];
+export interface TradingSignal {
+  asset: string;
+  action: 'buy' | 'sell' | 'hold';
+  confidence: number;
+  priceTarget: number;
+  stopLoss: number;
+  reasoning: string[];
+  indicators: TechnicalIndicator[];
+  timestamp: Date;
 }
 
 export class CryptoAnalysisEngine {
-  private debugMode: boolean;
-  private priceHistory: Map<string, number[]>;
-  private technicalIndicators: Map<string, any>;
+  private assets: Map<string, CryptoAsset> = new Map();
+  private signals: Map<string, TradingSignal> = new Map();
+  private priceHistory: Map<string, number[]> = new Map();
 
-  constructor(debugMode: boolean = false) {
-    this.debugMode = debugMode;
-    this.priceHistory = new Map();
-    this.technicalIndicators = new Map();
-    this.initializeTechnicalModels();
+  constructor() {
+    this.initializeCryptoAssets();
   }
 
-  /**
-   * Comprehensive cryptocurrency analysis
-   */
-  async analyzeCrypto(cryptoData: CryptoMetrics[]): Promise<CryptoAnalysis> {
-    if (cryptoData.length === 0) {
-      throw new Error('No crypto data provided');
-    }
-
-    // Market overview analysis
-    const marketOverview = this.analyzeMarketOverview(cryptoData);
-    
-    // Technical analysis for the primary asset (first in array)
-    const primaryAsset = cryptoData[0];
-    const technicalAnalysis = this.performTechnicalAnalysis(primaryAsset);
-    
-    // Sentiment analysis
-    const sentimentAnalysis = this.analyzeSentiment(cryptoData);
-    
-    // Risk assessment
-    const riskMetrics = this.assessRisks(cryptoData);
-    
-    // Price predictions
-    const predictions = this.generatePredictions(primaryAsset);
-    
-    // Trading signals
-    const tradingSignals = this.generateTradingSignals(cryptoData, technicalAnalysis);
-    
-    // DeFi metrics (if applicable)
-    const deFiMetrics = this.analyzeDeFiMetrics(cryptoData);
-
-    if (this.debugMode) {
-      console.log('Crypto Analysis Complete:', {
-        assetsAnalyzed: cryptoData.length,
-        marketPhase: marketOverview.marketPhase,
-        fearGreedIndex: marketOverview.fearGreedIndex,
-        primaryAsset: primaryAsset.symbol
-      });
-    }
-
-    return {
-      marketOverview,
-      technicalAnalysis,
-      sentimentAnalysis,
-      riskMetrics,
-      predictions,
-      tradingSignals,
-      deFiMetrics
-    };
-  }
-
-  /**
-   * Analyze portfolio allocation and risk
-   */
-  async analyzePortfolio(cryptoData: CryptoMetrics[], holdings: Record<string, number>): Promise<CryptoPortfolioAnalysis> {
-    const totalValue = Object.entries(holdings).reduce((sum, [symbol, amount]) => {
-      const crypto = cryptoData.find(c => c.symbol === symbol);
-      return sum + (crypto ? crypto.price * amount : 0);
-    }, 0);
-
-    // Calculate allocation percentages
-    const allocation: Record<string, number> = {};
-    for (const [symbol, amount] of Object.entries(holdings)) {
-      const crypto = cryptoData.find(c => c.symbol === symbol);
-      if (crypto) {
-        allocation[symbol] = (crypto.price * amount) / totalValue;
+  private initializeCryptoAssets(): void {
+    const cryptoData = [
+      {
+        symbol: 'BTC',
+        name: 'Bitcoin',
+        price: 45000,
+        marketCap: 875000000000,
+        volume24h: 25000000000,
+        change1h: 0.5,
+        change24h: 2.5,
+        change7d: -1.2,
+        volatility: 0.04,
+        liquidity: 0.95
+      },
+      {
+        symbol: 'ETH',
+        name: 'Ethereum',
+        price: 2800,
+        marketCap: 340000000000,
+        volume24h: 12000000000,
+        change1h: 0.8,
+        change24h: 3.2,
+        change7d: 0.5,
+        volatility: 0.06,
+        liquidity: 0.90
+      },
+      {
+        symbol: 'ADA',
+        name: 'Cardano',
+        price: 0.45,
+        marketCap: 15000000000,
+        volume24h: 800000000,
+        change1h: -0.2,
+        change24h: 1.8,
+        change7d: 4.5,
+        volatility: 0.08,
+        liquidity: 0.75
+      },
+      {
+        symbol: 'SOL',
+        name: 'Solana',
+        price: 85,
+        marketCap: 38000000000,
+        volume24h: 1500000000,
+        change1h: 1.2,
+        change24h: 4.8,
+        change7d: 8.2,
+        volatility: 0.12,
+        liquidity: 0.80
       }
-    }
+    ];
 
-    // Calculate risk metrics
-    const riskScore = this.calculatePortfolioRisk(cryptoData, allocation);
-    const diversificationIndex = this.calculateDiversificationIndex(allocation);
-    const expectedReturn = this.calculateExpectedReturn(cryptoData, allocation);
-    const valueAtRisk = this.calculateVaR(cryptoData, allocation);
-
-    // Generate recommendations
-    const recommendations = this.generatePortfolioRecommendations(allocation, riskScore);
-
-    return {
-      allocation,
-      riskScore,
-      diversificationIndex,
-      expectedReturn,
-      valueAtRisk,
-      recommendations
-    };
-  }
-
-  /**
-   * Real-time arbitrage opportunities detection
-   */
-  async detectArbitrageOpportunities(cryptoData: CryptoMetrics[]): Promise<Array<{
-    symbol: string;
-    opportunity: number;
-    exchanges: string[];
-    profitPotential: number;
-    risk: 'low' | 'medium' | 'high';
-  }>> {
-    const opportunities: Array<{
-      symbol: string;
-      opportunity: number;
-      exchanges: string[];
-      profitPotential: number;
-      risk: 'low' | 'medium' | 'high';
-    }> = [];
-
-    // Simulate arbitrage detection (in real implementation, would compare across exchanges)
-    for (const crypto of cryptoData) {
-      // Simulate price differences across exchanges
-      const exchangePrices = this.simulateExchangePrices(crypto.price);
-      const maxPrice = Math.max(...exchangePrices.prices);
-      const minPrice = Math.min(...exchangePrices.prices);
-      const spread = ((maxPrice - minPrice) / minPrice) * 100;
-
-      if (spread > 0.5) { // Minimum 0.5% spread for viable arbitrage
-        opportunities.push({
-          symbol: crypto.symbol,
-          opportunity: spread,
-          exchanges: ['Exchange A', 'Exchange B'],
-          profitPotential: spread - 0.2, // Minus trading fees
-          risk: spread > 2 ? 'high' : spread > 1 ? 'medium' : 'low'
-        });
-      }
-    }
-
-    return opportunities.sort((a, b) => b.profitPotential - a.profitPotential);
-  }
-
-  /**
-   * DeFi yield farming analysis
-   */
-  async analyzeYieldFarming(cryptoData: CryptoMetrics[]): Promise<Array<{
-    protocol: string;
-    apr: number;
-    tvl: number;
-    riskLevel: 'low' | 'medium' | 'high' | 'extreme';
-    impermanentLossRisk: number;
-    recommendations: string[];
-  }>> {
-    const yieldOpportunities = [];
-
-    // Simulate DeFi protocols analysis
-    const protocols = ['Uniswap V3', 'Compound', 'Aave', 'PancakeSwap', 'SushiSwap'];
-    
-    for (const protocol of protocols) {
-      const apr = Math.random() * 50 + 5; // 5-55% APR
-      const tvl = Math.random() * 1000000000 + 100000000; // $100M - $1B TVL
-      const riskLevel = this.assessProtocolRisk(apr, tvl);
-      const impermanentLossRisk = Math.random() * 0.3; // 0-30% IL risk
-      const recommendations = this.generateYieldRecommendations(protocol, apr, riskLevel);
-
-      yieldOpportunities.push({
-        protocol,
-        apr,
-        tvl,
-        riskLevel,
-        impermanentLossRisk,
-        recommendations
+    cryptoData.forEach(crypto => {
+      this.assets.set(crypto.symbol, {
+        ...crypto,
+        timestamp: new Date()
       });
+
+      // Initialize price history with sample data
+      this.priceHistory.set(crypto.symbol, this.generatePriceHistory(crypto.price));
+    });
+  }
+
+  private generatePriceHistory(currentPrice: number, days: number = 30): number[] {
+    const history = [];
+    let price = currentPrice;
+    
+    for (let i = days; i >= 0; i--) {
+      const dailyChange = (Math.random() - 0.5) * 0.1; // ±5% daily variation
+      price = price * (1 + dailyChange);
+      history.push(Math.round(price * 100) / 100);
     }
-
-    return yieldOpportunities.sort((a, b) => this.calculateRiskAdjustedReturn(b) - this.calculateRiskAdjustedReturn(a));
-  }
-
-  // Private utility methods
-  private initializeTechnicalModels(): void {
-    // Initialize technical analysis models and parameters
-    this.technicalIndicators.set('rsi', { period: 14, overbought: 70, oversold: 30 });
-    this.technicalIndicators.set('macd', { fast: 12, slow: 26, signal: 9 });
-    this.technicalIndicators.set('bollinger', { period: 20, stdDev: 2 });
-  }
-
-  private analyzeMarketOverview(cryptoData: CryptoMetrics[]): {
-    totalMarketCap: number;
-    dominanceIndex: Record<string, number>;
-    fearGreedIndex: number;
-    marketPhase: 'accumulation' | 'markup' | 'distribution' | 'markdown';
-  } {
-    const totalMarketCap = cryptoData.reduce((sum, crypto) => sum + crypto.marketCap, 0);
     
-    // Calculate dominance index
-    const dominanceIndex: Record<string, number> = {};
-    for (const crypto of cryptoData) {
-      dominanceIndex[crypto.symbol] = (crypto.marketCap / totalMarketCap) * 100;
-    }
+    return history.reverse();
+  }
 
-    // Calculate Fear & Greed Index (simplified)
-    const avgChange = cryptoData.reduce((sum, crypto) => sum + crypto.change24h, 0) / cryptoData.length;
-    const avgVolatility = cryptoData.reduce((sum, crypto) => sum + crypto.volatility, 0) / cryptoData.length;
-    const fearGreedIndex = Math.max(0, Math.min(100, 50 + avgChange * 5 - avgVolatility * 100));
+  public analyzeMarketTrends(): any {
+    const assets = Array.from(this.assets.values());
+    
+    const bullishAssets = assets.filter(a => a.change24h > 2).length;
+    const bearishAssets = assets.filter(a => a.change24h < -2).length;
+    const neutralAssets = assets.length - bullishAssets - bearishAssets;
 
-    // Determine market phase
-    const marketPhase = this.determineMarketPhase(avgChange, avgVolatility, fearGreedIndex);
+    const marketSentiment = bullishAssets > bearishAssets ? 'bullish' : 
+                           bearishAssets > bullishAssets ? 'bearish' : 'neutral';
+
+    const totalMarketCap = assets.reduce((sum, a) => sum + a.marketCap, 0);
+    const totalVolume = assets.reduce((sum, a) => sum + a.volume24h, 0);
+    const avgVolatility = assets.reduce((sum, a) => sum + a.volatility, 0) / assets.length;
 
     return {
-      totalMarketCap,
-      dominanceIndex,
-      fearGreedIndex,
-      marketPhase
+      market_sentiment: marketSentiment,
+      sentiment_strength: Math.abs(bullishAssets - bearishAssets) / assets.length,
+      total_market_cap: totalMarketCap,
+      total_volume_24h: totalVolume,
+      average_volatility: Math.round(avgVolatility * 1000) / 1000,
+      asset_distribution: {
+        bullish: bullishAssets,
+        bearish: bearishAssets,
+        neutral: neutralAssets
+      },
+      market_dominance: this.calculateMarketDominance(assets),
+      fear_greed_index: this.calculateCryptoFearGreed(assets),
+      analysis_timestamp: new Date().toISOString()
     };
   }
 
-  private performTechnicalAnalysis(crypto: CryptoMetrics): {
-    support: number;
-    resistance: number;
-    rsi: number;
-    macd: { signal: 'buy' | 'sell' | 'hold'; strength: number };
-    bollingerBands: { upper: number; middle: number; lower: number };
-  } {
-    // Generate simulated price history for technical analysis
-    const priceHistory = this.generatePriceHistory(crypto.price, crypto.volatility);
-    
-    // Calculate support and resistance
-    const { support, resistance } = this.calculateSupportResistance(priceHistory);
-    
-    // Calculate RSI
-    const rsi = this.calculateRSI(priceHistory);
-    
-    // Calculate MACD
-    const macd = this.calculateMACD(priceHistory);
-    
-    // Calculate Bollinger Bands
-    const bollingerBands = this.calculateBollingerBands(priceHistory);
+  public generateTradingSignals(): TradingSignal[] {
+    const signals: TradingSignal[] = [];
 
-    return {
-      support,
-      resistance,
-      rsi,
-      macd,
-      bollingerBands
-    };
-  }
-
-  private analyzeSentiment(cryptoData: CryptoMetrics[]): {
-    socialSentiment: number;
-    newsImpact: number;
-    whaleActivity: 'accumulating' | 'distributing' | 'neutral';
-    institutionalFlow: number;
-  } {
-    // Simulate sentiment analysis based on market data
-    const avgSentiment = cryptoData.reduce((sum, crypto) => {
-      const sentimentScore = crypto.sentiment === 'bullish' ? 1 : crypto.sentiment === 'bearish' ? -1 : 0;
-      return sum + sentimentScore;
-    }, 0) / cryptoData.length;
-
-    const socialSentiment = Math.max(-1, Math.min(1, avgSentiment + (Math.random() - 0.5) * 0.4));
-    const newsImpact = (Math.random() - 0.5) * 2; // Random news impact
-    const whaleActivity = this.determineWhaleActivity(cryptoData);
-    const institutionalFlow = socialSentiment * 0.7 + (Math.random() - 0.5) * 0.6;
-
-    return {
-      socialSentiment,
-      newsImpact,
-      whaleActivity,
-      institutionalFlow
-    };
-  }
-
-  private assessRisks(cryptoData: CryptoMetrics[]): {
-    volatilityRank: number;
-    liquidityScore: number;
-    correlationRisk: number;
-    regulatoryRisk: 'low' | 'medium' | 'high';
-  } {
-    const avgVolatility = cryptoData.reduce((sum, crypto) => sum + crypto.volatility, 0) / cryptoData.length;
-    const volatilityRank = Math.min(10, Math.ceil(avgVolatility * 100));
-
-    const avgVolume = cryptoData.reduce((sum, crypto) => sum + crypto.volume, 0) / cryptoData.length;
-    const liquidityScore = Math.min(1, avgVolume / 1000000000); // Normalize by $1B volume
-
-    const correlationRisk = this.calculateCorrelationRisk(cryptoData);
-    const regulatoryRisk = this.assessRegulatoryRisk(cryptoData);
-
-    return {
-      volatilityRank,
-      liquidityScore,
-      correlationRisk,
-      regulatoryRisk
-    };
-  }
-
-  private generatePredictions(crypto: CryptoMetrics): {
-    shortTerm: { target: number; probability: number; timeframe: '24h' };
-    mediumTerm: { target: number; probability: number; timeframe: '7d' };
-    longTerm: { target: number; probability: number; timeframe: '30d' };
-  } {
-    const currentPrice = crypto.price;
-    const volatility = crypto.volatility;
-    const trend = crypto.change24h > 0 ? 1 : -1;
-
-    // Short-term prediction (24h)
-    const shortTermVariation = volatility * 0.5 * trend;
-    const shortTermTarget = currentPrice * (1 + shortTermVariation);
-    const shortTermProbability = Math.max(0.4, 0.8 - volatility);
-
-    // Medium-term prediction (7d)
-    const mediumTermVariation = volatility * 1.5 * trend * (0.8 + Math.random() * 0.4);
-    const mediumTermTarget = currentPrice * (1 + mediumTermVariation);
-    const mediumTermProbability = Math.max(0.3, 0.7 - volatility * 1.2);
-
-    // Long-term prediction (30d)
-    const longTermVariation = volatility * 3 * trend * (0.6 + Math.random() * 0.8);
-    const longTermTarget = currentPrice * (1 + longTermVariation);
-    const longTermProbability = Math.max(0.2, 0.6 - volatility * 1.5);
-
-    return {
-      shortTerm: { target: shortTermTarget, probability: shortTermProbability, timeframe: '24h' },
-      mediumTerm: { target: mediumTermTarget, probability: mediumTermProbability, timeframe: '7d' },
-      longTerm: { target: longTermTarget, probability: longTermProbability, timeframe: '30d' }
-    };
-  }
-
-  private generateTradingSignals(cryptoData: CryptoMetrics[], technical: any): Array<{
-    type: 'buy' | 'sell' | 'hold';
-    strength: number;
-    reasoning: string;
-    confidence: number;
-  }> {
-    const signals: Array<{
-      type: 'buy' | 'sell' | 'hold';
-      strength: number;
-      reasoning: string;
-      confidence: number;
-    }> = [];
-
-    const primary = cryptoData[0];
-
-    // RSI-based signal
-    if (technical.rsi < 30) {
-      signals.push({
-        type: 'buy',
-        strength: 0.8,
-        reasoning: 'RSI indicates oversold conditions',
-        confidence: 0.75
-      });
-    } else if (technical.rsi > 70) {
-      signals.push({
-        type: 'sell',
-        strength: 0.7,
-        reasoning: 'RSI indicates overbought conditions',
-        confidence: 0.7
-      });
-    }
-
-    // MACD-based signal
-    signals.push({
-      type: technical.macd.signal,
-      strength: technical.macd.strength,
-      reasoning: `MACD ${technical.macd.signal} signal detected`,
-      confidence: technical.macd.strength
+    this.assets.forEach((asset, symbol) => {
+      const technicalAnalysis = this.performTechnicalAnalysis(symbol);
+      const fundamentalScore = this.calculateFundamentalScore(asset);
+      
+      const signal = this.generateSignalForAsset(asset, technicalAnalysis, fundamentalScore);
+      signals.push(signal);
+      
+      this.signals.set(symbol, signal);
     });
 
-    // Volume-based signal
-    if (primary.volume > this.getAverageVolume(primary.symbol)) {
-      signals.push({
-        type: primary.change24h > 0 ? 'buy' : 'sell',
-        strength: 0.6,
-        reasoning: 'High volume confirms price movement',
-        confidence: 0.65
-      });
-    }
-
-    // Sentiment-based signal
-    if (primary.sentiment === 'bullish' && primary.change24h > 2) {
-      signals.push({
-        type: 'buy',
-        strength: 0.7,
-        reasoning: 'Strong bullish sentiment with positive momentum',
-        confidence: 0.6
-      });
-    }
-
-    return signals.sort((a, b) => (b.strength * b.confidence) - (a.strength * a.confidence));
+    return signals.sort((a, b) => b.confidence - a.confidence);
   }
 
-  private analyzeDeFiMetrics(cryptoData: CryptoMetrics[]): {
-    tvl: number;
-    yieldRate: number;
-    liquidityPools: number;
-    activeUsers: number;
-  } | undefined {
-    // Check if any crypto in the data is DeFi-related
-    const deFiTokens = cryptoData.filter(crypto => 
-      ['UNI', 'AAVE', 'COMP', 'SUSHI', 'CAKE'].includes(crypto.symbol)
-    );
+  public performTechnicalAnalysis(symbol: string): TechnicalIndicator[] {
+    const asset = this.assets.get(symbol);
+    const priceHistory = this.priceHistory.get(symbol);
+    
+    if (!asset || !priceHistory) return [];
 
-    if (deFiTokens.length === 0) return undefined;
+    const indicators: TechnicalIndicator[] = [];
 
-    // Simulate DeFi metrics
-    const tvl = Math.random() * 50000000000 + 10000000000; // $10B - $60B
-    const yieldRate = Math.random() * 20 + 5; // 5-25% APY
-    const liquidityPools = Math.floor(Math.random() * 1000 + 100); // 100-1100 pools
-    const activeUsers = Math.floor(Math.random() * 1000000 + 100000); // 100K-1.1M users
+    // RSI (Relative Strength Index)
+    const rsi = this.calculateRSI(priceHistory);
+    indicators.push({
+      name: 'RSI',
+      value: rsi,
+      signal: rsi > 70 ? 'sell' : rsi < 30 ? 'buy' : 'hold',
+      strength: Math.abs(rsi - 50) / 50,
+      timeframe: '14d'
+    });
+
+    // Moving Average Convergence Divergence
+    const macd = this.calculateMACD(priceHistory);
+    indicators.push({
+      name: 'MACD',
+      value: macd.signal,
+      signal: macd.signal > 0 ? 'buy' : 'sell',
+      strength: Math.min(1, Math.abs(macd.signal) / 100),
+      timeframe: '12/26/9'
+    });
+
+    // Bollinger Bands
+    const bb = this.calculateBollingerBands(priceHistory);
+    const currentPrice = asset.price;
+    let bbSignal: 'buy' | 'sell' | 'hold' = 'hold';
+    
+    if (currentPrice < bb.lower) bbSignal = 'buy';
+    else if (currentPrice > bb.upper) bbSignal = 'sell';
+    
+    indicators.push({
+      name: 'Bollinger Bands',
+      value: (currentPrice - bb.middle) / (bb.upper - bb.lower),
+      signal: bbSignal,
+      strength: Math.abs((currentPrice - bb.middle) / (bb.upper - bb.lower)),
+      timeframe: '20d'
+    });
+
+    return indicators;
+  }
+
+  public predictPriceMovement(symbol: string, days: number = 7): any {
+    const asset = this.assets.get(symbol);
+    const priceHistory = this.priceHistory.get(symbol);
+    
+    if (!asset || !priceHistory) return null;
+
+    const currentPrice = asset.price;
+    const volatility = asset.volatility;
+    const trend = this.calculateTrend(priceHistory);
+    
+    const predictions = [];
+    let price = currentPrice;
+
+    for (let day = 1; day <= days; day++) {
+      const trendInfluence = trend * 0.01 * day; // Trend impact increases over time
+      const randomWalk = (Math.random() - 0.5) * volatility * 2;
+      const priceChange = trendInfluence + randomWalk;
+      
+      price = price * (1 + priceChange);
+      
+      predictions.push({
+        day,
+        predicted_price: Math.round(price * 100) / 100,
+        change_from_current: Math.round(((price - currentPrice) / currentPrice) * 10000) / 100,
+        confidence: Math.max(0.3, 0.9 - (day * 0.1)) // Confidence decreases over time
+      });
+    }
 
     return {
-      tvl,
-      yieldRate,
-      liquidityPools,
-      activeUsers
+      symbol,
+      current_price: currentPrice,
+      predictions,
+      trend_direction: trend > 0 ? 'upward' : trend < 0 ? 'downward' : 'sideways',
+      volatility_level: volatility > 0.1 ? 'high' : volatility > 0.05 ? 'medium' : 'low',
+      prediction_timestamp: new Date().toISOString()
     };
   }
 
-  // Technical analysis helper methods
-  private generatePriceHistory(currentPrice: number, volatility: number, periods: number = 50): number[] {
-    const history = [currentPrice];
-    
-    for (let i = 1; i < periods; i++) {
-      const change = (Math.random() - 0.5) * volatility * 2;
-      const newPrice = history[i - 1] * (1 + change);
-      history.push(Math.max(0.01, newPrice)); // Prevent negative prices
-    }
-    
-    return history;
+  public analyzePortfolioRisk(portfolio: { symbol: string; amount: number }[]): any {
+    const totalValue = portfolio.reduce((sum, holding) => {
+      const asset = this.assets.get(holding.symbol);
+      return sum + (asset ? asset.price * holding.amount : 0);
+    }, 0);
+
+    const portfolioMetrics = portfolio.map(holding => {
+      const asset = this.assets.get(holding.symbol);
+      if (!asset) return null;
+
+      const value = asset.price * holding.amount;
+      const weight = value / totalValue;
+
+      return {
+        symbol: holding.symbol,
+        value,
+        weight: Math.round(weight * 10000) / 100,
+        volatility: asset.volatility,
+        risk_contribution: weight * asset.volatility
+      };
+    }).filter(Boolean);
+
+    const portfolioVolatility = portfolioMetrics.reduce((sum, m) => sum + m!.risk_contribution, 0);
+    const portfolioVaR = this.calculateVaR(portfolioMetrics, totalValue);
+
+    return {
+      total_value: Math.round(totalValue * 100) / 100,
+      portfolio_volatility: Math.round(portfolioVolatility * 1000) / 1000,
+      value_at_risk: portfolioVaR,
+      diversification_score: this.calculateDiversificationScore(portfolioMetrics),
+      holdings: portfolioMetrics,
+      risk_level: portfolioVolatility > 0.15 ? 'high' : portfolioVolatility > 0.08 ? 'medium' : 'low',
+      recommendations: this.generatePortfolioRecommendations(portfolioMetrics, portfolioVolatility),
+      analysis_timestamp: new Date().toISOString()
+    };
   }
 
-  private calculateSupportResistance(prices: number[]): { support: number; resistance: number } {
-    const highs = [];
-    const lows = [];
+  private calculateMarketDominance(assets: CryptoAsset[]): any[] {
+    const totalMarketCap = assets.reduce((sum, a) => sum + a.marketCap, 0);
     
-    for (let i = 1; i < prices.length - 1; i++) {
-      if (prices[i] > prices[i - 1] && prices[i] > prices[i + 1]) {
-        highs.push(prices[i]);
-      }
-      if (prices[i] < prices[i - 1] && prices[i] < prices[i + 1]) {
-        lows.push(prices[i]);
-      }
+    return assets.map(asset => ({
+      symbol: asset.symbol,
+      dominance: Math.round((asset.marketCap / totalMarketCap) * 10000) / 100
+    })).sort((a, b) => b.dominance - a.dominance);
+  }
+
+  private calculateCryptoFearGreed(assets: CryptoAsset[]): number {
+    const avgChange24h = assets.reduce((sum, a) => sum + a.change24h, 0) / assets.length;
+    const avgVolatility = assets.reduce((sum, a) => sum + a.volatility, 0) / assets.length;
+    const avgVolume = assets.reduce((sum, a) => sum + a.volume24h, 0) / assets.length;
+    
+    let fearGreed = 50; // Neutral
+    fearGreed += avgChange24h * 5; // Price momentum
+    fearGreed -= avgVolatility * 200; // Volatility fear
+    fearGreed += Math.min(10, avgVolume / 1000000000); // Volume confidence
+    
+    return Math.max(0, Math.min(100, Math.round(fearGreed)));
+  }
+
+  private calculateFundamentalScore(asset: CryptoAsset): number {
+    let score = 50; // Base score
+    
+    // Market cap influence
+    if (asset.marketCap > 100000000000) score += 20; // Large cap
+    else if (asset.marketCap > 10000000000) score += 10; // Mid cap
+    
+    // Volume influence
+    if (asset.volume24h > asset.marketCap * 0.1) score += 15; // High volume
+    
+    // Liquidity influence
+    score += asset.liquidity * 15;
+    
+    return Math.max(0, Math.min(100, score));
+  }
+
+  private generateSignalForAsset(asset: CryptoAsset, indicators: TechnicalIndicator[], fundamentalScore: number): TradingSignal {
+    const buySignals = indicators.filter(i => i.signal === 'buy').length;
+    const sellSignals = indicators.filter(i => i.signal === 'sell').length;
+    
+    let action: 'buy' | 'sell' | 'hold' = 'hold';
+    let confidence = 0.5;
+    const reasoning: string[] = [];
+
+    if (buySignals > sellSignals && fundamentalScore > 60) {
+      action = 'buy';
+      confidence = 0.6 + (buySignals / indicators.length) * 0.4;
+      reasoning.push('Technical indicators show buying opportunity');
+      reasoning.push('Strong fundamental metrics');
+    } else if (sellSignals > buySignals || fundamentalScore < 40) {
+      action = 'sell';
+      confidence = 0.6 + (sellSignals / indicators.length) * 0.4;
+      reasoning.push('Technical indicators suggest selling');
+      if (fundamentalScore < 40) reasoning.push('Weak fundamental metrics');
     }
-    
-    const resistance = highs.length > 0 ? Math.max(...highs) : Math.max(...prices) * 1.05;
-    const support = lows.length > 0 ? Math.min(...lows) : Math.min(...prices) * 0.95;
-    
-    return { support, resistance };
+
+    return {
+      asset: asset.symbol,
+      action,
+      confidence: Math.round(confidence * 100) / 100,
+      priceTarget: this.calculatePriceTarget(asset, action),
+      stopLoss: this.calculateStopLoss(asset, action),
+      reasoning,
+      indicators,
+      timestamp: new Date()
+    };
   }
 
   private calculateRSI(prices: number[], period: number = 14): number {
-    if (prices.length < period + 1) return 50; // Default neutral RSI
+    if (prices.length < period + 1) return 50;
     
-    const gains = [];
-    const losses = [];
+    let gains = 0;
+    let losses = 0;
     
-    for (let i = 1; i < prices.length; i++) {
-      const change = prices[i] - prices[i - 1];
-      gains.push(change > 0 ? change : 0);
-      losses.push(change < 0 ? Math.abs(change) : 0);
+    for (let i = 1; i <= period; i++) {
+      const change = prices[prices.length - i] - prices[prices.length - i - 1];
+      if (change > 0) gains += change;
+      else losses -= change;
     }
     
-    const avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period;
-    const avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period;
-    
-    if (avgLoss === 0) return 100;
-    
-    const rs = avgGain / avgLoss;
+    const rs = (gains / period) / (losses / period);
     return 100 - (100 / (1 + rs));
   }
 
-  private calculateMACD(prices: number[]): { signal: 'buy' | 'sell' | 'hold'; strength: number } {
+  private calculateMACD(prices: number[]): { signal: number; histogram: number } {
     const ema12 = this.calculateEMA(prices, 12);
     const ema26 = this.calculateEMA(prices, 26);
     const macdLine = ema12 - ema26;
     
-    // Simplified MACD signal
-    if (macdLine > 0 && Math.abs(macdLine) > prices[prices.length - 1] * 0.01) {
-      return { signal: 'buy', strength: Math.min(1, Math.abs(macdLine) / (prices[prices.length - 1] * 0.05)) };
-    } else if (macdLine < 0 && Math.abs(macdLine) > prices[prices.length - 1] * 0.01) {
-      return { signal: 'sell', strength: Math.min(1, Math.abs(macdLine) / (prices[prices.length - 1] * 0.05)) };
-    }
-    
-    return { signal: 'hold', strength: 0.3 };
+    return {
+      signal: macdLine,
+      histogram: macdLine * 0.8 // Simplified
+    };
   }
 
   private calculateEMA(prices: number[], period: number): number {
@@ -564,165 +401,131 @@ export class CryptoAnalysisEngine {
     return ema;
   }
 
-  private calculateBollingerBands(prices: number[], period: number = 20, stdDev: number = 2): {
-    upper: number;
-    middle: number;
-    lower: number;
-  } {
+  private calculateBollingerBands(prices: number[], period: number = 20, stdDev: number = 2): any {
     const recentPrices = prices.slice(-period);
-    const sma = recentPrices.reduce((a, b) => a + b, 0) / recentPrices.length;
+    const average = recentPrices.reduce((sum, p) => sum + p, 0) / recentPrices.length;
     
-    const variance = recentPrices.reduce((sum, price) => sum + Math.pow(price - sma, 2), 0) / recentPrices.length;
+    const variance = recentPrices.reduce((sum, p) => sum + Math.pow(p - average, 2), 0) / recentPrices.length;
     const standardDeviation = Math.sqrt(variance);
     
     return {
-      upper: sma + (standardDeviation * stdDev),
-      middle: sma,
-      lower: sma - (standardDeviation * stdDev)
+      upper: average + (standardDeviation * stdDev),
+      middle: average,
+      lower: average - (standardDeviation * stdDev)
     };
   }
 
-  // Portfolio analysis methods
-  private calculatePortfolioRisk(cryptoData: CryptoMetrics[], allocation: Record<string, number>): number {
-    let weightedRisk = 0;
+  private calculateTrend(prices: number[]): number {
+    if (prices.length < 2) return 0;
     
-    for (const [symbol, weight] of Object.entries(allocation)) {
-      const crypto = cryptoData.find(c => c.symbol === symbol);
-      if (crypto) {
-        weightedRisk += weight * crypto.volatility;
-      }
+    const recentPrices = prices.slice(-10); // Last 10 data points
+    const changes = [];
+    
+    for (let i = 1; i < recentPrices.length; i++) {
+      changes.push((recentPrices[i] - recentPrices[i-1]) / recentPrices[i-1]);
     }
     
-    return Math.min(1, weightedRisk);
+    return changes.reduce((sum, c) => sum + c, 0) / changes.length;
   }
 
-  private calculateDiversificationIndex(allocation: Record<string, number>): number {
-    const weights = Object.values(allocation);
-    const herfindahl = weights.reduce((sum, weight) => sum + weight * weight, 0);
-    return 1 - herfindahl; // Higher value = more diversified
-  }
-
-  private calculateExpectedReturn(cryptoData: CryptoMetrics[], allocation: Record<string, number>): number {
-    let weightedReturn = 0;
+  private calculateVaR(portfolioMetrics: any[], totalValue: number, confidence: number = 0.05): any {
+    const dailyReturn = 0.02; // Assume 2% daily return
+    const portfolioStdDev = Math.sqrt(portfolioMetrics.reduce((sum, m) => sum + Math.pow(m!.volatility * m!.weight, 2), 0));
     
-    for (const [symbol, weight] of Object.entries(allocation)) {
-      const crypto = cryptoData.find(c => c.symbol === symbol);
-      if (crypto) {
-        // Use 24h change as proxy for expected return (simplified)
-        weightedReturn += weight * (crypto.change24h / 100);
-      }
+    // VaR calculation (simplified)
+    const zScore = 1.645; // 95% confidence level
+    const varAmount = totalValue * zScore * portfolioStdDev;
+    
+    return {
+      confidence_level: (1 - confidence) * 100,
+      amount: Math.round(varAmount * 100) / 100,
+      percentage: Math.round((varAmount / totalValue) * 10000) / 100
+    };
+  }
+
+  private calculateDiversificationScore(portfolioMetrics: any[]): number {
+    if (!portfolioMetrics.length) return 0;
+    
+    // Simple diversification score based on weight distribution
+    const weights = portfolioMetrics.map(m => m!.weight / 100);
+    const herfindahlIndex = weights.reduce((sum, w) => sum + Math.pow(w, 2), 0);
+    
+    return Math.round((1 - herfindahlIndex) * 100);
+  }
+
+  private generatePortfolioRecommendations(portfolioMetrics: any[], volatility: number): string[] {
+    const recommendations = [];
+    
+    if (volatility > 0.15) {
+      recommendations.push('Consider reducing position sizes in high-volatility assets');
     }
     
-    return weightedReturn * 365; // Annualized
-  }
-
-  private calculateVaR(cryptoData: CryptoMetrics[], allocation: Record<string, number>, confidence: number = 0.95): number {
-    // Simplified VaR calculation
-    const portfolioVolatility = this.calculatePortfolioRisk(cryptoData, allocation);
-    const zScore = confidence === 0.95 ? 1.645 : confidence === 0.99 ? 2.33 : 1.28;
-    
-    return portfolioVolatility * zScore;
-  }
-
-  private generatePortfolioRecommendations(allocation: Record<string, number>, riskScore: number): string[] {
-    const recommendations: string[] = [];
-    
-    if (riskScore > 0.7) {
-      recommendations.push('Consider reducing exposure to high-volatility assets');
-      recommendations.push('Add stablecoins for risk management');
+    const maxWeight = Math.max(...portfolioMetrics.map(m => m!.weight));
+    if (maxWeight > 50) {
+      recommendations.push('Portfolio is too concentrated - consider diversifying');
     }
     
-    const maxAllocation = Math.max(...Object.values(allocation));
-    if (maxAllocation > 0.5) {
-      recommendations.push('Diversify holdings to reduce concentration risk');
+    if (portfolioMetrics.length < 3) {
+      recommendations.push('Add more assets to improve diversification');
     }
     
-    if (Object.keys(allocation).length < 3) {
-      recommendations.push('Increase diversification across different cryptocurrencies');
+    return recommendations.length ? recommendations : ['Portfolio allocation appears balanced'];
+  }
+
+  private calculatePriceTarget(asset: CryptoAsset, action: 'buy' | 'sell' | 'hold'): number {
+    const currentPrice = asset.price;
+    const volatility = asset.volatility;
+    
+    if (action === 'buy') {
+      return Math.round(currentPrice * (1 + volatility * 2) * 100) / 100;
+    } else if (action === 'sell') {
+      return Math.round(currentPrice * (1 - volatility * 1.5) * 100) / 100;
     }
     
-    return recommendations;
+    return currentPrice;
   }
 
-  // Utility methods
-  private determineMarketPhase(avgChange: number, avgVolatility: number, fearGreedIndex: number): 'accumulation' | 'markup' | 'distribution' | 'markdown' {
-    if (fearGreedIndex < 25 && avgChange < -5) return 'markdown';
-    if (fearGreedIndex < 50 && avgVolatility < 0.05) return 'accumulation';
-    if (fearGreedIndex > 75 && avgChange > 5) return 'distribution';
-    return 'markup';
-  }
-
-  private determineWhaleActivity(cryptoData: CryptoMetrics[]): 'accumulating' | 'distributing' | 'neutral' {
-    const highVolumeAssets = cryptoData.filter(c => c.volume > 1000000000); // > $1B volume
+  private calculateStopLoss(asset: CryptoAsset, action: 'buy' | 'sell' | 'hold'): number {
+    const currentPrice = asset.price;
+    const volatility = asset.volatility;
     
-    if (highVolumeAssets.length === 0) return 'neutral';
-    
-    const avgChange = highVolumeAssets.reduce((sum, c) => sum + c.change24h, 0) / highVolumeAssets.length;
-    
-    if (avgChange > 3) return 'accumulating';
-    if (avgChange < -3) return 'distributing';
-    return 'neutral';
-  }
-
-  private calculateCorrelationRisk(cryptoData: CryptoMetrics[]): number {
-    // Simplified correlation risk - assume higher when most assets move in same direction
-    const positiveChanges = cryptoData.filter(c => c.change24h > 0).length;
-    const negativeChanges = cryptoData.filter(c => c.change24h < 0).length;
-    
-    const directionAlignment = Math.abs(positiveChanges - negativeChanges) / cryptoData.length;
-    return directionAlignment;
-  }
-
-  private assessRegulatoryRisk(cryptoData: CryptoMetrics[]): 'low' | 'medium' | 'high' {
-    // Simple heuristic based on asset types
-    const privacyCoins = cryptoData.filter(c => ['XMR', 'ZEC', 'DASH'].includes(c.symbol));
-    const stablecoins = cryptoData.filter(c => ['USDT', 'USDC', 'BUSD'].includes(c.symbol));
-    
-    if (privacyCoins.length > cryptoData.length * 0.3) return 'high';
-    if (stablecoins.length > cryptoData.length * 0.5) return 'low';
-    return 'medium';
-  }
-
-  private getAverageVolume(symbol: string): number {
-    // Mock average volume - in real implementation would use historical data
-    return 1000000000; // $1B default
-  }
-
-  private simulateExchangePrices(basePrice: number): { prices: number[]; exchanges: string[] } {
-    const exchanges = ['Binance', 'Coinbase', 'Kraken', 'Huobi', 'KuCoin'];
-    const prices = exchanges.map(() => basePrice * (0.998 + Math.random() * 0.004)); // ±0.2% variation
-    
-    return { prices, exchanges };
-  }
-
-  private assessProtocolRisk(apr: number, tvl: number): 'low' | 'medium' | 'high' | 'extreme' {
-    if (apr > 100) return 'extreme'; // Unsustainably high APR
-    if (apr > 50 || tvl < 100000000) return 'high'; // High APR or low TVL
-    if (apr > 25 || tvl < 500000000) return 'medium';
-    return 'low';
-  }
-
-  private generateYieldRecommendations(protocol: string, apr: number, riskLevel: string): string[] {
-    const recommendations: string[] = [];
-    
-    if (riskLevel === 'extreme') {
-      recommendations.push('Extreme risk - avoid or use only small amounts');
-    } else if (riskLevel === 'high') {
-      recommendations.push('High risk - monitor closely and consider exit strategy');
-    } else if (riskLevel === 'low' && apr > 10) {
-      recommendations.push('Attractive risk-adjusted returns');
+    if (action === 'buy') {
+      return Math.round(currentPrice * (1 - volatility * 1.5) * 100) / 100;
+    } else if (action === 'sell') {
+      return Math.round(currentPrice * (1 + volatility * 2) * 100) / 100;
     }
     
-    recommendations.push(`Consider ${protocol} for ${riskLevel} risk tolerance`);
-    
-    return recommendations;
+    return currentPrice;
   }
 
-  private calculateRiskAdjustedReturn(opportunity: any): number {
-    const riskMultiplier = opportunity.riskLevel === 'low' ? 1 : 
-                          opportunity.riskLevel === 'medium' ? 0.8 :
-                          opportunity.riskLevel === 'high' ? 0.6 : 0.3;
+  public getAssets(): Map<string, CryptoAsset> {
+    return this.assets;
+  }
+
+  public getSignals(): Map<string, TradingSignal> {
+    return this.signals;
+  }
+
+  public updateAssetPrice(symbol: string, price: number): boolean {
+    const asset = this.assets.get(symbol);
+    if (!asset) return false;
+
+    const priceHistory = this.priceHistory.get(symbol) || [];
+    priceHistory.push(price);
     
-    return opportunity.apr * riskMultiplier;
+    // Keep only last 100 price points
+    if (priceHistory.length > 100) {
+      priceHistory.shift();
+    }
+    
+    this.priceHistory.set(symbol, priceHistory);
+
+    // Update asset
+    const change24h = ((price - asset.price) / asset.price) * 100;
+    asset.price = price;
+    asset.change24h = Math.round(change24h * 100) / 100;
+    asset.timestamp = new Date();
+
+    return true;
   }
 }

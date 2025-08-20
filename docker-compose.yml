@@ -12,8 +12,11 @@ services:
       - NODE_ENV=production
       - PORT=3001
       - AGI_MODE=active
+      - NEXT_PUBLIC_LOCALES=sq,en,de,fr,it,zh,ru,es,hi,ar,el,tr,he
+      - NEXT_PUBLIC_DEFAULT_LOCALE=sq
     volumes:
       - ./public:/app/public
+      - ./locales:/app/locales
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]

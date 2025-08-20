@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import { AGIxBioNature } from './AGIxBioNature';
-import styles from './AGIxBioNatureDemo.module.css';
+import { AGIBioNature } from './AGIBioNature';
+import styles from './AGIBioNatureDemo.module.css';
 
 const demoContainerVariants = cva(styles.demoContainer, {
   variants: {
@@ -33,15 +33,15 @@ const controlPanelVariants = cva(styles.controlPanel, {
   }
 });
 
-interface AGIxBioNatureDemoProps {
+interface AGIBioNatureDemoProps {
   initialMode?: 'biology' | 'nature' | 'medical' | 'ecology' | 'comprehensive';
   initialTheme?: 'forest' | 'ocean' | 'laboratory' | 'ecosystem' | 'medical';
 }
 
-export const AGIxBioNatureDemo = ({
+export const AGIBioNatureDemo = ({
   initialMode = 'comprehensive',
   initialTheme = 'forest'
-}: AGIxBioNatureDemoProps) => {
+}: AGIBioNatureDemoProps) => {
   const [mode, setMode] = useState<'biology' | 'nature' | 'medical' | 'ecology' | 'comprehensive'>(initialMode);
   const [theme, setTheme] = useState<'forest' | 'ocean' | 'laboratory' | 'ecosystem' | 'medical'>(initialTheme);
   const [dataSource, setDataSource] = useState<'realtime' | 'research' | 'simulation'>('simulation');
@@ -307,7 +307,7 @@ export const AGIxBioNatureDemo = ({
         </div>
       </motion.div>
 
-      {/* Main AGIxBioNature Component */}
+      {/* Main AGIBioNature Component */}
       <motion.div
         className={styles.mainContent}
         initial={{ opacity: 0, y: 20 }}
@@ -315,7 +315,7 @@ export const AGIxBioNatureDemo = ({
         transition={{ delay: 0.5 }}
         key={`${mode}-${theme}-${dataSource}`} // Re-animate on changes
       >
-        <AGIxBioNature
+        <AGIBioNature
           mode={mode}
           theme={theme}
           dataSource={dataSource}

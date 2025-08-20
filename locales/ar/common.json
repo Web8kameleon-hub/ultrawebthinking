@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تحرير",
+    "add": "إضافة",
+    "search": "بحث",
+    "close": "إغلاق",
+    "open": "فتح",
+    "yes": "نعم",
+    "no": "لا",
+    "next": "التالي",
+    "previous": "السابق",
+    "home": "الرئيسية",
+    "back": "عودة",
+    "continue": "متابعة",
+    "submit": "إرسال",
+    "reset": "إعادة تعيين",
+    "clear": "مسح",
+    "select": "اختيار",
+    "all": "الكل",
+    "none": "لا شيء",
+    "more": "المزيد",
+    "less": "أقل",
+    "view": "عرض",
+    "download": "تحميل",
+    "upload": "رفع",
+    "copy": "نسخ",
+    "paste": "لصق",
+    "cut": "قص"
+  },
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "projects": "المشاريع",
+    "analytics": "التحليلات",
+    "settings": "الإعدادات",
+    "profile": "الملف الشخصي",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "about": "حول",
+    "contact": "اتصال",
+    "help": "مساعدة",
+    "documentation": "التوثيق"
+  },
+  "agi": {
+    "title": "الذكاء الاصطناعي العام",
+    "description": "نظام ذكاء اصطناعي متقدم",
+    "modules": {
+      "core": "النواة",
+      "semantic": "دلالي",
+      "planner": "المخطط",
+      "executor": "المنفذ",
+      "monitor": "المراقب"
+    },
+    "features": {
+      "real_time_analysis": "تحليل في الوقت الفعلي",
+      "pattern_recognition": "التعرف على الأنماط",
+      "predictive_analytics": "التحليلات التنبؤية",
+      "automated_optimization": "التحسين التلقائي",
+      "natural_language": "اللغة الطبيعية"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "processing": "معالجة",
+      "completed": "مكتمل",
+      "error": "خطأ",
+      "pending": "معلق"
+    }
+  },
+  "economics": {
+    "title": "التحليل الاقتصادي",
+    "metrics": {
+      "revenue": "الإيرادات",
+      "profit": "الربح",
+      "growth_rate": "معدل النمو",
+      "market_share": "حصة السوق",
+      "roi": "عائد الاستثمار",
+      "expenses": "المصروفات",
+      "budget": "الميزانية",
+      "forecast": "التوقع"
+    },
+    "indicators": {
+      "bullish": "صاعد",
+      "bearish": "هابط",
+      "neutral": "محايد",
+      "volatile": "متقلب",
+      "stable": "مستقر"
+    }
+  },
+  "crypto": {
+    "title": "تحليل العملات المشفرة",
+    "assets": {
+      "bitcoin": "بيتكوين",
+      "ethereum": "إيثيريوم",
+      "portfolio": "المحفظة",
+      "trading": "التداول",
+      "wallet": "المحفظة"
+    },
+    "metrics": {
+      "price": "السعر",
+      "volume": "الحجم",
+      "market_cap": "القيمة السوقية",
+      "change_24h": "تغيير 24 ساعة",
+      "volatility": "التقلب",
+      "liquidity": "السيولة"
+    },
+    "signals": {
+      "buy": "شراء",
+      "sell": "بيع",
+      "hold": "احتفاظ",
+      "strong_buy": "شراء قوي",
+      "strong_sell": "بيع قوي"
+    }
+  },
+  "ecology": {
+    "title": "التحليل البيئي",
+    "metrics": {
+      "carbon_footprint": "البصمة الكربونية",
+      "energy_efficiency": "كفاءة الطاقة",
+      "sustainability": "الاستدامة",
+      "emissions": "الانبعاثات",
+      "renewable_energy": "الطاقة المتجددة",
+      "biodiversity": "التنوع البيولوجي"
+    },
+    "status": {
+      "excellent": "ممتاز",
+      "good": "جيد",
+      "fair": "مقبول",
+      "poor": "ضعيف",
+      "critical": "حرج"
+    }
+  },
+  "market": {
+    "title": "تحليل السوق",
+    "segments": {
+      "technology": "التكنولوجيا",
+      "healthcare": "الرعاية الصحية",
+      "finance": "المالية",
+      "education": "التعليم",
+      "retail": "التجارة بالتجزئة"
+    },
+    "competition": {
+      "high": "عالية",
+      "medium": "متوسطة",
+      "low": "منخفضة"
+    },
+    "trends": {
+      "growing": "نامية",
+      "declining": "متراجعة",
+      "stable": "مستقرة",
+      "emerging": "ناشئة"
+    }
+  },
+  "patterns": {
+    "title": "التعرف على الأنماط",
+    "types": {
+      "trend": "اتجاه",
+      "cycle": "دورة",
+      "anomaly": "شذوذ",
+      "correlation": "ارتباط",
+      "seasonal": "موسمي"
+    },
+    "confidence": {
+      "high": "عالية",
+      "medium": "متوسطة",
+      "low": "منخفضة"
+    },
+    "predictions": {
+      "title": "التنبؤات",
+      "accuracy": "الدقة",
+      "timeframe": "الإطار الزمني",
+      "probability": "الاحتمالية"
+    }
+  },
+  "errors": {
+    "network_error": "خطأ في الشبكة",
+    "server_error": "خطأ في الخادم",
+    "validation_error": "خطأ في التحقق",
+    "permission_denied": "تم رفض الإذن",
+    "not_found": "غير موجود",
+    "timeout": "انتهت المهلة",
+    "unknown_error": "خطأ غير معروف",
+    "connection_failed": "فشل الاتصال",
+    "data_corrupted": "بيانات تالفة",
+    "insufficient_permissions": "أذونات غير كافية"
+  },
+  "messages": {
+    "welcome": "مرحباً بكم في EuroWeb",
+    "data_saved": "تم حفظ البيانات",
+    "operation_completed": "تمت العملية",
+    "please_wait": "يرجى الانتظار",
+    "processing_request": "معالجة الطلب",
+    "no_data_available": "لا توجد بيانات متاحة",
+    "select_option": "اختر خياراً",
+    "confirm_action": "تأكيد الإجراء",
+    "changes_saved": "تم حفظ التغييرات",
+    "data_updated": "تم تحديث البيانات"
+  },
+  "forms": {
+    "required_field": "حقل مطلوب",
+    "invalid_email": "بريد إلكتروني غير صحيح",
+    "password_too_short": "كلمة المرور قصيرة جداً",
+    "passwords_dont_match": "كلمات المرور غير متطابقة",
+    "invalid_format": "تنسيق غير صحيح",
+    "field_too_long": "الحقل طويل جداً",
+    "field_too_short": "الحقل قصير جداً",
+    "invalid_number": "رقم غير صحيح",
+    "invalid_date": "تاريخ غير صحيح",
+    "invalid_url": "رابط غير صحيح"
+  },
+  "time": {
+    "seconds": "ثوان",
+    "minutes": "دقائق",
+    "hours": "ساعات",
+    "days": "أيام",
+    "weeks": "أسابيع",
+    "months": "أشهر",
+    "years": "سنوات",
+    "ago": "مضت",
+    "from_now": "من الآن",
+    "just_now": "الآن"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "د.إ",
+    "temperature": "°م",
+    "distance": "كم",
+    "weight": "كغ",
+    "volume": "ل"
+  }
+}

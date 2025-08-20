@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "success": "הצלחה",
+    "cancel": "ביטול",
+    "save": "שמירה",
+    "delete": "מחיקה",
+    "edit": "עריכה",
+    "add": "הוספה",
+    "search": "חיפוש",
+    "close": "סגירה",
+    "open": "פתיחה",
+    "yes": "כן",
+    "no": "לא",
+    "next": "הבא",
+    "previous": "קודם",
+    "home": "בית",
+    "back": "חזור",
+    "continue": "המשך",
+    "submit": "שלח",
+    "reset": "איפוס",
+    "clear": "נקה",
+    "select": "בחר",
+    "all": "הכל",
+    "none": "כלום",
+    "more": "עוד",
+    "less": "פחות",
+    "view": "צפה",
+    "download": "הורדה",
+    "upload": "העלאה",
+    "copy": "העתק",
+    "paste": "הדבק",
+    "cut": "גזור"
+  },
+  "navigation": {
+    "dashboard": "לוח בקרה",
+    "projects": "פרויקטים",
+    "analytics": "אנליטיקה",
+    "settings": "הגדרות",
+    "profile": "פרופיל",
+    "logout": "התנתקות",
+    "login": "התחברות",
+    "register": "הרשמה",
+    "about": "אודות",
+    "contact": "צור קשר",
+    "help": "עזרה",
+    "documentation": "תיעוד"
+  },
+  "agi": {
+    "title": "בינה מלאכותית כללית",
+    "description": "מערכת בינה מלאכותית מתקדמת",
+    "modules": {
+      "core": "ליבה",
+      "semantic": "סמנטי",
+      "planner": "מתכנן",
+      "executor": "מבצע",
+      "monitor": "מוניטור"
+    },
+    "features": {
+      "real_time_analysis": "ניתוח בזמן אמת",
+      "pattern_recognition": "זיהוי דפוסים",
+      "predictive_analytics": "אנליטיקה חזויה",
+      "automated_optimization": "אופטימיזציה אוטומטית",
+      "natural_language": "שפה טבעית"
+    },
+    "status": {
+      "active": "פעיל",
+      "inactive": "לא פעיל",
+      "processing": "מעבד",
+      "completed": "הושלם",
+      "error": "שגיאה",
+      "pending": "ממתין"
+    }
+  },
+  "economics": {
+    "title": "ניתוח כלכלי",
+    "metrics": {
+      "revenue": "הכנסות",
+      "profit": "רווח",
+      "growth_rate": "שיעור צמיחה",
+      "market_share": "נתח שוק",
+      "roi": "תשואה על השקעה",
+      "expenses": "הוצאות",
+      "budget": "תקציב",
+      "forecast": "תחזית"
+    },
+    "indicators": {
+      "bullish": "עלייה",
+      "bearish": "ירידה",
+      "neutral": "ניטרלי",
+      "volatile": "תנודתי",
+      "stable": "יציב"
+    }
+  },
+  "crypto": {
+    "title": "ניתוח מטבעות דיגיטליים",
+    "assets": {
+      "bitcoin": "ביטקוין",
+      "ethereum": "איתריום",
+      "portfolio": "תיק השקעות",
+      "trading": "מסחר",
+      "wallet": "ארנק"
+    },
+    "metrics": {
+      "price": "מחיר",
+      "volume": "נפח",
+      "market_cap": "שווי שוק",
+      "change_24h": "שינוי 24 שעות",
+      "volatility": "תנודתיות",
+      "liquidity": "נזילות"
+    },
+    "signals": {
+      "buy": "קנה",
+      "sell": "מכור",
+      "hold": "החזק",
+      "strong_buy": "קניה חזקה",
+      "strong_sell": "מכירה חזקה"
+    }
+  },
+  "ecology": {
+    "title": "ניתוח אקולוגי",
+    "metrics": {
+      "carbon_footprint": "טביעת רגל פחמנית",
+      "energy_efficiency": "יעילות אנרגטית",
+      "sustainability": "קיימות",
+      "emissions": "פליטות",
+      "renewable_energy": "אנרגיה מתחדשת",
+      "biodiversity": "מגוון ביולוגי"
+    },
+    "status": {
+      "excellent": "מצוין",
+      "good": "טוב",
+      "fair": "בינוני",
+      "poor": "גרוע",
+      "critical": "קריטי"
+    }
+  },
+  "market": {
+    "title": "ניתוח שוק",
+    "segments": {
+      "technology": "טכנולוגיה",
+      "healthcare": "בריאות",
+      "finance": "פיננסים",
+      "education": "חינוך",
+      "retail": "קמעונאות"
+    },
+    "competition": {
+      "high": "גבוה",
+      "medium": "בינוני",
+      "low": "נמוך"
+    },
+    "trends": {
+      "growing": "צומח",
+      "declining": "יורד",
+      "stable": "יציב",
+      "emerging": "מתפתח"
+    }
+  },
+  "patterns": {
+    "title": "זיהוי דפוסים",
+    "types": {
+      "trend": "מגמה",
+      "cycle": "מחזור",
+      "anomaly": "חריגה",
+      "correlation": "מתאם",
+      "seasonal": "עונתי"
+    },
+    "confidence": {
+      "high": "גבוה",
+      "medium": "בינוני",
+      "low": "נמוך"
+    },
+    "predictions": {
+      "title": "תחזיות",
+      "accuracy": "דיוק",
+      "timeframe": "מסגרת זמן",
+      "probability": "הסתברות"
+    }
+  },
+  "errors": {
+    "network_error": "שגיאת רשת",
+    "server_error": "שגיאת שרת",
+    "validation_error": "שגיאת אימות",
+    "permission_denied": "הרשאה נדחתה",
+    "not_found": "לא נמצא",
+    "timeout": "פג זמן",
+    "unknown_error": "שגיאה לא ידועה",
+    "connection_failed": "החיבור נכשל",
+    "data_corrupted": "נתונים פגומים",
+    "insufficient_permissions": "הרשאות לא מספיקות"
+  },
+  "messages": {
+    "welcome": "ברוכים הבאים ל-EuroWeb",
+    "data_saved": "הנתונים נשמרו",
+    "operation_completed": "הפעולה הושלמה",
+    "please_wait": "אנא המתן",
+    "processing_request": "מעבד בקשה",
+    "no_data_available": "אין נתונים זמינים",
+    "select_option": "בחר אפשרות",
+    "confirm_action": "אשר פעולה",
+    "changes_saved": "השינויים נשמרו",
+    "data_updated": "הנתונים עודכנו"
+  },
+  "forms": {
+    "required_field": "שדה חובה",
+    "invalid_email": "אימייל לא תקין",
+    "password_too_short": "סיסמה קצרה מדי",
+    "passwords_dont_match": "הסיסמאות לא תואמות",
+    "invalid_format": "פורמט לא תקין",
+    "field_too_long": "השדה ארוך מדי",
+    "field_too_short": "השדה קצר מדי",
+    "invalid_number": "מספר לא תקין",
+    "invalid_date": "תאריך לא תקין",
+    "invalid_url": "כתובת לא תקינה"
+  },
+  "time": {
+    "seconds": "שניות",
+    "minutes": "דקות",
+    "hours": "שעות",
+    "days": "ימים",
+    "weeks": "שבועות",
+    "months": "חודשים",
+    "years": "שנים",
+    "ago": "לפני",
+    "from_now": "מהיום",
+    "just_now": "זה עתה"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "₪",
+    "temperature": "°C",
+    "distance": "ק\"מ",
+    "weight": "ק\"ג",
+    "volume": "ליטר"
+  }
+}

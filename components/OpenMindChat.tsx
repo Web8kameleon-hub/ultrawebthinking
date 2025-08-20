@@ -1,7 +1,10 @@
 'use client';
 
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { OPENMIND_CONFIG, AIProvider } from '../config/openmind';
+import DualMindEngine from '../lib/dualMindEngine';
+import UniversalTranslationEngine from '../lib/universalTranslationEngine';
 
 interface Message {
   id: string
@@ -9,17 +12,39 @@ interface Message {
   content: string
   provider?: string
   timestamp: Date
+  isAlbi?: boolean
+  isJona?: boolean
+  isSynthesis?: boolean
 }
 
 const OpenMindChat = () => {
-  // Pure TypeScript - NO HOOKS - industrial grade
-  let messages: Message[] = [];
-  let input = '';
-  let selectedProvider: AIProvider = 'openmind';
-  let isLoading = false;
+  // React state for proper reactivity
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [selectedProvider, setSelectedProvider] = useState<AIProvider>('openmind');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDualMindMode, setIsDualMindMode] = useState(true);
+  
+  // Initialize engines
+  const dualMind = DualMindEngine.getInstance();
+  const translator = UniversalTranslationEngine.getInstance();
 
-  const sendMessage = (content: string) => {
-    if (!content.trim()) {return;}
+  // Function to detect language using UniversalTranslationEngine
+  const detectLanguage = async (text: string): Promise<string> => {
+    try {
+      const detected = await translator.detectLanguage(text);
+      return detected.code;
+    } catch (error) {
+      // Fallback detection
+      if (/[ëçõ]|përshëndetje|tungjatjeta|mirëdita|faleminderit|tani|mund|duhet|është|janë|çfarë|kur|ku|si/i.test(text)) {
+        return 'sq';
+      }
+      return 'en';
+    }
+  };
+
+  const sendMessage = async (content: string) => {
+    if (!content.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -28,24 +53,77 @@ const OpenMindChat = () => {
       timestamp: new Date()
     };
 
-    messages = [...messages, userMessage]; // Direct assignment - no hooks
-    input = ''; // Direct assignment - no hooks
-    isLoading = true; // Direct assignment - no hooks
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const provider = OPENMIND_CONFIG.providers[selectedProvider];
-      const aiMessage: Message = {
+    try {
+      if (isDualMindMode && selectedProvider === 'openmind') {
+        // Enhanced Albanian language detection
+        const detectedLanguage = await detectLanguage(content);
+        
+        // Use DualMind Engine for ALBI & JONA conversation
+        const conversation = await dualMind.generateAnthropicConversation(
+          content, 
+          detectedLanguage
+        );
+
+        // Add ALBI response
+        const albiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: conversation.albiResponse,
+          provider: 'openmind',
+          timestamp: new Date(),
+          isAlbi: true
+        };
+
+        // Add JONA response
+        const jonaMessage: Message = {
+          id: (Date.now() + 2).toString(),
+          role: 'assistant',
+          content: conversation.jonaResponse,
+          provider: 'openmind',
+          timestamp: new Date(),
+          isJona: true
+        };
+
+        // Add synthesis
+        const synthesisMessage: Message = {
+          id: (Date.now() + 3).toString(),
+          role: 'assistant',
+          content: conversation.sharedInsight,
+          provider: 'openmind',
+          timestamp: new Date(),
+          isSynthesis: true
+        };
+
+        setMessages(prev => [...prev, albiMessage, jonaMessage, synthesisMessage]);
+      } else {
+        // Standard AI provider response
+        const provider = OPENMIND_CONFIG.providers[selectedProvider];
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: `${provider.icon} ${provider.name}: I understand your message "${content}". ${provider.description}. How can I help you further?`,
+          provider: selectedProvider,
+          timestamp: new Date()
+        };
+        
+        setMessages(prev => [...prev, aiMessage]);
+      }
+    } catch (error) {
+      console.error('OpenMind error:', error);
+      const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `${provider.icon} ${provider.name}: I understand your message "${content}". ${provider.description}. How can I help you further?`,
-        provider: selectedProvider,
+        content: '❌ Sorry, there was an error processing your request. Please try again.',
         timestamp: new Date()
       };
-      
-      messages = [...messages, aiMessage]; // Direct assignment - no hooks
-      isLoading = false; // Direct assignment - no hooks
-    }, 1000);
+      setMessages(prev => [...prev, errorMessage]);
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -70,8 +148,40 @@ const OpenMindChat = () => {
           color: '#d4af37',
           marginBottom: '10px'
         }}>
-          🧠 EuroWeb OpenMind AI
+          🧠 EuroWeb OpenMind Ultra - DualMind AI (ALBI & JONA)
         </h1>
+        
+        {/* DualMind Mode Toggle */}
+        <div style={{
+          display: 'flex',
+          gap: '15px',
+          alignItems: 'center',
+          marginBottom: '15px'
+        }}>
+          <button
+            onClick={() => { 
+              setIsDualMindMode(prev => !prev);
+              console.log('DualMind mode:', !isDualMindMode);
+            }}
+            style={{
+              padding: '8px 16px',
+              borderRadius: '20px',
+              border: isDualMindMode ? '2px solid #22c55e' : '1px solid #374151',
+              background: isDualMindMode ? 'rgba(34, 197, 94, 0.2)' : 'rgba(55, 65, 81, 0.3)',
+              color: isDualMindMode ? '#22c55e' : '#cbd5e1',
+              fontSize: '14px',
+              cursor: 'pointer',
+              fontWeight: '600'
+            }}
+          >
+            {isDualMindMode ? '🎭 DualMind Mode Active' : '🤖 Standard Mode'}
+          </button>
+          {isDualMindMode && (
+            <div style={{ fontSize: '12px', color: '#22c55e' }}>
+              🔍 M.Albi (Analytical) + 💝 F.Jona (Creative) + 🤝 Synthesis
+            </div>
+          )}
+        </div>
         
         {/* Provider Selector */}
         <div style={{
@@ -84,8 +194,8 @@ const OpenMindChat = () => {
             <motion.button
               key={key}
               onClick={() => { 
-                selectedProvider = key as AIProvider; // Direct assignment - no hooks
-                console.log('Provider changed:', selectedProvider);
+                setSelectedProvider(key as AIProvider);
+                console.log('Provider changed:', key);
               }}
               style={{
                 padding: '8px 16px',
@@ -100,7 +210,7 @@ const OpenMindChat = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {provider.icon} {provider.name}
+              {(provider as any).icon} {(provider as any).name}
             </motion.button>
           ))}
         </div>
@@ -122,9 +232,17 @@ const OpenMindChat = () => {
             color: '#6b7280'
           }}>
             <h3 style={{ fontSize: '18px', marginBottom: '10px' }}>
-              Welcome to OpenMind AI Gateway
+              Welcome to OpenMind Ultra - DualMind AI Gateway
             </h3>
-            <p>Choose an AI provider and start chatting with multiple AI models!</p>
+            <p>🎭 <strong>DualMind Mode:</strong> Experience conversations with ALBI & JONA dual personalities!</p>
+            <div style={{ marginTop: '20px', fontSize: '14px', color: '#94a3b8' }}>
+              <div>🔍 <strong>M.Albi:</strong> Analytical, systematic, technical approach</div>
+              <div>💝 <strong>F.Jona:</strong> Creative, empathetic, intuitive perspective</div>
+              <div>🤝 <strong>Synthesis:</strong> Combined wisdom from both minds</div>
+              <div style={{ marginTop: '10px', color: '#22c55e' }}>
+                💡 Try saying "Tungjatjeta" for Albanian cultural context!
+              </div>
+            </div>
           </div>
         )}
 
@@ -140,9 +258,22 @@ const OpenMindChat = () => {
               borderRadius: '15px',
               background: message.role === 'user' 
                 ? 'linear-gradient(45deg, #d4af37, #ffd700)'
-                : 'rgba(55, 65, 81, 0.5)',
+                : message.isAlbi 
+                  ? 'rgba(34, 197, 94, 0.1)' 
+                  : message.isJona 
+                    ? 'rgba(236, 72, 153, 0.1)' 
+                    : message.isSynthesis 
+                      ? 'rgba(59, 130, 246, 0.1)' 
+                      : 'rgba(55, 65, 81, 0.5)',
               color: message.role === 'user' ? '#1a1d29' : '#f8fafc',
-              backdropFilter: 'blur(10px)'
+              backdropFilter: 'blur(10px)',
+              border: message.isAlbi 
+                ? '1px solid #22c55e' 
+                : message.isJona 
+                  ? '1px solid #ec4899' 
+                  : message.isSynthesis 
+                    ? '1px solid #3b82f6' 
+                    : 'none'
             }}
           >
             <div style={{
@@ -151,9 +282,19 @@ const OpenMindChat = () => {
               marginBottom: '5px',
               opacity: 0.8
             }}>
-              {message.role === 'user' ? 'You' : message.provider ? OPENMIND_CONFIG.providers[message.provider as AIProvider]?.name : 'AI'}
+              {message.role === 'user' 
+                ? 'You' 
+                : message.isAlbi 
+                  ? '🔍 M.Albi (Analytical)'
+                  : message.isJona 
+                    ? '💝 F.Jona (Creative)'
+                    : message.isSynthesis 
+                      ? '🤝 ALBI & JONA Synthesis'
+                      : message.provider 
+                        ? OPENMIND_CONFIG.providers[message.provider as AIProvider]?.name 
+                        : 'AI'}
             </div>
-            <div>{message.content}</div>
+            <div style={{ whiteSpace: 'pre-wrap' }}>{message.content}</div>
             <div style={{
               fontSize: '12px',
               opacity: 0.6,
@@ -211,11 +352,13 @@ const OpenMindChat = () => {
             type="text"
             value={input}
             onChange={(e) => { 
-              input = e.target.value; // Direct assignment - no hooks
-              console.log('Input changed:', input);
+              setInput(e.target.value);
+              console.log('Input changed:', e.target.value);
             }}
             onKeyPress={(e) => e.key === 'Enter' && !isLoading && sendMessage(input)}
-            placeholder={`Ask ${OPENMIND_CONFIG.providers[selectedProvider].name} anything...`}
+            placeholder={isDualMindMode && selectedProvider === 'openmind' 
+              ? `Ask ALBI & JONA anything... (Try: "Tungjatjeta" for Albanian)` 
+              : `Ask ${OPENMIND_CONFIG.providers[selectedProvider]?.name} anything...`}
             disabled={isLoading}
             style={{
               flex: 1,

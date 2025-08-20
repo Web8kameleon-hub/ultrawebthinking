@@ -10,7 +10,7 @@ export const OPENMIND_CONFIG = {
       name: 'OpenMind AI',
       url: 'https://openmind.ai',
       apiUrl: 'https://api.openmind.ai/v1',
-      description: 'Advanced AI reasoning and creativity',
+      description: 'Advanced AI reasoning and creativity with DualMind (ALBI & JONA)',
       icon: '🧠',
       enabled: true,
       priority: 1

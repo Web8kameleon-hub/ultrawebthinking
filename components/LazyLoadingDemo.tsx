@@ -14,8 +14,8 @@ import {
   registerLazyComponent,
   preloadComponent,
   AGISheetLazy,
-  AGIxEcoLazy,
-  AGIxBioNatureLazy,
+  AGIEcoLazy,
+  AGIBioNatureLazy,
   Web8TabSystemLazy,
   IndustrialFallback
 } from '@/components/LazyLoader'
@@ -41,7 +41,7 @@ export const ViewportLazyExample = () => {
       <h2>Scroll down to load component</h2>
       <div style={{ marginTop: '100vh' }}>
         <LazyLoader 
-          component="AGIxEco"
+          component="AGIEco"
           variant="neural"
           priority="low"
           viewport={true}
@@ -112,8 +112,8 @@ export const IndustrialTabExample = () => {
 
   const tabs = [
     { id: 'sheet', name: 'AGI Sheet', component: 'AGISheet', priority: 'critical' },
-    { id: 'eco', name: 'AGI Eco', component: 'AGIxEco', priority: 'normal' },
-    { id: 'bio', name: 'AGI Bio', component: 'AGIxBioNature', priority: 'normal' }
+    { id: 'eco', name: 'AGI Eco', component: 'AGIEco', priority: 'normal' },
+    { id: 'bio', name: 'AGI Bio', component: 'AGIBioNature', priority: 'normal' }
   ]
 
   return (

@@ -30,12 +30,12 @@ export const Home = () => {
         </div>
         
         <div className={styles.feature}>
-          <h3>🌿 AGIxBioNature</h3>
+          <h3>🌿 AGIBioNature</h3>
           <p>Biology, nature, medical, and ecology analysis engines</p>
         </div>
         
         <div className={styles.feature}>
-          <h3>💰 AGIxEco</h3>
+          <h3>💰 AGIEco</h3>
           <p>Economic, statistical, and crypto-analysis tools</p>
         </div>
       </div>

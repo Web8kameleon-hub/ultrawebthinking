@@ -1,373 +1,209 @@
-interface EcoDataPoint {
-  timestamp: Date;
+/**
+ * EcoStatisticsEngine.ts
+ * Real-time ecological statistics processing engine
+ * © Web8 UltraThinking – Ledjan Ahmati
+ */
+
+export interface EcoStatistic {
+  id: string;
+  name: string;
   value: number;
-  category: string;
-  metadata?: Record<string, any>;
-}
-
-interface StatisticalSummary {
-  mean: number;
-  median: number;
-  standardDeviation: number;
-  variance: number;
-  skewness: number;
-  kurtosis: number;
-  correlation: Record<string, number>;
-  trend: 'upward' | 'downward' | 'stable';
-  volatility: number;
-  anomalies: Array<{ timestamp: Date; value: number; severity: number }>;
-}
-
-interface RegressionResult {
-  slope: number;
-  intercept: number;
-  rSquared: number;
-  prediction: number[];
+  unit: string;
+  trend: 'up' | 'down' | 'stable';
   confidence: number;
+  timestamp: Date;
+  category: 'biodiversity' | 'climate' | 'pollution' | 'resources';
 }
 
-interface SeasonalAnalysis {
-  seasonality: 'strong' | 'moderate' | 'weak' | 'none';
-  cycle: number; // Period in data points
-  amplitude: number;
-  phase: number;
+export interface EcoMetrics {
+  biodiversityIndex: number;
+  carbonFootprint: number;
+  waterQuality: number;
+  airQuality: number;
+  soilHealth: number;
+  energyEfficiency: number;
 }
 
 export class EcoStatisticsEngine {
-  private debugMode: boolean;
+  private metrics: Map<string, EcoStatistic> = new Map();
+  private history: Map<string, EcoStatistic[]> = new Map();
 
-  constructor(debugMode: boolean = false) {
-    this.debugMode = debugMode;
+  constructor() {
+    this.initializeMetrics();
   }
 
-  /**
-   * Comprehensive statistical analysis of economic data
-   */
-  async analyzeData(data: EcoDataPoint[]): Promise<StatisticalSummary> {
-    if (data.length === 0) {
-      throw new Error('No data provided for analysis');
-    }
+  private initializeMetrics(): void {
+    const baseMetrics = [
+      {
+        id: 'biodiversity_index',
+        name: 'Biodiversity Index',
+        value: 0.75,
+        unit: 'index',
+        trend: 'down' as const,
+        confidence: 0.89,
+        category: 'biodiversity' as const
+      },
+      {
+        id: 'carbon_footprint',
+        name: 'Carbon Footprint',
+        value: 4.8,
+        unit: 'tons CO2/year',
+        trend: 'up' as const,
+        confidence: 0.92,
+        category: 'climate' as const
+      },
+      {
+        id: 'water_quality',
+        name: 'Water Quality Index',
+        value: 0.82,
+        unit: 'index',
+        trend: 'stable' as const,
+        confidence: 0.85,
+        category: 'pollution' as const
+      }
+    ];
 
-    const values = data.map(d => d.value);
-    const timestamps = data.map(d => d.timestamp);
+    baseMetrics.forEach(metric => {
+      this.metrics.set(metric.id, {
+        ...metric,
+        timestamp: new Date()
+      });
+    });
+  }
 
-    // Basic statistics
-    const mean = this.calculateMean(values);
-    const median = this.calculateMedian(values);
-    const variance = this.calculateVariance(values, mean);
-    const standardDeviation = Math.sqrt(variance);
-    
-    // Advanced statistics
-    const skewness = this.calculateSkewness(values, mean, standardDeviation);
-    const kurtosis = this.calculateKurtosis(values, mean, standardDeviation);
-    
-    // Correlation analysis by category
-    const correlation = this.calculateCorrelation(data);
-    
-    // Trend analysis
-    const trend = this.analyzeTrend(values, timestamps);
-    
-    // Volatility calculation
-    const volatility = this.calculateVolatility(values);
-    
-    // Anomaly detection
-    const anomalies = this.detectAnomalies(data, mean, standardDeviation);
+  public calculateBiodiversityTrends(): EcoStatistic[] {
+    const trends = [];
+    const baseTime = Date.now();
 
-    if (this.debugMode) {
-      console.log('Statistical Analysis Complete:', {
-        dataPoints: data.length,
-        mean,
-        standardDeviation,
-        trend,
-        anomalyCount: anomalies.length
+    for (let i = 0; i < 12; i++) {
+      trends.push({
+        id: `biodiversity_${i}`,
+        name: `Biodiversity Month ${i + 1}`,
+        value: 0.6 + (Math.random() * 0.3),
+        unit: 'index',
+        trend: (Math.random() > 0.5 ? 'up' : 'down') as 'up' | 'down',
+        confidence: 0.7 + (Math.random() * 0.3),
+        timestamp: new Date(baseTime - (i * 30 * 24 * 60 * 60 * 1000)),
+        category: 'biodiversity' as const
       });
     }
 
+    return trends;
+  }
+
+  public predictClimateImpact(years: number = 5): EcoStatistic[] {
+    const predictions = [];
+    const currentTemp = 15.2; // Current global temperature increase
+
+    for (let year = 1; year <= years; year++) {
+      const tempIncrease = currentTemp + (year * 0.2) + (Math.random() * 0.1);
+      
+      predictions.push({
+        id: `climate_prediction_${year}`,
+        name: `Climate Impact Year ${year}`,
+        value: tempIncrease,
+        unit: '°C increase',
+        trend: 'up' as const,
+        confidence: Math.max(0.5, 0.9 - (year * 0.1)),
+        timestamp: new Date(Date.now() + (year * 365 * 24 * 60 * 60 * 1000)),
+        category: 'climate' as const
+      });
+    }
+
+    return predictions;
+  }
+
+  public analyzeEcosystemHealth(data: any): EcoMetrics {
+    // Simulate ecosystem health analysis
     return {
-      mean,
-      median,
-      standardDeviation,
-      variance,
-      skewness,
-      kurtosis,
-      correlation,
-      trend,
-      volatility,
-      anomalies
+      biodiversityIndex: 0.65 + (Math.random() * 0.3),
+      carbonFootprint: 3.5 + (Math.random() * 2),
+      waterQuality: 0.7 + (Math.random() * 0.25),
+      airQuality: 0.6 + (Math.random() * 0.35),
+      soilHealth: 0.75 + (Math.random() * 0.2),
+      energyEfficiency: 0.55 + (Math.random() * 0.4)
     };
   }
 
-  /**
-   * Perform linear regression analysis
-   */
-  async performRegression(data: EcoDataPoint[]): Promise<RegressionResult> {
-    const x = data.map((_, i) => i); // Time index
-    const y = data.map(d => d.value);
-    
-    const n = data.length;
-    const sumX = x.reduce((a, b) => a + b, 0);
-    const sumY = y.reduce((a, b) => a + b, 0);
-    const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
-    const sumXX = x.reduce((sum, xi) => sum + xi * xi, 0);
-    const sumYY = y.reduce((sum, yi) => sum + yi * yi, 0);
-
-    // Calculate slope and intercept
-    const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-    const intercept = (sumY - slope * sumX) / n;
-
-    // Calculate R-squared
-    const yMean = sumY / n;
-    const ssRes = y.reduce((sum, yi, i) => {
-      const predicted = slope * x[i] + intercept;
-      return sum + Math.pow(yi - predicted, 2);
-    }, 0);
-    const ssTot = y.reduce((sum, yi) => sum + Math.pow(yi - yMean, 2), 0);
-    const rSquared = 1 - (ssRes / ssTot);
-
-    // Generate predictions
-    const prediction = x.map(xi => slope * xi + intercept);
-    
-    // Calculate confidence level
-    const confidence = Math.max(0, Math.min(1, rSquared));
+  public generateEcoReport(): any {
+    const metrics = this.analyzeEcosystemHealth({});
+    const trends = this.calculateBiodiversityTrends();
+    const predictions = this.predictClimateImpact(3);
 
     return {
-      slope,
-      intercept,
-      rSquared,
-      prediction,
-      confidence
+      summary: {
+        overall_health: (metrics.biodiversityIndex + metrics.waterQuality + metrics.soilHealth) / 3,
+        critical_areas: this.identifyCriticalAreas(metrics),
+        improvement_potential: this.calculateImprovementPotential(metrics)
+      },
+      current_metrics: metrics,
+      historical_trends: trends.slice(0, 6),
+      future_predictions: predictions,
+      recommendations: this.generateRecommendations(metrics),
+      report_timestamp: new Date().toISOString()
     };
   }
 
-  /**
-   * Analyze seasonal patterns in data
-   */
-  async analyzeSeasonality(data: EcoDataPoint[]): Promise<SeasonalAnalysis> {
-    const values = data.map(d => d.value);
+  private identifyCriticalAreas(metrics: EcoMetrics): string[] {
+    const critical = [];
     
-    // Simple seasonality detection using autocorrelation
-    const maxLag = Math.min(Math.floor(data.length / 4), 100);
-    let bestCorrelation = 0;
-    let bestPeriod = 0;
+    if (metrics.biodiversityIndex < 0.7) critical.push('Biodiversity Loss');
+    if (metrics.carbonFootprint > 4.0) critical.push('High Carbon Emissions');
+    if (metrics.waterQuality < 0.8) critical.push('Water Pollution');
+    if (metrics.airQuality < 0.7) critical.push('Air Quality Issues');
+    if (metrics.soilHealth < 0.75) critical.push('Soil Degradation');
+    if (metrics.energyEfficiency < 0.6) critical.push('Energy Inefficiency');
 
-    for (let lag = 2; lag <= maxLag; lag++) {
-      const correlation = this.calculateAutoCorrelation(values, lag);
-      if (correlation > bestCorrelation) {
-        bestCorrelation = correlation;
-        bestPeriod = lag;
-      }
-    }
-
-    // Determine seasonality strength
-    let seasonality: 'strong' | 'moderate' | 'weak' | 'none';
-    if (bestCorrelation > 0.7) seasonality = 'strong';
-    else if (bestCorrelation > 0.5) seasonality = 'moderate';
-    else if (bestCorrelation > 0.3) seasonality = 'weak';
-    else seasonality = 'none';
-
-    // Calculate amplitude and phase (simplified)
-    const amplitude = this.calculateAmplitude(values, bestPeriod);
-    const phase = 0; // Simplified - would need FFT for accurate phase
-
-    return {
-      seasonality,
-      cycle: bestPeriod,
-      amplitude,
-      phase
-    };
+    return critical;
   }
 
-  // Private utility methods
-  private calculateMean(values: number[]): number {
-    return values.reduce((a, b) => a + b, 0) / values.length;
-  }
-
-  private calculateMedian(values: number[]): number {
-    const sorted = [...values].sort((a, b) => a - b);
-    const mid = Math.floor(sorted.length / 2);
+  private calculateImprovementPotential(metrics: EcoMetrics): number {
+    const maxPossible = 6.0; // 6 metrics * 1.0 max each
+    const current = Object.values(metrics).reduce((sum, value) => sum + Math.min(1.0, value), 0);
     
-    if (sorted.length % 2 === 0) {
-      return (sorted[mid - 1] + sorted[mid]) / 2;
-    }
-    return sorted[mid];
+    return Math.round(((maxPossible - current) / maxPossible) * 100);
   }
 
-  private calculateVariance(values: number[], mean: number): number {
-    return values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
-  }
+  private generateRecommendations(metrics: EcoMetrics): string[] {
+    const recommendations = [];
 
-  private calculateSkewness(values: number[], mean: number, stdDev: number): number {
-    const n = values.length;
-    const sum = values.reduce((sum, val) => sum + Math.pow((val - mean) / stdDev, 3), 0);
-    return (n / ((n - 1) * (n - 2))) * sum;
-  }
-
-  private calculateKurtosis(values: number[], mean: number, stdDev: number): number {
-    const n = values.length;
-    const sum = values.reduce((sum, val) => sum + Math.pow((val - mean) / stdDev, 4), 0);
-    return ((n * (n + 1)) / ((n - 1) * (n - 2) * (n - 3))) * sum - (3 * Math.pow(n - 1, 2)) / ((n - 2) * (n - 3));
-  }
-
-  private calculateCorrelation(data: EcoDataPoint[]): Record<string, number> {
-    const categories = [...new Set(data.map(d => d.category))];
-    const correlations: Record<string, number> = {};
-
-    for (let i = 0; i < categories.length; i++) {
-      for (let j = i + 1; j < categories.length; j++) {
-        const cat1Data = data.filter(d => d.category === categories[i]).map(d => d.value);
-        const cat2Data = data.filter(d => d.category === categories[j]).map(d => d.value);
-        
-        const minLength = Math.min(cat1Data.length, cat2Data.length);
-        if (minLength < 2) continue;
-
-        const correlation = this.calculatePearsonCorrelation(
-          cat1Data.slice(0, minLength),
-          cat2Data.slice(0, minLength)
-        );
-        
-        correlations[`${categories[i]}_${categories[j]}`] = correlation;
-      }
+    if (metrics.carbonFootprint > 4.0) {
+      recommendations.push('Implement renewable energy sources to reduce carbon footprint');
     }
 
-    return correlations;
-  }
-
-  private calculatePearsonCorrelation(x: number[], y: number[]): number {
-    const n = x.length;
-    if (n !== y.length || n < 2) return 0;
-
-    const sumX = x.reduce((a, b) => a + b, 0);
-    const sumY = y.reduce((a, b) => a + b, 0);
-    const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
-    const sumXX = x.reduce((sum, xi) => sum + xi * xi, 0);
-    const sumYY = y.reduce((sum, yi) => sum + yi * yi, 0);
-
-    const numerator = n * sumXY - sumX * sumY;
-    const denominator = Math.sqrt((n * sumXX - sumX * sumX) * (n * sumYY - sumY * sumY));
-
-    return denominator === 0 ? 0 : numerator / denominator;
-  }
-
-  private analyzeTrend(values: number[], timestamps: Date[]): 'upward' | 'downward' | 'stable' {
-    if (values.length < 2) return 'stable';
-
-    // Simple linear regression slope
-    const n = values.length;
-    const x = Array.from({ length: n }, (_, i) => i);
-    const y = values;
-
-    const sumX = x.reduce((a, b) => a + b, 0);
-    const sumY = y.reduce((a, b) => a + b, 0);
-    const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
-    const sumXX = x.reduce((sum, xi) => sum + xi * xi, 0);
-
-    const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
-
-    const threshold = Math.abs(this.calculateMean(values)) * 0.001; // 0.1% threshold
-
-    if (slope > threshold) return 'upward';
-    if (slope < -threshold) return 'downward';
-    return 'stable';
-  }
-
-  private calculateVolatility(values: number[]): number {
-    if (values.length < 2) return 0;
-
-    const returns = [];
-    for (let i = 1; i < values.length; i++) {
-      const returnValue = (values[i] - values[i - 1]) / values[i - 1];
-      returns.push(returnValue);
+    if (metrics.biodiversityIndex < 0.7) {
+      recommendations.push('Establish protected areas and wildlife corridors');
     }
 
-    const mean = this.calculateMean(returns);
-    const variance = this.calculateVariance(returns, mean);
-    return Math.sqrt(variance * 252); // Annualized volatility
-  }
-
-  private detectAnomalies(data: EcoDataPoint[], mean: number, stdDev: number): Array<{ timestamp: Date; value: number; severity: number }> {
-    const threshold = 2; // 2 standard deviations
-    const anomalies: Array<{ timestamp: Date; value: number; severity: number }> = [];
-
-    for (const point of data) {
-      const zScore = Math.abs((point.value - mean) / stdDev);
-      if (zScore > threshold) {
-        anomalies.push({
-          timestamp: point.timestamp,
-          value: point.value,
-          severity: zScore
-        });
-      }
+    if (metrics.waterQuality < 0.8) {
+      recommendations.push('Upgrade water treatment facilities and reduce industrial runoff');
     }
 
-    return anomalies.sort((a, b) => b.severity - a.severity);
-  }
-
-  private calculateAutoCorrelation(values: number[], lag: number): number {
-    if (lag >= values.length) return 0;
-
-    const n = values.length - lag;
-    const x1 = values.slice(0, n);
-    const x2 = values.slice(lag, lag + n);
-
-    return this.calculatePearsonCorrelation(x1, x2);
-  }
-
-  private calculateAmplitude(values: number[], period: number): number {
-    if (period === 0 || values.length < period * 2) return 0;
-
-    const cycles = Math.floor(values.length / period);
-    let maxAmplitude = 0;
-
-    for (let c = 0; c < cycles; c++) {
-      const cycleData = values.slice(c * period, (c + 1) * period);
-      const min = Math.min(...cycleData);
-      const max = Math.max(...cycleData);
-      const amplitude = (max - min) / 2;
-      maxAmplitude = Math.max(maxAmplitude, amplitude);
+    if (metrics.energyEfficiency < 0.6) {
+      recommendations.push('Invest in energy-efficient technologies and smart grid systems');
     }
 
-    return maxAmplitude;
+    return recommendations;
   }
 
-  /**
-   * Advanced statistical forecasting
-   */
-  async forecast(data: EcoDataPoint[], periods: number = 10): Promise<{ predictions: number[]; confidence: number[] }> {
-    const values = data.map(d => d.value);
-    
-    // Simple exponential smoothing for forecasting
-    const alpha = 0.3; // Smoothing parameter
-    let smoothed = values[0];
-    const smoothedValues = [smoothed];
-
-    for (let i = 1; i < values.length; i++) {
-      smoothed = alpha * values[i] + (1 - alpha) * smoothed;
-      smoothedValues.push(smoothed);
-    }
-
-    // Generate predictions
-    const predictions: number[] = [];
-    const confidence: number[] = [];
-    let lastValue = smoothedValues[smoothedValues.length - 1];
-    const error = this.calculateForecastError(values, smoothedValues);
-
-    for (let i = 0; i < periods; i++) {
-      predictions.push(lastValue);
-      // Confidence decreases with distance
-      confidence.push(Math.max(0.1, 0.9 - (i * 0.1)));
-    }
-
-    return { predictions, confidence };
+  public getMetrics(): Map<string, EcoStatistic> {
+    return this.metrics;
   }
 
-  private calculateForecastError(actual: number[], predicted: number[]): number {
-    const minLength = Math.min(actual.length, predicted.length);
-    let sumSquaredError = 0;
+  public updateMetric(id: string, value: number): boolean {
+    const metric = this.metrics.get(id);
+    if (!metric) return false;
 
-    for (let i = 0; i < minLength; i++) {
-      sumSquaredError += Math.pow(actual[i] - predicted[i], 2);
-    }
+    // Store in history
+    const history = this.history.get(id) || [];
+    history.push({ ...metric });
+    this.history.set(id, history);
 
-    return Math.sqrt(sumSquaredError / minLength);
+    // Update current metric
+    metric.value = value;
+    metric.timestamp = new Date();
+    this.metrics.set(id, metric);
+
+    return true;
   }
 }

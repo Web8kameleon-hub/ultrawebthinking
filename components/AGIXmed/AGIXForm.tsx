@@ -1,5 +1,5 @@
 /**
- * AGIXmed Form Component
+ * AGImed Form Component
  * Medical AI Analysis Input Form
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -13,12 +13,12 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
-export type AGIXFormProps = {
+export type AGIFormProps = {
   onSubmit: (input: string) => void
   isLoading?: boolean
 }
 
-export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false }) => {
+export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false }) => {
   const [input, setInput] = useState('')
   const [charCount, setCharCount] = useState(0)
   const maxChars = 500
@@ -69,7 +69,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
           justifyContent: 'center',
           gap: '12px'
         }}>
-          🏥 AGIXmed Analyzer
+          🏥 AGImed Analyzer
         </h2>
         <p style={{
           fontSize: '16px',
@@ -148,7 +148,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
           }}>
             <span>💡</span>
             <span>
-              Sa më shumë detaje të jepni, aq më të sakta do të jenë rekomandimet e AGIXmed
+              Sa më shumë detaje të jepni, aq më të sakta do të jenë rekomandimet e AGImed
             </span>
           </div>
         </div>
@@ -214,7 +214,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
               </>
             ) : (
               <>
-                🧠 Dërgo në AGIXmed
+                🧠 Dërgo në AGImed
               </>
             )}
           </motion.button>
@@ -231,5 +231,5 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
   )
 }
 
-// Removed default export: AGIXForm
+// Removed default export: AGIForm
 

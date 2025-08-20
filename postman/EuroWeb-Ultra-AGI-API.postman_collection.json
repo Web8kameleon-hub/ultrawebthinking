@@ -1,0 +1,285 @@
+{
+  "info": {
+    "name": "EuroWeb Ultra AGI API",
+    "description": "Complete API collection for EuroWeb Ultra multi-language AGI platform",
+    "version": "2.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001"
+    },
+    {
+      "key": "prodUrl", 
+      "value": "https://euroweb-ultra.vercel.app"
+    }
+  ],
+  "item": [
+    {
+      "name": "AGI Core API",
+      "item": [
+        {
+          "name": "Core Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/core/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "core", "status"]
+            }
+          }
+        },
+        {
+          "name": "Semantic Analysis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Analyze this content for semantic meaning\",\n  \"language\": \"en\",\n  \"depth\": \"detailed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/semantic/analyze",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "semantic", "analyze"]
+            }
+          }
+        },
+        {
+          "name": "Create Plan",
+          "request": {
+            "method": "POST", 
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"goal\": \"Optimize business processes\",\n  \"constraints\": [\"budget\", \"timeline\"],\n  \"priority\": \"high\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/planner/create",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "planner", "create"]
+            }
+          }
+        },
+        {
+          "name": "Execute Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type", 
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"planId\": \"plan_123\",\n  \"task\": \"data_analysis\",\n  \"parameters\": {}\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/executor/run",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "executor", "run"]
+            }
+          }
+        },
+        {
+          "name": "Monitor Metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/monitor/metrics",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "monitor", "metrics"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Economic Analysis",
+      "item": [
+        {
+          "name": "Economic Analysis",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/economics/analyze",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "economics", "analyze"]
+            }
+          }
+        },
+        {
+          "name": "Crypto Portfolio",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/crypto/portfolio",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "crypto", "portfolio"]
+            }
+          }
+        },
+        {
+          "name": "Market Trends",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/market/trends",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "market", "trends"]
+            }
+          }
+        },
+        {
+          "name": "Ecological Analysis",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/ecology/sustainability",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "ecology", "sustainability"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pattern Recognition",
+      "item": [
+        {
+          "name": "Detect Patterns",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [1, 2, 3, 5, 8, 13, 21],\n  \"type\": \"sequence\",\n  \"confidence\": 0.95\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/agi/patterns/detect",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "agi", "patterns", "detect"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Multi-Language Routes",
+      "item": [
+        {
+          "name": "Albanian Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/sq/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["sq", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "English Dashboard", 
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/en/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["en", "dashboard"]
+            }
+          }
+        },
+        {
+          "name": "Chinese Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/zh/仪表板",
+              "host": ["{{baseUrl}}"],
+              "path": ["zh", "仪表板"]
+            }
+          }
+        },
+        {
+          "name": "Arabic Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ar/لوحة-التحكم",
+              "host": ["{{baseUrl}}"],
+              "path": ["ar", "لوحة-التحكم"]
+            }
+          }
+        },
+        {
+          "name": "Available Locales",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/locales",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "locales"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health & Status",
+      "item": [
+        {
+          "name": "API Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health"]
+            }
+          }
+        },
+        {
+          "name": "System Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "status"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

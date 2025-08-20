@@ -1,0 +1,47 @@
+# k8s/configmap.yaml
+# EuroWeb Ultra Configuration
+# © Web8 UltraThinking – Ledjan Ahmati
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: euroweb-config
+  namespace: euroweb-ultra
+data:
+  # AGI Configuration
+  agi.mode: "production"
+  agi.performance.level: "ultra"
+  agi.mesh.enabled: "true"
+  agi.lora.frequency: "868"
+  
+  # Network Configuration
+  mesh.protocol: "EuroMesh"
+  mesh.encryption: "AES-256"
+  mesh.discovery: "auto"
+  
+  # Performance Settings
+  cache.ttl: "3600"
+  worker.threads: "4"
+  memory.limit: "1Gi"
+  
+  # Logging
+  log.level: "info"
+  log.format: "json"
+  
+  # Features
+  features.dualmind: "enabled"
+  features.translator: "enabled"
+  features.analytics: "enabled"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: euroweb-secrets
+  namespace: euroweb-ultra
+type: Opaque
+data:
+  # Base64 encoded secrets (placeholder - replace with real values)
+  database-url: cG9zdGdyZXNxbDovL3VzZXI6cGFzc0BkYi1zZXJ2aWNlOjU0MzIvZXVyb3dlYg==
+  jwt-secret: dWx0cmEtc2VjcmV0LWtleS1mb3ItZXVyb3dlYi1hZ2k=
+  api-key: YWdpLXVsdHJhLWFwaS1rZXktMjAyNQ==

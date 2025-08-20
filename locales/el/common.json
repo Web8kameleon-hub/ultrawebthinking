@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "Φόρτωση...",
+    "error": "Σφάλμα",
+    "success": "Επιτυχία",
+    "cancel": "Ακύρωση",
+    "save": "Αποθήκευση",
+    "delete": "Διαγραφή",
+    "edit": "Επεξεργασία",
+    "add": "Προσθήκη",
+    "search": "Αναζήτηση",
+    "close": "Κλείσιμο",
+    "open": "Άνοιγμα",
+    "yes": "Ναι",
+    "no": "Όχι",
+    "next": "Επόμενο",
+    "previous": "Προηγούμενο",
+    "home": "Αρχική",
+    "back": "Πίσω",
+    "continue": "Συνέχεια",
+    "submit": "Υποβολή",
+    "reset": "Επαναφορά",
+    "clear": "Καθαρισμός",
+    "select": "Επιλογή",
+    "all": "Όλα",
+    "none": "Κανένα",
+    "more": "Περισσότερα",
+    "less": "Λιγότερα",
+    "view": "Προβολή",
+    "download": "Λήψη",
+    "upload": "Μεταφόρτωση",
+    "copy": "Αντιγραφή",
+    "paste": "Επικόλληση",
+    "cut": "Αποκοπή"
+  },
+  "navigation": {
+    "dashboard": "Πίνακας Ελέγχου",
+    "projects": "Έργα",
+    "analytics": "Αναλύσεις",
+    "settings": "Ρυθμίσεις",
+    "profile": "Προφίλ",
+    "logout": "Αποσύνδεση",
+    "login": "Σύνδεση",
+    "register": "Εγγραφή",
+    "about": "Σχετικά",
+    "contact": "Επικοινωνία",
+    "help": "Βοήθεια",
+    "documentation": "Τεκμηρίωση"
+  },
+  "agi": {
+    "title": "Γενική Τεχνητή Νοημοσύνη",
+    "description": "Προηγμένο σύστημα τεχνητής νοημοσύνης",
+    "modules": {
+      "core": "Πυρήνας",
+      "semantic": "Σημασιολογικό",
+      "planner": "Σχεδιαστής",
+      "executor": "Εκτελεστής",
+      "monitor": "Παρακολούθηση"
+    },
+    "features": {
+      "real_time_analysis": "Ανάλυση Πραγματικού Χρόνου",
+      "pattern_recognition": "Αναγνώριση Μοτίβων",
+      "predictive_analytics": "Προβλεπτικές Αναλύσεις",
+      "automated_optimization": "Αυτοματοποιημένη Βελτιστοποίηση",
+      "natural_language": "Φυσική Γλώσσα"
+    },
+    "status": {
+      "active": "Ενεργό",
+      "inactive": "Ανενεργό",
+      "processing": "Επεξεργασία",
+      "completed": "Ολοκληρώθηκε",
+      "error": "Σφάλμα",
+      "pending": "Εκκρεμεί"
+    }
+  },
+  "economics": {
+    "title": "Οικονομική Ανάλυση",
+    "metrics": {
+      "revenue": "Έσοδα",
+      "profit": "Κέρδη",
+      "growth_rate": "Ρυθμός Ανάπτυξης",
+      "market_share": "Μερίδιο Αγοράς",
+      "roi": "Απόδοση Επένδυσης",
+      "expenses": "Έξοδα",
+      "budget": "Προϋπολογισμός",
+      "forecast": "Πρόβλεψη"
+    },
+    "indicators": {
+      "bullish": "Ανοδικό",
+      "bearish": "Καθοδικό",
+      "neutral": "Ουδέτερο",
+      "volatile": "Μεταβλητό",
+      "stable": "Σταθερό"
+    }
+  },
+  "crypto": {
+    "title": "Ανάλυση Κρυπτονομισμάτων",
+    "assets": {
+      "bitcoin": "Bitcoin",
+      "ethereum": "Ethereum",
+      "portfolio": "Χαρτοφυλάκιο",
+      "trading": "Συναλλαγές",
+      "wallet": "Πορτοφόλι"
+    },
+    "metrics": {
+      "price": "Τιμή",
+      "volume": "Όγκος",
+      "market_cap": "Κεφαλαιοποίηση",
+      "change_24h": "Αλλαγή 24ω",
+      "volatility": "Μεταβλητότητα",
+      "liquidity": "Ρευστότητα"
+    },
+    "signals": {
+      "buy": "Αγορά",
+      "sell": "Πώληση",
+      "hold": "Κράτημα",
+      "strong_buy": "Ισχυρή Αγορά",
+      "strong_sell": "Ισχυρή Πώληση"
+    }
+  },
+  "ecology": {
+    "title": "Οικολογική Ανάλυση",
+    "metrics": {
+      "carbon_footprint": "Αποτύπωμα Άνθρακα",
+      "energy_efficiency": "Ενεργειακή Απόδοση",
+      "sustainability": "Βιωσιμότητα",
+      "emissions": "Εκπομπές",
+      "renewable_energy": "Ανανεώσιμη Ενέργεια",
+      "biodiversity": "Βιοποικιλότητα"
+    },
+    "status": {
+      "excellent": "Εξαιρετικό",
+      "good": "Καλό",
+      "fair": "Μέτριο",
+      "poor": "Κακό",
+      "critical": "Κρίσιμο"
+    }
+  },
+  "market": {
+    "title": "Ανάλυση Αγοράς",
+    "segments": {
+      "technology": "Τεχνολογία",
+      "healthcare": "Υγειονομική Περίθαλψη",
+      "finance": "Χρηματοοικονομικά",
+      "education": "Εκπαίδευση",
+      "retail": "Λιανική"
+    },
+    "competition": {
+      "high": "Υψηλός",
+      "medium": "Μέτριος",
+      "low": "Χαμηλός"
+    },
+    "trends": {
+      "growing": "Αναπτυσσόμενη",
+      "declining": "Φθίνουσα",
+      "stable": "Σταθερή",
+      "emerging": "Αναδυόμενη"
+    }
+  },
+  "patterns": {
+    "title": "Αναγνώριση Μοτίβων",
+    "types": {
+      "trend": "Τάση",
+      "cycle": "Κύκλος",
+      "anomaly": "Ανωμαλία",
+      "correlation": "Συσχέτιση",
+      "seasonal": "Εποχιακό"
+    },
+    "confidence": {
+      "high": "Υψηλή",
+      "medium": "Μέτρια",
+      "low": "Χαμηλή"
+    },
+    "predictions": {
+      "title": "Προβλέψεις",
+      "accuracy": "Ακρίβεια",
+      "timeframe": "Χρονικό Πλαίσιο",
+      "probability": "Πιθανότητα"
+    }
+  },
+  "errors": {
+    "network_error": "Σφάλμα Δικτύου",
+    "server_error": "Σφάλμα Διακομιστή",
+    "validation_error": "Σφάλμα Επικύρωσης",
+    "permission_denied": "Άρνηση Άδειας",
+    "not_found": "Δεν Βρέθηκε",
+    "timeout": "Λήξη Χρόνου",
+    "unknown_error": "Άγνωστο Σφάλμα",
+    "connection_failed": "Αποτυχία Σύνδεσης",
+    "data_corrupted": "Κατεστραμμένα Δεδομένα",
+    "insufficient_permissions": "Ανεπαρκείς Άδειες"
+  },
+  "messages": {
+    "welcome": "Καλώς ήρθατε στο EuroWeb",
+    "data_saved": "Τα δεδομένα αποθηκεύτηκαν",
+    "operation_completed": "Η λειτουργία ολοκληρώθηκε",
+    "please_wait": "Παρακαλώ περιμένετε",
+    "processing_request": "Επεξεργασία αιτήματος",
+    "no_data_available": "Δεν υπάρχουν διαθέσιμα δεδομένα",
+    "select_option": "Επιλέξτε μια επιλογή",
+    "confirm_action": "Επιβεβαίωση ενέργειας",
+    "changes_saved": "Οι αλλαγές αποθηκεύτηκαν",
+    "data_updated": "Τα δεδομένα ενημερώθηκαν"
+  },
+  "forms": {
+    "required_field": "Υποχρεωτικό πεδίο",
+    "invalid_email": "Μη έγκυρο email",
+    "password_too_short": "Ο κωδικός είναι πολύ σύντομος",
+    "passwords_dont_match": "Οι κωδικοί δεν ταιριάζουν",
+    "invalid_format": "Μη έγκυρη μορφή",
+    "field_too_long": "Το πεδίο είναι πολύ μεγάλο",
+    "field_too_short": "Το πεδίο είναι πολύ μικρό",
+    "invalid_number": "Μη έγκυρος αριθμός",
+    "invalid_date": "Μη έγκυρη ημερομηνία",
+    "invalid_url": "Μη έγκυρο URL"
+  },
+  "time": {
+    "seconds": "δευτερόλεπτα",
+    "minutes": "λεπτά",
+    "hours": "ώρες",
+    "days": "ημέρες",
+    "weeks": "εβδομάδες",
+    "months": "μήνες",
+    "years": "χρόνια",
+    "ago": "πριν",
+    "from_now": "από τώρα",
+    "just_now": "μόλις τώρα"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "€",
+    "temperature": "°C",
+    "distance": "km",
+    "weight": "kg",
+    "volume": "L"
+  }
+}

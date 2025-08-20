@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "success": "सफलता",
+    "cancel": "रद्द करें",
+    "save": "सेव करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "add": "जोड़ें",
+    "search": "खोजें",
+    "close": "बंद करें",
+    "open": "खोलें",
+    "yes": "हां",
+    "no": "नहीं",
+    "next": "अगला",
+    "previous": "पिछला",
+    "home": "होम",
+    "back": "वापस",
+    "continue": "जारी रखें",
+    "submit": "जमा करें",
+    "reset": "रीसेट करें",
+    "clear": "साफ़ करें",
+    "select": "चुनें",
+    "all": "सभी",
+    "none": "कोई नहीं",
+    "more": "अधिक",
+    "less": "कम",
+    "view": "देखें",
+    "download": "डाउनलोड करें",
+    "upload": "अपलोड करें",
+    "copy": "कॉपी करें",
+    "paste": "पेस्ट करें",
+    "cut": "कट करें"
+  },
+  "navigation": {
+    "dashboard": "डैशबोर्ड",
+    "projects": "प्रोजेक्ट्स",
+    "analytics": "एनालिटिक्स",
+    "settings": "सेटिंग्स",
+    "profile": "प्रोफाइल",
+    "logout": "लॉग आउट",
+    "login": "लॉग इन",
+    "register": "रजिस्टर करें",
+    "about": "हमारे बारे में",
+    "contact": "संपर्क",
+    "help": "सहायता",
+    "documentation": "दस्तावेज़"
+  },
+  "agi": {
+    "title": "AGI (कृत्रिम सामान्य बुद्धिमत्ता)",
+    "description": "उन्नत कृत्रिम बुद्धिमत्ता प्रणाली",
+    "modules": {
+      "core": "मुख्य",
+      "semantic": "अर्थपूर्ण",
+      "planner": "योजनाकार",
+      "executor": "कार्यकर्ता",
+      "monitor": "मॉनिटर"
+    },
+    "features": {
+      "real_time_analysis": "रीयल-टाइम विश्लेषण",
+      "pattern_recognition": "पैटर्न पहचान",
+      "predictive_analytics": "भविष्यवाणी विश्लेषण",
+      "automated_optimization": "स्वचालित अनुकूलन",
+      "natural_language": "प्राकृतिक भाषा"
+    },
+    "status": {
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "processing": "प्रसंस्करण",
+      "completed": "पूर्ण",
+      "error": "त्रुटि",
+      "pending": "लंबित"
+    }
+  },
+  "economics": {
+    "title": "आर्थिक विश्लेषण",
+    "metrics": {
+      "revenue": "आय",
+      "profit": "लाभ",
+      "growth_rate": "वृद्धि दर",
+      "market_share": "बाजार हिस्सेदारी",
+      "roi": "निवेश पर वापसी",
+      "expenses": "खर्च",
+      "budget": "बजट",
+      "forecast": "पूर्वानुमान"
+    },
+    "indicators": {
+      "bullish": "तेजी",
+      "bearish": "मंदी",
+      "neutral": "तटस्थ",
+      "volatile": "अस्थिर",
+      "stable": "स्थिर"
+    }
+  },
+  "crypto": {
+    "title": "क्रिप्टोकरेंसी विश्लेषण",
+    "assets": {
+      "bitcoin": "बिटकॉइन",
+      "ethereum": "एथेरियम",
+      "portfolio": "पोर्टफोलियो",
+      "trading": "ट्रेडिंग",
+      "wallet": "वॉलेट"
+    },
+    "metrics": {
+      "price": "कीमत",
+      "volume": "वॉल्यूम",
+      "market_cap": "मार्केट कैप",
+      "change_24h": "24 घंटे का बदलाव",
+      "volatility": "अस्थिरता",
+      "liquidity": "तरलता"
+    },
+    "signals": {
+      "buy": "खरीदें",
+      "sell": "बेचें",
+      "hold": "होल्ड करें",
+      "strong_buy": "मजबूत खरीदारी",
+      "strong_sell": "मजबूत बिक्री"
+    }
+  },
+  "ecology": {
+    "title": "पारिस्थितिक विश्लेषण",
+    "metrics": {
+      "carbon_footprint": "कार्बन फुटप्रिंट",
+      "energy_efficiency": "ऊर्जा दक्षता",
+      "sustainability": "स्थिरता",
+      "emissions": "उत्सर्जन",
+      "renewable_energy": "नवीकरणीय ऊर्जा",
+      "biodiversity": "जैव विविधता"
+    },
+    "status": {
+      "excellent": "उत्कृष्ट",
+      "good": "अच्छा",
+      "fair": "ठीक",
+      "poor": "खराब",
+      "critical": "गंभीर"
+    }
+  },
+  "market": {
+    "title": "बाजार विश्लेषण",
+    "segments": {
+      "technology": "प्रौद्योगिकी",
+      "healthcare": "स्वास्थ्य सेवा",
+      "finance": "वित्त",
+      "education": "शिक्षा",
+      "retail": "खुदरा"
+    },
+    "competition": {
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कम"
+    },
+    "trends": {
+      "growing": "बढ़ते",
+      "declining": "घटते",
+      "stable": "स्थिर",
+      "emerging": "उभरते"
+    }
+  },
+  "patterns": {
+    "title": "पैटर्न पहचान",
+    "types": {
+      "trend": "रुझान",
+      "cycle": "चक्र",
+      "anomaly": "विसंगति",
+      "correlation": "सहसंबंध",
+      "seasonal": "मौसमी"
+    },
+    "confidence": {
+      "high": "उच्च",
+      "medium": "मध्यम",
+      "low": "कम"
+    },
+    "predictions": {
+      "title": "भविष्यवाणियां",
+      "accuracy": "सटीकता",
+      "timeframe": "समय सीमा",
+      "probability": "संभावना"
+    }
+  },
+  "errors": {
+    "network_error": "नेटवर्क त्रुटि",
+    "server_error": "सर्वर त्रुटि",
+    "validation_error": "सत्यापन त्रुटि",
+    "permission_denied": "अनुमति अस्वीकृत",
+    "not_found": "नहीं मिला",
+    "timeout": "समय समाप्त",
+    "unknown_error": "अज्ञात त्रुटि",
+    "connection_failed": "कनेक्शन विफल",
+    "data_corrupted": "डेटा दूषित",
+    "insufficient_permissions": "अपर्याप्त अनुमतियां"
+  },
+  "messages": {
+    "welcome": "EuroWeb में आपका स्वागत है",
+    "data_saved": "डेटा सेव हो गया",
+    "operation_completed": "ऑपरेशन पूरा हुआ",
+    "please_wait": "कृपया प्रतीक्षा करें",
+    "processing_request": "अनुरोध प्रसंस्करण",
+    "no_data_available": "कोई डेटा उपलब्ध नहीं",
+    "select_option": "एक विकल्प चुनें",
+    "confirm_action": "कार्य की पुष्टि करें",
+    "changes_saved": "परिवर्तन सेव हुए",
+    "data_updated": "डेटा अपडेट हुआ"
+  },
+  "forms": {
+    "required_field": "आवश्यक फील्ड",
+    "invalid_email": "गलत ईमेल",
+    "password_too_short": "पासवर्ड बहुत छोटा",
+    "passwords_dont_match": "पासवर्ड मेल नहीं खाते",
+    "invalid_format": "गलत फॉर्मेट",
+    "field_too_long": "फील्ड बहुत लंबा",
+    "field_too_short": "फील्ड बहुत छोटा",
+    "invalid_number": "गलत संख्या",
+    "invalid_date": "गलत तारीख",
+    "invalid_url": "गलत URL"
+  },
+  "time": {
+    "seconds": "सेकंड",
+    "minutes": "मिनट",
+    "hours": "घंटे",
+    "days": "दिन",
+    "weeks": "सप्ताह",
+    "months": "महीने",
+    "years": "साल",
+    "ago": "पहले",
+    "from_now": "अब से",
+    "just_now": "अभी"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "₹",
+    "temperature": "°C",
+    "distance": "किमी",
+    "weight": "किग्रा",
+    "volume": "लीटर"
+  }
+}

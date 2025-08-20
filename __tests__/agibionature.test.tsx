@@ -1,5 +1,5 @@
 /**
- * AGIxBioNature Tests - Pure TypeScript Biology Engine
+ * AGIBioNature Tests - Pure TypeScript Biology Engine
  * Modern JSX + Lazy vectors + Framer Motion
  */
 
@@ -7,7 +7,7 @@ import React from 'react';
 import { test, expect, describe, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AGIxBioNature } from '../components/AGISheet/AGIxBioNature';
+import { AGIBioNature } from '../components/AGISheet/AGIBioNature';
 
 // Pure TypeScript test data - readonly immutable
 const MOCK_BIOLOGICAL_DATA = {
@@ -28,14 +28,14 @@ const MOCK_BIOLOGICAL_DATA = {
   ]
 } as const;
 
-describe('AGIxBioNature Industrial Tests', () => {
+describe('AGIBioNature Industrial Tests', () => {
   beforeEach(() => {
     // Pure setup - no useState
   });
 
   test('renders without useState violations', () => {
     const { container } = render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="comprehensive" 
         theme="forest" 
         dataSource="simulation" 
@@ -43,14 +43,14 @@ describe('AGIxBioNature Industrial Tests', () => {
     );
     
     expect(container).toBeDefined();
-    expect(screen.getByText(/AGI×BioNature Intelligence/)).toBeInTheDocument();
+    expect(screen.getByText(/AGI BioNature Intelligence/)).toBeInTheDocument();
   });
 
   test('specimen gallery displays correctly', async () => {
     const user = userEvent.setup();
     
     render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="biology" 
         theme="laboratory" 
         dataSource="simulation" 
@@ -66,7 +66,7 @@ describe('AGIxBioNature Industrial Tests', () => {
     const user = userEvent.setup();
     
     render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="comprehensive" 
         theme="ecosystem" 
         dataSource="simulation" 
@@ -94,25 +94,25 @@ describe('AGIxBioNature Industrial Tests', () => {
 
   test('CVA variants work correctly', () => {
     const { rerender } = render(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="biology" 
         theme="forest" 
         dataSource="simulation" 
       />
     );
     
-    expect(screen.getByText(/AGI×BioNature Intelligence/)).toBeInTheDocument();
+    expect(screen.getByText(/AGI BioNature Intelligence/)).toBeInTheDocument();
     
     // Test theme switching
     rerender(
-      <AGIxBioNature 
+      <AGIBioNature 
         mode="medical" 
         theme="laboratory" 
         dataSource="simulation" 
       />
     );
     
-    expect(screen.getByText(/AGI×BioNature Intelligence/)).toBeInTheDocument();
+    expect(screen.getByText(/AGI BioNature Intelligence/)).toBeInTheDocument();
   });
 });
 
@@ -123,6 +123,6 @@ export const createMockSpecimen = (overrides = {}) => ({
 });
 
 export const createBiologyTestSuite = () => ({
-  renderComponent: (props = {}) => render(<AGIxBioNature {...props} />),
+  renderComponent: (props = {}) => render(<AGIBioNature {...props} />),
   mockData: MOCK_BIOLOGICAL_DATA
 });

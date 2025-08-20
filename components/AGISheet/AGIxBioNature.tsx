@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import styles from './AGIxBioNature.module.css';
+import styles from './AGIBioNature.module.css';
 
 // Lazy import functions for analysis engines to reduce First Load JS
 const loadBiologyEngine = async () => {
@@ -117,19 +117,19 @@ interface MedicalInsight {
   marketPotential: number;
 }
 
-interface AGIxBioNatureProps {
+interface AGIBioNatureProps {
   mode?: 'biology' | 'nature' | 'medical' | 'ecology' | 'comprehensive';
   theme?: 'forest' | 'ocean' | 'laboratory' | 'ecosystem' | 'medical';
   dataSource?: 'realtime' | 'research' | 'simulation';
   researchMode?: boolean;
 }
 
-export const AGIxBioNature = ({ 
+export const AGIBioNature = ({ 
   mode = 'comprehensive',
   theme = 'forest',
   dataSource = 'simulation',
   researchMode = false
-}: AGIxBioNatureProps) => {
+}: AGIBioNatureProps) => {
   const [biologicalData, setBiologicalData] = useState<BiologicalData[]>([]);
   const [ecosystemMetrics, setEcosystemMetrics] = useState<EcosystemMetrics | null>(null);
   const [medicalInsights, setMedicalInsights] = useState<MedicalInsight[]>([]);

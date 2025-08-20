@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "success": "Başarılı",
+    "cancel": "İptal",
+    "save": "Kaydet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "add": "Ekle",
+    "search": "Ara",
+    "close": "Kapat",
+    "open": "Aç",
+    "yes": "Evet",
+    "no": "Hayır",
+    "next": "Sonraki",
+    "previous": "Önceki",
+    "home": "Ana Sayfa",
+    "back": "Geri",
+    "continue": "Devam",
+    "submit": "Gönder",
+    "reset": "Sıfırla",
+    "clear": "Temizle",
+    "select": "Seç",
+    "all": "Tümü",
+    "none": "Hiçbiri",
+    "more": "Daha Fazla",
+    "less": "Daha Az",
+    "view": "Görüntüle",
+    "download": "İndir",
+    "upload": "Yükle",
+    "copy": "Kopyala",
+    "paste": "Yapıştır",
+    "cut": "Kes"
+  },
+  "navigation": {
+    "dashboard": "Kontrol Paneli",
+    "projects": "Projeler",
+    "analytics": "Analizler",
+    "settings": "Ayarlar",
+    "profile": "Profil",
+    "logout": "Çıkış",
+    "login": "Giriş",
+    "register": "Kayıt",
+    "about": "Hakkında",
+    "contact": "İletişim",
+    "help": "Yardım",
+    "documentation": "Dokümantasyon"
+  },
+  "agi": {
+    "title": "Genel Yapay Zeka",
+    "description": "Gelişmiş yapay zeka sistemi",
+    "modules": {
+      "core": "Çekirdek",
+      "semantic": "Anlamsal",
+      "planner": "Planlayıcı",
+      "executor": "Yürütücü",
+      "monitor": "İzleyici"
+    },
+    "features": {
+      "real_time_analysis": "Gerçek Zamanlı Analiz",
+      "pattern_recognition": "Desen Tanıma",
+      "predictive_analytics": "Tahmine Dayalı Analitik",
+      "automated_optimization": "Otomatik Optimizasyon",
+      "natural_language": "Doğal Dil"
+    },
+    "status": {
+      "active": "Aktif",
+      "inactive": "Pasif",
+      "processing": "İşleniyor",
+      "completed": "Tamamlandı",
+      "error": "Hata",
+      "pending": "Beklemede"
+    }
+  },
+  "economics": {
+    "title": "Ekonomik Analiz",
+    "metrics": {
+      "revenue": "Gelir",
+      "profit": "Kar",
+      "growth_rate": "Büyüme Oranı",
+      "market_share": "Pazar Payı",
+      "roi": "Yatırım Getirisi",
+      "expenses": "Giderler",
+      "budget": "Bütçe",
+      "forecast": "Tahmin"
+    },
+    "indicators": {
+      "bullish": "Yükselişte",
+      "bearish": "Düşüşte",
+      "neutral": "Nötr",
+      "volatile": "Değişken",
+      "stable": "Kararlı"
+    }
+  },
+  "crypto": {
+    "title": "Kripto Para Analizi",
+    "assets": {
+      "bitcoin": "Bitcoin",
+      "ethereum": "Ethereum",
+      "portfolio": "Portföy",
+      "trading": "Ticaret",
+      "wallet": "Cüzdan"
+    },
+    "metrics": {
+      "price": "Fiyat",
+      "volume": "Hacim",
+      "market_cap": "Piyasa Değeri",
+      "change_24h": "24s Değişim",
+      "volatility": "Volatilite",
+      "liquidity": "Likidite"
+    },
+    "signals": {
+      "buy": "Al",
+      "sell": "Sat",
+      "hold": "Tut",
+      "strong_buy": "Güçlü Al",
+      "strong_sell": "Güçlü Sat"
+    }
+  },
+  "ecology": {
+    "title": "Ekolojik Analiz",
+    "metrics": {
+      "carbon_footprint": "Karbon Ayak İzi",
+      "energy_efficiency": "Enerji Verimliliği",
+      "sustainability": "Sürdürülebilirlik",
+      "emissions": "Emisyonlar",
+      "renewable_energy": "Yenilenebilir Enerji",
+      "biodiversity": "Biyoçeşitlilik"
+    },
+    "status": {
+      "excellent": "Mükemmel",
+      "good": "İyi",
+      "fair": "Orta",
+      "poor": "Kötü",
+      "critical": "Kritik"
+    }
+  },
+  "market": {
+    "title": "Pazar Analizi",
+    "segments": {
+      "technology": "Teknoloji",
+      "healthcare": "Sağlık",
+      "finance": "Finans",
+      "education": "Eğitim",
+      "retail": "Perakende"
+    },
+    "competition": {
+      "high": "Yüksek",
+      "medium": "Orta",
+      "low": "Düşük"
+    },
+    "trends": {
+      "growing": "Büyüyen",
+      "declining": "Azalan",
+      "stable": "Stabil",
+      "emerging": "Yükselen"
+    }
+  },
+  "patterns": {
+    "title": "Desen Tanıma",
+    "types": {
+      "trend": "Trend",
+      "cycle": "Döngü",
+      "anomaly": "Anomali",
+      "correlation": "Korelasyon",
+      "seasonal": "Mevsimsel"
+    },
+    "confidence": {
+      "high": "Yüksek",
+      "medium": "Orta",
+      "low": "Düşük"
+    },
+    "predictions": {
+      "title": "Tahminler",
+      "accuracy": "Doğruluk",
+      "timeframe": "Zaman Çerçevesi",
+      "probability": "Olasılık"
+    }
+  },
+  "errors": {
+    "network_error": "Ağ Hatası",
+    "server_error": "Sunucu Hatası",
+    "validation_error": "Doğrulama Hatası",
+    "permission_denied": "İzin Reddedildi",
+    "not_found": "Bulunamadı",
+    "timeout": "Zaman Aşımı",
+    "unknown_error": "Bilinmeyen Hata",
+    "connection_failed": "Bağlantı Başarısız",
+    "data_corrupted": "Bozuk Veri",
+    "insufficient_permissions": "Yetersiz İzinler"
+  },
+  "messages": {
+    "welcome": "EuroWeb'e Hoş Geldiniz",
+    "data_saved": "Veri kaydedildi",
+    "operation_completed": "İşlem tamamlandı",
+    "please_wait": "Lütfen bekleyin",
+    "processing_request": "İstek işleniyor",
+    "no_data_available": "Mevcut veri yok",
+    "select_option": "Bir seçenek seçin",
+    "confirm_action": "Eylemi onayla",
+    "changes_saved": "Değişiklikler kaydedildi",
+    "data_updated": "Veri güncellendi"
+  },
+  "forms": {
+    "required_field": "Gerekli alan",
+    "invalid_email": "Geçersiz e-posta",
+    "password_too_short": "Şifre çok kısa",
+    "passwords_dont_match": "Şifreler eşleşmiyor",
+    "invalid_format": "Geçersiz format",
+    "field_too_long": "Alan çok uzun",
+    "field_too_short": "Alan çok kısa",
+    "invalid_number": "Geçersiz sayı",
+    "invalid_date": "Geçersiz tarih",
+    "invalid_url": "Geçersiz URL"
+  },
+  "time": {
+    "seconds": "saniye",
+    "minutes": "dakika",
+    "hours": "saat",
+    "days": "gün",
+    "weeks": "hafta",
+    "months": "ay",
+    "years": "yıl",
+    "ago": "önce",
+    "from_now": "şu andan",
+    "just_now": "az önce"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "₺",
+    "temperature": "°C",
+    "distance": "km",
+    "weight": "kg",
+    "volume": "L"
+  }
+}

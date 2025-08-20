@@ -1,7 +1,6 @@
 /**
- * EuroWeb Web8 Platform - Tab System Component (Simplified)
+ * EuroWeb Web8 Platform - Tab System Component (Fixed)
  * Pure TypeScript Industrial Architecture - No Hooks
- * Temporary inline styles for immediate build success
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
@@ -11,10 +10,21 @@
 
 'use client'
 
-import React from 'react'
+import * as React from 'react'
 import { motion } from 'framer-motion'
-// import { AGIMedUltra } from './AGISheet/AGIMedUltra'
-// import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
+import { AGIMedUltra } from './AGISheet/AGIMedUltra'
+import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
+import { AGIEcoUltra } from './AGISheet/AGIEcoUltra'
+import { AGIElUltra } from './AGISheet/AGIElUltra'
+import { AGICoreUltra } from './AGISheet/AGICoreUltra'
+import { MeshNetworkUltra } from './AGISheet/MeshNetworkUltra'
+import { LoRaConnectUltra } from './AGISheet/LoRaConnectUltra'
+import LoRaConnectUltraNew from './LoRaConnectUltra'
+import RealLoRaGatewayDashboard from './RealLoRaGatewayDashboard'
+import { OpenMindChat } from './OpenMindChat'
+import UniversalTranslator from './UniversalTranslator'
+import AGISpreadsheetEngine from './AGISheet/AGISpreadsheetEngine'
+import EuroMeshDashboard from './EuroMeshDashboard'
 
 // Interface definitions
 interface Tab {
@@ -79,6 +89,55 @@ const initialTabs: Tab[] = [
     url: 'euroweb://agi-eco',
     isActive: false,
     isLoading: false
+  },
+  {
+    id: 'openmind',
+    title: '🧠 OpenMind',
+    url: 'euroweb://openmind',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'translator',
+    title: '🌍 Universal Translator',
+    url: 'euroweb://translator',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'mesh',
+    title: '🕸️ EuroMesh Network',
+    url: 'euroweb://euromesh',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'lora-real',
+    title: '📡 Real LoRa Gateway',
+    url: 'euroweb://lora-real',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'lora',
+    title: '📡 LoRa Connect',
+    url: 'euroweb://lora',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'utt',
+    title: '🔧 UTT Tools',
+    url: 'euroweb://utt',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'agisheet-engine',
+    title: '📊 AGISheet Universal',
+    url: 'euroweb://agisheet-engine',
+    isActive: false,
+    isLoading: false
   }
 ];
 
@@ -95,15 +154,15 @@ const staticAGIMetrics: AGIMetrics = {
 
 /**
  * Web8 Tab System Component
- * Industrial architecture without React hooks - Pure TypeScript
+ * Industrial architecture without React hooks
  */
-export const Web8TabSystem: React.FC = () => {
+const Web8TabSystem: React.FC = () => {
   const tabs = initialTabs
   const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
   const agiMetrics = staticAGIMetrics
   const currentTime = new Date().toLocaleTimeString()
 
-  // Tab switching function - DOM manipulation
+  // Tab switching function
   const switchTab = (targetId: string) => {
     // Hide all content
     const allContent = document.querySelectorAll('[data-content-id]');
@@ -448,74 +507,190 @@ export const Web8TabSystem: React.FC = () => {
 
           {/* AGI Core Content */}
           <div data-content-id="agi-core" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'none'
+            display: 'none',
+            height: '100%',
+            overflow: 'auto'
           }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #6366f1, #8b5cf6)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              🤖 AGI Core Engine
-            </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Artificial General Intelligence - Pure Neural Processing
-            </p>
+            <div style={{ padding: '40px', textAlign: 'center' }}>
+              <h1 style={{
+                fontSize: '48px',
+                fontWeight: 800,
+                marginBottom: '20px',
+                background: 'linear-gradient(45deg, #6366f1, #8b5cf6)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                🤖 AGI Core Ultra Engine
+              </h1>
+              <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+                Artificial General Intelligence - Quantum-Enhanced Neural Processing (441 lines)
+              </p>
+              <AGICoreUltra />
+            </div>
           </div>
 
-          {/* AGI×Office Content */}
+          {/* AGISheet Office Content */}
           <div data-content-id="agi-office" style={{
             display: 'none',
             height: '100%',
             overflow: 'auto'
           }}>
-            {/* <AGIOfficeUltra /> */}
             <div style={{ padding: '40px', textAlign: 'center' }}>
-              <h2>🏢 AGI×Office Ultra</h2>
-              <p>Professional Office AI - Coming Soon</p>
+              <h1 style={{
+                fontSize: '48px',
+                fontWeight: 800,
+                marginBottom: '20px',
+                background: 'linear-gradient(45deg, #3b82f6, #1d4ed8)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                💼 AGISheet Office Suite
+              </h1>
+              <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+                Universal Office Tools - Document, Spreadsheet & Presentation AGI
+              </p>
+              <AGIOfficeUltra />
             </div>
           </div>
 
-          {/* AGI×Med Content */}
+          {/* AGISheet Medical Content */}
           <div data-content-id="agi-med" style={{
             display: 'none',
             height: '100%',
             overflow: 'auto'
           }}>
-            {/* <AGIMedUltra /> */}
             <div style={{ padding: '40px', textAlign: 'center' }}>
-              <h2>⚕️ AGI×Med Ultra</h2>
-              <p>Medical AI System - Coming Soon</p>
+              <h1 style={{
+                fontSize: '48px',
+                fontWeight: 800,
+                marginBottom: '20px',
+                background: 'linear-gradient(45deg, #ef4444, #dc2626)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                🏥 AGISheet Medical Suite
+              </h1>
+              <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+                Medical Data Management - Patient Records & Health Analytics AGI
+              </p>
+              <AGIMedUltra />
             </div>
           </div>
 
-          {/* AGI×El Content */}
+          {/* AGISheet Electrical Content */}
           <div data-content-id="agi-el" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'none'
+            display: 'none',
+            height: '100%',
+            overflow: 'auto'
           }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #facc15, #eab308)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              ⚡ AGI×El Energy
-            </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Electrical Systems - Smart Grid & Automation
-            </p>
+            <div style={{ padding: '40px', textAlign: 'center' }}>
+              <h1 style={{
+                fontSize: '48px',
+                fontWeight: 800,
+                marginBottom: '20px',
+                background: 'linear-gradient(45deg, #facc15, #eab308)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                ⚡ AGI×El Ultra Suite
+              </h1>
+              <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+                Electrical Engineering AI - Quantum-Enhanced Smart Grid & Energy (442 lines)
+              </p>
+              <AGIElUltra />
+            </div>
           </div>
 
-          {/* AGI×Eco Content */}
+          {/* AGISheet Eco Content */}
           <div data-content-id="agi-eco" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto'
+          }}>
+            <div style={{ padding: '40px', textAlign: 'center' }}>
+              <h1 style={{
+                fontSize: '48px',
+                fontWeight: 800,
+                marginBottom: '20px',
+                background: 'linear-gradient(45deg, #22c55e, #16a34a)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                🌱 AGI×Eco Ultra Suite
+              </h1>
+              <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+                Environmental AI System - Quantum-Enhanced Climate & Sustainability (820 lines)
+              </p>
+              <AGIEcoUltra />
+            </div>
+          </div>
+
+          {/* OpenMind Content */}
+          <div data-content-id="openmind" style={{
+            display: 'none',
+            height: '100vh'
+          }}>
+            <OpenMindChat />
+          </div>
+
+          {/* Universal Translator Content */}
+          <div data-content-id="translator" style={{
+            display: 'none',
+            height: '100vh',
+            overflow: 'auto',
+            padding: '20px'
+          }}>
+            <UniversalTranslator />
+          </div>
+
+          {/* EuroMesh Network Content */}
+          <div data-content-id="mesh" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto'
+          }}>
+            <EuroMeshDashboard />
+          </div>
+
+          {/* Real LoRa Gateway Content */}
+          <div data-content-id="lora-real" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto'
+          }}>
+            <RealLoRaGatewayDashboard />
+          </div>
+
+          {/* LoRa Connect Content */}
+          <div data-content-id="lora" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto'
+          }}>
+            <LoRaConnectUltraNew />
+          </div>
+
+          {/* AGISheet Engine Content */}
+          <div data-content-id="agisheet-engine" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto',
+            padding: '20px'
+          }}>
+            <div style={{
+              background: 'rgba(45, 52, 70, 0.8)',
+              borderRadius: '12px',
+              padding: '20px',
+              marginBottom: '20px'
+            }}>
+              <h2 style={{ color: '#d4af37', marginBottom: '10px' }}>📊 AGI Universal Spreadsheet Engine</h2>
+              <p style={{ color: '#cbd5e1' }}>Industrial-grade spreadsheet system with AI enhancement (553 lines)</p>
+            </div>
+            <AGISpreadsheetEngine />
+          </div>
+
+          {/* UTT Tools Content */}
+          <div data-content-id="utt" style={{
             padding: '40px',
             textAlign: 'center',
             display: 'none'
@@ -524,15 +699,41 @@ export const Web8TabSystem: React.FC = () => {
               fontSize: '48px',
               fontWeight: 800,
               marginBottom: '20px',
-              background: 'linear-gradient(45deg, #22c55e, #16a34a)',
+              background: 'linear-gradient(45deg, #ef4444, #dc2626)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
             }}>
-              🌱 AGI×Eco Environment
+              🔧 UTT Tools
             </h1>
             <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Environmental AI - Climate & Sustainability
+              Universal Testing & Troubleshooting Tools
             </p>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '20px',
+              maxWidth: '900px',
+              margin: '0 auto'
+            }}>
+              <motion.div whileHover={{ scale: 1.05 }} style={{
+                background: 'rgba(105, 68, 239, 0.1)',
+                border: '1px solid #448eefff',
+                borderRadius: '12px',
+                padding: '24px'
+              }}>
+                <h3 style={{ color: '#ef44', marginBottom: '16px' }}>🛠️ Debug Tools</h3>
+                <p style={{ color: '#cbd5e1' }}>Advanced debugging and diagnostics</p>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} style={{
+                background: 'rgba(220, 38, 38, 0.1)',
+                border: '1px solid #26dc9fff',
+                borderRadius: '12px',
+                padding: '24px'
+              }}>
+                <h3 style={{ color: '#26c7dcff', marginBottom: '16px' }}>⚡ Performance</h3>
+                <p style={{ color: '#cbd5e1' }}>System performance optimization</p>
+              </motion.div>
+            </div>
           </div>
         </div>
       </motion.main>
@@ -548,4 +749,5 @@ export const Web8TabSystem: React.FC = () => {
   )
 }
 
-
+export default Web8TabSystem
+export { Web8TabSystem as Web8TabSystemComponent }

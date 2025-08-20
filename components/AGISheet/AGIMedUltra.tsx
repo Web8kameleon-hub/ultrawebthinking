@@ -12,8 +12,8 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { AGIXForm } from '../AGIXmed/AGIXForm'
-import { AGIXResults } from '../AGIXmed/AGIXResults'
+import { AGIForm } from '../AGImed/AGIForm'
+import { AGIResults } from '../AGImed/AGIResults'
 
 // Professional Medical AI Interface
 interface ProfessionalMedicalAccess {
@@ -111,10 +111,10 @@ const professionalMedModules: ProfessionalMedModule[] = [
 
 export const AGIMedUltra: React.FC = () => {
   const [selectedModule, setSelectedModule] = useState<string>('access_control')
-  const [showAGIXForm, setShowAGIXForm] = useState<boolean>(false)
-  const [agixResults, setAGIXResults] = useState<any>(null)
+  const [showAGIForm, setShowAGIForm] = useState<boolean>(false)
+  const [AGIResults, setAGIResults] = useState<any>(null)
 
-  const handleAGIXSubmit = (data: any) => {
+  const handleAGISubmit = (data: any) => {
     // Professional medical AI analysis
     const professionalAnalysis = {
       timestamp: new Date().toISOString(),
@@ -124,7 +124,7 @@ export const AGIMedUltra: React.FC = () => {
       aiConfidence: quantumMedMetrics.aiConfidence,
       complianceFlags: ['HIPAA', 'GDPR', 'HL7-FHIR']
     }
-    setAGIXResults(professionalAnalysis)
+    setAGIResults(professionalAnalysis)
   }
 
   return (
@@ -271,7 +271,7 @@ export const AGIMedUltra: React.FC = () => {
               alignItems: 'center'
             }}>
               <button 
-                onClick={() => setShowAGIXForm(true)}
+                onClick={() => setShowAGIForm(true)}
                 style={{
                   background: '#2563eb',
                   color: 'white',
@@ -377,8 +377,8 @@ export const AGIMedUltra: React.FC = () => {
           ))}
         </div>
 
-        {/* AGIX Form Integration */}
-        {showAGIXForm && (
+        {/* AGI Form Integration */}
+        {showAGIForm && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -387,26 +387,26 @@ export const AGIMedUltra: React.FC = () => {
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-slate-800">Professional Medical Assessment</h3>
               <button 
-                onClick={() => setShowAGIXForm(false)}
+                onClick={() => setShowAGIForm(false)}
                 className="text-slate-500 hover:text-slate-700"
               >
                 ✕
               </button>
             </div>
-            <AGIXForm onSubmit={handleAGIXSubmit} />
+            <AGIForm onSubmit={handleAGISubmit} />
           </motion.div>
         )}
 
-        {/* AGIX Results */}
-        {agixResults && (
+        {/* AGI Results */}
+        {AGIResults && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <AGIXResults 
-              result={agixResults} 
-              onNewAnalysis={() => setAGIXResults(null)}
+            <AGIResults 
+              result={AGIResults} 
+              onNewAnalysis={() => setAGIResults(null)}
             />
           </motion.div>
         )}

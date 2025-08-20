@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "search": "搜索",
+    "close": "关闭",
+    "open": "打开",
+    "yes": "是",
+    "no": "否",
+    "next": "下一个",
+    "previous": "上一个",
+    "home": "首页",
+    "back": "返回",
+    "continue": "继续",
+    "submit": "提交",
+    "reset": "重置",
+    "clear": "清除",
+    "select": "选择",
+    "all": "全部",
+    "none": "无",
+    "more": "更多",
+    "less": "更少",
+    "view": "查看",
+    "download": "下载",
+    "upload": "上传",
+    "copy": "复制",
+    "paste": "粘贴",
+    "cut": "剪切"
+  },
+  "navigation": {
+    "dashboard": "仪表板",
+    "projects": "项目",
+    "analytics": "分析",
+    "settings": "设置",
+    "profile": "个人资料",
+    "logout": "登出",
+    "login": "登录",
+    "register": "注册",
+    "about": "关于我们",
+    "contact": "联系",
+    "help": "帮助",
+    "documentation": "文档"
+  },
+  "agi": {
+    "title": "AGI（通用人工智能）",
+    "description": "先进的人工智能系统",
+    "modules": {
+      "core": "核心",
+      "semantic": "语义",
+      "planner": "规划器",
+      "executor": "执行器",
+      "monitor": "监控器"
+    },
+    "features": {
+      "real_time_analysis": "实时分析",
+      "pattern_recognition": "模式识别",
+      "predictive_analytics": "预测分析",
+      "automated_optimization": "自动优化",
+      "natural_language": "自然语言"
+    },
+    "status": {
+      "active": "活跃",
+      "inactive": "非活跃",
+      "processing": "处理中",
+      "completed": "已完成",
+      "error": "错误",
+      "pending": "待处理"
+    }
+  },
+  "economics": {
+    "title": "经济分析",
+    "metrics": {
+      "revenue": "收入",
+      "profit": "利润",
+      "growth_rate": "增长率",
+      "market_share": "市场份额",
+      "roi": "投资回报率",
+      "expenses": "支出",
+      "budget": "预算",
+      "forecast": "预测"
+    },
+    "indicators": {
+      "bullish": "看涨",
+      "bearish": "看跌",
+      "neutral": "中性",
+      "volatile": "波动",
+      "stable": "稳定"
+    }
+  },
+  "crypto": {
+    "title": "加密货币分析",
+    "assets": {
+      "bitcoin": "比特币",
+      "ethereum": "以太坊",
+      "portfolio": "投资组合",
+      "trading": "交易",
+      "wallet": "钱包"
+    },
+    "metrics": {
+      "price": "价格",
+      "volume": "交易量",
+      "market_cap": "市值",
+      "change_24h": "24小时变化",
+      "volatility": "波动性",
+      "liquidity": "流动性"
+    },
+    "signals": {
+      "buy": "买入",
+      "sell": "卖出",
+      "hold": "持有",
+      "strong_buy": "强烈买入",
+      "strong_sell": "强烈卖出"
+    }
+  },
+  "ecology": {
+    "title": "生态分析",
+    "metrics": {
+      "carbon_footprint": "碳足迹",
+      "energy_efficiency": "能源效率",
+      "sustainability": "可持续性",
+      "emissions": "排放",
+      "renewable_energy": "可再生能源",
+      "biodiversity": "生物多样性"
+    },
+    "status": {
+      "excellent": "优秀",
+      "good": "良好",
+      "fair": "一般",
+      "poor": "较差",
+      "critical": "严重"
+    }
+  },
+  "market": {
+    "title": "市场分析",
+    "segments": {
+      "technology": "技术",
+      "healthcare": "医疗保健",
+      "finance": "金融",
+      "education": "教育",
+      "retail": "零售"
+    },
+    "competition": {
+      "high": "高",
+      "medium": "中等",
+      "low": "低"
+    },
+    "trends": {
+      "growing": "增长中",
+      "declining": "下降中",
+      "stable": "稳定",
+      "emerging": "新兴"
+    }
+  },
+  "patterns": {
+    "title": "模式识别",
+    "types": {
+      "trend": "趋势",
+      "cycle": "周期",
+      "anomaly": "异常",
+      "correlation": "相关性",
+      "seasonal": "季节性"
+    },
+    "confidence": {
+      "high": "高",
+      "medium": "中等",
+      "low": "低"
+    },
+    "predictions": {
+      "title": "预测",
+      "accuracy": "准确性",
+      "timeframe": "时间框架",
+      "probability": "概率"
+    }
+  },
+  "errors": {
+    "network_error": "网络错误",
+    "server_error": "服务器错误",
+    "validation_error": "验证错误",
+    "permission_denied": "权限被拒绝",
+    "not_found": "未找到",
+    "timeout": "超时",
+    "unknown_error": "未知错误",
+    "connection_failed": "连接失败",
+    "data_corrupted": "数据损坏",
+    "insufficient_permissions": "权限不足"
+  },
+  "messages": {
+    "welcome": "欢迎来到EuroWeb",
+    "data_saved": "数据已保存",
+    "operation_completed": "操作已完成",
+    "please_wait": "请稍候",
+    "processing_request": "正在处理请求",
+    "no_data_available": "无可用数据",
+    "select_option": "选择一个选项",
+    "confirm_action": "确认操作",
+    "changes_saved": "更改已保存",
+    "data_updated": "数据已更新"
+  },
+  "forms": {
+    "required_field": "必填字段",
+    "invalid_email": "无效邮箱",
+    "password_too_short": "密码太短",
+    "passwords_dont_match": "密码不匹配",
+    "invalid_format": "无效格式",
+    "field_too_long": "字段太长",
+    "field_too_short": "字段太短",
+    "invalid_number": "无效数字",
+    "invalid_date": "无效日期",
+    "invalid_url": "无效网址"
+  },
+  "time": {
+    "seconds": "秒",
+    "minutes": "分钟",
+    "hours": "小时",
+    "days": "天",
+    "weeks": "周",
+    "months": "月",
+    "years": "年",
+    "ago": "前",
+    "from_now": "从现在开始",
+    "just_now": "刚才"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "¥",
+    "temperature": "°C",
+    "distance": "公里",
+    "weight": "公斤",
+    "volume": "升"
+  }
+}

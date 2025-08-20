@@ -1,11 +1,11 @@
 /**
- * AGIxBioNature Tests - Pure TypeScript Biology Engine  
+ * AGIBioNature Tests - Pure TypeScript Biology Engine  
  * Zero mocks, zero hooks, pure functions only
  */
 
 import { test, expect, describe } from 'vitest';
 
-describe('AGIxBioNature Pure Logic Tests', () => {
+describe('AGIBioNature Pure Logic Tests', () => {
   test('data formatting functions work correctly', () => {
     // Pure TypeScript functions - no React, no mocks
     const formatNumber = (value: number, decimals: number = 2): string => value.toFixed(decimals);

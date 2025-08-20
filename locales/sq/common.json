@@ -1,0 +1,237 @@
+{
+  "common": {
+    "loading": "Duke ngarkuar...",
+    "error": "Gabim",
+    "success": "Sukses",
+    "cancel": "Anulo",
+    "save": "Ruaj",
+    "delete": "Fshi",
+    "edit": "Ndrysho",
+    "add": "Shto",
+    "search": "Kërko",
+    "close": "Mbyll",
+    "open": "Hap",
+    "yes": "Po",
+    "no": "Jo",
+    "next": "Tjetër",
+    "previous": "I mëparshmi",
+    "home": "Ballina",
+    "back": "Kthehu",
+    "continue": "Vazhdo",
+    "submit": "Dërgo",
+    "reset": "Rivendos",
+    "clear": "Pastro",
+    "select": "Zgjedh",
+    "all": "Të gjitha",
+    "none": "Asnjë",
+    "more": "Më shumë",
+    "less": "Më pak",
+    "view": "Shiko",
+    "download": "Shkarko",
+    "upload": "Ngarko",
+    "copy": "Kopjo",
+    "paste": "Ngjit",
+    "cut": "Prit"
+  },
+  "navigation": {
+    "dashboard": "Paneli Kryesor",
+    "projects": "Projektet",
+    "analytics": "Analitika",
+    "settings": "Cilësimet",
+    "profile": "Profili",
+    "logout": "Dil",
+    "login": "Hyr",
+    "register": "Regjistrohu",
+    "about": "Rreth nesh",
+    "contact": "Kontakt",
+    "help": "Ndihmë",
+    "documentation": "Dokumentacioni"
+  },
+  "agi": {
+    "title": "AGI (Inteligjenca Artificiale e Përgjithshme)",
+    "description": "Sistemi i avancuar i inteligjencës artificiale",
+    "modules": {
+      "core": "Bërthama",
+      "semantic": "Semantik",
+      "planner": "Planifikues",
+      "executor": "Ekzekutues",
+      "monitor": "Monitorues"
+    },
+    "features": {
+      "real_time_analysis": "Analizë në kohë reale",
+      "pattern_recognition": "Njohja e modeleve",
+      "predictive_analytics": "Analitika parashikuese",
+      "automated_optimization": "Optimizim i automatizuar",
+      "natural_language": "Gjuhë natyrale"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Jo aktiv",
+      "processing": "Duke përpunuar",
+      "completed": "Përfunduar",
+      "error": "Gabim",
+      "pending": "Në pritje"
+    }
+  },
+  "economics": {
+    "title": "Analiza Ekonomike",
+    "metrics": {
+      "revenue": "Të ardhurat",
+      "profit": "Fitimi",
+      "growth_rate": "Shkalla e rritjes",
+      "market_share": "Pjesa e tregut",
+      "roi": "Kthimi i investimit",
+      "expenses": "Shpenzimet",
+      "budget": "Buxheti",
+      "forecast": "Parashikimi"
+    },
+    "indicators": {
+      "bullish": "Pozitive",
+      "bearish": "Negative",
+      "neutral": "Neutrale",
+      "volatile": "E paqëndrueshme",
+      "stable": "E qëndrueshme"
+    }
+  },
+  "crypto": {
+    "title": "Analiza e Kriptomonedhave",
+    "assets": {
+      "bitcoin": "Bitcoin",
+      "ethereum": "Ethereum",
+      "portfolio": "Portofoli",
+      "trading": "Tregtimi",
+      "wallet": "Portofoli dixhital"
+    },
+    "metrics": {
+      "price": "Çmimi",
+      "volume": "Volumi",
+      "market_cap": "Kapitalizimi i tregut",
+      "change_24h": "Ndryshimi 24h",
+      "volatility": "Paqëndrueshmëria",
+      "liquidity": "Likuiditeti"
+    },
+    "signals": {
+      "buy": "Bli",
+      "sell": "Shit",
+      "hold": "Mbaj",
+      "strong_buy": "Bli shumë",
+      "strong_sell": "Shit shumë"
+    }
+  },
+  "ecology": {
+    "title": "Analiza Ekolgjike",
+    "metrics": {
+      "carbon_footprint": "Gjurma e karbonit",
+      "energy_efficiency": "Efikasiteti energjetik",
+      "sustainability": "Qëndrueshmëria",
+      "emissions": "Emetimet",
+      "renewable_energy": "Energjia e rinovueshme",
+      "biodiversity": "Biodiversiteti"
+    },
+    "status": {
+      "excellent": "E shkëlqyer",
+      "good": "E mirë",
+      "fair": "E drejtë",
+      "poor": "E dobët",
+      "critical": "Kritike"
+    }
+  },
+  "market": {
+    "title": "Analiza e Tregut",
+    "segments": {
+      "technology": "Teknologjia",
+      "healthcare": "Shëndetësia",
+      "finance": "Financat",
+      "education": "Arsimi",
+      "retail": "Shitja me pakicë"
+    },
+    "competition": {
+      "high": "E lartë",
+      "medium": "Mesatare",
+      "low": "E ulët"
+    },
+    "trends": {
+      "growing": "Duke u rritur",
+      "declining": "Duke u ulur",
+      "stable": "E qëndrueshme",
+      "emerging": "Emergjente"
+    }
+  },
+  "patterns": {
+    "title": "Njohja e Modeleve",
+    "types": {
+      "trend": "Tendenca",
+      "cycle": "Cikël",
+      "anomaly": "Anomali",
+      "correlation": "Korrelacion",
+      "seasonal": "Stinore"
+    },
+    "confidence": {
+      "high": "E lartë",
+      "medium": "Mesatare",
+      "low": "E ulët"
+    },
+    "predictions": {
+      "title": "Parashikimet",
+      "accuracy": "Saktësia",
+      "timeframe": "Korniza kohore",
+      "probability": "Probabiliteti"
+    }
+  },
+  "errors": {
+    "network_error": "Gabim në rrjet",
+    "server_error": "Gabim në server",
+    "validation_error": "Gabim validimi",
+    "permission_denied": "Leja u refuzua",
+    "not_found": "Nuk u gjet",
+    "timeout": "Koha mbaroi",
+    "unknown_error": "Gabim i panjohur",
+    "connection_failed": "Lidhja dështoi",
+    "data_corrupted": "Të dhënat janë dëmtuar",
+    "insufficient_permissions": "Leje të pamjaftueshme"
+  },
+  "messages": {
+    "welcome": "Mirësevjen në EuroWeb",
+    "data_saved": "Të dhënat u ruajtën",
+    "operation_completed": "Operacioni u plotësua",
+    "please_wait": "Ju lutem prisni",
+    "processing_request": "Duke përpunuar kërkesën",
+    "no_data_available": "Nuk ka të dhëna të disponueshme",
+    "select_option": "Zgjidhni një opsion",
+    "confirm_action": "Konfirmoni veprimin",
+    "changes_saved": "Ndryshimet u ruajtën",
+    "data_updated": "Të dhënat u përditësuan"
+  },
+  "forms": {
+    "required_field": "Fusha e detyrueshme",
+    "invalid_email": "Email i pavlefshëm",
+    "password_too_short": "Fjalëkalimi shumë i shkurtër",
+    "passwords_dont_match": "Fjalëkalimet nuk përputhen",
+    "invalid_format": "Format i pavlefshëm",
+    "field_too_long": "Fusha shumë e gjatë",
+    "field_too_short": "Fusha shumë e shkurtër",
+    "invalid_number": "Numër i pavlefshëm",
+    "invalid_date": "Datë e pavlefshme",
+    "invalid_url": "URL e pavlefshme"
+  },
+  "time": {
+    "seconds": "sekonda",
+    "minutes": "minuta",
+    "hours": "orë",
+    "days": "ditë",
+    "weeks": "javë",
+    "months": "muaj",
+    "years": "vite",
+    "ago": "më parë",
+    "from_now": "nga tani",
+    "just_now": "tani"
+  },
+  "units": {
+    "percentage": "%",
+    "currency": "€",
+    "temperature": "°C",
+    "distance": "km",
+    "weight": "kg",
+    "volume": "L"
+  }
+}

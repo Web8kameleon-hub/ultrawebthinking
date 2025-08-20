@@ -1,5 +1,5 @@
 /**
- * AGIXmed Results Component
+ * AGImed Results Component
  * Medical AI Analysis Results Display
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -13,7 +13,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-interface AGIXmedResult {
+interface AGImedResult {
   symptoms: string
   confidence: number
   recommendations: string[]
@@ -22,15 +22,15 @@ interface AGIXmedResult {
     probability: number
   }>
   timestamp: string
-  agixmedVersion: string
+  AGImedVersion: string
 }
 
-interface AGIXResultsProps {
-  result: AGIXmedResult | null
+interface AGIResultsProps {
+  result: AGImedResult | null
   onNewAnalysis: () => void
 }
 
-export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysis }) => {
+export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis }) => {
   if (!result) {
     return (
       <div style={{
@@ -40,7 +40,7 @@ export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysis 
       }}>
         <div style={{ fontSize: '64px', marginBottom: '24px' }}>🏥</div>
         <h3 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '12px', color: '#22c55e' }}>
-          AGIXmed e gatshme për analizë
+          AGImed e gatshme për analizë
         </h3>
         <p style={{ fontSize: '16px' }}>
           Përdorni formularin më lart për të filluar analizën mjekësore
@@ -91,7 +91,7 @@ export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysis 
           alignItems: 'center',
           gap: '12px'
         }}>
-          🧠 Rezultatet e Analizës AGIXmed
+          🧠 Rezultatet e Analizës AGImed
         </h2>
         
         <div style={{
@@ -342,12 +342,12 @@ export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysis 
         flexWrap: 'wrap',
         gap: '8px'
       }}>
-        <span>AGIXmed v{result.agixmedVersion}</span>
+        <span>AGImed v{result.AGImedVersion}</span>
         <span>{new Date(result.timestamp).toLocaleString('sq-AL')}</span>
       </div>
     </motion.div>
   )
 }
 
-// Removed default export: AGIXResults
+// Removed default export: AGIResults
 

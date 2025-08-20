@@ -1,5 +1,5 @@
 /**
- * AGIxBioNature - Pure TypeScript Biology Engine
+ * AGIBioNature - Pure TypeScript Biology Engine
  * Yarn Berry + TypeScript + Vitest + Named Exports ONLY
  * 
  * NO JS, NO Jest, NO Panda, NO Tailwind, NO useState, NO JSX
@@ -10,7 +10,7 @@
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
 import { useCallback, useEffect, useRef } from 'react';
-import styles from './AGIxBioNature.module.css';
+import styles from './AGIBioNature.module.css';
 
 // Pure CVA variants - NO defaultVariants
 const containerVariants = cva(styles.container, {
@@ -104,7 +104,7 @@ interface MedicalInsight {
   readonly marketPotential: number;
 }
 
-interface AGIxBioNatureProps {
+interface AGIBioNatureProps {
   readonly mode?: 'biology' | 'nature' | 'medical' | 'ecology' | 'comprehensive';
   readonly theme?: 'forest' | 'ocean' | 'laboratory' | 'ecosystem' | 'medical';
   readonly dataSource?: 'realtime' | 'research' | 'simulation';
@@ -149,12 +149,12 @@ const loadEcologyEngine = async () => {
   return new EcologyEngine();
 };
 
-export const AGIxBioNature = ({ 
+export const AGIBioNature = ({ 
   mode = 'comprehensive',
   theme = 'forest',
   dataSource = 'simulation',
   researchMode = false
-}: AGIxBioNatureProps) => {
+}: AGIBioNatureProps) => {
   // Pure refs - NO useState
   const stateRef = useRef<ComponentState>({
     biologicalData: [],

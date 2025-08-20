@@ -164,20 +164,6 @@ class AGICore extends SimpleEventEmitter {
     });
   }
 
-  public getMetrics() {
-    return {
-      initialized: this.isInitialized,
-      uptime: Date.now() - this.startTime,
-      processingSpeed: this.processingSpeed,
-      totalLayers: this.layers.size,
-      activeLayers: Array.from(this.layers.values()).filter(l => l.status === 'active').length,
-      averageLoad: this.getAverageLoad(),
-      totalConnections: this.getTotalConnections(),
-      memoryOptimal: this.config.memoryOptimal,
-      timestamp: Date.now()
-    };
-  }
-
   public getLayerStatus(layerId: string): AGILayer | null {
     return this.layers.get(layerId) || null;
   }
@@ -261,6 +247,103 @@ class AGICore extends SimpleEventEmitter {
       newKnowledge: 'Pattern recognition improved by 3%',
       modelUpdated: true,
       timestamp: Date.now()
+    };
+  }
+
+  /**
+   * Merr statusin aktual të AGI Core (async version)
+   */
+  public async getStatus(): Promise<any> {
+    const uptime = Date.now() - this.startTime;
+    const layersArray = Array.from(this.layers.values());
+    
+    return {
+      status: this.isInitialized ? 'running' : 'initializing',
+      uptime: Math.round(uptime / 1000), // seconds
+      layers: {
+        total: this.layers.size,
+        active: layersArray.filter(l => l.status === 'active').length,
+        inactive: layersArray.filter(l => l.status === 'inactive').length
+      },
+      performance: {
+        processingSpeed: this.processingSpeed,
+        averageLoad: layersArray.reduce((sum, l) => sum + l.load, 0) / layersArray.length,
+        totalConnections: layersArray.reduce((sum, l) => sum + l.connections, 0)
+      },
+      config: this.config,
+      lastUpdate: Date.now(),
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  /**
+   * Rivendos AGI Core në gjendjen fillestare (async version)
+   */
+  public async resetSystem(): Promise<any> {
+    this.logger.info('🔄 Resetting AGI Core...');
+    
+    // Reset layers
+    this.layers.forEach(layer => {
+      layer.status = 'inactive';
+      layer.load = 0;
+      layer.connections = 0;
+      layer.lastUpdate = Date.now();
+    });
+
+    // Reset internal state
+    this.isInitialized = false;
+    this.startTime = Date.now();
+
+    // Re-initialize with delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.initializeLayers();
+
+    this.emit('core:reset', { timestamp: Date.now() });
+    this.logger.info('✅ AGI Core reset completed');
+
+    return {
+      success: true,
+      message: 'AGI Core has been reset successfully',
+      timestamp: new Date().toISOString()
+    };
+  }
+
+  /**
+   * Get system metrics for optimization
+   */
+  public async getMetrics(): Promise<any> {
+    const uptime = Date.now() - this.startTime;
+    const layersArray = Array.from(this.layers.values());
+    
+    return {
+      cpu: {
+        usage: Math.random() * 100, // Simulated CPU usage
+        cores: 8,
+        frequency: 3200
+      },
+      memory: {
+        usage: Math.random() * 100, // Simulated memory usage
+        total: 16384, // 16GB
+        available: 16384 - (Math.random() * 8192)
+      },
+      network: {
+        latency: Math.random() * 200, // Simulated latency
+        bandwidth: 1000, // 1Gbps
+        connections: layersArray.reduce((sum, l) => sum + l.connections, 0)
+      },
+      database: {
+        query_time: Math.random() * 100, // Simulated query time
+        connections: Math.floor(Math.random() * 50),
+        cache_hit_ratio: 0.85 + (Math.random() * 0.1)
+      },
+      agi: {
+        layers: this.layers.size,
+        processing_speed: this.processingSpeed,
+        average_load: layersArray.reduce((sum, l) => sum + l.load, 0) / layersArray.length,
+        uptime: Math.round(uptime / 1000),
+        status: this.isInitialized ? 'running' : 'initializing'
+      },
+      timestamp: new Date().toISOString()
     };
   }
 }

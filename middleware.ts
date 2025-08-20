@@ -1,31 +1,32 @@
-/**
- * EuroWeb - Next.js Middleware
- * Security & Route Protection
- * 
- * @author Ledjan Ahmati (100% Owner)
- * @version 8.0.0 Ultra
- */
+import { NextRequest, NextResponse } from 'next/server';
+import { guardianMiddleware } from './lib/guardian-middleware';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './lib/i18n/routing';
 
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+// Create i18n middleware
+const intlMiddleware = createMiddleware(routing);
 
 export function middleware(request: NextRequest) {
-  // Security headers
-  const response = NextResponse.next()
+  // Skip Guardian for static assets and specific paths
+  const { pathname } = request.nextUrl;
   
-  // Add security headers
-  response.headers.set('X-Frame-Options', 'DENY')
-  response.headers.set('X-Content-Type-Options', 'nosniff')
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
-  response.headers.set('X-XSS-Protection', '1; mode=block')
-  
-  // CSP for enhanced security
-  response.headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
-  )
-  
-  return response
+  if (
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/api/_') ||
+    pathname === '/guardian' // Allow access to Guardian panel
+  ) {
+    return NextResponse.next();
+  }
+
+  // Apply Guardian security checks first
+  const guardianResponse = guardianMiddleware(request);
+  if (guardianResponse) {
+    return guardianResponse;
+  }
+
+  // Apply i18n middleware for localization
+  return intlMiddleware(request);
 }
 
 export const config = {
@@ -37,6 +38,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
-}
+};
