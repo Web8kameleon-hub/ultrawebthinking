@@ -1,62 +1,58 @@
 /**
  * EuroWeb Web8 - Simple Index Component
- * CSS Modules + CVA + Framer Motion Implementation
+ * Pure Panda CSS - No styled-system - Industrial Grade
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
- * @version 8.0.1 Industrial
+ * @version 8.0.0 Industrial
  * @license MIT
  */
 
 'use client';
 
-import React from 'react';
 import { motion } from 'framer-motion';
-import { fadeInUp, staggerContainer } from '../lib/motion';
-import styles from './IndexSimple.module.css';
+import React from 'react';
+import '../styles/globals.css';
 
 // Pure TypeScript component - NO default export (forbidden)
 const IndexSimple = (): React.ReactElement => {
   return (
     <motion.div
-      variants={staggerContainer}
-      initial="initial"
-      animate="animate"
-      className={styles.container}
+      className="flex justify-center items-center min-h-screen text-2xl font-bold text-white bg-gradient-to-br from-blue-700 to-blue-900 text-center p-8 font-inter"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6 }}
     >
       <motion.div
-        variants={fadeInUp}
-        className={styles.content}
+        className="flex flex-col gap-4"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
       >
         <motion.h1
-          variants={fadeInUp}
-          className={styles.title}
+          className="text-4xl font-bold text-white drop-shadow-lg"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
         >
           Web8 UltraThinking
         </motion.h1>
-        
         <motion.p
-          variants={fadeInUp}
-          className={styles.subtitle}
+          className="text-xl text-blue-100 font-medium"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
         >
           Kristal Engine Ready
         </motion.p>
-        
         <motion.div
-          variants={fadeInUp}
-          className={styles.statusContainer}
+          className="flex gap-2 justify-center items-center mt-4"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
         >
-          <motion.div
-            animate={{
-              opacity: [1, 0.5, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-            }}
-            className={styles.statusIndicator}
-          />
-          <span className={styles.statusText}>
+          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+          <span className="text-sm text-green-300 font-medium">
             System Active
           </span>
         </motion.div>
@@ -67,3 +63,4 @@ const IndexSimple = (): React.ReactElement => {
 
 // Named export (required by EuroWeb Web8 standards)
 export { IndexSimple };
+

@@ -10,6 +10,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { css } from '../css';
 import type { 
   IndustrialPage, 
   PageLoadResult, 
@@ -90,15 +91,16 @@ class QuantumCSS {
   }
 
   private generateOptimizedCSS(pageId: string): string {
-    return `
-      .page-${pageId} {
-        min-height: 100vh;
-        width: 100%;
-        background: linear-gradient(to bottom right, #1f2937, #1e3a8a, #7c3aed);
-        color: white;
-        font-family: Inter, system-ui, sans-serif;
-      }
-    `;
+    return css({
+      minH: '100vh',
+      w: 'full',
+      bg: 'gradient-to-br',
+      from: 'gray.900',
+      via: 'blue.900',
+      to: 'purple.900',
+      color: 'white',
+      fontFamily: 'Inter, system-ui, sans-serif',
+    });
   }
 
   apply(cssString: string): string {
@@ -299,7 +301,7 @@ export class IndustrialPageService {
       id: `${pageId}-error`,
       title: `Error - ${pageId}`,
       content: (
-        <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <div className={css({ p: '8', textAlign: 'center' })}>
           <h1>⚠️ Page Load Error</h1>
           <p>Failed to load page: {pageId}</p>
           <p>Error: {error.message}</p>
@@ -353,7 +355,7 @@ export class IndustrialPageService {
   /**
    * Render page with industrial performance
    */
-  public renderPage(pageId: string): React.ReactElement {
+  public renderPage(pageId: string): React.JSX.Element {
     const page = this.pageCache.get(pageId);
     if (!page) {
       throw new Error(`Page ${pageId} not loaded. Call loadPage() first.`);
@@ -411,14 +413,7 @@ const IndustrialPageFrame: React.FC<{
   return (
     <motion.div 
       id={`page-${id}`}
-      style={{
-        minHeight: '100vh',
-        width: '100%',
-        position: 'relative',
-        background: 'linear-gradient(to bottom right, #1f2937, #1e3a8a, #7c3aed)',
-        color: 'white',
-        fontFamily: 'Inter, system-ui, sans-serif'
-      }}
+      className={CSS_ENGINE.apply(css)}
       initial={motionConfig.initial}
       animate={motionConfig.animate}
       exit={motionConfig.exit}

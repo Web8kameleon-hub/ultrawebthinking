@@ -130,8 +130,8 @@ app.get('/api/guardian/status', (req, res) => {
   });
 });
 
-// AGImed API endpoints
-app.post('/api/AGImed/analyze', (req, res) => {
+// AGIXmed API endpoints
+app.post('/api/agixmed/analyze', (req, res) => {
   const { symptoms } = req.body;
   
   if (!symptoms || !symptoms.trim()) {
@@ -141,7 +141,7 @@ app.post('/api/AGImed/analyze', (req, res) => {
     });
   }
 
-  // Mock AGImed analysis response
+  // Mock AGIXmed analysis response
   const analysis = {
     symptoms: symptoms,
     confidence: 0.85,
@@ -156,7 +156,7 @@ app.post('/api/AGImed/analyze', (req, res) => {
       { name: 'Dehidratimi', probability: 0.10 }
     ],
     timestamp: new Date().toISOString(),
-    AGImedVersion: '8.0.0'
+    agixmedVersion: '8.0.0'
   };
 
   res.json(analysis);
@@ -218,4 +218,4 @@ server.listen(PORT, () => {
   logger.info(`🔒 DDoS defense system operational`);
 });
 
-export { app }
+export default app;

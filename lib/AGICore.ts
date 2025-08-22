@@ -94,14 +94,25 @@ class AGICore {
 
     // Navigate to the parent of the target property
     for (let i = 0; i < keys.length - 1; i++) {
-      if (!(keys[i] in current)) {
-        current[keys[i]] = {};
+      const key = keys[i];
+      if (!key) continue; // Skip undefined keys
+      
+      if (!(key in current)) {
+        current[key] = {};
       }
-      current = current[keys[i]];
+      current = current[key];
+      
+      // Ensure current is not undefined
+      if (!current) {
+        current = {};
+      }
     }
 
     // Set the value
-    current[keys[keys.length - 1]] = value;
+    const lastKey = keys[keys.length - 1];
+    if (lastKey && current) {
+      current[lastKey] = value;
+    }
 
     this.saveMemory();
     this.notifyListeners();
@@ -170,4 +181,18 @@ export function subscribeToAGIMemory(callback: () => void): () => void {
   return agiCore.subscribe(callback);
 }
 
-export { AGICore }
+// React hook for AGI memory state
+export function useAGIMemory<T>(selector: (memory: AGIMemoryStore) => T): T {
+  const [state, setState] = React.useState(() => selector(agiCore.getMemory()));
+
+  React.useEffect(() => {
+    const unsubscribe = agiCore.subscribe(() => {
+      setState(selector(agiCore.getMemory()));
+    });
+    return unsubscribe;
+  }, [selector]);
+
+  return state;
+}
+
+export default AGICore;

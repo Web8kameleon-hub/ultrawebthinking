@@ -320,4 +320,4 @@ export class EchoEngine {
 
 // Export singleton instance
 export const echoEngine = new EchoEngine();
-
+export default echoEngine;

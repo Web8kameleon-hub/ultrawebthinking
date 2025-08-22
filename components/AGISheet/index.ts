@@ -10,11 +10,11 @@ export { default as AGISheetDemo } from './AGISheetDemo';
 export { default as AGISpreadsheetEngine } from './AGISpreadsheetEngine';
 
 // Legacy exports (to be removed)
-export { default as AGICoreUltra } from './AGICoreUltra';
+export { AGICoreUltra } from './AGICoreUltra';
 export { default as AGIEcoUltra } from './AGIEcoUltra';
 export { default as AGIElUltra } from './AGIElUltra';
-export { default as AGIMedUltra } from './AGIMedUltra';
-export { default as AGIOfficeUltra } from './AGIOfficeUltra';
+export { AGIMedUltra } from './AGIMedUltra';
+export { AGIOfficeUltra } from './AGIOfficeUltra';
 
 // Mesh and connectivity
 export { default as LoRaConnectUltra } from './LoRaConnectUltra';

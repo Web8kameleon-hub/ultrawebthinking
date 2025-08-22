@@ -6,11 +6,11 @@
 
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join } from 'path';
-import colors from 'colors';
+import chalk from 'chalk';
 
 function setupOpenMind(): void {
-  console.log(colors.cyan('\n🧠 EuroWeb OpenMind AI Setup\n'));
-  console.log(colors.yellow('Konfigurimi i AI providers...'));
+  console.log(chalk.cyan('\n🧠 EuroWeb OpenMind AI Setup\n'));
+  console.log(chalk.yellow('Konfigurimi i AI providers...'));
 
   // Create openmind page
   const pagesDir = join(process.cwd(), 'pages');
@@ -62,7 +62,7 @@ export default function OpenMindPage() {
 
   const openmindPagePath = join(pagesDir, 'openmind.tsx');
   writeFileSync(openmindPagePath, openmindPageContent);
-  console.log(colors.green('✅ Created pages/openmind.tsx'));
+  console.log(chalk.green('✅ Created pages/openmind.tsx'));
 
   // Create app route version too
   const appDir = join(process.cwd(), 'app');
@@ -74,7 +74,7 @@ export default function OpenMindPage() {
 
   const appPageContent = `'use client'
 
-import { OpenMindChat } from '../../components/OpenMindChat'
+import OpenMindChat from '../../components/OpenMindChat'
 
 export default function OpenMindPage() {
   return <OpenMindChat />
@@ -83,10 +83,10 @@ export default function OpenMindPage() {
 
   const appPagePath = join(openmindAppDir, 'page.tsx');
   writeFileSync(appPagePath, appPageContent);
-  console.log(colors.green('✅ Created app/openmind/page.tsx'));
+  console.log(chalk.green('✅ Created app/openmind/page.tsx'));
 
   // Show available AI providers
-  console.log(colors.cyan('\n🤖 Available AI Providers:'));
+  console.log(chalk.cyan('\n🤖 Available AI Providers:'));
   const providers = [
     '🧠 OpenMind AI - https://openmind.ai',
     '🤖 Anthropic Claude - https://claude.ai', 
@@ -99,21 +99,21 @@ export default function OpenMindPage() {
   ];
 
   providers.forEach(provider => {
-    console.log(colors.white('  ' + provider));
+    console.log(chalk.white('  ' + provider));
   });
 
-  console.log(colors.green('\n✅ OpenMind AI setup completed!'));
-  console.log(colors.blue('\n🚀 Next steps:'));
-  console.log(colors.cyan('1. yarn dev'));
-  console.log(colors.cyan('2. Visit: http://localhost:3000/openmind'));
-  console.log(colors.cyan('3. Chat with any AI provider!'));
+  console.log(chalk.green('\n✅ OpenMind AI setup completed!'));
+  console.log(chalk.blue('\n🚀 Next steps:'));
+  console.log(chalk.cyan('1. yarn dev'));
+  console.log(chalk.cyan('2. Visit: http://localhost:3000/openmind'));
+  console.log(chalk.cyan('3. Chat with any AI provider!'));
   
-  console.log(colors.yellow('\n💡 Available commands:'));
-  console.log(colors.white('  yarn ai:chat    - Start AI chat interface'));
-  console.log(colors.white('  yarn openmind   - Run this setup again'));
+  console.log(chalk.yellow('\n💡 Available commands:'));
+  console.log(chalk.white('  yarn ai:chat    - Start AI chat interface'));
+  console.log(chalk.white('  yarn openmind   - Run this setup again'));
 }
 
 // Run setup
 setupOpenMind();
 
-export { setupOpenMind }
+export default setupOpenMind;

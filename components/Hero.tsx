@@ -86,5 +86,4 @@ const Hero = () => {
 
 
 export { Hero }
-// Removed default export: Hero
-
+export default Hero

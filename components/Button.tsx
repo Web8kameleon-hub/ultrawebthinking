@@ -1,70 +1,41 @@
-/**
- * EuroWeb Web8 - Button Component
- * CSS Modules + CVA Implementation
- * 
- * @author Ledjan Ahmati (100% Owner)
- * @version 8.0.1 Industrial
- */
-
 import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import styles from '../styles/Button.module.css';
+import { css } from '..//css';
 
-// CVA button variants using CSS module classes
-const buttonVariants = cva(styles.button, {
-  variants: {
-    variant: {
-      primary: styles.primary,
-      secondary: styles.secondary,
-      outline: styles.outline,
-      ghost: styles.ghost,
-      danger: styles.danger,
-    },
-    size: {
-      small: styles.small,
-      medium: styles.medium,
-      large: styles.large,
-    },
-    fullWidth: {
-      true: styles.fullWidth,
-    },
-    loading: {
-      true: styles.loading,
-    },
-  },
-  defaultVariants: {
-    variant: 'primary',
-    size: 'medium',
-  },
-});
-
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  loading?: boolean;
+interface ButtonProps {
   children: React.ReactNode;
+  variant?: 'primary' | 'secondary';
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
-export function Button({ 
-  className, 
-  variant, 
-  size, 
-  fullWidth, 
-  loading, 
+export default function Button({ 
   children, 
-  disabled, 
-  ...props 
+  variant = 'primary', 
+  onClick, 
+  disabled = false 
 }: ButtonProps) {
   return (
     <button
-      className={buttonVariants({ variant, size, fullWidth, loading, className })}
-      disabled={disabled || loading}
-      {...props}
+      className={css({
+        px: 4,
+        py: 2,
+        borderRadius: 'md',
+        fontWeight: 'medium',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.5 : 1,
+        bg: variant === 'primary' ? 'blue.500' : 'gray.200',
+        color: variant === 'primary' ? 'white' : 'gray.800',
+        _hover: {
+          bg: disabled ? undefined : variant === 'primary' ? 'blue.600' : 'gray.300'
+        }
+      })}
+      onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>
   );
 }
 
-// Named export only - no default exports in Web8
 
+export { Button };

@@ -73,6 +73,8 @@ jspm_packages/
 *.swo
 
 ## Panda CSS
+styled-system
+styled-system-studio
 
 ## AGI System
 blocked/
@@ -87,22 +89,3 @@ tsconfig.tsbuildinfo
 # Optional: AGI cache or memory stores
 memory.json
 extensions.json
-
-# Large files (>100MB)
-*.node
-*.exe
-*.dll
-*.so
-*.dylib
-*.zip
-*.tar.gz
-*.rar
-*.7z
-
-# Node.js native modules
-**/*.node
-
-# Binary assets
-*.bin
-*.dat
-*.pak

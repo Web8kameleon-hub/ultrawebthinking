@@ -1,247 +1,241 @@
+'use client';
+
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+
+// Lazy load components
 /**
- * EuroWeb Ultra Lazy Loading Usage Examples
- * Industrial-Grade Component Loading Demonstrations
+ * Lazily loaded HeavyChart component for improved performance.
  * 
- * @author Ledjan Ahmati (100% Owner)
- * @contact dealsjona@gmail.com
- * @version 8.0.0 Ultra
- * @license MIT
+ * This component is loaded on-demand using React's lazy loading functionality
+ * to reduce the initial bundle size and improve application startup time.
+ * The chart will only be loaded when it's actually needed in the UI.
+ * 
+ * @example
+ * ```tsx
+ * <Suspense fallback={<div>Loading chart...</div>}>
+ *   <HeavyChart data={chartData} />
+ * </Suspense>
+ * ```
  */
+const HeavyChart = lazy(() => import('./HeavyChart'));
+const DataTable = lazy(() => import('./DataTable'));
+const ImageGallery = lazy(() => import('./ImageGallery'));
+const VideoPlayer = lazy(() => import('./VideoPlayer'));
 
-import React from 'react'
-import { 
-  LazyLoader, 
-  registerLazyComponent,
-  preloadComponent,
-  AGISheetLazy,
-  AGIEcoLazy,
-  AGIBioNatureLazy,
-  Web8TabSystemLazy,
-  IndustrialFallback
-} from '@/components/LazyLoader'
+// Loading spinner component
+const LoadingSpinner = ({ message = 'Duke ngarkuar...' }: { message?: string }) => (
+  <div className="flex flex-col items-center justify-center p-8 space-y-4">
+    <motion.div
+      className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"
+      animate={{ rotate: 360 }}
+      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+    />
+    <p className="text-gray-600 text-sm">{message}</p>
+  </div>
+);
 
-// Example 1: Basic Lazy Loading
-export const BasicLazyExample = () => {
-  return (
-    <div>
-      <h2>Basic Lazy Loading</h2>
-      <LazyLoader 
-        component="AGISheet"
-        variant="default"
-        priority="normal"
-      />
-    </div>
-  )
-}
+// Error boundary for lazy loaded components
+class LazyErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-// Example 2: Viewport-based Loading
-export const ViewportLazyExample = () => {
-  return (
-    <div style={{ height: '200vh' }}>
-      <h2>Scroll down to load component</h2>
-      <div style={{ marginTop: '100vh' }}>
-        <LazyLoader 
-          component="AGIEco"
-          variant="neural"
-          priority="low"
-          viewport={true}
-          fallback={<IndustrialFallback message="Loading AGI Eco Engine..." variant="neural" />}
-        />
-      </div>
-    </div>
-  )
-}
+  static getDerivedStateFromError(_: Error) {
+    return { hasError: true };
+  }
 
-// Example 3: High Priority Preloading
-export const PreloadExample = () => {
-  React.useEffect(() => {
-    // Preload critical components
-    preloadComponent('Web8TabSystem')
-    preloadComponent('AGISheet')
-  }, [])
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Lazy loading error:', error, errorInfo);
+  }
 
-  return (
-    <div>
-      <h2>Preloaded Components</h2>
-      <LazyLoader 
-        component="Web8TabSystem"
-        variant="industrial"
-        priority="critical"
-        preload={true}
-      />
-    </div>
-  )
-}
-
-// Example 4: Custom Component Registration
-const CustomAGIEngine = registerLazyComponent({
-  name: 'CustomAGIEngine',
-  loader: async () => {
-    // Simulate heavy computation/loading
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    return {
-      default: () => (
-        <div style={{ padding: '20px', background: '#1a1a2e', color: '#fff' }}>
-          <h3>Custom AGI Engine Loaded!</h3>
-          <p>This component was lazy loaded with custom configuration.</p>
-        </div>
-      )
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
     }
-  },
-  priority: 'high',
-  chunk: 'custom-agi'
-})
 
-export const CustomLazyExample = () => {
-  return (
-    <div>
-      <h2>Custom Lazy Component</h2>
-      <LazyLoader 
-        component="CustomAGIEngine"
-        variant="quantum"
-        priority="high"
-        fallback={<IndustrialFallback message="Loading Custom AGI..." variant="quantum" />}
-      />
-    </div>
-  )
+    return this.props.children;
+  }
 }
 
-// Example 5: Industrial Tab System with Lazy Engines
-export const IndustrialTabExample = () => {
-  const [activeTab, setActiveTab] = React.useState('sheet')
+// Component performance tracker
+const useComponentLoadTime = (componentName: string) => {
+  const [loadTime, setLoadTime] = useState<number | null>(null);
+  const [startTime] = useState(Date.now());
+
+  useEffect(() => {
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    setLoadTime(duration);
+    console.log(`${componentName} loaded in ${duration}ms`);
+  }, [componentName, startTime]);
+
+  return loadTime;
+};
+
+export default function LazyLoadingDemo() {
+  const [activeTab, setActiveTab] = useState('charts');
+  const [loadedComponents, setLoadedComponents] = useState<Set<string>>(new Set());
+  const [performanceMetrics, setPerformanceMetrics] = useState<Record<string, number>>({});
 
   const tabs = [
-    { id: 'sheet', name: 'AGI Sheet', component: 'AGISheet', priority: 'critical' },
-    { id: 'eco', name: 'AGI Eco', component: 'AGIEco', priority: 'normal' },
-    { id: 'bio', name: 'AGI Bio', component: 'AGIBioNature', priority: 'normal' }
-  ]
+    { id: 'charts', label: '📊 Grafikë', icon: '📈' },
+    { id: 'data', label: '📋 Të dhëna', icon: '🗂️' },
+    { id: 'gallery', label: '🖼️ Galeri', icon: '🎨' },
+    { id: 'video', label: '🎬 Video', icon: '📺' }
+  ];
 
-  return (
-    <div style={{ width: '100%', height: '600px' }}>
-      <div style={{ display: 'flex', borderBottom: '2px solid #333', marginBottom: '20px' }}>
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              padding: '10px 20px',
-              background: activeTab === tab.id ? '#0066cc' : '#333',
-              color: '#fff',
-              border: 'none',
-              cursor: 'pointer',
-              borderRadius: '4px 4px 0 0',
-              marginRight: '5px'
-            }}
-          >
-            {tab.name}
-          </button>
-        ))}
-      </div>
+  const handleComponentLoad = (componentName: string) => {
+    setLoadedComponents(prev => new Set(prev.add(componentName)));
+  };
 
-      <div style={{ height: '500px' }}>
-        {tabs.map(tab => (
-          <div 
-            key={tab.id}
-            style={{ 
-              display: activeTab === tab.id ? 'block' : 'none',
-              height: '100%'
-            }}
-          >
-            <LazyLoader 
-              component={tab.component}
-              variant="industrial"
-              priority={tab.priority as any}
-              fallback={
-                <IndustrialFallback 
-                  message={`Loading ${tab.name}...`} 
-                  variant="industrial" 
-                />
-              }
-            />
-          </div>
-        ))}
-      </div>
+  const trackPerformance = (componentName: string, loadTime: number) => {
+    setPerformanceMetrics(prev => ({
+      ...prev,
+      [componentName]: loadTime
+    }));
+  };
+
+  // Error fallback component
+  const ErrorFallback = ({ componentName }: { componentName: string }) => (
+    <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
+      <div className="text-red-500 text-4xl mb-4">⚠️</div>
+      <h3 className="text-lg font-semibold text-red-800 mb-2">
+        Gabim në ngarkimin e komponentit
+      </h3>
+      <p className="text-red-600 mb-4">
+        Komponenti "{componentName}" nuk mund të ngarkohet.
+      </p>
+      <button
+        onClick={() => window.location.reload()}
+        className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+      >
+        Rifresko faqen
+      </button>
     </div>
-  )
-}
-
-// Example 6: Performance Monitoring
-export const PerformanceLazyExample = () => {
-  const [loadTimes, setLoadTimes] = React.useState<Record<string, number>>({})
-
-  const handleLoad = (componentName: string) => {
-    const loadTime = performance.now()
-    setLoadTimes(prev => ({ ...prev, [componentName]: loadTime }))
-    console.log(`${componentName} loaded in ${loadTime}ms`)
-  }
+  );
 
   return (
-    <div>
-      <h2>Performance Monitoring</h2>
-      <div style={{ marginBottom: '20px' }}>
-        {Object.entries(loadTimes).map(([component, time]) => (
-          <div key={component} style={{ color: '#666' }}>
-            {component}: {time.toFixed(2)}ms
+    <div className="max-w-7xl mx-auto p-6 space-y-6">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-6"
+      >
+        <h1 className="text-3xl font-bold mb-2">🚀 Demo e Ngarkimit të Vonuar</h1>
+        <p className="text-blue-100">
+          Eksploroni komponentët e ngarkuar dinamikisht me React.lazy dhe Suspense
+        </p>
+      </motion.div>
+
+      {/* Performance Dashboard */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-lg shadow-lg p-6"
+      >
+        <h2 className="text-xl font-semibold mb-4">📈 Performanca</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="bg-green-50 p-4 rounded-lg">
+            <div className="text-2xl font-bold text-green-600">{loadedComponents.size}</div>
+            <div className="text-sm text-gray-600">Komponentë të ngarkuar</div>
           </div>
-        ))}
-      </div>
-
-      <LazyLoader 
-        component="AGISheet"
-        variant="neural"
-        priority="high"
-        onLoad={() => handleLoad('AGISheet')}
-      />
-    </div>
-  )
-}
-
-// Example 7: Error Handling
-export const ErrorHandlingExample = () => {
-  const [error, setError] = React.useState<string | null>(null)
-
-  const handleError = (error: Error) => {
-    setError(error.message)
-    console.error('Lazy loading error:', error)
-  }
-
-  return (
-    <div>
-      <h2>Error Handling</h2>
-      {error && (
-        <div style={{ color: 'red', marginBottom: '20px' }}>
-          Error: {error}
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="text-2xl font-bold text-blue-600">{tabs.length}</div>
+            <div className="text-sm text-gray-600">Komponentë total</div>
+          </div>
+          <div className="bg-purple-50 p-4 rounded-lg">
+            <div className="text-2xl font-bold text-purple-600">
+              {Object.keys(performanceMetrics).length > 0
+                ? Math.round(Object.values(performanceMetrics).reduce((a, b) => a + b, 0) / Object.values(performanceMetrics).length)
+                : 0}ms
+            </div>
+            <div className="text-sm text-gray-600">Kohë mesatare</div>
+          </div>
+          <div className="bg-orange-50 p-4 rounded-lg">
+            <div className="text-2xl font-bold text-orange-600">
+              {loadedComponents.size > 0 ? Math.round((loadedComponents.size / tabs.length) * 100) : 0}%
+            </div>
+            <div className="text-sm text-gray-600">Progres</div>
+          </div>
         </div>
-      )}
+      </motion.div>
 
-      <LazyLoader 
-        component="NonExistentComponent"
-        variant="default"
-        priority="normal"
-        onError={handleError}
-        fallback={<div>Loading or error...</div>}
-      />
-    </div>
-  )
-}
+      {/* Tab Navigation */}
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="flex flex-wrap border-b">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex-1 min-w-0 px-6 py-4 text-center font-medium transition-all ${
+                activeTab === tab.id
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-lg">{tab.icon}</span>
+                <span className="hidden sm:inline">{tab.label}</span>
+              </div>
+              {loadedComponents.has(tab.id) && (
+                <div className="w-2 h-2 bg-green-500 rounded-full mx-auto mt-1"></div>
+              )}
+            </button>
+          ))}
+        </div>
 
-// Complete Demo App
-export const LazyLoadingDemo = () => {
-  return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <h1>EuroWeb Ultra Lazy Loading System Demo</h1>
-      
-      <div style={{ display: 'grid', gap: '40px', marginTop: '30px' }}>
-        <BasicLazyExample />
-        <ViewportLazyExample />
-        <PreloadExample />
-        <CustomLazyExample />
-        <IndustrialTabExample />
-        <PerformanceLazyExample />
-        <ErrorHandlingExample />
+        {/* Tab Content */}
+        <div className="p-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              className="min-h-[400px]"
+            >
+              {activeTab === 'charts' && (
+                <LazyErrorBoundary fallback={<ErrorFallback componentName="Grafikë" />}>
+                  <Suspense fallback={<LoadingSpinner message="Duke ngarkuar grafikët..." />}>
+                    <HeavyChart onLoad={() => handleComponentLoad('charts')} />
+                  </Suspense>
+                </LazyErrorBoundary>
+              )}
+
+              {activeTab === 'data' && (
+                <LazyErrorBoundary fallback={<ErrorFallback componentName="Të dhëna" />}>
+                  <Suspense fallback={<LoadingSpinner message="Duke ngarkuar tabelën..." />}>
+                    <DataTable onLoad={() => handleComponentLoad('data')} />
+                  </Suspense>
+                </LazyErrorBoundary>
+              )}
+
+              {activeTab === 'gallery' && (
+                <LazyErrorBoundary fallback={<ErrorFallback componentName="Galeri" />}>
+                  <Suspense fallback={<LoadingSpinner message="Duke ngarkuar galerinë..." />}>
+                    <ImageGallery onLoad={() => handleComponentLoad('gallery')} />
+                  </Suspense>
+                </LazyErrorBoundary>
+              )}
+
+              {activeTab === 'video' && (
+                <LazyErrorBoundary fallback={<ErrorFallback componentName="Video" />}>
+                  <Suspense fallback={<LoadingSpinner message="Duke ngarkuar video player..." />}>
+                    <VideoPlayer onLoad={() => handleComponentLoad('video')} />
+                  </Suspense>
+                </LazyErrorBoundary>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default LazyLoadingDemo

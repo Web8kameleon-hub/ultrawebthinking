@@ -41,4 +41,3 @@ export const CardContent: React.FC<CardContentProps> = ({ className = '', childr
     </div>
   )
 }
-

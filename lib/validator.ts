@@ -1,7 +1,28 @@
 // Real validator for Web8 memory and responses
 // No mocks - validates against real memory and real data
-import { agiCore, AGIMemoryStore } from './AGICore';
-import { realSense, RealInputPayload } from './sense';
+import { agiCore } from './AGICore';
+import { realSense } from './sense';
+
+// Type definition for AGI Memory Store (matching AGICore.ts)
+export interface AGIMemoryStore {
+  ui: {
+    activeTab: string;
+    scrollPosition: number;
+    theme: 'light' | 'dark' | 'nature';
+    navigationState: string;
+  };
+  agi: {
+    status: 'ACTIVE' | 'PROCESSING' | 'IDLE';
+    lastQuery: string;
+    responses: string[];
+    brainActive: boolean;
+  };
+  user: {
+    preferences: Record<string, any>;
+    history: string[];
+    currentTime: string;
+  };
+}
 
 export interface ValidationResult {
   isValid: boolean;
@@ -391,4 +412,4 @@ class RealValidator {
 }
 
 export const realValidator = new RealValidator();
-export { RealValidator }
+export default RealValidator;

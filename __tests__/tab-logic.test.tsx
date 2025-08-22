@@ -3,17 +3,13 @@
  * Dynamic imports + Edge splitting + Turbo pack
  */
 
-import React from 'react';
-import { test, expect, describe } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { describe, expect, test } from 'vitest';
 
 // Lazy tab system loading
 const loadTabSystem = async () => {
-  const { Web8TabSystem } = await import('../components/Web8TabSystem');
+  const Web8TabSystem = (await import('../components/Web8TabSystem')).default;
   return Web8TabSystem;
 };
-
 describe('Tab Logic Industrial Tests', () => {
   test('tab creation is pure and immutable', () => {
     const createTab = (id: string, title: string, url: string) => ({
@@ -48,19 +44,14 @@ describe('Tab Logic Industrial Tests', () => {
   });
 
   test('lazy tab system loads correctly', async () => {
-    // Test that the import doesn't throw
-    try {
-      const module = await import('../components/Web8TabSystem');
-      expect(true).toBe(true); // Import successful
-    } catch (error) {
-      throw new Error(`Import failed: ${error}`);
-    }
+    const TabSystem = await loadTabSystem();
+    expect(TabSystem).toBeDefined();
   });
 
   test('edge splitting works with Next.js', async () => {
-    // Test that dynamic imports are supported
-    const dynamicImport = () => import('../components/Web8TabSystem');
-    expect(typeof dynamicImport).toBe('function');
+    // Test that components can be dynamically imported
+    const dynamicComponent = await import('../components/Web8TabSystem');
+    expect(dynamicComponent.default).toBeDefined();
   });
 });
 

@@ -77,4 +77,4 @@ export class RealAGI {
   }
 }
 
-
+export default RealAGI;

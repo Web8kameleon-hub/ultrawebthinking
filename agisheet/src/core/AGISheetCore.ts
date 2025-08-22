@@ -1,13 +1,13 @@
 import { EventEmitter } from 'eventemitter3';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { z } from 'zod';
-import type { 
-  AGISheetConfig, 
-  CellData, 
-  LayerStatus, 
+import type {
+  AGISheetConfig,
+  CellData,
   KameleonModeType,
-  OperationalCommand 
-} from '../types/index.js';
+  LayerStatus,
+  OperationalCommand
+} from '../types/index';
 
 // Validation schemas
 const CellDataSchema = z.object({

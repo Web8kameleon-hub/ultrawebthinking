@@ -1,5 +1,5 @@
 /**
- * AGImed Results Component
+ * AGIXmed Results Component
  * Medical AI Analysis Results Display
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -10,10 +10,10 @@
 
 'use client'
 
-import React from 'react'
 import { motion } from 'framer-motion'
+import React from 'react'
 
-interface AGImedResult {
+interface AGIXmedResult {
   symptoms: string
   confidence: number
   recommendations: string[]
@@ -22,15 +22,15 @@ interface AGImedResult {
     probability: number
   }>
   timestamp: string
-  AGImedVersion: string
+  agixmedVersion: string
 }
 
-interface AGIResultsProps {
-  result: AGImedResult | null
-  onNewAnalysis: () => void
+interface AGIXResultsProps {
+  result: AGIXmedResult | null
+  onNewAnalysisAction: () => void
 }
 
-export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis }) => {
+export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysisAction }) => {
   if (!result) {
     return (
       <div style={{
@@ -40,7 +40,7 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
       }}>
         <div style={{ fontSize: '64px', marginBottom: '24px' }}>🏥</div>
         <h3 style={{ fontSize: '24px', fontWeight: 600, marginBottom: '12px', color: '#22c55e' }}>
-          AGImed e gatshme për analizë
+          AGIXmed e gatshme për analizë
         </h3>
         <p style={{ fontSize: '16px' }}>
           Përdorni formularin më lart për të filluar analizën mjekësore
@@ -91,9 +91,9 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
           alignItems: 'center',
           gap: '12px'
         }}>
-          🧠 Rezultatet e Analizës AGImed
+          🧠 Rezultatet e Analizës AGIXmed
         </h2>
-        
+
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -154,7 +154,7 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
         }}>
           🔍 Kushtet e mundshme:
         </h3>
-        
+
         <div style={{ display: 'grid', gap: '12px' }}>
           {result.possibleConditions.map((condition, index) => (
             <motion.div
@@ -179,7 +179,7 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
               }}>
                 {condition.name}
               </div>
-              
+
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -226,7 +226,7 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
         }}>
           💡 Rekomandimet:
         </h3>
-        
+
         <div style={{ display: 'grid', gap: '12px' }}>
           {result.recommendations.map((recommendation, index) => (
             <motion.div
@@ -294,10 +294,10 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
             Ky është një këshillim fillestar. Konsultohuni gjithmonë me një mjek të licencuar për diagnozë të saktë.
           </span>
         </div>
-        
+
         <div style={{ display: 'flex', gap: '12px' }}>
           <button
-            onClick={onNewAnalysis}
+            onClick={onNewAnalysisAction}
             style={{
               background: 'rgba(34, 197, 94, 0.2)',
               border: '1px solid #22c55e',
@@ -311,7 +311,7 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
           >
             🔄 Analizë e re
           </button>
-          
+
           <button
             style={{
               background: 'rgba(59, 130, 246, 0.2)',
@@ -342,12 +342,11 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysis })
         flexWrap: 'wrap',
         gap: '8px'
       }}>
-        <span>AGImed v{result.AGImedVersion}</span>
+        <span>AGIXmed v{result.agixmedVersion}</span>
         <span>{new Date(result.timestamp).toLocaleString('sq-AL')}</span>
       </div>
     </motion.div>
   )
 }
 
-// Removed default export: AGIResults
-
+export default AGIXResults

@@ -10,8 +10,8 @@
 
 'use client'
 
-import React from 'react'
 import { motion } from 'framer-motion'
+import React from 'react'
 
 interface GuardianStats {
   totalRequests: number
@@ -435,13 +435,11 @@ const GuardianMonitor: React.FC = () => {
           fontWeight: 600,
           cursor: 'pointer'
         }}>
-        🛑 Emergency Block
+          🛑 Emergency Block
         </button>
       </motion.div>
     </div>
   )
 }
 
-// Named export only (no default exports allowed)
-export { GuardianMonitor }
-
+export default GuardianMonitor

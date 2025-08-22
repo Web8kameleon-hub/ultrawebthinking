@@ -24,17 +24,16 @@ const LiveNavigator = () => {
     <nav className={styles.navbar}>
       <div className={styles.indicator} style={{ top: `${sections.findIndex(sec => sec.id === active) * 50}px` }} />
       {sections.map((sec) => (
-        <button
-          key={sec.id}
-          onClick={() => scrollTo(sec.id)}
-          className={`${styles.link} ${active === sec.id ? styles.active : ''}`}
-        >
-          {sec.label}
-        </button>
+      <button
+        key={sec.id}
+        onClick={() => scrollTo(sec.id)}
+        className={`${styles.link} ${active === sec.id ? styles.active : ''}`}
+      >
+        {sec.label}
+      </button>
       ))}
     </nav>
   );
 };
 
-// Removed default export: LiveNavigator;
-
+export default LiveNavigator;

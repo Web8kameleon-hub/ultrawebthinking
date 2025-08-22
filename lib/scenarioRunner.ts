@@ -117,6 +117,37 @@ class RealScenarioRunner {
         }
 
         const step = scenario.steps[currentStepIndex];
+        if (!step) {
+          // This shouldn't happen due to the length check above, but TypeScript safety
+          resolve({
+            scenarioId: scenario.id,
+            startTime,
+            endTime: Date.now(),
+            success: false,
+            stepResults,
+            overallValidation: { 
+              isValid: false, 
+              score: 0, 
+              errors: ['Step not found'], 
+              warnings: [], 
+              suggestions: [],
+              realData: {
+                memoryConsistency: false,
+                networkIntegrity: false,
+                agiCoherence: false,
+                userExperience: false,
+              }
+            },
+            realMetrics: {
+              memoryDelta: 0,
+              networkTraffic: 0,
+              agiProcessingTime: 0,
+              userInteractions: 0,
+            },
+          });
+          return;
+        }
+
         const stepStartTime = Date.now();
 
         this.executeStep(step).then((stepResult) => {
@@ -126,7 +157,7 @@ class RealScenarioRunner {
             success: stepResult.success,
             duration: stepEndTime - stepStartTime,
             realData: stepResult.data,
-            validation: stepResult.validation,
+            ...(stepResult.validation && { validation: stepResult.validation }),
           });
 
           currentStepIndex++;
@@ -337,7 +368,14 @@ class RealScenarioRunner {
     if (recentResults.length < 2) {return null;}
 
     const scores = recentResults.map(r => r.overallValidation.score);
-    const trend = scores[scores.length - 1] - scores[0];
+    const firstScore = scores[0];
+    const lastScore = scores[scores.length - 1];
+    
+    if (firstScore === undefined || lastScore === undefined) {
+      return null;
+    }
+    
+    const trend = lastScore - firstScore;
 
     return {
       scoresTrend: trend > 0 ? 'improving' : trend < 0 ? 'declining' : 'stable',
@@ -421,4 +459,4 @@ class RealScenarioRunner {
 }
 
 export const realScenarioRunner = new RealScenarioRunner();
-export { RealScenarioRunner }
+export default RealScenarioRunner;

@@ -55,7 +55,7 @@ class RealEngine {
 
   // Start real engine with real components
   start(): void {
-    if (this.isRunning) {return;}
+    if (this.isRunning) { return; }
 
     console.log('🚀 Starting Web8 Real Engine...');
     this.isRunning = true;
@@ -86,7 +86,7 @@ class RealEngine {
 
   // Stop real engine
   stop(): void {
-    if (!this.isRunning) {return;}
+    if (!this.isRunning) { return; }
 
     console.log('🛑 Stopping Web8 Real Engine...');
     this.isRunning = false;
@@ -100,7 +100,7 @@ class RealEngine {
     }
 
     const startTime = performance.now();
-    
+
     // Real AGI processing
     agiCore.addAGIResponse(input, `Real AGI processed: ${input}`);
     const memory = agiCore.getMemory();
@@ -194,7 +194,7 @@ class RealEngine {
   // Real validation of engine state
   validate(): any {
     const validation = realValidator.validateSystem();
-    
+
     return {
       engineHealth: {
         running: this.isRunning,
@@ -225,7 +225,7 @@ class RealEngine {
   // Update engine configuration
   updateConfig(newConfig: Partial<RealEngineConfig>): void {
     this.config = { ...this.config, ...newConfig };
-    
+
     if (this.isRunning) {
       this.stop();
       this.start();
@@ -234,12 +234,12 @@ class RealEngine {
 
   private initializeEngine(): void {
     console.log('🔧 Initializing Web8 Real Engine...');
-    
+
     // Initialize real components
     if (typeof window !== 'undefined') {
       this.setupBrowserIntegration();
     }
-    
+
     this.setupEventListeners();
     console.log('✅ Web8 Real Engine initialized');
   }
@@ -251,7 +251,7 @@ class RealEngine {
 
   private startMeshNetwork(): void {
     console.log('🕸️ Starting mesh network...');
-    
+
     // Real mesh network initialization
     const networkData = realSense.captureNetworkMesh();
     const peers = networkData.data.connectedPeers || [];
@@ -260,21 +260,21 @@ class RealEngine {
 
   private startLoraNetwork(): void {
     console.log('📻 Starting LoRa network...');
-    
+
     // Real LoRa network initialization
     this.loraNetwork.set('broadcast', 0.8);
   }
 
   private startDDoSProtection(): void {
     console.log('🛡️ Starting DDoS protection...');
-    
+
     // Real DDoS protection monitoring
     this.metrics.ddosThreats = 0;
   }
 
   private startSelfGeneration(): void {
     console.log('🔄 Starting self-generation system...');
-    
+
     // Generate initial modules
     this.generateModule('validator', { type: 'memory' });
     this.generateModule('processor', { type: 'agi' });
@@ -283,19 +283,19 @@ class RealEngine {
 
   private startMetricsCollection(): void {
     const startTime = Date.now();
-    
+
     setInterval(() => {
-      if (!this.isRunning) {return;}
-      
+      if (!this.isRunning) { return; }
+
       this.metrics.uptime = Date.now() - startTime;
-      
+
       // Update real metrics
       const networkData = realSense.captureNetworkMesh();
       this.metrics.meshConnectivity = networkData.data.connectedPeers?.length || 0;
-      
+
       const userInput = realSense.captureRealInput();
       this.metrics.agiProcessingRate = this.calculateAGIRate();
-      
+
     }, 1000);
   }
 
@@ -305,15 +305,15 @@ class RealEngine {
     // if ('serviceWorker' in navigator) {
     //   this.setupServiceWorker();
     // }
-    
+
     if ('webkitNotifications' in window) {
       this.setupNotifications();
     }
   }
 
   private setupEventListeners(): void {
-    if (typeof window === 'undefined') {return;}
-    
+    if (typeof window === 'undefined') { return; }
+
     // Real event listeners for mesh network
     window.addEventListener('online', () => {
       console.log('🌐 Network online - restarting mesh');
@@ -321,7 +321,7 @@ class RealEngine {
         this.startMeshNetwork();
       }
     });
-    
+
     window.addEventListener('offline', () => {
       console.log('📡 Network offline - switching to LoRa');
       if (this.config.loraEnabled) {
@@ -341,7 +341,7 @@ class RealEngine {
     const baseSignal = 0.8;
     const frequencyFactor = frequency / 868; // Normalize to 868MHz
     const environmentFactor = Math.random() * 0.4 + 0.6; // Environment interference
-    
+
     return Math.min(1.0, baseSignal * frequencyFactor * environmentFactor);
   }
 
@@ -351,7 +351,7 @@ class RealEngine {
     if (knownThreats.includes(sourceIP)) {
       return 0.9;
     }
-    
+
     // Analyze request patterns
     const requestPattern = Math.random();
     return requestPattern > 0.8 ? 0.7 : 0.2;
@@ -377,7 +377,7 @@ export function sendData(data: any, target: string): boolean {
   return true;
 }`,
     };
-    
+
     return templates[type as keyof typeof templates] || '// Unknown module type';
   }
 
@@ -385,11 +385,11 @@ export function sendData(data: any, target: string): boolean {
     const memory = agiCore.getMemory();
     const responses = memory.agi.responses.length;
     const uptime = this.metrics.uptime / 1000; // seconds
-    
+
     return uptime > 0 ? responses / uptime : 0;
   }
 }
 
 // Global real engine instance
 export const realEngine = new RealEngine();
-export { RealEngine }
+export default RealEngine;

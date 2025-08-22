@@ -290,7 +290,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
             ...getNodeStyle(node)
           }}
         >
-          {node.type[0].toUpperCase()}
+          {(node.type?.[0] ?? '').toUpperCase()}
         </motion.div>
       ))}
 

@@ -22,7 +22,7 @@ interface VirtualScrollProps<T extends VirtualScrollItem> {
   items: T[];
   itemHeight: number | ((item: T, index: number) => number);
   containerHeight: number;
-  renderItem: (item: T, index: number, style: React.CSSProperties) => ReactNode;
+  renderItemAction: (item: T, index: number, style: React.CSSProperties) => ReactNode;
   overscan?: number;
   onScroll?: (scrollTop: number, scrollLeft: number) => void;
   className?: string;
@@ -44,7 +44,7 @@ export function VirtualScrollList<T extends VirtualScrollItem>({
   items,
   itemHeight,
   containerHeight,
-  renderItem,
+  renderItemAction,
   overscan = 5,
   onScroll,
   className = '',
@@ -234,7 +234,7 @@ export function VirtualScrollList<T extends VirtualScrollItem>({
           
           return (
             <div key={item.id} style={style}>
-              {renderItem(item, actualIndex, style)}
+              {renderItemAction(item, actualIndex, style)}
             </div>
           );
         })}
@@ -342,7 +342,7 @@ export function AGIVirtualList({
       items={data}
       itemHeight={80}
       containerHeight={containerHeight}
-      renderItem={renderAGIItem}
+      renderItemAction={renderAGIItem}
       className={`border border-gray-200 dark:border-gray-700 rounded-lg ${className}`}
       onEndReached={onLoadMore}
       loading={loading}

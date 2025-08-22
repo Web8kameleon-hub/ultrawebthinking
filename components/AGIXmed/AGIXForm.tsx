@@ -1,5 +1,5 @@
 /**
- * AGImed Form Component
+ * AGIXmed Form Component
  * Medical AI Analysis Input Form
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -10,15 +10,15 @@
 
 'use client'
 
-import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import React, { useState } from 'react'
 
-export type AGIFormProps = {
-  onSubmit: (input: string) => void
+export type AGIXFormProps = {
+  action: (input: string) => void
   isLoading?: boolean
 }
 
-export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false }) => {
+export const AGIXForm: React.FC<AGIXFormProps> = ({ action, isLoading = false }) => {
   const [input, setInput] = useState('')
   const [charCount, setCharCount] = useState(0)
   const maxChars = 500
@@ -26,7 +26,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!input.trim() || isLoading) return
-    onSubmit(input.trim())
+    action(input.trim())
     setInput('')
     setCharCount(0)
   }
@@ -69,7 +69,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
           justifyContent: 'center',
           gap: '12px'
         }}>
-          🏥 AGImed Analyzer
+          🏥 AGIXmed Analyzer
         </h2>
         <p style={{
           fontSize: '16px',
@@ -94,7 +94,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
           >
             Përshkruaj simptomat ose shqetësimet shëndetësore:
           </label>
-          
+
           <div style={{ position: 'relative' }}>
             <textarea
               id="symptoms"
@@ -126,7 +126,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
               }}
               required
             />
-            
+
             <div style={{
               position: 'absolute',
               bottom: '8px',
@@ -137,7 +137,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
               {charCount}/{maxChars}
             </div>
           </div>
-          
+
           <div style={{
             fontSize: '13px',
             color: '#94a3b8',
@@ -148,7 +148,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
           }}>
             <span>💡</span>
             <span>
-              Sa më shumë detaje të jepni, aq më të sakta do të jenë rekomandimet e AGImed
+              Sa më shumë detaje të jepni, aq më të sakta do të jenë rekomandimet e AGIXmed
             </span>
           </div>
         </div>
@@ -171,15 +171,15 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
             <span>🔒</span>
             <span>Të dhënat tuaja janë të sigurta dhe të enkriptuara</span>
           </div>
-          
+
           <motion.button
             type="submit"
             disabled={!input.trim() || isLoading}
             whileHover={{ scale: isLoading ? 1 : 1.02 }}
             whileTap={{ scale: isLoading ? 1 : 0.98 }}
             style={{
-              background: isLoading 
-                ? 'rgba(34, 197, 94, 0.3)' 
+              background: isLoading
+                ? 'rgba(34, 197, 94, 0.3)'
                 : 'linear-gradient(135deg, #22c55e, #16a34a)',
               border: 'none',
               borderRadius: '12px',
@@ -193,8 +193,8 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
               gap: '8px',
               minWidth: '140px',
               justifyContent: 'center',
-              boxShadow: isLoading 
-                ? 'none' 
+              boxShadow: isLoading
+                ? 'none'
                 : '0 4px 12px rgba(34, 197, 94, 0.3)',
               opacity: !input.trim() || isLoading ? 0.6 : 1,
               transition: 'all 0.2s ease'
@@ -214,7 +214,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
               </>
             ) : (
               <>
-                🧠 Dërgo në AGImed
+                🧠 Dërgo në AGIXmed
               </>
             )}
           </motion.button>
@@ -231,5 +231,4 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
   )
 }
 
-// Removed default export: AGIForm
-
+export default AGIXForm

@@ -1,0 +1,383 @@
+/**
+ * UltraSearch CSS Module - Military-Grade Styling
+ * Web8-Pure CSS Architecture
+ * @author Ledjan Ahmati
+ * @version 3.0.0 Ultra-Fast
+ */
+
+/* Container Variants */
+.searchContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1b2e 50%, #16213e 100%);
+  color: #ffffff;
+  padding: 2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.searchContainerUltra {
+  background: linear-gradient(135deg, #0f0f23 0%, #1e1e3f 50%, #2d2d5a 100%);
+}
+
+.searchContainerQuantum {
+  background: linear-gradient(135deg, #000011 0%, #1a0033 50%, #330066 100%);
+  box-shadow: inset 0 0 100px rgba(212, 175, 55, 0.1);
+}
+
+/* Header Styles */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.headerIcon {
+  font-size: 2.5rem;
+  animation: pulse 2s infinite;
+}
+
+.headerTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #d4af37 0%, #ffd700 50%, #ffed4a 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+.headerSubtitle {
+  color: #d4af37;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Search Input Section */
+.searchSection {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  position: relative;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  padding: 0.5rem;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.inputContainer:focus-within {
+  border-color: #d4af37;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 1.1rem;
+  padding: 1rem 1.5rem;
+  font-family: inherit;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.searchButton {
+  background: linear-gradient(135deg, #d4af37 0%, #ffd700 100%);
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.searchButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+}
+
+.searchButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid #000;
+  border-radius: 50%;
+}
+
+/* Suggestions */
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(26, 27, 46, 0.95);
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.suggestion {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.suggestion:last-child {
+  border-bottom: none;
+}
+
+.suggestion:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.suggestionIcon {
+  font-size: 1.1rem;
+}
+
+/* Stats Section */
+.stats {
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Results Section */
+.resultsContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.resultItem {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.resultItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.resultHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.resultCategory {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.resultMeta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.resultLoadTime {
+  color: #4ade80;
+}
+
+.resultGrade {
+  color: #d4af37;
+}
+
+.resultTrust {
+  color: #60a5fa;
+}
+
+.resultTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.resultTitle a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.resultTitle a:hover {
+  color: #d4af37;
+}
+
+.resultUrl {
+  color: #4ade80;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  word-break: break-all;
+}
+
+.resultSnippet {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.aiSummary {
+  background: rgba(212, 175, 55, 0.05);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #d4af37;
+}
+
+.aiSummaryLabel {
+  color: #d4af37;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.resultFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.resultSource {
+  font-weight: 500;
+}
+
+.resultReadTime {
+  color: #60a5fa;
+}
+
+.resultRelevance {
+  color: #d4af37;
+}
+
+/* No Results */
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.noResultsIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .searchContainer {
+    padding: 1rem;
+  }
+  
+  .headerTitle {
+    font-size: 2rem;
+  }
+  
+  .inputContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .searchButton {
+    align-self: stretch;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .resultHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .resultMeta {
+    flex-wrap: wrap;
+  }
+}

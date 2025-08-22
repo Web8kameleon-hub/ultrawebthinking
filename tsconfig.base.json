@@ -1,41 +1,28 @@
+// tsconfig.base.json
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "ES2022"],
-    "module": "esnext",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM"],
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strict": true,
-    "noEmit": true,
     "allowJs": false,
     "checkJs": false,
-    "jsx": "react-jsx",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "strict": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["components/*"],
-      "@lib/*": ["lib/*"],
-      "@styles/*": ["styles/*"],
-      "@app/*": ["app/*"]
+      "@core/*": ["backend/agi/core/*"],
+      "@components/*": ["frontend/components/*"],
+      "@pages/*": ["frontend/pages/*"],
+      "@mesh/*": ["mesh/*"],
+      "@ddos/*": ["ddos/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next",
-    "dist",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.cjs",
-    "**/*.mjs"
-  ]
+  "exclude": ["node_modules", "dist", ".next"]
 }

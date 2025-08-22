@@ -3,10 +3,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import qrcode from "qrcode";
-import { config } from "dotenv";
-
-// Load environment variables
-config({ path: path.join(process.cwd(), '.env.local') });
 
 async function main() {
   const [tokenId, serial, wallet] = process.argv.slice(2);
@@ -19,7 +15,6 @@ async function main() {
   const mint = process.env.ALB_MINT_ADDRESS!;
   if (!mint) {
     console.error("Error: ALB_MINT_ADDRESS not found in environment");
-    console.error("Available env vars:", Object.keys(process.env).filter(k => k.includes('ALB')));
     process.exit(1);
   }
 
