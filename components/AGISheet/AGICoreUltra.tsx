@@ -437,5 +437,5 @@ const AGICoreUltra: React.FC = () => {
   )
 }
 
-export { AGICoreUltra }
-
+export { AGICoreUltra };
+export default AGICoreUltra;

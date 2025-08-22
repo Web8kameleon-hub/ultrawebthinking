@@ -1,108 +1,98 @@
 /**
- * Test API OpenMind 
- * Test i shpejtë për chat functionality
+ * API Test Dashboard
+ * EuroWeb Platform - Test all APIs in one place
+ * 
+ * @author Ledjan Ahmati (100% Owner)
+ * @contact dealsjona@gmail.com
+ * @version 8.1.0 Ultra
+ * @license MIT
  */
 
-'use client';
+'use client'
 
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-export default function TestOpenMind() {
-  const [query, setQuery] = useState('');
-  const [response, setResponse] = useState('');
-  const [loading, setLoading] = useState(false);
+export default function TestAPIPage() {
+  const [results, setResults] = useState<Record<string, any>>({})
+  const [loading, setLoading] = useState<Record<string, boolean>>({})
 
-  const testAPI = async () => {
-    setLoading(true);
+  const testAPI = async (endpoint: string, name: string) => {
+    setLoading(prev => ({ ...prev, [name]: true }))
     try {
-      const res = await fetch('/api/openmind', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: query || 'Mirëdita, si jeni?',
-          options: { ethicalCheck: true }
-        })
-      });
-      
-      const data = await res.json();
-      setResponse(JSON.stringify(data, null, 2));
+      const response = await fetch(`/api/${endpoint}`)
+      const data = await response.json()
+      setResults(prev => ({ ...prev, [name]: { success: true, data, status: response.status } }))
     } catch (error) {
-      setResponse('Gabim: ' + error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      setResults(prev => ({ ...prev, [name]: { success: false, error: errorMessage } }))
     } finally {
-      setLoading(false);
+      setLoading(prev => ({ ...prev, [name]: false }))
     }
-  };
+  }
+
+  const apis = [
+    { endpoint: 'utt/info', name: 'UTT Info' },
+    { endpoint: 'lora/status', name: 'LoRa Status' },
+    { endpoint: 'agi/status', name: 'AGI Status' },
+    { endpoint: 'health', name: 'Health Check' }
+  ]
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-        <h1 className="text-2xl font-bold mb-3">🤖 Test OpenMind API</h1>
-        <p className="text-blue-800 mb-2">
-          <strong>Çfarë është kjo?</strong> Kjo është një vegël testimi për Chat AI-në tuaj.
-        </p>
-        <p className="text-blue-700 text-sm">
-          Përdoreni për të testuar nëse OpenMind Chat po punon si duhet. 
-          Shkruani një pyetje, klikoni "Testo API" dhe shikoni përgjigjen nga AI.
-        </p>
-      </div>
-      
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            💬 Shkruani pyetjen tuaj:
-          </label>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Shkruani pyetjen tuaj (p.sh: 'Si jeni?' ose 'Hello')"
-            className="w-full p-3 border rounded-lg focus:border-blue-500 outline-none"
-          />
-          <p className="text-xs text-slate-500 mt-1">
-            Nëse lëni bosh, do të dërgohet: "Mirëdita, si jeni?"
-          </p>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          🧪 API Test Dashboard
+        </h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {apis.map(({ endpoint, name }) => (
+            <div key={name} className="bg-white p-6 rounded-lg shadow">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-semibold">{name}</h3>
+                <button
+                  onClick={() => testAPI(endpoint, name)}
+                  disabled={loading[name]}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {loading[name] ? '⏳' : '🧪'} Test
+                </button>
+              </div>
+              
+              <p className="text-sm text-gray-600 mb-4">
+                <code>/api/{endpoint}</code>
+              </p>
+              
+              {results[name] && (
+                <div className={`p-4 rounded ${results[name].success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                  <div className="flex items-center mb-2">
+                    <span className={`text-sm font-semibold ${results[name].success ? 'text-green-700' : 'text-red-700'}`}>
+                      {results[name].success ? '✅ Success' : '❌ Error'}
+                    </span>
+                    {results[name].status && (
+                      <span className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded">
+                        {results[name].status}
+                      </span>
+                    )}
+                  </div>
+                  <pre className="text-xs overflow-auto">
+                    {JSON.stringify(results[name].data || results[name].error, null, 2)}
+                  </pre>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
         
-        <button
-          onClick={testAPI}
-          disabled={loading}
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          {loading ? '🔄 Duke testuar...' : '🚀 Testo API-në'}
-        </button>
-        
-        {response && (
-          <div>
-            <label className="block text-sm font-medium mb-2">
-              📋 Përgjigja nga OpenMind API:
-            </label>
-            <pre className="bg-slate-100 p-4 rounded-lg text-sm overflow-auto border max-h-96">
-              {response}
-            </pre>
-            
-            <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded">
-              <p className="text-green-800 text-sm">
-                ✅ <strong>Sukses!</strong> API-ja po punon. Tani mund të përdorni chat-in në platformën kryesore.
-              </p>
-            </div>
-          </div>
-        )}
-        
-        <div className="mt-8 p-4 bg-slate-50 rounded-lg border">
-          <h3 className="font-semibold mb-2">🔗 Lidhje të dobishme:</h3>
-          <div className="space-y-1 text-sm">
-            <a href="/" className="text-blue-600 hover:underline block">
-              🏠 Kthehu në Dashboard Kryesor
-            </a>
-            <a href="/agioffice" className="text-blue-600 hover:underline block">
-              💼 Hap AGI Office
-            </a>
-            <a href="/agimed" className="text-blue-600 hover:underline block">
-              🏥 Hap AGI Medical
-            </a>
-          </div>
+        <div className="mt-8 bg-white p-6 rounded-lg shadow">
+          <h3 className="text-lg font-semibold mb-4">🚀 Test All APIs</h3>
+          <button
+            onClick={() => apis.forEach(({ endpoint, name }) => testAPI(endpoint, name))}
+            className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold"
+          >
+            🧪 Run All Tests
+          </button>
         </div>
       </div>
     </div>
-  );
+  )
 }

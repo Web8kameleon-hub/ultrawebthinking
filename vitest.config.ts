@@ -1,60 +1,62 @@
-/**
- * Vitest Configuration - Pure TypeScript Testing
- * ZERO jest, ZERO chunks, industrial testing
- */
-
+// vitest.config.ts - Robust Vitest Configuration for EuroWeb
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
+  plugins: [],
   test: {
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
-    include: ['**/*.{test,spec}.{ts,tsx}'],
+    include: [
+      '__tests__/**/*.{test,spec}.{ts,tsx}',
+      '**/*.{test,spec}.{ts,tsx}'
+    ],
     exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/*.js', // NO .js files allowed
-      '**/*jest*', // NO jest files
-      '**/*chunk*' // NO chunk files
+      'node_modules/**',
+      'dist/**',
+      '.next/**',
+      'out/**',
+      '**/*.d.ts',
+      '**/*.java',
+      '**/*.jar',
+      '**/*.class'
     ],
     coverage: {
+      provider: 'v8',
       reporter: ['text', 'json', 'html'],
+      include: [
+        'components/**/*.{ts,tsx}',
+        'lib/**/*.{ts,tsx}',
+        'app/**/*.{ts,tsx}',
+        'agisheet/**/*.{ts,tsx}',
+        'backend/**/*.{ts,tsx}'
+      ],
       exclude: [
-        'node_modules/',
-        'test/',
-        '**/*.js', // NO .js coverage
-        '**/*jest*',
-        '**/*chunk*'
+        '**/*.d.ts',
+        'node_modules/**',
+        '__tests__/**',
+        '**/*.test.{ts,tsx}',
+        '**/*.spec.{ts,tsx}',
+        '**/*.java',
+        '**/*.jar',
+        '**/*.class'
       ]
     },
-    // Pure TypeScript performance
-    isolate: true,
-    pool: 'threads',
-    maxConcurrency: 8
+    testTimeout: 10000,
+    hookTimeout: 10000
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, '.'),
-      '@/components': resolve(__dirname, './components'),
-      '@/lib': resolve(__dirname, './lib'),
-      '@/utils': resolve(__dirname, './utils')
+      '@/components': resolve(__dirname, 'components'),
+      '@/lib': resolve(__dirname, 'lib'),
+      '@/app': resolve(__dirname, 'app'),
+      '@/agisheet': resolve(__dirname, 'agisheet'),
+      '@/backend': resolve(__dirname, 'backend')
     }
   },
-  // Optimize for industrial use
-  optimizeDeps: {
-    include: [
-      'vitest',
-      '@testing-library/react',
-      '@testing-library/user-event',
-      '@testing-library/jest-dom',
-      '@popperjs/core'
-    ],
-    exclude: [
-      'jest', // FORBIDDEN
-      'chunks', // FORBIDDEN
-      'useState' // FORBIDDEN (this won't work but shows intent)
-    ]
+  define: {
+    'process.env.NODE_ENV': '"test"'
   }
 });

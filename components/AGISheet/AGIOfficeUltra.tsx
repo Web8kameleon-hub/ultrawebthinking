@@ -653,7 +653,7 @@ const AGIOfficeUltra: React.FC = () => {
       </motion.div>
 
       {/* CSS Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes pulse {
           0%, 100% {
             opacity: 1;
@@ -667,5 +667,5 @@ const AGIOfficeUltra: React.FC = () => {
   )
 }
 
-export { AGIOfficeUltra }
-
+export { AGIOfficeUltra };
+export default AGIOfficeUltra;

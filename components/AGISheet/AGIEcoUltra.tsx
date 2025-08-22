@@ -837,6 +837,5 @@ const AGIEcoUltra: React.FC = () => {
   )
 }
 
-export { AGIEcoUltra }
-// Removed default export: AGIEcoUltra
-
+export { AGIEcoUltra };
+export default AGIEcoUltra;

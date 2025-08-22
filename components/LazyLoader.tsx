@@ -302,7 +302,7 @@ export const Web8TabSystemLazy = registerLazyComponent({
   name: 'Web8TabSystem',
   loader: async () => {
     const module = await import('./Web8TabSystem')
-    return { default: module.Web8TabSystem }
+    return { default: module.default }
   },
   priority: 'critical',
   preload: true,

@@ -1,15 +1,13 @@
-/**
- * EuroWeb - Root Layout
- * Vanilla CSS + Motion + CVA Architecture
- */
-
 import type { Metadata } from 'next'
-import '../styles/theme-vars.css'
-import '../app/globals.css'
+import { Inter } from 'next/font/google'
+import { notFound } from 'next/navigation'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'EuroWeb Platform',
-  description: 'Pure TypeScript Industrial Web8 Platform - Vanilla CSS + Motion + CVA',
+  title: 'EuroWeb Ultra Platform - Universal AI Gateway',
+  description: 'Platforma më e avancuar e AI me arkitekturë industriale dhe mbështetje shumëgjuhëshe.',
 }
 
 export default function RootLayout({
@@ -18,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body className={inter.className} suppressHydrationWarning={true}>
         {children}
       </body>
     </html>

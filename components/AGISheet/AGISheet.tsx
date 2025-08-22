@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 interface Cell {
   id: string
@@ -10,7 +10,7 @@ interface Cell {
   formula?: string
   type: 'text' | 'number' | 'formula' | 'agi-command' | 'agi-status'
   agiBinding?: string
-  status?: 'idle' | 'processing' | 'active' | 'error' | 'warning'
+  status?: 'idle' | 'processing' | 'active' | 'error' | 'warning' | 'inactive'
   metadata?: Record<string, any>
 }
 
@@ -31,8 +31,7 @@ interface AGISheetProps {
   height?: number
 }
 
-// Named export for AGISheet
-export const AGISheet: React.FC<AGISheetProps> = ({ 
+const AGISheet: React.FC<AGISheetProps> = ({ 
   mode = 'analysis', 
   width = 20, 
   height = 50 
@@ -155,7 +154,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.name,
         type: 'text',
         agiBinding: layer.id,
-        status: layer.status === 'inactive' ? 'idle' : layer.status
+        status: layer.status
       })
       
       // Status
@@ -166,7 +165,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.status.toUpperCase(),
         type: 'agi-status',
         agiBinding: layer.id,
-        status: layer.status === 'inactive' ? 'idle' : layer.status
+        status: layer.status
       })
       
       // Type
@@ -315,7 +314,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
     }
   }
 
-  const getCellStyle = (row: number, col: number): React.CSSProperties => {
+  const getCellStyle = (row: number, col: number) => {
     const cell = cells.get(getCellId(row, col))
     const isSelected = selectedCell === getCellId(row, col)
     const isHeader = row === 0
@@ -352,7 +351,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
       flexDirection: 'column',
       fontFamily: 'Inter, monospace'
     }}>
-      {/* AGISheet Header */}
+       {/* AGISheet Header */}
       <div style={{
         background: 'linear-gradient(135deg, #1e293b, #334155)',
         padding: '12px 16px',
@@ -559,5 +558,5 @@ export const AGISheet: React.FC<AGISheetProps> = ({
   )
 }
 
-// Removed default export: AGISheet
-
+export default AGISheet;
+export { AGISheet };

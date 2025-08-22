@@ -2,7 +2,27 @@
  * EuroWeb Web8 Platform - Tab System Component (Fixed)
  * Pure TypeScript Industrial Architecture - No Hooks
  * 
- * @author Ledjan Ahmati (100% Owner)
+ * @auth  {
+    id: 'utt',
+    title: '🔧 UTT Dashboard',
+    url: 'euroweb://utt',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'alb-security',
+    title: '🔒 ALB Security',
+    url: 'euroweb://alb-security',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'agisheet-engine',
+    title: '📊 AGISheet Universal',
+    url: 'euroweb://agisheet-engine',
+    isActive: false,
+    isLoading: false
+  }ti (100% Owner)
  * @contact dealsjona@gmail.com
  * @version 8.0.0 Industrial
  * @license MIT
@@ -25,6 +45,11 @@ import { OpenMindChat } from './OpenMindChat'
 import UniversalTranslator from './UniversalTranslator'
 import AGISpreadsheetEngine from './AGISheet/AGISpreadsheetEngine'
 import EuroMeshDashboard from './EuroMeshDashboard'
+import { AGIDashboardManager } from './AGI/AGIDashboardManager'
+import UTTDashboard from './UTTDashboard'
+import ALBSecurityDashboard from './ALBSecurityDashboard'
+import LoRaPhysicalDashboard from './LoRaPhysicalDashboard'
+import AGISheetOfficeSuite from './AGISheetOfficeSuite'
 
 // Interface definitions
 interface Tab {
@@ -127,8 +152,22 @@ const initialTabs: Tab[] = [
   },
   {
     id: 'utt',
-    title: '🔧 UTT Tools',
+    title: '🪙 UTT Dashboard',
     url: 'euroweb://utt',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'alb-security',
+    title: '🔒 ALB Security',
+    url: 'euroweb://alb-security',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'lora-physical',
+    title: '🛰️ LoRa Physical',
+    url: 'euroweb://lora-physical',
     isActive: false,
     isLoading: false
   },
@@ -157,13 +196,19 @@ const staticAGIMetrics: AGIMetrics = {
  * Industrial architecture without React hooks
  */
 const Web8TabSystem: React.FC = () => {
+  // Client-side safety check
+  const isClient = typeof window !== 'undefined';
+  
   const tabs = initialTabs
   const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
   const agiMetrics = staticAGIMetrics
-  const currentTime = new Date().toLocaleTimeString()
+  const currentTime = isClient ? new Date().toLocaleTimeString() : '00:00:00'
 
-  // Tab switching function
+  // Tab switching function - with client-side safety
   const switchTab = (targetId: string) => {
+    // Only run DOM operations on client side
+    if (typeof window === 'undefined') return;
+    
     // Hide all content
     const allContent = document.querySelectorAll('[data-content-id]');
     allContent.forEach(content => {
@@ -460,49 +505,13 @@ const Web8TabSystem: React.FC = () => {
           flexDirection: 'column',
           background: 'rgba(15, 20, 25, 0.8)'
         }}>
-          {/* Dashboard Content */}
+          {/* Dashboard Content - AGI Dashboard Ultra */}
           <div data-content-id="dashboard" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'block'
+            display: 'block',
+            height: '100%',
+            overflow: 'hidden'
           }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              AGI Core Dashboard
-            </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Advanced General Intelligence System - Industrial Grade TypeScript Architecture
-            </p>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
-              maxWidth: '800px',
-              margin: '0 auto'
-            }}>
-              {Object.entries(agiMetrics).map(([key, value]) => (
-                <motion.div key={key} whileHover={{ scale: 1.05 }} style={{
-                  background: 'rgba(45, 52, 70, 0.8)',
-                  border: '1px solid rgba(212, 175, 55, 0.3)',
-                  borderRadius: '12px',
-                  padding: '20px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '24px', fontWeight: 600, color: '#d4af37', marginBottom: '8px' }}>
-                    {value}
-                  </div>
-                  <div style={{ fontSize: '14px', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                    {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <AGIDashboardManager />
           </div>
 
           {/* AGI Core Content */}
@@ -674,66 +683,30 @@ const Web8TabSystem: React.FC = () => {
           <div data-content-id="agisheet-engine" style={{
             display: 'none',
             height: '100%',
-            overflow: 'auto',
-            padding: '20px'
+            overflow: 'hidden'
           }}>
-            <div style={{
-              background: 'rgba(45, 52, 70, 0.8)',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '20px'
-            }}>
-              <h2 style={{ color: '#d4af37', marginBottom: '10px' }}>📊 AGI Universal Spreadsheet Engine</h2>
-              <p style={{ color: '#cbd5e1' }}>Industrial-grade spreadsheet system with AI enhancement (553 lines)</p>
-            </div>
-            <AGISpreadsheetEngine />
+            <AGISheetOfficeSuite />
           </div>
 
-          {/* UTT Tools Content */}
+          {/* UTT Dashboard Content */}
           <div data-content-id="utt" style={{
-            padding: '40px',
-            textAlign: 'center',
             display: 'none'
           }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #ef4444, #dc2626)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
-              🔧 UTT Tools
-            </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-              Universal Testing & Troubleshooting Tools
-            </p>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '20px',
-              maxWidth: '900px',
-              margin: '0 auto'
-            }}>
-              <motion.div whileHover={{ scale: 1.05 }} style={{
-                background: 'rgba(105, 68, 239, 0.1)',
-                border: '1px solid #448eefff',
-                borderRadius: '12px',
-                padding: '24px'
-              }}>
-                <h3 style={{ color: '#ef44', marginBottom: '16px' }}>🛠️ Debug Tools</h3>
-                <p style={{ color: '#cbd5e1' }}>Advanced debugging and diagnostics</p>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} style={{
-                background: 'rgba(220, 38, 38, 0.1)',
-                border: '1px solid #26dc9fff',
-                borderRadius: '12px',
-                padding: '24px'
-              }}>
-                <h3 style={{ color: '#26c7dcff', marginBottom: '16px' }}>⚡ Performance</h3>
-                <p style={{ color: '#cbd5e1' }}>System performance optimization</p>
-              </motion.div>
-            </div>
+            <UTTDashboard />
+          </div>
+
+          {/* ALB Security Dashboard Content */}
+          <div data-content-id="alb-security" style={{
+            display: 'none'
+          }}>
+            <ALBSecurityDashboard />
+          </div>
+
+          {/* LoRa Physical Verification Dashboard Content */}
+          <div data-content-id="lora-physical" style={{
+            display: 'none'
+          }}>
+            <LoRaPhysicalDashboard />
           </div>
         </div>
       </motion.main>

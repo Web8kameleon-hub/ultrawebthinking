@@ -1,41 +1,31 @@
-import React from 'react';
-import { useAGI, useAGIState } from '../lib/AGIContext';
+import React, { useState } from 'react';
+import { useAGI } from '../lib/AGIContext';
 import { motion } from 'framer-motion';
 import styles from '../styles/MiniAGIAssistant.module.css';
 
 const MiniAGIAssistant: React.FC = () => {
-  const { actions, ui } = useAGI();
-  
-  // Get AGI state from context (no  needed!)
-  const agiStatus = useAGIState(memory => memory.agi.status);
-  const lastQuery = useAGIState(memory => memory.agi.lastQuery);
-  const responses = useAGIState(memory => memory.agi.responses);
-  const brainActive = useAGIState(memory => memory.agi.brainActive);
+  const { memory, actions } = useAGI();
+  const [inputValue, setInputValue] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleQuery = (query: string) => {
-    if (!query.trim()) return;
+  const handleQuery = async (query: string) => {
+    if (!query.trim() || isProcessing) return;
     
-    // Add to AGI memory instead of local state
-    actions.addAGIResponse(query, `Processing: ${query}`);
-    actions.setAGIStatus('PROCESSING');
+    setIsProcessing(true);
+    actions.setAGIStatus('PROCESSING' as any);
     
-    // Simulate AGI response
-    setTimeout(() => {
-      const response = `AGI Response: I've analyzed "${query}" and here's my intelligent response.`;
+    try {
+      // Process the query
+      const response = await actions.processQuery(query);
       actions.addAGIResponse(query, response);
-      actions.setAGIStatus('ACTIVE');
-    }, 2000);
-  };
-
-  React.useEffect(() => {
-    // Activate UI element when component mounts
-    ui.activateElement('mini-agi-assistant');
-    
-    // Add pulse effect when brain is active
-    if (brainActive) {
-      ui.pulseElement('agi-brain-indicator');
+    } catch (error) {
+      actions.addAGIResponse(query, `Error: ${(error as Error).message}`);
+    } finally {
+      setIsProcessing(false);
+      setInputValue('');
+      actions.setAGIStatus('ACTIVE' as any);
     }
-  }, [ui, brainActive]);
+  };
 
   return (
     <motion.div 
@@ -49,36 +39,31 @@ const MiniAGIAssistant: React.FC = () => {
         <h3>
           🤖 Mini AGI Assistant
           <span 
-            id="agi-brain-indicator" 
-            className={`${styles.statusIndicator} ${agiStatus === 'PROCESSING' ? styles.processing : ''}`}
+            className={`${styles.statusIndicator} ${isProcessing ? styles.processing : ''}`}
           >
-            {agiStatus}
+            {isProcessing ? 'Processing' : memory.agi.status !== 'IDLE' ? 'Active' : 'Inactive'}
           </span>
         </h3>
-        <p>Intelligent assistance powered by AGI memory</p>
+        <p>Intelligent assistance powered by AGI Core</p>
       </div>
       
       <div className={styles.chatArea}>
         <div className={styles.messages}>
-          {responses.length > 0 ? (
-            responses.slice(-3).map((response, index) => (
-              <motion.div 
-                key={index}
-                className={`${styles.response} agi-accent`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                {response}
-              </motion.div>
-            ))
+          {memory.agi.responses.length > 0 ? (
+            <motion.div 
+              className={`${styles.response} agi-accent`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {JSON.stringify(memory.agi.responses[memory.agi.responses.length - 1]) || 'No response yet'}
+            </motion.div>
           ) : (
             <div className={styles.systemMessage}>
-              AGI Assistant ready. Memory system active.
+              AGI Assistant ready. Core system {memory.agi.status !== 'IDLE' ? 'active' : 'inactive'}.
             </div>
           )}
           
-          {agiStatus === 'PROCESSING' && (
+          {isProcessing && (
             <motion.div 
               className={styles.loading}
               animate={{ opacity: [0.5, 1, 0.5] }}
@@ -93,42 +78,35 @@ const MiniAGIAssistant: React.FC = () => {
       <div className={styles.inputArea}>
         <input
           type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           placeholder="Ask the AGI something..."
           className={`${styles.inputField} agi-reactive`}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
-              const target = e.target as HTMLInputElement;
-              handleQuery(target.value);
-              target.value = '';
+              handleQuery(inputValue);
             }
           }}
-          disabled={agiStatus === 'PROCESSING'}
+          disabled={isProcessing}
         />
         <button 
-          className={`${styles.sendButton} agi-reactive ${agiStatus === 'PROCESSING' ? styles.disabled : ''}`}
-          onClick={(e) => {
-            const input = (e.target as HTMLElement).previousElementSibling as HTMLInputElement;
-            if (input) {
-              handleQuery(input.value);
-              input.value = '';
-            }
-          }}
-          disabled={agiStatus === 'PROCESSING'}
+          className={`${styles.sendButton} agi-reactive ${isProcessing ? styles.disabled : ''}`}
+          onClick={() => handleQuery(inputValue)}
+          disabled={isProcessing}
         >
-          {agiStatus === 'PROCESSING' ? 'Processing...' : 'Send'}
+          {isProcessing ? 'Processing...' : 'Send'}
         </button>
       </div>
 
       <div className={styles.memoryInfo}>
         <small>
-          Last query: {lastQuery || 'None'} | 
-          Responses: {responses.length} | 
-          Brain: {brainActive ? '🟢 Active' : '🔴 Inactive'}
+          Last query: {memory.agi.lastQuery || 'None'} | 
+          Status: {memory.agi.status !== 'IDLE' ? '🟢 Active' : '🔴 Inactive'} |
+          Tasks: {memory.agi.responses.length}
         </small>
       </div>
     </motion.div>
   );
 };
 
-// Removed default export: MiniAGIAssistant;
-
+export default MiniAGIAssistant;

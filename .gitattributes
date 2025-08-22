@@ -1,10 +1,16 @@
-# Git LFS Configuration for UltraWebThinking
+# Git LFS Configuration for EuroWeb Ultra v8.1.0
 # Large directories and build outputs
 .next/** filter=lfs diff=lfs merge=lfs -text
 node_modules/** filter=lfs diff=lfs merge=lfs -text
 .yarn/cache/** filter=lfs diff=lfs merge=lfs -text
 .yarn/releases/** filter=lfs diff=lfs merge=lfs -text
 styled-system/** filter=lfs diff=lfs merge=lfs -text
+
+# Large binary files (>50MB)
+*.node filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text
+
 # Images and media files
 *.png filter=lfs diff=lfs merge=lfs -text
 *.jpg filter=lfs diff=lfs merge=lfs -text

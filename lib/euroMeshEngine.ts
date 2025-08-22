@@ -749,6 +749,45 @@ export class EuroMeshEngine extends EventEmitter {
       }, 3000); // Longer optimization time for better realism
     });
   }
+
+  public isEngineRunning(): boolean {
+    return this.isRunning;
+  }
+
+  public getNetworkState(): {
+    layers: NetworkLayer[],
+    nodes: MeshNode[],
+    connections: Connection[],
+    metrics: {
+      totalNodes: number,
+      totalConnections: number,
+      avgLatency: number,
+      networkReliability: number
+    }
+  } {
+    const avgLatency = this.connections.size > 0 
+      ? Array.from(this.connections.values()).reduce((sum, c) => sum + c.latency, 0) / this.connections.size
+      : 0;
+    
+    const networkReliability = this.layers.size > 0
+      ? Array.from(this.layers.values()).reduce((sum, l) => sum + l.performance.reliability, 0) / this.layers.size
+      : 0;
+
+    return {
+      layers: Array.from(this.layers.values()),
+      nodes: Array.from(this.nodes.values()),
+      connections: Array.from(this.connections.values()),
+      metrics: {
+        totalNodes: this.nodes.size,
+        totalConnections: this.connections.size,
+        avgLatency,
+        networkReliability
+      }
+    };
+  }
 }
+
+// Create and export a singleton instance
+export const euroMeshEngine = new EuroMeshEngine();
 
 export default EuroMeshEngine;

@@ -26,6 +26,30 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@/mesh": [
+        "./mesh"
+      ],
+      "@/lora": [
+        "./lora"
+      ],
+      "@/utt": [
+        "./utt"
+      ],
+      "@/agicore": [
+        "./agi"
+      ],
+      "@/neural": [
+        "./neural"
+      ],
+      "@/websearch": [
+        "./websearch"
+      ],
+      "@/neuralsearch": [
+        "./neuralsearch"
+      ],
+      "@/analytics": [
+        "./analytics"
       ]
     }
   },
@@ -34,16 +58,17 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.mts",
-    ".next/types/**/*.ts",
-    "types/**/*.d.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     ".next",
     "dist",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.mjs",
-    "**/*.cjs"
+    "**/*.bak",
+    "**/*.temp",
+    "tests/**/*",
+    "test-*",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ]
 }

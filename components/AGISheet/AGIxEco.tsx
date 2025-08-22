@@ -182,9 +182,9 @@ export const AGIEco = ({
     
     try {
       // Run comprehensive analysis
-      const stats = await statisticsEngine.analyzeData(ecoData);
-      const ecoAnalysis = await economicsEngine.analyzeMarket(marketIndicators);
-      const cryptoAnalysis = await cryptoEngine.analyzeCrypto(cryptoMetrics);
+      const stats = await statisticsEngine.analyzeEcosystemHealth(ecoData);
+      const ecoAnalysis = await economicsEngine.analyzeEconomicTrends();
+      const cryptoAnalysis = await cryptoEngine.analyzeMarketTrends();
       
       setAnalysisResults({
         statistics: stats,

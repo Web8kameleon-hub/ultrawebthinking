@@ -13,6 +13,7 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/api/') || // Skip ALL API routes from i18n
     pathname.startsWith('/api/_') ||
     pathname === '/guardian' // Allow access to Guardian panel
   ) {
@@ -38,6 +39,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
