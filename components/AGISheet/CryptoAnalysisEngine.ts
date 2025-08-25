@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CryptoAnalysisEngine.ts
  * Advanced cryptocurrency analysis and trading engine
  * © Web8 UltraThinking – Ledjan Ahmati

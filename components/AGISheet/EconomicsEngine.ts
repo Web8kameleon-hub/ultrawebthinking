@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EconomicsEngine.ts
  * Advanced economics and financial analysis engine
  * © Web8 UltraThinking – Ledjan Ahmati

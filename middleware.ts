@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import { guardianMiddleware } from './lib/guardian-middleware';
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './lib/i18n/routing';

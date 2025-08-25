@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 AGI Module
  * Pure TypeScript, Self-Coded, Industrial Architecture
  * 

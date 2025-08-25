@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LoRa Physical Verification API - App Router
  * EuroWeb Platform - IoT Integration for UTT-ALB
  * 

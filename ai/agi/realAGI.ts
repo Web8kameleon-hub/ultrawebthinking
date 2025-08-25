@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RealAGI - Web8 UltraWebThinking AGI Core
  * Mendja Galaktike - Advanced General Intelligence System
  */

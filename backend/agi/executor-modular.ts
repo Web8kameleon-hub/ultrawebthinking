@@ -1,4 +1,4 @@
-// backend/agi/executor-modular.ts
+﻿// backend/agi/executor-modular.ts
 /**
  * Executor.ts - Real Modular Instance-Based Architecture
  * Ekzekutues për komandat dhe planet AGI

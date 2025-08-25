@@ -1,4 +1,4 @@
-// backend/agi/executor.ts
+﻿// backend/agi/executor.ts
 /**
  * Executor.ts
  * Ekzekutues për komandat dhe planet AGI

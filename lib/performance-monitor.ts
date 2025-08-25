@@ -1,4 +1,4 @@
-// EuroWeb Ultra Performance Monitor - TypeScript
+﻿// EuroWeb Ultra Performance Monitor - TypeScript
 // Real-time performance tracking dhe optimization
 
 interface PerformanceMetrics {

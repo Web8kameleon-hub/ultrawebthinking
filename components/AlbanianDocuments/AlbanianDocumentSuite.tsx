@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import AlbanianWordProcessor from '@/components/AlbanianDocuments/AlbanianWordProcessor'

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Module - Advanced General Intelligence Components
  * EuroWeb Ultra Platform
  */

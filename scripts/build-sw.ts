@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Service Worker Build Script
  * Compiles sw.ts to sw.js for production
  * 

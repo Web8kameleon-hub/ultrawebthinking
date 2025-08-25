@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGIBioNature Tests - Pure TypeScript Biology Engine
  * Modern JSX + Lazy vectors + Framer Motion
  */

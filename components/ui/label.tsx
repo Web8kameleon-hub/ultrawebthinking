@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Label UI Component
  * Reusable label component for EuroWeb platform
  * 

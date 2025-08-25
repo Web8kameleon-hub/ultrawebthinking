@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+﻿import * as fs from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
 import * as path from 'path';
 

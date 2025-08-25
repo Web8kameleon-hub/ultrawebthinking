@@ -1,4 +1,4 @@
-// scripts/utt/generate-qr.ts
+﻿// scripts/utt/generate-qr.ts
 // Usage: npx tsx scripts/utt/generate-qr.ts ALB-0001 SERIAL-0001 <WALLET_ADDRESS>
 import fs from "node:fs";
 import path from "node:path";

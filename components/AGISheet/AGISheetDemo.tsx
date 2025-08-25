@@ -1,4 +1,4 @@
-// AGISheetDemo.tsx - Clean recreation
+﻿// AGISheetDemo.tsx - Clean recreation
 import React from 'react';
 
 const AGISheetDemo: React.FC = () => {

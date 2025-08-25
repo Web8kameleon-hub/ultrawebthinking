@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Advanced LoRa Connect Scenarios
  * Skenare të Avancuara LoRa Connect
  * 

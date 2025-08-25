@@ -1,4 +1,4 @@
-// vitest.config.ts - Robust Vitest Configuration for EuroWeb
+﻿// vitest.config.ts - Robust Vitest Configuration for EuroWeb
 import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 

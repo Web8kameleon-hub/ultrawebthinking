@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LoRa Connect Ultra Dashboard Component
  * Komponenti i Dashboard-it LoRa Connect Ultra
  */

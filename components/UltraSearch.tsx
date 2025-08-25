@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Ultra Search Component - Clean Build
  * Temporary stub for build compatibility
  */

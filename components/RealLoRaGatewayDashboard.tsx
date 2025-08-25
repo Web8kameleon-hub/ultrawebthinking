@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Real LoRa Gateway Dashboard
  * Dashboard për Gateway LoRa të Vërtetë
  * 

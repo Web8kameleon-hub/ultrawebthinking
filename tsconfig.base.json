@@ -1,28 +1,16 @@
-// tsconfig.base.json
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
     "lib": ["ES2022", "DOM"],
-    "moduleResolution": "bundler",
-    "allowJs": false,
-    "checkJs": false,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "react-jsx",
     "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["backend/agi/core/*"],
-      "@components/*": ["frontend/components/*"],
-      "@pages/*": ["frontend/pages/*"],
-      "@mesh/*": ["mesh/*"],
-      "@ddos/*": ["ddos/*"]
-    }
-  },
-  "exclude": ["node_modules", "dist", ".next"]
+      "@/*": ["*"],
+      "@/css": ["css/index.ts"]
+    },
+    "types": ["node"]
+  }
 }

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Medical Form Component
  * Medical AI Analysis Input Form
  * 

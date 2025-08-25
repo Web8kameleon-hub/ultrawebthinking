@@ -1,4 +1,4 @@
-// EuroWeb Ultra - Comprehensive System Test
+﻿// EuroWeb Ultra - Comprehensive System Test
 // Test i plotë për të gjitha modulet e reja
 
 import '@testing-library/jest-dom';

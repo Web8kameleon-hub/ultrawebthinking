@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Ultra Platform - Root Redirect Page
  * Redirects to default locale (Albanian)
  * 

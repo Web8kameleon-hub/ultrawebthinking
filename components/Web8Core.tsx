@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+﻿import { ReactElement } from 'react';
 
 /**
  * EuroWeb Web8 - Core AGI Interface

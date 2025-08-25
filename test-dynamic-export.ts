@@ -1,4 +1,4 @@
-// Test dynamic exports in TypeScript
+﻿// Test dynamic exports in TypeScript
 import DualMindEngineDefault, { DualMindEngine } from './lib/dualMindEngine';
 
 console.log('Named export DualMindEngine:', DualMindEngine);

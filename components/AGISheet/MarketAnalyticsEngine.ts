@@ -1,4 +1,4 @@
-/**
+﻿/**
  * MarketAnalyticsEngine.ts
  * Advanced market analytics and business intelligence engine
  * © Web8 UltraThinking – Ledjan Ahmati

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGIBioNature.tsx - Pure TypeScript Biology Engine
  * Real modular AGI biology component without x
  * © Web8 UltraThinking – Ledjan Ahmati

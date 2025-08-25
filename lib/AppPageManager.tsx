@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 - Industrial App Page Manager
  * Ultra-High Performance Page Management for app/ Directory
  * 

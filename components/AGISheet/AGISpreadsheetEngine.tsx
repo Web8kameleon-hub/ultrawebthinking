@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI Spreadsheet Engine - Universal Excel-like System
  * Industrial-Grade Spreadsheet with AI Enhancement
  * 

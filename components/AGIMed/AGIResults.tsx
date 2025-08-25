@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Medical Results Component
  * Medical AI Analysis Results Display
  * 

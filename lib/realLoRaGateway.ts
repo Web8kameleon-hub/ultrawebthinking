@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Real LoRa Gateway Integration
  * Integrimi i Gateway LoRa të Vërtetë
  * 

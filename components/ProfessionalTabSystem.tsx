@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Professional Tab System Component
  * Temporary stub for build compatibility
  */

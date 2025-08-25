@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Industrial Token System Demo
  * Demonstrates comprehensive CVA token usage with vanilla motion
  */

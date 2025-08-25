@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGIEco Tests - Pure TypeScript Economic Engine
  * Dynamic imports + Lazy loading + Vector cache
  */

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SimpleModular Components - Pure TypeScript + CVA
  * Author: EuroWeb Ultra Platform
  */

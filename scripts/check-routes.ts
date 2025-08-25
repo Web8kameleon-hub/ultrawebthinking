@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+﻿#!/usr/bin/env tsx
 /**
  * EuroWeb Route Checker
  * Debugs routing issues in the platform

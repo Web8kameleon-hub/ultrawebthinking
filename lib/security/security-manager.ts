@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+﻿import { NextRequest } from 'next/server';
 import crypto from 'crypto';
 
 // Security Configuration Types

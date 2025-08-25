@@ -1,4 +1,4 @@
-import crypto from "crypto";
+﻿import crypto from "crypto";
 
 /**
  * EncryptionManager - Një klasë për menaxhimin e enkriptimit dhe dekriptimit.

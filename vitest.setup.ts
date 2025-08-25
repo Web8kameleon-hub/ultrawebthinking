@@ -1,4 +1,4 @@
-/// <reference types="vitest/globals" />
+﻿/// <reference types="vitest/globals" />
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeAll, beforeEach, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';

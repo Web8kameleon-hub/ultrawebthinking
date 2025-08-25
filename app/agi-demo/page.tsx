@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 - AGI Demo Page
  * Pure TypeScript + Framer Motion + Vanilla CSS + Industrial Pages
  * 
@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { css } from '../../css';
+import { css } from '\.\./\.\./styles';
 import { IndustrialWrapper, IndustrialTemplates } from '../../lib/IndustrialPages';
 
 /**
@@ -90,3 +90,6 @@ const AGIDemoPage = (): React.ReactElement => {
 
 export { AGIDemoPage };
 export default AGIDemoPage;
+
+
+

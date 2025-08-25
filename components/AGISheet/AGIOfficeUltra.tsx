@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI×Office Ultra - Universal Workspace & Data Management
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI BioNature Pure Test Suite
  * Comprehensive testing for biological intelligence systems
  * 

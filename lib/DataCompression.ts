@@ -1,4 +1,4 @@
-/**
+﻿/**
  * DataCompression - Real data compression and storage utilities
  * Author: EuroWeb Ultra Platform
  */

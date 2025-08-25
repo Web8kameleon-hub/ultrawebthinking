@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Neural Analytics Service
  * Advanced neural network analytics and pattern recognition
  * 

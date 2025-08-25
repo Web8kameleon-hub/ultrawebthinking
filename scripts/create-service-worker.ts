@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+﻿#!/usr/bin/env tsx
 /**
  * EuroWeb Service Worker Creator
  * Creates PWA service worker and fixes 404 issues

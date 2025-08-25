@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 Platform - Tab System Component
  * Pure TypeScript Industrial Architecture - No Hooks
  * 

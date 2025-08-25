@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Universal Translation Component
  * Komponenti Universal i Përkthimit
  */

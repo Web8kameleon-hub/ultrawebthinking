@@ -1,4 +1,4 @@
-// React Context for inter-component state management
+﻿// React Context for inter-component state management
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { agiCore, AGIMemoryStore } from './AGICore';
 

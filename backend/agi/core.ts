@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI Core Module - Moduli kryesor i inteligjencës artificiale
  * Arkitekturë modulare industriale për Web8 Browser Engine
  * 

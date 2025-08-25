@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 - Industrial Pages Service
  * Ultra-High Performance Page Rendering System
  * 
@@ -10,7 +10,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { css } from '../css';
+import { css } from '\.\./styles';
 import type { 
   IndustrialPage, 
   PageLoadResult, 

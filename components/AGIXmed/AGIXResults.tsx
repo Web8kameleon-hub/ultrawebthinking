@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGIXmed Results Component
  * Medical AI Analysis Results Display
  * 

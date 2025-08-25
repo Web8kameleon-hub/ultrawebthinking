@@ -1,4 +1,4 @@
-/**
+﻿/**
  * CommandBridge.ts
  * Real-time modular AGI command bridge - NO STATIC methods
  * © Web8 UltraThinking – Ledjan Ahmati

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGISheet Tests - Pure TypeScript Excel Engine
  * Lazy FormulaEngine + @popperjs/core + Dynamic imports
  */

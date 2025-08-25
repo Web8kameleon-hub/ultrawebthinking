@@ -1,4 +1,4 @@
-// test-utt-system.ts
+﻿// test-utt-system.ts
 // Test script për UTT-ALB integration
 // Usage: npx tsx test-utt-system.ts
 

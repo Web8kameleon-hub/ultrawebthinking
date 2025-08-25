@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Guardian Express Middleware
  * Integrates Guardian Engine with Express.js requests
  * 

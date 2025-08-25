@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Guardian Status Component
  * Real-time monitoring of Guardian Engine DDoS protection
  * 

@@ -1,4 +1,4 @@
-// Real input payload generator for Web8 testing
+﻿// Real input payload generator for Web8 testing
 // No mocks - real data only
 export interface RealInputPayload {
   timestamp: number;

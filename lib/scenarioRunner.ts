@@ -1,4 +1,4 @@
-// Real scenario runner for Web8 testing
+﻿// Real scenario runner for Web8 testing
 // Executes real scenarios with real data, no mocks
 import { agiCore } from './AGICore';
 import { realSense } from './sense';

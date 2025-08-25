@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI×El Ultra - Electrical Engineering AI Tab System
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 

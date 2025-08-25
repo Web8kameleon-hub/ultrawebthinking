@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Context - Simple and Clean
  * Context i thjeshtë për AGI Core Integration
  * 

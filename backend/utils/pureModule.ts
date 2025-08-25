@@ -1,4 +1,4 @@
-/**
+﻿/**
  * UltraBuild Pure Utility Module – për funksione të pastërta, industriale dhe të kontrollueshme.
  */
 

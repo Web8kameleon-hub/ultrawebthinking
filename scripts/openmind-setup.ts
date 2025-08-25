@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+﻿#!/usr/bin/env tsx
 /**
  * EuroWeb OpenMind Setup Script
  * Konfigurimi i plotë për të gjitha AI providers

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Surfing Ultra - Ultra-Fluid Hybrid Navigation
  * Ultra-Fast Performance with Quantum-Enhanced Animations
  * 

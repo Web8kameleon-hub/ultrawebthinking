@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGISheet Office Suite - Real-time Universal Office Platform
  * EuroWeb Ultra Platform - Revolutionary Office System
  * 

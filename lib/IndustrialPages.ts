@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 - Industrial Page Service
  * Pure TypeScript + ESM + Yarn Berry + Vanilla CSS + Framer Motion ONLY
  * 
@@ -10,7 +10,7 @@
 
 import { motion } from 'framer-motion';
 import React from 'react';
-import { css } from '../css';
+import { css } from '\../css';
 
 // Pure TypeScript Industrial Types
 export interface IndustrialPage {
@@ -378,3 +378,6 @@ export const IndustrialTemplates = {
     ]);
   }
 };
+
+
+

@@ -1,5 +1,5 @@
-// components/Explore.tsx
-import { css } from "..//css";
+﻿// components/Explore.tsx
+import { css } from "../css";
 
 export function Explore() {
   return (

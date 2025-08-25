@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Dashboard Manager - Central Control System
  * EuroWeb Platform - Quantum-Enhanced AGI Management
  * 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PatternRecognitionEngine.ts
  * Advanced pattern recognition and predictive analytics engine
  * © Web8 UltraThinking – Ledjan Ahmati

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 Platform - Minimal Tab System
  * Pure CSS + CVA Implementation (No Motion)
  * 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Military Mesh Network Ultra - Continental Command Architecture
  * 9 Continental Commands with Hierarchical Military Structure & Power Management
  * 

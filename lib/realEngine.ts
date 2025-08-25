@@ -1,4 +1,4 @@
-// Mock engine replacement - Real engine for Web8
+﻿// Mock engine replacement - Real engine for Web8
 // No mocks - only real AGI processing and mesh networking
 import { agiCore } from './AGICore';
 import { realSense } from './sense';

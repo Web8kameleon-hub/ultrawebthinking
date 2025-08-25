@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI×Eco Ultra - Environmental AI Tab System
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 

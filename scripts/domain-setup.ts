@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+﻿#!/usr/bin/env tsx
 /**
  * EuroWeb Domain Setup Script
  * Automatic domain configuration dhe deployment setup

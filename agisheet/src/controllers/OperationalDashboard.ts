@@ -1,4 +1,4 @@
-/**
+﻿/**
  * OperationalDashboard - AGI Operational Intelligence Dashboard
  * Web8 AGISheet Kameleoni Real-time Operations Control Center
  */

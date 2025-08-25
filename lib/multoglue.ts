@@ -1,4 +1,4 @@
-/**
+﻿/**
  * MultiGlue - Universal Multi-Language Communication Engine
  * Integrated with DualMind AI Engine (ALBI & JONA personalities)
  * 

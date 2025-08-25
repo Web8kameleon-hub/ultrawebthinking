@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Core Engine Ultra Dashboard - Most Powerful AGI Control Center
  * EuroWeb Platform - Quantum-Enhanced AGI Management System
  * 

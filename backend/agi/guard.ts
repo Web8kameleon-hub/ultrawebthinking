@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI Module Guard - Siguria dhe kontrolli i moduleve AGI
  * @module AGIModuleGuard
  * @author EuroWeb Development Team

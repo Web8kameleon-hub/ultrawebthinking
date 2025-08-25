@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+﻿#!/usr/bin/env tsx
 /**
  * EuroWeb Platform - Deployment Manager
  * Handles Vercel, Docker, and domain deployment

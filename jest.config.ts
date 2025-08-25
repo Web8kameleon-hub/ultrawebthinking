@@ -1,4 +1,4 @@
-const config = {
+﻿const config = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/vitest.setup.ts'],

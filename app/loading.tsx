@@ -1,0 +1,8 @@
+"use client";
+export default function Loading() {
+  return (
+    <div style={{ padding: 16 }}>
+      <span>Loading…</span>
+    </div>
+  );
+}

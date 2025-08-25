@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Test DualMind Engine Response Generation
  */
 import DualMindEngine from './lib/dualMindEngine';

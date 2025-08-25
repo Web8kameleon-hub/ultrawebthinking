@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Ultra Platform - Localized Layout
  * Pure TypeScript Implementation - i18n Support
  * 

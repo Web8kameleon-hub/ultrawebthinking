@@ -1,4 +1,4 @@
-// __tests__/agi/CommandBridge.test.ts
+﻿// __tests__/agi/CommandBridge.test.ts
 /**
  * CommandBridge Testing Suite
  * Tests për AGI command routing dhe backend integration

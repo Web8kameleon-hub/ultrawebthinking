@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Universal Language Translation Engine
  * Motori Universal i Përkthimit të Gjuhëve
  * 

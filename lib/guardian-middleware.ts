@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Guardian Middleware - Edge Runtime Compatible
  * Pure TypeScript Security Middleware for Vercel Edge
  * 

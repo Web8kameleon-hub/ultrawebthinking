@@ -1,4 +1,4 @@
-// EuroWeb Ultra - Main Dashboard Integration
+﻿// EuroWeb Ultra - Main Dashboard Integration
 // Dashboard kryesor që integron të gjitha modulet
 
 'use client';

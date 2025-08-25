@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI Types - Type definitions për arkitekturën modulare
  * @module AGI-Types
  * @author EuroWeb Development Team

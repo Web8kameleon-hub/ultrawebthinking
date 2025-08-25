@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGISheet - Kameleoni i Inteligjencës Operacionale
  * Excel-like interface me tru AGI për Web8 EuroWeb Platform
  */

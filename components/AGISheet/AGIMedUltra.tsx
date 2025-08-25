@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI×Med Ultra - Medical AI Tab System
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 

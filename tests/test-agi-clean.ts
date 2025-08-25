@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Test i thjeshtë për AGI Core Integration
  * @author EuroWeb Platform
  */

@@ -1,4 +1,4 @@
-// backend/agi/planner-modular.ts
+﻿// backend/agi/planner-modular.ts
 /**
  * Planner.ts - Real Modular Instance-Based Architecture
  * Planifikues strategjik për detyra AGI

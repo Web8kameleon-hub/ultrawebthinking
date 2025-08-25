@@ -1,4 +1,4 @@
-// backend/agi/monitor.ts
+﻿// backend/agi/monitor.ts
 /**
  * Monitor.ts
  * Sistem monitorimi dhe logging për AGI

@@ -1,4 +1,4 @@
-import DualMindEngine from '../../../lib/dualMindEngine';
+﻿import DualMindEngine from '../../../lib/dualMindEngine';
 import OpenMindMemory from '../../../lib/memorySystem';
 // import MultiGlueEngine from '../../../lib/multoglue';
 import ServiceRegistry from '../../../lib/serviceRegistry';

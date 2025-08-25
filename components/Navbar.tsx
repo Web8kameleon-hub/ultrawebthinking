@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useAGI } from '../lib/AGIContext';
 import { motion } from 'framer-motion';
 

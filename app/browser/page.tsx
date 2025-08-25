@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 Platform - Advanced Laptop Browser Experience
  * Pure TypeScript + CVA Components with Laptop Integration
  *

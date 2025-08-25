@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGIBioNature Tests - Pure TypeScript Industrial
  * Modern JSX syntax + React TypeScript best practices
  */

@@ -1,4 +1,4 @@
-// EuroWeb Ultra - Green AI & Edge Computing Manager
+﻿// EuroWeb Ultra - Green AI & Edge Computing Manager
 // Optimizimi i energjisë dhe procesimi lokal
 
 'use client';

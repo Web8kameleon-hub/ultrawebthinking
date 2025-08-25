@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Lora Module - Long Range IoT Communication
  * EuroWeb Platform v8.0.0
  * 

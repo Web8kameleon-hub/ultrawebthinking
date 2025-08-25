@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb Web8 Platform - Client Component Wrapper
  * Ensures proper hydration for dynamic AGI interface
  * 

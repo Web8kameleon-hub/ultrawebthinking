@@ -1,4 +1,4 @@
-#!/usr/bin/env tsx
+﻿#!/usr/bin/env tsx
 /**
  * EuroWeb Port Manager - Menaxhuesi i Porteve për Web8
  * Handles port conflicts and finds available ports

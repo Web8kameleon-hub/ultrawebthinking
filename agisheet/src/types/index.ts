@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGISheet Type Definitions
  * Të gjitha tipet për AGISheet Kameleon
  */

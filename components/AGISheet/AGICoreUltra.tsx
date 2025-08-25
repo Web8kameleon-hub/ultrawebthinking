@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb AGI Core Ultra - Core AI Engine Tab System
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 

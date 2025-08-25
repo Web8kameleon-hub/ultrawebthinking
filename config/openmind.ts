@@ -1,4 +1,4 @@
-/**
+﻿/**
  * EuroWeb OpenMind Configuration
  * Universal AI Provider Settings
  */

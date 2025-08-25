@@ -1,4 +1,4 @@
-// Performance Monitoring System for EuroWeb Ultra
+﻿// Performance Monitoring System for EuroWeb Ultra
 export interface PerformanceMetrics {
   timestamp: number;
   route: string;

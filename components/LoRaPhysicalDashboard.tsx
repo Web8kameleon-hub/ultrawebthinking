@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LoRa Physical Verification Dashboard
  * EuroWeb Platform - IoT Integration for UTT-ALB
  * 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Service Registry - Mock Version
  */
 

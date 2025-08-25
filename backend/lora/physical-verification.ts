@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LoRa Physical Token Verification Module
  * EuroWeb Platform - IoT Integration for UTT-ALB Bridge
  * 

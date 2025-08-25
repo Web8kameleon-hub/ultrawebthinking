@@ -1,4 +1,4 @@
-/**
+﻿/**
  * OpenMind System Status Dashboard
  * Real-time monitoring and analytics
  * 

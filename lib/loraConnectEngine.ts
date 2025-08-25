@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LoRa Connect Ultra - Real-time IoT Management System
  * Sistema e Menaxhimit të IoT në Kohë Reale
  * 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Test Universal Translation Engine
  * Testimi i Motorit Universal të Përkthimit
  */

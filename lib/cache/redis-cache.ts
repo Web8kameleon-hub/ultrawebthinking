@@ -1,4 +1,4 @@
-// Redis Caching System for EuroWeb Ultra - TypeScript
+﻿// Redis Caching System for EuroWeb Ultra - TypeScript
 // High-performance caching for AGI responses
 
 import Redis from 'ioredis';
