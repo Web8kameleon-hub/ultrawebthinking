@@ -17,7 +17,6 @@ export interface AlertingConfig {
   cpuThreshold: number;
   memoryThreshold: number;
   web8ProactivePolling: boolean;
-  webhooks: string[];
 }
 
 export interface SystemMetrics {

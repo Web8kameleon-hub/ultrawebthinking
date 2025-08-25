@@ -191,8 +191,33 @@ export function useAGIRealTime(options: UseAGIRealTimeOptions = {}): UseAGIRealT
       }
     };
     
+    const mockEthics: EthicalCompliance = {
+      timestamp: Date.now(),
+      ethicalCompliance: {
+        status: 'optimal',
+        n7Controller: {
+          activity: 85,
+          pulseRate: 12,
+          flickering: 0,
+          status: 'active'
+        },
+        violations: false,
+        safeThinkActive: true,
+        activeNodes: 7,
+        alerts: 0
+      },
+      recommendations: ['System operating within ethical parameters'],
+      strictMode: {
+        flickeringThreshold: 5,
+        maxPulseRate: 30,
+        safeThinkDuration: 1000,
+        monitoringInterval: 100
+      }
+    };
+    
     setActivities(mockActivities);
     setAnalytics(mockAnalytics);
+    setEthics(mockEthics);
   }, []);
 
   const disconnect = useCallback(() => {

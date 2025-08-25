@@ -15,7 +15,7 @@ import nextDynamic from 'next/dynamic'
 export const dynamic = 'force-dynamic'
 
 const Web8TabSystem = nextDynamic(
-  () => import('@/components/Web8TabSystem'),
+  () => import('../components/Web8TabSystem'),
   { 
     ssr: false,
     loading: () => (

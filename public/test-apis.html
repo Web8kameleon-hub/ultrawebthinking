@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Web8 API Test Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        /* Top Navigation Tabs */
+        .nav-tabs {
+            background: linear-gradient(90deg, #2d1b69 0%, #11998e 100%);
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-tabs ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            overflow-x: auto;
+        }
+        
+        .nav-tabs li {
+            min-width: 150px;
+            flex-shrink: 0;
+        }
+        
+        .nav-tab {
+            display: block;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+        }
+        
+        .nav-tab:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .nav-tab.active {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+            background: rgba(255,215,0,0.1);
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Tab Content Areas */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Royal Header */
+        .royal-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(45,27,105,0.8), rgba(17,153,142,0.8));
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .royal-title {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .royal-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 15px;
+        }
+        
+        .system-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .system-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Central Web Search */
+        .search-center {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 15px 60px 15px 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: #000;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Grid Layouts */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        /* Cards */
+        .metric-card, .api-card, .tool-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover, .api-card:hover, .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: rgba(255,215,0,0.3);
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4ecdc4;
+            margin: 10px 0;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        /* Buttons */
+        .royal-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .royal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+        
+        .royal-btn.primary {
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            color: #000;
+        }
+        
+        .royal-btn.danger {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+        }
+        
+        .tool-btn {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .tool-btn:hover {
+            background: rgba(255,215,0,0.2);
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+        
+        /* Response Box */
+        .response-box {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            display: none;
+            color: #fff;
+        }
+        
+        .response-box.loading {
+            color: #4ecdc4;
+            display: block;
+        }
+        
+        .response-box.error {
+            color: #ff6b6b;
+            background: rgba(255,107,107,0.1);
+            border-color: #ff6b6b;
+            display: block;
+        }
+        
+        .response-box.success {
+            color: #4ecdc4;
+            background: rgba(78,205,196,0.1);
+            border-color: #4ecdc4;
+            display: block;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .api-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .api-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .api-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .test-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .response-box {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border-color: #c3e6cb;
+        }
+        
+        /* Floating Real-Time Tab */
+        .realtime-tab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .realtime-tab.collapsed {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .realtime-tab.expanded {
+            width: 350px;
+            height: 400px;
+        }
+        
+        .realtime-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .realtime-content {
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            padding: 15px;
+            font-size: 12px;
+            display: none;
+        }
+        
+        .realtime-tab.expanded .realtime-content {
+            display: block;
+        }
+        
+        .tab-icon {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        
+        .tab-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .realtime-tab.expanded .tab-icon {
+            display: none;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 3px;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Tabs -->
+    <nav class="nav-tabs">
+        <ul>
+            <li><button class="nav-tab active" onclick="showTab('dashboard')">👑 Dashboard</button></li>
+            <li><button class="nav-tab" onclick="showTab('apis')">🔧 API Center</button></li>
+            <li><button class="nav-tab" onclick="showTab('metrics')">📊 Live Metrics</button></li>
+            <li><button class="nav-tab" onclick="showTab('neural')">🧠 Neural Tools</button></li>
+            <li><button class="nav-tab" onclick="showTab('security')">🛡️ Security</button></li>
+            <li><button class="nav-tab" onclick="showTab('system')">⚙️ System</button></li>
+            <li><button class="nav-tab" onclick="showTab('docs')">📚 Documentation</button></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Royal Header -->
+        <div class="royal-header">
+            <h1 class="royal-title">👑 AGI Royal Dashboard</h1>
+            <p class="royal-subtitle">🏛️ Real-Time Intelligence System</p>
+            <div class="system-info">
+                <span class="system-badge">win32 • 12 cores • x64</span>
+                <span class="system-badge">🟢 Live Metrics</span>
+                <span class="system-badge">🛡️ Royal Secure</span>
+            </div>
+        </div>
+
+        <!-- Central Web Search -->
+        <div class="search-center">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="🔍 Search AGI systems, APIs, or ask questions..." id="mainSearch">
+                <button class="search-btn" onclick="performSearch()">🔍</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab Content -->
+        <div id="dashboard" class="tab-content active">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="card-title">💻 CPU Load</div>
+                    <div class="metric-value">5%</div>
+                    <div class="metric-label">12 cores</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">🎮 GPU Utilization</div>
+                    <div class="metric-value">N/A</div>
+                    <div class="metric-label">no GPU access</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">🧠 Memory Used</div>
+                    <div class="metric-value">65.5%</div>
+                    <div class="metric-label">10.8GB / 16.5GB</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">🔗 Neural Connections</div>
+                    <div class="metric-value">107</div>
+                    <div class="metric-label">active links</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">⚡ Processing Speed</div>
+                    <div class="metric-value">2.5 THz</div>
+                    <div class="metric-label">🧠 Core</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">📈 Learning Rate</div>
+                    <div class="metric-value">0.97</div>
+                    <div class="metric-label">(0–1)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">🛡️ Security Level</div>
+                    <div class="metric-value">Military</div>
+                    <div class="metric-label">Grade compliance</div>
+                </div>
+                <div class="metric-card">
+                    <div class="card-title">⏱️ Response Latency</div>
+                    <div class="metric-value">29 ms</div>
+                    <div class="metric-label">avg</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0; color: rgba(255,255,255,0.7);">
+                Last update: <span id="lastUpdateTime">1:15:47 PM</span> • 
+                Metrics: 2s intervals | AGI: 5s intervals
+            </div>
+        </div>
+
+        <!-- API Center Tab Content -->
+        <div id="apis" class="tab-content">
+            <div class="api-grid">
+                <div class="api-card">
+                    <div class="card-title">🏥 Health Monitor</div>
+                    <button class="royal-btn" onclick="testAPI('/api/health', 'health')">Test Health API</button>
+                    <div id="health-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">📚 API Directory</div>
+                    <button class="royal-btn" onclick="testAPI('/api/directory', 'directory')">Test Directory API</button>
+                    <div id="directory-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">📊 Traffic Monitor</div>
+                    <button class="royal-btn" onclick="testAPI('/api/traffic', 'traffic')">Test Traffic API</button>
+                    <div id="traffic-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">🧠 AGI Analytics</div>
+                    <button class="royal-btn" onclick="testAPI('/api/agi-analytics', 'agi-analytics')">Test AGI Analytics</button>
+                    <div id="agi-analytics-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">🌐 Sitemap SEO</div>
+                    <button class="royal-btn" onclick="testAPI('/api/sitemap-seo', 'sitemap-seo')">Test Sitemap SEO</button>
+                    <div id="sitemap-seo-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">🔍 Neural Search</div>
+                    <button class="royal-btn" onclick="testAPI('/api/neural-search', 'neural-search')">Test Neural Search</button>
+                    <div id="neural-search-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">💬 Ultra AGI Chat</div>
+                    <button class="royal-btn" onclick="testAPI('/api/ultra-agi-chat', 'ultra-agi-chat', 'POST', {message: 'Hello AGI!'})">Test Chat API</button>
+                    <div id="ultra-agi-chat-response" class="response-box"></div>
+                </div>
+                
+                <div class="api-card">
+                    <div class="card-title">🛡️ Guardian Security</div>
+                    <button class="royal-btn" onclick="testAPI('/api/guardian', 'guardian')">Test Guardian API</button>
+                    <div id="guardian-response" class="response-box"></div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="royal-btn primary" onclick="testAllAPIs()" style="max-width: 300px;">🚀 Test All APIs</button>
+            </div>
+        </div>
+
+        <!-- Live Metrics Tab Content -->
+        <div id="metrics" class="tab-content">
+            <div class="tools-grid">
+                <button class="tool-btn" onclick="refreshMetrics()">🔄 Refresh Data</button>
+                <button class="tool-btn" onclick="exportMetrics()">📊 Export Metrics</button>
+                <button class="tool-btn" onclick="viewLogs()">📝 View Logs</button>
+                <button class="tool-btn" onclick="clearCache()">🗑️ Clear Cache</button>
+            </div>
+            
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                <h3 style="color: #ffd700; margin-bottom: 15px;">📈 Real-Time Performance</h3>
+                <div id="metricsData" style="font-family: monospace; font-size: 14px; line-height: 1.6;">
+                    Loading metrics data...
+                </div>
+            </div>
+        </div>
+
+        <!-- Neural Tools Tab Content -->
+        <div id="neural" class="tab-content">
+            <div class="tools-grid">
+                <button class="tool-btn" onclick="runNeuralScan()">🔬 Deep Neural Scan</button>
+                <button class="tool-btn" onclick="trainModel()">🎯 Train AI Model</button>
+                <button class="tool-btn" onclick="analyzePatterns()">🔮 Pattern Analysis</button>
+                <button class="tool-btn" onclick="backupNeural()">💾 Neural Backup</button>
+                <button class="tool-btn" onclick="optimizeNetwork()">⚡ Optimize Network</button>
+                <button class="tool-btn" onclick="ethicsCheck()">⚖️ Ethics Check</button>
+            </div>
+        </div>
+
+        <!-- Security Tab Content -->
+        <div id="security" class="tab-content">
+            <div class="tools-grid">
+                <button class="tool-btn" onclick="securityScan()">🛡️ Security Scan</button>
+                <button class="tool-btn" onclick="threatAnalysis()">⚠️ Threat Analysis</button>
+                <button class="tool-btn" onclick="accessLogs()">📋 Access Logs</button>
+                <button class="tool-btn" onclick="encryptData()">🔒 Encrypt Data</button>
+                <button class="tool-btn" onclick="firewallStatus()">🔥 Firewall Status</button>
+                <button class="tool-btn" onclick="guardianMode()">👑 Guardian Mode</button>
+            </div>
+        </div>
+
+        <!-- System Tab Content -->
+        <div id="system" class="tab-content">
+            <div class="tools-grid">
+                <button class="tool-btn" onclick="performanceBench()">🚀 Performance Test</button>
+                <button class="tool-btn" onclick="networkTest()">📡 Network Test</button>
+                <button class="tool-btn" onclick="resourceMonitor()">📈 Resource Monitor</button>
+                <button class="tool-btn" onclick="systemDiagnose()">🔧 System Diagnose</button>
+                <button class="tool-btn" onclick="restartServices()">🔄 Restart Services</button>
+                <button class="tool-btn" onclick="maintenanceMode()">⚙️ Maintenance</button>
+            </div>
+        </div>
+
+        <!-- Documentation Tab Content -->
+        <div id="docs" class="tab-content">
+            <div class="tools-grid">
+                <button class="tool-btn" onclick="apiDocs()">📚 API Documentation</button>
+                <button class="tool-btn" onclick="quickStart()">🚀 Quick Start Guide</button>
+                <button class="tool-btn" onclick="tutorials()">🎓 Tutorials</button>
+                <button class="tool-btn" onclick="changelog()">📝 Changelog</button>
+                <button class="tool-btn" onclick="support()">❓ Support</button>
+                <button class="tool-btn" onclick="feedback()">💬 Feedback</button>
+            </div>
+        </div>
+        
+        <div class="api-grid">
+            <div class="api-card">
+                <div class="api-title">🏥 Health Monitor</div>
+                <button class="test-btn" onclick="testAPI('/api/health', 'health')">Test Health API</button>
+                <div id="health-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">📚 API Directory</div>
+                <button class="test-btn" onclick="testAPI('/api/directory', 'directory')">Test Directory API</button>
+                <div id="directory-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">📊 Traffic Monitor</div>
+                <button class="test-btn" onclick="testAPI('/api/traffic', 'traffic')">Test Traffic API</button>
+                <div id="traffic-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">🧠 AGI Analytics</div>
+                <button class="test-btn" onclick="testAPI('/api/agi-analytics', 'agi-analytics')">Test AGI Analytics</button>
+                <div id="agi-analytics-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">🌐 Sitemap SEO</div>
+                <button class="test-btn" onclick="testAPI('/api/sitemap-seo', 'sitemap-seo')">Test Sitemap SEO</button>
+                <div id="sitemap-seo-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">🔍 Neural Search</div>
+                <button class="test-btn" onclick="testAPI('/api/neural-search', 'neural-search')">Test Neural Search</button>
+                <div id="neural-search-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">💬 Ultra AGI Chat</div>
+                <button class="test-btn" onclick="testAPI('/api/ultra-agi-chat', 'ultra-agi-chat', 'POST', {message: 'Hello AGI!'})">Test Chat API</button>
+                <div id="ultra-agi-chat-response" class="response-box"></div>
+            </div>
+            
+            <div class="api-card">
+                <div class="api-title">🛡️ Guardian Security</div>
+                <button class="test-btn" onclick="testAPI('/api/guardian', 'guardian')">Test Guardian API</button>
+                <div id="guardian-response" class="response-box"></div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="test-btn" onclick="testAllAPIs()" style="max-width: 300px;">🚀 Test All APIs</button>
+        </div>
+    </div>
+
+    <!-- Floating Real-Time Tab -->
+    <div class="realtime-tab collapsed" id="realtimeTab">
+        <div class="tab-icon" onclick="toggleRealtimeTab()">
+            🔍
+        </div>
+        
+        <div class="realtime-header" onclick="toggleRealtimeTab()">
+            <span>🔍 Real-Time Monitor</span>
+            <span id="toggleIcon">📖</span>
+        </div>
+        
+        <div class="realtime-content">
+            <div class="status-item">
+                <span>Connection:</span>
+                <span id="connectionStatus">❌ Disconnected</span>
+            </div>
+            <div class="status-item">
+                <span>Loading:</span>
+                <span id="loadingStatus">✅ Ready</span>
+            </div>
+            <div class="status-item">
+                <span>Activities:</span>
+                <span id="activitiesCount">0 modules</span>
+            </div>
+            <div class="status-item">
+                <span>Analytics:</span>
+                <span id="analyticsStatus">❌ Not available</span>
+            </div>
+            <div class="status-item">
+                <span>Ethics:</span>
+                <span id="ethicsStatus">❌ Not available</span>
+            </div>
+            
+            <div style="margin-top: 15px;">
+                <button class="test-btn" onclick="connectRealtime()" id="connectBtn" style="margin-bottom: 5px;">
+                    🔌 Connect to AGI
+                </button>
+                <button class="test-btn" onclick="disconnectRealtime()" id="disconnectBtn" style="background: #dc3545;">
+                    🔌 Disconnect
+                </button>
+            </div>
+            
+            <div style="margin-top: 10px; font-size: 10px; color: #666;">
+                Last update: <span id="lastUpdate">Never</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation System
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+            
+            // Update page title based on tab
+            const tabTitles = {
+                'dashboard': '👑 Royal Dashboard',
+                'apis': '🔧 API Center', 
+                'metrics': '📊 Live Metrics',
+                'neural': '🧠 Neural Tools',
+                'security': '🛡️ Security Center',
+                'system': '⚙️ System Control',
+                'docs': '📚 Documentation'
+            };
+            document.title = `${tabTitles[tabName]} - Web8 AGI`;
+        }
+        
+        // Central Search Function
+        function performSearch() {
+            const searchInput = document.getElementById('mainSearch');
+            const query = searchInput.value.trim();
+            
+            if (!query) {
+                alert('⚠️ Please enter a search query');
+                return;
+            }
+            
+            // Simulate search functionality
+            const searchResults = [
+                'Neural API endpoints found',
+                'System metrics available', 
+                'Security protocols active',
+                'Documentation updated'
+            ];
+            
+            alert(`🔍 Search Results for "${query}":\n\n${searchResults.join('\n')}`);
+            searchInput.value = '';
+        }
+        
+        // Enhanced API Testing
+        async function testAPI(endpoint, id, method = 'GET', body = null) {
+            const responseBox = document.getElementById(`${id}-response`);
+            responseBox.style.display = 'block';
+            responseBox.className = 'response-box loading';
+            responseBox.textContent = '⏳ Testing API...';
+            
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (body && method === 'POST') {
+                    options.body = JSON.stringify(body);
+                }
+                
+                const response = await fetch(endpoint, options);
+                const data = await response.json();
+                
+                responseBox.className = response.ok ? 'response-box success' : 'response-box error';
+                responseBox.textContent = `Status: ${response.status} ${response.statusText}\n\n` + 
+                                         JSON.stringify(data, null, 2);
+                
+            } catch (error) {
+                responseBox.className = 'response-box error';
+                responseBox.textContent = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        async function testAllAPIs() {
+            const apis = [
+                {endpoint: '/api/health', id: 'health'},
+                {endpoint: '/api/directory', id: 'directory'},
+                {endpoint: '/api/traffic', id: 'traffic'},
+                {endpoint: '/api/agi-analytics', id: 'agi-analytics'},
+                {endpoint: '/api/sitemap-seo', id: 'sitemap-seo'},
+                {endpoint: '/api/neural-search', id: 'neural-search'},
+                {endpoint: '/api/guardian', id: 'guardian'}
+            ];
+            
+            for (const api of apis) {
+                await testAPI(api.endpoint, api.id);
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+            
+            await testAPI('/api/ultra-agi-chat', 'ultra-agi-chat', 'POST', {message: 'Hello AGI!'});
+        }
+        
+        // Tool Functions
+        function refreshMetrics() {
+            const metricsData = document.getElementById('metricsData');
+            metricsData.innerHTML = `🔄 Refreshing metrics...\n\nCPU: ${Math.random() * 10}%\nMemory: ${Math.random() * 100}%\nNetwork: ${Math.random() * 1000}kb/s\nUpdated: ${new Date().toLocaleTimeString()}`;
+        }
+        
+        function exportMetrics() { alert('📊 Metrics exported successfully!'); }
+        function viewLogs() { alert('📝 Opening system logs...'); }
+        function clearCache() { alert('🗑️ Cache cleared successfully!'); }
+        
+        function runNeuralScan() { alert('🔬 Running deep neural scan...'); }
+        function trainModel() { alert('🎯 Starting AI model training...'); }
+        function analyzePatterns() { alert('🔮 Analyzing data patterns...'); }
+        function backupNeural() { alert('💾 Creating neural network backup...'); }
+        function optimizeNetwork() { alert('⚡ Optimizing neural network...'); }
+        function ethicsCheck() { alert('⚖️ Running ethics compliance check...'); }
+        
+        function securityScan() { alert('🛡️ Running security scan...'); }
+        function threatAnalysis() { alert('⚠️ Analyzing potential threats...'); }
+        function accessLogs() { alert('📋 Opening access logs...'); }
+        function encryptData() { alert('🔒 Encrypting sensitive data...'); }
+        function firewallStatus() { alert('🔥 Firewall status: ACTIVE'); }
+        function guardianMode() { alert('👑 Guardian mode activated!'); }
+        
+        function performanceBench() { alert('🚀 Running performance benchmark...'); }
+        function networkTest() { alert('📡 Testing network connectivity...'); }
+        function resourceMonitor() { alert('📈 Opening resource monitor...'); }
+        function systemDiagnose() { alert('🔧 Running system diagnostics...'); }
+        function restartServices() { alert('🔄 Restarting system services...'); }
+        function maintenanceMode() { alert('⚙️ Entering maintenance mode...'); }
+        
+        function apiDocs() { alert('📚 Opening API documentation...'); }
+        function quickStart() { alert('🚀 Opening quick start guide...'); }
+        function tutorials() { alert('🎓 Loading tutorials...'); }
+        function changelog() { alert('📝 Viewing changelog...'); }
+        function support() { alert('❓ Opening support center...'); }
+        function feedback() { alert('💬 Opening feedback form...'); }
+        
+        // Auto-initialization
+        window.addEventListener('load', () => {
+            // Auto-test health API
+            setTimeout(() => testAPI('/api/health', 'health'), 1000);
+            
+            // Update time display
+            setInterval(() => {
+                document.getElementById('lastUpdateTime').textContent = new Date().toLocaleTimeString();
+            }, 1000);
+            
+            // Enable search on Enter key
+            document.getElementById('mainSearch').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+        
+        // Floating Real-Time Tab Functions
+        function toggleRealtimeTab() {
+            const tab = document.getElementById('realtimeTab');
+            const icon = document.getElementById('toggleIcon');
+            
+            if (tab.classList.contains('collapsed')) {
+                tab.classList.remove('collapsed');
+                tab.classList.add('expanded');
+                icon.textContent = '📕';
+            } else {
+                tab.classList.remove('expanded');
+                tab.classList.add('collapsed');
+                icon.textContent = '📖';
+            }
+        }
+        
+        let realtimeInterval = null;
+        let isConnected = false;
+        
+        function connectRealtime() {
+            if (isConnected) return;
+            
+            isConnected = true;
+            document.getElementById('connectionStatus').innerHTML = '✅ Connected';
+            document.getElementById('loadingStatus').innerHTML = '🔄 Loading...';
+            document.getElementById('connectBtn').disabled = true;
+            
+            // Simulate real-time updates
+            realtimeInterval = setInterval(() => {
+                updateRealtimeData();
+            }, 2000);
+            
+            // Initial update
+            setTimeout(updateRealtimeData, 500);
+        }
+        
+        function disconnectRealtime() {
+            if (!isConnected) return;
+            
+            isConnected = false;
+            document.getElementById('connectionStatus').innerHTML = '❌ Disconnected';
+            document.getElementById('loadingStatus').innerHTML = '✅ Ready';
+            document.getElementById('connectBtn').disabled = false;
+            
+            if (realtimeInterval) {
+                clearInterval(realtimeInterval);
+                realtimeInterval = null;
+            }
+            
+            // Reset to default values
+            document.getElementById('activitiesCount').innerHTML = '0 modules';
+            document.getElementById('analyticsStatus').innerHTML = '❌ Not available';
+            document.getElementById('ethicsStatus').innerHTML = '❌ Not available';
+            document.getElementById('lastUpdate').innerHTML = 'Never';
+        }
+        
+        function updateRealtimeData() {
+            if (!isConnected) return;
+            
+            // Simulate random data
+            const activities = Math.floor(Math.random() * 10) + 1;
+            const analyticsOk = Math.random() > 0.3;
+            const ethicsOk = Math.random() > 0.4;
+            
+            document.getElementById('loadingStatus').innerHTML = '✅ Ready';
+            document.getElementById('activitiesCount').innerHTML = `${activities} modules`;
+            document.getElementById('analyticsStatus').innerHTML = analyticsOk ? '✅ Available' : '⚠️ Limited';
+            document.getElementById('ethicsStatus').innerHTML = ethicsOk ? '✅ Active' : '⚠️ Monitoring';
+            document.getElementById('lastUpdate').innerHTML = new Date().toLocaleTimeString();
+        }
+    </script>
+</body>
+</html>

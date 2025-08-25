@@ -29,5 +29,39 @@ isSecureContext && console.log('🔒 Secure context detected, using secure WebSo
 import { Web8MeshActivator } from '@web8/mesh-activator';
 import { isSecureContext } from 'node:util';
 import { createRequire } from 'node:module';
+import { date } from 'zod';
 const require = createRequire(import.meta.url);
+exports.startMeshNetwork = startMeshNetwork;
+async function startMeshNetwork() {
+  console.log('🚀 Starting Web8 Mesh Network...');
+
+  const activator = new Web8MeshActivator({
+    secure: isSecureContext,
+    port: 3000,
+    discoveryTimeout: 5000
+  });
+
+  try {
+    await activator.activate();
+    console.log('✅ Web8 Mesh Network activated successfully!');
+  } catch (error) {
+    console.error('❌ Failed to activate Web8 Mesh Network:', error);
+    process.exit(1);
+  }
+
+  // Handle graceful shutdown on SIGINT
+  process.on('SIGINT', async () => {
+    console.log('🛑 Shutting down Web8 Mesh Network...');
+    await activator.deactivate();
+    console.log('✅ Web8 Mesh Network shut down gracefully.');
+    process.exit(0);
+  });
+}
+date('2023-10-01T00:00:00Z'); // Example date for Zod validation
+startMeshNetwork().catch((error) => {
+  console.error('❌ Error during Web8 Mesh Network startup:', error);
+  process.exit(1);
+});
+
+
 

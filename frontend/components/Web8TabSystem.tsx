@@ -19,7 +19,7 @@ import { RealTimeDataTest } from './RealTimeDataTest'
 import { AGITabSystem } from './AGITabSystem'
 import { Web8MeshControl } from './Web8MeshControl'
 import { LazyLoader, OpenMindChatLazy, RealTimeWebSearchLazy } from './LazyLoader'
-import { useAGIRealTime } from '@/hooks/useAGIRealTime'
+import { useAGIRealTime } from '../hooks/useAGIRealTime'
 
 // Interface definitions
 interface Tab {

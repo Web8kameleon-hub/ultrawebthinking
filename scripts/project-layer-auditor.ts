@@ -20,31 +20,25 @@ const execAsync = promisify(exec);
 const PROJECT_ROOT = process.cwd();
 
 interface LayerAuditReport {
-  web8Layers: {
-    layer1_agi_core: LayerStatus;
-    layer2_realtime: LayerStatus;
-    layer3_neural: LayerStatus;
-    layer4_analytics: LayerStatus;
-    layer5_security: LayerStatus;
-    layer6_communication: LayerStatus;
-    layer7_storage: LayerStatus;
-    layer8_integration: LayerStatus;
-    layer9_optimization: LayerStatus;
-    layer10_monitoring: LayerStatus;
-    layer11_backup: LayerStatus;
-    layer12_lightning: LayerStatus;
+  layers: {
+    neural: LayerStatus;
+    ethical: LayerStatus;
+    fluid: LayerStatus;
+    guardian: LayerStatus;
+    memory: LayerStatus;
+    api: LayerStatus;
   };
-  monorepoCompliance: {
-    aliasesConfigured: string[];
-    dynamicModules: string[];
-    missingAliases: string[];
-    brokenImports: string[];
+  typeScriptCompliance: {
+    jsFilesFound: string[];
+    missingTsFiles: string[];
+    invalidImports: string[];
+    infiniteLoops: string[];
   };
-  missingComponents: {
-    web8Components: string[];
-    agiModules: string[];
-    lightningPool: string[];
-    ultraSpeed: string[];
+  missingModules: {
+    validators: string[];
+    lazers: string[];
+    controllers: string[];
+    interfaces: string[];
   };
   recommendations: string[];
   score: number;
@@ -59,469 +53,430 @@ interface LayerStatus {
 }
 
 /**
- * 🎯 MAIN AUDITOR CLASS - WEB8 12-LAYER ARCHITECTURE
+ * 🎯 MAIN AUDITOR CLASS
  */
 class ProjectLayerAuditor {
   private readonly report: LayerAuditReport = {
-    web8Layers: {
-      layer1_agi_core: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer2_realtime: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer3_neural: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer4_analytics: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer5_security: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer6_communication: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer7_storage: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer8_integration: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer9_optimization: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer10_monitoring: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer11_backup: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
-      layer12_lightning: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] }
+    layers: {
+      neural: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
+      ethical: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
+      fluid: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
+      guardian: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
+      memory: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] },
+      api: { exists: false, files: [], dependencies: [], health: 'critical', issues: [] }
     },
-    monorepoCompliance: {
-      aliasesConfigured: [],
-      dynamicModules: [],
-      missingAliases: [],
-      brokenImports: []
+    typeScriptCompliance: {
+      jsFilesFound: [],
+      missingTsFiles: [],
+      invalidImports: [],
+      infiniteLoops: []
     },
-    missingComponents: {
-      web8Components: [],
-      agiModules: [],
-      lightningPool: [],
-      ultraSpeed: []
+    missingModules: {
+      validators: [],
+      lazers: [],
+      controllers: [],
+      interfaces: []
     },
     recommendations: [],
     score: 0
   };
 
   /**
-   * 🔍 MAIN AUDIT EXECUTION - WEB8 12-LAYER ARCHITECTURE
+   * 🔍 MAIN AUDIT EXECUTION
    */
   public async performAudit(): Promise<LayerAuditReport> {
-    console.log('🔍 WEB8 12-LAYER ARCHITECTURE AUDIT STARTING...\n');
+    console.log('🔍 PROJECT LAYER & TYPESCRIPT AUDIT STARTING...\n');
 
-    await this.auditWeb8Layers();
-    await this.auditMonorepoCompliance();
-    await this.auditMissingComponents();
-    await this.generateWeb8Recommendations();
-    this.calculateWeb8Score();
+    await this.auditLayers();
+    await this.auditTypeScriptCompliance();
+    await this.auditMissingModules();
+    await this.generateRecommendations();
+    this.calculateScore();
 
     return this.report;
   }
 
   /**
-   * 🧠 LAYER 1: AGI CORE ENGINE AUDIT
+   * 🏗️ AUDIT PROJECT LAYERS
    */
-  private async auditLayer1AGICore(): Promise<void> {
-    const agiFiles = await glob('**/AGI*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    const sheetFiles = await glob('**/components/AGISheet/**/*', { cwd: PROJECT_ROOT });
+  private async auditLayers(): Promise<void> {
+    console.log('🏗️ Auditing Project Layers...');
+
+    // Neural Layer
+    await this.auditNeuralLayer();
     
-    this.report.web8Layers.layer1_agi_core.files = [...agiFiles, ...sheetFiles];
-    this.report.web8Layers.layer1_agi_core.exists = this.report.web8Layers.layer1_agi_core.files.length > 0;
+    // Ethical Layer  
+    await this.auditEthicalLayer();
     
-    const requiredAGIFiles = ['components/AGISheet/AGISheet.tsx', 'components/AGISheet/EcologyEngine.ts'];
-    for (const file of requiredAGIFiles) {
+    // Fluid Architecture Layer
+    await this.auditFluidLayer();
+    
+    // Guardian Security Layer
+    await this.auditGuardianLayer();
+    
+    // Memory Layer
+    await this.auditMemoryLayer();
+    
+    // API Layer
+    await this.auditApiLayer();
+
+    console.log('✅ Layer audit complete\n');
+  }
+
+  /**
+   * 🧠 NEURAL LAYER AUDIT
+   */
+  private async auditNeuralLayer(): Promise<void> {
+    const neuralFiles = await glob('**/Neural*.ts', { cwd: PROJECT_ROOT });
+    const plannerFiles = await glob('**/planner*.ts', { cwd: PROJECT_ROOT, nocase: true });
+    
+    this.report.layers.neural.files = [...neuralFiles, ...plannerFiles];
+    this.report.layers.neural.exists = this.report.layers.neural.files.length > 0;
+
+    // Check for required neural components
+    const requiredNeuralFiles = [
+      'lib/NeuralPlanner.ts',
+      'lib/EthicalNeuralPlanner.ts',
+      'ai/agi/mind.ts',
+      'ai/agi/sense.ts'
+    ];
+
+    for (const file of requiredNeuralFiles) {
       if (!existsSync(join(PROJECT_ROOT, file))) {
-        this.report.web8Layers.layer1_agi_core.issues.push(`Missing: ${file}`);
+        this.report.layers.neural.issues.push(`Missing: ${file}`);
       }
     }
-    
-    this.report.web8Layers.layer1_agi_core.health = this.report.web8Layers.layer1_agi_core.issues.length === 0 ? 'excellent' : 'warning';
-    console.log(`🧠 Layer 1 AGI Core: ${this.report.web8Layers.layer1_agi_core.health} (${this.report.web8Layers.layer1_agi_core.files.length} files)`);
-  }
 
-  /**
-   * ⚡ LAYER 2: REAL-TIME PROCESSING AUDIT
-   */
-  private async auditLayer2Realtime(): Promise<void> {
-    const realtimeFiles = await glob('**/realtime*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    const socketFiles = await glob('**/socket*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer2_realtime.files = [...realtimeFiles, ...socketFiles];
-    this.report.web8Layers.layer2_realtime.exists = this.report.web8Layers.layer2_realtime.files.length > 0;
-    
-    if (!existsSync(join(PROJECT_ROOT, 'backend/realtime-server.ts'))) {
-      this.report.web8Layers.layer2_realtime.issues.push('Missing: backend/realtime-server.ts');
+    // Health assessment
+    if (this.report.layers.neural.issues.length === 0) {
+      this.report.layers.neural.health = 'excellent';
+    } else if (this.report.layers.neural.issues.length <= 2) {
+      this.report.layers.neural.health = 'good';
+    } else {
+      this.report.layers.neural.health = 'warning';
     }
-    
-    this.report.web8Layers.layer2_realtime.health = this.report.web8Layers.layer2_realtime.issues.length === 0 ? 'excellent' : 'warning';
-    console.log(`⚡ Layer 2 Realtime: ${this.report.web8Layers.layer2_realtime.health} (${this.report.web8Layers.layer2_realtime.files.length} files)`);
+
+    console.log(`🧠 Neural Layer: ${this.report.layers.neural.health} (${this.report.layers.neural.files.length} files)`);
   }
 
   /**
-   * 🧠 LAYER 3: NEURAL NETWORKS AUDIT  
+   * ⚖️ ETHICAL LAYER AUDIT
    */
-  private async auditLayer3Neural(): Promise<void> {
-    const neuralFiles = await glob('**/neural*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    const analyzerFiles = await glob('**/neuralAnalyzer.ts', { cwd: PROJECT_ROOT });
+  private async auditEthicalLayer(): Promise<void> {
+    const ethicalFiles = await glob('**/Ethical*.ts', { cwd: PROJECT_ROOT });
+    const guardFiles = await glob('**/guard*.ts', { cwd: PROJECT_ROOT, nocase: true });
     
-    this.report.web8Layers.layer3_neural.files = [...neuralFiles, ...analyzerFiles];
-    this.report.web8Layers.layer3_neural.exists = this.report.web8Layers.layer3_neural.files.length > 0;
-    
-    if (!existsSync(join(PROJECT_ROOT, 'lib/neuralAnalyzer.ts'))) {
-      this.report.web8Layers.layer3_neural.issues.push('Missing: lib/neuralAnalyzer.ts');
+    this.report.layers.ethical.files = [...ethicalFiles, ...guardFiles];
+    this.report.layers.ethical.exists = this.report.layers.ethical.files.length > 0;
+
+    // Check for infinite loops in ethical planner
+    const ethicalPlannerPath = join(PROJECT_ROOT, 'lib/EthicalNeuralPlanner.ts');
+    if (existsSync(ethicalPlannerPath)) {
+      const content = readFileSync(ethicalPlannerPath, 'utf-8');
+      
+      // Check for potential infinite loops
+      const loopPatterns = [
+        /while\s*\(\s*true\s*\)/g,
+        /for\s*\(\s*;\s*;\s*\)/g,
+        /do\s*{[^}]*}\s*while\s*\(\s*true\s*\)/g
+      ];
+
+      for (const pattern of loopPatterns) {
+        if (pattern.test(content)) {
+          this.report.typeScriptCompliance.infiniteLoops.push('EthicalNeuralPlanner.ts: Potential infinite loop detected');
+        }
+      }
     }
-    
-    this.report.web8Layers.layer3_neural.health = this.report.web8Layers.layer3_neural.issues.length === 0 ? 'excellent' : 'warning';
-    console.log(`🧠 Layer 3 Neural: ${this.report.web8Layers.layer3_neural.health} (${this.report.web8Layers.layer3_neural.files.length} files)`);
+
+    this.report.layers.ethical.health = this.report.layers.ethical.files.length > 0 ? 'good' : 'critical';
+    console.log(`⚖️ Ethical Layer: ${this.report.layers.ethical.health} (${this.report.layers.ethical.files.length} files)`);
   }
 
   /**
-   * 📊 LAYER 4: ANALYTICS AUDIT
+   * 💧 FLUID ARCHITECTURE AUDIT
    */
-  private async auditLayer4Analytics(): Promise<void> {
-    const analyticsFiles = await glob('**/analytics*.{ts,tsx}', { cwd: PROJECT_ROOT });
+  private async auditFluidLayer(): Promise<void> {
+    const fluidFiles = await glob('**/Fluid*.ts', { cwd: PROJECT_ROOT });
+    const flowFiles = await glob('**/flow*.ts', { cwd: PROJECT_ROOT, nocase: true });
     
-    this.report.web8Layers.layer4_analytics.files = analyticsFiles;
-    this.report.web8Layers.layer4_analytics.exists = analyticsFiles.length > 0;
-    this.report.web8Layers.layer4_analytics.health = analyticsFiles.length > 0 ? 'good' : 'warning';
-    console.log(`📊 Layer 4 Analytics: ${this.report.web8Layers.layer4_analytics.health} (${analyticsFiles.length} files)`);
-  }
+    this.report.layers.fluid.files = [...fluidFiles, ...flowFiles];
+    this.report.layers.fluid.exists = this.report.layers.fluid.files.length > 0;
 
-  /**
-   * 🛡️ LAYER 5: SECURITY (GUARDIAN) AUDIT
-   */
-  private async auditLayer5Security(): Promise<void> {
-    const guardianFiles = await glob('**/guardian/**/*.ts', { cwd: PROJECT_ROOT });
-    const securityFiles = await glob('**/security*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer5_security.files = [...guardianFiles, ...securityFiles];
-    this.report.web8Layers.layer5_security.exists = this.report.web8Layers.layer5_security.files.length > 0;
-    
-    if (!existsSync(join(PROJECT_ROOT, 'backend/guardian/Guardian-web8.ts'))) {
-      this.report.web8Layers.layer5_security.issues.push('Missing: backend/guardian/Guardian-web8.ts');
+    // Check for required fluid components
+    const requiredFluidFiles = [
+      'lib/FluidArchitecture.ts',
+      'scripts/flow-optimizer.ts',
+      'scripts/system-health.ts'
+    ];
+
+    for (const file of requiredFluidFiles) {
+      if (!existsSync(join(PROJECT_ROOT, file))) {
+        this.report.layers.fluid.issues.push(`Missing: ${file}`);
+      }
     }
-    
-    this.report.web8Layers.layer5_security.health = this.report.web8Layers.layer5_security.issues.length === 0 ? 'excellent' : 'warning';
-    console.log(`🛡️ Layer 5 Security: ${this.report.web8Layers.layer5_security.health} (${this.report.web8Layers.layer5_security.files.length} files)`);
+
+    this.report.layers.fluid.health = this.report.layers.fluid.issues.length === 0 ? 'excellent' : 'warning';
+    console.log(`💧 Fluid Layer: ${this.report.layers.fluid.health} (${this.report.layers.fluid.files.length} files)`);
   }
 
   /**
-   * 📡 LAYER 6: COMMUNICATION AUDIT
+   * 🛡️ GUARDIAN SECURITY AUDIT
    */
-  private async auditLayer6Communication(): Promise<void> {
+  private async auditGuardianLayer(): Promise<void> {
+    const guardianFiles = await glob('**/Guardian*.ts', { cwd: PROJECT_ROOT });
+    const securityFiles = await glob('**/ddos*.ts', { cwd: PROJECT_ROOT, nocase: true });
+    
+    this.report.layers.guardian.files = [...guardianFiles, ...securityFiles];
+    this.report.layers.guardian.exists = this.report.layers.guardian.files.length > 0;
+
+    this.report.layers.guardian.health = this.report.layers.guardian.files.length > 0 ? 'good' : 'warning';
+    console.log(`🛡️ Guardian Layer: ${this.report.layers.guardian.health} (${this.report.layers.guardian.files.length} files)`);
+  }
+
+  /**
+   * 💾 MEMORY LAYER AUDIT
+   */
+  private async auditMemoryLayer(): Promise<void> {
+    const memoryFiles = await glob('**/memory*.ts', { cwd: PROJECT_ROOT, nocase: true });
+    const cacheFiles = await glob('**/cache*.ts', { cwd: PROJECT_ROOT, nocase: true });
+    
+    this.report.layers.memory.files = [...memoryFiles, ...cacheFiles];
+    this.report.layers.memory.exists = this.report.layers.memory.files.length > 0;
+
+    this.report.layers.memory.health = this.report.layers.memory.files.length > 0 ? 'good' : 'warning';
+    console.log(`💾 Memory Layer: ${this.report.layers.memory.health} (${this.report.layers.memory.files.length} files)`);
+  }
+
+  /**
+   * 🌐 API LAYER AUDIT
+   */
+  private async auditApiLayer(): Promise<void> {
     const apiFiles = await glob('**/api/**/*.ts', { cwd: PROJECT_ROOT });
     const serverFiles = await glob('**/server*.ts', { cwd: PROJECT_ROOT });
     
-    this.report.web8Layers.layer6_communication.files = [...apiFiles, ...serverFiles];
-    this.report.web8Layers.layer6_communication.exists = this.report.web8Layers.layer6_communication.files.length > 0;
-    this.report.web8Layers.layer6_communication.health = this.report.web8Layers.layer6_communication.files.length > 0 ? 'good' : 'warning';
-    console.log(`📡 Layer 6 Communication: ${this.report.web8Layers.layer6_communication.health} (${this.report.web8Layers.layer6_communication.files.length} files)`);
+    this.report.layers.api.files = [...apiFiles, ...serverFiles];
+    this.report.layers.api.exists = this.report.layers.api.files.length > 0;
+
+    this.report.layers.api.health = this.report.layers.api.files.length > 0 ? 'good' : 'warning';
+    console.log(`🌐 API Layer: ${this.report.layers.api.health} (${this.report.layers.api.files.length} files)`);
   }
 
   /**
-   * 💾 LAYER 7: STORAGE AUDIT
+   * 📜 TYPESCRIPT COMPLIANCE AUDIT
    */
-  private async auditLayer7Storage(): Promise<void> {
-    const storageFiles = await glob('**/storage*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    const dbFiles = await glob('**/database/**/*.ts', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer7_storage.files = [...storageFiles, ...dbFiles];
-    this.report.web8Layers.layer7_storage.exists = this.report.web8Layers.layer7_storage.files.length > 0;
-    this.report.web8Layers.layer7_storage.health = this.report.web8Layers.layer7_storage.files.length > 0 ? 'good' : 'warning';
-    console.log(`💾 Layer 7 Storage: ${this.report.web8Layers.layer7_storage.health} (${this.report.web8Layers.layer7_storage.files.length} files)`);
-  }
+  private async auditTypeScriptCompliance(): Promise<void> {
+    console.log('📜 Auditing TypeScript Compliance...');
 
-  /**
-   * 🔗 LAYER 8: INTEGRATION AUDIT
-   */
-  private async auditLayer8Integration(): Promise<void> {
-    const integrationFiles = await glob('**/integration*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer8_integration.files = integrationFiles;
-    this.report.web8Layers.layer8_integration.exists = integrationFiles.length > 0;
-    this.report.web8Layers.layer8_integration.health = integrationFiles.length > 0 ? 'good' : 'warning';
-    console.log(`🔗 Layer 8 Integration: ${this.report.web8Layers.layer8_integration.health} (${integrationFiles.length} files)`);
-  }
+    // Check for .js files in source directories (excluding node_modules and .next)
+    const jsFiles = await glob('**/*.js', { 
+      cwd: PROJECT_ROOT,
+      ignore: ['node_modules/**', '.next/**', 'dist/**', 'build/**']
+    });
 
-  /**
-   * ⚡ LAYER 9: OPTIMIZATION AUDIT
-   */
-  private async auditLayer9Optimization(): Promise<void> {
-    const lazyFiles = await glob('**/Lazy*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    const optimizationFiles = await glob('**/optimization*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer9_optimization.files = [...lazyFiles, ...optimizationFiles];
-    this.report.web8Layers.layer9_optimization.exists = this.report.web8Layers.layer9_optimization.files.length > 0;
-    
-    if (!existsSync(join(PROJECT_ROOT, 'components/LazyLoader.tsx'))) {
-      this.report.web8Layers.layer9_optimization.issues.push('Missing: components/LazyLoader.tsx');
-    }
-    
-    this.report.web8Layers.layer9_optimization.health = this.report.web8Layers.layer9_optimization.issues.length === 0 ? 'excellent' : 'warning';
-    console.log(`⚡ Layer 9 Optimization: ${this.report.web8Layers.layer9_optimization.health} (${this.report.web8Layers.layer9_optimization.files.length} files)`);
-  }
+    this.report.typeScriptCompliance.jsFilesFound = jsFiles;
 
-  /**
-   * 📊 LAYER 10: MONITORING AUDIT
-   */
-  private async auditLayer10Monitoring(): Promise<void> {
-    const monitoringFiles = await glob('**/monitoring*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer10_monitoring.files = monitoringFiles;
-    this.report.web8Layers.layer10_monitoring.exists = monitoringFiles.length > 0;
-    this.report.web8Layers.layer10_monitoring.health = monitoringFiles.length > 0 ? 'good' : 'warning';
-    console.log(`📊 Layer 10 Monitoring: ${this.report.web8Layers.layer10_monitoring.health} (${monitoringFiles.length} files)`);
-  }
+    // Check for missing TypeScript files that should exist
+    const expectedTsFiles = [
+      'lib/validator.ts',
+      'lib/LaserController.ts',
+      'components/LazyLoader.tsx',
+      'utils/web8-utils.ts'
+    ];
 
-  /**
-   * 💾 LAYER 11: BACKUP & RECOVERY AUDIT
-   */
-  private async auditLayer11Backup(): Promise<void> {
-    const backupFiles = await glob('**/backup*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer11_backup.files = backupFiles;
-    this.report.web8Layers.layer11_backup.exists = backupFiles.length > 0;
-    this.report.web8Layers.layer11_backup.health = backupFiles.length > 0 ? 'good' : 'warning';
-    console.log(`💾 Layer 11 Backup: ${this.report.web8Layers.layer11_backup.health} (${backupFiles.length} files)`);
-  }
-
-  /**
-   * ⚡ LAYER 12: LIGHTNING POOL AUDIT
-   */
-  private async auditLayer12Lightning(): Promise<void> {
-    const lightningFiles = await glob('**/Lightning*.{ts,tsx}', { cwd: PROJECT_ROOT });
-    const workerFiles = await glob('**/workers/**/*.ts', { cwd: PROJECT_ROOT });
-    
-    this.report.web8Layers.layer12_lightning.files = [...lightningFiles, ...workerFiles];
-    this.report.web8Layers.layer12_lightning.exists = this.report.web8Layers.layer12_lightning.files.length > 0;
-    
-    if (!existsSync(join(PROJECT_ROOT, 'backend/Web8LightningPool.ts'))) {
-      this.report.web8Layers.layer12_lightning.issues.push('Missing: backend/Web8LightningPool.ts');
-    }
-    
-    this.report.web8Layers.layer12_lightning.health = this.report.web8Layers.layer12_lightning.issues.length === 0 ? 'excellent' : 'critical';
-    console.log(`⚡ Layer 12 Lightning: ${this.report.web8Layers.layer12_lightning.health} (${this.report.web8Layers.layer12_lightning.files.length} files)`);
-  }
-
-  /**
-   * 📦 AUDIT MONOREPO COMPLIANCE
-   */
-  private async auditMonorepoCompliance(): Promise<void> {
-    console.log('📦 Auditing Monorepo Compliance...');
-    
-    // Check for tsconfig aliases
-    const tsconfigPath = join(PROJECT_ROOT, 'tsconfig.json');
-    if (existsSync(tsconfigPath)) {
-      const content = readFileSync(tsconfigPath, 'utf-8');
-      const tsconfig = JSON.parse(content);
-      
-      if (tsconfig.compilerOptions?.paths) {
-        this.report.monorepoCompliance.aliasesConfigured = Object.keys(tsconfig.compilerOptions.paths);
+    for (const file of expectedTsFiles) {
+      if (!existsSync(join(PROJECT_ROOT, file))) {
+        this.report.typeScriptCompliance.missingTsFiles.push(file);
       }
     }
-    
-    // Check package.json scripts for dynamic modules
-    const packageJsonPath = join(PROJECT_ROOT, 'package.json');
-    if (existsSync(packageJsonPath)) {
-      const content = readFileSync(packageJsonPath, 'utf-8');
-      const packageJson = JSON.parse(content);
-      
-      if (packageJson.scripts) {
-        this.report.monorepoCompliance.dynamicModules = Object.keys(packageJson.scripts).filter(script => 
-          script.includes('dev:') || script.includes('build:') || script.includes('test:')
-        );
+
+    // Check for invalid imports (JavaScript imports in TypeScript files)
+    const tsFiles = await glob('**/*.{ts,tsx}', { 
+      cwd: PROJECT_ROOT,
+      ignore: ['node_modules/**', '.next/**']
+    });
+
+    for (const file of tsFiles.slice(0, 20)) { // Limit to prevent performance issues
+      try {
+        const content = readFileSync(join(PROJECT_ROOT, file), 'utf-8');
+        const jsImportPattern = /import.*from.*['"].*\.js['"];?/g;
+        
+        if (jsImportPattern.test(content)) {
+          this.report.typeScriptCompliance.invalidImports.push(file);
+        }
+      } catch (error) {
+        // Skip unreadable files
       }
     }
-    
-    console.log(`📦 Aliases: ${this.report.monorepoCompliance.aliasesConfigured.length}`);
-    console.log(`📦 Dynamic Modules: ${this.report.monorepoCompliance.dynamicModules.length}`);
+
+    console.log(`📜 TypeScript: ${this.report.typeScriptCompliance.jsFilesFound.length} JS files found`);
+    console.log(`📜 Missing TS files: ${this.report.typeScriptCompliance.missingTsFiles.length}`);
   }
 
   /**
-   * 🔍 AUDIT MISSING COMPONENTS
+   * 🔍 AUDIT MISSING MODULES
    */
-  private async auditMissingComponents(): Promise<void> {
-    console.log('🔍 Auditing Missing Components...');
-    
-    // Web8 Components
-    const web8Components = ['components/Web8TabSystem.tsx', 'lib/web8-motion.ts'];
-    for (const component of web8Components) {
-      if (!existsSync(join(PROJECT_ROOT, component))) {
-        this.report.missingComponents.web8Components.push(component);
-      }
+  private async auditMissingModules(): Promise<void> {
+    console.log('🔍 Auditing Missing Modules...');
+
+    // Validators
+    const validatorFiles = await glob('**/validator*.ts', { cwd: PROJECT_ROOT, nocase: true });
+    if (validatorFiles.length === 0) {
+      this.report.missingModules.validators.push('lib/validator.ts');
     }
-    
-    // AGI Modules
-    const agiModules = ['components/AGISheet/AGISheet.tsx', 'components/AGISheet/EcologyEngine.ts'];
-    for (const module of agiModules) {
-      if (!existsSync(join(PROJECT_ROOT, module))) {
-        this.report.missingComponents.agiModules.push(module);
-      }
+
+    // Lazers/LazyLoaders
+    const lazerFiles = await glob('**/Lazy*.ts*', { cwd: PROJECT_ROOT });
+    const laserFiles = await glob('**/Laser*.ts', { cwd: PROJECT_ROOT });
+    if ([...lazerFiles, ...laserFiles].length === 0) {
+      this.report.missingModules.lazers.push('components/LazyLoader.tsx');
+      this.report.missingModules.lazers.push('lib/LaserController.ts');
     }
-    
-    // Lightning Pool
-    const lightningPool = ['backend/Web8LightningPool.ts', 'backend/UltraSpeedModule.ts'];
-    for (const pool of lightningPool) {
-      if (!existsSync(join(PROJECT_ROOT, pool))) {
-        this.report.missingComponents.lightningPool.push(pool);
-      }
+
+    // Controllers
+    const controllerFiles = await glob('**/*Controller*.ts', { cwd: PROJECT_ROOT });
+    if (controllerFiles.length < 3) {
+      this.report.missingModules.controllers.push('lib/ThemeController.ts');
+      this.report.missingModules.controllers.push('lib/StateController.ts');
     }
-    
-    console.log(`🔍 Missing Web8: ${this.report.missingComponents.web8Components.length}`);
-    console.log(`🔍 Missing AGI: ${this.report.missingComponents.agiModules.length}`);
-    console.log(`🔍 Missing Lightning: ${this.report.missingComponents.lightningPool.length}`);
+
+    // Interfaces/Types
+    const interfaceFiles = await glob('**/types/**/*.ts', { cwd: PROJECT_ROOT });
+    if (interfaceFiles.length < 5) {
+      this.report.missingModules.interfaces.push('types/neural.types.ts');
+      this.report.missingModules.interfaces.push('types/fluid.types.ts');
+    }
+
+    console.log(`🔍 Missing validators: ${this.report.missingModules.validators.length}`);
+    console.log(`🔍 Missing lazers: ${this.report.missingModules.lazers.length}`);
+    console.log(`🔍 Missing controllers: ${this.report.missingModules.controllers.length}`);
   }
 
   /**
-   * 💡 GENERATE WEB8 RECOMMENDATIONS
+   * 💡 GENERATE RECOMMENDATIONS
    */
-  private async generateWeb8Recommendations(): Promise<void> {
+  private async generateRecommendations(): Promise<void> {
+    const recommendations = this.report.recommendations;
+
     // Layer recommendations
-    Object.entries(this.report.web8Layers).forEach(([layer, status]) => {
-      if (!status.exists) {
-        this.report.recommendations.push(`🚨 CRITICAL: Implement ${layer.replace('_', ' ').toUpperCase()}`);
-      }
-      if (status.issues.length > 0) {
-        this.report.recommendations.push(`⚠️ WARNING: Fix issues in ${layer.replace('_', ' ').toUpperCase()}`);
-      }
-    });
-    
-    // Monorepo recommendations
-    if (this.report.monorepoCompliance.aliasesConfigured.length === 0) {
-      this.report.recommendations.push('📦 Configure TypeScript path aliases for monorepo');
+    if (!this.report.layers.neural.exists) {
+      recommendations.push('🧠 CRITICAL: Implement Neural Layer - create NeuralPlanner.ts');
     }
-    
-    if (this.report.monorepoCompliance.dynamicModules.length < 5) {
-      this.report.recommendations.push('📦 Add more dynamic module scripts (dev:*, build:*, test:*)');
+
+    if (this.report.layers.ethical.issues.length > 0) {
+      recommendations.push('⚖️ WARNING: Fix Ethical Layer issues - check EthicalNeuralPlanner.ts');
     }
-    
-    // Component recommendations
-    if (this.report.missingComponents.lightningPool.length > 0) {
-      this.report.recommendations.push('⚡ URGENT: Implement Web8 Lightning Pool system');
+
+    // TypeScript recommendations
+    if (this.report.typeScriptCompliance.jsFilesFound.length > 0) {
+      recommendations.push('📜 CRITICAL: Remove all .js files - project must be TypeScript-only');
     }
+
+    if (this.report.typeScriptCompliance.infiniteLoops.length > 0) {
+      recommendations.push('🔄 CRITICAL: Fix infinite loops in ethical planner');
+    }
+
+    // Missing modules recommendations
+    if (this.report.missingModules.validators.length > 0) {
+      recommendations.push('✅ HIGH: Implement missing validators for data validation');
+    }
+
+    if (this.report.missingModules.lazers.length > 0) {
+      recommendations.push('⚡ MEDIUM: Implement LazyLoader components for performance');
+    }
+
+    // General recommendations
+    recommendations.push('🔧 Update all imports to use TypeScript extensions (.ts/.tsx)');
+    recommendations.push('🛡️ Ensure all layers have proper error handling');
+    recommendations.push('📊 Add comprehensive type definitions for all modules');
   }
 
   /**
-   * 📊 CALCULATE WEB8 SCORE
+   * 📊 CALCULATE AUDIT SCORE
    */
-  private calculateWeb8Score(): void {
+  private calculateScore(): void {
     let score = 100;
-    
-    // Deduct for missing layers (each layer is worth ~8 points)
-    Object.values(this.report.web8Layers).forEach(layer => {
-      if (!layer.exists) score -= 8;
-      if (layer.health === 'critical') score -= 4;
-      if (layer.health === 'warning') score -= 2;
+
+    // Deduct for missing layers
+    Object.values(this.report.layers).forEach(layer => {
+      if (!layer.exists) score -= 15;
+      if (layer.health === 'critical') score -= 10;
+      if (layer.health === 'warning') score -= 5;
     });
-    
-    // Deduct for missing components
-    score -= this.report.missingComponents.web8Components.length * 3;
-    score -= this.report.missingComponents.agiModules.length * 3;
-    score -= this.report.missingComponents.lightningPool.length * 5;
-    
+
+    // Deduct for TypeScript compliance issues
+    score -= this.report.typeScriptCompliance.jsFilesFound.length * 5;
+    score -= this.report.typeScriptCompliance.missingTsFiles.length * 3;
+    score -= this.report.typeScriptCompliance.invalidImports.length * 2;
+    score -= this.report.typeScriptCompliance.infiniteLoops.length * 10;
+
+    // Deduct for missing modules
+    score -= this.report.missingModules.validators.length * 5;
+    score -= this.report.missingModules.lazers.length * 3;
+    score -= this.report.missingModules.controllers.length * 4;
+
     this.report.score = Math.max(0, score);
   }
 
   /**
-   * 🏗️ AUDIT WEB8 12-LAYER ARCHITECTURE
-   */
-  private async auditWeb8Layers(): Promise<void> {
-    console.log('🏗️ Auditing Web8 12-Layer Architecture...');
-
-    // Layer 1: AGI Core
-    await this.auditLayer1AGICore();
-    
-    // Layer 2: Real-time Processing
-    await this.auditLayer2Realtime();
-    
-    // Layer 3: Neural Networks
-    await this.auditLayer3Neural();
-    
-    // Layer 4: Analytics
-    await this.auditLayer4Analytics();
-    
-    // Layer 5: Security (Guardian)
-    await this.auditLayer5Security();
-    
-    // Layer 6: Communication
-    await this.auditLayer6Communication();
-    
-    // Layer 7: Storage
-    await this.auditLayer7Storage();
-    
-    // Layer 8: Integration
-    await this.auditLayer8Integration();
-    
-    // Layer 9: Optimization
-    await this.auditLayer9Optimization();
-    
-    // Layer 10: Monitoring
-    await this.auditLayer10Monitoring();
-    
-    // Layer 11: Backup & Recovery
-    await this.auditLayer11Backup();
-    
-    // Layer 12: Lightning Pool
-    await this.auditLayer12Lightning();
-
-    console.log('✅ Web8 12-layer audit complete\n');
-  }
-
-  /**
-   *  PRINT COMPREHENSIVE WEB8 REPORT
+   * 📋 PRINT COMPREHENSIVE REPORT
    */
   public printReport(report: LayerAuditReport): void {
-    console.log(`\n${'='.repeat(80)}`);
-    console.log('🔍 WEB8 12-LAYER ARCHITECTURE AUDIT REPORT');
+    console.log(`\n${  '='.repeat(80)}`);
+    console.log('🔍 PROJECT LAYER & TYPESCRIPT AUDIT REPORT');
     console.log('='.repeat(80));
 
     // Overall Score
     const scoreColor = report.score >= 90 ? '🟢' : report.score >= 70 ? '🟡' : '🔴';
     console.log(`\n📊 OVERALL SCORE: ${scoreColor} ${report.score}/100\n`);
 
-    // Web8 12-Layer Status
-    console.log('🏗️ WEB8 12-LAYER STATUS:');
-    Object.entries(report.web8Layers).forEach(([name, layer]) => {
+    // Layer Status
+    console.log('🏗️ LAYER STATUS:');
+    Object.entries(report.layers).forEach(([name, layer]) => {
       const healthIcon = layer.health === 'excellent' ? '🟢' : 
                         layer.health === 'good' ? '🟡' : 
                         layer.health === 'warning' ? '🟠' : '🔴';
-      console.log(`   ${healthIcon} ${name.replace('_', ' ').toUpperCase()}: ${layer.health} (${layer.files.length} files)`);
+      console.log(`   ${healthIcon} ${name.toUpperCase()}: ${layer.health} (${layer.files.length} files)`);
       
       if (layer.issues.length > 0) {
         layer.issues.forEach(issue => console.log(`      ❌ ${issue}`));
       }
     });
 
-    // Monorepo Compliance
-    console.log('\n� MONOREPO COMPLIANCE:');
-    console.log(`   Configured Aliases: ${report.monorepoCompliance.aliasesConfigured.length}`);
-    if (report.monorepoCompliance.aliasesConfigured.length > 0) {
-      report.monorepoCompliance.aliasesConfigured.slice(0, 3).forEach(alias => {
-        console.log(`      ✅ ${alias}`);
+    // TypeScript Compliance
+    console.log('\n📜 TYPESCRIPT COMPLIANCE:');
+    console.log(`   JS Files Found: ${report.typeScriptCompliance.jsFilesFound.length}`);
+    if (report.typeScriptCompliance.jsFilesFound.length > 0) {
+      report.typeScriptCompliance.jsFilesFound.slice(0, 5).forEach(file => {
+        console.log(`      ❌ ${file}`);
       });
     }
     
-    console.log(`   Dynamic Modules: ${report.monorepoCompliance.dynamicModules.length}`);
-    if (report.monorepoCompliance.dynamicModules.length > 0) {
-      report.monorepoCompliance.dynamicModules.slice(0, 5).forEach(module => {
-        console.log(`      ⚡ ${module}`);
-      });
-    }
+    console.log(`   Missing TS Files: ${report.typeScriptCompliance.missingTsFiles.length}`);
+    report.typeScriptCompliance.missingTsFiles.forEach(file => {
+      console.log(`      ❌ ${file}`);
+    });
 
-    // Missing Components
-    console.log('\n🔍 MISSING COMPONENTS:');
-    console.log(`   Web8 Components: ${report.missingComponents.web8Components.length}`);
-    report.missingComponents.web8Components.forEach(comp => console.log(`      ❌ ${comp}`));
-    
-    console.log(`   AGI Modules: ${report.missingComponents.agiModules.length}`);
-    report.missingComponents.agiModules.forEach(comp => console.log(`      ❌ ${comp}`));
-    
-    console.log(`   Lightning Pool: ${report.missingComponents.lightningPool.length}`);
-    report.missingComponents.lightningPool.forEach(comp => console.log(`      ❌ ${comp}`));
+    console.log(`   Infinite Loops: ${report.typeScriptCompliance.infiniteLoops.length}`);
+    report.typeScriptCompliance.infiniteLoops.forEach(loop => {
+      console.log(`      🔄 ${loop}`);
+    });
+
+    // Missing Modules
+    console.log('\n🔍 MISSING MODULES:');
+    console.log(`   Validators: ${report.missingModules.validators.length}`);
+    console.log(`   Lazers: ${report.missingModules.lazers.length}`);
+    console.log(`   Controllers: ${report.missingModules.controllers.length}`);
+    console.log(`   Interfaces: ${report.missingModules.interfaces.length}`);
 
     // Recommendations
-    console.log('\n💡 WEB8 RECOMMENDATIONS:');
-    if (report.recommendations.length === 0) {
-      console.log('   🎉 No recommendations - Web8 architecture is optimal!');
-    } else {
-      report.recommendations.forEach((rec, index) => {
-        console.log(`   ${index + 1}. ${rec}`);
-      });
-    }
+    console.log('\n💡 RECOMMENDATIONS:');
+    report.recommendations.forEach((rec, index) => {
+      console.log(`   ${index + 1}. ${rec}`);
+    });
 
-    console.log(`\n${'='.repeat(80)}`);
-    console.log('✅ WEB8 AUDIT COMPLETE - 12-layer architecture analyzed');
-    console.log(`${'='.repeat(80)}\n`);
+    console.log(`\n${  '='.repeat(80)}`);
+    console.log('✅ AUDIT COMPLETE - Reviewed project layers and TypeScript compliance');
+    console.log(`${'='.repeat(80)  }\n`);
   }
 }
 

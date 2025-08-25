@@ -6,7 +6,7 @@
  * @version 8.0.0 Ultra
  */
 
-import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { LoadingSpinner } from '../frontend/components/LoadingSpinner'
 import styles from './loading.module.css'
 
 export default function Loading() {

@@ -863,7 +863,9 @@ app.get('/', (req, res) => {
       success: false,
       error: 'Internal server error'
     });
+    return;
   }
+  return;
 });
 
 // Error handling middleware

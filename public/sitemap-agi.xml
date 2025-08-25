@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  
+  <!-- Web8 AGI Core Pages -->
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/agi-dashboard</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>1.0</priority>
+    <news:news>
+      <news:publication>
+        <news:name>Web8 AGI Platform</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2025-08-17</news:publication_date>
+      <news:title>Real-Time AGI Royal Dashboard - Live System Metrics</news:title>
+      <news:keywords>AGI, artificial intelligence, real-time, dashboard, neural processing</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/ultra-agi-chat</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <news:news>
+      <news:publication>
+        <news:name>Web8 AGI Platform</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2025-08-17</news:publication_date>
+      <news:title>Ultra AGI Chat Interface - Advanced AI Communication</news:title>
+      <news:keywords>AGI chat, AI communication, neural interface, conversational AI</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/agi</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/agi-bio-demo</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/agi-eco-demo</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/agi-demo</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://ultrawebthinking.vercel.app/agixeco-demo</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

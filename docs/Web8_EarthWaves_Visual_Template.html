@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web8 + Earth Waves - Industrial Roadmap</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            background: #001122;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Cover Page */
+        .cover-slide {
+            background: linear-gradient(135deg, #002B5B 0%, #001F3F 50%, #000814 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .cover-slide h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FF6B35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .cover-slide h2 {
+            font-size: 2rem;
+            color: #87CEEB;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        
+        .cover-icons {
+            display: flex;
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .cover-icon {
+            font-size: 6rem;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .cover-icon:nth-child(2) {
+            animation-delay: -1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Slide Layout */
+        .slide {
+            min-height: 100vh;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .slide-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .slide-icon {
+            font-size: 3rem;
+            margin-right: 20px;
+        }
+        
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        /* Part 1 - Introduction */
+        .intro-slide {
+            background: linear-gradient(135deg, #E8E8E8 0%, #F5F5F5 100%);
+            color: #333;
+        }
+        
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .intro-visual {
+            text-align: center;
+        }
+        
+        .pathway-box {
+            background: linear-gradient(45deg, #4A90E2, #7B68EE);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        /* Part 2 - Web8 */
+        .web8-slide {
+            background: linear-gradient(135deg, #001F3F 0%, #002B5B 100%);
+        }
+        
+        .web8-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .module-box {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #FF4444;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chip-box {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #FFD700;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Part 3 - Earth Waves */
+        .earthwaves-slide {
+            background: linear-gradient(135deg, #2E8B57 0%, #3CB371 50%, #20B2AA 100%);
+        }
+        
+        .earthwaves-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .wave-box {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #00CED1;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Part 4 - Roadmap */
+        .roadmap-slide {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+            color: #333;
+        }
+        
+        .roadmap-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .roadmap-table th {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .roadmap-table td {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 1rem;
+        }
+        
+        .roadmap-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .roadmap-table tr:hover {
+            background: #e9ecef;
+        }
+        
+        /* Part 5 - Market */
+        .market-slide {
+            background: linear-gradient(135deg, #6A5ACD 0%, #483D8B 50%, #2F1B69 100%);
+        }
+        
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #E0E0E0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cover-slide h1 { font-size: 2.5rem; }
+            .cover-slide h2 { font-size: 1.5rem; }
+            .slide { padding: 40px 20px; }
+            .intro-content, .web8-content, .earthwaves-content {
+                grid-template-columns: 1fr;
+            }
+            .cover-icons { flex-direction: column; gap: 20px; }
+        }
+        
+        /* Print styles for PDF export */
+        @media print {
+            .slide { page-break-after: always; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover Page -->
+    <div class="cover-slide">
+        <h1>Industrial Roadmap</h1>
+        <h2>From Software to Chip</h2>
+        <p style="font-size: 1.5rem; margin: 20px 0; color: #B0C4DE;">
+            Web8 (Cybersecurity & AGI) + Earth Waves (Energy & Communication)
+        </p>
+        <div class="cover-icons">
+            <div class="cover-icon">🔒</div>
+            <div class="cover-icon">⚡</div>
+            <div class="cover-icon">🌍</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Part 1 - Introduction -->
+        <div class="slide intro-slide">
+            <div class="slide-header">
+                <div class="slide-icon" style="color: #4A90E2;">🌍</div>
+                <h2 class="slide-title">Introduction</h2>
+            </div>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h3 style="color: #2E5984; margin-bottom: 20px;">Vision</h3>
+                    <p><strong>Web8:</strong> A post-quantum, AI-driven cybersecurity ecosystem that behaves like a digital immune system.</p>
+                    <br>
+                    <p><strong>Earth Waves:</strong> Wireless energy transfer and resilient off-grid communication inspired by natural resonance.</p>
+                    
+                    <div class="pathway-box">
+                        <h4>Objective Pathway</h4>
+                        <p>Software → FPGA → ASIC → Product Integration</p>
+                    </div>
+                </div>
+                <div class="intro-visual">
+                    <div style="font-size: 8rem; margin-bottom: 20px;">🚀</div>
+                    <p style="font-size: 1.3rem; color: #666;">
+                        The future of secure, autonomous technology
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 2 - Web8 -->
+        <div class="slide web8-slide">
+            <div class="slide-header">
+                <div class="slide-icon">🔒</div>
+                <h2 class="slide-title">Web8 (Cybersecurity & AGI)</h2>
+            </div>
+            <div class="web8-content">
+                <div>
+                    <h3 style="margin-bottom: 30px; color: #FFD700;">Software Modules</h3>
+                    
+                    <div class="module-box">
+                        <h4>🪞 Mirror Defense (Layer 7)</h4>
+                        <ul style="margin-top: 10px;">
+                            <li>Out Mirror: CSP, SRI, cleanup</li>
+                            <li>Broken Mirror: Logic inversion, zombie code</li>
+                            <li>Close Mirror: 5-layer obfuscation</li>
+                            <li>Guardian + Watchdog</li>
+                            <li>Honeypot traps</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="module-box">
+                        <h4>🛡️ DDoS Defense (Layer 8)</h4>
+                        <ul style="margin-top: 10px;">
+                            <li>Firewall + Rate Limiting</li>
+                            <li>Proof-of-Work challenges</li>
+                            <li>Anomaly detection (EWMA)</li>
+                            <li>Mesh synchronization</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="margin-bottom: 30px; color: #FFD700;">Hardware Potential</h3>
+                    
+                    <div class="chip-box">
+                        <h4>💎 Guardian Chip</h4>
+                        <p>Hashing + anomaly detection + SAFE mode</p>
+                    </div>
+                    
+                    <div class="chip-box">
+                        <h4>💎 Mirror Chip</h4>
+                        <p>Obfuscation & encryption accelerator</p>
+                    </div>
+                    
+                    <div class="chip-box">
+                        <h4>💎 Mesh Security Chip</h4>
+                        <p>Distributed consensus & ban-sharing</p>
+                    </div>
+                    
+                    <div class="chip-box">
+                        <h4>💎 AGI Co-Processor</h4>
+                        <p>AI ethics + self-defense reasoning</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 3 - Earth Waves -->
+        <div class="slide earthwaves-slide">
+            <div class="slide-header">
+                <div class="slide-icon">⚡</div>
+                <h2 class="slide-title">Earth Waves (Energy & Communication)</h2>
+            </div>
+            <div class="earthwaves-content">
+                <div>
+                    <h3 style="margin-bottom: 30px;">Technology Modules</h3>
+                    
+                    <div class="wave-box">
+                        <h4>🌊 Wave Resonance</h4>
+                        <p>Wireless energy transfer using earth's electromagnetic fields</p>
+                    </div>
+                    
+                    <div class="wave-box">
+                        <h4>📡 Ground-Wave Communication</h4>
+                        <p>VLF/UHF backup channels for off-grid networks</p>
+                    </div>
+                    
+                    <div class="wave-box">
+                        <h4>🔋 Energy Harvesting</h4>
+                        <p>Perpetual power for IoT sensors from ambient sources</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="margin-bottom: 30px;">EarthWave Chipset</h3>
+                    
+                    <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">🔌</div>
+                        <h4>Resonance Chip</h4>
+                        <p>Wireless power controller</p>
+                    </div>
+                    <br>
+                    <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">📶</div>
+                        <h4>Ground-Wave Modem</h4>
+                        <p>Off-grid communication</p>
+                    </div>
+                    <br>
+                    <div style="background: rgba(255,255,255,0.2); padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">⚡</div>
+                        <h4>Energy Harvesting</h4>
+                        <p>Ambient energy capture</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Part 4 - Roadmap -->
+        <div class="slide roadmap-slide">
+            <div class="slide-header">
+                <div class="slide-icon" style="color: #FF6B35;">🛠️</div>
+                <h2 class="slide-title" style="color: #333;">Industrial Roadmap</h2>
+            </div>
+            
+            <table class="roadmap-table">
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Technology</th>
+                        <th>Product</th>
+                        <th>Result</th>
+                        <th>Timeline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Software</strong></td>
+                        <td>Web8 + Earth Waves modules</td>
+                        <td>Secure Software Platform</td>
+                        <td>✅ Already deployable</td>
+                        <td>2025</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. FPGA</strong></td>
+                        <td>Guardian core, Mesh core, Wave resonance</td>
+                        <td>FPGA Prototypes</td>
+                        <td>🔬 Lab validation</td>
+                        <td>2026</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. ASIC/SoC</strong></td>
+                        <td>Web8 Secure + EarthWave Chipsets</td>
+                        <td>Dedicated Silicon</td>
+                        <td>🏭 Industrial production</td>
+                        <td>2027-2028</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Integration</strong></td>
+                        <td>Servers + IoT devices</td>
+                        <td>Complete Ecosystem</td>
+                        <td>🌍 Global deployment</td>
+                        <td>2029+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Part 5 - Market -->
+        <div class="slide market-slide">
+            <div class="slide-header">
+                <div class="slide-icon">📊</div>
+                <h2 class="slide-title">Market Opportunities</h2>
+            </div>
+            
+            <div class="market-stats">
+                <div class="stat-box">
+                    <div class="stat-number">$200B+</div>
+                    <div class="stat-label">Cybersecurity Hardware Market (2025)</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-number">$50B+</div>
+                    <div class="stat-label">IoT Secure Chips Market (2025)</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-number">$25B+</div>
+                    <div class="stat-label">Wireless Energy Transfer Market (2030)</div>
+                </div>
+                
+                <div class="stat-box">
+                    <div class="stat-number">75B+</div>
+                    <div class="stat-label">Connected IoT Devices by 2030</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 50px; text-align: center;">
+                <h3 style="color: #FFD700; margin-bottom: 20px;">Competitive Advantage</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <strong>🔗 Integrated Ecosystem</strong><br>
+                        Security + Energy + Communication unified
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <strong>🛡️ Post-Quantum Ready</strong><br>
+                        Designed for quantum-era threats
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <strong>🧠 Ethics Layer</strong><br>
+                        AGI reasoning in hardware
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <strong>🌐 Decentralized</strong><br>
+                        Mesh synchronization, no single point of failure
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and animations
+        window.addEventListener('scroll', () => {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => {
+                const rect = slide.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    slide.style.opacity = '1';
+                    slide.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Print/PDF export function
+        function exportToPDF() {
+            window.print();
+        }
+
+        // Add export button
+        const exportBtn = document.createElement('button');
+        exportBtn.innerHTML = '📄 Export to PDF';
+        exportBtn.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        `;
+        exportBtn.onclick = exportToPDF;
+        document.body.appendChild(exportBtn);
+    </script>
+</body>
+</html>

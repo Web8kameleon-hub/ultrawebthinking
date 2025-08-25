@@ -12,12 +12,12 @@
 
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AGIMedUltra } from '../frontend/src/components/AGISheet/AGIMedUltra'
-import { AGIOfficeUltra } from '../frontend/src/components/AGISheet/AGIOfficeUltra'
-import { AGIEcoUltra } from '../frontend/src/components/AGISheet/AGIEcoUltra'
-import { AGIElUltra } from '../frontend/src/components/AGISheet/AGIElUltra'
-import { AGICoreUltra } from '../frontend/src/components/AGISheet/AGICoreUltra'
-import { GuardianMonitor } from '../frontend/src/components/GuardianMonitor'
+import { AGIMedUltra } from '../frontend/components/AGISheet/AGIMedUltra'
+import { AGIOfficeUltra } from '../frontend/components/AGISheet/AGIOfficeUltra'
+import { AGIEcoUltra } from '../frontend/components/AGISheet/AGIEcoUltra'
+import { AGIElUltra } from '../frontend/components/AGISheet/AGIElUltra'
+import { AGICoreUltra } from '../frontend/components/AGISheet/AGICoreUltra'
+import { GuardianMonitor } from '../frontend/components/GuardianMonitor'
 import { cva, type VariantProps } from 'class-variance-authority'
 import styles from '../frontend/src/components/Web8TabSystem.module.css'
 

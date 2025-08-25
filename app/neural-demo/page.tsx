@@ -9,7 +9,7 @@
 
 import * as React from 'react';
 
-import NeuralDashboard from '@/components/NeuralDashboard';
+import NeuralDashboard from '../../frontend/components/NeuralDashboard';
 
 // Web8 Functional Component
 export default function NeuralDemo() {

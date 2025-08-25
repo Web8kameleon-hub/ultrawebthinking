@@ -43,12 +43,12 @@ interface NeuralActivity {
 }
 
 class NeuralPlanner extends EventEmitter {
-  private readonly nodes: Map<string, NeuralNode>;
-  private readonly config: PlannerConfig;
+  private nodes: Map<string, NeuralNode>;
+  private config: PlannerConfig;
   private activityLog: NeuralActivity[] = [];
   private isRunning = false;
-  private monitoringInterval?: NodeJS.Timeout;
-  private readonly throttledNodes: Set<string> = new Set();
+  private monitoringInterval?: NodeJS.Timeout | undefined;
+  private throttledNodes: Set<string> = new Set();
   private safeThinkActive = false;
 
   constructor(config: Partial<PlannerConfig> = {}) {
@@ -70,10 +70,7 @@ class NeuralPlanner extends EventEmitter {
     this.startMonitoring();
     
     // Log strict ethical mode activation
-    console.log('🛡️ Neural Planner initialized in STRICT ETHICAL MODE');
-    console.log(`⚖️ Ethical threshold: ${this.config.flickeringThreshold}`);
-    console.log(`🚨 Max pulse rate: ${this.config.maxPulseRate}Hz`);
-  }
+    }
 
   /**
    * Initialize the neural network with core nodes
@@ -158,8 +155,7 @@ class NeuralPlanner extends EventEmitter {
       this.nodes.set(node.id, node);
     });
 
-    console.log('🧠 Neural network initialized with 8 core nodes');
-  }
+    }
 
   /**
    * Start neural activity monitoring
@@ -168,8 +164,6 @@ class NeuralPlanner extends EventEmitter {
     if (this.isRunning) return;
 
     this.isRunning = true;
-    console.log('🔄 Starting neural activity monitoring...');
-
     this.monitoringInterval = setInterval(() => {
       this.updateNeuralActivity();
       this.checkNodeHealth();
@@ -188,8 +182,7 @@ class NeuralPlanner extends EventEmitter {
       clearInterval(this.monitoringInterval);
       this.monitoringInterval = undefined;
     }
-    console.log('⏹️ Neural activity monitoring stopped');
-  }
+    }
 
   /**
    * Update neural activity for all nodes
@@ -222,184 +215,45 @@ class NeuralPlanner extends EventEmitter {
    */
   private checkNodeHealth(): void {
     this.nodes.forEach(node => {
-      // Critical monitoring for n1 (Primary Input Processor)
-      if (node.id === 'n1' && node.pulseRate > node.threshold) {
-        this.log.warn(`n1 overload detected — input throttled (pulse: ${node.pulseRate.toFixed(2)}Hz)`);
-        this.throttleInput(node.id);
-        this.emit('nodeOverload', { nodeId: 'n1', pulseRate: node.pulseRate });
+      // Check for high pulse rate
+      if (node.pulseRate > node.threshold) {
+        this.logWarning(`Node ${node.id} overload detected - pulse: ${node.pulseRate.toFixed(2)}Hz`);
+        this.throttleNode(node.id);
       }
 
-      // STRICT ETHICAL MONITORING for n7 (Ethical Oversight Controller)
+      // Check for ethical violations (n7 - Ethical Oversight Controller)
       if (node.id === 'n7' && node.flickering > this.config.flickeringThreshold) {
-        this.log.alert(`🚨 STRICT ETHICAL VIOLATION: n7 anomaly detected (flickering: ${node.flickering.toFixed(2)}) - ENGAGING ENHANCED SAFETHINK`);
+        this.logCritical(`🚨 ETHICAL VIOLATION: n7 anomaly detected (flickering: ${node.flickering.toFixed(2)}) - ENGAGING SAFETHINK`);
         this.activateSafeThink();
-        this.emit('ethicalViolation', { 
-          nodeId: 'n7', 
-          flickering: node.flickering, 
-          severity: 'CRITICAL',
-          action: 'ENHANCED_SAFETHINK_ACTIVATED'
-        });
-        
-        // Additional ethical compliance logging
-        console.error(`⚖️ [ETHICS] ${new Date().toISOString()} COMPLIANCE BREACH - Extending SafeThink duration`);
       }
 
-      // General overload protection
+      // Check for emergency shutdown conditions
       if (node.pulseRate > this.config.emergencyShutdownThreshold) {
-        this.log.critical(`Emergency shutdown triggered for ${node.id} (pulse: ${node.pulseRate.toFixed(2)}Hz)`);
+        this.logCritical(`Emergency shutdown triggered for ${node.id} (pulse: ${node.pulseRate.toFixed(2)}Hz)`);
         this.emergencyShutdown(node.id);
       }
 
-      // Recovery check for throttled nodes
-      if (this.throttledNodes.has(node.id) && node.pulseRate < node.threshold * 0.7) {
-        this.log.info(`Node ${node.id} recovered, removing throttle`);
-        this.removeThrottle(node.id);
+      // Check for recovery conditions
+      if (node.status === 'throttled' && node.pulseRate < node.threshold * 0.8) {
+        this.logInfo(`Node ${node.id} recovered, removing throttle`);
+        this.unthrottleNode(node.id);
       }
     });
   }
 
   /**
-   * Process neural pulses and propagate signals
+   * Process neural pulses and network communication
    */
   private processNeuralPulses(): void {
     this.nodes.forEach(node => {
-      if (node.status === 'active' && !this.throttledNodes.has(node.id)) {
-        // Propagate pulses to connected nodes
-        node.connections.forEach(targetId => {
-          const targetNode = this.nodes.get(targetId);
-          if (targetNode && targetNode.status === 'active') {
-            const pulseStrength = (node.pulseRate / 100) * (node.activity / 100);
-            targetNode.activity = Math.min(100, targetNode.activity + pulseStrength * 5);
-          }
-        });
-      }
-    });
-  }
-
-  /**
-   * Throttle input for overloaded nodes
-   */
-  private throttleInput(nodeId: string): void {
-    const node = this.nodes.get(nodeId);
-    if (!node) return;
-
-    node.status = 'throttled';
-    this.throttledNodes.add(nodeId);
-    
-    // Reduce activity and pulse rate
-    node.activity *= 0.5;
-    node.pulseRate *= 0.3;
-
-    this.logActivity(nodeId, node.activity, node.pulseRate, node.flickering, 'throttled');
-
-    // Auto-recovery after delay
-    setTimeout(() => {
-      if (this.throttledNodes.has(nodeId)) {
-        this.removeThrottle(nodeId);
-      }
-    }, this.config.throttleDelay);
-  }
-
-  /**
-   * Remove throttle from node
-   */
-  private removeThrottle(nodeId: string): void {
-    const node = this.nodes.get(nodeId);
-    if (!node) return;
-
-    node.status = 'active';
-    this.throttledNodes.delete(nodeId);
-    this.logActivity(nodeId, node.activity, node.pulseRate, node.flickering, 'unthrottled');
-  }
-
-  /**
-   * Activate safe thinking mode for ethical anomalies
-   */
-  private activateSafeThink(): void {
-    if (this.safeThinkActive) return;
-
-    this.safeThinkActive = true;
-    console.log('🛡️ SafeThink mode activated - ethical override engaged');
-
-    // Reduce activity on all non-essential nodes
-    this.nodes.forEach(node => {
-      if (node.type !== 'ethical' && node.type !== 'output') {
-        node.activity *= 0.4;
-        node.pulseRate *= 0.6;
-        if (node.id !== 'n7') {
-          node.status = 'safethink';
-        }
-      }
-    });
-
-    // Boost ethical controller
-    const n7 = this.nodes.get('n7');
-    if (n7) {
-      n7.activity = Math.min(100, n7.activity * 1.2);
-      n7.flickering = 0; // Reset flickering
-    }
-
-    this.emit('safeThinkActivated', { timestamp: Date.now() });
-
-    // Auto-deactivate after duration
-    setTimeout(() => {
-      this.deactivateSafeThink();
-    }, this.config.safeThinkDuration);
-  }
-
-  /**
-   * Deactivate safe thinking mode
-   */
-  private deactivateSafeThink(): void {
-    if (!this.safeThinkActive) return;
-
-    this.safeThinkActive = false;
-    console.log('✅ SafeThink mode deactivated - normal operation resumed');
-
-    // Restore normal status to safethink nodes
-    this.nodes.forEach(node => {
-      if (node.status === 'safethink') {
-        node.status = 'active';
-      }
-    });
-
-    this.emit('safeThinkDeactivated', { timestamp: Date.now() });
-  }
-
-  /**
-   * Emergency shutdown for critical node failures
-   */
-  private emergencyShutdown(nodeId: string): void {
-    const node = this.nodes.get(nodeId);
-    if (!node) return;
-
-    node.status = 'offline';
-    node.activity = 0;
-    node.pulseRate = 0;
-    node.flickering = 0;
-    node.errorCount++;
-
-    this.logActivity(nodeId, 0, 0, 0, 'emergency_shutdown');
-    this.emit('emergencyShutdown', { nodeId, timestamp: Date.now() });
-
-    // Reroute connections if possible
-    this.rerouteConnections(nodeId);
-  }
-
-  /**
-   * Reroute connections when a node goes offline
-   */
-  private rerouteConnections(offlineNodeId: string): void {
-    this.nodes.forEach(node => {
-      if (node.connections.includes(offlineNodeId)) {
-        // Find alternative paths
-        const alternatives = Array.from(this.nodes.values())
-          .filter(n => n.id !== offlineNodeId && n.status === 'active' && n.type !== 'output')
-          .slice(0, 2); // Max 2 alternative connections
-
-        alternatives.forEach(alt => {
-          if (!node.connections.includes(alt.id)) {
-            node.connections.push(alt.id);
+      if (node.status === 'active') {
+        // Process connections and pulse propagation
+        node.connections.forEach(connectionId => {
+          const connectedNode = this.nodes.get(connectionId);
+          if (connectedNode && connectedNode.status === 'active') {
+            // Simulate pulse transmission
+            const pulseStrength = node.activity * 0.1;
+            connectedNode.activity = Math.min(100, connectedNode.activity + pulseStrength);
           }
         });
       }
@@ -410,7 +264,7 @@ class NeuralPlanner extends EventEmitter {
    * Log neural activity
    */
   private logActivity(nodeId: string, activity: number, pulseRate: number, flickering: number, event: string): void {
-    const logEntry: NeuralActivity = {
+    const activityRecord: NeuralActivity = {
       timestamp: Date.now(),
       nodeId,
       activity,
@@ -418,114 +272,114 @@ class NeuralPlanner extends EventEmitter {
       flickering,
       event
     };
-
-    this.activityLog.push(logEntry);
-
-    // Keep only last 1000 entries
+    
+    this.activityLog.push(activityRecord);
+    
+    // Keep only last 1000 records
     if (this.activityLog.length > 1000) {
       this.activityLog = this.activityLog.slice(-1000);
     }
   }
 
   /**
-   * Advanced logging system
+   * Throttle a node to prevent overload
    */
-  private readonly log = {
-    info: (message: string) => {
-      console.log(`ℹ️ [Neural] ${new Date().toISOString()} ${message}`);
-    },
-    warn: (message: string) => {
-      console.warn(`⚠️ [Neural] ${new Date().toISOString()} ${message}`);
-      this.emit('warning', message);
-    },
-    alert: (message: string) => {
-      console.error(`🚨 [Neural] ${new Date().toISOString()} ${message}`);
-      this.emit('alert', message);
-    },
-    critical: (message: string) => {
-      console.error(`💥 [Neural] ${new Date().toISOString()} CRITICAL: ${message}`);
-      this.emit('critical', message);
+  private throttleNode(nodeId: string): void {
+    const node = this.nodes.get(nodeId);
+    if (node) {
+      node.status = 'throttled';
+      this.throttledNodes.add(nodeId);
+      
+      // Auto-recover after throttle delay
+      setTimeout(() => {
+        if (node.pulseRate < node.threshold * 0.8) {
+          this.unthrottleNode(nodeId);
+        }
+      }, this.config.throttleDelay);
     }
-  };
+  }
+
+  /**
+   * Remove throttling from a node
+   */
+  private unthrottleNode(nodeId: string): void {
+    const node = this.nodes.get(nodeId);
+    if (node) {
+      node.status = 'active';
+      this.throttledNodes.delete(nodeId);
+    }
+  }
+
+  /**
+   * Activate SafeThink mode for ethical compliance
+   */
+  private activateSafeThink(): void {
+    if (this.safeThinkActive) return;
+    
+    this.safeThinkActive = true;
+    this.nodes.forEach(node => {
+      if (node.status === 'active') {
+        node.status = 'safethink';
+      }
+    });
+
+    // Auto-deactivate after safe think duration
+    setTimeout(() => {
+      this.deactivateSafeThink();
+    }, this.config.safeThinkDuration);
+  }
+
+  /**
+   * Deactivate SafeThink mode
+   */
+  private deactivateSafeThink(): void {
+    this.safeThinkActive = false;
+    this.nodes.forEach(node => {
+      if (node.status === 'safethink') {
+        node.status = 'active';
+      }
+    });
+  }
+
+  /**
+   * Emergency shutdown of a specific node
+   */
+  private emergencyShutdown(nodeId: string): void {
+    const node = this.nodes.get(nodeId);
+    if (node) {
+      node.status = 'offline';
+      node.activity = 0;
+      node.pulseRate = 0;
+      this.emit('emergencyShutdown', { nodeId, timestamp: Date.now() });
+    }
+  }
+
+  /**
+   * Logging methods
+   */
+  private logInfo(message: string): void {
+    console.log(`ℹ️ [Neural] ${new Date().toISOString()} ${message}`);
+    this.emit('log', { level: 'info', message, timestamp: Date.now() });
+  }
+
+  private logWarning(message: string): void {
+    console.warn(`⚠️ [Neural] ${new Date().toISOString()} ${message}`);
+    this.emit('log', { level: 'warning', message, timestamp: Date.now() });
+  }
+
+  private logCritical(message: string): void {
+    console.error(`🚨 [Neural] ${new Date().toISOString()} CRITICAL: ${message}`);
+    this.emit('log', { level: 'critical', message, timestamp: Date.now() });
+  }
 
   /**
    * Get current neural network status
    */
-  public getNetworkStatus(): any {
-    const nodeStatuses = Array.from(this.nodes.values()).map(node => ({
-      id: node.id,
-      name: node.name,
-      type: node.type,
-      activity: Math.round(node.activity * 100) / 100,
-      pulseRate: Math.round(node.pulseRate * 100) / 100,
-      flickering: Math.round(node.flickering * 100) / 100,
-      status: node.status,
-      connections: node.connections.length,
-      errorCount: node.errorCount
-    }));
-
-    return {
-      timestamp: Date.now(),
-      isRunning: this.isRunning,
-      safeThinkActive: this.safeThinkActive,
-      throttledNodes: Array.from(this.throttledNodes),
-      totalNodes: this.nodes.size,
-      activeNodes: nodeStatuses.filter(n => n.status === 'active').length,
-      nodes: nodeStatuses,
-      recentActivity: this.activityLog.slice(-10)
-    };
-  }
-
-  /**
-   * Get neural activity map for visualization
-   */
-  public getActivityMap(): any {
-    const activityMap: any = {};
-    
-    this.nodes.forEach(node => {
-      activityMap[node.id] = {
-        name: node.name,
-        activity: node.activity,
-        pulseRate: node.pulseRate,
-        flickering: node.flickering,
-        status: node.status,
-        coordinates: this.getNodeCoordinates(node.id),
-        connections: node.connections
-      };
-    });
-
-    return {
-      timestamp: Date.now(),
-      map: activityMap,
-      safeThinkActive: this.safeThinkActive,
-      alerts: this.getActiveAlerts()
-    };
-  }
-
-  /**
-   * Get node coordinates for visualization
-   */
-  private getNodeCoordinates(nodeId: string): { x: number, y: number } {
-    const coords: Record<string, { x: number, y: number }> = {
-      'n1': { x: 100, y: 200 },
-      'n2': { x: 300, y: 100 },
-      'n3': { x: 300, y: 300 },
-      'n4': { x: 500, y: 150 },
-      'n5': { x: 500, y: 250 },
-      'n6': { x: 700, y: 200 },
-      'n7': { x: 700, y: 350 },
-      'n8': { x: 900, y: 200 }
-    };
-    return coords[nodeId] || { x: 0, y: 0 };
-  }
-
-  /**
-   * Get active alerts
-   */
-  private getActiveAlerts(): string[] {
+  public getNetworkStatus(): { nodes: NeuralNode[], alerts: string[] } {
+    const nodes = Array.from(this.nodes.values());
     const alerts: string[] = [];
-    
-    this.nodes.forEach(node => {
+
+    nodes.forEach(node => {
       if (node.pulseRate > node.threshold) {
         alerts.push(`${node.id}: High pulse rate (${node.pulseRate.toFixed(1)}Hz)`);
       }
@@ -537,53 +391,87 @@ class NeuralPlanner extends EventEmitter {
       }
     });
 
-    return alerts;
+    return { nodes, alerts };
   }
 
   /**
-   * Manual node control
+   * Get activity log
+   */
+  public getActivityLog(): NeuralActivity[] {
+    return [...this.activityLog];
+  }
+
+  /**
+   * Get activity map for visualization
+   */
+  public getActivityMap(): { nodeActivities: Record<string, number>, connectionStrengths: Record<string, number>, timestamp: number } {
+    const nodeActivities: Record<string, number> = {};
+    const connectionStrengths: Record<string, number> = {};
+
+    this.nodes.forEach((node, nodeId) => {
+      nodeActivities[nodeId] = node.activity;
+      node.connections.forEach(connectionId => {
+        const connectionKey = `${nodeId}->${connectionId}`;
+        connectionStrengths[connectionKey] = Math.random() * 100; // Mock connection strength
+      });
+    });
+
+    return {
+      nodeActivities,
+      connectionStrengths,
+      timestamp: Date.now()
+    };
+  }
+
+  /**
+   * Set node activity level
    */
   public setNodeActivity(nodeId: string, activity: number): boolean {
     const node = this.nodes.get(nodeId);
     if (!node) return false;
 
     node.activity = Math.max(0, Math.min(100, activity));
-    this.logActivity(nodeId, node.activity, node.pulseRate, node.flickering, 'manual_set');
+    this.logActivity(nodeId, node.activity, node.pulseRate, node.flickering, 'manual_activity_set');
+    
+    console.log(`🎛️ Node ${nodeId} activity manually set to ${activity}%`);
     return true;
   }
 
   /**
-   * Reset neural network
+   * Reset neural network to default state
    */
   public resetNetwork(): void {
-    this.nodes.forEach(node => {
-      node.activity = Math.random() * 30 + 20;
-      node.pulseRate = Math.random() * 20 + 10;
+    console.log('🔄 Resetting neural network...');
+    
+    this.nodes.forEach((node, nodeId) => {
+      node.activity = Math.random() * 50 + 25; // 25-75%
+      node.pulseRate = Math.random() * 30 + 20; // 20-50 Hz
       node.flickering = 0;
       node.status = 'active';
       node.errorCount = 0;
+      node.lastPulse = Date.now();
+      
+      this.logActivity(nodeId, node.activity, node.pulseRate, node.flickering, 'network_reset');
     });
-    
-    this.throttledNodes.clear();
-    this.safeThinkActive = false;
+
+    // Clear activity log
     this.activityLog = [];
-    
-    console.log('🔄 Neural network reset completed');
-    this.emit('networkReset', { timestamp: Date.now() });
+    this.emit('networkReset');
   }
 
   /**
-   * Cleanup resources
+   * Destroy neural planner and clean up resources
    */
   public destroy(): void {
+    console.log('💥 Destroying neural planner...');
+    
     this.stopMonitoring();
-    this.removeAllListeners();
     this.nodes.clear();
     this.activityLog = [];
-    console.log('💥 Neural planner destroyed');
+    this.removeAllListeners();
+    
+    console.log('✅ Neural planner destroyed successfully');
   }
 }
 
-export { NeuralPlanner };
-export type { NeuralNode, NeuralActivity, PlannerConfig };
 export default NeuralPlanner;

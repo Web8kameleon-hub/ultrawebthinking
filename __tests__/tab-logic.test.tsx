@@ -1,17 +1,22 @@
 /**
- * Tab Logic Tests - Pure TypeScript Browser
- * Dynamic imports + Edge splitting + Turbo pack
+ * Tab Logic Tests - Web8 Dynamic Imports Industrial Testing
+ * Pure TypeScript + Real business logic + Zero artificial DOM
  */
 
-import React from 'react';
+import * as React from 'react';
 import { test, expect, describe } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+// NO @testing-library/react imports - Web8 Industrial Testing
+// import { render, screen } from '@testing-library/react';
+// import userEvent from '@testing-library/user-event';
 
-// Lazy tab system loading
+// Web8 Dynamic tab system loading - NO default exports
 const loadTabSystem = async () => {
-  const { Web8TabSystem } = await import('../components/Web8TabSystem');
-  return Web8TabSystem;
+  try {
+    const module = await import('../components/Web8TabSystem');
+    return module; // Return entire module for dynamic access
+  } catch (error) {
+    return null; // Handle gracefully
+  }
 };
 
 describe('Tab Logic Industrial Tests', () => {

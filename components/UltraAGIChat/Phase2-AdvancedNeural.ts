@@ -280,7 +280,7 @@ export class Phase2AdvancedNeuralSystem extends Phase1QuantumEngine {
     }
     
     private initializeAdvancedNeural() {
-        this.memoryConsolidator = new MemoryConsolidator();
+        this.memoryConsolidation = new MemoryConsolidator();
         this.emotionalEngine = new EmotionalEngine();
         this.emotionalIntelligence = this.emotionalEngine;
         this.creativityEngine = new CreativityEngine();

@@ -79,9 +79,15 @@ async function testQuantumIntelligenceEngine() {
   
   // Test quantum breakthrough
   console.log('\n5. � Testing Quantum Breakthrough...')
-  const beforeBreakthrough = quantum.getSystemStatus()
+  const beforeBreakthrough = quantum.getSystemStatus() as {
+    intelligence: { overall: any },
+    consciousness: any
+  }
   quantum.triggerQuantumBreakthrough()
-  const afterBreakthrough = quantum.getSystemStatus()
+  const afterBreakthrough = quantum.getSystemStatus() as {
+    intelligence: { overall: any },
+    consciousness: any
+  }
   
   console.log('Intelligence before breakthrough:', beforeBreakthrough.intelligence.overall)
   console.log('Intelligence after breakthrough:', afterBreakthrough.intelligence.overall)
@@ -92,11 +98,25 @@ async function testQuantumIntelligenceEngine() {
   
   // Test continuous operation
   console.log('\n6. ⚡ Testing Continuous Operation...')
-  const statusSnapshots = []
+  type QuantumStatusSnapshot = {
+    iteration: number
+    intelligence: any
+    consciousness: any
+    creativity: any
+    wisdom: any
+    timestamp: any
+  }
+  const statusSnapshots: QuantumStatusSnapshot[] = []
   
   for (let i = 0; i < 5; i++) {
     await new Promise(resolve => setTimeout(resolve, 500)) // Wait 500ms
-    const status = quantum.getSystemStatus()
+    const status = quantum.getSystemStatus() as {
+      intelligence: { overall: any }
+      consciousness: any
+      creativity: any
+      wisdom: any
+      timestamp: any
+    }
     statusSnapshots.push({
       iteration: i + 1,
       intelligence: status.intelligence.overall,
@@ -144,7 +164,14 @@ async function testQuantumIntelligenceEngine() {
   
   // Final system state
   console.log('\n10. 🏆 Final System Analysis...')
-  const finalStatus = quantum.getSystemStatus()
+  const finalStatus = quantum.getSystemStatus() as {
+    intelligence: { overall: any },
+    neuralNodes: any,
+    memoryEntries: any,
+    consciousness: any,
+    creativity: any,
+    wisdom: any
+  }
   console.log('Final System Status:', finalStatus)
   
   console.log('\n🎉 QUANTUM INTELLIGENCE ENGINE - ALL TESTS PASSED!')

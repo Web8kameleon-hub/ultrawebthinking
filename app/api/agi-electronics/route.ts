@@ -132,8 +132,8 @@ const agiElectronicsEngine = {
       powerFactor: parseFloat(powerFactor.toFixed(3)),
       efficiency: Math.max(0, 100 - currentDeviation),
       health: currentDeviation < 5 ? 'excellent' : currentDeviation < 10 ? 'good' : 'poor',
-      recommendations: [],
-      warnings: []
+      recommendations: [] as string[],
+      warnings: [] as string[]
     }
 
     // Add recommendations

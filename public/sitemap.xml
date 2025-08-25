@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Web8 AGI Platform Dynamic Sitemaps -->
+  <!-- Creator: Ledjan Ahmati | Version: 8.0.0-WEB8 -->
+  <!-- Generated dynamically via API routes -->
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap-core</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap-agi</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap-neural</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap?type=demos</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap?type=api</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap-analytics</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+  <sitemap>
+    <loc>https://ultrawebthinking.vercel.app/api/sitemap-seo</loc>
+    <lastmod>2025-08-17T09:30:00+00:00</lastmod>
+  </sitemap>
+  
+</sitemapindex>

@@ -7,7 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { agiAnalyticsEngine } from '@/lib/agiAnalytics'
+import { agiAnalyticsEngine } from '../../../lib/agiAnalytics'
 
 export async function POST(request: NextRequest) {
   try {

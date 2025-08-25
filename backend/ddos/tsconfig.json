@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  /**
+   * @author Ledjan Ahmati
+   * @version 8.0.0-WEB8
+   * @contact dealsjona@gmail.com
+   */
+  "compilerOptions": {
+    "outDir": "../../dist/backend/ddos",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["../../*"]
+    }
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

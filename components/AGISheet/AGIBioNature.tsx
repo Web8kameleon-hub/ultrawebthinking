@@ -3,26 +3,26 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import styles from '../../frontend/src/components/AGISheet/AGIBioNature.module.css';
+import styles from '../../frontend/components/AGISheet/AGIBioNature.module.css';
 
 // Lazy import functions for analysis engines to reduce First Load JS
 const loadBiologyEngine = async () => {
-  const { BiologyEngine } = await import('../../frontend/src/components/AGISheet/BiologyEngine');
+  const { BiologyEngine } = await import('../../frontend/components/AGISheet/BiologyEngine');
   return new BiologyEngine();
 };
 
 const loadNatureEngine = async () => {
-  const { NatureEngine } = await import('../../frontend/src/components/AGISheet/NatureEngine');
+  const { NatureEngine } = await import('../../frontend/components/AGISheet/NatureEngine');
   return new NatureEngine();
 };
 
 const loadMedicalEngine = async () => {
-  const { MedicalEngine } = await import('../../frontend/src/components/AGISheet/MedicalEngine');
+  const { MedicalEngine } = await import('../../frontend/components/AGISheet/MedicalEngine');
   return new MedicalEngine();
 };
 
 const loadEcologyEngine = async () => {
-  const { EcologyEngine } = await import('../../frontend/src/components/AGISheet/EcologyEngine');
+  const { EcologyEngine } = await import('../../frontend/components/AGISheet/EcologyEngine');
   return new EcologyEngine();
 };
 

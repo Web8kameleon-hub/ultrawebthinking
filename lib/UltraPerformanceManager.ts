@@ -63,6 +63,9 @@ export class UltraPerformanceManager extends EventEmitter {
   private metrics: PerformanceMetrics
   private isOptimized: boolean = false
   private startTime: number
+  private monitoringInterval: NodeJS.Timeout | null = null
+  private isShuttingDown: boolean = false
+  private maxWorkersEverCreated: number = 0
 
   constructor(config?: Partial<PerformanceConfig>) {
     super()
@@ -119,13 +122,30 @@ export class UltraPerformanceManager extends EventEmitter {
     const numCPUs = os.cpus().length
     console.log(`⚡ Setting up cluster with ${numCPUs} processes...`)
     
-    for (let i = 0; i < numCPUs; i++) {
+    // Prevent fork bomb - limit cluster processes
+    const maxClusterProcesses = Math.min(numCPUs, 8) // Max 8 processes
+    let activeProcesses = 0
+    
+    for (let i = 0; i < maxClusterProcesses; i++) {
+      if (activeProcesses >= maxClusterProcesses) {
+        console.warn(`🚫 Cluster limit reached: ${maxClusterProcesses} processes`)
+        break
+      }
       cluster.fork()
+      activeProcesses++
     }
 
     cluster.on('exit', (worker, code, signal) => {
-      console.log(`🔄 Worker ${worker.process.pid} died. Restarting...`)
-      cluster.fork()
+      console.log(`🔄 Worker ${worker.process.pid} died. Code: ${code}, Signal: ${signal}`)
+      
+      // Only restart if not shutting down and under limit
+      if (!this.isShuttingDown && activeProcesses < maxClusterProcesses) {
+        console.log('🔄 Restarting worker...')
+        cluster.fork()
+      } else {
+        activeProcesses--
+        console.log(`📉 Active processes: ${activeProcesses}`)
+      }
     })
   }
 
@@ -163,10 +183,30 @@ export class UltraPerformanceManager extends EventEmitter {
   }
 
   private setupWorkerPool(): void {
-    console.log(`🏭 Setting up worker pool with ${this.config.maxWorkers} workers...`)
+    const targetWorkers = Math.min(this.config.maxWorkers, 12) // Absolute max limit
+    console.log(`🏭 Setting up worker pool with ${targetWorkers} workers...`)
     
-    for (let i = 0; i < this.config.maxWorkers; i++) {
+    // Only create workers if we don't already have enough
+    if (this.workers.length >= targetWorkers) {
+      console.log(`⚠️ Worker limit reached: ${this.workers.length}/${targetWorkers}`)
+      return
+    }
+    
+    const workersToCreate = targetWorkers - this.workers.length
+    
+    for (let i = 0; i < workersToCreate; i++) {
+      if (this.isShuttingDown) break
+      
       try {
+        const workerIndex = this.workers.length
+        this.maxWorkersEverCreated++
+        
+        // Prevent runaway worker creation
+        if (this.maxWorkersEverCreated > 50) {
+          console.error('🚫 EMERGENCY STOP: Too many workers created!')
+          break
+        }
+        
         const worker = new Worker(`
           const { parentPort } = require('worker_threads');
           const { performance } = require('perf_hooks');
@@ -216,24 +256,39 @@ export class UltraPerformanceManager extends EventEmitter {
         })
 
         worker.on('error', (error) => {
-          console.error(`Worker error:`, error)
-          this.restartWorker(i)
+          console.error(`Worker ${workerIndex} error:`, error)
+          this.replaceWorker(workerIndex)
         })
 
         this.workers.push(worker)
+        console.log(`✅ Worker ${workerIndex} created (Total: ${this.workers.length})`)
+        
       } catch (error) {
-        console.error(`Failed to create worker ${i}:`, error)
+        console.error(`Failed to create worker:`, error)
+        break
       }
     }
   }
 
-  private restartWorker(index: number): void {
+  private replaceWorker(index: number): void {
+    if (this.isShuttingDown) return
+    
+    console.log(`🔄 Replacing worker ${index}...`)
+    
+    // Terminate the problematic worker
     if (this.workers[index]) {
       this.workers[index].terminate()
     }
     
-    // Create new worker
-    this.setupWorkerPool()
+    // Remove from array
+    this.workers.splice(index, 1)
+    
+    // Only create replacement if under limits
+    if (this.workers.length < this.config.maxWorkers && this.maxWorkersEverCreated < 50) {
+      setTimeout(() => {
+        this.setupWorkerPool() // This will create one replacement worker
+      }, 1000) // Delay to prevent rapid restarts
+    }
   }
 
   private handleWorkerResult(result: any): void {
@@ -247,10 +302,21 @@ export class UltraPerformanceManager extends EventEmitter {
   }
 
   private startMonitoring(): void {
-    setInterval(async () => {
-      await this.updateMetrics()
-      this.optimizePerformance()
-    }, 1000) // Update every second
+    // Prevent multiple monitoring intervals
+    if (this.monitoringInterval) {
+      clearInterval(this.monitoringInterval)
+    }
+    
+    this.monitoringInterval = setInterval(async () => {
+      if (this.isShuttingDown) return
+      
+      try {
+        await this.updateMetrics()
+        this.optimizePerformance()
+      } catch (error) {
+        console.error('🚨 Monitoring error:', error)
+      }
+    }, 2000) // Increased to 2 seconds to reduce load
   }
 
   private async updateMetrics(): Promise<void> {
@@ -271,10 +337,32 @@ export class UltraPerformanceManager extends EventEmitter {
   }
 
   private optimizePerformance(): void {
-    // Auto-scale workers based on CPU usage
-    if (this.metrics.cpuUsage > this.config.cpuThreshold && this.workers.length < this.config.maxWorkers * 2) {
-      console.log('📈 High CPU detected, adding more workers...')
-      this.setupWorkerPool()
+    // Prevent optimization during shutdown
+    if (this.isShuttingDown) return
+    
+    // SAFE LIMITS - prevent runaway scaling
+    const absoluteMaxWorkers = Math.min(this.config.maxWorkers, 16) // Hard limit
+    const currentWorkerCount = this.workers.length
+    
+    // Auto-scale workers based on CPU usage (with strict limits)
+    if (this.metrics.cpuUsage > this.config.cpuThreshold && 
+        currentWorkerCount < absoluteMaxWorkers && 
+        this.maxWorkersEverCreated < 30) { // Emergency brake
+      
+      console.log(`📈 High CPU detected (${(this.metrics.cpuUsage * 100).toFixed(1)}%), considering worker scaling...`)
+      
+      // Only add workers if we really need them and haven't created too many recently
+      const timeSinceStart = performance.now() - this.startTime
+      if (timeSinceStart > 10000) { // Wait 10 seconds after startup
+        console.log('📈 Adding 1 additional worker...')
+        this.setupWorkerPool() // This will add only 1 worker due to new logic
+      }
+    }
+
+    // Scale DOWN if CPU is low and we have excess workers
+    if (this.metrics.cpuUsage < 0.3 && currentWorkerCount > os.cpus().length) {
+      console.log('📉 Low CPU usage, reducing workers...')
+      this.scaleDownWorkers()
     }
 
     // Trigger garbage collection if memory usage is high
@@ -287,6 +375,16 @@ export class UltraPerformanceManager extends EventEmitter {
     if (this.cache.size > this.config.cacheSize * 0.9) {
       console.log('🗑️ Cache nearly full, clearing old entries...')
       this.cache.clear()
+    }
+  }
+
+  private scaleDownWorkers(): void {
+    if (this.workers.length <= 2) return // Keep minimum workers
+    
+    const workerToRemove = this.workers.pop()
+    if (workerToRemove) {
+      workerToRemove.terminate()
+      console.log(`📉 Scaled down to ${this.workers.length} workers`)
     }
   }
 
@@ -433,8 +531,28 @@ export class UltraPerformanceManager extends EventEmitter {
   public async shutdown(): Promise<void> {
     console.log('🛑 Shutting down Ultra Performance Manager...')
     
-    // Terminate all workers
-    await Promise.all(this.workers.map(worker => worker.terminate()))
+    // Set shutdown flag to prevent new operations
+    this.isShuttingDown = true
+    
+    // Stop monitoring
+    if (this.monitoringInterval) {
+      clearInterval(this.monitoringInterval)
+      this.monitoringInterval = null
+    }
+    
+    // Terminate all workers safely
+    console.log(`🔄 Terminating ${this.workers.length} workers...`)
+    await Promise.all(this.workers.map(async (worker, index) => {
+      try {
+        await worker.terminate()
+        console.log(`✅ Worker ${index} terminated`)
+      } catch (error) {
+        console.error(`❌ Error terminating worker ${index}:`, error)
+      }
+    }))
+    
+    // Clear workers array
+    this.workers = []
     
     // Clear cache
     this.cache.clear()
@@ -446,13 +564,44 @@ export class UltraPerformanceManager extends EventEmitter {
   }
 }
 
-// Singleton instance
+// Singleton instance with SAFE configuration
 export const ultraPerformanceManager = new UltraPerformanceManager({
-  maxWorkers: os.cpus().length * 3, // Aggressive worker scaling
-  cacheSize: 50000, // Large cache
+  maxWorkers: Math.min(os.cpus().length * 2, 8), // Safer worker count
+  cacheSize: 10000, // Reduced cache size
   enableOptimization: true,
   enableCache: true,
-  enableCluster: true
+  enableCluster: false, // Disable cluster in development to prevent fork bombs
+  memoryThreshold: 0.7, // Lower memory threshold
+  cpuThreshold: 0.8 // Lower CPU threshold
+})
+
+// Emergency shutdown mechanism
+let emergencyShutdownTriggered = false
+
+const emergencyShutdown = async () => {
+  if (emergencyShutdownTriggered) return
+  emergencyShutdownTriggered = true
+  
+  console.log('🚨 EMERGENCY SHUTDOWN TRIGGERED!')
+  try {
+    await ultraPerformanceManager.shutdown()
+    process.exit(0)
+  } catch (error) {
+    console.error('🚨 Emergency shutdown failed:', error)
+    process.exit(1)
+  }
+}
+
+// Register emergency handlers
+process.on('SIGTERM', emergencyShutdown)
+process.on('SIGINT', emergencyShutdown)
+process.on('uncaughtException', (error) => {
+  console.error('🚨 Uncaught Exception:', error)
+  emergencyShutdown()
+})
+process.on('unhandledRejection', (reason) => {
+  console.error('🚨 Unhandled Rejection:', reason)
+  emergencyShutdown()
 })
 
 // Export utility functions

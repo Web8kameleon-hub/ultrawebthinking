@@ -6,6 +6,7 @@
 import type { Metadata } from 'next'
 import '../frontend/src/styles/theme-vars.css'
 import '../app/globals.css'
+import RoyalNavigationMenu from '../components/RoyalNavigationMenu'
 
 export const metadata: Metadata = {
   title: 'EuroWeb Platform',
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <RoyalNavigationMenu />
         {children}
       </body>
     </html>

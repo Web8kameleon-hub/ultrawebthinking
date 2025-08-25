@@ -9,47 +9,34 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
-import { cva, type VariantProps } from 'class-variance-authority'
 import styles from './LoadingSpinner.module.css'
 
-const spinnerVariants = cva(styles.spinner, {
-  variants: {
-    size: {
-      small: styles.small,
-      medium: styles.medium,
-      large: styles.large,
-    },
-    color: {
-      primary: styles.primary,
-      secondary: styles.secondary,
-      accent: styles.accent,
-    },
-  },
-  defaultVariants: {
-    size: 'medium',
-    color: 'primary',
-  },
-})
-
-interface LoadingSpinnerProps extends VariantProps<typeof spinnerVariants> {
+interface LoadingSpinnerProps {
+  size?: 'small' | 'medium' | 'large'
+  color?: 'primary' | 'secondary' | 'accent'
   className?: string
 }
 
-export function LoadingSpinner({ size, color, className }: LoadingSpinnerProps) {
+export function LoadingSpinner({ 
+  size = 'medium', 
+  color = 'primary', 
+  className 
+}: LoadingSpinnerProps) {
+  const sizeClass = size === 'small' ? styles.small : 
+                   size === 'large' ? styles.large : styles.medium
+  const colorClass = color === 'secondary' ? styles.secondary :
+                    color === 'accent' ? styles.accent : styles.primary
+
   return (
-    <motion.div
-      className={spinnerVariants({ size, color, className })}
-      animate={{ rotate: 360 }}
-      transition={{
-        duration: 1,
-        repeat: Infinity,
-        ease: 'linear',
+    <div
+      className={`${styles.spinner} ${sizeClass} ${colorClass} ${className || ''}`}
+      style={{
+        animation: 'spin 1s linear infinite'
       }}
       aria-label="Loading..."
       role="status"
     >
       <div className={styles.inner} />
-    </motion.div>
+    </div>
   )
 }

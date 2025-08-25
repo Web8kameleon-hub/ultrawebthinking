@@ -37,7 +37,7 @@ export class OpenMindCore {
         });
 
         socket.on('contribute', (data) => {
-            this.knowledgeGraph.addNode(data.concept, data.data);
+            this.knowledgeGraph.addNode(data.concept, data.data, data.meta ?? {});
             this.collectiveIntelligence.broadcast('new_knowledge', { concept: data.concept });
         });
     }

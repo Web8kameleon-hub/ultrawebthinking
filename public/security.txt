@@ -1,0 +1,59 @@
+# Web8 Security Policy
+# EuroWeb Web8 AGI Platform Security Configuration
+# Created: 2025-08-17T09:30:00Z
+# Version: 8.0.0-WEB8
+
+Contact: mailto:dealsjona@gmail.com
+Contact: https://github.com/Web8kameleon-hub/ultrawebthinking/issues
+Expires: 2025-12-31T23:59:59Z
+
+# Preferred Languages
+Preferred-Languages: en, sq, it
+
+# Acknowledgments
+Acknowledgments: https://github.com/Web8kameleon-hub/ultrawebthinking/blob/main/SECURITY.md
+
+# Policy
+Policy: https://github.com/Web8kameleon-hub/ultrawebthinking/blob/main/SECURITY.md
+
+# Hiring
+Hiring: https://github.com/Web8kameleon-hub
+
+# Web8 Platform Security Features
+Guardian-System: Guardian-web8.ts
+Rate-Limiting: Enabled
+XSS-Protection: Enabled
+SQL-Injection-Detection: Enabled
+API-Security: Middleware-Protected
+Compliance-Level: Military-Grade
+
+# Vulnerability Disclosure
+# Please report security vulnerabilities responsibly
+# Do not exploit vulnerabilities in production
+# Allow reasonable time for fixes before public disclosure
+
+# Security Scope
+In-Scope: 
+- Web8 Core Components (/components/Web8*.tsx)
+- AGI API Endpoints (/api/agi/*)
+- Neural Processing System (/api/neural/*)
+- Guardian Security System (/backend/guardian/*)
+- Real-time Metrics (/api/metrics/*)
+
+Out-of-Scope:
+- Third-party dependencies
+- Development/test environments
+- Client-side browser vulnerabilities
+- Social engineering attacks
+- Physical security
+
+# Hall of Fame
+# Security researchers who responsibly disclosed vulnerabilities:
+# (None yet - Be the first!)
+
+# Additional Information
+Platform: Next.js 14.2.31 + TypeScript
+Architecture: Industrial-grade AGI browser
+Real-time: WebSocket neural processing
+Creator: Ledjan Ahmati
+Repository: Web8kameleon-hub/ultrawebthinking

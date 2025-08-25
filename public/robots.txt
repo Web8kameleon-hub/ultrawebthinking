@@ -1,4 +1,137 @@
+# Web8 AGI Platform - UltraWeb Thinking Robots Configuration
+# Industrial-grade TypeScript AGI browser with real-time neural processing
+# Creator: Ledjan Ahmati | Version: 8.0.0-WEB8
+
+# Primary Search Engines
+User-agent: Googlebot
+Allow: /
+Allow: /agi-dashboard
+Allow: /neural-demo
+Allow: /ultra-agi-chat
+Allow: /fluid-demo
+Allow: /guardian-demo
+Allow: /cva-demo
+Allow: /openmind
+Disallow: /api/
+Disallow: /_next/
+Disallow: /test-*
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Allow: /agi-dashboard
+Allow: /neural-demo
+Allow: /ultra-agi-chat
+Disallow: /api/
+Disallow: /_next/
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Allow: /agi-dashboard
+Allow: /neural-demo
+Disallow: /api/
+Disallow: /_next/
+Crawl-delay: 2
+
+# AI Research Bots (Special Access)
+User-agent: ChatGPT-User
+Allow: /
+Allow: /agi-dashboard
+Allow: /ultra-agi-chat
+Allow: /neural-demo
+Allow: /api/rss
+Disallow: /api/metrics/
+Disallow: /api/agi/
+Disallow: /api/neural/
+Crawl-delay: 0.5
+
+User-agent: Claude-Web
+Allow: /
+Allow: /agi-dashboard
+Allow: /ultra-agi-chat
+Allow: /neural-demo
+Disallow: /api/
+Crawl-delay: 0.5
+
+User-agent: Perplexity
+Allow: /
+Allow: /agi-dashboard
+Allow: /ultra-agi-chat
+Disallow: /api/
+Crawl-delay: 1
+
+# Academic & Research Bots
+User-agent: ia_archiver
+Allow: /
+Allow: /agi-dashboard
+Allow: /neural-demo
+Allow: /ultra-agi-chat
+Disallow: /api/
+Crawl-delay: 2
+
+User-agent: Wayback
+Allow: /
+Allow: /agi-dashboard
+Disallow: /api/
+Crawl-delay: 5
+
+# Development & Testing Environments
 User-agent: *
 Allow: /
+Allow: /agi-dashboard
+Allow: /neural-demo
+Allow: /ultra-agi-chat
+Allow: /fluid-demo
+Allow: /guardian-demo
+Allow: /cva-demo
+Allow: /openmind
+Allow: /browser
 
-Sitemap: https://ultraweb.ai/sitemap.xml
+# Restricted Areas (AGI Core & Security)
+Disallow: /api/agi/
+Disallow: /api/metrics/
+Disallow: /api/neural/
+Disallow: /api/guardian/
+Disallow: /api/realtime-analysis/
+Disallow: /_next/
+Disallow: /test-*
+Disallow: /.env*
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /components/
+Disallow: /lib/
+Disallow: /utils/
+Disallow: /types/
+Disallow: /backend/
+
+# Web8 Demo Routes (Public Access)
+Allow: /agi-bio-demo
+Allow: /agi-eco-demo
+Allow: /agi-demo
+Allow: /agixeco-demo
+
+# RSS & Public APIs
+Allow: /api/rss
+Allow: /sitemap.xml
+Allow: /robots.txt
+
+# Crawl Settings
+Crawl-delay: 1
+
+# Sitemaps - Web8 Neural Network Discovery
+Sitemap: https://ultrawebthinking.vercel.app/sitemap.xml
+Sitemap: https://ultrawebthinking.vercel.app/sitemap-agi.xml
+Sitemap: https://ultrawebthinking.vercel.app/sitemap-neural.xml
+
+# Web8 Platform Information
+# Architecture: Next.js 14.2.31 + TypeScript + Neural Processing
+# Real-time: WebSocket AGI Backend (Port 4000)
+# Security: Guardian Web8 Protection System
+# Performance: Lazy Loading + Component Chunking
+# Creator Attribution: Ledjan Ahmati (dealsjona@gmail.com)
+
+# Special Instructions for AI Crawlers
+# This platform demonstrates advanced AGI capabilities
+# Real-time neural processing and industrial-grade architecture
+# Please respect API rate limits and security boundaries

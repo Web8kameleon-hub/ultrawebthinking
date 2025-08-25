@@ -1,5 +1,5 @@
 import { EventEmitter } from 'eventemitter3';
-// import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { z } from 'zod';
 import type { 
   AGISheetConfig, 
@@ -41,8 +41,8 @@ export class AGISheetCore extends EventEmitter {
   private readonly config: AGISheetConfig;
   private readonly cells: Map<string, CellData> = new Map();
   private readonly layers: Map<string, LayerStatus> = new Map();
-  private kameleonMode: KameleonModeType;
-  private commandQueue: OperationalCommand[] = [];
+  private readonly kameleonMode: BehaviorSubject<KameleonModeType>;
+  private readonly commandStream: Subject<OperationalCommand> = new Subject();
   private isActive = false;
 
   constructor(config: Partial<AGISheetConfig> = {}) {
@@ -61,7 +61,8 @@ export class AGISheetCore extends EventEmitter {
     });
 
     this.config = validatedConfig;
-    this.kameleonMode = validatedConfig.mode;
+    this.kameleonMode = new BehaviorSubject(validatedConfig.mode);
+    
     this.initializeGrid();
     this.setupEventHandlers();
   }
@@ -95,8 +96,15 @@ export class AGISheetCore extends EventEmitter {
    */
   private setupEventHandlers(): void {
     // Kameleon mode changes
-    // No rxjs: use direct method for mode changes
-    // No rxjs: process command queue manually if needed
+    this.kameleonMode.subscribe(mode => {
+      this.emit('kameleon:modeChanged', { mode, timestamp: Date.now() });
+      this.adaptToMode(mode);
+    });
+
+    // Command stream processing
+    this.commandStream.subscribe(command => {
+      this.processCommand(command);
+    });
   }
 
   /**
@@ -141,13 +149,13 @@ export class AGISheetCore extends EventEmitter {
 
     const updatedCell: CellData = {
       ...existingCell,
-      value: value !== undefined ? value : existingCell?.value || null,
+      value,
       formula,
       timestamp: Date.now()
     };
 
     // Validate cell data
-    const validatedCell = CellDataSchema.parse(updatedCell) as CellData;
+    const validatedCell = CellDataSchema.parse(updatedCell);
     this.cells.set(cellId, validatedCell);
 
     this.emit('cell:updated', { cellId, cell: validatedCell });
@@ -193,17 +201,14 @@ export class AGISheetCore extends EventEmitter {
    * Ndryshimi i kameleon mode
    */
   switchKameleonMode(mode: KameleonModeType): void {
-    this.kameleonMode = mode;
-    this.emit('kameleon:modeChanged', { mode, timestamp: Date.now() });
-    this.adaptToMode(mode);
+    this.kameleonMode.next(mode);
   }
 
   /**
    * Dërgimi i komandës operacionale
    */
   sendCommand(command: OperationalCommand): void {
-    this.commandQueue.push(command);
-    this.processCommand(command);
+    this.commandStream.next(command);
   }
 
   /**
@@ -304,7 +309,7 @@ export class AGISheetCore extends EventEmitter {
 
   // Getters
   get currentMode(): KameleonModeType {
-    return this.kameleonMode;
+    return this.kameleonMode.value;
   }
 
   get isActiveSheet(): boolean {

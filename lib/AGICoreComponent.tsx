@@ -9,20 +9,21 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import * as React from "react";
+import { useState, useEffect } from "react";
 import { AGICore } from './AGICore';
-import styles from './AGICoreComponent.module.css';
 
 interface AGICoreComponentProps {
   className?: string;
 }
 
-export const AGICoreComponent: React.FC<AGICoreComponentProps> = ({ className }) => {
+export const AGICoreComponent: React.FC<AGICoreComponentProps> = ({ className }: AGICoreComponentProps) => {
   const [agiCore, setAgiCore] = useState<AGICore | null>(null);
   const [status, setStatus] = useState<string>('Initializing...');
   const [memory, setMemory] = useState<any>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isClient, setIsClient] = useState(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>('');
 
   useEffect(() => {
     // Mark as client-side only
@@ -46,193 +47,250 @@ export const AGICoreComponent: React.FC<AGICoreComponentProps> = ({ className })
     };
   }, []);
 
-  // Don't render dynamic content until client-side
-  if (!isClient) {
-    return (
-      <div className={`${styles.agiContainer} ${className || ''}`}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>🧠 AGI Core System</h1>
-          <div className={styles.status}>
-            <span className={styles.statusIndicator}></span>
-            Loading...
-          </div>
-        </div>
-        <div className={styles.loading}>
-          <div className={styles.loadingSpinner}></div>
-          <p>Initializing AGI Core...</p>
-        </div>
-      </div>
-    );
-  }
-
-  const handleQuery = async (query: string) => {
-    if (!agiCore) return;
+  const handleQuery = async (inputQuery: string) => {
+    if (!agiCore || !inputQuery.trim()) return;
     
     setIsProcessing(true);
-    setStatus('Processing...');
+    setQuery(inputQuery);
     
     try {
-      // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Process query with AGI Core using available methods
+      agiCore.setAGIStatus('PROCESSING');
       
-      agiCore.updateMemory('agi', {
-        lastQuery: query,
-        responses: [...(memory?.agi?.responses || []), `Response to: ${query}`],
-        brainActive: true
-      });
+      // Simulate processing delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      setStatus('Query Processed');
+      // Add response using the available method
+      const response = `Processed: ${inputQuery} at ${new Date().toLocaleTimeString()}`
+      agiCore.addAGIResponse(inputQuery, response);
+      
+      agiCore.setAGIStatus('ACTIVE');
+      setMemory(agiCore.getMemory());
     } catch (error) {
-      setStatus('Error Processing Query');
+      console.error('AGI processing error:', error);
+      agiCore.setAGIStatus('IDLE');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const toggleTheme = () => {
-    if (!agiCore) return;
-    
-    const themes = ['light', 'dark', 'nature'];
-    const currentTheme = memory?.ui?.theme || 'dark';
-    const currentIndex = themes.indexOf(currentTheme);
-    const nextTheme = themes[(currentIndex + 1) % themes.length];
-    
-    agiCore.updateMemory('ui', { ...memory?.ui, theme: nextTheme });
-  };
+  // Don't render dynamic content until client-side
+  if (!isClient) {
+    return (
+      <div className={`agi-container ${className || ''}`}>
+        <div className="loading">Initializing AGI Core...</div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`${styles.agiContainer} ${className || ''}`} data-theme={memory?.ui?.theme || 'dark'}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>🧠 AGI Core System</h1>
-        <div className={styles.status}>
-          <span className={`${styles.statusIndicator} ${isProcessing ? styles.processing : ''}`}></span>
+    <div className={`agi-container ${className || ''}`}>
+      <div className="agi-header">
+        <h2>AGI Core System</h2>
+        <span className={`status-indicator ${isProcessing ? 'processing' : 'active'}`}>
           {status}
-        </div>
+        </span>
       </div>
 
-      {memory && (
-        <div className={styles.dashboard}>
-          <div className={styles.section}>
-            <h3>UI State</h3>
-            <div className={styles.stateGrid}>
-              <div className={styles.stateItem}>
-                <label>Active Tab:</label>
-                <span>{memory.ui?.activeTab || 'none'}</span>
-              </div>
-              <div className={styles.stateItem}>
-                <label>Theme:</label>
-                <span>{memory.ui?.theme || 'dark'}</span>
-              </div>
-              <div className={styles.stateItem}>
-                <label>Scroll Position:</label>
-                <span>{memory.ui?.scrollPosition || 0}px</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.section}>
-            <h3>AGI State</h3>
-            <div className={styles.stateGrid}>
-              <div className={styles.stateItem}>
-                <label>Status:</label>
-                <span className={styles.agiStatus}>{memory.agi?.status || 'IDLE'}</span>
-              </div>
-              <div className={styles.stateItem}>
-                <label>Brain Active:</label>
-                <span>{memory.agi?.brainActive ? '🟢 Yes' : '🔴 No'}</span>
-              </div>
-              <div className={styles.stateItem}>
-                <label>Last Query:</label>
-                <span>{memory.agi?.lastQuery || 'None'}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.section}>
-            <h3>Recent Responses</h3>
-            <div className={styles.responsesList}>
-              {memory.agi?.responses?.slice(-3).map((response: string, index: number) => (
-                <div key={index} className={styles.responseItem}>
-                  {response}
+      <div className="agi-content">
+        <div className="memory-display">
+          <h3>Memory State</h3>
+          <div className="memory-info">
+            {memory && (
+              <>
+                <div className="memory-section">
+                  <strong>AGI Status:</strong> {memory.agi?.status || 'Unknown'}
                 </div>
-              )) || <div className={styles.noResponses}>No responses yet</div>}
-            </div>
+                <div className="memory-section">
+                  <strong>Processing:</strong> {memory.agi?.processing ? 'Active' : 'Idle'}
+                </div>
+                <div className="memory-section">
+                  <strong>Current Time:</strong> {memory.user?.currentTime || new Date().toISOString()}
+                </div>
+                <div className="memory-section">
+                  <strong>Responses:</strong> {memory.agi?.responses?.length || 0}
+                </div>
+              </>
+            )}
           </div>
         </div>
-      )}
 
-      <div className={styles.controls}>
-        <div className={styles.querySection}>
-          <input
-            type="text"
-            placeholder="Enter AGI query..."
-            className={styles.queryInput}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-                handleQuery(e.currentTarget.value.trim());
-                e.currentTarget.value = '';
-              }
-            }}
-            disabled={isProcessing}
-          />
-          <button
-            className={styles.button}
-            onClick={() => {
-              const input = document.querySelector(`.${styles.queryInput}`) as HTMLInputElement;
-              if (input && input.value.trim()) {
-                handleQuery(input.value.trim());
-                input.value = '';
-              }
-            }}
-            disabled={isProcessing}
-          >
-            {isProcessing ? 'Processing...' : 'Send Query'}
-          </button>
+        <div className="query-interface">
+          <h3>Query Interface</h3>
+          <div className="query-form">
+            <input
+              type="text"
+              className="query-input"
+              placeholder="Enter your query for AGI processing..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleQuery(query);
+                }
+              }}
+              disabled={isProcessing}
+            />
+            <button
+              className="query-submit"
+              onClick={() => handleQuery(query)}
+              disabled={isProcessing || !query.trim()}
+            >
+              {isProcessing ? 'Processing...' : 'Process Query'}
+            </button>
+          </div>
         </div>
 
-        <div className={styles.actionButtons}>
-          <button className={styles.button} onClick={toggleTheme}>
-            Change Theme
-          </button>
-          
-          <button 
-            className={styles.button}
-            onClick={() => agiCore?.updateMemory('agi', { status: 'ACTIVE', brainActive: true })}
-          >
-            Activate Brain
-          </button>
-          
-          <button 
-            className={styles.button}
-            onClick={() => {
-              // Reset AGI memory manually since clearMemory doesn't exist
-              agiCore?.updateMemory('agi', {
-                status: 'IDLE',
-                lastQuery: '',
-                responses: [],
-                brainActive: false
-              });
-              agiCore?.updateMemory('user', {
-                preferences: {},
-                history: [],
-                currentTime: new Date().toLocaleString()
-              });
-            }}
-          >
-            Reset Memory
-          </button>
-        </div>
+        {memory?.agi?.responses && memory.agi.responses.length > 0 && (
+          <div className="responses-display">
+            <h3>AGI Responses</h3>
+            <div className="responses-list">
+              {memory.agi.responses.slice(-5).map((response: any, index: number) => (
+                <div key={index} className="response-item">
+                  <div className="response-timestamp">
+                    {new Date().toLocaleTimeString()}
+                  </div>
+                  <div className="response-content">
+                    {typeof response === 'string' ? response : JSON.stringify(response)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className={styles.footer}>
-        <small>
-          {isClient && memory?.user?.currentTime ? (
-            `Current Time: ${memory.user.currentTime}`
-          ) : (
-            'AGI Core System Ready'
-          )}
-        </small>
-      </div>
+      <style jsx>{`
+        .agi-container {
+          padding: 20px;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          background: #f9f9f9;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .agi-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #eee;
+        }
+        
+        .agi-header h2 {
+          margin: 0;
+          color: #333;
+        }
+        
+        .status-indicator {
+          padding: 4px 12px;
+          border-radius: 4px;
+          font-size: 0.9em;
+          font-weight: bold;
+        }
+        
+        .status-indicator.active {
+          background: #4CAF50;
+          color: white;
+        }
+        
+        .status-indicator.processing {
+          background: #FF9800;
+          color: white;
+          animation: pulse 1s infinite;
+        }
+        
+        .memory-display, .query-interface, .responses-display {
+          margin-bottom: 20px;
+          padding: 15px;
+          background: white;
+          border-radius: 6px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .memory-display h3, .query-interface h3, .responses-display h3 {
+          margin: 0 0 15px 0;
+          color: #333;
+          font-size: 1.1em;
+        }
+        
+        .memory-section {
+          margin-bottom: 8px;
+          padding: 8px;
+          background: #f5f5f5;
+          border-radius: 4px;
+        }
+        
+        .query-form {
+          display: flex;
+          gap: 10px;
+        }
+        
+        .query-input {
+          flex: 1;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 1em;
+        }
+        
+        .query-submit {
+          padding: 10px 20px;
+          background: #2196F3;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 1em;
+        }
+        
+        .query-submit:hover:not(:disabled) {
+          background: #1976D2;
+        }
+        
+        .query-submit:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+        }
+        
+        .responses-list {
+          max-height: 300px;
+          overflow-y: auto;
+        }
+        
+        .response-item {
+          margin-bottom: 10px;
+          padding: 10px;
+          background: #f8f9fa;
+          border-left: 3px solid #2196F3;
+          border-radius: 4px;
+        }
+        
+        .response-timestamp {
+          font-size: 0.8em;
+          color: #666;
+          margin-bottom: 5px;
+        }
+        
+        .response-content {
+          font-size: 0.9em;
+          line-height: 1.4;
+        }
+        
+        .loading {
+          text-align: center;
+          padding: 40px;
+          color: #666;
+          font-style: italic;
+        }
+        
+        @keyframes pulse {
+          0% { opacity: 1; }
+          50% { opacity: 0.7; }
+          100% { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 };

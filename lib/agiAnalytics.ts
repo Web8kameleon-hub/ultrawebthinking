@@ -542,31 +542,31 @@ class AGIAnalyticsEngine {
   }
 
   runMonteCarloSimulation(parameters: any, iterations: number): any {
-    const results = []
-    
-    for (let i = 0; i < iterations; i++) {
-      const result = this.simulateIteration(parameters)
-      results.push(result)
-    }
-    
-    const stats = this.calculateAdvancedStatistics(results)
-    
-    return {
-      iterations,
-      parameters,
-      results: results.slice(0, 100), // Return first 100 results
-      statistics: stats,
-      confidenceIntervals: {
-        '95%': this.calculateConfidenceInterval(results, 0.95),
-        '99%': this.calculateConfidenceInterval(results, 0.99)
-      },
-      riskMetrics: {
-        var95: this.calculateVaR(results, 0.95),
-        var99: this.calculateVaR(results, 0.99),
-        expectedShortfall: this.calculateExpectedShortfall(results, 0.95)
+      const results: number[] = []
+      
+      for (let i = 0; i < iterations; i++) {
+        const result = this.simulateIteration(parameters)
+        results.push(result)
+      }
+      
+      const stats = this.calculateAdvancedStatistics(results)
+      
+      return {
+        iterations,
+        parameters,
+        results: results.slice(0, 100), // Return first 100 results
+        statistics: stats,
+        confidenceIntervals: {
+          '95%': this.calculateConfidenceInterval(results, 0.95),
+          '99%': this.calculateConfidenceInterval(results, 0.99)
+        },
+        riskMetrics: {
+          var95: this.calculateVaR(results, 0.95),
+          var99: this.calculateVaR(results, 0.99),
+          expectedShortfall: this.calculateExpectedShortfall(results, 0.95)
+        }
       }
     }
-  }
 
   performOptimization(objectiveFunction: string, constraints: any[], variables: string[]): any {
     // Simplified optimization simulation
@@ -829,7 +829,7 @@ class AGIAnalyticsEngine {
   private calculateMode(array: number[]): number | null {
     const frequency: { [key: number]: number } = {}
     let maxFreq = 0
-    let mode = null
+    let mode: number | null = null
     
     array.forEach(num => {
       frequency[num] = (frequency[num] || 0) + 1
@@ -900,7 +900,7 @@ class AGIAnalyticsEngine {
   }
 
   private detectChangePoints(values: number[]): number[] {
-    const changePoints = []
+    const changePoints: number[] = []
     for (let i = 10; i < values.length - 10; i += Math.floor(Math.random() * 20) + 10) {
       changePoints.push(i)
     }
@@ -919,7 +919,7 @@ class AGIAnalyticsEngine {
   }
 
   private initializeCentroids(points: Array<{x: number, y: number}>, k: number): Array<{x: number, y: number}> {
-    const centroids = []
+    const centroids: Array<{x: number, y: number}> = []
     for (let i = 0; i < k; i++) {
       const randomPoint = points[Math.floor(Math.random() * points.length)]
       centroids.push({ ...randomPoint })
@@ -932,7 +932,7 @@ class AGIAnalyticsEngine {
   }
 
   private updateCentroids(points: Array<{x: number, y: number}>, assignments: number[], k: number): Array<{x: number, y: number}> {
-    const centroids = []
+    const centroids: Array<{x: number, y: number}> = []
     
     for (let i = 0; i < k; i++) {
       const clusterPoints = points.filter((_, index) => assignments[index] === i)
@@ -1075,7 +1075,7 @@ class AGIAnalyticsEngine {
   }
 
   private calculateAutocorrelation(values: number[]): number[] {
-    const autocorr = []
+    const autocorr: number[] = []
     const mean = values.reduce((sum, val) => sum + val, 0) / values.length
     
     for (let lag = 0; lag < Math.min(10, values.length - 1); lag++) {
@@ -1095,7 +1095,7 @@ class AGIAnalyticsEngine {
 
   private generateTimeSeriesForecast(data: Array<{timestamp: Date, value: number}>, periods: number): Array<{timestamp: Date, value: number}> {
     const lastPoint = data[data.length - 1]
-    const forecast = []
+    const forecast: Array<{timestamp: Date, value: number}> = []
     
     for (let i = 1; i <= periods; i++) {
       const futureTime = new Date(lastPoint.timestamp.getTime() + i * 24 * 60 * 60 * 1000)
@@ -1202,9 +1202,9 @@ class AGIAnalyticsEngine {
     ]
   }
 
-  private generateHistoricalData(period: string): any[] {
+  private generateHistoricalData(period: string): Array<{ date: Date; value: number; category: string }> {
     const days = period === '7d' ? 7 : period === '30d' ? 30 : 365
-    const data = []
+    const data: Array<{ date: Date; value: number; category: string }> = []
     
     for (let i = 0; i < days; i++) {
       const date = new Date()

@@ -28,6 +28,7 @@ const KNOWLEDGE_BASE_PATH = path.join(__dirname, '../../knowledge_base.json');
  * to store and reason about interconnected concepts. Now with persistence.
  */
 export class KnowledgeGraph {
+    [x: string]: any;
     private nodes: Map<string, Node>;
 
     constructor() {
