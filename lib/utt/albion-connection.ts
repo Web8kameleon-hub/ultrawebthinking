@@ -102,7 +102,7 @@ export class AlbionConnection {
       
     } catch (_error) {
       this.connectionAttempts++
-      console.error(`❌ Connection failed (attempt ${this.connectionAttempts}):`, error)
+      console.error(`❌ Connection failed (attempt ${this.connectionAttempts}):`, _error)
       
       if (this.connectionAttempts < this.maxConnectionAttempts) {
         console.log(`🔄 Retrying connection in ${SOLANA_CONFIG.retryDelay}ms...`)
@@ -116,6 +116,7 @@ export class AlbionConnection {
   /**
    * Get ALB token balance for an address
    */
+  // eslint-disable-next-line require-await
   async getALBBalance(address: string): Promise<ALBBalance> {
     this.ensureConnected()
     
@@ -137,7 +138,7 @@ export class AlbionConnection {
       return balance
       
     } catch (_error) {
-      console.error("❌ Failed to get ALB balance:", error)
+      console.error("❌ Failed to get ALB balance:", _error)
       return {
         address,
         balance: 0,
@@ -153,6 +154,7 @@ export class AlbionConnection {
   /**
    * Get recent transactions for an address
    */
+  // eslint-disable-next-line require-await
   async getRecentTransactions(address: string, limit = 10): Promise<SolanaTransaction[]> {
     this.ensureConnected()
     
@@ -181,7 +183,7 @@ export class AlbionConnection {
       return mockTransactions
       
     } catch (_error) {
-      console.error("❌ Failed to get transactions:", error)
+      console.error("❌ Failed to get transactions:", _error)
       return []
     }
   }
@@ -207,7 +209,7 @@ export class AlbionConnection {
       return result
       
     } catch (_error) {
-      console.error("❌ Failed to monitor transaction:", error)
+      console.error("❌ Failed to monitor transaction:", _error)
       return { status: "failed", confirmations: 0 }
     }
   }
@@ -215,6 +217,7 @@ export class AlbionConnection {
   /**
    * Get network status and performance metrics
    */
+  // eslint-disable-next-line require-await
   async getNetworkStatus(): Promise<{
     slot: number
     blockHeight: number
@@ -240,8 +243,8 @@ export class AlbionConnection {
       return status
       
     } catch (_error) {
-      console.error("❌ Failed to get network status:", error)
-      throw error
+      console.error("❌ Failed to get network status:", _error)
+      throw _error
     }
   }
 
@@ -256,6 +259,7 @@ export class AlbionConnection {
   /**
    * Get ALB token price in real-time (mock implementation)
    */
+  // eslint-disable-next-line require-await
   async getALBPrice(): Promise<{ eur: number; usd: number; lastUpdated: Date }> {
     // In production, this would fetch from DEX or price oracle
     return {
@@ -314,9 +318,7 @@ let globalConnection: AlbionConnection | null = null
  * Get or create global Albion connection
  */
 export function getAlbionConnection(network?: 'mainnet' | 'testnet' | 'devnet'): AlbionConnection {
-  if (!globalConnection) {
-    globalConnection = new AlbionConnection(network)
-  }
+  globalConnection ??= new AlbionConnection(network)
   return globalConnection
 }
 

@@ -85,8 +85,8 @@ export class PhantomIntegration {
       }
 
     } catch (_error) {
-      console.error("❌ Failed to initialize Phantom wallet:", error)
-      this.emit('walletError', error)
+      console.error("❌ Failed to initialize Phantom wallet:", _error)
+      this.emit('walletError', _error)
     }
   }
 
@@ -113,9 +113,9 @@ export class PhantomIntegration {
       return this.state
 
     } catch (_error) {
-      console.error("❌ Failed to connect to Phantom:", error)
-      this.emit('walletError', error)
-      throw error
+      console.error("❌ Failed to connect to Phantom:", _error)
+      this.emit('walletError', _error)
+      throw _error
     }
   }
 
@@ -141,8 +141,8 @@ export class PhantomIntegration {
       this.emit('walletDisconnected', null)
 
     } catch (_error) {
-      console.error("❌ Failed to disconnect from Phantom:", error)
-      this.emit('walletError', error)
+      console.error("❌ Failed to disconnect from Phantom:", _error)
+      this.emit('walletError', _error)
     }
   }
 
@@ -168,7 +168,7 @@ export class PhantomIntegration {
       console.log(`💸 Creating transfer transaction: ${amount} ALB to ${toAddress}`)
 
       // Simulate transaction creation and signing
-      const mockTransaction = {
+      const _mockTransaction = {
         from: this.state.publicKey,
         to: toAddress,
         amount,
@@ -209,15 +209,15 @@ export class PhantomIntegration {
       return result
 
     } catch (_error) {
-      console.error("❌ Failed to create transfer transaction:", error)
+      console.error("❌ Failed to create transfer transaction:", _error)
       const errorResult: TransactionResult = {
         signature: '',
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: _error instanceof Error ? _error.message : 'Unknown error',
         timestamp: new Date()
       }
       this.emit('transactionError', errorResult)
-      throw error
+      throw _error
     }
   }
 
@@ -234,7 +234,7 @@ export class PhantomIntegration {
 
       console.log("✍️ Requesting message signature from Phantom...")
       
-      const encodedMessage = new TextEncoder().encode(message)
+      const _encodedMessage = new TextEncoder().encode(message)
       
       // Simulate signing
       await new Promise(resolve => setTimeout(resolve, 1500))
@@ -252,9 +252,9 @@ export class PhantomIntegration {
       return result
 
     } catch (_error) {
-      console.error("❌ Failed to sign message:", error)
-      this.emit('messageSignError', error)
-      throw error
+      console.error("❌ Failed to sign message:", _error)
+      this.emit('messageSignError', _error)
+      throw _error
     }
   }
 
@@ -280,7 +280,7 @@ export class PhantomIntegration {
       return isValid
 
     } catch (_error) {
-      console.error("❌ Failed to verify signature:", error)
+      console.error("❌ Failed to verify signature:", _error)
       return false
     }
   }
@@ -368,7 +368,7 @@ export class PhantomIntegration {
       }
 
     } catch (_error) {
-      console.error("❌ Failed to update wallet state:", error)
+      console.error("❌ Failed to update wallet state:", _error)
     }
   }
 
@@ -384,10 +384,12 @@ export class PhantomIntegration {
   /**
    * Monitor transaction confirmation
    */
+  // eslint-disable-next-line require-await
   private async monitorTransactionConfirmation(signature: string): Promise<void> {
     let confirmations = 0
     const maxConfirmations = 32
 
+    // eslint-disable-next-line require-await
     const monitor = setInterval(async () => {
       try {
         confirmations++
@@ -402,7 +404,7 @@ export class PhantomIntegration {
 
       } catch (_error) {
         clearInterval(monitor)
-        console.error("❌ Error monitoring transaction:", error)
+        console.error("❌ Error monitoring transaction:", _error)
       }
     }, 1000) // Check every second
   }
