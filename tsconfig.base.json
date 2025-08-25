@@ -1,41 +1,23 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "ES2022"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strict": true,
-    "noEmit": true,
-    "allowJs": false,
-    "checkJs": false,
-    "jsx": "react-jsx",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
+    "allowJs": false,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["components/*"],
-      "@lib/*": ["lib/*"],
-      "@styles/*": ["styles/*"],
-      "@app/*": ["app/*"]
+      "@euroweb/agi": ["packages/agi/src"],
+      "@euroweb/utt": ["packages/utt"],
+      "@euroweb/search": ["packages/search/src"],
+      "@euroweb/ui": ["packages/ui/src"],
+      "@euroweb/utils": ["packages/utils/src"]
     }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".next",
-    "dist",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.cjs",
-    "**/*.mjs"
-  ]
+  }
 }
