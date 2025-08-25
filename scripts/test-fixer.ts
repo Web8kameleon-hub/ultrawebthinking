@@ -8,7 +8,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
-import { join, extname } from 'path';
+import { join, extname as _extname } from 'path';
 import { execSync } from 'child_process';
 
 // Pure TypeScript test patterns
@@ -97,7 +97,7 @@ export class TestFixer {
           this.analyzeTestFile(fullPath);
         }
       }
-    } catch (error) {
+    } catch (_error) {
       console.error(`Error scanning ${dir}:`, error);
     }
   }
@@ -232,9 +232,9 @@ describe('AGIxBioNature Industrial Tests', () => {
     // Test number formatting - pure functions
     const formatNumber = (value: number, decimals: number = 2): string => value.toFixed(decimals);
     const formatPopulation = (value: number): string => {
-      if (value >= 1e9) return \`\${(value / 1e9).toFixed(1)}B\`;
-      if (value >= 1e6) return \`\${(value / 1e6).toFixed(1)}M\`;
-      if (value >= 1e3) return \`\${(value / 1e3).toFixed(1)}K\`;
+      if (value >= 1e9) { return \`\${(value / 1e9).toFixed(1)}B\`; }
+      if (value >= 1e6) { return \`\${(value / 1e6).toFixed(1)}M\`; }
+      if (value >= 1e3) { return \`\${(value / 1e3).toFixed(1)}K\`; }
       return value.toString();
     };
 
@@ -582,7 +582,7 @@ describe('Utilities Industrial Tests', () => {
 
   test('format utilities work correctly', () => {
     const formatBytes = (bytes: number): string => {
-      if (bytes === 0) return '0 Bytes';
+      if (bytes === 0) { return '0 Bytes'; }
       
       const k = 1024;
       const sizes = ['Bytes', 'KB', 'MB', 'GB'] as const;
@@ -733,7 +733,7 @@ export default defineConfig({
     try {
       execSync('yarn test', { stdio: 'inherit' });
       console.log('✅ All tests pass with ZERO problems!');
-    } catch (error) {
+    } catch (_error) {
       console.log('⚠️ Some tests still need fixing, but foundation is pure TypeScript');
     }
   }

@@ -50,14 +50,14 @@ export class AGISheetCore extends EventEmitter {
     
     // Validate and set configuration
     const validatedConfig = AGISheetConfigSchema.parse({
-      id: config.id || `agisheet-${Date.now()}`,
-      name: config.name || 'AGISheet Kameleon',
-      mode: config.mode || 'analysis',
-      rows: config.rows || 1000,
-      cols: config.cols || 50,
+      id: config.id ?? `agisheet-${Date.now()}`,
+      name: config.name ?? 'AGISheet Kameleon',
+      mode: config.mode ?? 'analysis',
+      rows: config.rows ?? 1000,
+      cols: config.cols ?? 50,
       realTimeUpdates: config.realTimeUpdates ?? true,
       agiIntegration: config.agiIntegration ?? true,
-      securityLevel: config.securityLevel || 'standard'
+      securityLevel: config.securityLevel ?? 'standard'
     });
 
     this.config = validatedConfig;
@@ -172,7 +172,7 @@ export class AGISheetCore extends EventEmitter {
   getCellValue(row: number, col: number): any {
     const cellId = this.getCellId(row, col);
     const cell = this.cells.get(cellId);
-    return cell?.value || null;
+    return cell?.value ?? null;
   }
 
   /**

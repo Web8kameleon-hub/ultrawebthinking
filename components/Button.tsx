@@ -58,7 +58,7 @@ export function Button({
   return (
     <button
       className={buttonVariants({ variant, size, fullWidth, loading, className })}
-      disabled={disabled || loading}
+      disabled={disabled ?? loading}
       {...props}
     >
       {children}

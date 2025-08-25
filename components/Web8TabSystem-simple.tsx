@@ -149,7 +149,7 @@ const Web8TabSystemSimple: React.FC = () => {
   const [currentTime, setCurrentTime] = React.useState('')
   const [isClient, setIsClient] = React.useState(false)
 
-  const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
+  const activeTab = tabs.find(tab => tab.isActive) ?? tabs[0]
 
   // Helper function to format numbers consistently
   const formatNumber = (num: number): string => {
@@ -172,7 +172,7 @@ const Web8TabSystemSimple: React.FC = () => {
   // Handle search
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!searchQuery.trim()) return
+    if (!searchQuery.trim()) {return}
     
     setIsLoading(true)
     switchTab('search')

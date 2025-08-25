@@ -85,7 +85,7 @@ export class SignalTrace {
   }
 
   public getDuration(): number {
-    return (this.endTime || Date.now()) - this.startTime;
+    return (this.endTime ?? Date.now()) - this.startTime;
   }
 }
 
@@ -164,7 +164,7 @@ export class MemoryLayer {
   }
 
   public retrieve(key: string): any {
-    const item = this.shortTerm.get(key) || this.longTerm.get(key);
+    const item = this.shortTerm.get(key) ?? this.longTerm.get(key);
     if (item) {
       item.accessCount++;
       item.lastAccess = Date.now();
@@ -195,7 +195,7 @@ export class MemoryLayer {
   private cleanupLongTerm(): void {
     if (this.longTerm.size > this.maxLongTerm) {
       const entries = Array.from(this.longTerm.entries());
-      entries.sort((a, b) => (a[1].lastAccess || 0) - (b[1].lastAccess || 0));
+      entries.sort((a, b) => (a[1].lastAccess ?? 0) - (b[1].lastAccess ?? 0));
       const toRemove = entries.slice(0, entries.length - this.maxLongTerm);
       toRemove.forEach(([key]) => this.longTerm.delete(key));
     }

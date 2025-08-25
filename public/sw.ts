@@ -107,7 +107,7 @@ sw.addEventListener('fetch', (event) => {
   } else if (url.pathname.startsWith('/_next/static/')) {
     // Static Next.js assets - cache-first strategy
     event.respondWith(handleStaticAssets(request));
-  } else if (url.pathname === '/' || url.pathname.startsWith('/agi')) {
+  } else if (url.pathname === '/' ?? url.pathname.startsWith('/agi')) {
     // App routes - network-first with offline fallback
     event.respondWith(handleAppRoutes(request));
   } else {
@@ -134,7 +134,7 @@ async function handleAGIRequest(request: Request): Promise<Response> {
     }
     
     throw new Error('Network response not ok');
-  } catch (error) {
+  } catch (_error) {
     // Fallback to cache for offline AGI functionality
     console.log('[EuroWeb SW] AGI network failed, trying cache:', request.url);
     const cachedResponse = await cache.match(request);
@@ -176,7 +176,7 @@ async function handleStaticAssets(request: Request): Promise<Response> {
       await cache.put(request, networkResponse.clone());
     }
     return networkResponse;
-  } catch (error) {
+  } catch (_error) {
     console.log('[EuroWeb SW] Static asset failed:', request.url);
     throw error;
   }
@@ -194,7 +194,7 @@ async function handleAppRoutes(request: Request): Promise<Response> {
     }
     
     return networkResponse;
-  } catch (error) {
+  } catch (_error) {
     console.log('[EuroWeb SW] App route failed, trying cache:', request.url);
     const cachedResponse = await cache.match(request);
     
@@ -275,7 +275,7 @@ async function handleAppRoutes(request: Request): Promise<Response> {
 async function handleDefault(request: Request): Promise<Response> {
   try {
     return await fetch(request);
-  } catch (error) {
+  } catch (_error) {
     console.log('[EuroWeb SW] Default request failed:', request.url);
     throw error;
   }
@@ -302,11 +302,11 @@ async function syncAGIData(): Promise<void> {
           await cache.put(endpoint, response.clone());
           console.log('[EuroWeb SW] AGI data synced:', endpoint);
         }
-      } catch (error) {
+      } catch (_error) {
         console.log('[EuroWeb SW] AGI sync failed for:', endpoint);
       }
     }
-  } catch (error) {
+  } catch (_error) {
     console.log('[EuroWeb SW] Background AGI sync failed:', error);
   }
 }
@@ -316,7 +316,7 @@ sw.addEventListener('push', (event: any) => {
   console.log('[EuroWeb SW] Push notification received');
   
   const options = {
-    body: event.data?.text() || 'EuroWeb AGI notification',
+    body: event.data?.text() ?? 'EuroWeb AGI notification',
     icon: '/favicon.ico',
     badge: '/favicon.ico',
     data: {
@@ -344,7 +344,7 @@ sw.addEventListener('push', (event: any) => {
 sw.addEventListener('notificationclick', (event: any) => {
   event.notification.close();
 
-  if (event.action === 'open' || !event.action) {
+  if (event.action === 'open' ?? !event.action) {
     event.waitUntil(
       sw.clients.openWindow('/')
     );

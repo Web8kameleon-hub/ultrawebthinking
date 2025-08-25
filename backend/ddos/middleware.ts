@@ -15,9 +15,9 @@ import { monitorRequest, getGuardianStatus, getLogs, getBlockedIPs } from './gua
  * Express middleware for Guardian protection
  */
 export function guardianMiddleware(req: Request, res: Response, next: NextFunction): void {
-  const clientIP = req.ip || req.connection.remoteAddress || 'unknown'
+  const clientIP = req.ip ?? req.connection.remoteAddress ?? 'unknown'
   const payloadSize = req.get('content-length') ? parseInt(req.get('content-length')!) : 0
-  const userAgent = req.get('user-agent') || 'unknown'
+  const userAgent = req.get('user-agent') ?? 'unknown'
   const requestPath = req.path
 
   // Simple rate limiting based on request timestamp

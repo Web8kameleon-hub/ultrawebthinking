@@ -8,8 +8,8 @@
  */
 
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync as _writeFileSync, existsSync } from 'fs';
+import { join as _join } from 'path';
 
 interface CleanerConfig {
   readonly forbiddenPatterns: readonly string[];
@@ -71,7 +71,7 @@ export const runBuild = (): void => {
   try {
     execSync('yarn build', { stdio: 'inherit' });
     console.log('✅ Build completed successfully');
-  } catch (error) {
+  } catch (_error) {
     console.error('❌ Build failed:', error);
     process.exit(1);
   }
@@ -83,7 +83,7 @@ export const runTests = (): void => {
   try {
     execSync('yarn test', { stdio: 'inherit' });
     console.log('✅ Tests completed successfully');
-  } catch (error) {
+  } catch (_error) {
     console.error('❌ Tests failed:', error);
     process.exit(1);
   }
@@ -94,7 +94,7 @@ export const runDev = (): void => {
   
   try {
     execSync('yarn dev', { stdio: 'inherit' });
-  } catch (error) {
+  } catch (_error) {
     console.error('❌ Dev server failed:', error);
     process.exit(1);
   }

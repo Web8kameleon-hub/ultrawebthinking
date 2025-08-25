@@ -166,9 +166,9 @@ export class BiologyEngine {
     const avgPopulation = populations.reduce((a, b) => a + b, 0) / populations.length;
     const variance = populations.reduce((acc, pop) => acc + Math.pow(pop - avgPopulation, 2), 0) / populations.length;
     
-    if (avgPopulation === 0) return 'extinct';
-    if (variance / avgPopulation > 0.5) return 'declining';
-    if (variance / avgPopulation < 0.1) return 'stable';
+    if (avgPopulation === 0) {return 'extinct';}
+    if (variance / avgPopulation > 0.5) {return 'declining';}
+    if (variance / avgPopulation < 0.1) {return 'stable';}
     return 'growing';
   }
 
@@ -179,12 +179,12 @@ export class BiologyEngine {
     const avgTemp = specimens.reduce((acc, s) => acc + s.environmentalFactors.temperature, 0) / specimens.length;
     const avgPH = specimens.reduce((acc, s) => acc + s.environmentalFactors.ph, 0) / specimens.length;
 
-    if (avgPollution > 0.3) pressures.push('pollution_stress');
-    if (avgTemp > 30 || avgTemp < 5) pressures.push('temperature_extremes');
-    if (avgPH < 6 || avgPH > 8) pressures.push('ph_imbalance');
+    if (avgPollution > 0.3) {pressures.push('pollution_stress');}
+    if (avgTemp > 30 ?? avgTemp < 5) {pressures.push('temperature_extremes');}
+    if (avgPH < 6 ?? avgPH > 8) {pressures.push('ph_imbalance');}
     
     const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered').length;
-    if (endangeredCount / specimens.length > 0.3) pressures.push('habitat_loss');
+    if (endangeredCount / specimens.length > 0.3) {pressures.push('habitat_loss');}
 
     pressures.push('resource_competition', 'climate_change', 'genetic_bottleneck');
 
@@ -216,15 +216,15 @@ export class BiologyEngine {
 
   private determineInteractionType(spec1: SpecimenData, spec2: SpecimenData): 'symbiotic' | 'competitive' | 'predatory' | 'neutral' {
     // Simple logic for demo purposes
-    if (spec1.category === 'plant' && spec2.category === 'animal') return 'symbiotic';
-    if (spec1.category === spec2.category) return 'competitive';
-    if (spec1.category === 'animal' && spec2.category === 'microorganism') return 'predatory';
+    if (spec1.category === 'plant' && spec2.category === 'animal') {return 'symbiotic';}
+    if (spec1.category === spec2.category) {return 'competitive';}
+    if (spec1.category === 'animal' && spec2.category === 'microorganism') {return 'predatory';}
     return 'neutral';
   }
 
   private calculateAdaptationPotential(specimens: SpecimenData[]): number {
     const avgGeneticDiversity = specimens.reduce((acc, s) => acc + s.properties.geneticDiversity, 0) / specimens.length;
-    const avgMetabolicRate = specimens.reduce((acc, s) => acc + (s.properties.metabolicRate || 1), 0) / specimens.length;
+    const avgMetabolicRate = specimens.reduce((acc, s) => acc + (s.properties.metabolicRate ?? 1), 0) / specimens.length;
     const environmentalVariability = this.calculateEnvironmentalVariability(specimens);
     
     return (avgGeneticDiversity * 0.5 + avgMetabolicRate * 0.3 + environmentalVariability * 0.2);
@@ -244,9 +244,9 @@ export class BiologyEngine {
   }
 
   private classifyGeneticTrend(avgDiversity: number): 'increasing' | 'stable' | 'decreasing' | 'critical' {
-    if (avgDiversity > 0.8) return 'increasing';
-    if (avgDiversity > 0.6) return 'stable';
-    if (avgDiversity > 0.3) return 'decreasing';
+    if (avgDiversity > 0.8) {return 'increasing';}
+    if (avgDiversity > 0.6) {return 'stable';}
+    if (avgDiversity > 0.3) {return 'decreasing';}
     return 'critical';
   }
 
@@ -261,7 +261,7 @@ export class BiologyEngine {
 
   private calculateDiseaseResistance(specimens: SpecimenData[]): number {
     return specimens.reduce((acc, s) => {
-      const medicalFactor = s.medicalRelevance?.resistanceFactors.length || 0;
+      const medicalFactor = s.medicalRelevance?.resistanceFactors.length ?? 0;
       const geneticFactor = s.properties.geneticDiversity;
       return acc + (medicalFactor * 0.1 + geneticFactor * 0.9);
     }, 0) / specimens.length;
@@ -383,9 +383,9 @@ export class BiologyEngine {
     const avgPollution = specimens.reduce((acc, s) => acc + s.environmentalFactors.pollution, 0) / specimens.length;
     const lowGeneticDiversity = specimens.filter(s => s.properties.geneticDiversity < 0.5).length / specimens.length;
     
-    if (endangeredRatio > 0.3) riskFactors.push('high_endangerment_rate');
-    if (avgPollution > 0.2) riskFactors.push('environmental_pollution');
-    if (lowGeneticDiversity > 0.4) riskFactors.push('genetic_bottleneck');
+    if (endangeredRatio > 0.3) {riskFactors.push('high_endangerment_rate');}
+    if (avgPollution > 0.2) {riskFactors.push('environmental_pollution');}
+    if (lowGeneticDiversity > 0.4) {riskFactors.push('genetic_bottleneck');}
     
     riskFactors.push('climate_change', 'habitat_fragmentation', 'invasive_species');
     
@@ -395,9 +395,9 @@ export class BiologyEngine {
   private assessConservationPriority(healthScore: number, geneticDiversity: number): 'low' | 'medium' | 'high' | 'critical' {
     const combinedScore = (healthScore + geneticDiversity) / 2;
     
-    if (combinedScore < 0.3) return 'critical';
-    if (combinedScore < 0.5) return 'high';
-    if (combinedScore < 0.7) return 'medium';
+    if (combinedScore < 0.3) {return 'critical';}
+    if (combinedScore < 0.5) {return 'high';}
+    if (combinedScore < 0.7) {return 'medium';}
     return 'low';
   }
 
@@ -405,9 +405,9 @@ export class BiologyEngine {
     const queryLower = query.toLowerCase();
     
     return specimens.filter(specimen => 
-      specimen.species.toLowerCase().includes(queryLower) ||
-      specimen.category.toLowerCase().includes(queryLower) ||
-      specimen.location.habitat.toLowerCase().includes(queryLower) ||
+      specimen.species.toLowerCase().includes(queryLower) ??
+      specimen.category.toLowerCase().includes(queryLower) ??
+      specimen.location.habitat.toLowerCase().includes(queryLower) ??
       (specimen.medicalRelevance?.drugCompounds.some(compound => 
         compound.toLowerCase().includes(queryLower)
       ))

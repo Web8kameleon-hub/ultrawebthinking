@@ -50,14 +50,14 @@ export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysis 
   }
 
   const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 0.8) return '#22c55e'
-    if (confidence >= 0.6) return '#f59e0b'
+    if (confidence >= 0.8) {return '#22c55e'}
+    if (confidence >= 0.6) {return '#f59e0b'}
     return '#ef4444'
   }
 
   const getProbabilityColor = (probability: number) => {
-    if (probability >= 0.6) return '#ef4444'
-    if (probability >= 0.3) return '#f59e0b'
+    if (probability >= 0.6) {return '#ef4444'}
+    if (probability >= 0.3) {return '#f59e0b'}
     return '#22c55e'
   }
 

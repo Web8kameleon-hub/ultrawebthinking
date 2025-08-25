@@ -117,8 +117,8 @@ export class EchoEngine {
         // Use AGI module for intelligent navigation
         const execution = urlModule.execute({
           url: params.url,
-          method: params.method || 'GET',
-          headers: params.headers || {},
+          method: params.method ?? 'GET',
+          headers: params.headers ?? {},
           timestamp: startTime,
           layer: params.layer,
           context: this.context
@@ -129,7 +129,7 @@ export class EchoEngine {
       } else {
         // Traditional navigation
         result = this.performTraditionalNavigation(params);
-        trace.addStep('traditional-navigation', { method: params.method || 'GET' });
+        trace.addStep('traditional-navigation', { method: params.method ?? 'GET' });
         this.metrics.traditionalNavigations++;
       }
 
@@ -265,7 +265,7 @@ export class EchoEngine {
    * Validate Navigation Parameters
    */
   private validateNavigationParams(params: Web8NavigationParams): void {
-    if (!params.url || typeof params.url !== 'string') {
+    if (!params.url ?? typeof params.url !== 'string') {
       throw new Error('Invalid URL parameter');
     }
     if (params.method && !['GET', 'POST', 'PUT', 'DELETE'].includes(params.method)) {
@@ -277,7 +277,7 @@ export class EchoEngine {
    * Validate Route Parameters
    */
   private validateRouteParams(params: OrchestrationParams): void {
-    if (!params.route || typeof params.route !== 'string') {
+    if (!params.route ?? typeof params.route !== 'string') {
       throw new Error('Invalid route parameter');
     }
     if (params.method && typeof params.method !== 'string') {
@@ -294,8 +294,8 @@ export class EchoEngine {
     // Simulate navigation result
     return {
       url: params.url,
-      method: params.method || 'GET',
-      headers: params.headers || {},
+      method: params.method ?? 'GET',
+      headers: params.headers ?? {},
       timestamp: Date.now(),
       type: 'traditional'
     };
@@ -310,8 +310,8 @@ export class EchoEngine {
     // Simulate routing result
     return {
       route: params.route,
-      params: params.params || {},
-      method: params.method || 'GET',
+      params: params.params ?? {},
+      method: params.method ?? 'GET',
       timestamp: Date.now(),
       type: 'traditional'
     };

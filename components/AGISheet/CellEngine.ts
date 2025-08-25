@@ -45,7 +45,7 @@ export class CellEngine {
           return await this.analyzeText(parsedCommand.input, context);
         
         case 'translate':
-          return await this.translateText(parsedCommand.input, parsedCommand.parameters?.to || 'en');
+          return await this.translateText(parsedCommand.input, parsedCommand.parameters?.to ?? 'en');
         
         case 'summarize':
           return await this.summarizeText(parsedCommand.input);
@@ -62,7 +62,7 @@ export class CellEngine {
         default:
           throw new Error(`Unknown AGI command type: ${parsedCommand.type}`);
       }
-    } catch (error) {
+    } catch (_error) {
       throw new Error(`AGI processing failed: ${error}`);
     }
   }
@@ -74,11 +74,11 @@ export class CellEngine {
     const normalizedCommand = command.toLowerCase().trim();
     
     // Detect command type
-    if (normalizedCommand.includes('analyze') || normalizedCommand.includes('analizo')) {
+    if (normalizedCommand.includes('analyze') ?? normalizedCommand.includes('analizo')) {
       return { type: 'analyze', input: command.replace(/^(analyze|analizo)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('translate') || normalizedCommand.includes('perkthe')) {
+    if (normalizedCommand.includes('translate') ?? normalizedCommand.includes('perkthe')) {
       const match = command.match(/(?:translate|perkthe)\s+(.+)\s+(?:to|ne)\s+(\w+)/i);
       if (match) {
         return { 
@@ -90,19 +90,19 @@ export class CellEngine {
       return { type: 'translate', input: command.replace(/^(translate|perkthe)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('summarize') || normalizedCommand.includes('permbledh')) {
+    if (normalizedCommand.includes('summarize') ?? normalizedCommand.includes('permbledh')) {
       return { type: 'summarize', input: command.replace(/^(summarize|permbledh)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('calculate') || normalizedCommand.includes('llogarit')) {
+    if (normalizedCommand.includes('calculate') ?? normalizedCommand.includes('llogarit')) {
       return { type: 'calculate', input: command.replace(/^(calculate|llogarit)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('generate') || normalizedCommand.includes('gjeneroj')) {
+    if (normalizedCommand.includes('generate') ?? normalizedCommand.includes('gjeneroj')) {
       return { type: 'generate', input: command.replace(/^(generate|gjeneroj)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('classify') || normalizedCommand.includes('klasifiko')) {
+    if (normalizedCommand.includes('classify') ?? normalizedCommand.includes('klasifiko')) {
       return { type: 'classify', input: command.replace(/^(classify|klasifiko)\s*/i, '') };
     }
     
@@ -147,11 +147,11 @@ export class CellEngine {
           organizations,
           numbers
         },
-        summary: text.length > 100 ? text.substring(0, 97) + '...' : text
+        summary: text.length > 100 ? `${text.substring(0, 97)  }...` : text
       };
       
       return JSON.stringify(analysis, null, 2);
-    } catch (error) {
+    } catch (_error) {
       return `Analysis failed: ${error}`;
     }
   }
@@ -171,12 +171,12 @@ export class CellEngine {
             tgt_lang: this.getHFLanguageCode(targetLanguage)
           }
         });
-        return result.translation_text || text;
+        return result.translation_text ?? text;
       }
       
       // Fallback: basic language detection and response
       return `[Translation to ${targetLanguage}]: ${text}`;
-    } catch (error) {
+    } catch (_error) {
       return `Translation failed: ${error}`;
     }
   }
@@ -206,7 +206,7 @@ export class CellEngine {
       ].join(' ');
       
       return summary;
-    } catch (error) {
+    } catch (_error) {
       return `Summarization failed: ${error}`;
     }
   }
@@ -226,13 +226,13 @@ export class CellEngine {
         const rowIndex = parseInt(row) - 1;
         const cellId = `${rowIndex}-${colIndex}`;
         const cell = context.get(cellId);
-        return cell?.value || '0';
+        return cell?.value ?? '0';
       });
       
       // Basic math evaluation (be careful with eval in production)
       const result = this.safeEvaluate(processedExpression);
       return result.toString();
-    } catch (error) {
+    } catch (_error) {
       return `Calculation failed: ${error}`;
     }
   }
@@ -247,17 +247,17 @@ export class CellEngine {
           model: 'microsoft/DialoGPT-medium',
           inputs: prompt,
           parameters: {
-            max_length: parameters?.maxLength || 100,
-            temperature: parameters?.temperature || 0.7,
+            max_length: parameters?.maxLength ?? 100,
+            temperature: parameters?.temperature ?? 0.7,
             ...parameters
           }
         });
-        return result.generated_text || `Generated response for: ${prompt}`;
+        return result.generated_text ?? `Generated response for: ${prompt}`;
       }
       
       // Fallback generation
       return `[Generated content for]: ${prompt}`;
-    } catch (error) {
+    } catch (_error) {
       return `Content generation failed: ${error}`;
     }
   }
@@ -277,15 +277,15 @@ export class CellEngine {
       
       const categories = [];
       
-      if (hasNumbers) categories.push('numerical');
-      if (hasQuestions) categories.push('question');
-      if (hasEmails) categories.push('contact');
-      if (hasUrls) categories.push('reference');
-      if (doc.people().length > 0) categories.push('personal');
-      if (doc.places().length > 0) categories.push('geographical');
+      if (hasNumbers) {categories.push('numerical');}
+      if (hasQuestions) {categories.push('question');}
+      if (hasEmails) {categories.push('contact');}
+      if (hasUrls) {categories.push('reference');}
+      if (doc.people().length > 0) {categories.push('personal');}
+      if (doc.places().length > 0) {categories.push('geographical');}
       
       return categories.length > 0 ? categories.join(', ') : 'general';
-    } catch (error) {
+    } catch (_error) {
       return `Classification failed: ${error}`;
     }
   }
@@ -304,7 +304,7 @@ export class CellEngine {
       'por': 'Portuguese',
       'und': 'Unknown'
     };
-    return languages[code] || 'Unknown';
+    return languages[code] ?? 'Unknown';
   }
 
   private getHFLanguageCode(lang: string): string {
@@ -317,7 +317,7 @@ export class CellEngine {
       'es': 'es_XX',
       'pt': 'pt_XX'
     };
-    return codes[lang] || 'en_XX';
+    return codes[lang] ?? 'en_XX';
   }
 
   private analyzeSentiment(text: string): string {
@@ -329,12 +329,12 @@ export class CellEngine {
     let score = 0;
     
     words.forEach(word => {
-      if (positiveWords.includes(word)) score++;
-      if (negativeWords.includes(word)) score--;
+      if (positiveWords.includes(word)) {score++;}
+      if (negativeWords.includes(word)) {score--;}
     });
     
-    if (score > 0) return 'positive';
-    if (score < 0) return 'negative';
+    if (score > 0) {return 'positive';}
+    if (score < 0) {return 'negative';}
     return 'neutral';
   }
 

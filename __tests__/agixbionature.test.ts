@@ -8,11 +8,11 @@ import { test, expect, describe } from 'vitest';
 describe('AGIxBioNature Pure Logic Tests', () => {
   test('data formatting functions work correctly', () => {
     // Pure TypeScript functions - no React, no mocks
-    const formatNumber = (value: number, decimals: number = 2): string => value.toFixed(decimals);
+    const formatNumber = (value: number, decimals = 2): string => value.toFixed(decimals);
     const formatPopulation = (value: number): string => {
-      if (value >= 1e9) return `${(value / 1e9).toFixed(1)}B`;
-      if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-      if (value >= 1e3) return `${(value / 1e3).toFixed(1)}K`;
+      if (value >= 1e9) {return `${(value / 1e9).toFixed(1)}B`;}
+      if (value >= 1e6) {return `${(value / 1e6).toFixed(1)}M`;}
+      if (value >= 1e3) {return `${(value / 1e3).toFixed(1)}K`;}
       return value.toString();
     };
 
@@ -56,7 +56,7 @@ describe('AGIxBioNature Pure Logic Tests', () => {
     const calculateBiodiversityIndex = (species: readonly number[]): number => {
       const total = species.reduce((sum, count) => sum + count, 0);
       return species.reduce((index, count) => {
-        if (count === 0) return index;
+        if (count === 0) {return index;}
         const proportion = count / total;
         return index - (proportion * Math.log(proportion));
       }, 0);
@@ -72,11 +72,11 @@ describe('AGIxBioNature Pure Logic Tests', () => {
 
 // Export pure utility functions (no React components)
 export const BiologyUtils = {
-  formatNumber: (value: number, decimals: number = 2): string => value.toFixed(decimals),
+  formatNumber: (value: number, decimals = 2): string => value.toFixed(decimals),
   formatPopulation: (value: number): string => {
-    if (value >= 1e9) return `${(value / 1e9).toFixed(1)}B`;
-    if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}K`;
+    if (value >= 1e9) {return `${(value / 1e9).toFixed(1)}B`;}
+    if (value >= 1e6) {return `${(value / 1e6).toFixed(1)}M`;}
+    if (value >= 1e3) {return `${(value / 1e3).toFixed(1)}K`;}
     return value.toString();
   },
   calculateGeneticDiversity: (alleles: number, population: number): number => {

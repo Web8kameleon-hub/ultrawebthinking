@@ -164,7 +164,7 @@ export class AppPageManager {
    * Get page by ID
    */
   getPage(pageId: string): AppPage | null {
-    return this.pageRegistry.get(pageId) || null;
+    return this.pageRegistry.get(pageId) ?? null;
   }
 
   /**
@@ -188,7 +188,7 @@ export class AppPageManager {
     motionType: 'standard' | 'agi' | 'dashboard' = 'standard'
   ): React.ReactElement {
     const page = this.getPage(pageId);
-    const motionPreset = this.motionPresets.get(motionType) || this.motionPresets.get('standard')!;
+    const motionPreset = this.motionPresets.get(motionType) ?? this.motionPresets.get('standard')!;
     
     if (!page) {
       throw new Error(`Page ${pageId} not registered`);
@@ -237,14 +237,14 @@ export class AppPageManager {
    * Get performance metrics for a page
    */
   getPerformanceMetrics(pageId: string): PagePerformance | null {
-    return this.performanceCache.get(pageId) || null;
+    return this.performanceCache.get(pageId) ?? null;
   }
 
   /**
    * Record performance metrics
    */
   recordPerformance(pageId: string, metrics: Partial<PagePerformance>): void {
-    const existing = this.performanceCache.get(pageId) || this.createDefaultPerformance();
+    const existing = this.performanceCache.get(pageId) ?? this.createDefaultPerformance();
     const updated = { ...existing, ...metrics };
     this.performanceCache.set(pageId, updated);
     

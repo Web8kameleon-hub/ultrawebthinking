@@ -1,0 +1,63 @@
+{
+    "trustProxy": true,
+    "firewall": {
+        "whitelistCidrs": [
+            "127.0.0.1/32",
+            "10.0.0.0/8"
+        ],
+        "blacklistCidrs": [],
+        "temporaryBanSeconds": 1800
+    },
+    "ratelimit": {
+        "default": {
+            "capacity": 120,
+            "refillPerSec": 60
+        },
+        "strict": {
+            "capacity": 30,
+            "refillPerSec": 15
+        },
+        "static": {
+            "capacity": 300,
+            "refillPerSec": 150
+        }
+    },
+    "paths": {
+        "strict": [
+            "/auth",
+            "/login",
+            "/api/auth",
+            "/defense/handshake",
+            "/defense/seal"
+        ],
+        "static": [
+            "/static",
+            "/assets"
+        ]
+    },
+    "pow": {
+        "difficultyBits": 18,
+        "cookieName": "pow_ok",
+        "ttlSeconds": 900
+    },
+    "anomaly": {
+        "ewmaAlpha": 0.2,
+        "spikeFactor": 4.0,
+        "greylistSeconds": 900,
+        "tarpitMs": 400
+    },
+    "mesh": {
+        "nodeId": "web8-node-tirana-01",
+        "privateKeyPem": "",
+        "peers": [
+            {
+                "id": "web8-node-berlin-01",
+                "publicKeyPem": ""
+            },
+            {
+                "id": "web8-node-dusseldorf-01",
+                "publicKeyPem": ""
+            }
+        ]
+    }
+}

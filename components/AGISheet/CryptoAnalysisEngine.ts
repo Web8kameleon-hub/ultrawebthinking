@@ -75,7 +75,7 @@ export class CryptoAnalysisEngine {
   private priceHistory: Map<string, number[]>;
   private technicalIndicators: Map<string, any>;
 
-  constructor(debugMode: boolean = false) {
+  constructor(debugMode = false) {
     this.debugMode = debugMode;
     this.priceHistory = new Map();
     this.technicalIndicators = new Map();
@@ -467,7 +467,7 @@ export class CryptoAnalysisEngine {
       ['UNI', 'AAVE', 'COMP', 'SUSHI', 'CAKE'].includes(crypto.symbol)
     );
 
-    if (deFiTokens.length === 0) return undefined;
+    if (deFiTokens.length === 0) {return undefined;}
 
     // Simulate DeFi metrics
     const tvl = Math.random() * 50000000000 + 10000000000; // $10B - $60B
@@ -484,7 +484,7 @@ export class CryptoAnalysisEngine {
   }
 
   // Technical analysis helper methods
-  private generatePriceHistory(currentPrice: number, volatility: number, periods: number = 50): number[] {
+  private generatePriceHistory(currentPrice: number, volatility: number, periods = 50): number[] {
     const history = [currentPrice];
     
     for (let i = 1; i < periods; i++) {
@@ -515,8 +515,8 @@ export class CryptoAnalysisEngine {
     return { support, resistance };
   }
 
-  private calculateRSI(prices: number[], period: number = 14): number {
-    if (prices.length < period + 1) return 50; // Default neutral RSI
+  private calculateRSI(prices: number[], period = 14): number {
+    if (prices.length < period + 1) {return 50;} // Default neutral RSI
     
     const gains = [];
     const losses = [];
@@ -530,7 +530,7 @@ export class CryptoAnalysisEngine {
     const avgGain = gains.slice(-period).reduce((a, b) => a + b, 0) / period;
     const avgLoss = losses.slice(-period).reduce((a, b) => a + b, 0) / period;
     
-    if (avgLoss === 0) return 100;
+    if (avgLoss === 0) {return 100;}
     
     const rs = avgGain / avgLoss;
     return 100 - (100 / (1 + rs));
@@ -552,7 +552,7 @@ export class CryptoAnalysisEngine {
   }
 
   private calculateEMA(prices: number[], period: number): number {
-    if (prices.length === 0) return 0;
+    if (prices.length === 0) {return 0;}
     
     const multiplier = 2 / (period + 1);
     let ema = prices[0];
@@ -564,7 +564,7 @@ export class CryptoAnalysisEngine {
     return ema;
   }
 
-  private calculateBollingerBands(prices: number[], period: number = 20, stdDev: number = 2): {
+  private calculateBollingerBands(prices: number[], period = 20, stdDev = 2): {
     upper: number;
     middle: number;
     lower: number;
@@ -616,7 +616,7 @@ export class CryptoAnalysisEngine {
     return weightedReturn * 365; // Annualized
   }
 
-  private calculateVaR(cryptoData: CryptoMetrics[], allocation: Record<string, number>, confidence: number = 0.95): number {
+  private calculateVaR(cryptoData: CryptoMetrics[], allocation: Record<string, number>, confidence = 0.95): number {
     // Simplified VaR calculation
     const portfolioVolatility = this.calculatePortfolioRisk(cryptoData, allocation);
     const zScore = confidence === 0.95 ? 1.645 : confidence === 0.99 ? 2.33 : 1.28;
@@ -646,21 +646,21 @@ export class CryptoAnalysisEngine {
 
   // Utility methods
   private determineMarketPhase(avgChange: number, avgVolatility: number, fearGreedIndex: number): 'accumulation' | 'markup' | 'distribution' | 'markdown' {
-    if (fearGreedIndex < 25 && avgChange < -5) return 'markdown';
-    if (fearGreedIndex < 50 && avgVolatility < 0.05) return 'accumulation';
-    if (fearGreedIndex > 75 && avgChange > 5) return 'distribution';
+    if (fearGreedIndex < 25 && avgChange < -5) {return 'markdown';}
+    if (fearGreedIndex < 50 && avgVolatility < 0.05) {return 'accumulation';}
+    if (fearGreedIndex > 75 && avgChange > 5) {return 'distribution';}
     return 'markup';
   }
 
   private determineWhaleActivity(cryptoData: CryptoMetrics[]): 'accumulating' | 'distributing' | 'neutral' {
     const highVolumeAssets = cryptoData.filter(c => c.volume > 1000000000); // > $1B volume
     
-    if (highVolumeAssets.length === 0) return 'neutral';
+    if (highVolumeAssets.length === 0) {return 'neutral';}
     
     const avgChange = highVolumeAssets.reduce((sum, c) => sum + c.change24h, 0) / highVolumeAssets.length;
     
-    if (avgChange > 3) return 'accumulating';
-    if (avgChange < -3) return 'distributing';
+    if (avgChange > 3) {return 'accumulating';}
+    if (avgChange < -3) {return 'distributing';}
     return 'neutral';
   }
 
@@ -678,8 +678,8 @@ export class CryptoAnalysisEngine {
     const privacyCoins = cryptoData.filter(c => ['XMR', 'ZEC', 'DASH'].includes(c.symbol));
     const stablecoins = cryptoData.filter(c => ['USDT', 'USDC', 'BUSD'].includes(c.symbol));
     
-    if (privacyCoins.length > cryptoData.length * 0.3) return 'high';
-    if (stablecoins.length > cryptoData.length * 0.5) return 'low';
+    if (privacyCoins.length > cryptoData.length * 0.3) {return 'high';}
+    if (stablecoins.length > cryptoData.length * 0.5) {return 'low';}
     return 'medium';
   }
 
@@ -696,9 +696,9 @@ export class CryptoAnalysisEngine {
   }
 
   private assessProtocolRisk(apr: number, tvl: number): 'low' | 'medium' | 'high' | 'extreme' {
-    if (apr > 100) return 'extreme'; // Unsustainably high APR
-    if (apr > 50 || tvl < 100000000) return 'high'; // High APR or low TVL
-    if (apr > 25 || tvl < 500000000) return 'medium';
+    if (apr > 100) {return 'extreme';} // Unsustainably high APR
+    if (apr > 50 ?? tvl < 100000000) {return 'high';} // High APR or low TVL
+    if (apr > 25 ?? tvl < 500000000) {return 'medium';}
     return 'low';
   }
 

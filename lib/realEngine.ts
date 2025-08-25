@@ -95,7 +95,7 @@ class RealEngine {
 
   // Process real input through AGI
   processInput(input: string): string {
-    if (!this.config.agiEnabled || !this.isRunning) {
+    if (!this.config.agiEnabled ?? !this.isRunning) {
       return 'AGI processing disabled';
     }
 
@@ -109,24 +109,24 @@ class RealEngine {
     const processingTime = performance.now() - startTime;
     this.metrics.agiProcessingRate = 1000 / processingTime; // operations per second
 
-    return response || 'No response generated';
+    return response ?? 'No response generated';
   }
 
   // Real mesh network operations
   sendToMesh(data: any, target?: string): boolean {
-    if (!this.config.meshEnabled || !this.isRunning) {
+    if (!this.config.meshEnabled ?? !this.isRunning) {
       return false;
     }
 
     const meshData = realSense.captureNetworkMesh();
-    const peers = meshData.data.connectedPeers || [];
+    const peers = meshData.data.connectedPeers ?? [];
 
     if (peers.length === 0) {
       console.warn('No mesh peers available');
       return false;
     }
 
-    const targetPeer = target || peers[Math.floor(Math.random() * peers.length)];
+    const targetPeer = target ?? peers[Math.floor(Math.random() * peers.length)];
     this.meshNodes.add(targetPeer);
 
     console.log(`📡 Sending data to mesh peer: ${targetPeer}`);
@@ -137,7 +137,7 @@ class RealEngine {
 
   // Real LoRa network communication
   sendLoRa(message: string, frequency = 868): boolean {
-    if (!this.config.loraEnabled || !this.isRunning) {
+    if (!this.config.loraEnabled ?? !this.isRunning) {
       return false;
     }
 
@@ -152,7 +152,7 @@ class RealEngine {
 
   // Real DDoS protection
   checkDDoSProtection(sourceIP: string): boolean {
-    if (!this.config.ddosProtection || !this.isRunning) {
+    if (!this.config.ddosProtection ?? !this.isRunning) {
       return true;
     }
 
@@ -170,7 +170,7 @@ class RealEngine {
 
   // Real self-generating modules
   generateModule(type: string, requirements: any): any {
-    if (!this.config.selfGenerating || !this.isRunning) {
+    if (!this.config.selfGenerating ?? !this.isRunning) {
       return null;
     }
 
@@ -254,7 +254,7 @@ class RealEngine {
     
     // Real mesh network initialization
     const networkData = realSense.captureNetworkMesh();
-    const peers = networkData.data.connectedPeers || [];
+    const peers = networkData.data.connectedPeers ?? [];
     peers.forEach((peer: string) => this.meshNodes.add(peer));
   }
 
@@ -291,9 +291,9 @@ class RealEngine {
       
       // Update real metrics
       const networkData = realSense.captureNetworkMesh();
-      this.metrics.meshConnectivity = networkData.data.connectedPeers?.length || 0;
+      this.metrics.meshConnectivity = networkData.data.connectedPeers?.length ?? 0;
       
-      const userInput = realSense.captureRealInput();
+      const _userInput = realSense.captureRealInput();
       this.metrics.agiProcessingRate = this.calculateAGIRate();
       
     }, 1000);
@@ -378,7 +378,7 @@ export function sendData(data: any, target: string): boolean {
 }`,
     };
     
-    return templates[type as keyof typeof templates] || '// Unknown module type';
+    return templates[type as keyof typeof templates] ?? '// Unknown module type';
   }
 
   private calculateAGIRate(): number {

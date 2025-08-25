@@ -26,7 +26,7 @@ const features = [
   },
 ];
 
-const Features = () => {
+const _Features = () => {
   return (
     <section className={styles.section}>
       <div className={styles.titleBlock}>
@@ -50,5 +50,6 @@ const Features = () => {
   );
 };
 
-// Removed default export: Features;
+// Named export
+export { _Features as Features };
 

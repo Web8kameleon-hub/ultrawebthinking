@@ -48,7 +48,7 @@ export class EconomicsEngine {
   private debugMode: boolean;
   private economicModels: Map<string, any>;
 
-  constructor(debugMode: boolean = false) {
+  constructor(debugMode = false) {
     this.debugMode = debugMode;
     this.economicModels = new Map();
     this.initializeModels();
@@ -224,10 +224,10 @@ export class EconomicsEngine {
 
     const healthScore = (positiveCount - negativeCount) / indicators.length + averageConfidence;
 
-    if (healthScore > 0.8) return 'excellent';
-    if (healthScore > 0.4) return 'good';
-    if (healthScore > 0) return 'moderate';
-    if (healthScore > -0.4) return 'poor';
+    if (healthScore > 0.8) {return 'excellent';}
+    if (healthScore > 0.4) {return 'good';}
+    if (healthScore > 0) {return 'moderate';}
+    if (healthScore > -0.4) {return 'poor';}
     return 'critical';
   }
 
@@ -238,9 +238,9 @@ export class EconomicsEngine {
 
     const riskScore = (volatility * 0.4) + (negativeCount / indicators.length * 0.3) + (lowConfidenceCount / indicators.length * 0.3);
 
-    if (riskScore < 0.25) return 'low';
-    if (riskScore < 0.5) return 'medium';
-    if (riskScore < 0.75) return 'high';
+    if (riskScore < 0.25) {return 'low';}
+    if (riskScore < 0.5) {return 'medium';}
+    if (riskScore < 0.75) {return 'high';}
     return 'extreme';
   }
 
@@ -250,10 +250,10 @@ export class EconomicsEngine {
 
     const sentimentScore = avgChange * 0.6 + (positiveCount - 0.5) * 0.4;
 
-    if (sentimentScore > 2) return 'very_bullish';
-    if (sentimentScore > 0.5) return 'bullish';
-    if (sentimentScore > -0.5) return 'neutral';
-    if (sentimentScore > -2) return 'bearish';
+    if (sentimentScore > 2) {return 'very_bullish';}
+    if (sentimentScore > 0.5) {return 'bullish';}
+    if (sentimentScore > -0.5) {return 'neutral';}
+    if (sentimentScore > -2) {return 'bearish';}
     return 'very_bearish';
   }
 
@@ -263,7 +263,7 @@ export class EconomicsEngine {
     if (health === 'excellent' && risk === 'low') {
       recommendations.push('Consider increasing portfolio allocation to growth assets');
       recommendations.push('Monitor for potential overheating signals');
-    } else if (health === 'poor' || risk === 'high') {
+    } else if (health === 'poor' ?? risk === 'high') {
       recommendations.push('Implement defensive investment strategies');
       recommendations.push('Increase cash reserves and reduce leverage');
       recommendations.push('Consider hedging strategies');
@@ -318,7 +318,7 @@ export class EconomicsEngine {
       risks.push(`High volatility in ${volatileIndicators.map(i => i.name).join(', ')}`);
     }
 
-    if (riskLevel === 'high' || riskLevel === 'extreme') {
+    if (riskLevel === 'high' ?? riskLevel === 'extreme') {
       risks.push('Elevated market uncertainty');
       risks.push('Potential for increased correlation during stress');
     }
@@ -339,7 +339,7 @@ export class EconomicsEngine {
       opportunities.push(`Potential value opportunities in ${oversoldIndicators.map(i => i.name).join(', ')}`);
     }
 
-    if (health === 'good' || health === 'excellent') {
+    if (health === 'good' ?? health === 'excellent') {
       opportunities.push('Favorable environment for growth investments');
     }
 
@@ -363,12 +363,12 @@ export class EconomicsEngine {
   private assessInflationRisk(indicators: MarketIndicator[]): number {
     // Look for inflation-sensitive indicators
     const commodityIndicators = indicators.filter(i => 
-      i.name.toLowerCase().includes('gold') || 
-      i.name.toLowerCase().includes('oil') ||
+      i.name.toLowerCase().includes('gold') ?? 
+      i.name.toLowerCase().includes('oil') ??
       i.name.toLowerCase().includes('commodity')
     );
 
-    if (commodityIndicators.length === 0) return 0.3; // Default moderate risk
+    if (commodityIndicators.length === 0) {return 0.3;} // Default moderate risk
 
     const avgCommodityChange = commodityIndicators.reduce((sum, i) => sum + i.change, 0) / commodityIndicators.length;
     return Math.max(0, Math.min(1, 0.5 + avgCommodityChange * 0.1));
@@ -376,12 +376,12 @@ export class EconomicsEngine {
 
   private assessGrowthPotential(indicators: MarketIndicator[]): number {
     const equityIndicators = indicators.filter(i => 
-      i.name.includes('S&P') || 
-      i.name.includes('NASDAQ') ||
+      i.name.includes('S&P') ?? 
+      i.name.includes('NASDAQ') ??
       i.name.includes('Dow')
     );
 
-    if (equityIndicators.length === 0) return 0.5;
+    if (equityIndicators.length === 0) {return 0.5;}
 
     const avgEquityChange = equityIndicators.reduce((sum, i) => sum + i.change, 0) / equityIndicators.length;
     const avgConfidence = equityIndicators.reduce((sum, i) => sum + i.confidence, 0) / equityIndicators.length;
@@ -435,15 +435,15 @@ export class EconomicsEngine {
   private generateShortTermOutlook(trends: Record<string, number>, volatility: number): string {
     const avgTrend = Object.values(trends).reduce((sum, t) => sum + t, 0) / Object.values(trends).length;
     
-    if (volatility > 0.5) return 'High uncertainty expected with increased volatility';
-    if (avgTrend > 1) return 'Positive momentum likely to continue in the short term';
-    if (avgTrend < -1) return 'Downward pressure expected to persist';
+    if (volatility > 0.5) {return 'High uncertainty expected with increased volatility';}
+    if (avgTrend > 1) {return 'Positive momentum likely to continue in the short term';}
+    if (avgTrend < -1) {return 'Downward pressure expected to persist';}
     return 'Sideways movement with mixed signals anticipated';
   }
 
   private generateMediumTermOutlook(trends: Record<string, number>, momentum: number): string {
-    if (momentum > 2) return 'Strong fundamentals support continued growth';
-    if (momentum < -2) return 'Structural headwinds may persist';
+    if (momentum > 2) {return 'Strong fundamentals support continued growth';}
+    if (momentum < -2) {return 'Structural headwinds may persist';}
     return 'Gradual stabilization expected with selective opportunities';
   }
 
@@ -472,12 +472,12 @@ export class EconomicsEngine {
     for (const indicator of indicators) {
       let sector = 'General';
       
-      if (indicator.name.includes('S&P') || indicator.name.includes('NASDAQ')) sector = 'Equities';
-      else if (indicator.name.includes('USD') || indicator.name.includes('EUR')) sector = 'Currencies';
-      else if (indicator.name.includes('Gold') || indicator.name.includes('Oil')) sector = 'Commodities';
-      else if (indicator.name.includes('Bond')) sector = 'Fixed Income';
+      if (indicator.name.includes('S&P') ?? indicator.name.includes('NASDAQ')) {sector = 'Equities';}
+      else if (indicator.name.includes('USD') ?? indicator.name.includes('EUR')) {sector = 'Currencies';}
+      else if (indicator.name.includes('Gold') ?? indicator.name.includes('Oil')) {sector = 'Commodities';}
+      else if (indicator.name.includes('Bond')) {sector = 'Fixed Income';}
       
-      if (!sectors.has(sector)) sectors.set(sector, []);
+      if (!sectors.has(sector)) {sectors.set(sector, []);}
       sectors.get(sector)!.push(indicator);
     }
     
@@ -491,8 +491,8 @@ export class EconomicsEngine {
   private determineSectorOutlook(indicators: MarketIndicator[]): 'positive' | 'neutral' | 'negative' {
     const performance = this.calculateSectorPerformance(indicators);
     
-    if (performance > 1) return 'positive';
-    if (performance < -1) return 'negative';
+    if (performance > 1) {return 'positive';}
+    if (performance < -1) {return 'negative';}
     return 'neutral';
   }
 
@@ -522,7 +522,7 @@ export class EconomicsEngine {
   private detectDivergence(indicators: MarketIndicator[]): boolean {
     // Simple divergence detection - check if major indicators move in opposite directions
     const major = indicators.filter(i => i.confidence > 0.8);
-    if (major.length < 2) return false;
+    if (major.length < 2) {return false;}
     
     const positive = major.filter(i => i.change > 0).length;
     const negative = major.filter(i => i.change < 0).length;
@@ -533,7 +533,7 @@ export class EconomicsEngine {
   // Macroeconomic estimation methods
   private estimateGDPGrowth(indicators: MarketIndicator[]): number {
     const equityPerformance = indicators
-      .filter(i => i.name.includes('S&P') || i.name.includes('NASDAQ'))
+      .filter(i => i.name.includes('S&P') ?? i.name.includes('NASDAQ'))
       .reduce((sum, i) => sum + i.change, 0) / 2;
     
     return Math.max(-5, Math.min(8, 2.5 + equityPerformance * 0.3));
@@ -541,7 +541,7 @@ export class EconomicsEngine {
 
   private estimateInflation(indicators: MarketIndicator[]): number {
     const commodityChange = indicators
-      .filter(i => i.name.includes('Gold') || i.name.includes('Oil'))
+      .filter(i => i.name.includes('Gold') ?? i.name.includes('Oil'))
       .reduce((sum, i) => sum + i.change, 0);
     
     return Math.max(0, Math.min(10, 2.5 + commodityChange * 0.1));

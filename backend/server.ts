@@ -21,7 +21,7 @@ const app = express();
 const server = createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
     methods: ["GET", "POST"]
   }
 });
@@ -63,7 +63,7 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:3000",
+  origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
   credentials: true
 }));
 
@@ -85,7 +85,7 @@ app.get('/api/health', (req, res) => {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     platform: 'EuroWeb',
-    version: process.env.WEB8_VERSION || '1.0.0',
+    version: process.env.WEB8_VERSION ?? '1.0.0',
     uptime: process.uptime()
   });
 });
@@ -134,7 +134,7 @@ app.get('/api/guardian/status', (req, res) => {
 app.post('/api/agixmed/analyze', (req, res) => {
   const { symptoms } = req.body;
   
-  if (!symptoms || !symptoms.trim()) {
+  if (!symptoms?.trim()) {
     return res.status(400).json({
       error: 'Symptoms required',
       message: 'Ju lutem përshkruani simptomat'
@@ -143,7 +143,7 @@ app.post('/api/agixmed/analyze', (req, res) => {
 
   // Mock AGIXmed analysis response
   const analysis = {
-    symptoms: symptoms,
+    symptoms,
     confidence: 0.85,
     recommendations: [
       'Konsultohuni me një mjek nëse simptomat vazhdojnë',
@@ -207,7 +207,7 @@ app.use('*', (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT ?? 8080;
 
 server.listen(PORT, () => {
   logger.info(`🚀 EuroWeb Backend Server started on port ${PORT}`);

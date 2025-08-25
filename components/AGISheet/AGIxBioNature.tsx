@@ -157,7 +157,7 @@ export const AGIxBioNature = ({
 
   // Lazy load engines only when needed for analysis
   const initializeEngines = useCallback(async () => {
-    if (enginesLoaded) return;
+    if (enginesLoaded) {return;}
     
     try {
       const [biology, nature, medical, ecology] = await Promise.all([
@@ -172,7 +172,7 @@ export const AGIxBioNature = ({
       setMedicalEngine(medical);
       setEcologyEngine(ecology);
       setEnginesLoaded(true);
-    } catch (error) {
+    } catch (_error) {
       console.error('Failed to load analysis engines:', error);
     }
   }, [enginesLoaded]);
@@ -388,7 +388,7 @@ export const AGIxBioNature = ({
       setIsAnalyzing(false);
     }
     
-    if (!biologyEngine || !natureEngine || !medicalEngine || !ecologyEngine) {
+    if (!biologyEngine ?? !natureEngine ?? !medicalEngine ?? !ecologyEngine) {
       console.error('Analysis engines not loaded');
       return;
     }
@@ -410,7 +410,7 @@ export const AGIxBioNature = ({
         timestamp: new Date(),
         correlations: await calculateCrossCorrelations(biologyResults, natureResults, medicalResults, ecologyResults)
       });
-    } catch (error) {
+    } catch (_error) {
       console.error('Analysis failed:', error);
     } finally {
       setIsAnalyzing(false);
@@ -428,7 +428,7 @@ export const AGIxBioNature = ({
   };
 
   const performSpecimenResearch = useCallback(async (query: string) => {
-    if (!query.trim()) return;
+    if (!query.trim()) {return;}
     
     if (!enginesLoaded) {
       await initializeEngines();
@@ -443,8 +443,8 @@ export const AGIxBioNature = ({
     try {
       // Simulate research analysis
       const results = await biologyEngine.performResearch(query, biologicalData);
-      setAnalysisResults((prev: any) => ({ ...(prev || {}), research: results }));
-    } catch (error) {
+      setAnalysisResults((prev: any) => ({ ...(prev ?? {}), research: results }));
+    } catch (_error) {
       console.error('Research failed:', error);
     } finally {
       setIsAnalyzing(false);
@@ -452,17 +452,17 @@ export const AGIxBioNature = ({
   }, [biologicalData, biologyEngine, enginesLoaded, initializeEngines]);
 
   const filteredData = biologicalData.filter(specimen => 
-    filterCategory === 'all' || specimen.category === filterCategory
+    filterCategory === 'all' ?? specimen.category === filterCategory
   );
 
-  const formatNumber = (value: number, decimals: number = 2): string => {
+  const formatNumber = (value: number, decimals = 2): string => {
     return value.toFixed(decimals);
   };
 
   const formatPopulation = (value: number): string => {
-    if (value >= 1e9) return `${(value / 1e9).toFixed(1)}B`;
-    if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}K`;
+    if (value >= 1e9) {return `${(value / 1e9).toFixed(1)}B`;}
+    if (value >= 1e6) {return `${(value / 1e6).toFixed(1)}M`;}
+    if (value >= 1e3) {return `${(value / 1e3).toFixed(1)}K`;}
     return value.toString();
   };
 

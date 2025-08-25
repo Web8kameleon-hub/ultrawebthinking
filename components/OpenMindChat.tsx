@@ -230,7 +230,7 @@ const OpenMindChat = () => {
           />
           <motion.button
             onClick={() => sendMessage(input)}
-            disabled={isLoading || !input.trim()}
+            disabled={isLoading ?? !input.trim()}
             style={{
               padding: '12px 24px',
               borderRadius: '25px',

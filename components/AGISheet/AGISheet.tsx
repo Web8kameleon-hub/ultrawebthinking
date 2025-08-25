@@ -237,7 +237,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
 
   const getCellValue = (row: number, col: number): string => {
     const cell = cells.get(getCellId(row, col))
-    return cell?.value || ''
+    return cell?.value ?? ''
   }
 
   const setCellValue = (row: number, col: number, value: string, type?: Cell['type']) => {
@@ -249,9 +249,9 @@ export const AGISheet: React.FC<AGISheetProps> = ({
       row,
       col,
       value,
-      type: type || existingCell?.type || 'text',
+      type: type ?? existingCell?.type ?? 'text',
       agiBinding: existingCell?.agiBinding,
-      status: existingCell?.status || 'idle'
+      status: existingCell?.status ?? 'idle'
     }
 
     // AGI Processing for special cell types
@@ -292,14 +292,14 @@ export const AGISheet: React.FC<AGISheetProps> = ({
     const cellId = getCellId(row, col)
     setSelectedCell(cellId)
     const cell = cells.get(cellId)
-    setFormulaBar(cell?.formula || cell?.value || '')
+    setFormulaBar(cell?.formula ?? cell?.value ?? '')
   }
 
   const handleCellDoubleClick = (row: number, col: number) => {
     const cellId = getCellId(row, col)
     const cell = cells.get(cellId)
     
-    if (cell?.type === 'agi-command' || cell?.agiBinding) {
+    if (cell?.type === 'agi-command' ?? cell?.agiBinding) {
       // Open AGI command interface
       console.log('Opening AGI interface for:', cell.agiBinding)
     }
@@ -321,9 +321,9 @@ export const AGISheet: React.FC<AGISheetProps> = ({
     const isHeader = row === 0
     
     let backgroundColor = '#1e293b'
-    if (isHeader) backgroundColor = '#0f172a'
-    if (isSelected) backgroundColor = 'rgba(212, 175, 55, 0.2)'
-    if (cell?.agiBinding) backgroundColor = 'rgba(34, 197, 94, 0.1)'
+    if (isHeader) {backgroundColor = '#0f172a'}
+    if (isSelected) {backgroundColor = 'rgba(212, 175, 55, 0.2)'}
+    if (cell?.agiBinding) {backgroundColor = 'rgba(34, 197, 94, 0.1)'}
     
     return {
       width: '150px',
@@ -427,7 +427,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
         gap: '12px'
       }}>
         <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 600 }}>
-          {selectedCell || 'A1'}
+          {selectedCell ?? 'A1'}
         </span>
         <input
           type="text"

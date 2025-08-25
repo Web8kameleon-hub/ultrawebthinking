@@ -1,0 +1,54 @@
+# EuroWeb Platform v9.0.1 - Development Docker Compose
+# Ultra Modern Aviation & Office Suite
+# Author: Ledjan Ahmati (100% Owner)
+
+version: '3.8'
+
+services:
+  # EuroWeb Platform - Development Mode
+  euroweb-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      target: development
+    ports:
+      - "3000:3000"
+      - "3001:3001"  # For API if needed
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+      - AGI_MODE=active
+      - AVIATION_MODE=enabled
+      - UTT_BLOCKCHAIN=enabled
+      - OFFICE_SUITE=enabled
+      - HOT_RELOAD=true
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+
+networks:
+  default:
+    name: euroweb-network

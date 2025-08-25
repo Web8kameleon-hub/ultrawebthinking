@@ -53,13 +53,13 @@ async function analyzeCSSApproach(): Promise<CSSReport> {
   })
 
   for (const file of tsFiles) {
-    if (!existsSync(file)) continue
+    if (!existsSync(file)) {continue}
     
     try {
       const content = readFileSync(file, 'utf-8')
 
       // Check for CVA usage
-      if (content.includes('class-variance-authority') || content.includes('cva')) {
+      if (content.includes('class-variance-authority') ?? content.includes('cva')) {
         report.cvaUsage.push(file)
       }
 
@@ -68,7 +68,7 @@ async function analyzeCSSApproach(): Promise<CSSReport> {
       const pandaUsageRegex = /(panda\(|pandaTokens\.|styled-system\/)/
       // Ignore self (css-check.ts) and comment/string contexts
       const isOwnFile = file.includes('css-check.ts')
-      if (!isOwnFile && (pandaImportRegex.test(content) || pandaUsageRegex.test(content))) {
+      if (!isOwnFile && (pandaImportRegex.test(content) ?? pandaUsageRegex.test(content))) {
         report.pandaUsage.push(file)
       }
 
@@ -77,7 +77,7 @@ async function analyzeCSSApproach(): Promise<CSSReport> {
       if (cssInJsRegex.test(content) && !file.includes('css-check.ts')) {
         report.cssInJsUsage.push(file)
       }
-    } catch (error) {
+    } catch (_error) {
       console.warn(`Could not read file: ${file}`)
     }
   }
@@ -164,7 +164,7 @@ function printReport(report: CSSReport) {
     )
   }
 
-  console.log('\n' + '═'.repeat(50))
+  console.log(`\n${  '═'.repeat(50)}`)
   
   if (report.success) {
     console.log('🎉 SUCCESS: Perfect CSS approach!')
@@ -191,7 +191,7 @@ async function main() {
     printReport(report)
     
     process.exit(report.success ? 0 : 1)
-  } catch (error) {
+  } catch (_error) {
     console.error('❌ Error analyzing CSS approach:', error)
     process.exit(1)
   }

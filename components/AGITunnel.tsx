@@ -1,6 +1,6 @@
 // AGI Tunnel Component - Pure TypeScript + Framer Motion - Industrial Grade
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence as _AnimatePresence } from 'framer-motion';
 
 interface TunnelNode {
   id: string;
@@ -29,7 +29,7 @@ interface AGITunnelProps {
   onDataFlow?: (flow: DataFlow) => void;
 }
 
-const AGITunnel: React.FC<AGITunnelProps> = ({
+const _AGITunnel: React.FC<AGITunnelProps> = ({
   width = 800,
   height = 600,
   theme = 'agi',
@@ -156,7 +156,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
   initializeNodes();
   generateDataFlows();
 
-    const interval = setInterval(() => {
+    const _interval = setInterval(() => {
       if (showDataFlow) {
         const flows = generateDataFlows();
         flows.forEach(flow => onDataFlow?.(flow));
@@ -235,7 +235,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
         {showDataFlow && dataFlows.map((flow, index) => {
           const fromNode = nodes.find(n => n.id === flow.from);
           const toNode = nodes.find(n => n.id === flow.to);
-          if (!fromNode || !toNode) {return null;}
+          if (!fromNode ?? !toNode) {return null;}
 
           return (
             <motion.circle
@@ -336,5 +336,6 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
   );
 };
 
-// Removed default export: AGITunnel;
+// Named export
+export { _AGITunnel as AGITunnel };
 

@@ -73,7 +73,7 @@ class NeuralLazyEngine {
     this.componentCache.set(config.name, LazyComponent)
 
     // Auto-preload high priority components
-    if (config.preload || config.priority === 'critical' || config.priority === 'high') {
+    if (config.preload ?? config.priority === 'critical' ?? config.priority === 'high') {
       this.preload(config.name)
     }
 
@@ -96,7 +96,7 @@ class NeuralLazyEngine {
   }
 
   isLoading(componentName: string): boolean {
-    return this.loadingStates.get(componentName) || false
+    return this.loadingStates.get(componentName) ?? false
   }
 
   // Intersection Observer for Viewport Loading
@@ -146,7 +146,7 @@ export const IndustrialFallback = memo(({
   variant?: 'default' | 'industrial' | 'neural' | 'quantum'
 }) => (
   <motion.div
-    className={lazyVariants({ variant: variant || 'default', loading: true })}
+    className={lazyVariants({ variant: variant ?? 'default', loading: true })}
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
     exit={{ opacity: 0, scale: 0.9 }}
@@ -185,7 +185,7 @@ export const LazyLoader = memo<LazyLoaderProps>(({
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [shouldLoad, setShouldLoad] = React.useState(!viewport || preload)
+  const [shouldLoad, setShouldLoad] = React.useState(!viewport ?? preload)
 
   // Viewport Intersection Logic
   useEffect(() => {
@@ -213,7 +213,7 @@ export const LazyLoader = memo<LazyLoaderProps>(({
   const defaultFallback = (
     <IndustrialFallback 
       message={`Loading ${component}...`}
-      variant={variant || 'default'}
+      variant={variant ?? 'default'}
     />
   )
 
@@ -233,7 +233,7 @@ export const LazyLoader = memo<LazyLoaderProps>(({
             transition={{ duration: 0.4 }}
             onAnimationComplete={onLoad}
           >
-            <Suspense fallback={fallback || defaultFallback}>
+            <Suspense fallback={fallback ?? defaultFallback}>
               <LazyComponent {...props}>
                 {children}
               </LazyComponent>
@@ -247,7 +247,7 @@ export const LazyLoader = memo<LazyLoaderProps>(({
             exit={{ opacity: 0 }}
             className={styles.placeholder}
           >
-            {fallback || defaultFallback}
+            {fallback ?? defaultFallback}
           </motion.div>
         )}
       </AnimatePresence>

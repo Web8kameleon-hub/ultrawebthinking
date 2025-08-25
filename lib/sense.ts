@@ -40,7 +40,7 @@ class RealSenseSystem {
   // Capture real user interactions
   captureRealInput(): RealInputPayload {
     const now = Date.now();
-    const memoryInfo = (performance as any).memory || { usedJSHeapSize: 0 };
+    const memoryInfo = (performance as any).memory ?? { usedJSHeapSize: 0 };
     
     return {
       timestamp: now,
@@ -49,7 +49,7 @@ class RealSenseSystem {
         mousePosition: this.getMousePosition(),
         keyboardState: this.getKeyboardState(),
         scrollPosition: this.getScrollPosition(),
-        activeElement: document.activeElement?.tagName || 'NONE',
+        activeElement: document.activeElement?.tagName ?? 'NONE',
       },
       context: {
         sessionId: this.generateSessionId(),
@@ -127,7 +127,7 @@ class RealSenseSystem {
         keystrokes: this.getKeystrokeCount(),
       },
       environment: {
-        battery: (navigator as any).getBattery?.()?.level || 1,
+        battery: (navigator as any).getBattery?.()?.level ?? 1,
         connection: this.getConnectionSpeed(),
         screenSize: {
           width: window.innerWidth,
@@ -210,7 +210,7 @@ class RealSenseSystem {
   }
 
   private getAGIMemoryUsage(): number {
-    return (performance as any).memory?.usedJSHeapSize || 0;
+    return (performance as any).memory?.usedJSHeapSize ?? 0;
   }
 
   private captureVisualData(): ImageData | null {
@@ -224,19 +224,19 @@ class RealSenseSystem {
   }
 
   private extractTextFromDOM(): string {
-    return document.body.innerText || '';
+    return document.body.innerText ?? '';
   }
 
   private getClickCount(): number {
-    return parseInt(sessionStorage.getItem('web8-clicks') || '0');
+    return parseInt(sessionStorage.getItem('web8-clicks') ?? '0');
   }
 
   private getScrollCount(): number {
-    return parseInt(sessionStorage.getItem('web8-scrolls') || '0');
+    return parseInt(sessionStorage.getItem('web8-scrolls') ?? '0');
   }
 
   private getKeystrokeCount(): number {
-    return parseInt(sessionStorage.getItem('web8-keystrokes') || '0');
+    return parseInt(sessionStorage.getItem('web8-keystrokes') ?? '0');
   }
 
   private getConnectionSpeed(): 'slow' | 'fast' | 'offline' {

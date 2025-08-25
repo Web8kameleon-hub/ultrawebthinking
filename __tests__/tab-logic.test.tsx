@@ -52,7 +52,7 @@ describe('Tab Logic Industrial Tests', () => {
     try {
       const module = await import('../components/Web8TabSystem');
       expect(true).toBe(true); // Import successful
-    } catch (error) {
+    } catch (_error) {
       throw new Error(`Import failed: ${error}`);
     }
   });

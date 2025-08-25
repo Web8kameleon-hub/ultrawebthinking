@@ -48,7 +48,7 @@ export class FormulaEngine {
       }
       
       return this.formatResult(result.result);
-    } catch (error) {
+    } catch (_error) {
       throw new Error(`Formula evaluation failed: ${error}`);
     }
   }
@@ -63,7 +63,7 @@ export class FormulaEngine {
       const cellId = `${rowIndex}-${colIndex}`;
       const cell = context.get(cellId);
       
-      if (!cell || cell.value === undefined || cell.value === '') {
+      if (!cell ?? cell.value === undefined ?? cell.value === '') {
         return '0';
       }
       
@@ -95,7 +95,7 @@ export class FormulaEngine {
 
     this.customFunctions.set('MEDIAN', (values: number[]) => {
       const numbers = values.filter(v => typeof v === 'number').sort((a, b) => a - b);
-      if (numbers.length === 0) return 0;
+      if (numbers.length === 0) {return 0;}
       const mid = Math.floor(numbers.length / 2);
       return numbers.length % 2 === 0 
         ? (numbers[mid - 1] + numbers[mid]) / 2 
@@ -140,19 +140,19 @@ export class FormulaEngine {
     this.customFunctions.set('LANGUAGE', (text: string) => {
       // Simple language detection based on common words
       const str = String(text).toLowerCase();
-      if (str.includes('the ') || str.includes(' and ') || str.includes(' is ')) return 'en';
-      if (str.includes('dhe ') || str.includes(' është ') || str.includes(' një ')) return 'sq';
-      if (str.includes('et ') || str.includes(' est ') || str.includes(' le ')) return 'fr';
+      if (str.includes('the ') ?? str.includes(' and ') ?? str.includes(' is ')) {return 'en';}
+      if (str.includes('dhe ') ?? str.includes(' është ') ?? str.includes(' një ')) {return 'sq';}
+      if (str.includes('et ') ?? str.includes(' est ') ?? str.includes(' le ')) {return 'fr';}
       return 'unknown';
     });
 
     // Math functions
-    this.customFunctions.set('ROUND', (num: number, decimals: number = 0) => {
+    this.customFunctions.set('ROUND', (num: number, decimals = 0) => {
       const factor = Math.pow(10, decimals);
       return Math.round(Number(num) * factor) / factor;
     });
 
-    this.customFunctions.set('RANDOM', (min: number = 0, max: number = 1) => {
+    this.customFunctions.set('RANDOM', (min = 0, max = 1) => {
       return Math.random() * (Number(max) - Number(min)) + Number(min);
     });
 
@@ -210,7 +210,7 @@ export class FormulaEngine {
   private formatResult(value: any): any {
     if (typeof value === 'number') {
       // Round very small numbers to avoid floating point precision issues
-      if (Math.abs(value) < 1e-10) return 0;
+      if (Math.abs(value) < 1e-10) {return 0;}
       // Round to 10 decimal places to avoid very long decimals
       if (value % 1 !== 0) {
         return Math.round(value * 1e10) / 1e10;
@@ -222,7 +222,7 @@ export class FormulaEngine {
       return value;
     }
     
-    if (value === null || value === undefined) {
+    if (value === null ?? value === undefined) {
       return '';
     }
     
@@ -240,12 +240,12 @@ export class FormulaEngine {
     let score = 0;
     
     words.forEach(word => {
-      if (positiveWords.includes(word)) score++;
-      if (negativeWords.includes(word)) score--;
+      if (positiveWords.includes(word)) {score++;}
+      if (negativeWords.includes(word)) {score--;}
     });
     
-    if (score > 0) return 'positive';
-    if (score < 0) return 'negative';
+    if (score > 0) {return 'positive';}
+    if (score < 0) {return 'negative';}
     return 'neutral';
   }
 
@@ -269,7 +269,7 @@ export class FormulaEngine {
       }
       
       return { isValid: true };
-    } catch (error) {
+    } catch (_error) {
       return { isValid: false, error: String(error) };
     }
   }

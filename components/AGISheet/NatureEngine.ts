@@ -243,9 +243,9 @@ export class NatureEngine {
   private determineStability(metrics: EcosystemMetrics): 'stable' | 'fluctuating' | 'declining' | 'critical' {
     const healthScore = (metrics.biodiversityIndex + metrics.waterQuality + metrics.soilHealth + metrics.airQuality) / 4;
     
-    if (healthScore > 0.8 && metrics.threatLevel === 'low') return 'stable';
-    if (healthScore > 0.6 && ['low', 'medium'].includes(metrics.threatLevel)) return 'fluctuating';
-    if (healthScore > 0.4) return 'declining';
+    if (healthScore > 0.8 && metrics.threatLevel === 'low') {return 'stable';}
+    if (healthScore > 0.6 && ['low', 'medium'].includes(metrics.threatLevel)) {return 'fluctuating';}
+    if (healthScore > 0.4) {return 'declining';}
     return 'critical';
   }
 
@@ -366,7 +366,7 @@ export class NatureEngine {
   private identifyImmediateThreats(metrics: EcosystemMetrics): string[] {
     const threats = [];
     
-    if (metrics.threatLevel === 'critical' || metrics.threatLevel === 'high') {
+    if (metrics.threatLevel === 'critical' ?? metrics.threatLevel === 'high') {
       threats.push('habitat_destruction');
       threats.push('pollution_contamination');
     }
@@ -426,7 +426,7 @@ export class NatureEngine {
       recommendations.push('Implement species recovery programs');
     }
     
-    if (metrics.threatLevel === 'high' || metrics.threatLevel === 'critical') {
+    if (metrics.threatLevel === 'high' ?? metrics.threatLevel === 'critical') {
       recommendations.push('Immediate threat mitigation measures');
       recommendations.push('Emergency conservation interventions');
     }

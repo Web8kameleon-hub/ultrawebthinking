@@ -98,7 +98,7 @@ export class AppPageManager {
   }
 
   getCurrentPage(): PageConfig | null {
-    return this.currentPage ? this.pages.get(this.currentPage) || null : null;
+    return this.currentPage ? this.pages.get(this.currentPage) ?? null : null;
   }
 
   createPageWrapper(
@@ -124,15 +124,15 @@ export class AppPageManager {
 
   generateMetadata(pageId: string): Record<string, string> {
     const page = this.pages.get(pageId);
-    if (!page) return {};
+    if (!page) {return {};}
 
     return {
       title: page.title,
-      description: page.meta?.description || `${page.title} - EuroWeb Web8`,
-      keywords: page.meta?.keywords?.join(', ') || 'web8, euroweb, agi',
+      description: page.meta?.description ?? `${page.title} - EuroWeb Web8`,
+      keywords: page.meta?.keywords?.join(', ') ?? 'web8, euroweb, agi',
       'og:title': page.title,
-      'og:description': page.meta?.description || '',
-      'og:image': page.meta?.ogImage || '/og-default.png'
+      'og:description': page.meta?.description ?? '',
+      'og:image': page.meta?.ogImage ?? '/og-default.png'
     };
   }
 }

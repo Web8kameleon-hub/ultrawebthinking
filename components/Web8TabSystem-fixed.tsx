@@ -17,6 +17,7 @@ import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
 import { AGIEcoUltra } from './AGISheet/AGIEcoUltra'
 import { AGIElUltra } from './AGISheet/AGIElUltra'
 import { AGICoreUltra } from './AGISheet/AGICoreUltra'
+import { ProjectManagerUltra } from './AGISheet/ProjectManagerUltra'
 import { GuardianMonitor } from './GuardianMonitor'
 import { cva, type VariantProps } from 'class-variance-authority'
 import styles from './Web8TabSystem.module.css'
@@ -184,6 +185,18 @@ const initialTabs: Tab[] = [
       { id: 'n11', activation: 0.92, connections: ['n4', 'n5'], lastFired: new Date() }
     ],
     lastAccessed: new Date()
+  },
+  {
+    id: 'project-manager',
+    title: '🛠️ Project Manager',
+    url: 'euroweb://project-manager',
+    isActive: false,
+    isLoading: false,
+    neuralWeight: 0.95,
+    associatedNodes: [
+      { id: 'n12', activation: 0.96, connections: ['n1', 'n4', 'n11'], lastFired: new Date() }
+    ],
+    lastAccessed: new Date()
   }
 ]
 
@@ -219,7 +232,52 @@ const Web8TabSystemUltra: React.FC = () => {
   const [searchResults, setSearchResults] = React.useState<any[]>([])
   const [isNeuralProcessing, setIsNeuralProcessing] = React.useState(false)
 
-  const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
+  // Real-time neural network updates
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      // Simulate natural neural activity
+      setNeuralContext(prev => {
+        const shouldAddNode = Math.random() > 0.7
+        const shouldRemoveNode = Math.random() > 0.8 && prev.activeNeuralPath.length > 2
+        
+        const newPath = [...prev.activeNeuralPath]
+        
+        if (shouldAddNode && newPath.length < 6) {
+          const newNodeId = `n${Math.floor(Math.random() * 12) + 1}`
+          if (!newPath.includes(newNodeId)) {
+            newPath.push(newNodeId)
+          }
+        }
+        
+        if (shouldRemoveNode) {
+          const indexToRemove = Math.floor(Math.random() * newPath.length)
+          newPath.splice(indexToRemove, 1)
+        }
+        
+        return {
+          ...prev,
+          activeNeuralPath: newPath,
+          cognitiveLoad: Math.max(0.3, Math.min(0.9, prev.cognitiveLoad + (Math.random() - 0.5) * 0.1))
+        }
+      })
+      
+      // Update AGI metrics with more dynamic values
+      setAgiMetrics(prev => ({
+        ...prev,
+        processingSpeed: `${(4.2 + Math.random() * 0.8).toFixed(1)} THz (Quantum Boosted)`,
+        neuralConnections: prev.neuralConnections + Math.floor((Math.random() - 0.5) * 20),
+        activeNodes: Math.max(30, Math.min(100, prev.activeNodes + Math.floor((Math.random() - 0.5) * 8))),
+        latency: Math.max(1, Math.min(10, prev.latency + (Math.random() - 0.5) * 1)),
+        learningRate: Math.max(0.95, Math.min(0.999, prev.learningRate + (Math.random() - 0.5) * 0.01)),
+        throughput: `${(5.8 + Math.random() * 1.2).toFixed(1)} GB/s (Neural Optimized)`,
+        predictionAccuracy: `${(98 + Math.random() * 1.5).toFixed(1)}% Contextual`
+      }))
+    }, 2000) // Update every 2 seconds
+    
+    return () => clearInterval(interval)
+  }, [])
+
+  const activeTab = tabs.find(tab => tab.isActive) ?? tabs[0]
   const currentTime = new Date().toLocaleTimeString()
 
   // Neural processing simulation
@@ -228,7 +286,7 @@ const Web8TabSystemUltra: React.FC = () => {
     
     // Find the tab being activated
     const targetTab = tabs.find(tab => tab.id === tabId)
-    if (!targetTab) return
+    if (!targetTab) {return}
     
     // Update neural context
     const newNeuralPath = [
@@ -258,7 +316,7 @@ const Web8TabSystemUltra: React.FC = () => {
   // Enhanced search with neural prediction
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!searchQuery.trim()) return
+    if (!searchQuery.trim()) {return}
     
     setIsNeuralProcessing(true)
     switchTab('search')
@@ -284,7 +342,7 @@ const Web8TabSystemUltra: React.FC = () => {
   // Neural search result generation
   const generateNeuralSearchResults = (query: string) => {
     const relatedTabs = tabs.filter(tab => 
-      tab.title.toLowerCase().includes(query.toLowerCase()) || 
+      tab.title.toLowerCase().includes(query.toLowerCase()) ?? 
       tab.id.toLowerCase().includes(query.toLowerCase())
     )
     
@@ -457,7 +515,7 @@ const Web8TabSystemUltra: React.FC = () => {
                       >
                         <div style={{ fontWeight: 500, color: '#e2e8f0' }}>{result.title}</div>
                         <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
-                          {result.content.length > 60 ? result.content.substring(0, 60) + '...' : result.content}
+                          {result.content.length > 60 ? `${result.content.substring(0, 60)  }...` : result.content}
                         </div>
                       </div>
                     ))}
@@ -516,7 +574,7 @@ const Web8TabSystemUltra: React.FC = () => {
         <AnimatePresence>
           {tabs.map((tab) => {
             const isPremium = tab.id === 'agi-core'
-            const isLoading = tab.isLoading || (tab.isActive && isNeuralProcessing)
+            const isLoading = tab.isLoading ?? (tab.isActive && isNeuralProcessing)
             
             return (
               <motion.div
@@ -740,7 +798,7 @@ const Web8TabSystemUltra: React.FC = () => {
                     fontFamily: 'JetBrains Mono, monospace',
                     color: '#d4af37'
                   }}>
-                    {typeof value === 'string' ? (value.length > 15 ? value.substring(0, 15) + '...' : value) : value}
+                    {typeof value === 'string' ? (value.length > 15 ? `${value.substring(0, 15)  }...` : value) : value}
                   </span>
                 </div>
               ))}
@@ -858,32 +916,124 @@ const Web8TabSystemUltra: React.FC = () => {
                           padding: '24px'
                         }}>
                           <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: '20px'
+                          }}>
+                            <div style={{ color: '#94a3b8', fontSize: '14px' }}>
+                              Click neurons to activate • {neuralContext.activeNeuralPath.length} active nodes
+                            </div>
+                            <button 
+                              onClick={() => {
+                                // Trigger neural pulse animation
+                                const randomNodes = Array.from({ length: Math.floor(Math.random() * 8) + 3 }, (_, i) => `n${Math.floor(Math.random() * 12) + 1}`)
+                                setNeuralContext(prev => ({
+                                  ...prev,
+                                  activeNeuralPath: randomNodes,
+                                  cognitiveLoad: Math.random() * 0.4 + 0.6
+                                }))
+                                setAgiMetrics(prev => ({
+                                  ...prev,
+                                  neuralConnections: prev.neuralConnections + Math.floor(Math.random() * 100),
+                                  activeNodes: Math.floor(Math.random() * 20) + 50
+                                }))
+                              }}
+                              style={{
+                                background: 'linear-gradient(135deg, #d4af37, #b8941f)',
+                                border: 'none',
+                                borderRadius: '6px',
+                                padding: '8px 16px',
+                                color: 'white',
+                                cursor: 'pointer',
+                                fontSize: '12px',
+                                fontWeight: '600'
+                              }}
+                            >
+                              🧠 Neural Pulse
+                            </button>
+                          </div>
+                          <div style={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(8, 1fr)',
                             gap: '16px'
                           }}>
                             {Array.from({ length: 64 }).map((_, i) => {
-                              const isActive = neuralContext.activeNeuralPath.includes(`n${i % 12 + 1}`)
+                              const nodeId = `n${(i % 12) + 1}`
+                              const isActive = neuralContext.activeNeuralPath.includes(nodeId)
+                              const activationLevel = Math.random() * 0.8 + 0.2
+                              
                               return (
                                 <motion.div
                                   key={i}
                                   animate={{
-                                    scale: isActive ? [1, 1.1, 1] : 1,
+                                    scale: isActive ? [1, 1.2, 1] : [1, 1.05, 1],
                                     backgroundColor: isActive 
-                                      ? 'rgba(212, 175, 55, 0.2)' 
-                                      : 'rgba(30, 41, 59, 0.5)'
+                                      ? ['rgba(212, 175, 55, 0.3)', 'rgba(212, 175, 55, 0.6)', 'rgba(212, 175, 55, 0.3)']
+                                      : 'rgba(30, 41, 59, 0.5)',
+                                    boxShadow: isActive 
+                                      ? ['0 0 10px rgba(212, 175, 55, 0.3)', '0 0 20px rgba(212, 175, 55, 0.6)', '0 0 10px rgba(212, 175, 55, 0.3)']
+                                      : '0 0 0px rgba(212, 175, 55, 0)'
                                   }}
-                                  transition={{ duration: 0.5, repeat: Infinity }}
+                                  transition={{ 
+                                    duration: isActive ? 0.8 : 2,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                  }}
+                                  whileHover={{ 
+                                    scale: 1.15,
+                                    backgroundColor: 'rgba(212, 175, 55, 0.4)',
+                                    boxShadow: '0 0 15px rgba(212, 175, 55, 0.5)'
+                                  }}
+                                  whileTap={{ scale: 0.95 }}
+                                  onClick={() => {
+                                    // Toggle neural node
+                                    setNeuralContext(prev => {
+                                      const newPath = prev.activeNeuralPath.includes(nodeId)
+                                        ? prev.activeNeuralPath.filter(id => id !== nodeId)
+                                        : [...prev.activeNeuralPath, nodeId].slice(0, 8) // Max 8 active
+                                      
+                                      return {
+                                        ...prev,
+                                        activeNeuralPath: newPath,
+                                        cognitiveLoad: newPath.length / 8
+                                      }
+                                    })
+                                    
+                                    // Update metrics
+                                    setAgiMetrics(prev => ({
+                                      ...prev,
+                                      neuralConnections: prev.neuralConnections + (isActive ? -1 : 1),
+                                      activeNodes: prev.activeNodes + (isActive ? -1 : 1)
+                                    }))
+                                  }}
                                   style={{
                                     width: '100%',
                                     aspectRatio: '1',
                                     borderRadius: '8px',
-                                    border: '1px solid rgba(212, 175, 55, 0.2)',
+                                    border: isActive ? '2px solid rgba(212, 175, 55, 0.6)' : '1px solid rgba(212, 175, 55, 0.2)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    position: 'relative',
+                                    overflow: 'hidden'
                                   }}
                                 >
+                                  {isActive && (
+                                    <motion.div
+                                      initial={{ scale: 0, opacity: 1 }}
+                                      animate={{ scale: [0, 1.5, 0], opacity: [1, 0.5, 0] }}
+                                      transition={{ duration: 1, repeat: Infinity }}
+                                      style={{
+                                        position: 'absolute',
+                                        width: '100%',
+                                        height: '100%',
+                                        borderRadius: '8px',
+                                        background: 'radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%)'
+                                      }}
+                                    />
+                                  )}
                                   <span style={{
                                     fontSize: '12px',
                                     color: '#94a3b8'
@@ -1004,6 +1154,8 @@ const Web8TabSystemUltra: React.FC = () => {
                   )}
                   
                   {tab.id === 'guardian' && <GuardianMonitor />}
+                  
+                  {tab.id === 'project-manager' && <ProjectManagerUltra />}
                 </motion.div>
               )
             ))}

@@ -118,7 +118,7 @@ const Surfing: React.FC = () => {
 
   // Ultra-fast AGI processing simulation
   const handleAsk = useCallback(async () => {
-    if (!state.input.trim()) return;
+    if (!state.input.trim()) {return;}
 
     setState(prev => ({ ...prev, loading: true, error: "", response: "" }));
 
@@ -296,7 +296,7 @@ const Surfing: React.FC = () => {
             <motion.button
               type="button"
               onClick={handleAsk}
-              disabled={state.loading || !state.input.trim()}
+              disabled={state.loading ?? !state.input.trim()}
               whileHover={{ scale: 1.05, boxShadow: `0 10px 25px ${modeConfig[state.mode].color}40` }}
               whileTap={{ scale: 0.95 }}
               style={{

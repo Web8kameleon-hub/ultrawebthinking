@@ -246,7 +246,7 @@ export const AGIxBioNature = ({
 
   // Pure engine initialization
   const initializeEngines = useCallback(async () => {
-    if (stateRef.current.enginesLoaded) return;
+    if (stateRef.current.enginesLoaded) {return;}
     
     try {
       const [biology, nature, medical, ecology] = await Promise.all([
@@ -262,20 +262,20 @@ export const AGIxBioNature = ({
       stateRef.current.ecologyEngine = ecology;
       stateRef.current.enginesLoaded = true;
       rerenderRef.current();
-    } catch (error) {
+    } catch (_error) {
       console.error('Failed to load analysis engines:', error);
     }
   }, []);
 
   // Pure format functions
-  const formatNumber = (value: number, decimals: number = 2): string => {
+  const formatNumber = (value: number, decimals = 2): string => {
     return value.toFixed(decimals);
   };
 
   const formatPopulation = (value: number): string => {
-    if (value >= 1e9) return `${(value / 1e9).toFixed(1)}B`;
-    if (value >= 1e6) return `${(value / 1e6).toFixed(1)}M`;
-    if (value >= 1e3) return `${(value / 1e3).toFixed(1)}K`;
+    if (value >= 1e9) {return `${(value / 1e9).toFixed(1)}B`;}
+    if (value >= 1e6) {return `${(value / 1e6).toFixed(1)}M`;}
+    if (value >= 1e3) {return `${(value / 1e3).toFixed(1)}K`;}
     return value.toString();
   };
 
@@ -296,7 +296,7 @@ export const AGIxBioNature = ({
 
   const state = stateRef.current;
   const filteredData = state.biologicalData.filter(specimen => 
-    state.filterCategory === 'all' || specimen.category === state.filterCategory
+    state.filterCategory === 'all' ?? specimen.category === state.filterCategory
   );
 
   return (

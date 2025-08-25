@@ -1,0 +1,46 @@
+{
+    "brokenMirror": {
+        "aggressiveness": "EXTREME",
+        "zombieCodeRatio": 0.3
+    },
+    "closeMirror": {
+        "layers": 5,
+        "debugProtectionIntervalMs": 4000,
+        "selfDefending": true,
+        "stringArrayRc4": true
+    },
+    "outMirror": {
+        "cdnWhitelist": [
+            "https://cdn.jsdelivr.net",
+            "https://unpkg.com",
+            "https://cdnjs.cloudflare.com"
+        ],
+        "csp": {
+            "defaultSrc": [
+                "'self'"
+            ],
+            "scriptSrc": [
+                "'self'",
+                "'strict-dynamic'"
+            ],
+            "styleSrc": [
+                "'self'",
+                "'unsafe-inline'"
+            ],
+            "imgSrc": [
+                "'self'",
+                "data:"
+            ],
+            "connectSrc": [
+                "'self'"
+            ],
+            "fontSrc": [
+                "'self'",
+                "data:"
+            ],
+            "frameAncestors": [
+                "'none'"
+            ]
+        }
+    }
+}

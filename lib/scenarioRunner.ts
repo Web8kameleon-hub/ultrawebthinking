@@ -176,7 +176,7 @@ class RealScenarioRunner {
           default:
             throw new Error(`Unknown step action: ${step.action}`);
         }
-      } catch (error) {
+      } catch (_error) {
         result = {
           success: false,
           data: { error: error instanceof Error ? error.message : 'Unknown error' },
@@ -189,7 +189,7 @@ class RealScenarioRunner {
 
   private executeInputStep(step: ScenarioStep): { success: boolean; data: any; validation?: ValidationResult } {
     // Execute real input with real AGI processing
-    const input = step.data?.input || 'Test input';
+    const input = step.data?.input ?? 'Test input';
     const realInput = realSense.captureRealInput();
     
     // Process through real AGI
@@ -216,7 +216,7 @@ class RealScenarioRunner {
     return {
       success: true,
       data: {
-        waitDuration: step.duration || 1000,
+        waitDuration: step.duration ?? 1000,
         environmentDuringWait: waitData,
       },
     };
@@ -229,7 +229,7 @@ class RealScenarioRunner {
     return {
       success: validation.isValid,
       data: {
-        validationType: step.data?.type || 'system',
+        validationType: step.data?.type ?? 'system',
         validationResults: validation,
       },
       validation,
@@ -238,7 +238,7 @@ class RealScenarioRunner {
 
   private executeCaptureStep(step: ScenarioStep): { success: boolean; data: any; validation?: ValidationResult } {
     // Real data capture
-    const captureType = step.data?.type || 'all';
+    const captureType = step.data?.type ?? 'all';
     let capturedData: any = {};
 
     switch (captureType) {
@@ -268,7 +268,7 @@ class RealScenarioRunner {
 
   private executeAnalyzeStep(step: ScenarioStep): { success: boolean; data: any; validation: ValidationResult } {
     // Real analysis of real data
-    const analysisType = step.data?.type || 'performance';
+    const analysisType = step.data?.type ?? 'performance';
     const systemHealth = realValidator.getSystemHealth();
     const validation = realValidator.validateSystem();
 
@@ -319,7 +319,7 @@ class RealScenarioRunner {
   }
 
   private getMemoryUsage(): number {
-    return (performance as any).memory?.usedJSHeapSize || 0;
+    return (performance as any).memory?.usedJSHeapSize ?? 0;
   }
 
   private getCPUUsage(): number {

@@ -132,7 +132,7 @@ const AGISpreadsheetEngine: React.FC = () => {
   const currentTime = new Date().toLocaleTimeString()
 
   // Generate spreadsheet grid (simplified view)
-  const generateGrid = (rows: number = 15, cols: number = 8): React.ReactElement[] => {
+  const generateGrid = (rows = 15, cols = 8): React.ReactElement[] => {
     const grid: React.ReactElement[] = []
     const colHeaders = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
     

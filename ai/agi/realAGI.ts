@@ -23,7 +23,7 @@ export class RealAGI {
 
   constructor(providers: AGIProvider[] = []) {
     this.providers = providers;
-    this.currentProvider = providers.find(p => p.enabled) || null;
+    this.currentProvider = providers.find(p => p.enabled) ?? null;
   }
 
   think(prompt: string): AGIResponse {
@@ -60,7 +60,7 @@ export class RealAGI {
 
   setProvider(providerName: string): boolean {
     const provider = this.providers.find(p => p.name === providerName);
-    if (provider && provider.enabled) {
+    if (provider?.enabled) {
       this.currentProvider = provider;
       return true;
     }

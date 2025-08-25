@@ -30,13 +30,13 @@ class AtomicMemory {
   constructor(name: string, config: Partial<AtomicMemoryConfig> = {}) {
     this.config = {
       name,
-      capacity: config.capacity || 1000,
-      ttl: config.ttl || 300000, // 5 minutes
+      capacity: config.capacity ?? 1000,
+      ttl: config.ttl ?? 300000, // 5 minutes
     };
   }
 
   async get<T>(key: string): Promise<T | null> {
-    return this.storage.get(key) || null;
+    return this.storage.get(key) ?? null;
   }
 
   async set<T>(key: string, value: T): Promise<void> {
@@ -126,7 +126,7 @@ class MotionOptimizer {
     this.config = {
       prefetch: config.prefetch !== false,
       lazy: config.lazy !== false,
-      performance: config.performance || 'high',
+      performance: config.performance ?? 'high',
     };
   }
 
@@ -250,7 +250,7 @@ export class IndustrialPageService {
         success: true,
         loadTime: Date.now() - startTime
       };
-    } catch (error) {
+    } catch (_error) {
       return {
         page: await this.createErrorPage(pageId, error as Error),
         success: false,
@@ -267,7 +267,7 @@ export class IndustrialPageService {
     return {
       id: pageId,
       title: `EuroWeb Web8 - ${pageId}`,
-      content: content || <div>Loading {pageId}...</div>,
+      content: content ?? <div>Loading {pageId}...</div>,
       css: '',
       motion: {
         initial: { opacity: 0 },
@@ -344,7 +344,7 @@ export class IndustrialPageService {
       page.lastAccessed = Date.now();
       
       this.hydrationQueue.delete(pageId);
-    } catch (error) {
+    } catch (_error) {
       console.error(`[HYDRATION ERROR] ${pageId}:`, error);
       page.hydrationStatus = 'error';
     }
@@ -375,7 +375,7 @@ export class IndustrialPageService {
    */
   public getPageMetrics(pageId: string): PageMetadata['performance'] | null {
     const page = this.pageCache.get(pageId);
-    return page?.metadata.performance || null;
+    return page?.metadata.performance ?? null;
   }
 
   /**

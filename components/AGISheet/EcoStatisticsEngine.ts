@@ -36,7 +36,7 @@ interface SeasonalAnalysis {
 export class EcoStatisticsEngine {
   private debugMode: boolean;
 
-  constructor(debugMode: boolean = false) {
+  constructor(debugMode = false) {
     this.debugMode = debugMode;
   }
 
@@ -160,10 +160,10 @@ export class EcoStatisticsEngine {
 
     // Determine seasonality strength
     let seasonality: 'strong' | 'moderate' | 'weak' | 'none';
-    if (bestCorrelation > 0.7) seasonality = 'strong';
-    else if (bestCorrelation > 0.5) seasonality = 'moderate';
-    else if (bestCorrelation > 0.3) seasonality = 'weak';
-    else seasonality = 'none';
+    if (bestCorrelation > 0.7) {seasonality = 'strong';}
+    else if (bestCorrelation > 0.5) {seasonality = 'moderate';}
+    else if (bestCorrelation > 0.3) {seasonality = 'weak';}
+    else {seasonality = 'none';}
 
     // Calculate amplitude and phase (simplified)
     const amplitude = this.calculateAmplitude(values, bestPeriod);
@@ -218,7 +218,7 @@ export class EcoStatisticsEngine {
         const cat2Data = data.filter(d => d.category === categories[j]).map(d => d.value);
         
         const minLength = Math.min(cat1Data.length, cat2Data.length);
-        if (minLength < 2) continue;
+        if (minLength < 2) {continue;}
 
         const correlation = this.calculatePearsonCorrelation(
           cat1Data.slice(0, minLength),
@@ -234,7 +234,7 @@ export class EcoStatisticsEngine {
 
   private calculatePearsonCorrelation(x: number[], y: number[]): number {
     const n = x.length;
-    if (n !== y.length || n < 2) return 0;
+    if (n !== y.length ?? n < 2) {return 0;}
 
     const sumX = x.reduce((a, b) => a + b, 0);
     const sumY = y.reduce((a, b) => a + b, 0);
@@ -249,7 +249,7 @@ export class EcoStatisticsEngine {
   }
 
   private analyzeTrend(values: number[], timestamps: Date[]): 'upward' | 'downward' | 'stable' {
-    if (values.length < 2) return 'stable';
+    if (values.length < 2) {return 'stable';}
 
     // Simple linear regression slope
     const n = values.length;
@@ -265,13 +265,13 @@ export class EcoStatisticsEngine {
 
     const threshold = Math.abs(this.calculateMean(values)) * 0.001; // 0.1% threshold
 
-    if (slope > threshold) return 'upward';
-    if (slope < -threshold) return 'downward';
+    if (slope > threshold) {return 'upward';}
+    if (slope < -threshold) {return 'downward';}
     return 'stable';
   }
 
   private calculateVolatility(values: number[]): number {
-    if (values.length < 2) return 0;
+    if (values.length < 2) {return 0;}
 
     const returns = [];
     for (let i = 1; i < values.length; i++) {
@@ -303,7 +303,7 @@ export class EcoStatisticsEngine {
   }
 
   private calculateAutoCorrelation(values: number[], lag: number): number {
-    if (lag >= values.length) return 0;
+    if (lag >= values.length) {return 0;}
 
     const n = values.length - lag;
     const x1 = values.slice(0, n);
@@ -313,7 +313,7 @@ export class EcoStatisticsEngine {
   }
 
   private calculateAmplitude(values: number[], period: number): number {
-    if (period === 0 || values.length < period * 2) return 0;
+    if (period === 0 ?? values.length < period * 2) {return 0;}
 
     const cycles = Math.floor(values.length / period);
     let maxAmplitude = 0;
@@ -332,7 +332,7 @@ export class EcoStatisticsEngine {
   /**
    * Advanced statistical forecasting
    */
-  async forecast(data: EcoDataPoint[], periods: number = 10): Promise<{ predictions: number[]; confidence: number[] }> {
+  async forecast(data: EcoDataPoint[], periods = 10): Promise<{ predictions: number[]; confidence: number[] }> {
     const values = data.map(d => d.value);
     
     // Simple exponential smoothing for forecasting
@@ -348,7 +348,7 @@ export class EcoStatisticsEngine {
     // Generate predictions
     const predictions: number[] = [];
     const confidence: number[] = [];
-    let lastValue = smoothedValues[smoothedValues.length - 1];
+    const lastValue = smoothedValues[smoothedValues.length - 1];
     const error = this.calculateForecastError(values, smoothedValues);
 
     for (let i = 0; i < periods; i++) {

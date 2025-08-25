@@ -1,7 +1,7 @@
 // Real validator for Web8 memory and responses
 // No mocks - validates against real memory and real data
 import { agiCore, AGIMemoryStore } from './AGICore';
-import { realSense, RealInputPayload } from './sense';
+import { realSense, RealInputPayload as _RealInputPayload } from './sense';
 
 export interface ValidationResult {
   isValid: boolean;
@@ -113,7 +113,7 @@ class RealValidator {
     const networkData = realSense.captureNetworkMesh();
     
     // Validate peer connections
-    const peers = networkData.data.connectedPeers || [];
+    const peers = networkData.data.connectedPeers ?? [];
     if (peers.length < this.rules.networkRequirements.minPeers) {
       errors.push(`Insufficient peers: ${peers.length} < ${this.rules.networkRequirements.minPeers}`);
       score -= 0.4;
@@ -303,7 +303,7 @@ class RealValidator {
     }
 
     // Check if UI state is coherent
-    if (!memory.ui.activeTab || !memory.ui.theme) {
+    if (!memory.ui.activeTab ?? !memory.ui.theme) {
       errors.push('Missing essential UI state');
     }
 
@@ -360,13 +360,13 @@ class RealValidator {
 
   private validateResponseCoherence(response: any, memory: AGIMemoryStore): boolean {
     // Check if response aligns with current memory state
-    if (!response || typeof response !== 'object') {return false;}
+    if (!response ?? typeof response !== 'object') {return false;}
     
     // Check if response references known context
     const responseText = JSON.stringify(response);
     const hasContext = memory.agi.lastQuery && responseText.includes(memory.agi.lastQuery);
     
-    return hasContext || memory.agi.responses.length === 0;
+    return hasContext ?? memory.agi.responses.length === 0;
   }
 
   getValidationHistory(): ValidationResult[] {

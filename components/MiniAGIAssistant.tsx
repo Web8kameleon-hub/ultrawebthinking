@@ -13,7 +13,7 @@ const MiniAGIAssistant: React.FC = () => {
   const brainActive = useAGIState(memory => memory.agi.brainActive);
 
   const handleQuery = (query: string) => {
-    if (!query.trim()) return;
+    if (!query.trim()) {return;}
     
     // Add to AGI memory instead of local state
     actions.addAGIResponse(query, `Processing: ${query}`);
@@ -121,7 +121,7 @@ const MiniAGIAssistant: React.FC = () => {
 
       <div className={styles.memoryInfo}>
         <small>
-          Last query: {lastQuery || 'None'} | 
+          Last query: {lastQuery ?? 'None'} | 
           Responses: {responses.length} | 
           Brain: {brainActive ? '🟢 Active' : '🔴 Inactive'}
         </small>

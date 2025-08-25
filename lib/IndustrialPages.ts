@@ -54,7 +54,7 @@ class IndustrialMemory {
   }
 
   get(key: string): IndustrialPage | null {
-    return this.storage.get(key) || null;
+    return this.storage.get(key) ?? null;
   }
 
   set(key: string, value: IndustrialPage): void {
@@ -144,7 +144,7 @@ class MotionEngine {
   }
 
   getMotion(preset: string): MotionSettings {
-    return this.presets.get(preset) || this.presets.get('standard')!;
+    return this.presets.get(preset) ?? this.presets.get('standard')!;
   }
 }
 
@@ -190,7 +190,7 @@ export class IndustrialPageService {
     const page: IndustrialPage = {
       id: pageId,
       title: `EuroWeb Web8 - ${pageId}`,
-      content: content || this.createDefaultContent(pageId),
+      content: content ?? this.createDefaultContent(pageId),
       cssStyles: this.cssEngine.generateClasses(pageId),
       motionConfig: this.motionEngine.getMotion('standard'),
       metadata: {
@@ -243,7 +243,7 @@ export class IndustrialPageService {
    */
   getMetrics(pageId: string): PageMeta['performance'] | null {
     const page = this.memory.get(pageId);
-    return page?.metadata.performance || null;
+    return page?.metadata.performance ?? null;
   }
 
   /**

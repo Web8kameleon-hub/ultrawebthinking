@@ -95,7 +95,7 @@ const Web8TabSystemMinimal: React.FC = () => {
   }
 
   const closeTab = (tabId: string) => {
-    if (tabs.length <= 1) return
+    if (tabs.length <= 1) {return}
     const newTabs = tabs.filter(tab => tab.id !== tabId)
     setTabs(newTabs)
     if (activeTabId === tabId) {
@@ -185,7 +185,7 @@ const Web8TabSystemMinimal: React.FC = () => {
             <div className="flex-1 bg-slate-800 rounded-lg px-4 py-2 border border-slate-600">
               <input
                 type="text"
-                value={tabs.find(tab => tab.isActive)?.url || ''}
+                value={tabs.find(tab => tab.isActive)?.url ?? ''}
                 className="w-full bg-transparent text-slate-200 placeholder-slate-400 outline-none"
                 placeholder="Enter URL..."
               />

@@ -42,7 +42,7 @@ class AGICore {
       if (stored) {
         return { ...this.getDefaultMemory(), ...JSON.parse(stored) };
       }
-    } catch (error) {
+    } catch (_error) {
       console.warn('AGICore: Failed to load memory from storage', error);
     }
 
@@ -77,7 +77,7 @@ class AGICore {
 
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(this.memory));
-    } catch (error) {
+    } catch (_error) {
       console.warn('AGICore: Failed to save memory to storage', error);
     }
   }

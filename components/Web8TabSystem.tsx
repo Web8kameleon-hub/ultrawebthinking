@@ -99,7 +99,7 @@ const staticAGIMetrics: AGIMetrics = {
  */
 export const Web8TabSystem: React.FC = () => {
   const tabs = initialTabs
-  const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
+  const activeTab = tabs.find(tab => tab.isActive) ?? tabs[0]
   const agiMetrics = staticAGIMetrics
   const currentTime = new Date().toLocaleTimeString()
 

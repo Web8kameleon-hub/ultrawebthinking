@@ -1,0 +1,438 @@
+/* Project Manager Ultra Styles */
+.projectManager {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #f8fafc;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 2rem;
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: #ffffff;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #e2e8f0;
+  opacity: 0.9;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background: rgba(15, 23, 42, 0.8);
+  border-right: 1px solid rgba(59, 130, 246, 0.1);
+  padding: 1.5rem;
+}
+
+.sectionNav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sectionButton {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.sectionButton:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateX(4px);
+}
+
+.sectionButton.active {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  border-color: #3b82f6;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.sectionIcon {
+  font-size: 1.2rem;
+}
+
+.sectionName {
+  font-weight: 500;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Overview Styles */
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.statIcon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin-bottom: 0.25rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.projectInfo {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.projectInfo h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #3b82f6;
+}
+
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: #94a3b8;
+}
+
+.infoValue {
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+/* Commands Styles */
+.commands h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #3b82f6;
+}
+
+/* Stations Styles */
+.stations h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #3b82f6;
+}
+
+.stationSection {
+  width: 100%;
+}
+
+.stationSection p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.commandGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.commandCard {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.commandCard:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.commandIcon {
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.commandInfo {
+  flex: 1;
+}
+
+.commandName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #f8fafc;
+}
+
+.commandDescription {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.executeButton {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  border: none;
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.executeButton:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.executeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Analytics Styles */
+.analytics h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #3b82f6;
+}
+
+.analyticsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.analyticsCard {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.analyticsCard h4 {
+  margin-bottom: 1.5rem;
+  color: #3b82f6;
+}
+
+.scoreCircle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border: 4px solid #3b82f6;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.scoreLabel {
+  font-size: 1.2rem;
+  color: #94a3b8;
+}
+
+.qualityBars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.qualityBar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.qualityBar span:first-child {
+  min-width: 140px;
+  color: #94a3b8;
+}
+
+.qualityBar span:last-child {
+  min-width: 40px;
+  text-align: right;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.progressBar {
+  flex: 1;
+  height: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Settings Styles */
+.settings h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #3b82f6;
+}
+
+.settingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.settingGroup {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.settingGroup h4 {
+  margin-bottom: 1.5rem;
+  color: #3b82f6;
+}
+
+.settingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.settingItem:last-child {
+  border-bottom: none;
+}
+
+.settingItem label {
+  color: #f8fafc;
+  font-weight: 500;
+}
+
+.settingItem input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #3b82f6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    max-height: 200px;
+    overflow-x: auto;
+  }
+  
+  .sectionNav {
+    flex-direction: row;
+    gap: 1rem;
+  }
+  
+  .sectionButton {
+    min-width: 200px;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  
+  .commandGrid {
+    grid-template-columns: 1fr;
+  }
+}

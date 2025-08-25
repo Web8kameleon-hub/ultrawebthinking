@@ -206,7 +206,7 @@ function updateRequestCount(ip: string): void {
  * Get current request rate for IP
  */
 function getRequestRate(ip: string): number {
-  const counts = requestCounts.get(ip) || []
+  const counts = requestCounts.get(ip) ?? []
   return counts.length
 }
 
@@ -277,7 +277,7 @@ function blockIP(ip: string, reason: string): void {
       unblockIP(ip)
     }, defaultConfig.blockDuration)
     
-  } catch (error) {
+  } catch (_error) {
     console.error(`Failed to block IP ${ip}:`, error)
   }
 }
@@ -296,7 +296,7 @@ function unblockIP(ip: string): void {
       blockedIPs.delete(ip)
       console.log(`✅ Guardian unblocked IP: ${ip}`)
     }
-  } catch (error) {
+  } catch (_error) {
     console.error(`Failed to unblock IP ${ip}:`, error)
   }
 }
@@ -401,7 +401,7 @@ export function resetStats(): void {
 /**
  * Manual IP block/unblock functions
  */
-export function manualBlockIP(ip: string, reason: string = 'Manual block'): void {
+export function manualBlockIP(ip: string, reason = 'Manual block'): void {
   blockIP(ip, reason)
 }
 

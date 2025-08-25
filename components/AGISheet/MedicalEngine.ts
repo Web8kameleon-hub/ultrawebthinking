@@ -188,7 +188,7 @@ export class MedicalEngine {
 
   private analyzeDrugDiscoveryPotential(specimens: SpecimenData[]) {
     const medicalSpecimens = specimens.filter(s => s.medicalRelevance);
-    const totalCompounds = medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.drugCompounds.length || 0), 0);
+    const totalCompounds = medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.drugCompounds.length ?? 0), 0);
     const activeCompounds = Math.floor(totalCompounds * 0.3); // Assume 30% show activity
     const novelMolecules = Math.floor(activeCompounds * 0.15); // Assume 15% are novel
 
@@ -261,10 +261,10 @@ export class MedicalEngine {
       );
       
       const potential = relevantSpecimens.length > 0 ? 
-        relevantSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential || 0), 0) / relevantSpecimens.length :
+        relevantSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential ?? 0), 0) / relevantSpecimens.length :
         0;
       
-      const compounds = relevantSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.drugCompounds.length || 0), 0);
+      const compounds = relevantSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.drugCompounds.length ?? 0), 0);
       
       return {
         area,
@@ -280,7 +280,7 @@ export class MedicalEngine {
     
     return {
       absorption: {
-        average: medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential || 0), 0) / medicalSpecimens.length,
+        average: medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential ?? 0), 0) / medicalSpecimens.length,
         variance: 0.15 + Math.random() * 0.1
       },
       distribution: {
@@ -301,7 +301,7 @@ export class MedicalEngine {
   private assessToxicology(specimens: SpecimenData[]) {
     const medicalSpecimens = specimens.filter(s => s.medicalRelevance);
     const avgToxicity = medicalSpecimens.length > 0 ?
-      medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.toxicity || 0), 0) / medicalSpecimens.length :
+      medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.toxicity ?? 0), 0) / medicalSpecimens.length :
       0;
 
     return {
@@ -441,7 +441,7 @@ export class MedicalEngine {
   private analyzeMarketPotential(specimens: SpecimenData[]) {
     const medicalSpecimens = specimens.filter(s => s.medicalRelevance);
     const avgPotential = medicalSpecimens.length > 0 ?
-      medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential || 0), 0) / medicalSpecimens.length :
+      medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential ?? 0), 0) / medicalSpecimens.length :
       0;
 
     return {
@@ -502,10 +502,10 @@ export class MedicalEngine {
   }
 
   private assignClinicalPhase(therapeuticPotential: number): 'preclinical' | 'phase1' | 'phase2' | 'phase3' | 'approved' | 'withdrawn' {
-    if (therapeuticPotential > 0.9) return 'approved';
-    if (therapeuticPotential > 0.7) return 'phase3';
-    if (therapeuticPotential > 0.5) return 'phase2';
-    if (therapeuticPotential > 0.3) return 'phase1';
+    if (therapeuticPotential > 0.9) {return 'approved';}
+    if (therapeuticPotential > 0.7) {return 'phase3';}
+    if (therapeuticPotential > 0.5) {return 'phase2';}
+    if (therapeuticPotential > 0.3) {return 'phase1';}
     return 'preclinical';
   }
 
@@ -522,9 +522,9 @@ export class MedicalEngine {
 
   private isRelevantToTherapeuticArea(specimen: SpecimenData, area: string): boolean {
     // Simplified relevance logic
-    if (area === 'oncology' && specimen.medicalRelevance?.drugCompounds.some(c => c.includes('taxol'))) return true;
-    if (area === 'infectious_diseases' && specimen.category === 'microorganism') return true;
-    if (area === 'cardiovascular' && specimen.category === 'plant') return true;
+    if (area === 'oncology' && specimen.medicalRelevance?.drugCompounds.some(c => c.includes('taxol'))) {return true;}
+    if (area === 'infectious_diseases' && specimen.category === 'microorganism') {return true;}
+    if (area === 'cardiovascular' && specimen.category === 'plant') {return true;}
     return Math.random() > 0.7; // Random for demo
   }
 
@@ -535,9 +535,9 @@ export class MedicalEngine {
 
   private determineSeverity(toxicity1: number, toxicity2: number): 'mild' | 'moderate' | 'severe' | 'contraindicated' {
     const avgToxicity = (toxicity1 + toxicity2) / 2;
-    if (avgToxicity > 0.8) return 'contraindicated';
-    if (avgToxicity > 0.6) return 'severe';
-    if (avgToxicity > 0.3) return 'moderate';
+    if (avgToxicity > 0.8) {return 'contraindicated';}
+    if (avgToxicity > 0.6) {return 'severe';}
+    if (avgToxicity > 0.3) {return 'moderate';}
     return 'mild';
   }
 

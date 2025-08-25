@@ -4,7 +4,7 @@
 
 export function generateHash(input: string): string {
   let hash = 0;
-  if (input.length === 0) return hash.toString();
+  if (input.length === 0) {return hash.toString();}
 
   for (let i = 0; i < input.length; i++) {
     const chr = input.charCodeAt(i);

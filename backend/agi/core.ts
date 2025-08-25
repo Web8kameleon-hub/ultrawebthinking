@@ -31,7 +31,7 @@ class SimpleEventEmitter {
   private events: Map<string, EventCallback[]> = new Map();
 
   emit(event: string, ...args: any[]): void {
-    const callbacks = this.events.get(event) || [];
+    const callbacks = this.events.get(event) ?? [];
     callbacks.forEach(callback => callback(...args));
   }
 
@@ -43,7 +43,7 @@ class SimpleEventEmitter {
   }
 
   off(event: string, callback: EventCallback): void {
-    const callbacks = this.events.get(event) || [];
+    const callbacks = this.events.get(event) ?? [];
     const index = callbacks.indexOf(callback);
     if (index > -1) {
       callbacks.splice(index, 1);
@@ -82,11 +82,11 @@ class AGICore extends SimpleEventEmitter {
     super();
     
     this.config = {
-      layers: config.layers || 7,
-      processingSpeed: config.processingSpeed || 2500,
+      layers: config.layers ?? 7,
+      processingSpeed: config.processingSpeed ?? 2500,
       memoryOptimal: config.memoryOptimal ?? true,
       realTimeUpdates: config.realTimeUpdates ?? true,
-      securityLevel: config.securityLevel || 'standard'
+      securityLevel: config.securityLevel ?? 'standard'
     };
 
     this.startTime = Date.now();
@@ -179,7 +179,7 @@ class AGICore extends SimpleEventEmitter {
   }
 
   public getLayerStatus(layerId: string): AGILayer | null {
-    return this.layers.get(layerId) || null;
+    return this.layers.get(layerId) ?? null;
   }
 
   public getAllLayers(): AGILayer[] {

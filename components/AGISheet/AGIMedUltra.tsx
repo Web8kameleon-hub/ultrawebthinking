@@ -120,7 +120,7 @@ export const AGIMedUltra: React.FC = () => {
       timestamp: new Date().toISOString(),
       analysisType: 'Professional Medical Assessment',
       clearanceLevel: 'Restricted - Medical Professionals Only',
-      data: data,
+      data,
       aiConfidence: quantumMedMetrics.aiConfidence,
       complianceFlags: ['HIPAA', 'GDPR', 'HL7-FHIR']
     }

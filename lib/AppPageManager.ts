@@ -4,9 +4,9 @@
  * Uses framer-motion and class-variance-authority
  */
 
-import { Suspense, lazy, ReactNode, createElement } from 'react';
-import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
+import { motion } from 'framer-motion';
+import { ReactNode, Suspense, createElement, lazy } from 'react';
 import styles from './AppPageManager.module.css';
 
 // Page Definition Interface
@@ -37,19 +37,22 @@ const motionWrapperVariants = cva(styles.pageWrapper, {
 });
 
 // Simple Loader Component (pure CSS)
-export const Loader = (): ReactNode => 
+export const Loader = (): ReactNode =>
   createElement('div', { className: styles.loader },
     createElement('div', { className: styles.loaderSpinner }),
     createElement('span', { className: styles.loaderText }, 'Loading...')
   );
 
 // Lazy loaded components - using named exports
-const LazyHome = lazy(() => import("@/components/pages/Home").then(module => ({ default: module.Home })));
-const LazySettings = lazy(() => import("@/components/pages/Settings").then(module => ({ default: module.Settings })));
-const LazyAGI = lazy(() => import("@/components/pages/AGICore").then(module => ({ default: module.AGICore })));
+const LazyUltraDashboard = lazy(() => import("@/pages/ultra-dashboard").then(m => ({ default: (m as any).default ?? (m as any).UltraSystemIntegration })));
+const LazyLocationDemo = lazy(() => import("@/pages/location-demo").then(m => ({ default: (m as any).default ?? (m as any).LocationDemoPage })));
+const LazyAviationWeather = lazy(() => import("@/pages/aviation-weather").then(m => ({ default: (m as any).default ?? (m as any).AviationPage })));
+const LazyAGIOfficeSuite = lazy(() => import("@/pages/agi-office-suite").then(m => ({ default: (m as any).default ?? (m as any).AGIOfficeSuite })));
+const LazyNavigationTest = lazy(() => import("@/pages/navigation-test").then(m => ({ default: (m as any).default ?? (m as any).NavigationTest })));
+const LazyWeb8TabSystem = lazy(() => import("@/components/web8-tabs/ModernWeb8TabSystem").then(m => ({ default: (m as any).default ?? (m as any).ModernWeb8TabSystem })));
 
 // Motion wrapper for page transitions
-export const withMotion = (component: ReactNode, layout: PageDefinition['layout'] = 'default'): ReactNode => 
+export const withMotion = (component: ReactNode, layout: PageDefinition['layout'] = 'default'): ReactNode =>
   createElement(motion.div, {
     initial: { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
@@ -61,32 +64,70 @@ export const withMotion = (component: ReactNode, layout: PageDefinition['layout'
 // Page definitions with proper typing
 export const pageDefinitions: PageDefinition[] = [
   {
-    path: '/',
-    title: 'Home - EuroWeb Platform',
-    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyHome)),
-    layout: 'default',
+    path: '/ultra-dashboard',
+    title: 'Ultra Dashboard - EuroWeb',
+    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyUltraDashboard)),
+    layout: 'fullscreen',
     meta: {
-      description: 'EuroWeb Platform - Advanced AGI-powered web browser',
-      keywords: ['agi', 'web browser', 'ai', 'euroweb']
+      description: 'EuroWeb Ultra - Main Dashboard Integration',
+      keywords: ['dashboard', 'ultra', 'quantum', 'agi', 'mesh']
     }
   },
   {
-    path: '/settings',
-    title: 'Settings - EuroWeb Platform',
-    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazySettings)),
-    layout: 'default'
+    path: '/location-demo',
+    title: 'Location Demo - EuroWeb',
+    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyLocationDemo)),
+    layout: 'fullscreen',
+    meta: {
+      description: 'Demonstration of configurable station locations',
+      keywords: ['location', 'station', 'demo', 'mesh', 'gps']
+    }
   },
   {
-    path: '/agi',
-    title: 'AGI Core - EuroWeb Platform',
-    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyAGI)),
-    layout: 'fullscreen'
+    path: '/aviation-weather',
+    title: 'Aviation Weather Intelligence - EuroWeb',
+    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyAviationWeather)),
+    layout: 'fullscreen',
+    meta: {
+      description: 'SAT + METAR/TAF + NWP → Airport Forecasts (0–48h)',
+      keywords: ['aviation', 'weather', 'forecast', 'satellite', 'metar', 'taf', 'nwp']
+    }
+  },
+  {
+    path: '/agi-office-suite',
+    title: 'AGI Office Suite Ultra - Universal Office Tools',
+    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyAGIOfficeSuite)),
+    layout: 'fullscreen',
+    meta: {
+      description: 'Universal Office Suite - From Students to NATO Operations. AGISheet, AGIDoc, and AI-powered tools.',
+      keywords: ['office', 'suite', 'spreadsheet', 'document', 'ai', 'collaboration', 'agi', 'nato', 'enterprise']
+    }
+  },
+  {
+    path: '/navigation-test',
+    title: 'Navigation Test - EuroWeb Platform',
+    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyNavigationTest)),
+    layout: 'fullscreen',
+    meta: {
+      description: 'Platform navigation test page',
+      keywords: ['navigation', 'test', 'platform', 'routes']
+    }
+  },
+  {
+    path: '/web8-tabs',
+    title: 'Web8TabSystem Ultra - Advanced Tab Management',
+    element: createElement(Suspense, { fallback: createElement(Loader) }, createElement(LazyWeb8TabSystem)),
+    layout: 'fullscreen',
+    meta: {
+      description: 'Advanced tab-based UI/UX management system unifying all major modules',
+      keywords: ['web8', 'tabs', 'ui', 'ux', 'management', 'modules', 'advanced', 'unified']
+    }
   }
 ];
 
 // App Page Manager Class
 export class AppPageManager {
-  private currentPage: string = '/';
+  private currentPage = '/';
   private pages: Map<string, PageDefinition> = new Map();
 
   constructor() {
@@ -141,7 +182,7 @@ export class AppPageManager {
     const page = this.pages.get(path);
     if (page && typeof document !== 'undefined') {
       document.title = page.title;
-      
+
       // Update meta description if available
       if (page.meta?.description) {
         const metaDescription = document.querySelector('meta[name="description"]');
@@ -163,4 +204,5 @@ export class AppPageManager {
 
 // Default export for the singleton instance
 export const appPageManager = new AppPageManager();
+
 

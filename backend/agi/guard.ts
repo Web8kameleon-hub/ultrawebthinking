@@ -15,7 +15,7 @@ export class AGIModuleGuard {
   private auditLog: SecurityEvent[] = [];
   
   constructor(config: Partial<EuroWebConfig> = {}) {
-    this.securityLevel = config.securityLevel || 'standard';
+    this.securityLevel = config.securityLevel ?? 'standard';
     this.moduleLimits = this.getDefaultLimits();
     this.initializeDefaultModules();
     this.startSecurityMonitoring();

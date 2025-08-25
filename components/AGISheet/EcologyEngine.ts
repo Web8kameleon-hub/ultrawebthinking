@@ -209,7 +209,7 @@ export class EcologyEngine {
   }
 
   private evaluateConservationStatus(specimens: SpecimenData[], ecosystemMetrics: EcosystemMetrics) {
-    const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered' || s.properties.healthStatus === 'critical').length;
+    const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered' ?? s.properties.healthStatus === 'critical').length;
     const healthyCount = specimens.filter(s => s.properties.healthStatus === 'healthy').length;
     const totalSpecimens = specimens.length;
 
@@ -217,9 +217,9 @@ export class EcologyEngine {
     
     let overallAssessment: 'least_concern' | 'near_threatened' | 'vulnerable' | 'endangered' | 'critically_endangered' | 'extinct';
     
-    if (endangeredRatio > 0.7 || ecosystemMetrics.threatLevel === 'critical') {
+    if (endangeredRatio > 0.7 ?? ecosystemMetrics.threatLevel === 'critical') {
       overallAssessment = 'critically_endangered';
-    } else if (endangeredRatio > 0.5 || ecosystemMetrics.threatLevel === 'high') {
+    } else if (endangeredRatio > 0.5 ?? ecosystemMetrics.threatLevel === 'high') {
       overallAssessment = 'endangered';
     } else if (endangeredRatio > 0.3) {
       overallAssessment = 'vulnerable';
@@ -383,11 +383,11 @@ export class EcologyEngine {
     
     let conflictLevel: 'none' | 'low' | 'moderate' | 'high' | 'severe';
     
-    if (humanImpact > 0.7) conflictLevel = 'severe';
-    else if (humanImpact > 0.5) conflictLevel = 'high';
-    else if (humanImpact > 0.3) conflictLevel = 'moderate';
-    else if (humanImpact > 0.1) conflictLevel = 'low';
-    else conflictLevel = 'none';
+    if (humanImpact > 0.7) {conflictLevel = 'severe';}
+    else if (humanImpact > 0.5) {conflictLevel = 'high';}
+    else if (humanImpact > 0.3) {conflictLevel = 'moderate';}
+    else if (humanImpact > 0.1) {conflictLevel = 'low';}
+    else {conflictLevel = 'none';}
     
     return {
       conflictLevel,
@@ -488,16 +488,16 @@ export class EcologyEngine {
   private determinePopulationTrend(specimens: SpecimenData[]): 'increasing' | 'stable' | 'decreasing' | 'unknown' {
     const healthyRatio = specimens.filter(s => s.properties.healthStatus === 'healthy').length / specimens.length;
     
-    if (healthyRatio > 0.7) return 'increasing';
-    if (healthyRatio > 0.4) return 'stable';
-    if (healthyRatio > 0.1) return 'decreasing';
+    if (healthyRatio > 0.7) {return 'increasing';}
+    if (healthyRatio > 0.4) {return 'stable';}
+    if (healthyRatio > 0.1) {return 'decreasing';}
     return 'decreasing';
   }
 
   private generateConservationActions(specimens: SpecimenData[], ecosystemMetrics: EcosystemMetrics, status: string): ConservationStrategy[] {
     const actions: ConservationStrategy[] = [];
     
-    if (status === 'critically_endangered' || status === 'endangered') {
+    if (status === 'critically_endangered' ?? status === 'endangered') {
       actions.push({
         priority: 'critical',
         timeframe: 'immediate',
@@ -533,7 +533,7 @@ export class EcologyEngine {
       'least_concern': 0.2
     };
     
-    const statusWeight = statusWeights[status as keyof typeof statusWeights] || 0.5;
+    const statusWeight = statusWeights[status as keyof typeof statusWeights] ?? 0.5;
     const threatWeight = ecosystemMetrics.threatLevel === 'critical' ? 1.0 :
                         ecosystemMetrics.threatLevel === 'high' ? 0.8 :
                         ecosystemMetrics.threatLevel === 'medium' ? 0.6 : 0.4;
@@ -545,12 +545,12 @@ export class EcologyEngine {
     const criteria = [];
     
     const smallPopulations = specimens.filter(s => s.properties.population < 1000).length;
-    if (smallPopulations > 0) criteria.push('Small population size');
+    if (smallPopulations > 0) {criteria.push('Small population size');}
     
     const lowDiversity = specimens.filter(s => s.properties.geneticDiversity < 0.3).length;
-    if (lowDiversity > 0) criteria.push('Low genetic diversity');
+    if (lowDiversity > 0) {criteria.push('Low genetic diversity');}
     
-    if (ecosystemMetrics.threatLevel === 'high' || ecosystemMetrics.threatLevel === 'critical') {
+    if (ecosystemMetrics.threatLevel === 'high' ?? ecosystemMetrics.threatLevel === 'critical') {
       criteria.push('High threat level');
     }
     
@@ -571,10 +571,10 @@ export class EcologyEngine {
   }
 
   private determineTrophicRole(specimen: SpecimenData, trophicLevel: number): 'producer' | 'primary_consumer' | 'secondary_consumer' | 'tertiary_consumer' | 'decomposer' {
-    if (specimen.category === 'fungi' || specimen.category === 'microorganism') return 'decomposer';
-    if (trophicLevel <= 1.5) return 'producer';
-    if (trophicLevel <= 2.5) return 'primary_consumer';
-    if (trophicLevel <= 3.5) return 'secondary_consumer';
+    if (specimen.category === 'fungi' ?? specimen.category === 'microorganism') {return 'decomposer';}
+    if (trophicLevel <= 1.5) {return 'producer';}
+    if (trophicLevel <= 2.5) {return 'primary_consumer';}
+    if (trophicLevel <= 3.5) {return 'secondary_consumer';}
     return 'tertiary_consumer';
   }
 
@@ -593,10 +593,10 @@ export class EcologyEngine {
   }
 
   private determineRelationship(spec1: SpecimenData, spec2: SpecimenData): string {
-    if (spec1.category === 'plant' && spec2.category === 'animal') return 'mutualist';
-    if (spec1.category === 'animal' && spec2.category === 'plant') return 'mutualist';
-    if (spec1.category === spec2.category) return 'competitor';
-    if (spec1.category === 'animal' && spec2.category === 'microorganism') return 'predator';
+    if (spec1.category === 'plant' && spec2.category === 'animal') {return 'mutualist';}
+    if (spec1.category === 'animal' && spec2.category === 'plant') {return 'mutualist';}
+    if (spec1.category === spec2.category) {return 'competitor';}
+    if (spec1.category === 'animal' && spec2.category === 'microorganism') {return 'predator';}
     return 'neutral';
   }
 
@@ -651,21 +651,21 @@ export class EcologyEngine {
   }
 
   private determineThreatSeverity(threatType: string, specimens: SpecimenData[], ecosystemMetrics: EcosystemMetrics): string {
-    if (threatType === 'pollution' && specimens.some(s => s.environmentalFactors.pollution > 0.5)) return 'high';
-    if (threatType === 'climate_change') return ecosystemMetrics.threatLevel;
+    if (threatType === 'pollution' && specimens.some(s => s.environmentalFactors.pollution > 0.5)) {return 'high';}
+    if (threatType === 'climate_change') {return ecosystemMetrics.threatLevel;}
     return ['low', 'medium', 'high'][Math.floor(Math.random() * 3)];
   }
 
   private determineThreatScope(threatType: string): string {
-    if (['climate_change', 'pollution'].includes(threatType)) return 'global';
-    if (['habitat_loss', 'invasive_species'].includes(threatType)) return 'regional';
+    if (['climate_change', 'pollution'].includes(threatType)) {return 'global';}
+    if (['habitat_loss', 'invasive_species'].includes(threatType)) {return 'regional';}
     return 'local';
   }
 
   private determineThreatTimeframe(threatType: string): string {
-    if (['disease', 'overexploitation'].includes(threatType)) return 'immediate';
-    if (['habitat_loss', 'pollution'].includes(threatType)) return 'short';
-    if (['climate_change', 'invasive_species'].includes(threatType)) return 'medium';
+    if (['disease', 'overexploitation'].includes(threatType)) {return 'immediate';}
+    if (['habitat_loss', 'pollution'].includes(threatType)) {return 'short';}
+    if (['climate_change', 'invasive_species'].includes(threatType)) {return 'medium';}
     return 'long';
   }
 
@@ -690,7 +690,7 @@ export class EcologyEngine {
   private generateConflictTypes(conflictLevel: string): string[] {
     const types = [];
     
-    if (conflictLevel === 'severe' || conflictLevel === 'high') {
+    if (conflictLevel === 'severe' ?? conflictLevel === 'high') {
       types.push('Crop damage', 'Livestock predation', 'Property damage');
     }
     
@@ -746,8 +746,8 @@ export class EcologyEngine {
   private identifyBarriers(ecosystemMetrics: EcosystemMetrics): string[] {
     const barriers = [];
     
-    if (ecosystemMetrics.airQuality < 0.5) barriers.push('Infrastructure development');
-    if (ecosystemMetrics.waterQuality < 0.5) barriers.push('Waterway modifications');
+    if (ecosystemMetrics.airQuality < 0.5) {barriers.push('Infrastructure development');}
+    if (ecosystemMetrics.waterQuality < 0.5) {barriers.push('Waterway modifications');}
     
     barriers.push('Urban development', 'Agricultural expansion');
     

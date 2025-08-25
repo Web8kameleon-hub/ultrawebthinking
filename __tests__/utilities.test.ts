@@ -29,13 +29,13 @@ describe('Utilities Industrial Tests', () => {
 
   test('format utilities work correctly', () => {
     const formatBytes = (bytes: number): string => {
-      if (bytes === 0) return '0 Bytes';
+      if (bytes === 0) {return '0 Bytes';}
       
       const k = 1024;
       const sizes = ['Bytes', 'KB', 'MB', 'GB'] as const;
       const i = Math.floor(Math.log(bytes) / Math.log(k));
       
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))  } ${  sizes[i]}`;
     };
     
     expect(formatBytes(0)).toBe('0 Bytes');
@@ -95,7 +95,7 @@ describe('Utilities Industrial Tests', () => {
 export const createUtilsTestSuite = () => ({
   cache: new Map<string, any>(),
   formatters: {
-    bytes: (bytes: number) => bytes + ' bytes',
+    bytes: (bytes: number) => `${bytes  } bytes`,
     date: (date: Date) => date.toISOString()
   }
 });
