@@ -1,5 +1,5 @@
 ﻿// components/Footer.tsx
-import React from "react";
+import { StatusFooter } from "@/components/StatusFooter";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -38,6 +38,10 @@ const Footer = () => {
 
       <div className={styles.version}>
         Version 1.0 – Krijuar me pasion & logjikë të pastër
+      </div>
+
+      <div style={{ marginTop: 12 }}>
+        <StatusFooter />
       </div>
     </footer>
   );
