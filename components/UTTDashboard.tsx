@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT Dashboard - Universal Token Terminal
  * EuroWeb Platform - Solana ALB Integration
  * 
@@ -10,8 +10,9 @@
 
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import { fmt2, fmtAddress, fmtLocale } from '@/lib/utils/number'
 import { motion } from 'framer-motion'
+import React, { useEffect, useState } from 'react'
 
 interface UTTInfo {
   network: string
@@ -53,7 +54,7 @@ const UTTDashboard: React.FC = () => {
     setError(null)
     try {
       const response = await fetch('/api/utt/info')
-      
+
       // Check if response is JSON
       const contentType = response.headers.get('content-type')
       if (!contentType || !contentType.includes('application/json')) {
@@ -61,9 +62,9 @@ const UTTDashboard: React.FC = () => {
         setError(`API returned HTML instead of JSON. Status: ${response.status}. This usually means the route was not found.`)
         return
       }
-      
+
       const data = await response.json()
-      
+
       if (response.ok) {
         setUttInfo(data)
       } else {
@@ -96,7 +97,7 @@ const UTTDashboard: React.FC = () => {
       })
 
       const data = await response.json()
-      
+
       if (response.ok) {
         alert(`Transfer successful!\nSignature: ${data.signature}\nExplorer: ${data.explorer}`)
         setTransferForm({ to: '', amount: '' })
@@ -129,7 +130,7 @@ const UTTDashboard: React.FC = () => {
       })
 
       const data = await response.json()
-      
+
       if (response.ok) {
         const jsonData = JSON.stringify(data, null, 2)
         setVerifyData(jsonData)
@@ -162,7 +163,7 @@ const UTTDashboard: React.FC = () => {
       })
 
       const data = await response.json()
-      
+
       if (response.ok) {
         const status = data.valid ? '✅ VALID' : '❌ INVALID'
         alert(`Verification Result: ${status}\n\nChecks:\n${Object.entries(data.checks || {}).map(([k, v]) => `${k}: ${v ? '✅' : '❌'}`).join('\n')}`)
@@ -258,21 +259,21 @@ const UTTDashboard: React.FC = () => {
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Bridge Balance</div>
               <div style={{ fontSize: '16px', fontWeight: 600, color: '#22c55e' }}>
-                {uttInfo.bridgeBalanceALB.toFixed(2)} ALB
+                {fmt2(uttInfo?.bridgeBalanceALB)} ALB
               </div>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>EUR per ALB</div>
               <div style={{ fontSize: '16px', fontWeight: 600, color: '#f59e0b' }}>
-                €{uttInfo.euroPerALB.toLocaleString()}
+                €{fmtLocale(uttInfo?.euroPerALB)}
               </div>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Status</div>
-              <div style={{ 
-                fontSize: '16px', 
-                fontWeight: 600, 
-                color: getStatusColor(uttInfo.status) 
+              <div style={{
+                fontSize: '16px',
+                fontWeight: 600,
+                color: getStatusColor(uttInfo.status)
               }}>
                 {uttInfo.transfersEnabled ? '🟢 ACTIVE' : '🟡 SHADOW'}
               </div>
@@ -316,8 +317,8 @@ const UTTDashboard: React.FC = () => {
             }}
           >
             {tab === 'overview' ? '📊 Overview' :
-             tab === 'transfer' ? '💸 Transfer' :
-             tab === 'physical' ? '🪙 Physical Tokens' : '📋 Audit'}
+              tab === 'transfer' ? '💸 Transfer' :
+                tab === 'physical' ? '🪙 Physical Tokens' : '📋 Audit'}
           </button>
         ))}
       </motion.div>
@@ -356,12 +357,12 @@ const UTTDashboard: React.FC = () => {
                 <h4 style={{ color: '#3b82f6', marginBottom: '12px' }}>🌐 Network Info</h4>
                 <div style={{ fontSize: '14px', color: '#cbd5e1', lineHeight: '1.6' }}>
                   <div>Network: {uttInfo.network}</div>
-                  <div>Mint: {uttInfo.mint.substring(0, 20)}...</div>
+                  <div>Mint: {fmtAddress(uttInfo?.mint)}</div>
                   <div>Decimals: {uttInfo.decimals}</div>
-                  <div>Bridge: {uttInfo.bridge.substring(0, 20)}...</div>
+                  <div>Bridge: {fmtAddress(uttInfo?.bridge)}</div>
                 </div>
               </div>
-              
+
               <div style={{
                 background: 'rgba(34, 197, 94, 0.1)',
                 border: '1px solid #22c55e',
@@ -370,9 +371,9 @@ const UTTDashboard: React.FC = () => {
               }}>
                 <h4 style={{ color: '#22c55e', marginBottom: '12px' }}>💰 Economics</h4>
                 <div style={{ fontSize: '14px', color: '#cbd5e1', lineHeight: '1.6' }}>
-                  <div>1 ALB = €{uttInfo.euroPerALB.toLocaleString()}</div>
-                  <div>Bridge Balance: {uttInfo.bridgeBalanceALB.toFixed(2)} ALB</div>
-                  <div>Total Value: €{(uttInfo.bridgeBalanceALB * uttInfo.euroPerALB).toLocaleString()}</div>
+                  <div>1 ALB = €{fmtLocale(uttInfo?.euroPerALB)}</div>
+                  <div>Bridge Balance: {fmt2(uttInfo?.bridgeBalanceALB)} ALB</div>
+                  <div>Total Value: €{fmtLocale((uttInfo?.bridgeBalanceALB ?? 0) * (uttInfo?.euroPerALB ?? 0))}</div>
                 </div>
               </div>
             </div>
@@ -385,7 +386,7 @@ const UTTDashboard: React.FC = () => {
             <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '20px' }}>
               💸 ALB Transfer
             </h3>
-            
+
             {!uttInfo?.transfersEnabled && (
               <div style={{
                 background: 'rgba(245, 158, 11, 0.1)',
@@ -398,7 +399,7 @@ const UTTDashboard: React.FC = () => {
                 🔒 Transfers are currently disabled (Shadow Mode). Only verification functions are active.
               </div>
             )}
-            
+
             <form onSubmit={handleTransfer} style={{ maxWidth: '400px' }}>
               <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontSize: '14px', color: '#cbd5e1', marginBottom: '4px' }}>
@@ -421,7 +422,7 @@ const UTTDashboard: React.FC = () => {
                   required
                 />
               </div>
-              
+
               <div style={{ marginBottom: '20px' }}>
                 <label style={{ display: 'block', fontSize: '14px', color: '#cbd5e1', marginBottom: '4px' }}>
                   Amount (ALB)
@@ -445,7 +446,7 @@ const UTTDashboard: React.FC = () => {
                   required
                 />
               </div>
-              
+
               <button
                 type="submit"
                 disabled={loading || !uttInfo?.transfersEnabled}
@@ -473,7 +474,7 @@ const UTTDashboard: React.FC = () => {
             <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '20px' }}>
               🪙 Physical Token Management
             </h3>
-            
+
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
@@ -625,7 +626,7 @@ const UTTDashboard: React.FC = () => {
               <div>💸 Transfers Enabled: {uttInfo?.transfersEnabled ? 'Yes' : 'No (Shadow Mode)'}</div>
               <div>⏰ Last Update: {new Date().toISOString()}</div>
               <div style={{ marginTop: '12px', color: '#94a3b8' }}>
-                🔍 Detailed audit logs are written to console and will be implemented 
+                🔍 Detailed audit logs are written to console and will be implemented
                 in the next phase with hash-chain verification.
               </div>
             </div>
@@ -725,3 +726,4 @@ const UTTDashboard: React.FC = () => {
 }
 
 export default UTTDashboard
+

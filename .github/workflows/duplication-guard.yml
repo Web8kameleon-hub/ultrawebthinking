@@ -1,0 +1,28 @@
+name: Duplication Guard
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+
+jobs:
+  dupes-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node with Corepack
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install deps
+        run: yarn install --immutable
+
+      - name: Run duplication scan + guard
+        run: yarn dupes:ci
