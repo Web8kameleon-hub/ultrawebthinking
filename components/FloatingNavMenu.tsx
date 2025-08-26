@@ -8,11 +8,14 @@ export function FloatingNavMenu() {
 
   const menuItems = [
     { href: '/openmind', label: '🧠 OpenMind AI', description: 'Universal AI Gateway' },
+    { href: '/aviation', label: '✈️ Aviation Weather', description: 'METAR/TAF Data' },
+    { href: '/status', label: '📊 System Status', description: 'Health Monitor' },
     { href: '/guardian', label: '🛡️ Guardian', description: 'Security Control' },
     { href: '/browser', label: '🌐 Web8 Browser', description: 'Advanced Browser' },
     { href: '/agi-demo', label: '🤖 AGI Demo', description: 'AI Demonstration' },
     { href: '/agibionature-demo', label: '🌿 AGI Bio', description: 'Bio Nature AI' },
     { href: '/agieco-demo', label: '♻️ AGI Eco', description: 'Ecological AI' },
+    { href: '/test-utt', label: '🪙 UTT Demo', description: 'Token Testing' },
     { href: '/ultra-live', label: '⚡ Ultra Live', description: 'Live Platform' }
   ];
 
@@ -22,9 +25,8 @@ export function FloatingNavMenu() {
       <div className="fixed bottom-6 right-6 z-50">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
-            isOpen ? 'rotate-45' : 'hover:scale-110'
-          }`}
+          className={`w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${isOpen ? 'rotate-45' : 'hover:scale-110'
+            }`}
         >
           {isOpen ? '✕' : '🚀'}
         </button>
