@@ -38,7 +38,9 @@ import { AGIEcoUltra } from './AGISheet/AGIEcoUltra'
 import { AGIElUltra } from './AGISheet/AGIElUltra'
 import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
 import ALBSecurityDashboard from './ALBSecurityDashboard'
+import AviationIndustrial from './AviationIndustrial'
 import EuroMeshDashboard from './EuroMeshDashboard'
+import IndustrialQuickMenu from './IndustrialQuickMenu'
 import { LiveAGISheet } from './LiveAGISheet'
 import LoRaConnectUltraNew from './LoRaConnectUltra'
 import LoRaPhysicalDashboard from './LoRaPhysicalDashboard'
@@ -172,6 +174,13 @@ const initialTabs: Tab[] = [
     id: 'agisheet-engine',
     title: '📊 AGISheet Universal',
     url: 'euroweb://agisheet-engine',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'aviation-weather',
+    title: '🛩️ Aviation Weather',
+    url: 'euroweb://aviation-weather',
     isActive: false,
     isLoading: false
   },
@@ -714,6 +723,16 @@ const Web8TabSystem: React.FC = () => {
             <LoRaPhysicalDashboard />
           </div>
 
+          {/* Aviation Weather Content */}
+          <div data-content-id="aviation-weather" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'
+          }}>
+            <AviationIndustrial />
+          </div>
+
           {/* Components Showcase Content */}
           <div data-content-id="components-showcase" style={{
             display: 'none',
@@ -837,6 +856,9 @@ const Web8TabSystem: React.FC = () => {
           to { transform: rotate(360deg); }
         }
       `}</style>
+
+      {/* Industrial Quick Menu - Always available */}
+      <IndustrialQuickMenu />
     </div>
   )
 }
