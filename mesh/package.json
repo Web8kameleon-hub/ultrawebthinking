@@ -1,0 +1,11 @@
+{
+    "name": "web8-lora-simulator",
+    "version": "1.0.0",
+    "description": "LoRa Mesh Gateway Simulator for Web8",
+    "main": "lora-simulator.js",
+    "dependencies": {
+        "express": "^4.18.2",
+        "ws": "^8.14.2",
+        "cors": "^2.8.5"
+    }
+}

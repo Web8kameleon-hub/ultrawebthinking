@@ -1,0 +1,300 @@
+{
+    "info": {
+        "name": "Web8 Intelligence Platform APIs",
+        "description": "Complete API collection for Web8 UltraThinking Intelligence Platform - Real-time, Real-data, Real-docs",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_postman_id": "web8-intelligence-apis",
+        "version": "1.0.0"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "string"
+        },
+        {
+            "key": "braveApiKey",
+            "value": "{{BRAVE_API_KEY}}",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "🏥 Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/health",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "health"
+                    ]
+                },
+                "description": "Check system health status including UTT and LoRa systems"
+            }
+        },
+        {
+            "name": "🔍 Real Web Search",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/search?q=artificial intelligence&count=5",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "search"
+                    ],
+                    "query": [
+                        {
+                            "key": "q",
+                            "value": "artificial intelligence",
+                            "description": "Search query"
+                        },
+                        {
+                            "key": "count",
+                            "value": "5",
+                            "description": "Number of results (1-20)"
+                        }
+                    ]
+                },
+                "description": "Real web search using Brave Search API - returns live search results"
+            }
+        },
+        {
+            "name": "🧠 Text Analysis",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"text\": \"Web8 Intelligence Platform është një sistem i avancuar për analizën e të dhënave në kohë reale. Platforma përdor teknologji moderne për të analizuar përmbajtjen, për të gjeneruar raporte dhe për të monitoruar sistemin. Kjo teknologji është shumë e dobishme për ndërmarrjet që duan të marrin vendime të bazuara në të dhëna reale.\"\n}"
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/api/analyze",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "analyze"
+                    ]
+                },
+                "description": "Analyze text for language, keywords, sentiment, and extractive summary"
+            }
+        },
+        {
+            "name": "📄 Generate PDF Report",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/report?q=web8 intelligence platform",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "report"
+                    ],
+                    "query": [
+                        {
+                            "key": "q",
+                            "value": "web8 intelligence platform",
+                            "description": "Query for report generation"
+                        }
+                    ]
+                },
+                "description": "Generate industrial PDF report from search results and analysis"
+            }
+        },
+        {
+            "name": "📊 Real-time System Stats",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Accept",
+                        "value": "text/event-stream"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/api/stats",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "stats"
+                    ]
+                },
+                "description": "Server-Sent Events stream of real-time system metrics (CPU, Memory, Network, Disk)"
+            }
+        },
+        {
+            "name": "🌐 Content Ingestion",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/ingest?url=https://example.com",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "ingest"
+                    ],
+                    "query": [
+                        {
+                            "key": "url",
+                            "value": "https://example.com",
+                            "description": "URL to fetch and analyze"
+                        }
+                    ]
+                },
+                "description": "Fetch content from URL and perform automatic analysis"
+            }
+        },
+        {
+            "name": "📈 Ingested Data Summary",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/ingested",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "ingested"
+                    ]
+                },
+                "description": "Get summary of all ingested content with analytics"
+            }
+        },
+        {
+            "name": "✈️ Aviation Weather",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/aviation/LOWW",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "aviation",
+                        "LOWW"
+                    ],
+                    "variable": [
+                        {
+                            "key": "icao",
+                            "value": "LOWW",
+                            "description": "ICAO airport code (e.g., LOWW for Vienna)"
+                        }
+                    ]
+                },
+                "description": "Get METAR/TAF weather data for specified airport"
+            }
+        },
+        {
+            "name": "🪙 UTT Token Info",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/utt/info",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "utt",
+                        "info"
+                    ]
+                },
+                "description": "Get UltraThinking Token (UTT) information and status"
+            }
+        },
+        {
+            "name": "🛰️ LoRa Network Status",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/api/lora/status",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "api",
+                        "lora",
+                        "status"
+                    ]
+                },
+                "description": "Get LoRa mesh network status and node information"
+            }
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// Pre-request script for Web8 Intelligence Platform",
+                    "console.log('🚀 Testing Web8 Intelligence Platform API:', pm.info.requestName);",
+                    "",
+                    "// Set timestamp for tracking",
+                    "pm.globals.set('requestTimestamp', new Date().toISOString());"
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "// Global test script for Web8 Intelligence Platform",
+                    "pm.test('Response time is acceptable', function () {",
+                    "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+                    "});",
+                    "",
+                    "pm.test('Status code is successful', function () {",
+                    "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                    "});",
+                    "",
+                    "// Log response for debugging",
+                    "console.log('📊 Response Status:', pm.response.status);",
+                    "console.log('⏱️  Response Time:', pm.response.responseTime + 'ms');",
+                    "",
+                    "// Additional tests based on content type",
+                    "const contentType = pm.response.headers.get('Content-Type');",
+                    "if (contentType && contentType.includes('application/json')) {",
+                    "    pm.test('Response is valid JSON', function () {",
+                    "        pm.response.to.be.json;",
+                    "    });",
+                    "} else if (contentType && contentType.includes('application/pdf')) {",
+                    "    pm.test('Response is PDF', function () {",
+                    "        pm.expect(contentType).to.include('application/pdf');",
+                    "    });",
+                    "}"
+                ]
+            }
+        }
+    ]
+}

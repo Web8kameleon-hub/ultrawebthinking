@@ -30,26 +30,23 @@
 
 'use client'
 
-import * as React from 'react'
 import { motion } from 'framer-motion'
-import { AGIMedUltra } from './AGISheet/AGIMedUltra'
-import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
+import * as React from 'react'
+import { AGIDashboardManager } from './AGI/AGIDashboardManager'
+import { AGICoreUltra } from './AGISheet/AGICoreUltra'
 import { AGIEcoUltra } from './AGISheet/AGIEcoUltra'
 import { AGIElUltra } from './AGISheet/AGIElUltra'
-import { AGICoreUltra } from './AGISheet/AGICoreUltra'
-import { MeshNetworkUltra } from './AGISheet/MeshNetworkUltra'
-import { LoRaConnectUltra } from './AGISheet/LoRaConnectUltra'
-import LoRaConnectUltraNew from './LoRaConnectUltra'
-import RealLoRaGatewayDashboard from './RealLoRaGatewayDashboard'
-import { OpenMindChat } from './OpenMindChat'
-import UniversalTranslator from './UniversalTranslator'
-import AGISpreadsheetEngine from './AGISheet/AGISpreadsheetEngine'
-import EuroMeshDashboard from './EuroMeshDashboard'
-import { AGIDashboardManager } from './AGI/AGIDashboardManager'
-import UTTDashboard from './UTTDashboard'
+import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
 import ALBSecurityDashboard from './ALBSecurityDashboard'
+import EuroMeshDashboard from './EuroMeshDashboard'
+import { LiveAGISheet } from './LiveAGISheet'
+import LoRaConnectUltraNew from './LoRaConnectUltra'
 import LoRaPhysicalDashboard from './LoRaPhysicalDashboard'
-import AGISheetOfficeSuite from './AGISheetOfficeSuite'
+import { MedEnginePanel } from './MedEnginePanel'
+import { OpenMindChat } from './OpenMindChat'
+import RealLoRaGatewayDashboard from './RealLoRaGatewayDashboard'
+import UniversalTranslator from './UniversalTranslator'
+import UTTDashboard from './UTTDashboard'
 
 // Interface definitions
 interface Tab {
@@ -177,6 +174,13 @@ const initialTabs: Tab[] = [
     url: 'euroweb://agisheet-engine',
     isActive: false,
     isLoading: false
+  },
+  {
+    id: 'components-showcase',
+    title: '🎨 Components Showcase',
+    url: 'euroweb://components',
+    isActive: false,
+    isLoading: false
   }
 ];
 
@@ -198,7 +202,7 @@ const staticAGIMetrics: AGIMetrics = {
 const Web8TabSystem: React.FC = () => {
   // Client-side safety check
   const isClient = typeof window !== 'undefined';
-  
+
   const tabs = initialTabs
   const activeTab = tabs.find(tab => tab.isActive) || tabs[0]
   const agiMetrics = staticAGIMetrics
@@ -208,19 +212,19 @@ const Web8TabSystem: React.FC = () => {
   const switchTab = (targetId: string) => {
     // Only run DOM operations on client side
     if (typeof window === 'undefined') return;
-    
+
     // Hide all content
     const allContent = document.querySelectorAll('[data-content-id]');
     allContent.forEach(content => {
       (content as HTMLElement).style.display = 'none';
     });
-    
+
     // Show target content
     const targetContent = document.querySelector(`[data-content-id="${targetId}"]`);
     if (targetContent) {
       (targetContent as HTMLElement).style.display = 'block';
     }
-    
+
     // Update tab styles
     const allTabs = document.querySelectorAll('[data-tab-id]');
     allTabs.forEach(tab => {
@@ -229,7 +233,7 @@ const Web8TabSystem: React.FC = () => {
       tabElement.style.border = '1px solid transparent';
       tabElement.style.color = '#cbd5e1';
     });
-    
+
     const activeTabElement = document.querySelector(`[data-tab-id="${targetId}"]`) as HTMLElement;
     if (activeTabElement) {
       activeTabElement.style.background = 'rgba(212, 175, 55, 0.2)';
@@ -273,7 +277,7 @@ const Web8TabSystem: React.FC = () => {
           }}>
             EuroWeb
           </div>
-          
+
           <nav style={{ display: 'flex', gap: '16px' }}>
             <button style={{
               background: 'rgba(212, 175, 55, 0.2)',
@@ -370,7 +374,7 @@ const Web8TabSystem: React.FC = () => {
                 animation: 'spin 1s linear infinite'
               }} />
             )}
-            <span style={{ 
+            <span style={{
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap'
@@ -391,7 +395,7 @@ const Web8TabSystem: React.FC = () => {
             </button>
           </div>
         ))}
-        
+
         <button style={{
           background: 'none',
           border: '1px solid rgba(212, 175, 55, 0.3)',
@@ -568,21 +572,22 @@ const Web8TabSystem: React.FC = () => {
             height: '100%',
             overflow: 'auto'
           }}>
-            <div style={{ padding: '40px', textAlign: 'center' }}>
+            <div style={{ padding: '20px' }}>
               <h1 style={{
-                fontSize: '48px',
+                fontSize: '36px',
                 fontWeight: 800,
                 marginBottom: '20px',
-                background: 'linear-gradient(45deg, #ef4444, #dc2626)',
+                background: 'linear-gradient(45deg, #10b981, #059669)',
                 WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                WebkitTextFillColor: 'transparent',
+                textAlign: 'center'
               }}>
-                🏥 AGISheet Medical Suite
+                🏥 SuperCrista Medicine Engine
               </h1>
-              <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
-                Medical Data Management - Patient Records & Health Analytics AGI
+              <p style={{ fontSize: '18px', color: '#cbd5e1', marginBottom: '30px', textAlign: 'center' }}>
+                Advanced Medical Analysis & Diagnostic Platform
               </p>
-              <AGIMedUltra />
+              <MedEnginePanel />
             </div>
           </div>
 
@@ -685,7 +690,7 @@ const Web8TabSystem: React.FC = () => {
             height: '100%',
             overflow: 'hidden'
           }}>
-            <AGISheetOfficeSuite />
+            <LiveAGISheet />
           </div>
 
           {/* UTT Dashboard Content */}
@@ -708,6 +713,120 @@ const Web8TabSystem: React.FC = () => {
           }}>
             <LoRaPhysicalDashboard />
           </div>
+
+          {/* Components Showcase Content */}
+          <div data-content-id="components-showcase" style={{
+            display: 'none',
+            height: '100%',
+            overflow: 'auto',
+            padding: '20px'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+              <h1 style={{
+                fontSize: '36px',
+                fontWeight: 800,
+                marginBottom: '20px',
+                background: 'linear-gradient(45deg, #8b5cf6, #a855f7)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>
+                🎨 EuroWeb Components Showcase
+              </h1>
+              <p style={{ fontSize: '18px', color: '#cbd5e1', marginBottom: '30px' }}>
+                Live Preview of All Available Modules & Components
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '20px',
+              maxWidth: '1200px',
+              margin: '0 auto'
+            }}>
+              {/* Component cards grid */}
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ color: '#d4af37', marginBottom: '10px' }}>🧠 AGI Dashboard</h3>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>AI-powered control center</p>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ color: '#10b981', marginBottom: '10px' }}>🏥 Medical Engine</h3>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>SuperCrista diagnostic platform</p>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ color: '#3b82f6', marginBottom: '10px' }}>💼 Office Suite</h3>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>Document & spreadsheet tools</p>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ color: '#06b6d4', marginBottom: '10px' }}>🛰️ LoRa Network</h3>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>IoT communication layer</p>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ color: '#f59e0b', marginBottom: '10px' }}>🔒 Security</h3>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>Multi-layer defense system</p>
+              </div>
+
+              <div style={{
+                background: 'rgba(30, 41, 59, 0.8)',
+                border: '1px solid rgba(148, 163, 184, 0.2)',
+                borderRadius: '12px',
+                padding: '20px',
+                textAlign: 'center'
+              }}>
+                <h3 style={{ color: '#8b5cf6', marginBottom: '10px' }}>🪙 UTT System</h3>
+                <p style={{ color: '#94a3b8', fontSize: '14px' }}>Task automation platform</p>
+              </div>
+            </div>
+
+            <div style={{
+              marginTop: '40px',
+              padding: '20px',
+              background: 'rgba(34, 197, 94, 0.1)',
+              border: '1px solid rgba(34, 197, 94, 0.3)',
+              borderRadius: '12px',
+              textAlign: 'center'
+            }}>
+              <h3 style={{ color: '#22c55e', marginBottom: '10px' }}>✅ System Status</h3>
+              <p style={{ color: '#cbd5e1' }}>
+                All {tabs.length} modules loaded and operational.
+                Click on any tab above to access specific functionality.
+              </p>
+            </div>
+          </div>
         </div>
       </motion.main>
 
@@ -724,3 +843,4 @@ const Web8TabSystem: React.FC = () => {
 
 export default Web8TabSystem
 export { Web8TabSystem as Web8TabSystemComponent }
+

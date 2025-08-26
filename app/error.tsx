@@ -1,66 +1,84 @@
-﻿'use client'
+﻿'use client';
 
-import { useEffect } from 'react';
+import { AlertTriangle, Home, RefreshCw } from 'lucide-react';
+import Link from 'next/link';
+import React from 'react';
 
-export function Error({
-  error: _error,
-  reset,
-}: {
+interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
-  useEffect(() => {
+}
+
+export default function Error({ error, reset }: ErrorProps) {
+  React.useEffect(() => {
     // Log the error to an error reporting service
-    console.error(_error);
-  }, [_error]);
+    console.error('Application Error:', error);
+  }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
-        <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
-          <svg
-            className="w-6 h-6 text-red-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
-            />
-          </svg>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-orange-100">
+      <div className="max-w-md w-full mx-auto text-center p-8">
+        <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+          {/* Error Icon */}
+          <div className="mb-6">
+            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+              <AlertTriangle className="w-8 h-8 text-red-500" />
+            </div>
+            <h1 className="text-6xl font-bold text-red-500 mb-2">Error</h1>
+            <div className="w-16 h-1 bg-red-500 mx-auto rounded-full"></div>
+          </div>
 
-        <div className="mt-4 text-center">
-          <h1 className="text-lg font-medium text-gray-900">
-            Something went wrong!
-          </h1>
-          <p className="mt-2 text-sm text-gray-500">
-            An error occurred while loading this page.
-          </p>
+          {/* Error Message */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-3">
+              Diçka shkoi gabim
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-4">
+              Ndodhi një gabim i papritur. Ju lutemi provoni përsëri ose kthehuni në faqen kryesore.
+            </p>
 
-          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            {/* Error Details (only in development) */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="text-left bg-gray-100 p-4 rounded-lg mb-4">
+                <p className="text-sm font-mono text-red-600 break-all">
+                  {error.message}
+                </p>
+                {error.digest && (
+                  <p className="text-xs text-gray-500 mt-2">
+                    Digest: {error.digest}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={reset}
-              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
             >
-              Try again
+              <RefreshCw className="w-4 h-4 mr-2" />
+              Provo Përsëri
             </button>
 
-            <button
-              onClick={() => window.location.href = '/'}
-              className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
             >
-              Go home
-            </button>
+              <Home className="w-4 h-4 mr-2" />
+              Faqja Kryesore
+            </Link>
+          </div>
+
+          {/* Additional Help */}
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <p className="text-sm text-gray-500">
+              Nëse problemi vazhdon, kontaktoni administratorin.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-// Dynamic export
-export default Error;

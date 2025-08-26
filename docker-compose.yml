@@ -1,50 +1,94 @@
 version: '3.8'
 
 services:
-  euroweb-platform:
+  # Web8 UltraThinking Main Platform
+  web8-platform:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
+      - "3000:3000"
       - "3001:3001"
-      - "8080:8080"
     environment:
       - NODE_ENV=production
-      - PORT=3001
+      - PORT=3000
       - AGI_MODE=active
-      - NEXT_PUBLIC_LOCALES=sq,en,de,fr,it,zh,ru,es,hi,ar,el,tr,he
-      - NEXT_PUBLIC_DEFAULT_LOCALE=sq
+      - NEXT_PUBLIC_CLUSTER=devnet
+      - NEXT_PUBLIC_SOLANA_RPC=https://api.devnet.solana.com
+      - UTT_BRIDGE_ENABLED=true
+      - AWC_USER_AGENT=EuroWeb-Aviation/8.0.2 (+admin@euroweb.com)
+      - BRAVE_API_KEY=${BRAVE_API_KEY}
+      - DATABASE_URL=postgresql://web8:web8pass@postgres:5432/web8db
+      - REDIS_URL=redis://redis:6379
     volumes:
-      - ./public:/app/public
-      - ./locales:/app/locales
+      - ./data:/app/data
+      - ./logs:/app/logs
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+    depends_on:
+      - postgres
+      - redis
     networks:
-      - euroweb-network
+      - web8-network
 
-  euroweb-backend:
-    build:
-      context: ./backend
-      dockerfile: ../Dockerfile
-      target: backend
-    ports:
-      - "8080:8080"
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
     environment:
-      - NODE_ENV=production
-      - PORT=8080
-      - AGI_CORE=enabled
+      - POSTGRES_DB=web8db
+      - POSTGRES_USER=web8
+      - POSTGRES_PASSWORD=web8pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
     restart: unless-stopped
     networks:
-      - euroweb-network
+      - web8-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    networks:
+      - web8-network
+
+  # Mesh LoRa Gateway Simulator
+  lora-gateway:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm i && node lora-simulator.js"
+    environment:
+      - LORA_FREQ=868000000
+      - LORA_POWER=14
+      - MESH_NODES=5
+    volumes:
+      - ./mesh:/app
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - web8-network
 
 networks:
-  euroweb-network:
+  web8-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
 
 volumes:
-  euroweb-data:
+  postgres_data:
+    driver: local
+  redis_data:
     driver: local
