@@ -127,6 +127,21 @@ export const routing = defineRouting({
       el: '/βοήθεια',
       tr: '/yardim',
       he: '/עזרה'
+    },
+    '/mirror-demo': {
+      sq: '/mirror-demo',
+      en: '/mirror-demo',
+      de: '/mirror-demo',
+      fr: '/mirror-demo',
+      it: '/mirror-demo',
+      zh: '/mirror-demo',
+      ru: '/mirror-demo',
+      es: '/mirror-demo',
+      hi: '/mirror-demo',
+      ar: '/mirror-demo',
+      el: '/mirror-demo',
+      tr: '/mirror-demo',
+      he: '/mirror-demo'
     }
   }
 });
