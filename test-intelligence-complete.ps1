@@ -16,7 +16,12 @@ function Test-Endpoint {
     Write-Host "Testing $name..." -ForegroundColor Yellow
     try {
         $response = Invoke-RestMethod -Uri $url -Method $method -TimeoutSec 10
-        Write-Host "✅ $name - SUCCESS" -ForegroundColor Green
+        if ($response) {
+            Write-Host "✅ $name - SUCCESS" -ForegroundColor Green
+        }
+        else {
+            Write-Host "⚠️ $name - SUCCESS (No response data)" -ForegroundColor Yellow
+        }
         return $true
     }
     catch {
@@ -97,11 +102,15 @@ $totalPageTests = $pageTests.Count
 $passedPageTests = ($pageTests | Where-Object { $_ -eq $true }).Count
 $pageSuccessRate = [math]::Round(($passedPageTests / $totalPageTests) * 100, 2)
 
-Write-Host "API Endpoints: $passedApiTests/$totalApiTests passed ($apiSuccessRate%)" -ForegroundColor $(if ($apiSuccessRate -eq 100) { "Green" } else { "Yellow" })
-Write-Host "Pages: $passedPageTests/$totalPageTests passed ($pageSuccessRate%)" -ForegroundColor $(if ($pageSuccessRate -eq 100) { "Green" } else { "Yellow" })
+$apiResultText = "API Endpoints: {0}/{1} passed ({2} percent)" -f $passedApiTests, $totalApiTests, $apiSuccessRate
+$pageResultText = "Pages: {0}/{1} passed ({2} percent)" -f $passedPageTests, $totalPageTests, $pageSuccessRate
+
+Write-Host $apiResultText -ForegroundColor $(if ($apiSuccessRate -eq 100) { "Green" } else { "Yellow" })
+Write-Host $pageResultText -ForegroundColor $(if ($pageSuccessRate -eq 100) { "Green" } else { "Yellow" })
 
 $overallSuccessRate = [math]::Round((($passedApiTests + $passedPageTests) / ($totalApiTests + $totalPageTests)) * 100, 2)
-Write-Host "Overall Success Rate: $overallSuccessRate%" -ForegroundColor $(if ($overallSuccessRate -eq 100) { "Green" } elseif ($overallSuccessRate -ge 80) { "Yellow" } else { "Red" })
+$overallResultText = "Overall Success Rate: {0} percent" -f $overallSuccessRate
+Write-Host $overallResultText -ForegroundColor $(if ($overallSuccessRate -eq 100) { "Green" } elseif ($overallSuccessRate -ge 80) { "Yellow" } else { "Red" })
 
 Write-Host ""
 Write-Host "🌟 Web8 Intelligence Platform Status:" -ForegroundColor Cyan
