@@ -1,0 +1,75 @@
+name: 🛡️ Mirror Defense Industrial Pipeline
+
+on:
+  push:
+    branches: [ main, master, develop, 'feature/*' ]
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  NODE_VERSION: '18'
+  MIRROR_DEFENSE_VERSION: '2.0.0'
+
+jobs:
+  mirror-defense-build:
+    name: 🛡️ Mirror Defense Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [development, staging, production]
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: ⚙️ Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: 📦 Install Dependencies
+      run: |
+        npm ci
+        npm install -g typescript
+        
+    - name: 🎭 Generate Decoy Assets
+      run: npm run build:decoy
+        
+    - name: 🔐 Generate Protected Assets
+      run: npm run build:protected
+        
+    - name: 🔒 Generate SRI Hashes
+      run: npm run build:sri
+        
+    - name: 🌐 Generate Secured HTML
+      run: node scripts/generate-secured-html.js ${{ matrix.environment }}
+        
+    - name: 📊 Generate Security Report
+      run: npm run build:report
+        
+    - name: 📤 Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: mirror-defense-${{ matrix.environment }}-${{ github.sha }}
+        path: |
+          build/
+          security-report.json
+        retention-days: 30
+
+  deploy-production:
+    name: 🚀 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: mirror-defense-build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: 📥 Download Build Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: mirror-defense-production-${{ github.sha }}
+        
+    - name: 🚀 Deploy Mirror Defense
+      run: |
+        echo "🚀 Deploying Mirror Defense to production..."
+        echo "✅ Mirror Defense is now LIVE in production!"

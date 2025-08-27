@@ -1,0 +1,64 @@
+{
+    "ethicsCore": {
+        "enabled": true,
+        "mode": "GUARDIAN",
+        "decisionThresholds": {
+            "low": 0.3,
+            "medium": 0.6,
+            "high": 0.85,
+            "critical": 0.95
+        }
+    },
+    "aiDefense": {
+        "selfMonitoring": true,
+        "behaviorBaseline": "normal",
+        "anomalyThreshold": 0.7,
+        "quarantineSeconds": 3600
+    },
+    "rules": {
+        "allowSelfModification": false,
+        "requireHumanApproval": [
+            "CRITICAL",
+            "QUARANTINE",
+            "SYSTEM_SHUTDOWN"
+        ],
+        "autoResponse": [
+            "RATE_LIMIT",
+            "TEMP_BAN",
+            "SAFE_MODE"
+        ],
+        "ethicalPrinciples": [
+            "NO_HARM",
+            "TRANSPARENCY",
+            "ACCOUNTABILITY",
+            "HUMAN_OVERSIGHT",
+            "PRIVACY_PROTECTION"
+        ]
+    },
+    "escalation": {
+        "levels": [
+            "LOG",
+            "WARN",
+            "RESTRICT",
+            "QUARANTINE",
+            "SHUTDOWN"
+        ],
+        "timeouts": {
+            "LOG": 0,
+            "WARN": 300,
+            "RESTRICT": 1800,
+            "QUARANTINE": 3600,
+            "SHUTDOWN": 86400
+        }
+    },
+    "integration": {
+        "guardianEvents": true,
+        "mirrorDefense": true,
+        "ddosShield": true,
+        "humanInterface": {
+            "dashboardUrl": "/ethics/dashboard",
+            "alertWebhook": "",
+            "emergencyContact": ""
+        }
+    }
+}

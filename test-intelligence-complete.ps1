@@ -16,7 +16,7 @@ function Test-Endpoint {
     Write-Host "Testing $name..." -ForegroundColor Yellow
     try {
         $response = Invoke-RestMethod -Uri $url -Method $method -TimeoutSec 10
-        if ($response) {
+        if ($response -ne $null) {
             Write-Host "✅ $name - SUCCESS" -ForegroundColor Green
         }
         else {

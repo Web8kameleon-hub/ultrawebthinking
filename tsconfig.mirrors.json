@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "CommonJS",
+        "strict": true,
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "outDir": "./dist",
+        "sourceMap": false,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node"
+    },
+    "include": [
+        "security/**/*.ts",
+        "scripts/**/*.ts",
+        "src/**/*.ts",
+        "LAYER_7_DEFENSE_MIRROR/**/*.ts",
+        "LAYER_8_DDOS_DEFENSE/**/*.ts",
+        "LAYER_9_ETHICS_AI_DEFENSE/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build",
+        "coverage"
+    ]
+}

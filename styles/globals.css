@@ -1,10 +1,13 @@
 /**
  * EuroWeb Web8 - Global Styles
- * CSS Modules + CVA + Theme Variables System
+ * CSS Modules + CVA + Theme Variables System + Tailwind v4
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @version 8.0.1 Industrial
  */
+
+/* Tailwind CSS v4 */
+@import "tailwindcss";
 
 /* Import Theme Variables */
 @import './theme-vars.css';
@@ -38,4 +41,3 @@ body {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
-

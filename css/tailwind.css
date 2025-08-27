@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Ultra Power Custom Styles */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@layer components {
+    .slider {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .slider::-webkit-slider-track {
+        background: #374151;
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
+
+@layer utilities {
+    .ultra-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .ultra-text-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}

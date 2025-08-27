@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Web8 Mirror Defense - Demo Industrial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .shield {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .mirror-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .mirror-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mirror-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .mirror-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .mirror-card:hover::before {
+            left: 100%;
+        }
+
+        .mirror-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .mirror-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        .status-protecting {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 1px solid #ffa500;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .mirror-details {
+            margin: 1rem 0;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-label {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        .detail-value {
+            color: #ffffff;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-preview {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-preview pre {
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .copy-btn:hover {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .live-monitor {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .monitor-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-log {
+            background: #0a0a0a;
+            border-radius: 8px;
+            padding: 1rem;
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #333;
+        }
+
+        .log-entry {
+            padding: 0.3rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .log-timestamp {
+            color: #666;
+        }
+
+        .log-action {
+            color: #00ff00;
+            font-weight: 600;
+        }
+
+        .log-details {
+            color: #cccccc;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00d4ff, #0099cc);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff4757, #ff3742);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #ffa502, #ff6348);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff00;
+        }
+
+        .stat-label {
+            color: #cccccc;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>
+            <span class="shield">🛡️</span>
+            Web8 Mirror Defense - Demo Industrial
+            <span class="mirror-status status-active">AKTIV</span>
+        </h1>
+    </div>
+
+    <div class="container">
+        <!-- Mirror Cards -->
+        <div class="mirror-grid">
+            <!-- Broken Mirror -->
+            <div class="mirror-card">
+                <div class="mirror-title">
+                    🪞 Broken Mirror (Decoy)
+                    <span class="mirror-status status-protecting">MASHTRUES</span>
+                </div>
+                <div class="mirror-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Qëllimi:</span>
+                        <span class="detail-value">Humb hackers</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Metoda:</span>
+                        <span class="detail-value">AST + Babel</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">File:</span>
+                        <span class="detail-value">app.decoy.js</span>
+                    </div>
+                </div>
+                <div class="code-preview">
+                    <button class="copy-btn" onclick="copyCode('decoy')">Copy</button>
+                    <pre id="decoy-code">// Kod i shtrembëruar (Decoy)
+export function toob_7bpxs() {
+    console.log('Web8 production code booted.');
+}
+// FAKE FUNCTION - DECOY
+function mahcxe_k9df2() {
+    return "false_data_" + Math.random();
+}</pre>
+                </div>
+            </div>
+
+            <!-- Close Mirror -->
+            <div class="mirror-card">
+                <div class="mirror-title">
+                    🔒 Close Mirror (Protected)
+                    <span class="mirror-status status-active">MBROJTUR</span>
+                </div>
+                <div class="mirror-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Qëllimi:</span>
+                        <span class="detail-value">Kod real i sigurt</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Metoda:</span>
+                        <span class="detail-value">RC4 + Obfuskim</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">File:</span>
+                        <span class="detail-value">app.protected.js</span>
+                    </div>
+                </div>
+                <div class="code-preview">
+                    <button class="copy-btn" onclick="copyCode('protected')">Copy</button>
+                    <pre id="protected-code">// Kod i mbrojtur (Close Mirror)
+(function(_0x6971b,_0x4f5321){
+var _0x454e0f=_0x2fce,_0x227e47=_0x6971b();
+while(!![]){try{var _0x332eaa=-parseInt(_0x454e0f(0x6d,'rc]M'))/0x1;
+if(_0x332eaa===_0x4f5321)break;
+// ... 16KB më shumë obfuskim ...</pre>
+                </div>
+            </div>
+
+            <!-- Out Mirror -->
+            <div class="mirror-card">
+                <div class="mirror-title">
+                    🌐 Out Mirror (UI Protection)
+                    <span class="mirror-status status-active">SRI + CSP</span>
+                </div>
+                <div class="mirror-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Qëllimi:</span>
+                        <span class="detail-value">Mbroj UI nga XSS</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Metoda:</span>
+                        <span class="detail-value">CSP + SRI hash</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">SRI:</span>
+                        <span class="detail-value">sha384-LJSdXQU6...</span>
+                    </div>
+                </div>
+                <div class="code-preview">
+                    <button class="copy-btn" onclick="copyCode('sri')">Copy</button>
+                    <pre id="sri-code"><!-- HTML i mbrojtur -->
+&lt;meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; script-src 'self'"&gt;
+&lt;script src="assets/app.protected.1756305238456.js" 
+        integrity="sha384-LJSdXQU6H6kwBIrWbDK4..."
+        crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Monitor -->
+        <div class="live-monitor">
+            <div class="monitor-title">
+                📊 Live Protection Monitor
+                <span class="mirror-status status-protecting">DUKE MONITORUAR</span>
+            </div>
+            <div class="activity-log" id="activity-log">
+                <div class="log-entry">
+                    <span class="log-timestamp">[16:25:38]</span>
+                    <span class="log-action">PROTECT</span>
+                    <span class="log-details">Mirror Defense activated - 3 layers online</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[16:25:39]</span>
+                    <span class="log-action">BROKEN</span>
+                    <span class="log-details">Decoy generated: app.decoy.1756305238456.js</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[16:25:40]</span>
+                    <span class="log-action">CLOSE</span>
+                    <span class="log-details">Protected code: 16.6KB obfuscated with RC4</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[16:25:41]</span>
+                    <span class="log-action">OUT</span>
+                    <span class="log-details">SRI hash: sha384-LJSdXQU6H6kwBIrWbDK4...</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[16:25:42]</span>
+                    <span class="log-action">CSP</span>
+                    <span class="log-details">10 security directives applied</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="protection-time">38</div>
+                <div class="stat-label">Sekonda Mbrojtje</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Shtresa Aktive</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">16.6</div>
+                <div class="stat-label">KB Kod i Mbrojtur</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Sulme të Zbuluara</div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn" onclick="runProtection()">🔄 Riaktivizo Mirror Defense</button>
+            <button class="btn btn-warning" onclick="showManifest()">📋 Shiko Manifest</button>
+            <button class="btn btn-danger" onclick="simulateAttack()">⚡ Simulo Sulm</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🛡️ Web8 Mirror Defense Industrial - Built with TypeScript, Babel, Terser & JavaScript Obfuscator</p>
+        <p>Timestamp: <span id="current-time"></span></p>
+    </div>
+
+    <script>
+        // Live time update
+        function updateTime() {
+            document.getElementById('current-time').textContent = new Date().toLocaleString();
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Protection timer
+        let protectionSeconds = 38;
+        setInterval(() => {
+            protectionSeconds++;
+            document.getElementById('protection-time').textContent = protectionSeconds;
+        }, 1000);
+
+        // Copy code functionality
+        function copyCode(type) {
+            const codeElement = document.getElementById(type + '-code');
+            navigator.clipboard.writeText(codeElement.textContent).then(() => {
+                const btn = event.target;
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Add log entry
+        function addLogEntry(action, message) {
+            const log = document.getElementById('activity-log');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `
+                <span class="log-timestamp">[${time}]</span>
+                <span class="log-action">${action}</span>
+                <span class="log-details">${message}</span>
+            `;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // Run protection
+        function runProtection() {
+            addLogEntry('INIT', 'Starting Mirror Defense protection sequence...');
+            setTimeout(() => addLogEntry('BROKEN', 'Generating new decoy code...'), 500);
+            setTimeout(() => addLogEntry('CLOSE', 'Applying multi-layer obfuscation...'), 1000);
+            setTimeout(() => addLogEntry('OUT', 'Updating SRI hash and CSP headers...'), 1500);
+            setTimeout(() => addLogEntry('SUCCESS', 'All mirrors activated successfully!'), 2000);
+        }
+
+        // Show manifest
+        function showManifest() {
+            const manifest = {
+                timestamp: Date.now(),
+                decoy: `app.decoy.${Date.now()}.js`,
+                protected: `app.protected.${Date.now()}.js`,
+                ui: "index.html"
+            };
+            addLogEntry('MANIFEST', `Generated: ${JSON.stringify(manifest)}`);
+        }
+
+        // Simulate attack
+        function simulateAttack() {
+            addLogEntry('ALERT', '🚨 Potential attack detected on decoy layer');
+            setTimeout(() => addLogEntry('DECEIVE', 'Attacker redirected to fake code'), 500);
+            setTimeout(() => addLogEntry('PROTECT', 'Real code remains secure behind Close Mirror'), 1000);
+            setTimeout(() => addLogEntry('BLOCK', 'CSP blocked unauthorized script injection'), 1500);
+        }
+
+        // Add some initial activity
+        setTimeout(() => {
+            addLogEntry('SYSTEM', 'Mirror Defense monitoring system online');
+            addLogEntry('HEALTH', 'All security layers functioning normally');
+        }, 1000);
+    </script>
+</body>
+
+</html>
