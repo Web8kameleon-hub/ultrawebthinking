@@ -68,7 +68,7 @@ const agiElectronicsEngine = {
       deviceId,
       deviceType,
       lastUpdate: new Date().toISOString(),
-      data: deviceTypes[deviceType] || { status: 'unknown' },
+      data: (deviceTypes[deviceType] || {}) || { status: 'unknown' },
       health: Math.floor(Math.random() * 100),
       alerts: []
     }
@@ -109,7 +109,7 @@ const agiElectronicsEngine = {
 
     return {
       ...gridData,
-      actionPerformed: actionResults[action] || { action: 'Unknown action' },
+      actionPerformed: (actionResults[action] || {}) || { action: 'Unknown action' },
       timestamp: new Date().toISOString()
     }
   },

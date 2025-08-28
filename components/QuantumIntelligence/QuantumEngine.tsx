@@ -56,8 +56,8 @@ export interface QuantumMemory {
 export class QuantumIntelligenceEngine {
   private quantumStates: Map<string, QuantumState> = new Map()
   private neuralNetwork: Map<string, NeuralNode> = new Map()
-  private memory: QuantumMemory
-  private intelligence: IntelligenceMetrics
+  private memory: QuantumMemory = {} as QuantumMemory
+  private intelligence: IntelligenceMetrics = {} as IntelligenceMetrics
   private consciousness: number = 0
   private creativity: number = 0
   private wisdom: number = 0
@@ -154,8 +154,8 @@ export class QuantumIntelligenceEngine {
       
       for (let i = 0; i < connectionCount; i++) {
         const targetNode = nodes[Math.floor(Math.random() * nodes.length)]
-        if (targetNode !== nodeId && !node.connections.includes(targetNode)) {
-          node.connections.push(targetNode)
+        if (targetNode && targetNode !== nodeId && !node.connections.includes(targetNode)) {
+          if (targetNode) node.connections.push(targetNode)
         }
       }
     })
@@ -371,7 +371,7 @@ export class QuantumIntelligenceEngine {
       .filter(node => node.type === 'output')
     
     outputNodes.forEach(node => {
-      output += node.value * node.weights[0]
+      output += node.value * (node.weights?.[0] || 1)
     })
     
     return output

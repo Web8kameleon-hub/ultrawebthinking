@@ -9,13 +9,14 @@
 
 'use client'
 
+import { NoSSR } from '../components/NoSSR'
 import nextDynamic from 'next/dynamic'
 
 // Force dynamic rendering - no static generation
 export const dynamic = 'force-dynamic'
 
 const Web8TabSystem = nextDynamic(
-  () => import('../frontend/src/components/Web8TabSystem'),
+  () => import('../components/Web8TabSystem'),
   { 
     ssr: false,
     loading: () => (
@@ -58,5 +59,38 @@ const Web8TabSystem = nextDynamic(
 )
 
 export default function Home() {
-  return <Web8TabSystem />
+  return (
+    <NoSSR
+      fallback={
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #667eea 100%)',
+          color: 'white'
+        }}>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{
+              width: '60px',
+              height: '60px',
+              border: '3px solid rgba(255, 255, 255, 0.3)',
+              borderTop: '3px solid rgba(255, 255, 255, 0.8)',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+              margin: '0 auto 20px'
+            }}></div>
+            <h1 style={{ fontSize: '2rem', marginBottom: '10px', color: 'white' }}>
+              👑 EuroWeb Platform
+            </h1>
+            <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)' }}>
+              Hydration-Safe React 19.1.1 Loading...
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <Web8TabSystem />
+    </NoSSR>
+  )
 }

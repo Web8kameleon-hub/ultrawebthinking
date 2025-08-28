@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react'
 import { AGITabSystem } from './AGITabSystem'
-import { Web8TabSystem } from './Web8TabSystem'
+import { Web8TabSystem } from '../../../components/Web8TabSystem'
 
 export function AGIMainController() {
   const [useNewTabSystem, setUseNewTabSystem] = useState<boolean>(true)

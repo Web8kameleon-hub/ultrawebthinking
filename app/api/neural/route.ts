@@ -8,13 +8,19 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { NeuralPlanner } from '../../../lib/NeuralPlanner';
+
+// Dynamic import for NeuralPlanner to avoid TypeScript issues
+async function getNeuralPlannerClass() {
+  const { default: NeuralPlanner } = await import('../../../lib/NeuralPlanner');
+  return NeuralPlanner;
+}
 
 // Global neural planner instance
-let neuralPlanner: NeuralPlanner | null = null;
+let neuralPlanner: any = null;
 
-function getNeuralPlanner(): NeuralPlanner {
+async function getNeuralPlanner() {
   if (!neuralPlanner) {
+    const NeuralPlanner = await getNeuralPlannerClass();
     neuralPlanner = new NeuralPlanner({
       maxPulseRate: 100,
       flickeringThreshold: 3,
@@ -29,7 +35,7 @@ function getNeuralPlanner(): NeuralPlanner {
 
 export async function GET() {
   try {
-    const planner = getNeuralPlanner();
+    const planner = await getNeuralPlanner();
     const networkStatus = planner.getNetworkStatus();
     const activityMap = planner.getActivityMap();
     
@@ -60,10 +66,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { action, nodeId, value } = body;
-    const planner = getNeuralPlanner();
+    const planner = await getNeuralPlanner();
 
     switch (action) {
-      case 'setActivity': {
+      case 'setActivity':
         if (!nodeId || value === undefined) {
           return NextResponse.json(
             { success: false, error: 'Node ID and value required' },
@@ -76,8 +82,8 @@ export async function POST(request: NextRequest) {
           message: success ? `Node ${nodeId} activity set to ${value}%` : `Failed to set activity for ${nodeId}`,
           timestamp: new Date().toISOString()
         });
-      }
 
+      case 'resetNetwork':
         planner.resetNetwork();
         return NextResponse.json({
           success: true,
@@ -95,6 +101,7 @@ export async function POST(request: NextRequest) {
 
       case 'emergencyStart':
         // Create new instance if needed
+        const NeuralPlanner = await getNeuralPlannerClass();
         neuralPlanner = new NeuralPlanner();
         return NextResponse.json({
           success: true,
@@ -132,6 +139,7 @@ export async function PUT(request: NextRequest) {
       neuralPlanner.destroy();
     }
     
+    const NeuralPlanner = await getNeuralPlannerClass();
     neuralPlanner = new NeuralPlanner(config);
     
     return NextResponse.json({

@@ -258,10 +258,10 @@ export async function PATCH(request: NextRequest) {
       const notifIndex = userNotifs.findIndex(n => n.id === notificationId);
       if (notifIndex !== -1) {
         if (action === 'mark_read') {
-          userNotifs[notifIndex].read = true;
+          (userNotifs[notifIndex] || {}).read = true;
           updated = true;
         } else if (action === 'mark_unread') {
-          userNotifs[notifIndex].read = false;
+          (userNotifs[notifIndex] || {}).read = false;
           updated = true;
         } else if (action === 'delete') {
           userNotifs.splice(notifIndex, 1);
@@ -276,10 +276,10 @@ export async function PATCH(request: NextRequest) {
       const globalIndex = globalNotifications.findIndex(n => n.id === notificationId);
       if (globalIndex !== -1) {
         if (action === 'mark_read') {
-          globalNotifications[globalIndex].read = true;
+          (globalNotifications[globalIndex] || {}).read = true;
           updated = true;
         } else if (action === 'mark_unread') {
-          globalNotifications[globalIndex].read = false;
+          (globalNotifications[globalIndex] || {}).read = false;
           updated = true;
         } else if (action === 'delete') {
           globalNotifications.splice(globalIndex, 1);

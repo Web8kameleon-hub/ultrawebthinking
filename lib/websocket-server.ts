@@ -219,7 +219,7 @@ class Web8WebSocketServer {
       `🚀 Response: "${query}" - Optimized answer generated`
     ];
     
-    return responses[Math.floor(Math.random() * responses.length)];
+    return responses[Math.floor(Math.random() * responses.length)] ?? responses[0];
   }
 
   private sendToClient(clientId: string, data: any) {

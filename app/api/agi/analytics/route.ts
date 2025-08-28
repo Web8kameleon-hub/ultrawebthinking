@@ -225,7 +225,7 @@ function generateAnalyticsReport(timeFilter?: number): AnalyticsReport {
   }, {} as Record<string, number>);
 
   const mostCommonActions = Object.entries(actionCounts)
-    .sort((a, b) => b[1] - a[1])
+    .sort((a, b) => (b[1] || {}) - (a[1] || {}))
     .slice(0, 10)
     .map(([action, count]) => ({ action, count }));
 
@@ -238,7 +238,7 @@ function generateAnalyticsReport(timeFilter?: number): AnalyticsReport {
     }, {} as Record<string, number>);
 
   const topPages = Object.entries(pageViews)
-    .sort((a, b) => b[1] - a[1])
+    .sort((a, b) => (b[1] || {}) - (a[1] || {}))
     .slice(0, 10)
     .map(([url, views]) => ({ url, views }));
 

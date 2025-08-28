@@ -94,10 +94,10 @@ class AGICore {
 
     // Navigate to the parent of the target property
     for (let i = 0; i < keys.length - 1; i++) {
-      if (!(keys[i] in current)) {
-        current[keys[i]] = {};
+      if (keys[i] && !(keys[i] in current)) {
+        if (keys[i]) current[keys[i]] = {};
       }
-      current = current[keys[i]];
+      if (keys[i]) current = current[keys[i]];
     }
 
     // Set the value

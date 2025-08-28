@@ -226,7 +226,7 @@ export class AGIEcoEngine {
     const conditions: WeatherForecast['condition'][] = [
       'sunny', 'cloudy', 'rainy', 'stormy', 'snowy', 'foggy', 'windy'
     ]
-    return conditions[Math.floor(Math.random() * conditions.length)]
+    return conditions[Math.floor(Math.random() * conditions.length)] || conditions[0] || "sunny"
   }
 
   // Get Health Recommendations
@@ -370,7 +370,7 @@ export class AGIEcoEngine {
     
     if (data.length === 0) {
       return {
-        currentConditions: this.generateClimateData({ city: 'Unknown', country: 'Unknown', latitude: 0, longitude: 0 })[0],
+        currentConditions: this.generateClimateData({ city: "Unknown", country: "Unknown", latitude: 0, longitude: 0 })[0] || {} as ClimateData,
         forecast: [],
         analysis: 'No climate data available for this location.',
         recommendations: ['Enable location services', 'Check location spelling']
@@ -383,10 +383,10 @@ export class AGIEcoEngine {
     const avgTemp = data.reduce((sum, d) => sum + d.temperature.current, 0) / data.length
     const avgHumidity = data.reduce((sum, d) => sum + d.humidity, 0) / data.length
     
-    const analysis = `Climate analysis for ${currentConditions.location.city}: Average temperature ${avgTemp.toFixed(1)}°C, humidity ${avgHumidity.toFixed(1)}%. Air quality is ${currentConditions.airQuality.category}.`
+    const analysis = `Climate analysis for ${currentConditions?.location?.city || "Unknown"}: Average temperature ${avgTemp.toFixed(1)}°C, humidity ${avgHumidity.toFixed(1)}%. Air quality is ${currentConditions?.airQuality?.category || "Unknown"}.`
     
     const recommendations = [
-      `Monitor air quality levels (current AQI: ${currentConditions.airQuality.aqi})`,
+      `Monitor air quality levels (current AQI: ${currentConditions?.airQuality?.aqi || 50})`,
       'Consider renewable energy sources for this region',
       'Implement water conservation measures',
       'Track local biodiversity indicators'

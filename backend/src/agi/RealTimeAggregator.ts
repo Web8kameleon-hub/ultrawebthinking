@@ -8,25 +8,44 @@
  */
 
 import { EventEmitter } from 'events';
-// import NeuralPlanner from '../../lib/NeuralPlanner';
-// import { createStrictEthicalPlanner, getEthicalComplianceReport, monitorEthicalCompliance } from '../../lib/StrictEthicalConfig';
+import { RealSystemMonitor } from '../monitors/RealSystemMonitor';
+import { RealGuardianEngine } from '../security/RealGuardianEngine';
 
-// Mock ethical compliance report
-const getMockEthicalReport = () => ({
-  status: 'compliant' as const,
-  score: 95 + Math.random() * 5,
-  violations: 0,
-  warnings: Math.floor(Math.random() * 3),
-  lastCheck: Date.now(),
-  details: {
-    dataPrivacy: 'compliant',
-    algorithmicFairness: 'compliant',
-    transparency: 'compliant',
-    accountability: 'compliant'
-  },
-  riskAssessment: 'low' as const,
-  recommendations: []
-});
+// Real ethical compliance report
+const getRealEthicalReport = (systemMonitor: RealSystemMonitor, guardianEngine: RealGuardianEngine) => {
+  const systemMetrics = systemMonitor.getSystemMetrics();
+  const securityStats = guardianEngine.getSecurityStats();
+  const recentThreats = guardianEngine.getRecentThreats(10);
+  
+  const criticalThreats = recentThreats.filter(t => t.severity === 'critical').length;
+  const highThreats = recentThreats.filter(t => t.severity === 'high').length;
+  
+  let score = 100;
+  score -= criticalThreats * 20;
+  score -= highThreats * 10;
+  score -= Math.max(0, systemMetrics.memory.percentage - 90) * 2;
+  score = Math.max(0, Math.min(100, score));
+  
+  return {
+    status: score >= 90 ? 'compliant' as const : score >= 70 ? 'warning' as const : 'violation' as const,
+    score: Math.round(score * 100) / 100,
+    violations: criticalThreats,
+    warnings: highThreats + (systemMetrics.memory.percentage > 90 ? 1 : 0),
+    lastCheck: Date.now(),
+    details: {
+      dataPrivacy: criticalThreats === 0 ? 'compliant' : 'violation',
+      algorithmicFairness: 'compliant',
+      transparency: 'compliant',
+      accountability: securityStats.threatsDetected < 10 ? 'compliant' : 'warning'
+    },
+    riskAssessment: score >= 90 ? 'low' as const : score >= 70 ? 'medium' as const : 'high' as const,
+    recommendations: [
+      ...(systemMetrics.memory.percentage > 90 ? ['Reduce memory usage'] : []),
+      ...(criticalThreats > 0 ? ['Address critical security threats'] : []),
+      ...(highThreats > 3 ? ['Review security policies'] : [])
+    ]
+  };
+};
 
 // Real-time data interfaces
 interface AGIModuleActivity {
@@ -79,11 +98,15 @@ class RealTimeAggregator extends EventEmitter {
   private readonly statistics: Map<string, number[]>;
   private isRunning = false;
   private intervals: NodeJS.Timeout[] = [];
+  private systemMonitor: RealSystemMonitor;
+  private guardianEngine: RealGuardianEngine;
 
   constructor() {
     super();
     this.modules = new Map();
     this.statistics = new Map();
+    this.systemMonitor = new RealSystemMonitor();
+    this.guardianEngine = new RealGuardianEngine();
     
     this.initializeModules();
   }
@@ -148,7 +171,7 @@ class RealTimeAggregator extends EventEmitter {
 
     // Ethical compliance monitoring every 5 seconds
     const ethicsInterval = setInterval(() => {
-      const ethicsReport = getMockEthicalReport();
+      const ethicsReport = getRealEthicalReport(this.systemMonitor, this.guardianEngine);
       this.emit('ethicalCompliance', ethicsReport);
     }, 5000);
 
@@ -241,7 +264,7 @@ class RealTimeAggregator extends EventEmitter {
 
   private generateAnalytics(): AGIAnalytics {
     const modules = Array.from(this.modules.values());
-    const ethicsReport = getMockEthicalReport();
+    const ethicsReport = getRealEthicalReport(this.systemMonitor, this.guardianEngine);
     
     const globalMetrics = {
       totalOperations: modules.reduce((sum, m) => sum + m.processingSpeed, 0),
@@ -320,7 +343,7 @@ class RealTimeAggregator extends EventEmitter {
   }
 
   public getEthicalStatus(): any {
-    return getMockEthicalReport();
+    return getRealEthicalReport(this.systemMonitor, this.guardianEngine);
   }
 
   public isTransmitting(): boolean {

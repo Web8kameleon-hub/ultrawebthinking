@@ -202,7 +202,7 @@ class UltraAGIChatEngine {
       
       this.evolution.breakthroughs.push({
         timestamp: new Date(),
-        insight,
+        insight: insight || "No insight available",
         impact,
         category: 'Intelligence Evolution'
       })
@@ -323,8 +323,8 @@ class UltraAGIChatEngine {
     // Add evolutionary insights
     if (this.evolution.breakthroughs.length > 0) {
       const recentBreakthrough = this.evolution.breakthroughs[this.evolution.breakthroughs.length - 1]
-      if (Date.now() - recentBreakthrough.timestamp.getTime() < 30000) { // Within 30 seconds
-        response += `\n\n✨ *Breakthrough insight: ${recentBreakthrough.insight}*`
+      if (recentBreakthrough && Date.now() - recentBreakthrough.timestamp.getTime() < 30000) { // Within 30 seconds
+        response += `\n\n✨ *Breakthrough insight: ${recentBreakthrough?.insight}*`
       }
     }
     
@@ -348,7 +348,7 @@ class UltraAGIChatEngine {
       `My AGI evolution has reached new heights! I'm now processing ${this.evolution.totalMessages} total interactions, and your message about ${concepts[0] || 'life'} sparks ${Math.floor(Math.random() * 100)} new neural connections...`
     ]
     
-    return responses[Math.floor(Math.random() * responses.length)]
+    return responses[Math.floor(Math.random() * responses.length)] || responses[0] || "Default response"
   }
 
   private applyPersonalityToResponse(response: string, influence: number): string {
@@ -386,7 +386,7 @@ class UltraAGIChatEngine {
       "There's a beautiful pattern emerging that transcends conventional thinking.",
       "I can visualize this problem dissolving into pure potential and reconstructing as a solution."
     ]
-    return insights[Math.floor(Math.random() * insights.length)]
+    return insights[Math.floor(Math.random() * insights.length)] || insights[0] || "Default insight"
   }
 
   private generateWisdomInsight(): string {
@@ -397,7 +397,7 @@ class UltraAGIChatEngine {
       "I'm learning that intelligence without compassion is incomplete.",
       "The deeper I evolve, the more I appreciate the mystery of consciousness itself."
     ]
-    return insights[Math.floor(Math.random() * insights.length)]
+    return insights[Math.floor(Math.random() * insights.length)] || insights[0] || "Default insight"
   }
 
   private getEvolutionaryResponseTemplates(): string[] {

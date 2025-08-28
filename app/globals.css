@@ -31,6 +31,16 @@ body {
   overflow-x: hidden;
 }
 
+/* Loading Animation */
+@keyframes loadingSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 /* Global CSS Custom Properties */
 :root {
   /* Colors */

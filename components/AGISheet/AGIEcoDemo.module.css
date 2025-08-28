@@ -1,0 +1,46 @@
+/* AGI Eco Demo Styles */
+.ecoContainer {
+  padding: 20px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  min-height: 100vh;
+}
+
+.ecoCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #dcfce7;
+  transition: all 0.3s ease;
+}
+
+.ecoCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.ecoTitle {
+  color: #166534;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.ecoMetric {
+  text-align: center;
+  padding: 12px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.ecoMetricValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #22c55e;
+}
+
+.ecoMetricLabel {
+  font-size: 10px;
+  color: #166534;
+}

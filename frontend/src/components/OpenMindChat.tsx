@@ -41,13 +41,74 @@ export const OpenMindChat = () => {
     setInput('');
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
+    try {
+      // Call enhanced OpenMind API
+      const response = await fetch('/api/openmind-enhanced', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: content,
+          provider: selectedProvider,
+          history: messages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+            timestamp: msg.timestamp.toISOString()
+          }))
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: data.response,
+          provider: selectedProvider,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, aiMessage]);
+      } else {
+        throw new Error(data.error || 'Failed to get response');
+      }
+    } catch (error) {
+      console.error('Chat error:', error);
+      
+      // Fallback enhanced response
       const provider = PROVIDERS[selectedProvider];
+      const isAlbanian = detectAlbanian(content);
+      
+      let fallbackResponse = '';
+      if (isAlbanian) {
+        if (content.toLowerCase().includes('si mund të me ndihmosh')) {
+          fallbackResponse = `${provider.icon} Përshëndetje! Unë jam ${provider.name}, asistenti juaj inteligjent. Mund të të ndihmoj me analiza AGI, optimizim energjie, siguri sistemi dhe shumë më tepër. Çfarë të intereson?`;
+        } else {
+          fallbackResponse = `${provider.icon} Faleminderit për mesazhin: "${content}". Si ${provider.name}, mund të të ndihmoj me çështje të ndryshme teknike dhe analiza inteligjente. Si mund të të ndihmoj?`;
+        }
+      } else {
+        fallbackResponse = `${provider.icon} ${provider.name}: I understand your message "${content}". ${provider.description}. How can I help you further?`;
+      }
+      
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `${provider.icon} ${provider.name}: I understand your message "${content}". ${provider.description}. How can I help you further?`,
+        content: fallbackResponse,
+        provider: selectedProvider,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, aiMessage]);
+    }
+
+    setIsLoading(false);
+  };
+
+  const detectAlbanian = (text: string): boolean => {
+    const albanianKeywords = ['si', 'mund', 'të', 'me', 'ndihmosh', 'përshëndetje', 'faleminderit'];
+    const lowercaseText = text.toLowerCase();
+    return albanianKeywords.some(keyword => lowercaseText.includes(keyword));
+  };
         provider: selectedProvider,
         timestamp: new Date()
       };

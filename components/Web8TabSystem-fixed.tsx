@@ -12,7 +12,8 @@
 
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { AGIMedUltra } from '../frontend/src/components/AGISheet/AGIMedUltra'
+// import { AGIMedUltra } from './AGISheet/AGIMedUltra' // Temporarily disabled
+const AGIMedUltra = () => <div>Medical AGI Component Loading...</div>;
 import { AGIOfficeUltra } from '../frontend/src/components/AGISheet/AGIOfficeUltra'
 import { AGIEcoUltra } from '../frontend/src/components/AGISheet/AGIEcoUltra'
 import { AGIElUltra } from '../frontend/src/components/AGISheet/AGIElUltra'
@@ -592,7 +593,7 @@ const Web8TabSystemUltra: React.FC = () => {
           <div style={{ flex: 1, position: 'relative' }}>
             <input
               type="text"
-              value={activeTab.url}
+              value={activeTab?.url || ""}
               readOnly
               className={styles['address-input']}
             />

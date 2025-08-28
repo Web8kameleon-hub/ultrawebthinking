@@ -149,7 +149,7 @@ export class SimpleSearchAPIServer {
       // Execute search
       const searchOptions = {
         maxResults,
-        engines: engines.length > 0 ? engines : undefined
+        ...(engines.length > 0 && { engines })
       };
 
       const results = await this.searchEngine.search(query.trim(), searchOptions);

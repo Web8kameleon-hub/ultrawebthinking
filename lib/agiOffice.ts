@@ -268,7 +268,7 @@ Customer Support Team`,
   // Get Random Document Type
   private getRandomDocumentType(): string {
     const types = ['business report', 'technical specification', 'project proposal', 'financial statement', 'research paper']
-    return types[Math.floor(Math.random() * types.length)]
+    return types[Math.floor(Math.random() * types.length)] || types[0] || "document"
   }
 
   // Generate Excel Formula
@@ -277,7 +277,7 @@ Customer Support Team`,
       automation => automation.category === category && automation.complexity === complexity
     )
     
-    return formulas.length > 0 ? formulas[Math.floor(Math.random() * formulas.length)] : null
+    return formulas.length > 0 ? (formulas[Math.floor(Math.random() * formulas.length)] || null) : null
   }
 
   // Create Custom Excel Formula

@@ -255,8 +255,8 @@ class AGIAnalyticsEngine {
     let denomY = 0
     
     for (let i = 0; i < n; i++) {
-      const deltaX = datasetX[i] - meanX
-      const deltaY = datasetY[i] - meanY
+      const deltaX = (datasetX[i] ?? 0) - meanX
+      const deltaY = (datasetY[i] ?? 0) - meanY
       numerator += deltaX * deltaY
       denomX += deltaX * deltaX
       denomY += deltaY * deltaY
@@ -307,11 +307,11 @@ class AGIAnalyticsEngine {
     }> = []
     
     for (let i = 0; i < data.length; i++) {
-      const zScore = Math.abs((data[i] - stats.mean) / stats.standardDeviation)
+      const zScore = Math.abs(((data[i] ?? 0) - stats.mean) / stats.standardDeviation)
       if (zScore > threshold) {
         anomalies.push({
           index: i,
-          value: data[i],
+          value: data[i] ?? 0,
           zScore: parseFloat(zScore.toFixed(4)),
           severity: zScore > 3 ? 'high' : 'medium'
         })
@@ -339,14 +339,14 @@ class AGIAnalyticsEngine {
         let nearestCentroid = 0
         
         for (let j = 0; j < centroids.length; j++) {
-          const distance = this.euclideanDistance(points[i], centroids[j])
+          const distance = this.euclideanDistance((points[i] || { x: 0, y: 0 }), (centroids[j] || { x: 0, y: 0 }))
           if (distance < minDistance) {
             minDistance = distance
             nearestCentroid = j
           }
         }
         
-        assignments[i] = nearestCentroid
+        (assignments[i] || 0) = nearestCentroid
       }
       
       // Update centroids
@@ -806,7 +806,7 @@ class AGIAnalyticsEngine {
     
     if (dataPoints.length > 0) {
       const latestPoint = dataPoints[dataPoints.length - 1]
-      const hoursSinceUpdate = (Date.now() - latestPoint.timestamp.getTime()) / (1000 * 60 * 60)
+      const hoursSinceUpdate = (Date.now() - (latestPoint?.timestamp?.getTime() || Date.now())) / (1000 * 60 * 60)
       
       if (hoursSinceUpdate > 24) {
         insights.push('Data appears stale - last update over 24 hours ago')
@@ -822,8 +822,8 @@ class AGIAnalyticsEngine {
   private calculateMedian(sortedArray: number[]): number {
     const mid = Math.floor(sortedArray.length / 2)
     return sortedArray.length % 2 === 0
-      ? (sortedArray[mid - 1] + sortedArray[mid]) / 2
-      : sortedArray[mid]
+      ? ((sortedArray[mid - 1] || 0) + (sortedArray[mid] || 0)) / 2
+      : (sortedArray[mid] || 0)
   }
 
   private calculateMode(array: number[]): number | null {
@@ -847,8 +847,8 @@ class AGIAnalyticsEngine {
     const q3Index = Math.floor(sortedArray.length * 0.75)
     
     return {
-      q1: sortedArray[q1Index],
-      q3: sortedArray[q3Index]
+      q1: (sortedArray[q1Index] || 0),
+      q3: (sortedArray[q3Index] || 0)
     }
   }
 
@@ -881,7 +881,7 @@ class AGIAnalyticsEngine {
     const x = Array.from({ length: n }, (_, i) => i)
     const sumX = x.reduce((sum, val) => sum + val, 0)
     const sumY = values.reduce((sum, val) => sum + val, 0)
-    const sumXY = x.reduce((sum, val, i) => sum + val * values[i], 0)
+    const sumXY = x.reduce((sum, val, i) => sum + val * (values[i] || 0), 0)
     const sumXX = x.reduce((sum, val) => sum + val * val, 0)
     
     return (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
@@ -911,7 +911,7 @@ class AGIAnalyticsEngine {
     const lastValue = values[values.length - 1]
     const trend = this.calculateSlope(values)
     
-    return Array.from({ length: periods }, (_, i) => lastValue + trend * (i + 1))
+    return Array.from({ length: periods }, (_, i) => (lastValue || 0) + trend * (i + 1))
   }
 
   private calculateTrendConfidence(values: number[]): number {
@@ -924,7 +924,7 @@ class AGIAnalyticsEngine {
       const randomPoint = points[Math.floor(Math.random() * points.length)]
       centroids.push({ ...randomPoint })
     }
-    return centroids
+    return centroids.map(c => ({ x: c.x || 0, y: c.y || 0 }))
   }
 
   private euclideanDistance(p1: {x: number, y: number}, p2: {x: number, y: number}): number {
@@ -945,13 +945,13 @@ class AGIAnalyticsEngine {
       }
     }
     
-    return centroids
+    return centroids.map(c => ({ x: c.x || 0, y: c.y || 0 }))
   }
 
   private centroidsConverged(old: Array<{x: number, y: number}>, newCentroids: Array<{x: number, y: number}>): boolean {
     const threshold = 0.001
     for (let i = 0; i < old.length; i++) {
-      if (this.euclideanDistance(old[i], newCentroids[i]) > threshold) {
+      if (this.euclideanDistance((old[i] || { x: 0, y: 0 }), (newCentroids[i] || { x: 0, y: 0 })) > threshold) {
         return false
       }
     }
@@ -961,8 +961,8 @@ class AGIAnalyticsEngine {
   private calculateInertia(points: Array<{x: number, y: number}>, centroids: Array<{x: number, y: number}>, assignments: number[]): number {
     let inertia = 0
     for (let i = 0; i < points.length; i++) {
-      const centroid = centroids[assignments[i]]
-      inertia += Math.pow(this.euclideanDistance(points[i], centroid), 2)
+      const centroid = centroids[(assignments[i] || 0)]
+      inertia += Math.pow(this.euclideanDistance((points[i] || { x: 0, y: 0 }), centroid), 2)
     }
     return inertia
   }
@@ -975,7 +975,7 @@ class AGIAnalyticsEngine {
     const n = x.length
     const sumX = x.reduce((sum, val) => sum + val, 0)
     const sumY = y.reduce((sum, val) => sum + val, 0)
-    const sumXY = x.reduce((sum, val, i) => sum + val * y[i], 0)
+    const sumXY = x.reduce((sum, val, i) => sum + val * (y[i] || 0), 0)
     const sumXX = x.reduce((sum, val) => sum + val * val, 0)
     
     const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX)
@@ -1083,8 +1083,8 @@ class AGIAnalyticsEngine {
       let denominator = 0
       
       for (let i = 0; i < values.length - lag; i++) {
-        numerator += (values[i] - mean) * (values[i + lag] - mean)
-        denominator += (values[i] - mean) * (values[i] - mean)
+        numerator += ((values[i] || 0) - mean) * ((values[i + lag] || 0) - mean)
+        denominator += ((values[i] || 0) - mean) * ((values[i] || 0) - mean)
       }
       
       autocorr.push(numerator / denominator)

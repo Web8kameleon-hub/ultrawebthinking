@@ -133,8 +133,8 @@ function calculateScrollAnalytics(scrollData: ScrollData[]): ScrollAnalytics {
   // Calculate scroll velocity (pixels per second)
   let scrollVelocity = 0;
   if (scrollData.length > 1) {
-    const timeSpan = scrollData[scrollData.length - 1].timestamp - scrollData[0].timestamp;
-    const positionChange = Math.abs(scrollData[scrollData.length - 1].position - scrollData[0].position);
+    const timeSpan = scrollData[scrollData.length - 1].timestamp - (scrollData[0] || {}).timestamp;
+    const positionChange = Math.abs(scrollData[scrollData.length - 1].position - (scrollData[0] || {}).position);
     scrollVelocity = timeSpan > 0 ? (positionChange / timeSpan) * 1000 : 0; // px/second
   }
 
