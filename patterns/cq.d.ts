@@ -1,8 +1,8 @@
-﻿ 
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+ 
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface CqProperties {
@@ -10,11 +10,11 @@ export interface CqProperties {
 	type?: SystemProperties["containerType"]
 }
 
-interface CqStyles extends CqProperties, DistributiveOmit<SystemStyleObject, keyof CqProperties > {}
+interface CqStyles extends CqProperties, Omit<Record<string, any>, keyof CqProperties > {}
 
 interface CqPatternFn {
   (styles?: CqStyles): string
-  raw: (styles?: CqStyles) => SystemStyleObject
+  raw: (styles?: CqStyles) => Record<string, any>
 }
 
 

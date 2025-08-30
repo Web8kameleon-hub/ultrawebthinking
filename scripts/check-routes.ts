@@ -1,32 +1,36 @@
-﻿#!/usr/bin/env tsx
+#!/usr/bin/env tsx
 /**
- * EuroWeb Route Checker
- * Debugs routing issues in the platform
+ * EuroWeb Route Checker - Pure TypeScript Industrial
+ * Yarn Berry + TypeScript 5.8 + Next.js 14 + CVA + Framer Motion
+ * 
+ * ZERO: .js, jest, useState, chunks, default exports
+ * ONLY: named exports, dynamic imports, lazy loading
  */
 
-import { readdirSync, statSync, existsSync, writeFileSync, mkdirSync } from 'fs';
+import { readdirSync, statSync, existsSync, writeFileSync, mkdirSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 
-// Simple console colors without dependencies
+// Pure TypeScript console colors - NO dependencies
 const colors = {
-  blue: (text: string) => `\x1b[34m${text}\x1b[0m`,
-  green: (text: string) => `\x1b[32m${text}\x1b[0m`,
-  yellow: (text: string) => `\x1b[33m${text}\x1b[0m`,
-  red: (text: string) => `\x1b[31m${text}\x1b[0m`,
-  cyan: (text: string) => `\x1b[36m${text}\x1b[0m`,
-  gray: (text: string) => `\x1b[90m${text}\x1b[0m`
-};
+  blue: (text: string): string => `\x1b[34m${text}\x1b[0m`,
+  green: (text: string): string => `\x1b[32m${text}\x1b[0m`,
+  yellow: (text: string): string => `\x1b[33m${text}\x1b[0m`,
+  red: (text: string): string => `\x1b[31m${text}\x1b[0m`,
+  cyan: (text: string): string => `\x1b[36m${text}\x1b[0m`,
+  gray: (text: string): string => `\x1b[90m${text}\x1b[0m`
+} as const;
 
 interface RouteInfo {
-  path: string
-  type: 'page' | 'layout' | 'loading' | 'error' | 'not-found'
-  exists: boolean
-  isDirectory: boolean
+  readonly path: string;
+  readonly type: 'page' | 'layout' | 'loading' | 'error' | 'not-found';
+  readonly exists: boolean;
+  readonly isDirectory: boolean;
 }
 
-class RouteChecker {
-  private routes: RouteInfo[] = [];
-  private appDir: string;
+// Pure TypeScript class - NO useState, NO default exports
+export class RouteChecker {
+  private readonly routes: RouteInfo[] = [];
+  private readonly appDir: string;
 
   constructor() {
     this.appDir = join(process.cwd(), 'app');
@@ -57,7 +61,7 @@ class RouteChecker {
       console.log(colors.green('✅ Created app directory'));
       this.createBasicFiles();
     } catch (error) {
-      console.log(colors.red('❌ Failed to create app directory: ' + error));
+      console.log(colors.red(`❌ Failed to create app directory: ${  error}`));
     }
   }
 
@@ -161,7 +165,7 @@ html, body {
         writeFileSync(filePath, file.content);
         console.log(colors.green(`✅ Created ${file.path}`));
       } catch (error) {
-        console.log(colors.red(`❌ Failed to create ${file.path}: ` + error));
+        console.log(colors.red(`❌ Failed to create ${file.path}: ${  error}`));
       }
     }
   }
@@ -190,7 +194,7 @@ html, body {
         }
       }
     } catch (error) {
-      console.log(colors.red(`Error scanning ${dir}: ` + error));
+      console.log(colors.red(`Error scanning ${dir}: ${  error}`));
     }
   }
 
@@ -267,7 +271,7 @@ html, body {
     
     const loadingFile = join(this.appDir, 'loading.tsx');
     if (existsSync(loadingFile)) {
-      const content = require('fs').readFileSync(loadingFile, 'utf8');
+      const content = readFileSync(loadingFile, 'utf8');
       if (content.includes('styled-jsx') || content.includes('style jsx')) {
         console.log(colors.red('❌ loading.tsx uses styled-jsx (not allowed in Server Components)'));
       } else {
@@ -277,7 +281,7 @@ html, body {
     
     const layoutFile = join(this.appDir, 'layout.tsx');
     if (existsSync(layoutFile)) {
-      const content = require('fs').readFileSync(layoutFile, 'utf8');
+      const content = readFileSync(layoutFile, 'utf8');
       if (content.includes("'use client'")) {
         console.log(colors.yellow('⚠️ layout.tsx uses client directive (consider server-side rendering)'));
       } else {
@@ -310,7 +314,7 @@ html, body {
     // Check package.json scripts
     const packageJsonPath = join(process.cwd(), 'package.json');
     if (existsSync(packageJsonPath)) {
-      const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
+      const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
       const missingScripts = [
         'dev:quick',
         'check:routes', 
@@ -366,7 +370,7 @@ html, body {
     const packageJsonPath = join(process.cwd(), 'package.json');
     if (!existsSync(packageJsonPath)) {return;}
 
-    const packageJson = JSON.parse(require('fs').readFileSync(packageJsonPath, 'utf8'));
+    const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
     
     const scriptsToAdd = {
       'dev:quick': 'next dev --port 3001',
@@ -410,7 +414,7 @@ html, body {
   private fixServerComponentIssues(): void {
     const loadingFile = join(this.appDir, 'loading.tsx');
     if (existsSync(loadingFile)) {
-      const content = require('fs').readFileSync(loadingFile, 'utf8');
+      const content = readFileSync(loadingFile, 'utf8');
       if (content.includes('styled-jsx') || content.includes('style jsx')) {
         const fixedContent = `export default function Loading() {
   return (
@@ -446,14 +450,14 @@ html, body {
   }
 }
 
-// Run the checker
-function main() {
+// Run the checker - Pure TypeScript
+export const runRouteChecker = (): void => {
   const checker = new RouteChecker();
   checker.checkRoutes();
-}
+};
 
-if (require.main === module) {
-  main();
+// ES Module execution
+const command = process.argv[2];
+if (command === 'check' || !command) {
+  runRouteChecker();
 }
-
-export default RouteChecker;

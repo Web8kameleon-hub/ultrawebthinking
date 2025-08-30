@@ -1,19 +1,19 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface CircleProperties {
    size?: SystemProperties["width"]
 }
 
-interface CircleStyles extends CircleProperties, DistributiveOmit<SystemStyleObject, keyof CircleProperties > {}
+interface CircleStyles extends CircleProperties, Omit<Record<string, any>, keyof CircleProperties > {}
 
 interface CirclePatternFn {
   (styles?: CircleStyles): string
-  raw: (styles?: CircleStyles) => SystemStyleObject
+  raw: (styles?: CircleStyles) => Record<string, any>
 }
 
 

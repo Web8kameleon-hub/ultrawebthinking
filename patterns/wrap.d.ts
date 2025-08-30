@@ -1,23 +1,23 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface WrapProperties {
-   gap?: SystemProperties["gap"]
-	rowGap?: SystemProperties["gap"]
-	columnGap?: SystemProperties["gap"]
+   gap?: string | number
+	rowGap?: string | number
+	columnGap?: string | number
 	align?: SystemProperties["alignItems"]
 	justify?: SystemProperties["justifyContent"]
 }
 
-interface WrapStyles extends WrapProperties, DistributiveOmit<SystemStyleObject, keyof WrapProperties > {}
+interface WrapStyles extends WrapProperties, Omit<Record<string, any>, keyof WrapProperties > {}
 
 interface WrapPatternFn {
   (styles?: WrapStyles): string
-  raw: (styles?: WrapStyles) => SystemStyleObject
+  raw: (styles?: WrapStyles) => Record<string, any>
 }
 
 

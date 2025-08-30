@@ -1,23 +1,23 @@
-﻿ 
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+ 
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface GridProperties {
-   gap?: SystemProperties["gap"]
-	columnGap?: SystemProperties["gap"]
-	rowGap?: SystemProperties["gap"]
+   gap?: string | number
+	columnGap?: string | number
+	rowGap?: string | number
 	columns?: ConditionalValue<number>
 	minChildWidth?: ConditionalValue<Tokens["sizes"] | Properties["width"]>
 }
 
-interface GridStyles extends GridProperties, DistributiveOmit<SystemStyleObject, keyof GridProperties > {}
+interface GridStyles extends GridProperties, Omit<Record<string, any>, keyof GridProperties > {}
 
 interface GridPatternFn {
   (styles?: GridStyles): string
-  raw: (styles?: GridStyles) => SystemStyleObject
+  raw: (styles?: GridStyles) => Record<string, any>
 }
 
 

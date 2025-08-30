@@ -1,6 +1,43 @@
-﻿import React from 'react';
-import { useAGI } from '../lib/AGIContext';
+import * as React from 'react';
 import { motion } from 'framer-motion';
+
+// Mock AGI hooks for development
+const useAGI = () => ({
+  actions: {
+    updateScrollPosition: (position: number) => {
+      // Mock implementation
+      console.debug('Scroll position updated:', position);
+    }
+  },
+  ui: {
+    activateElement: (elementId: string) => {
+      // Mock implementation
+      console.debug('Element activated:', elementId);
+    },
+    pulseElement: (elementId: string) => {
+      // Mock implementation
+      console.debug('Element pulsed:', elementId);
+    }
+  }
+});
+
+const useAGIState = (selector: (memory: any) => any) => {
+  // Mock AGI state
+  const mockMemory = {
+    ui: {
+      scrollPosition: 0,
+      theme: 'dark'
+    },
+    user: {
+      currentTime: new Date().toISOString()
+    },
+    agi: {
+      status: 'READY'
+    }
+  };
+  
+  return selector(mockMemory);
+};
 
 interface NavbarProps {
   onMenuToggle?: () => void;
@@ -9,14 +46,14 @@ interface NavbarProps {
   className?: string;
 }
 
-export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, className = "" }: NavbarProps) {
-  const { actions, memory } = useAGI();
-  const [scrollPosition, setScrollPosition] = React.useState(0);
+export function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, className = "" }: NavbarProps) {
+  const { actions, ui } = useAGI();
   
-  // Get state from AGI memory
-  const currentTime = memory.user?.currentTime || new Date().toISOString();
-  const agiStatus = memory.agi?.status || 'IDLE';
-  const theme = memory.ui?.theme || 'light';
+  // Get state from AGI memory with proper typing
+  const scrollPosition = useAGIState((memory: any) => memory.ui.scrollPosition);
+  const currentTime = useAGIState((memory: any) => memory.user.currentTime);
+  const agiStatus = useAGIState((memory: any) => memory.agi.status);
+  const theme = useAGIState((memory: any) => memory.ui.theme);
 
   const isScrolled = scrollPosition > 20;
   const notifications = 3; // Could be from memory too
@@ -24,20 +61,22 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
   React.useEffect(() => {
     // Handle scroll position updates
     const handleScroll = () => {
-      setScrollPosition(window.scrollY);
+      actions.updateScrollPosition(window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [actions]);
 
   React.useEffect(() => {
-    // Note: UI activation would need to be implemented in AGICore
-    // For now, just track the AGI status
+    // Activate navbar UI
+    ui.activateElement('navbar');
+    
+    // Pulse when AGI is processing
     if (agiStatus === 'PROCESSING') {
-      // ui.pulseElement?.('agi-status-indicator');
+      ui.pulseElement('agi-status-indicator');
     }
-  }, [agiStatus]);
+  }, [ui, agiStatus]);
 
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
@@ -52,276 +91,231 @@ export default function Navbar({ onMenuToggle, onProfileClick, onSettingsClick, 
   return (
     <motion.nav 
       id="navbar"
-      className={`navbar ${className} agi-reactive agi-bg`} 
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        background: isScrolled 
-          ? 'rgba(248, 250, 252, 0.95)' 
-          : 'rgba(255, 255, 255, 0.90)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: isScrolled 
-          ? '1px solid rgba(99, 102, 241, 0.2)' 
-          : '1px solid rgba(148, 163, 184, 0.1)',
-        padding: '1rem 2rem',
-        transition: 'all 0.3s ease',
-        boxShadow: isScrolled 
-          ? '0 4px 20px rgba(99, 102, 241, 0.1)' 
-          : '0 2px 10px rgba(0, 0, 0, 0.05)'
-    }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        maxWidth: '1400px',
-        margin: '0 auto'
-      }}>
-        {/* Logo and Brand */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}>
-          <button
-        onClick={onMenuToggle}
-        style={{
-          background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-          border: '1px solid rgba(99, 102, 241, 0.2)',
-          borderRadius: '12px',
-          color: '#4f46e5',
-          fontSize: '18px',
-          cursor: 'pointer',
-          padding: '0.75rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.2s ease',
-          minWidth: '48px',
-          minHeight: '48px',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.05)';
-          e.currentTarget.style.background = 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)';
-          e.currentTarget.style.color = '#ffffff';
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(99, 102, 241, 0.3)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'scale(1)';
-          e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)';
-          e.currentTarget.style.color = '#4f46e5';
-          e.currentTarget.style.boxShadow = 'none';
-        }}
-        onMouseDown={(e) => {
-          e.currentTarget.style.transform = 'scale(0.95)';
-        }}
-        onMouseUp={(e) => {
-          e.currentTarget.style.transform = 'scale(1.05)';
-        }}
-          >
-        ☰
-          </button>
+      className={`navbar ${className} agi-reactive agi-bg`}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <style jsx>{`
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          padding: 1rem 2rem;
+          background: rgba(0, 0, 0, 0.9);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+          background: rgba(0, 0, 0, 0.95);
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .navbar-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        
+        .navbar-brand {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #fff;
+          text-decoration: none;
+        }
+        
+        .navbar-menu {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+        
+        .navbar-item {
+          padding: 0.5rem 1rem;
+          color: #fff;
+          text-decoration: none;
+          border-radius: 0.5rem;
+          transition: all 0.2s ease;
+          cursor: pointer;
+        }
+        
+        .navbar-item:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateY(-1px);
+        }
+        
+        .agi-status {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.25rem 0.75rem;
+          background: rgba(0, 255, 0, 0.1);
+          border: 1px solid rgba(0, 255, 0, 0.3);
+          border-radius: 1rem;
+          font-size: 0.875rem;
+          color: #00ff00;
+        }
+        
+        .agi-status.processing {
+          background: rgba(255, 165, 0, 0.1);
+          border-color: rgba(255, 165, 0, 0.3);
+          color: #ffa500;
+          animation: pulse 1s infinite;
+        }
+        
+        .time-display {
+          font-family: 'Courier New', monospace;
+          font-size: 0.875rem;
+          color: #888;
+        }
+        
+        .notification-badge {
+          position: relative;
+          cursor: pointer;
+        }
+        
+        .notification-badge::after {
+          content: attr(data-count);
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background: #ff4444;
+          color: white;
+          border-radius: 50%;
+          width: 18px;
+          height: 18px;
+          font-size: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        
+        .mobile-menu-toggle {
+          display: none;
+          background: none;
+          border: none;
+          color: #fff;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+          .navbar-menu {
+            display: none;
+          }
+          
+          .mobile-menu-toggle {
+            display: block;
+          }
+        }
+      `}</style>
 
-          <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.75rem'
-          }}>
-        <div style={{
-          fontSize: '1.8rem',
-          animation: 'pulse 2s ease-in-out infinite alternate'
-        }}>
-          🌌
-        </div>
-        <div>
-          <div style={{
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            background: 'linear-gradient(45deg, #FFD700, #FFA500)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            color: 'transparent'
-          }}>
-            UltraWebThinking
-          </div>
-          <div style={{
-            fontSize: '0.7rem',
-            color: '#00FF88',
-            fontWeight: 'bold',
-            letterSpacing: '1px'
-          }}>
-            WEB8 INDUSTRIAL
-          </div>
-        </div>
-          </div>
-        </div>
-
-        {/* Navigation Links */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
-          {[
-        { icon: '🏠', label: 'Dashboard', active: true, href: '/' },
-        { icon: '🧠', label: 'AGI', active: false, href: '/agi' },
-        { icon: '🚇', label: 'AGI Tunnel', active: false, href: '/agi-tunnel' },
-        { icon: '🧠', label: 'AGI Matrix', active: false, href: '/agi-matrix' },
-        { icon: '🎨', label: 'Panda Demo', active: false, href: '/panda-demo' },
-        { icon: '📊', label: 'Analytics', active: false, href: '/analytics' },
-        { icon: '🌊', label: 'Surfing', active: false, href: '/surfing' },
-        { icon: '⚡', label: 'Tools', active: false, href: '/tools' }
-          ].map((item, index) => (
-        <a
-          key={index}
-          href={item.href}
-          style={{
-            background: item.active 
-          ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.1))' 
-          : 'transparent',
-            border: item.active 
-          ? '1px solid rgba(99, 102, 241, 0.3)' 
-          : '1px solid transparent',
-            borderRadius: '12px',
-            color: item.active ? '#6366f1' : '#64748b',
-            cursor: 'pointer',
-            padding: '0.6rem 1rem',
-            fontSize: '0.85rem',
-            fontWeight: item.active ? '600' : '500',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            textDecoration: 'none'
-          }}
-          onMouseEnter={(e) => {
-            if (!item.active) {
-          e.currentTarget.style.background = 'rgba(99, 102, 241, 0.1)';
-          e.currentTarget.style.color = '#6366f1';
-          e.currentTarget.style.transform = 'translateY(-1px)';
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!item.active) {
-          e.currentTarget.style.background = 'transparent';
-          e.currentTarget.style.color = '#64748b';
-          e.currentTarget.style.transform = 'translateY(0)';
-            }
-          }}
+      <div className={`navbar-content ${isScrolled ? 'scrolled' : ''}`}>
+        {/* Brand/Logo */}
+        <motion.div 
+          className="navbar-brand"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <span style={{ fontSize: '16px' }}>{item.icon}</span>
-          <span>{item.label}</span>
-        </a>
-          ))}
-        </div>
+          <span>🚀</span>
+          <span>EuroWeb Ultra</span>
+        </motion.div>
 
-        {/* Right Side Controls */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}>
-          {/* Live Clock */}
-          <div style={{
-        background: 'rgba(0, 255, 136, 0.1)',
-        border: '1px solid rgba(0, 255, 136, 0.3)',
-        borderRadius: '8px',
-        padding: '0.4rem 0.8rem',
-        color: '#00FF88',
-        fontSize: '0.85rem',
-        fontFamily: 'monospace',
-        fontWeight: 'bold'
-          }}>
-        {formatTime(currentTime)}
+        {/* Desktop Menu */}
+        <div className="navbar-menu">
+          <motion.div 
+            className="navbar-item"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Dashboard
+          </motion.div>
+          
+          <motion.div 
+            className="navbar-item"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Search
+          </motion.div>
+          
+          <motion.div 
+            className="navbar-item"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Analytics
+          </motion.div>
+
+          {/* AGI Status Indicator */}
+          <motion.div 
+            id="agi-status-indicator"
+            className={`agi-status ${agiStatus === 'PROCESSING' ? 'processing' : ''}`}
+            whileHover={{ scale: 1.05 }}
+          >
+            <span>🧠</span>
+            <span>{agiStatus}</span>
+          </motion.div>
+
+          {/* Time Display */}
+          <div className="time-display">
+            {formatTime(currentTime)}
           </div>
 
           {/* Notifications */}
-          <button
-        style={{
-          position: 'relative',
-          background: 'rgba(255, 215, 0, 0.1)',
-          border: '1px solid rgba(255, 215, 0, 0.3)',
-          borderRadius: '8px',
-          color: '#FFD700',
-          fontSize: '16px',
-          cursor: 'pointer',
-          padding: '0.5rem',
-          transition: 'all 0.2s ease'
-        }}
+          <motion.div 
+            className="notification-badge navbar-item"
+            data-count={notifications}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
-        🔔
-        {notifications > 0 && (
-          <span style={{
-            position: 'absolute',
-            top: '-5px',
-            right: '-5px',
-            background: '#FF4444',
-            color: 'white',
-            borderRadius: '50%',
-            width: '18px',
-            height: '18px',
-            fontSize: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontWeight: 'bold'
-          }}>
-            {notifications}
-          </span>
-        )}
-          </button>
-
-          {/* Settings */}
-          <button
-        onClick={onSettingsClick}
-        style={{
-          background: 'rgba(255, 215, 0, 0.1)',
-          border: '1px solid rgba(255, 215, 0, 0.3)',
-          borderRadius: '8px',
-          color: '#FFD700',
-          fontSize: '16px',
-          cursor: 'pointer',
-          padding: '0.5rem',
-          transition: 'all 0.2s ease'
-        }}
-          >
-        ⚙️
-          </button>
+            🔔
+          </motion.div>
 
           {/* Profile */}
-          <button
-        onClick={onProfileClick}
-        style={{
-          background: 'linear-gradient(45deg, #FFD700, #FFA500)',
-          border: 'none',
-          borderRadius: '50%',
-          color: '#0a0a23',
-          fontSize: '16px',
-          cursor: 'pointer',
-          padding: '0.6rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: 'bold',
-          transition: 'all 0.2s ease',
-          boxShadow: '0 4px 12px rgba(255, 215, 0, 0.3)'
-        }}
+          <motion.div 
+            className="navbar-item"
+            onClick={onProfileClick}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-        👤
-          </button>
-        </div>
-      </div>
+            👤
+          </motion.div>
 
-      <style jsx>{`
-        @keyframes pulse {
-          0% { transform: scale(1); }
-          100% { transform: scale(1.1); }
-        }
-      `}</style>
+          {/* Settings */}
+          <motion.div 
+            className="navbar-item"
+            onClick={onSettingsClick}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            ⚙️
+          </motion.div>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="mobile-menu-toggle"
+          onClick={onMenuToggle}
+          aria-label="Toggle mobile menu"
+        >
+          ☰
+        </button>
+      </div>
     </motion.nav>
   );
 }
-
-export { Navbar }

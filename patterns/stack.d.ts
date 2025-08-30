@@ -1,22 +1,22 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface StackProperties {
    align?: SystemProperties["alignItems"]
 	justify?: SystemProperties["justifyContent"]
 	direction?: SystemProperties["flexDirection"]
-	gap?: SystemProperties["gap"]
+	gap?: string | number
 }
 
-interface StackStyles extends StackProperties, DistributiveOmit<SystemStyleObject, keyof StackProperties > {}
+interface StackStyles extends StackProperties, Omit<Record<string, any>, keyof StackProperties > {}
 
 interface StackPatternFn {
   (styles?: StackStyles): string
-  raw: (styles?: StackStyles) => SystemStyleObject
+  raw: (styles?: StackStyles) => Record<string, any>
 }
 
 

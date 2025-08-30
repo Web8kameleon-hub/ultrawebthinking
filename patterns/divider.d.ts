@@ -1,8 +1,8 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface DividerProperties {
@@ -11,11 +11,11 @@ export interface DividerProperties {
 	color?: ConditionalValue<Tokens["colors"] | Properties["borderColor"]>
 }
 
-interface DividerStyles extends DividerProperties, DistributiveOmit<SystemStyleObject, keyof DividerProperties > {}
+interface DividerStyles extends DividerProperties, Omit<Record<string, any>, keyof DividerProperties > {}
 
 interface DividerPatternFn {
   (styles?: DividerStyles): string
-  raw: (styles?: DividerStyles) => SystemStyleObject
+  raw: (styles?: DividerStyles) => Record<string, any>
 }
 
 

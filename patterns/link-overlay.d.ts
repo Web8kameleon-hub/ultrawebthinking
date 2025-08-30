@@ -1,19 +1,19 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface LinkOverlayProperties {
    
 }
 
-interface LinkOverlayStyles extends LinkOverlayProperties, DistributiveOmit<SystemStyleObject, keyof LinkOverlayProperties > {}
+interface LinkOverlayStyles extends LinkOverlayProperties, Omit<Record<string, any>, keyof LinkOverlayProperties > {}
 
 interface LinkOverlayPatternFn {
   (styles?: LinkOverlayStyles): string
-  raw: (styles?: LinkOverlayStyles) => SystemStyleObject
+  raw: (styles?: LinkOverlayStyles) => Record<string, any>
 }
 
 

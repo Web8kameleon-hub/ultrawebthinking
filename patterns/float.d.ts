@@ -1,8 +1,8 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface FloatProperties {
@@ -12,11 +12,11 @@ export interface FloatProperties {
 	placement?: ConditionalValue<"bottom-end" | "bottom-start" | "top-end" | "top-start" | "bottom-center" | "top-center" | "middle-center" | "middle-end" | "middle-start">
 }
 
-interface FloatStyles extends FloatProperties, DistributiveOmit<SystemStyleObject, keyof FloatProperties > {}
+interface FloatStyles extends FloatProperties, Omit<Record<string, any>, keyof FloatProperties > {}
 
 interface FloatPatternFn {
   (styles?: FloatStyles): string
-  raw: (styles?: FloatStyles) => SystemStyleObject
+  raw: (styles?: FloatStyles) => Record<string, any>
 }
 
 

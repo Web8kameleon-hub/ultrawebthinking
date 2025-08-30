@@ -1,19 +1,19 @@
-﻿/* eslint-disable */
-import type { SystemStyleObject, ConditionalValue } from '../types/index';
+/* eslint-disable */
+// Simplified: removed system-styles dependency
 import type { Properties } from '../types/csstype';
-import type { SystemProperties } from '../types/style-props';
-import type { DistributiveOmit } from '../types/system-types';
+// Simplified: removed system-styles dependency
+// Simplified: removed system-styles dependency
 import type { Tokens } from '../tokens/index';
 
 export interface SpacerProperties {
    size?: ConditionalValue<Tokens["spacing"]>
 }
 
-interface SpacerStyles extends SpacerProperties, DistributiveOmit<SystemStyleObject, keyof SpacerProperties > {}
+interface SpacerStyles extends SpacerProperties, Omit<Record<string, any>, keyof SpacerProperties > {}
 
 interface SpacerPatternFn {
   (styles?: SpacerStyles): string
-  raw: (styles?: SpacerStyles) => SystemStyleObject
+  raw: (styles?: SpacerStyles) => Record<string, any>
 }
 
 
