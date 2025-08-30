@@ -13,9 +13,9 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { AGICore } from '../frontend/components/AGICore'
-import { NeuralAnalytics } from '../frontend/components/NeuralAnalytics'
-import { NeuralSearch } from '../frontend/components/NeuralSearch'
+import { AGICore } from './pages/AGICore'
+import { NeuralAnalytics } from './NeuralAnalytics'
+import { NeuralSearch } from './NeuralSearch'
 import { AGITabSystem } from './AGITabSystem'
 import { useAGIRealTime } from '../hooks/useAGIRealTime'
 import AGIControlCenter from './AGIControlCenter'
