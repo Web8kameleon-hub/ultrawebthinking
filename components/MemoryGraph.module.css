@@ -1,0 +1,280 @@
+/* MemoryGraph Industrial CSS Module - EuroWeb Ultra Colors */
+
+.container {
+  padding: 20px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-soft);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status.connected {
+  color: var(--success);
+  border-color: var(--success);
+}
+
+.status.disconnected {
+  color: var(--warning);
+  border-color: var(--warning);
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metricCard {
+  background-color: var(--primary-dark);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.metricCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.metricLabel {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metricValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--info);
+  font-variant-numeric: tabular-nums;
+}
+
+.blocksContainer {
+  margin-top: 24px;
+}
+
+.blocksTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blocksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.blockCard {
+  background-color: var(--primary-dark);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.blockCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.blockActive {
+  border-color: var(--success);
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+.blockIdle {
+  border-color: var(--text-secondary);
+  background-color: rgba(148, 163, 184, 0.05);
+}
+
+.blockCritical {
+  border-color: var(--error);
+  background-color: rgba(220, 38, 38, 0.05);
+}
+
+.blockOptimizing {
+  border-color: var(--warning);
+  background-color: rgba(245, 158, 11, 0.05);
+}
+
+.blockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.blockIcon {
+  font-size: 18px;
+}
+
+.blockLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  flex-grow: 1;
+  margin-left: 8px;
+}
+
+.blockStatus {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.statusActive {
+  color: var(--success);
+  background-color: rgba(34, 197, 94, 0.2);
+}
+
+.statusIdle {
+  color: var(--text-secondary);
+  background-color: rgba(148, 163, 184, 0.2);
+}
+
+.statusCritical {
+  color: var(--error);
+  background-color: rgba(220, 38, 38, 0.2);
+}
+
+.statusOptimizing {
+  color: var(--warning);
+  background-color: rgba(245, 158, 11, 0.2);
+}
+
+.blockGraph {
+  margin-bottom: 12px;
+}
+
+.blockBarContainer {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-soft);
+}
+
+.blockBar {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.barActive {
+  background-color: var(--success);
+}
+
+.barIdle {
+  background-color: var(--text-secondary);
+}
+
+.barCritical {
+  background-color: var(--error);
+}
+
+.barOptimizing {
+  background-color: var(--warning);
+}
+
+.blockPercentage {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.blockTimestamp {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .metricsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  
+  .blocksGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blockHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .blockLabel {
+    margin-left: 0;
+  }
+  
+  .metricsGrid {
+    grid-template-columns: 1fr;
+  }
+}

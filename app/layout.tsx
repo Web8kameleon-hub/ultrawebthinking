@@ -1,6 +1,5 @@
 ﻿import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { notFound } from 'next/navigation'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -16,12 +15,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en" suppressHydrationWarning={true} className="theme-euroweb">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={`${inter.className} theme-euroweb`} suppressHydrationWarning={true}>
         {children}
       </body>
     </html>

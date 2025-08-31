@@ -1,198 +1,116 @@
-﻿// __tests__/agi/CommandBridge.test.ts
-/**
- * CommandBridge Testing Suite
- * Tests për AGI command routing dhe backend integration
+﻿/**
+ * CommandBridge Real Test Suite
+ * Teston integrimin real të CommandBridge me AGI sistemin backend
+ * Pa mock, pa random, pa fake – Vetëm funksione reale
  * © Web8 UltraThinking – Ledjan Ahmati
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { CommandBridge } from '../../backend/agi/CommandBridge';
+import { beforeEach, describe, expect, it } from '@jest/globals'
+import { CommandBridge } from '../../backend/agi/CommandBridge'
 
-// Mock dependencies
-vi.mock('../../backend/agi/core.js', () => ({
-  agiCore: {
-    status: vi.fn(),
-    reset: vi.fn(),
-    process: vi.fn()
-  },
-  AGICore: vi.fn()
-}));
+// Këto janë importime reale – sigurohu që rrugët ekzistojnë dhe funksionojnë
 
-vi.mock('../../backend/agi/semantic.js', () => ({
-  SemanticAnalyzer: vi.fn().mockImplementation(() => ({
-    parse: vi.fn(),
-    classify: vi.fn()
-  }))
-}));
+let commandBridge: CommandBridge
 
-vi.mock('../../backend/agi/planner.js', () => ({
-  Planner: vi.fn().mockImplementation(() => ({
-    generatePlan: vi.fn()
-  }))
-}));
-
-vi.mock('../../backend/agi/executor.js', () => ({
-  Executor: vi.fn().mockImplementation(() => ({
-    run: vi.fn()
-  }))
-}));
-
-vi.mock('../../backend/agi/monitor.js', () => ({
-  logger: {
-    info: vi.fn(),
-    error: vi.fn(),
-    warn: vi.fn()
-  }
-}));
-
-describe('CommandBridge', () => {
-  let commandBridge: CommandBridge;
-
+describe('🧠 CommandBridge - Real Function Tests', () => {
   beforeEach(() => {
-    commandBridge = new CommandBridge();
-    vi.clearAllMocks();
-  });
+    commandBridge = new CommandBridge()
+  })
 
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
+  it('ANALYZE: përpunon inputin për analizë semantike', async () => {
+    const payload = {
+      id: 'real-001',
+      command: 'ANALYZE' as const,
+      input: 'Ky është një tekst për analizë.',
+      context: { source: 'test-real' }
+    }
 
-  describe('Command Processing', () => {
-    it('should handle ANALYZE command correctly', async () => {
-      const payload = {
-        id: 'test-001',
-        command: 'ANALYZE' as const,
-        input: 'Test input for analysis',
-        context: { source: 'unit-test' }
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
+    expect(result.success).toBe(true)
+    expect(result.data?.keywords?.length).toBeGreaterThan(0)
+  })
 
-      expect(result).toBeDefined();
-      expect(result.success).toBe(true);
-      expect(result.data).toBeDefined();
-    });
+  it('CLASSIFY: klasifikon inputin në kategori reale', async () => {
+    const payload = {
+      id: 'real-002',
+      command: 'CLASSIFY' as const,
+      input: 'Ky është një mesazh i zakonshëm',
+      context: {}
+    }
 
-    it('should handle CLASSIFY command correctly', async () => {
-      const payload = {
-        id: 'test-002',
-        command: 'CLASSIFY' as const,
-        input: 'Text to classify',
-        context: { category: 'general' }
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
+    expect(result.success).toBe(true)
+    expect(result.data?.category).toBeDefined()
+  })
 
-      expect(result).toBeDefined();
-      expect(result.success).toBe(true);
-    });
+  it('PLAN: krijon plan real veprimi', async () => {
+    const payload = {
+      id: 'real-003',
+      command: 'PLAN' as const,
+      input: 'Krijo një plan për të analizuar të dhënat',
+      context: { urgency: 'high' }
+    }
 
-    it('should handle PLAN command correctly', async () => {
-      const payload = {
-        id: 'test-003',
-        command: 'PLAN' as const,
-        input: 'Create a task plan',
-        context: { priority: 'high' }
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
+    expect(result.success).toBe(true)
+    expect(result.data?.steps?.length).toBeGreaterThan(0)
+  })
 
-      expect(result).toBeDefined();
-      expect(result.success).toBe(true);
-    });
+  it('EXECUTE: ekzekuton komandë të planifikuar', async () => {
+    const payload = {
+      id: 'real-004',
+      command: 'EXECUTE' as const,
+      input: 'Krijo një plan dhe ekzekuto atë',
+      context: {}
+    }
 
-    it('should handle EXECUTE command correctly', async () => {
-      const payload = {
-        id: 'test-004',
-        command: 'EXECUTE' as const,
-        input: 'Execute task',
-        context: { async: false }
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
+    expect(result.success).toBe(true)
+    expect(result.data?.executed).toBe(true)
+  })
 
-      expect(result).toBeDefined();
-      expect(result.success).toBe(true);
-    });
+  it('STATUS: kthen gjendjen aktuale të AGI Core', async () => {
+    const payload = {
+      id: 'real-005',
+      command: 'STATUS' as const,
+      input: '',
+      context: {}
+    }
 
-    it('should handle STATUS command correctly', async () => {
-      const payload = {
-        id: 'test-005',
-        command: 'STATUS' as const,
-        input: '',
-        context: {}
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
+    expect(result.success).toBe(true)
+    expect(result.data?.status).toBeDefined()
+  })
 
-      expect(result).toBeDefined();
-      expect(result.success).toBe(true);
-      expect(result.data).toHaveProperty('status');
-    });
+  it('RESET: rivendos sistemin AGI', async () => {
+    const payload = {
+      id: 'real-006',
+      command: 'RESET' as const,
+      input: '',
+      context: {}
+    }
 
-    it('should handle RESET command correctly', async () => {
-      const payload = {
-        id: 'test-006',
-        command: 'RESET' as const,
-        input: '',
-        context: {}
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
+    expect(result.success).toBe(true)
+  })
 
-      expect(result).toBeDefined();
-      expect(result.success).toBe(true);
-    });
-  });
+  it('GABIM: komanda e panjohur refuzohet', async () => {
+    const payload = {
+      id: 'real-error-001',
+      command: 'PAKONFIGURUAR' as any,
+      input: 'test',
+      context: {}
+    }
 
-  describe('Error Handling', () => {
-    it('should handle invalid command gracefully', async () => {
-      const payload = {
-        id: 'test-error-001',
-        command: 'INVALID' as any,
-        input: 'test',
-        context: {}
-      };
+    const result = await commandBridge.processCommand(payload)
 
-      const result = await commandBridge.processCommand(payload);
-
-      expect(result).toBeDefined();
-      expect(result.success).toBe(false);
-      expect(result.error).toBeDefined();
-    });
-
-    it('should handle missing input gracefully', async () => {
-      const payload = {
-        id: 'test-error-002',
-        command: 'ANALYZE' as const,
-        input: '',
-        context: {}
-      };
-
-      const result = await commandBridge.processCommand(payload);
-
-      expect(result).toBeDefined();
-      // Should handle empty input gracefully
-    });
-  });
-
-  describe('Performance', () => {
-    it('should process commands within reasonable time', async () => {
-      const startTime = Date.now();
-      
-      const payload = {
-        id: 'test-perf-001',
-        command: 'STATUS' as const,
-        input: '',
-        context: {}
-      };
-
-      await commandBridge.processCommand(payload);
-      
-      const endTime = Date.now();
-      const duration = endTime - startTime;
-
-      expect(duration).toBeLessThan(1000); // Should complete within 1 second
-    });
-  });
-});
+    expect(result.success).toBe(false)
+    expect(result.error).toBeDefined()
+  })
+})

@@ -1,0 +1,116 @@
+/* Surfing Component - Modern CSS Module */
+
+.container {
+  padding: 32px;
+  max-width: 700px;
+  margin: 0 auto;
+  background: #f8fafc;
+  border-radius: 12px;
+  min-height: 100vh;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 24px;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.modeSelector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.modeButton {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modeButton:hover {
+  background: #f1f5f9;
+}
+
+.modeButtonActive {
+  border: 2px solid var(--active-color);
+  background: var(--active-bg);
+  color: var(--active-color);
+}
+
+.input {
+  width: 100%;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 16px;
+  background: var(--button-bg);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.submitButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.error {
+  color: #ef4444;
+  margin-top: 12px;
+  padding: 12px;
+  background: #fef2f2;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}
+
+.response {
+  margin-top: 24px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  white-space: pre-wrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Mode color variables */
+.searchMode {
+  --active-color: #3b82f6;
+  --active-bg: #3b82f610;
+  --button-bg: #3b82f6;
+}
+
+.chatMode {
+  --active-color: #22c55e;
+  --active-bg: #22c55e10;
+  --button-bg: #22c55e;
+}
+
+.navigateMode {
+  --active-color: #8b5cf6;
+  --active-bg: #8b5cf610;
+  --button-bg: #8b5cf6;
+}

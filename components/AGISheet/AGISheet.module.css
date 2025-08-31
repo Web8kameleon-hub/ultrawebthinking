@@ -1,0 +1,572 @@
+/* AGISheet Component - Pure CSS Module */
+
+.root {
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 20, 25, 0.95);
+    color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(26, 29, 41, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerContent {
+    flex: 1;
+}
+
+.title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #d4af37;
+    margin-bottom: 8px;
+}
+
+.description {
+    margin: 0;
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.headerControls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.modeSelect {
+    background: rgba(45, 52, 70, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    color: #f8fafc;
+    padding: 8px 12px;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.modeSelect:focus {
+    border-color: #d4af37;
+}
+
+.agiToggle {
+    background: linear-gradient(45deg, #ef4444, #dc2626);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.agiToggle.active {
+    background: linear-gradient(45deg, #10b981, #059669);
+}
+
+.agiToggle:hover {
+    transform: scale(1.05);
+}
+
+.formulaBar {
+    background: rgba(26, 29, 41, 0.9);
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cellReference {
+    color: #d4af37;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 60px;
+}
+
+.formulaInput {
+    flex: 1;
+    background: rgba(45, 52, 70, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 4px;
+    color: #f8fafc;
+    padding: 8px 12px;
+    font-size: 12px;
+    outline: none;
+}
+
+.formulaInput:focus {
+    border-color: #d4af37;
+}
+
+.gridContainer {
+    flex: 1;
+    overflow: auto;
+    background: #0f172a;
+}
+
+.gridWrapper {
+    display: inline-block;
+    min-width: 100%;
+}
+
+.columnHeaders {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    min-width: 120px;
+    height: 32px;
+    border: 1px solid rgba(100, 116, 139, 0.3);
+    background: #1e293b;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.cell:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.cellSelected {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+}
+
+.cellHeader {
+    background: #0a0f1a;
+    color: #d4af37;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.cellRowHeader {
+    background: #0a0f1a;
+    color: #d4af37;
+    font-weight: 600;
+    justify-content: center;
+}
+
+.cellAgi {
+    background: rgba(34, 197, 94, 0.1);
+    border-left: 3px solid #22c55e;
+}
+
+.cellProcessing {
+    background: rgba(245, 158, 11, 0.1);
+    border-left: 3px solid #f59e0b;
+}
+
+.cellError {
+    background: rgba(239, 68, 68, 0.1);
+    border-left: 3px solid #ef4444;
+}
+
+.cellActive {
+    background: rgba(34, 197, 94, 0.1);
+    border-left: 3px solid #22c55e;
+}
+
+.cellValue {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.statusIndicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.statusActive {
+    background: #22c55e;
+}
+
+.statusProcessing {
+    background: #f59e0b;
+}
+
+.statusError {
+    background: #ef4444;
+}
+
+.statusWarning {
+    background: #f97316;
+}
+
+.statusInactive {
+    background: #64748b;
+}
+
+.statusBar {
+    background: rgba(26, 29, 41, 0.9);
+    padding: 8px 16px;
+    border-top: 1px solid rgba(100, 116, 139, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.statusActiveText {
+    color: #22c55e;
+}
+
+.statusInfo {
+    color: #cbd5e1;
+}
+
+.statusBrand {
+    color: #d4af37;
+}
+
+.loadingSpinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid #d4af37;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.errorState {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    color: #fca5a5;
+    text-align: center;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    color: #94a3b8;
+}
+
+.emptyIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.emptyTitle {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+}
+
+.emptyDescription {
+    font-size: 14px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 20, 25, 0.95);
+    color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(26, 29, 41, 0.9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerInfo h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #d4af37;
+    margin-bottom: 8px;
+}
+
+.headerInfo p {
+    margin: 0;
+    font-size: 14px;
+    color: #94a3b8;
+}
+
+.headerControls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.modeSelect {
+    background: rgba(45, 52, 70, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    color: #f8fafc;
+    padding: 8px 12px;
+    font-size: 12px;
+    outline: none;
+}
+
+.modeSelect:focus {
+    border-color: #d4af37;
+}
+
+.agiToggle {
+    background: linear-gradient(45deg, #22c55e, #16a34a);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.agiToggle:hover {
+    transform: scale(1.05);
+}
+
+.agiToggle.inactive {
+    background: rgba(100, 116, 139, 0.6);
+}
+
+.formulaBar {
+    background: rgba(26, 29, 41, 0.9);
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(100, 116, 139, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cellLabel {
+    min-width: 60px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4af37;
+}
+
+.formulaInput {
+    flex: 1;
+    background: rgba(45, 52, 70, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 4px;
+    padding: 8px 12px;
+    color: #f8fafc;
+    font-size: 12px;
+    outline: none;
+}
+
+.formulaInput:focus {
+    border-color: #d4af37;
+}
+
+.gridContainer {
+    flex: 1;
+    overflow: auto;
+    background: #0f1419;
+}
+
+.gridWrapper {
+    display: inline-block;
+    min-width: 100%;
+}
+
+.columnHeaders {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(26, 29, 41, 0.95);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.cornerHeader {
+    min-width: 60px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 20, 25, 0.95);
+    border-right: 1px solid rgba(212, 175, 55, 0.3);
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.columnHeader {
+    min-width: 120px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid rgba(212, 175, 55, 0.3);
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4af37;
+    background: rgba(15, 20, 25, 0.95);
+}
+
+.row {
+    display: flex;
+}
+
+.rowHeader {
+    min-width: 60px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 20, 25, 0.95);
+    border-right: 1px solid rgba(212, 175, 55, 0.3);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4af37;
+}
+
+.cell {
+    min-width: 120px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    font-size: 12px;
+    cursor: pointer;
+    position: relative;
+    background: #1e293b;
+    color: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.cell:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.cell.selected {
+    background: rgba(212, 175, 55, 0.2);
+    border: 2px solid #d4af37;
+}
+
+.cell.header {
+    background: #0f172a;
+    color: #d4af37;
+    font-weight: 600;
+}
+
+.cell.agiBinding {
+    background: rgba(34, 197, 94, 0.1);
+    border-left: 3px solid #22c55e;
+}
+
+.cell.agiBinding.processing {
+    border-left-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.cell.agiBinding.error {
+    border-left-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.cellContent {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.agiIndicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+}
+
+.agiIndicator.processing {
+    background: #f59e0b;
+}
+
+.agiIndicator.error {
+    background: #ef4444;
+}
+
+.statusBar {
+    background: rgba(26, 29, 41, 0.9);
+    padding: 8px 16px;
+    border-top: 1px solid rgba(100, 116, 139, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.statusItem {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.statusActive {
+    color: #22c55e;
+}
+
+.statusInfo {
+    color: #cbd5e1;
+}
+
+.statusBrand {
+    color: #d4af37;
+}

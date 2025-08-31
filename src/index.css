@@ -1,0 +1,289 @@
+/* EuroWeb Ultra - UltraThemeEngine Global Styles */
+
+/* Import our custom theme engine styles */
+
+/* EuroWeb Ultra Theme Variables - Royal Edition */
+:root {
+  /* Royal Gold Palette */
+  --royal-gold: #d4af37;
+  --royal-dark-gold: #b8941f;
+  --royal-light-gold: #f2d570;
+  --royal-platinum: #e5e4e2;
+  
+  /* Ultra Dark Backgrounds */
+  --ultra-bg-primary: #0f1419;
+  --ultra-bg-secondary: #1a1a2e;
+  --ultra-bg-card: #2c3e50;
+  --ultra-bg-glass: rgba(255, 255, 255, 0.02);
+  --ultra-bg-overlay: rgba(0, 0, 0, 0.8);
+  
+  /* Crystal Text Colors */
+  --ultra-text-primary: #e2e8f0;
+  --ultra-text-secondary: #64748b;
+  --ultra-text-accent: #d4af37;
+  --ultra-text-danger: #e74c3c;
+  --ultra-text-success: #2ecc71;
+  --ultra-text-warning: #f39c12;
+  --ultra-text-info: #3498db;
+  
+  /* Ultra Borders */
+  --ultra-border-primary: rgba(255, 255, 255, 0.05);
+  --ultra-border-secondary: rgba(255, 255, 255, 0.1);
+  --ultra-border-accent: #d4af37;
+  --ultra-border-focus: #3498db;
+  
+  /* Royal Gradients */
+  --ultra-gradient-royal: linear-gradient(135deg, #d4af37 0%, #f2d570 100%);
+  --ultra-gradient-dark: linear-gradient(135deg, #0f1419 0%, #1a1a2e 100%);
+  --ultra-gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  
+  /* Ultra Shadows */
+  --ultra-shadow-royal: 0 0 20px rgba(212, 175, 55, 0.3);
+  --ultra-shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+  --ultra-shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Global Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--ultra-bg-primary);
+  color: var(--ultra-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* EuroWeb Ultra Animations */
+@keyframes ultraFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ultraGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+}
+
+@keyframes ultraFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes ultraPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Ultra Utility Classes */
+.ultra-fade-in {
+  animation: ultraFadeIn 0.3s ease-out;
+}
+
+.ultra-glow {
+  animation: ultraGlow 2s ease-in-out infinite;
+}
+
+.ultra-float {
+  animation: ultraFloat 6s ease-in-out infinite;
+}
+
+.ultra-pulse {
+  animation: ultraPulse 2s ease-in-out infinite;
+}
+
+/* Glass Effect Utilities */
+.ultra-glass {
+  background: var(--ultra-bg-glass);
+  border: 1px solid var(--ultra-border-primary);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ultra-glass-strong {
+  background: var(--ultra-gradient-glass);
+  border: 1px solid var(--ultra-border-secondary);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* Royal Card Styles */
+.ultra-card {
+  background: var(--ultra-bg-glass);
+  border: 1px solid var(--ultra-border-primary);
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--ultra-shadow-glass);
+  transition: all 0.3s ease;
+}
+
+.ultra-card:hover {
+  border-color: var(--ultra-border-secondary);
+  transform: translateY(-2px);
+}
+
+.ultra-card-royal {
+  background: var(--ultra-gradient-glass);
+  border: 1px solid var(--royal-gold);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: var(--ultra-shadow-royal);
+}
+
+/* Button Styles */
+.ultra-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ultra-btn-primary {
+  background: var(--ultra-gradient-royal);
+  color: var(--ultra-bg-primary);
+  border: 1px solid var(--royal-gold);
+  box-shadow: var(--ultra-shadow-royal);
+}
+
+.ultra-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+}
+
+.ultra-btn-secondary {
+  background: var(--ultra-bg-glass);
+  color: var(--ultra-text-primary);
+  border: 1px solid var(--ultra-border-primary);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.ultra-btn-secondary:hover {
+  border-color: var(--ultra-border-secondary);
+  background: var(--ultra-gradient-glass);
+}
+
+.ultra-btn-ghost {
+  background: transparent;
+  color: var(--ultra-text-secondary);
+  border: 1px solid transparent;
+}
+
+.ultra-btn-ghost:hover {
+  color: var(--ultra-text-primary);
+  border-color: var(--ultra-border-primary);
+}
+
+/* Input Styles */
+.ultra-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--ultra-bg-glass);
+  border: 1px solid var(--ultra-border-primary);
+  border-radius: 0.5rem;
+  color: var(--ultra-text-primary);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.ultra-input:focus {
+  outline: none;
+  border-color: var(--royal-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.ultra-input::placeholder {
+  color: var(--ultra-text-secondary);
+}
+
+/* Typography Utilities */
+.ultra-text-gradient {
+  background: var(--ultra-gradient-royal);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ultra-text-royal {
+  color: var(--royal-gold);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ultra-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ultra-border-secondary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--royal-gold);
+}
+
+/* Ultra Utility Classes */
+.ultra-text-secondary {
+  color: var(--ultra-text-secondary);
+}
+
+.ultra-features-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ultra-feature-item {
+  padding: 0.5rem 0;
+  color: var(--ultra-text-secondary);
+}
+
+.ultra-overview-features {
+  margin: 2rem;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--primary-dark);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

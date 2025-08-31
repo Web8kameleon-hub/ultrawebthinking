@@ -262,5 +262,24 @@ class Logger {
 // Singleton instance
 export const logger = new Logger();
 
+/**
+ * Log AGI processing events
+ */
+export async function logEvent(data: any): Promise<void> {
+  try {
+    // Use console.log for now since logger.log is private
+    console.log('[AGI Event]', {
+      input: data.input,
+      intent: data.sense?.intent,
+      action: data.mind?.action,
+      confidence: data.mind?.confidence,
+      timestamp: new Date(data.timestamp).toISOString()
+    });
+  } catch (error) {
+    console.error('[Monitor Error]', error);
+  }
+}
+
 // Export additional utilities
-export type { LogLevel, LogEntry, SystemMetrics };
+export type { LogEntry, LogLevel, SystemMetrics };
+

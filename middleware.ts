@@ -1,44 +1,31 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
-import { guardianMiddleware } from './lib/guardian-middleware';
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './lib/i18n/routing';
+import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
-// Create i18n middleware
-const intlMiddleware = createMiddleware(routing);
+export function middleware(req: NextRequest) {
+  const res = NextResponse.next()
+  const dev = process.env.NODE_ENV !== "production"
+  const allow = (process.env.RADIO_AUDIO_ALLOWLIST || "").split(",").map(s=>s.trim()).filter(Boolean)
+  const origins = allow.map(v => { try { return new URL(v).origin } catch { return null } }).filter(Boolean).join(" ")
 
-export function middleware(request: NextRequest) {
-  // Skip Guardian for static assets and specific paths
-  const { pathname } = request.nextUrl;
-  
-  if (
-    pathname.startsWith('/_next/') ||
-    pathname.startsWith('/favicon.ico') ||
-    pathname.startsWith('/api/') || // Skip ALL API routes from i18n
-    pathname.startsWith('/api/_') ||
-    pathname === '/guardian' // Allow access to Guardian panel
-  ) {
-    return NextResponse.next();
-  }
+  const csp = [
+    "default-src 'self'",
+    `script-src 'self'${dev ? " 'unsafe-eval' 'unsafe-inline'" : ""}`,
+    "style-src 'self' 'unsafe-inline'",
+    `connect-src 'self' ${origins}`,
+    `media-src 'self' data: blob: ${origins}`,
+    "img-src 'self' data: blob:",
+    "font-src 'self' data:",
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+  ].join("; ")
 
-  // Apply Guardian security checks first
-  const guardianResponse = guardianMiddleware(request);
-  if (guardianResponse) {
-    return guardianResponse;
-  }
-
-  // Apply i18n middleware for localization
-  return intlMiddleware(request);
+  res.headers.set("Content-Security-Policy", csp)
+  res.headers.set("X-Content-Type-Options", "nosniff")
+  res.headers.set("Referrer-Policy", "no-referrer")
+  res.headers.set("Permissions-Policy", "geolocation=(), microphone=(), camera=()")
+  return res
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
-};
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"],
+}

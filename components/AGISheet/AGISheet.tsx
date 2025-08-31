@@ -1,137 +1,187 @@
-﻿'use client'
+/**
+ * WEB8 EuroWeb - AGI Sheet Component (INDUSTRIAL VERSION)
+ * Real AGI Integration with Zero Mock/Simulations
+ * 
+ * @author Ledjan Ahmati (100% Owner)
+ * @version 8.0.0 Ultra - Pure Real Implementation
+ */
 
-import React, { useState, useEffect, useRef } from 'react'
+'use client'
+
+import { cva } from 'class-variance-authority';
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './AGISheet.module.css';
 
 interface Cell {
-  id: string
-  row: number
-  col: number
-  value: string
-  formula?: string
-  type: 'text' | 'number' | 'formula' | 'agi-command' | 'agi-status'
-  agiBinding?: string
-  status?: 'idle' | 'processing' | 'active' | 'error' | 'warning' | 'inactive'
-  metadata?: Record<string, any>
+  id: string;
+  row: number;
+  col: number;
+  value: string;
+  formula?: string;
+  type: 'text' | 'number' | 'formula' | 'agi-command' | 'agi-status';
+  agiBinding?: string;
+  status?: 'idle' | 'processing' | 'active' | 'error' | 'warning' | 'inactive';
+  metadata?: Record<string, any>;
 }
 
 interface AGILayer {
-  id: string
-  name: string
-  status: 'active' | 'inactive' | 'error' | 'processing'
-  type: 'semantic' | 'decision' | 'planning' | 'control' | 'task' | 'admin' | 'core'
-  connections: number
-  lastUpdate: Date
-  logs: string[]
-  commands: string[]
+  id: string;
+  name: string;
+  status: 'active' | 'inactive' | 'error' | 'processing';
+  type: 'semantic' | 'decision' | 'planning' | 'control' | 'task' | 'admin' | 'core';
+  connections: number;
+  lastUpdate: string;
+  logs: string[];
+  commands: string[];
+  performance: {
+    uptime: number;
+    throughput: number;
+    errorRate: number;
+    responseTime: number;
+  };
 }
 
 interface AGISheetProps {
-  mode?: 'analysis' | 'decision' | 'planning' | 'control' | 'task' | 'admin'
-  width?: number
-  height?: number
+  mode?: 'analysis' | 'decision' | 'planning' | 'control' | 'task' | 'admin';
+  width?: number;
+  height?: number;
 }
+
+interface AGIError {
+  message: string;
+  code?: string;
+}
+
+// CVA for cell variants
+const cellVariants = cva(styles.cell, {
+  variants: {
+    status: {
+      idle: '',
+      processing: styles.cellProcessing,
+      active: styles.cellActive,
+      error: styles.cellError,
+      warning: styles.cellError,
+      inactive: ''
+    },
+    selected: {
+      true: styles.cellSelected,
+      false: ''
+    },
+    header: {
+      true: styles.cellHeader,
+      false: ''
+    },
+    rowHeader: {
+      true: styles.cellRowHeader,
+      false: ''
+    },
+    agi: {
+      true: styles.cellAgi,
+      false: ''
+    }
+  },
+  defaultVariants: {
+    status: 'idle',
+    selected: false,
+    header: false,
+    rowHeader: false,
+    agi: false
+  }
+});
+
+// CVA for AGI toggle button
+const agiToggleVariants = cva(styles.agiToggle, {
+  variants: {
+    active: {
+      true: styles.active,
+      false: ''
+    }
+  },
+  defaultVariants: {
+    active: false
+  }
+});
+
+// CVA for status indicators
+const statusIndicatorVariants = cva(styles.statusIndicator, {
+  variants: {
+    status: {
+      active: styles.statusActive,
+      processing: styles.statusProcessing,
+      error: styles.statusError,
+      warning: styles.statusWarning,
+      inactive: styles.statusInactive,
+      idle: styles.statusInactive
+    }
+  }
+});
 
 const AGISheet: React.FC<AGISheetProps> = ({ 
   mode = 'analysis', 
   width = 20, 
   height = 50 
 }) => {
-  const [cells, setCells] = useState<Map<string, Cell>>(new Map())
-  const [selectedCell, setSelectedCell] = useState<string | null>(null)
-  const [formulaBar, setFormulaBar] = useState<string>('')
-  const [agiLayers, setAgiLayers] = useState<AGILayer[]>([])
-  const [isAGIActive, setIsAGIActive] = useState(true)
-  const [currentMode, setCurrentMode] = useState(mode)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 })
+  const [cells, setCells] = useState<Map<string, Cell>>(new Map());
+  const [selectedCell, setSelectedCell] = useState<string | null>(null);
+  const [formulaBar, setFormulaBar] = useState<string>('');
+  const [agiLayers, setAgiLayers] = useState<AGILayer[]>([]);
+  const [isAGIActive, setIsAGIActive] = useState(true);
+  const [currentMode, setCurrentMode] = useState(mode);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<AGIError | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initialize AGI Layers
+  // Load real AGI layers from API
   useEffect(() => {
-    const initialLayers: AGILayer[] = [
-      {
-        id: 'core',
-        name: 'AGI Core Engine',
-        status: 'active',
-        type: 'core',
-        connections: 7,
-        lastUpdate: new Date(),
-        logs: ['System initialized', 'Neural networks online'],
-        commands: ['INIT', 'PROCESS', 'ANALYZE']
-      },
-      {
-        id: 'semantic',
-        name: 'Semantic Analysis',
-        status: 'active',
-        type: 'semantic',
-        connections: 45,
-        lastUpdate: new Date(),
-        logs: ['Processing natural language', 'Context analysis complete'],
-        commands: ['PARSE', 'UNDERSTAND', 'CLASSIFY']
-      },
-      {
-        id: 'decision',
-        name: 'Decision Engine',
-        status: 'processing',
-        type: 'decision',
-        connections: 23,
-        lastUpdate: new Date(),
-        logs: ['Evaluating options', 'Decision tree analysis'],
-        commands: ['DECIDE', 'EVALUATE', 'RECOMMEND']
-      },
-      {
-        id: 'planning',
-        name: 'Strategic Planning',
-        status: 'active',
-        type: 'planning',
-        connections: 18,
-        lastUpdate: new Date(),
-        logs: ['Long-term strategy planning', 'Resource allocation'],
-        commands: ['PLAN', 'SCHEDULE', 'OPTIMIZE']
-      },
-      {
-        id: 'control',
-        name: 'Control Systems',
-        status: 'active',
-        type: 'control',
-        connections: 34,
-        lastUpdate: new Date(),
-        logs: ['System monitoring', 'Performance optimization'],
-        commands: ['MONITOR', 'CONTROL', 'ADJUST']
-      },
-      {
-        id: 'task',
-        name: 'Task Execution',
-        status: 'active',
-        type: 'task',
-        connections: 67,
-        lastUpdate: new Date(),
-        logs: ['Task queue processing', 'Workflow execution'],
-        commands: ['EXECUTE', 'QUEUE', 'COMPLETE']
-      },
-      {
-        id: 'admin',
-        name: 'Admin & Security',
-        status: 'active',
-        type: 'admin',
-        connections: 12,
-        lastUpdate: new Date(),
-        logs: ['Security scan complete', 'Access control updated'],
-        commands: ['SECURE', 'AUDIT', 'MANAGE']
-      }
-    ]
-    setAgiLayers(initialLayers)
-    
-    // Initialize default AGI Layer overview in cells
-    initializeAGIOverview(initialLayers)
-  }, [])
+    loadAGILayers();
 
+    // Refresh layers every 30 seconds
+    const interval = setInterval(loadAGILayers, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Real API call to load AGI layers
+  const loadAGILayers = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await fetch('/api/agi/layers');
+
+      if (!response.ok) {
+        throw new Error(`Failed to load AGI layers: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to load AGI layers');
+      }
+
+      setAgiLayers(data.layers);
+      initializeAGIOverview(data.layers);
+
+    } catch (err) {
+      console.error('AGI Layers error:', err);
+      setError({
+        message: err instanceof Error ? err.message : 'Failed to load AGI layers',
+        code: 'LAYERS_LOAD_ERROR'
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Initialize AGI overview with real data
   const initializeAGIOverview = (layers: AGILayer[]) => {
-    const newCells = new Map<string, Cell>()
+    const newCells = new Map<string, Cell>();
     
     // Headers
-    const headers = ['Layer Name', 'Status', 'Type', 'Connections', 'Last Update', 'Commands', 'AGI Binding']
+    const headers = ['Layer Name', 'Status', 'Type', 'Connections', 'Last Update', 'Commands', 'AGI Binding'];
     headers.forEach((header, colIndex) => {
-      const cellId = `${0}-${colIndex}`
+      const cellId = `${0}-${colIndex}`;
       newCells.set(cellId, {
         id: cellId,
         row: 0,
@@ -139,14 +189,13 @@ const AGISheet: React.FC<AGISheetProps> = ({
         value: header,
         type: 'text',
         status: 'active'
-      })
-    })
+      });
+    });
 
-    // AGI Layer data
+    // Real AGI Layer data
     layers.forEach((layer, rowIndex) => {
-      const actualRow = rowIndex + 1
-      
-      // Layer Name
+      const actualRow = rowIndex + 1;
+
       newCells.set(`${actualRow}-0`, {
         id: `${actualRow}-0`,
         row: actualRow,
@@ -155,9 +204,8 @@ const AGISheet: React.FC<AGISheetProps> = ({
         type: 'text',
         agiBinding: layer.id,
         status: layer.status
-      })
-      
-      // Status
+      });
+
       newCells.set(`${actualRow}-1`, {
         id: `${actualRow}-1`,
         row: actualRow,
@@ -166,9 +214,8 @@ const AGISheet: React.FC<AGISheetProps> = ({
         type: 'agi-status',
         agiBinding: layer.id,
         status: layer.status
-      })
-      
-      // Type
+      });
+
       newCells.set(`${actualRow}-2`, {
         id: `${actualRow}-2`,
         row: actualRow,
@@ -176,9 +223,8 @@ const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.type,
         type: 'text',
         agiBinding: layer.id
-      })
-      
-      // Connections
+      });
+
       newCells.set(`${actualRow}-3`, {
         id: `${actualRow}-3`,
         row: actualRow,
@@ -186,19 +232,17 @@ const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.connections.toString(),
         type: 'number',
         agiBinding: layer.id
-      })
-      
-      // Last Update
+      });
+
       newCells.set(`${actualRow}-4`, {
         id: `${actualRow}-4`,
         row: actualRow,
         col: 4,
-        value: layer.lastUpdate.toLocaleTimeString(),
+        value: new Date(layer.lastUpdate).toLocaleTimeString(),
         type: 'text',
         agiBinding: layer.id
-      })
-      
-      // Commands
+      });
+
       newCells.set(`${actualRow}-5`, {
         id: `${actualRow}-5`,
         row: actualRow,
@@ -206,9 +250,8 @@ const AGISheet: React.FC<AGISheetProps> = ({
         value: layer.commands.join(', '),
         type: 'agi-command',
         agiBinding: layer.id
-      })
-      
-      // AGI Binding
+      });
+
       newCells.set(`${actualRow}-6`, {
         id: `${actualRow}-6`,
         row: actualRow,
@@ -217,31 +260,101 @@ const AGISheet: React.FC<AGISheetProps> = ({
         type: 'agi-command',
         agiBinding: layer.id,
         status: 'active'
-      })
-    })
+      });
+    });
 
-    setCells(newCells)
-  }
+    setCells(newCells);
+  };
 
-  const getCellId = (row: number, col: number): string => `${row}-${col}`
-
-  const getColumnLetter = (col: number): string => {
-    let result = ''
-    while (col >= 0) {
-      result = String.fromCharCode(65 + (col % 26)) + result
-      col = Math.floor(col / 26) - 1
+  // Real AGI command processing via API
+  const processAGICommand = async (cell: Cell, command: string) => {
+    if (!cell.agiBinding) {
+      console.error('No AGI binding for cell:', cell.id);
+      return;
     }
-    return result
-  }
 
+    try {
+      // Update cell to processing state
+      updateCellStatus(cell.id, 'processing');
+
+      const response = await fetch('/api/agi/command', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          command,
+          binding: cell.agiBinding,
+          cellId: cell.id
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`AGI command failed: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        updateCellStatus(cell.id, result.status);
+        updateLayerFromResult(cell.agiBinding, result);
+      } else {
+        updateCellStatus(cell.id, 'error');
+        console.error('AGI command error:', result.error);
+      }
+    } catch (error) {
+      console.error('AGI command processing error:', error);
+      updateCellStatus(cell.id, 'error');
+    }
+  };
+
+  // Update layer data from API result
+  const updateLayerFromResult = (layerId: string, result: any) => {
+    setAgiLayers(prev => prev.map(layer =>
+      layer.id === layerId
+        ? {
+          ...layer,
+          status: result.status,
+          lastUpdate: new Date().toISOString(),
+          logs: result.logs || layer.logs
+        }
+        : layer
+    ));
+  };
+
+  // Update cell status
+  const updateCellStatus = (cellId: string, status: Cell['status']) => {
+    setCells(prev => {
+      const newCells = new Map(prev);
+      const cell = newCells.get(cellId);
+      if (cell) {
+        newCells.set(cellId, { ...cell, status });
+      }
+      return newCells;
+    });
+  };
+
+  // Generate cell ID
+  const getCellId = (row: number, col: number): string => `${row}-${col}`;
+
+  // Generate column letters
+  const getColumnLetter = (col: number): string => {
+    let result = '';
+    while (col >= 0) {
+      result = String.fromCharCode(65 + (col % 26)) + result;
+      col = Math.floor(col / 26) - 1;
+    }
+    return result;
+  };
+
+  // Get cell value
   const getCellValue = (row: number, col: number): string => {
-    const cell = cells.get(getCellId(row, col))
-    return cell?.value || ''
-  }
+    const cell = cells.get(getCellId(row, col));
+    return cell?.value || '';
+  };
 
+  // Set cell value with real AGI processing
   const setCellValue = (row: number, col: number, value: string, type?: Cell['type']) => {
-    const cellId = getCellId(row, col)
-    const existingCell = cells.get(cellId)
+    const cellId = getCellId(row, col);
+    const existingCell = cells.get(cellId);
     
     const newCell: Cell = {
       id: cellId,
@@ -251,145 +364,70 @@ const AGISheet: React.FC<AGISheetProps> = ({
       type: type || existingCell?.type || 'text',
       agiBinding: existingCell?.agiBinding,
       status: existingCell?.status || 'idle'
-    }
+    };
 
-    // AGI Processing for special cell types
+    // Real AGI processing for special commands
     if (newCell.type === 'agi-command' && value.startsWith('AGI.')) {
-      newCell.status = 'processing'
-      processAGICommand(newCell, value)
+      const [, layerId, action] = value.split('.');
+      if (layerId && action) {
+        processAGICommand(newCell, action);
+      }
     }
 
-    setCells(prev => new Map(prev.set(cellId, newCell)))
-  }
+    setCells(prev => new Map(prev.set(cellId, newCell)));
+  };
 
-  const processAGICommand = (cell: Cell, command: string) => {
-    // Simulate AGI command processing
-    setTimeout(() => {
-      const [, layerId, action] = command.split('.')
-      const layer = agiLayers.find(l => l.id === layerId)
-      
-      if (layer && action) {
-        // Update layer status based on command
-        setAgiLayers(prev => prev.map(l => 
-          l.id === layerId 
-            ? { ...l, lastUpdate: new Date(), logs: [...l.logs, `Command executed: ${action}`] }
-            : l
-        ))
-        
-        // Update cell status
-        setCells(prev => {
-          const newCells = new Map(prev)
-          const updatedCell = { ...cell, status: 'active' as const }
-          newCells.set(cell.id, updatedCell)
-          return newCells
-        })
-      }
-    }, 1000)
-  }
-
+  // Handle cell interactions
   const handleCellClick = (row: number, col: number) => {
-    const cellId = getCellId(row, col)
-    setSelectedCell(cellId)
-    const cell = cells.get(cellId)
-    setFormulaBar(cell?.formula || cell?.value || '')
-  }
+    const cellId = getCellId(row, col);
+    setSelectedCell(cellId);
+    const cell = cells.get(cellId);
+    setFormulaBar(cell?.formula || cell?.value || '');
+  };
 
   const handleCellDoubleClick = (row: number, col: number) => {
-    const cellId = getCellId(row, col)
-    const cell = cells.get(cellId)
+    const cellId = getCellId(row, col);
+    const cell = cells.get(cellId);
     
-    if (cell?.type === 'agi-command' || cell?.agiBinding) {
-      // Open AGI command interface
-      console.log('Opening AGI interface for:', cell.agiBinding)
+    if (cell?.type === 'agi-command' && cell.agiBinding) {
+      // Execute AGI command directly
+      const command = cell.value.split('.').pop() || 'PROCESS';
+      processAGICommand(cell, command);
     }
-  }
+  };
 
-  const getStatusColor = (status?: string) => {
-    switch (status) {
-      case 'active': return '#22c55e'
-      case 'processing': return '#f59e0b'
-      case 'error': return '#ef4444'
-      case 'warning': return '#f97316'
-      default: return '#64748b'
+  // Handle formula bar input
+  const handleFormulaSubmit = () => {
+    if (selectedCell) {
+      const [row, col] = selectedCell.split('-').map(Number);
+      setCellValue(row, col, formulaBar);
     }
-  }
-
-  const getCellStyle = (row: number, col: number) => {
-    const cell = cells.get(getCellId(row, col))
-    const isSelected = selectedCell === getCellId(row, col)
-    const isHeader = row === 0
-    
-    let backgroundColor = '#1e293b'
-    if (isHeader) backgroundColor = '#0f172a'
-    if (isSelected) backgroundColor = 'rgba(212, 175, 55, 0.2)'
-    if (cell?.agiBinding) backgroundColor = 'rgba(34, 197, 94, 0.1)'
-    
-    return {
-      width: '150px',
-      height: '32px',
-      border: '1px solid rgba(100, 116, 139, 0.3)',
-      backgroundColor,
-      color: isHeader ? '#d4af37' : '#f8fafc',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0 8px',
-      fontSize: '12px',
-      fontWeight: isHeader ? 600 : 400,
-      cursor: 'pointer',
-      position: 'relative' as const,
-      borderLeft: cell?.agiBinding ? `3px solid ${getStatusColor(cell.status)}` : undefined
-    }
-  }
+  };
 
   return (
-    <div style={{
-      width: '100%',
-      height: '100%',
-      background: '#0f172a',
-      color: '#f8fafc',
-      display: 'flex',
-      flexDirection: 'column',
-      fontFamily: 'Inter, monospace'
-    }}>
-       {/* AGISheet Header */}
-      <div style={{
-        background: 'linear-gradient(135deg, #1e293b, #334155)',
-        padding: '12px 16px',
-        borderBottom: '2px solid #d4af37',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
-        <div>
-          <h2 style={{ 
-            color: '#d4af37', 
-            fontSize: '18px', 
-            margin: 0,
-            fontWeight: 700
-          }}>
-            📋 AGISheet - Kameleoni i Inteligjencës Operacionale
+    <div className={styles.root}>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={styles.header}
+      >
+        <div className={styles.headerContent}>
+          <h2 className={styles.title}>
+            AGISheet - Industrial Neural Processing Grid
           </h2>
-          <p style={{ 
-            color: '#cbd5e1', 
-            fontSize: '12px', 
-            margin: '4px 0 0 0' 
-          }}>
-            Excel me tru AGI • Mode: {currentMode} • {isAGIActive ? '🧠 AGI ACTIVE' : '⏸️ AGI STANDBY'}
+          <p className={styles.description}>
+            Real-time AGI integration • Mode: {currentMode} • {isAGIActive ? 'AGI ACTIVE' : 'AGI STANDBY'}
           </p>
         </div>
-        
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div className={styles.headerControls}>
           <select
             value={currentMode}
             onChange={(e) => setCurrentMode(e.target.value as any)}
-            style={{
-              background: '#334155',
-              border: '1px solid #d4af37',
-              color: '#f8fafc',
-              padding: '4px 8px',
-              borderRadius: '4px',
-              fontSize: '12px'
-            }}
+            className={styles.modeSelect}
+            title="Select AGI Mode"
+            aria-label="AGI Mode Selection"
           >
             <option value="analysis">Analysis</option>
             <option value="decision">Decision</option>
@@ -398,86 +436,60 @@ const AGISheet: React.FC<AGISheetProps> = ({
             <option value="task">Task</option>
             <option value="admin">Admin</option>
           </select>
-          
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={() => setIsAGIActive(!isAGIActive)}
-            style={{
-              background: isAGIActive ? '#22c55e' : '#64748b',
-              border: 'none',
-              color: 'white',
-              padding: '4px 12px',
-              borderRadius: '4px',
-              fontSize: '12px',
-              cursor: 'pointer'
-            }}
+            className={clsx(agiToggleVariants({ active: isAGIActive }))}
           >
-            {isAGIActive ? '🧠 AGI ON' : '⏸️ AGI OFF'}
-          </button>
+            {isAGIActive ? 'AGI ON' : 'AGI OFF'}
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Error Display */}
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={styles.errorState}
+        >
+          ⚠️ {error.message}
+        </motion.div>
+      )}
 
       {/* Formula Bar */}
-      <div style={{
-        background: '#1e293b',
-        padding: '8px 16px',
-        borderBottom: '1px solid rgba(100, 116, 139, 0.3)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '12px'
-      }}>
-        <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 600 }}>
+      <div className={styles.formulaBar}>
+        <span className={styles.cellReference}>
           {selectedCell || 'A1'}
         </span>
         <input
           type="text"
           value={formulaBar}
           onChange={(e) => setFormulaBar(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && handleFormulaSubmit()}
           placeholder="Enter formula, AGI command, or value..."
-          style={{
-            flex: 1,
-            background: '#334155',
-            border: '1px solid rgba(100, 116, 139, 0.3)',
-            color: '#f8fafc',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            fontSize: '12px'
-          }}
+          className={styles.formulaInput}
         />
       </div>
 
-      {/* AGISheet Grid */}
-      <div
-        ref={containerRef}
-        style={{
-          flex: 1,
-          overflow: 'auto',
-          background: '#0f172a'
-        }}
-      >
-        <div style={{
-          display: 'inline-block',
-          minWidth: '100%'
-        }}>
+      {/* Loading State */}
+      {isLoading && (
+        <div className={styles.loadingSpinner} />
+      )}
+
+      {/* AGI Sheet Grid */}
+      <div ref={containerRef} className={styles.gridContainer}>
+        <div className={styles.gridWrapper}>
           {/* Column Headers */}
-          <div style={{ display: 'flex', position: 'sticky', top: 0, zIndex: 10 }}>
-            <div style={{
-              ...getCellStyle(-1, -1),
-              backgroundColor: '#0a0f1a',
-              color: '#64748b',
-              fontWeight: 700
-            }}>
-              📋
+          <div className={styles.columnHeaders}>
+            <div className={clsx(cellVariants({ header: true }))}>
+              #
             </div>
             {Array.from({ length: width }, (_, colIndex) => (
               <div
                 key={`col-${colIndex}`}
-                style={{
-                  ...getCellStyle(-1, colIndex),
-                  backgroundColor: '#0a0f1a',
-                  color: '#d4af37',
-                  fontWeight: 700,
-                  justifyContent: 'center'
-                }}
+                className={clsx(cellVariants({ header: true }))}
               >
                 {getColumnLetter(colIndex)}
               </div>
@@ -486,77 +498,64 @@ const AGISheet: React.FC<AGISheetProps> = ({
 
           {/* Rows */}
           {Array.from({ length: height }, (_, rowIndex) => (
-            <div key={`row-${rowIndex}`} style={{ display: 'flex' }}>
+            <div key={`row-${rowIndex}`} className={styles.row}>
               {/* Row Header */}
-              <div style={{
-                ...getCellStyle(rowIndex, -1),
-                backgroundColor: '#0a0f1a',
-                color: '#d4af37',
-                fontWeight: 600,
-                justifyContent: 'center'
-              }}>
+              <div className={clsx(cellVariants({ rowHeader: true }))}>
                 {rowIndex + 1}
               </div>
 
               {/* Cells */}
-              {Array.from({ length: width }, (_, colIndex) => (
-                <div
-                  key={getCellId(rowIndex, colIndex)}
-                  style={getCellStyle(rowIndex, colIndex)}
-                  onClick={() => handleCellClick(rowIndex, colIndex)}
-                  onDoubleClick={() => handleCellDoubleClick(rowIndex, colIndex)}
-                >
-                  <span style={{
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    width: '100%'
-                  }}>
-                    {getCellValue(rowIndex, colIndex)}
-                  </span>
-                  
-                  {/* AGI Status Indicator */}
-                  {cells.get(getCellId(rowIndex, colIndex))?.agiBinding && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '2px',
-                      right: '2px',
-                      width: '6px',
-                      height: '6px',
-                      borderRadius: '50%',
-                      backgroundColor: getStatusColor(cells.get(getCellId(rowIndex, colIndex))?.status)
-                    }} />
-                  )}
-                </div>
-              ))}
+              {Array.from({ length: width }, (_, colIndex) => {
+                const cellId = getCellId(rowIndex, colIndex);
+                const cell = cells.get(cellId);
+                const isSelected = selectedCell === cellId;
+                const isHeader = rowIndex === 0;
+
+                return (
+                  <motion.div
+                    key={cellId}
+                    whileHover={{ scale: 1.01 }}
+                    onClick={() => handleCellClick(rowIndex, colIndex)}
+                    onDoubleClick={() => handleCellDoubleClick(rowIndex, colIndex)}
+                    className={clsx(cellVariants({
+                      status: cell?.status,
+                      selected: isSelected,
+                      header: isHeader,
+                      agi: !!cell?.agiBinding
+                    }))}
+                  >
+                    <span className={styles.cellValue}>
+                      {getCellValue(rowIndex, colIndex)}
+                    </span>
+
+                    {/* AGI Status Indicator */}
+                    {cell?.agiBinding && (
+                      <div className={clsx(statusIndicatorVariants({ status: cell.status }))} />
+                    )}
+                  </motion.div>
+                );
+              })}
             </div>
           ))}
         </div>
       </div>
 
-      {/* AGI Status Bar */}
-      <div style={{
-        background: '#1e293b',
-        padding: '8px 16px',
-        borderTop: '1px solid rgba(100, 116, 139, 0.3)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        fontSize: '12px'
-      }}>
-        <span style={{ color: '#22c55e' }}>
+      {/* Real-time Status Bar */}
+      <div className={styles.statusBar}>
+        <span className={styles.statusActiveText}>
           ✅ AGI Layers: {agiLayers.filter(l => l.status === 'active').length}/{agiLayers.length} Active
         </span>
-        <span style={{ color: '#cbd5e1' }}>
+        <span className={styles.statusInfo}>
           📊 Cells: {cells.size} | 🧠 AGI Bindings: {Array.from(cells.values()).filter(c => c.agiBinding).length}
         </span>
-        <span style={{ color: '#d4af37' }}>
-          ⚡ EuroWeb AGISheet v1.0 | Web8 Kameleon Mode
+        <span className={styles.statusBrand}>
+          ⚡ EuroWeb AGISheet v8.0 | Industrial Mode
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AGISheet;
 export { AGISheet };
+
