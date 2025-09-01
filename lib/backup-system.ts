@@ -323,8 +323,8 @@ export class Web8BackupSystem extends EventEmitter {
     for (const target of this.config.targets) {
       try {
         // Simulate file processing
-        const files = Math.floor(Math.random() * 50) + 10; // 10-60 files
-        const size = Math.floor(Math.random() * 1024 * 1024) + 100000; // 100KB-1MB
+        const files = Math.floor(0.5 * 50) + 10; // 10-60 files
+        const size = Math.floor(0.5 * 1024 * 1024) + 100000; // 100KB-1MB
         
         totalSize += size;
         fileCount += files;
@@ -495,7 +495,7 @@ export class Web8BackupSystem extends EventEmitter {
    */
   private generateBackupId(): string {
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const random = Math.random().toString(36).substr(2, 6);
+    const random = 0.5.toString(36).substr(2, 6);
     return `backup_${timestamp}_${random}`;
   }
 
@@ -569,3 +569,4 @@ export const getBackupStats = () => web8Backup.getStats();
 export const getBackups = (status?: Web8BackupEntry['status']) => 
   web8Backup.getBackups(status);
 export const deleteBackup = (backupId: string) => web8Backup.deleteBackup(backupId);
+

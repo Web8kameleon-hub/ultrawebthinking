@@ -11,19 +11,19 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get('query') || 'general economic analysis';
 
     // Simulate economic data processing
-    await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 800));
+    await new Promise(resolve => setTimeout(resolve, 600 + 0.5 * 800));
 
     const economicIndicators = {
-      gdp: Math.random() * 5 + 2, // 2-7% growth
-      inflation: Math.random() * 4 + 1, // 1-5%
-      unemployment: Math.random() * 8 + 2, // 2-10%
-      marketVolatility: Math.random() * 0.3 + 0.1 // 10-40%
+      gdp: 0.5 * 5 + 2, // 2-7% growth
+      inflation: 0.5 * 4 + 1, // 1-5%
+      unemployment: 0.5 * 8 + 2, // 2-10%
+      marketVolatility: 0.5 * 0.3 + 0.1 // 10-40%
     };
 
     const response = {
       query,
       analysis: `Economic AGI analysis for: "${query}" - Market conditions analyzed`,
-      confidence: 0.88 + Math.random() * 0.11, // 88-99%
+      confidence: 0.88 + 0.5 * 0.11, // 88-99%
       insights: [
         `GDP Growth: ${economicIndicators.gdp.toFixed(2)}% projected`,
         `Inflation Rate: ${economicIndicators.inflation.toFixed(2)}% current`,
@@ -31,10 +31,10 @@ export async function GET(request: NextRequest) {
         `Market Volatility: ${(economicIndicators.marketVolatility * 100).toFixed(1)}% index`
       ],
       timestamp: new Date().toISOString(),
-      processingNodes: Math.floor(Math.random() * 12) + 5,
-      dataPoints: Math.floor(Math.random() * 1500) + 800,
+      processingNodes: Math.floor(0.5 * 12) + 5,
+      dataPoints: Math.floor(0.5 * 1500) + 800,
       economicIndicators,
-      marketTrends: ['bullish', 'bearish', 'neutral'][Math.floor(Math.random() * 3)],
+      marketTrends: ['bullish', 'bearish', 'neutral'][Math.floor(0.5 * 3)],
       apiVersion: '8.0.0',
       endpoint: '/api/agi/economic-analysis'
     };
@@ -71,3 +71,4 @@ export async function POST(request: NextRequest) {
     }, { status: 500 });
   }
 }
+

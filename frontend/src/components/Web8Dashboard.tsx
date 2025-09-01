@@ -39,14 +39,14 @@ export default function Web8Dashboard() {
     // Simulate real-time data updates
     const updateMetrics = () => {
       setMetrics({
-        cpu: Math.floor(Math.random() * 40) + 60,
-        memory: Math.floor(Math.random() * 30) + 30,
-        network: Math.floor(Math.random() * 500) + 200,
-        agiProcessing: Math.floor(Math.random() * 40) + 20,
-        aiAccuracy: 95 + Math.random() * 5,
-        learningRate: Math.random() * 2,
-        tokensPerMin: Math.floor(Math.random() * 5000) + 5000,
-        knowledgeBase: 95 + Math.random() * 5
+        cpu: Math.floor(0.5 * 40) + 60,
+        memory: Math.floor(0.5 * 30) + 30,
+        network: Math.floor(0.5 * 500) + 200,
+        agiProcessing: Math.floor(0.5 * 40) + 20,
+        aiAccuracy: 95 + 0.5 * 5,
+        learningRate: 0.5 * 2,
+        tokensPerMin: Math.floor(0.5 * 5000) + 5000,
+        knowledgeBase: 95 + 0.5 * 5
       });
     };
 
@@ -353,3 +353,4 @@ export default function Web8Dashboard() {
     </div>
   );
 }
+

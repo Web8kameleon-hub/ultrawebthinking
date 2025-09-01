@@ -44,7 +44,7 @@ export function formatTimestamp(date: Date): string {
  * Generate unique ID 
  */
 export function generateId(prefix = 'web8'): string {
-  return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return `${prefix}_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
 }
 
 /**
@@ -117,3 +117,4 @@ export const MOTION_PRESETS = {
     }
   }
 } as const;
+

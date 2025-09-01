@@ -173,19 +173,8 @@ export const Web8MeshControl: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div style={{
-        padding: '40px',
-        textAlign: 'center',
-        minHeight: '400px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      } as any}>
-        <div style={{
-          fontSize: '24px',
-          color: '#6366f1',
-          fontWeight: 600
-        } as any}>
+      <div className="p-10 text-center min-h-[400px] flex items-center justify-center">
+        <div className="text-2xl text-indigo-500 font-semibold">
           🌐 Connecting to Web8 Mesh Network...
         </div>
       </div>
@@ -193,60 +182,24 @@ export const Web8MeshControl: React.FC = () => {
   }
 
   return (
-    <div style={{
-      padding: '30px',
-      background: 'linear-gradient(135deg, #f8fafc 0%, #ffffff 100%)',
-      minHeight: '100vh'
-    } as any}>
+    <div className="p-[30px] bg-gradient-to-br from-slate-50 to-white min-h-screen">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        style={{
-          marginBottom: '30px',
-          textAlign: 'center'
-        } as any}
+        className="mb-[30px] text-center"
       >
-        <h1 style={{
-          fontSize: '48px',
-          fontWeight: 800,
-          background: 'linear-gradient(45deg, #6366f1, #8b5cf6, #a855f7)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          marginBottom: '10px'
-        } as any}>
+        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-500 bg-clip-text text-transparent mb-[10px]">
           🌐 Web8 Mesh Network Control
         </h1>
-        <p style={{
-          fontSize: '18px',
-          color: '#64748b',
-          marginBottom: '20px'
-        } as any}>
+        <p className="text-lg text-slate-500 mb-5">
           Aktivizo dhe menaxho rrjetin mesh nga Gjermania deri në Shqipëri
         </p>
         
         {/* Network Status Badge */}
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '12px',
-          padding: '12px 24px',
-          background: meshStatus?.isActive 
-            ? 'linear-gradient(135deg, #10b981, #059669)' 
-            : 'linear-gradient(135deg, #ef4444, #dc2626)',
-          borderRadius: '25px',
-          color: '#ffffff',
-          fontWeight: 600,
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
-        } as any}>
-          <div style={{
-            width: '12px',
-            height: '12px',
-            background: '#ffffff',
-            borderRadius: '50%',
-            animation: meshStatus?.isActive ? 'pulse 2s infinite' : 'none'
-          } as any} />
+        <div className={`inline-flex items-center gap-3 py-3 px-6 rounded-[25px] text-white font-semibold shadow-[0_4px_15px_rgba(0,0,0,0.1)] ${meshStatus?.isActive ? 'bg-gradient-to-br from-green-500 to-green-600' : 'bg-gradient-to-br from-red-500 to-red-600'}`}>
+          <div className={`w-3 h-3 bg-white rounded-full ${meshStatus?.isActive ? 'animate-pulse' : ''}`} />
           {meshStatus?.isActive ? '🟢 Network Active' : '🔴 Network Inactive'}
         </div>
       </motion.div>
@@ -256,50 +209,19 @@ export const Web8MeshControl: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '15px',
-          marginBottom: '30px',
-          flexWrap: 'wrap'
-        } as any}
+        className="flex justify-center gap-[15px] mb-[30px] flex-wrap"
       >
         <button
           onClick={activateMeshNetwork}
           disabled={isActivating}
-          style={{
-            padding: '12px 24px',
-            background: isActivating 
-              ? 'linear-gradient(135deg, #9ca3af, #6b7280)'
-              : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-            border: 'none',
-            borderRadius: '12px',
-            color: '#ffffff',
-            fontSize: '16px',
-            fontWeight: 600,
-            cursor: isActivating ? 'not-allowed' : 'pointer',
-            boxShadow: '0 4px 15px rgba(99, 102, 241, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          } as any}
+          className="py-3 px-6 border-none rounded-xl text-white text-base font-semibold flex items-center gap-2 shadow-[0_4px_15px_rgba(99,102,241,0.3)] disabled:bg-gradient-to-br disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed bg-gradient-to-br from-indigo-500 to-purple-500"
         >
           {isActivating ? '⏳ Activating...' : '🚀 Activate Network'}
         </button>
         
         <button
           onClick={discoverNodes}
-          style={{
-            padding: '12px 24px',
-            background: 'linear-gradient(135deg, #10b981, #059669)',
-            border: 'none',
-            borderRadius: '12px',
-            color: '#ffffff',
-            fontSize: '16px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
-          } as any}
+          className="py-3 px-6 bg-gradient-to-br from-green-500 to-green-600 border-none rounded-xl text-white text-base font-semibold cursor-pointer shadow-[0_4px_15px_rgba(16,185,129,0.3)]"
         >
           🔍 Discover Nodes
         </button>
@@ -311,73 +233,40 @@ export const Web8MeshControl: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '20px',
-            marginBottom: '30px'
-          } as any}
+          className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-5 mb-[30px]"
         >
-          <div style={{
-            background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-            border: '2px solid #e2e8f0',
-            borderRadius: '16px',
-            padding: '20px',
-            textAlign: 'center',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-          } as any}>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: '#6366f1', marginBottom: '8px' } as any}>
+          <div className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-5 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+            <div className="text-3xl font-bold text-indigo-500 mb-2">
               {meshStatus.activeNodes}/{meshStatus.totalNodes}
             </div>
-            <div style={{ fontSize: '14px', color: '#64748b', fontWeight: 500 } as any}>
+            <div className="text-sm text-slate-500 font-medium">
               Active Nodes
             </div>
           </div>
 
-          <div style={{
-            background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-            border: '2px solid #e2e8f0',
-            borderRadius: '16px',
-            padding: '20px',
-            textAlign: 'center',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-          } as any}>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: '#10b981', marginBottom: '8px' } as any}>
+          <div className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-5 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+            <div className="text-3xl font-bold text-green-500 mb-2">
               {meshStatus.health}%
             </div>
-            <div style={{ fontSize: '14px', color: '#64748b', fontWeight: 500 } as any}>
+            <div className="text-sm text-slate-500 font-medium">
               Network Health
             </div>
           </div>
 
-          <div style={{
-            background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-            border: '2px solid #e2e8f0',
-            borderRadius: '16px',
-            padding: '20px',
-            textAlign: 'center',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-          } as any}>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: '#f59e0b', marginBottom: '8px' } as any}>
+          <div className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-5 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+            <div className="text-3xl font-bold text-amber-500 mb-2">
               {meshStatus.latency.toFixed(1)}ms
             </div>
-            <div style={{ fontSize: '14px', color: '#64748b', fontWeight: 500 } as any}>
+            <div className="text-sm text-slate-500 font-medium">
               Avg Latency
             </div>
           </div>
 
-          <div style={{
-            background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-            border: '2px solid #e2e8f0',
-            borderRadius: '16px',
-            padding: '20px',
-            textAlign: 'center',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-          } as any}>
-            <div style={{ fontSize: '32px', fontWeight: 700, color: '#8b5cf6', marginBottom: '8px' } as any}>
+          <div className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-5 text-center shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+            <div className="text-3xl font-bold text-purple-500 mb-2">
               {meshStatus.bandwidth} MB/s
             </div>
-            <div style={{ fontSize: '14px', color: '#64748b', fontWeight: 500 } as any}>
+            <div className="text-sm text-slate-500 font-medium">
               Total Bandwidth
             </div>
           </div>
@@ -390,62 +279,25 @@ export const Web8MeshControl: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          style={{
-            background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-            border: '2px solid #e2e8f0',
-            borderRadius: '16px',
-            padding: '25px',
-            marginBottom: '30px',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-          } as any}
+          className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 mb-[30px] shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
         >
-          <h3 style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            color: '#1e293b',
-            marginBottom: '20px',
-            textAlign: 'center'
-          } as any}>
+          <h3 className="text-2xl font-bold text-slate-800 mb-5 text-center">
             🗺️ Regional Node Distribution
           </h3>
           
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '15px'
-          } as any}>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-[15px]">
             {meshStatus.regions.map((region) => (
               <div
                 key={region.region}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '12px 16px',
-                  background: 'rgba(99, 102, 241, 0.1)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(99, 102, 241, 0.2)'
-                } as any}
+                className="flex items-center justify-between py-3 px-4 bg-indigo-500/10 rounded-xl border border-indigo-500/20"
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' } as any}>
-                  <span style={{ fontSize: '20px' } as any}>{region.flag}</span>
-                  <span style={{ 
-                    fontSize: '14px', 
-                    fontWeight: 600,
-                    color: '#1e293b',
-                    textTransform: 'capitalize'
-                  } as any}>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">{region.flag}</span>
+                  <span className="text-sm font-semibold text-slate-800 capitalize">
                     {region.region}
                   </span>
                 </div>
-                <span style={{
-                  fontSize: '16px',
-                  fontWeight: 700,
-                  color: '#6366f1',
-                  background: 'rgba(99, 102, 241, 0.1)',
-                  padding: '4px 8px',
-                  borderRadius: '8px'
-                } as any}>
+                <span className="text-base font-bold text-indigo-500 bg-indigo-500/10 py-1 px-2 rounded-lg">
                   {region.nodes}
                 </span>
               </div>
@@ -459,42 +311,19 @@ export const Web8MeshControl: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
-        style={{
-          background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-          border: '2px solid #e2e8f0',
-          borderRadius: '16px',
-          padding: '25px',
-          marginBottom: '30px',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-        } as any}
+        className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 mb-[30px] shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
       >
-        <h3 style={{
-          fontSize: '20px',
-          fontWeight: 700,
-          color: '#1e293b',
-          marginBottom: '20px'
-        } as any}>
+        <h3 className="text-xl font-bold text-slate-800 mb-5">
           ➕ Add New Node to Network
         </h3>
         
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '15px',
-          marginBottom: '20px'
-        } as any}>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 mb-5">
           <input
             type="text"
             value={newNodeHost}
             onChange={(e) => setNewNodeHost(e.target.value)}
             placeholder="Node IP or hostname"
-            style={{
-              padding: '12px',
-              border: '2px solid #e2e8f0',
-              borderRadius: '8px',
-              fontSize: '14px',
-              background: '#ffffff'
-            } as any}
+            className="p-3 border-2 border-slate-200 rounded-lg text-sm bg-white"
           />
           
           <input
@@ -502,52 +331,32 @@ export const Web8MeshControl: React.FC = () => {
             value={newNodePort}
             onChange={(e) => setNewNodePort(e.target.value)}
             placeholder="Port"
-            style={{
-              padding: '12px',
-              border: '2px solid #e2e8f0',
-              borderRadius: '8px',
-              fontSize: '14px',
-              background: '#ffffff'
-            } as any}
+            className="p-3 border-2 border-slate-200 rounded-lg text-sm bg-white"
           />
           
-          <select
-            value={selectedRegion}
-            onChange={(e) => setSelectedRegion(e.target.value)}
-            style={{
-              padding: '12px',
-              border: '2px solid #e2e8f0',
-              borderRadius: '8px',
-              fontSize: '14px',
-              background: '#ffffff'
-            } as any}
-          >
-            <option value="germany">🇩🇪 Germany</option>
-            <option value="austria">🇦🇹 Austria</option>
-            <option value="slovenia">🇸🇮 Slovenia</option>
-            <option value="croatia">🇭🇷 Croatia</option>
-            <option value="montenegro">🇲🇪 Montenegro</option>
-            <option value="albania">🇦🇱 Albania</option>
-            <option value="kosova">🇽🇰 Kosova</option>
-          </select>
+          <div>
+            <label htmlFor="node-region" className="sr-only">Node Region</label>
+            <select
+              id="node-region"
+              value={selectedRegion}
+              onChange={(e) => setSelectedRegion(e.target.value)}
+              className="w-full p-3 border-2 border-slate-200 rounded-lg text-sm bg-white"
+            >
+              <option value="germany">🇩🇪 Germany</option>
+              <option value="austria">🇦🇹 Austria</option>
+              <option value="slovenia">🇸🇮 Slovenia</option>
+              <option value="croatia">🇭🇷 Croatia</option>
+              <option value="montenegro">🇲🇪 Montenegro</option>
+              <option value="albania">🇦🇱 Albania</option>
+              <option value="kosova">🇽🇰 Kosova</option>
+            </select>
+          </div>
         </div>
         
         <button
           onClick={addNewNode}
           disabled={!newNodeHost || !newNodePort}
-          style={{
-            padding: '12px 24px',
-            background: !newNodeHost || !newNodePort 
-              ? 'linear-gradient(135deg, #9ca3af, #6b7280)'
-              : 'linear-gradient(135deg, #10b981, #059669)',
-            border: 'none',
-            borderRadius: '8px',
-            color: '#ffffff',
-            fontSize: '16px',
-            fontWeight: 600,
-            cursor: !newNodeHost || !newNodePort ? 'not-allowed' : 'pointer',
-            boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
-          } as any}
+          className="py-3 px-6 border-none rounded-lg text-white text-base font-semibold shadow-[0_4px_15px_rgba(16,185,129,0.3)] disabled:bg-gradient-to-br disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed bg-gradient-to-br from-green-500 to-green-600"
         >
           🔗 Connect Node
         </button>
@@ -558,77 +367,32 @@ export const Web8MeshControl: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.5 }}
-        style={{
-          background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-          border: '2px solid #e2e8f0',
-          borderRadius: '16px',
-          padding: '25px',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
-        } as any}
+        className="bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
       >
-        <h3 style={{
-          fontSize: '20px',
-          fontWeight: 700,
-          color: '#1e293b',
-          marginBottom: '20px'
-        } as any}>
+        <h3 className="text-xl font-bold text-slate-800 mb-5">
           📡 Active Network Nodes ({nodes.length})
         </h3>
         
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '15px'
-        } as any}>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-[15px]">
           {nodes.map((node) => (
             <div
               key={node.id}
-              style={{
-                padding: '16px',
-                background: node.status === 'online' 
-                  ? 'rgba(16, 185, 129, 0.1)' 
-                  : 'rgba(239, 68, 68, 0.1)',
-                border: `2px solid ${node.status === 'online' 
-                  ? 'rgba(16, 185, 129, 0.3)' 
-                  : 'rgba(239, 68, 68, 0.3)'}`,
-                borderRadius: '12px'
-              }}
+              className={`p-4 rounded-xl ${node.status === 'online' ? 'bg-green-500/10 border-2 border-green-500/30' : 'bg-red-500/10 border-2 border-red-500/30'}`}
             >
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '8px'
-              } as any}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                } as any}>
-                  <span style={{ fontSize: '16px' } as any}>{node.flag}</span>
-                  <span style={{ fontSize: '16px' } as any}>{node.statusIcon}</span>
-                  <span style={{ 
-                    fontSize: '14px', 
-                    fontWeight: 600,
-                    color: '#1e293b'
-                  } as any}>
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">{node.flag}</span>
+                  <span className="text-base">{node.statusIcon}</span>
+                  <span className="text-sm font-semibold text-slate-800">
                     {node.host}:{node.port}
                   </span>
                 </div>
-                <span style={{
-                  fontSize: '12px',
-                  fontWeight: 500,
-                  color: '#64748b',
-                  textTransform: 'uppercase',
-                  background: 'rgba(100, 116, 139, 0.1)',
-                  padding: '2px 6px',
-                  borderRadius: '4px'
-                } as any}>
+                <span className="text-xs font-medium text-slate-500 uppercase bg-slate-400/10 px-1.5 py-0.5 rounded">
                   {node.type}
                 </span>
               </div>
               
-              <div style={{ fontSize: '12px', color: '#64748b' } as any}>
+              <div className="text-xs text-slate-500">
                 Region: {node.region} • Status: {node.status}
                 {node.latency && ` • Latency: ${node.latency}ms`}
               </div>
@@ -637,23 +401,13 @@ export const Web8MeshControl: React.FC = () => {
         </div>
         
         {nodes.length === 0 && (
-          <div style={{
-            textAlign: 'center',
-            padding: '40px',
-            color: '#64748b',
-            fontSize: '16px'
-          } as any}>
+          <div className="text-center p-10 text-slate-500 text-base">
             No nodes discovered yet. Click "Activate Network" to start discovery.
           </div>
         )}
       </motion.div>
       
-      <div style={{
-        marginTop: '20px',
-        textAlign: 'center',
-        fontSize: '12px',
-        color: '#64748b'
-      } as any}>
+      <div className="mt-5 text-center text-xs text-slate-500">
         Last updated: {new Date(lastUpdate).toLocaleString()}
       </div>
 
@@ -662,6 +416,9 @@ export const Web8MeshControl: React.FC = () => {
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        .animate-pulse {
+          animation: pulse 2s infinite;
         }
       `}</style>
     </div>

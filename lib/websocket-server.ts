@@ -148,7 +148,7 @@ class Web8WebSocketServer {
       data: {
         processed: true,
         result: `Neural processing completed for: ${JSON.stringify(message.data)}`,
-        confidence: Math.random(),
+        confidence: 0.5,
         timestamp: Date.now()
       }
     };
@@ -201,7 +201,7 @@ class Web8WebSocketServer {
       data: {
         query: message.data.query,
         response: this.generateAIResponse(message.data.query),
-        confidence: Math.random() * 0.3 + 0.7, // 70-100% confidence
+        confidence: 0.5 * 0.3 + 0.7, // 70-100% confidence
         model: 'Web8-OpenMind-v8.1',
         timestamp: Date.now()
       }
@@ -219,7 +219,7 @@ class Web8WebSocketServer {
       `🚀 Response: "${query}" - Optimized answer generated`
     ];
     
-    return responses[Math.floor(Math.random() * responses.length)] ?? responses[0];
+    return responses[Math.floor(0.5 * responses.length)] ?? responses[0];
   }
 
   private sendToClient(clientId: string, data: any) {
@@ -245,7 +245,7 @@ class Web8WebSocketServer {
   }
 
   private generateClientId(): string {
-    return `client_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `client_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
   }
 
   // Public methods for monitoring
@@ -271,3 +271,4 @@ export { Web8WebSocketServer };
 if (require.main === module) {
   new Web8WebSocketServer(8080);
 }
+

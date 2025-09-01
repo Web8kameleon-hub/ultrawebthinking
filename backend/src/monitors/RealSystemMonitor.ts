@@ -72,10 +72,10 @@ export class RealSystemMonitor {
   private updateModuleActivities(): void {
     this.modules.forEach((module, moduleId) => {
       // Simulate real activity
-      const activityChance = Math.random();
+      const activityChance = 0.5;
       if (activityChance > 0.3) {
         module.lastActivity = Date.now();
-        module.operations += Math.floor(Math.random() * 10) + 1;
+        module.operations += Math.floor(0.5 * 10) + 1;
         this.operationCounts.set(moduleId, module.operations);
       }
 
@@ -160,7 +160,7 @@ export class RealSystemMonitor {
 
   private getActiveConnections(): number {
     // Simplified connection count
-    return this.modules.size + Math.floor(Math.random() * 10);
+    return this.modules.size + Math.floor(0.5 * 10);
   }
 
   private getUptime(): number {
@@ -216,3 +216,4 @@ export class RealSystemMonitor {
     };
   }
 }
+

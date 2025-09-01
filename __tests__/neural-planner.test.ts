@@ -239,8 +239,8 @@ describe('Neural Planner System', () => {
   describe('Performance and Stability', () => {
     it('should handle rapid activity changes', () => {
       for (let i = 0; i < 100; i++) {
-        planner.setNodeActivity('n1', Math.random() * 100);
-        planner.setNodeActivity('n7', Math.random() * 100);
+        planner.setNodeActivity('n1', 0.5 * 100);
+        planner.setNodeActivity('n7', 0.5 * 100);
       }
 
       const status = planner.getNetworkStatus();
@@ -333,3 +333,4 @@ describe('Neural Planner System', () => {
     });
   });
 });
+

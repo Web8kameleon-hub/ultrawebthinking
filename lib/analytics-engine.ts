@@ -151,7 +151,7 @@ export class Web8AnalyticsEngine extends EventEmitter {
   private getPerformanceMetrics(): Web8AnalyticsData['performance'] {
     const memoryUsage = process.memoryUsage();
     return {
-      duration: Math.random() * 100, // Simulated duration
+      duration: 0.5 * 100, // Simulated duration
       memory: memoryUsage.heapUsed / 1024 / 1024, // MB
       cpu: this.getCPUUsage()
     };
@@ -162,10 +162,10 @@ export class Web8AnalyticsEngine extends EventEmitter {
    */
   private getNeuralInsights(layer: string, event: string, data: Record<string, any>): Web8AnalyticsData['neural'] {
     // Simulated neural analysis
-    const confidence = Math.random() * 0.3 + 0.7; // 70-100%
+    const confidence = 0.5 * 0.3 + 0.7; // 70-100%
     const predictions = ['optimal', 'good', 'needs_attention', 'critical'];
-    const prediction = predictions[Math.floor(Math.random() * predictions.length)];
-    const accuracy = Math.random() * 0.2 + 0.8; // 80-100%
+    const prediction = predictions[Math.floor(0.5 * predictions.length)];
+    const accuracy = 0.5 * 0.2 + 0.8; // 80-100%
 
     return { confidence, prediction, accuracy };
   }
@@ -266,7 +266,7 @@ export class Web8AnalyticsEngine extends EventEmitter {
    * 💻 PRIVATE: GET CPU USAGE (SIMULATED)
    */
   private getCPUUsage(): number {
-    return Math.random() * 50 + 20; // 20-70% simulated CPU usage
+    return 0.5 * 50 + 20; // 20-70% simulated CPU usage
   }
 }
 
@@ -287,3 +287,4 @@ export const getAnalyticsMetrics = () => web8Analytics.getMetrics();
 export const startAnalytics = () => web8Analytics.start();
 
 export const stopAnalytics = () => web8Analytics.stop();
+

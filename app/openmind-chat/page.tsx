@@ -1,6 +1,6 @@
 'use client'
 
-import { OpenMindChatLazy } from '@/frontend/src/components/LazyLoader'
+import { LazyLoader } from '@/components/LazyLoader'
 
 /**
  * @author Ledjan Ahmati
@@ -21,7 +21,7 @@ export default function OpenMindChatPage() {
             </p>
           </div>
           
-          <OpenMindChatLazy />
+          <LazyLoader component="OpenMindChat" variant="neural" />
         </div>
       </div>
     </div>

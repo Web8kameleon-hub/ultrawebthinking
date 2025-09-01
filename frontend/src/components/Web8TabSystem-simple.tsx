@@ -14,6 +14,19 @@ import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 
+// Screen reader only styles for accessibility
+const srOnlyStyles = {
+  position: 'absolute' as const,
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  margin: '-1px',
+  overflow: 'hidden' as const,
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap' as const,
+  border: 0
+}
+
 // Tab Interface
 interface Tab {
   id: string
@@ -234,12 +247,16 @@ const Web8TabSystemSimple: React.FC = () => {
           
           {/* Search Bar */}
           <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center', gap: '8px' } as any}>
+            <label htmlFor="search-input" style={srOnlyStyles}>Search AGI modules and content</label>
             <input
+              id="search-input"
               type="text"
               name="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="🔍 Search..."
+              aria-label="Search AGI modules and content"
+              title="Search AGI modules and content"
               style={{
                 backgroundColor: 'rgba(30, 41, 59, 0.8)',
                 border: '1px solid rgba(245, 158, 11, 0.3)',
@@ -253,6 +270,8 @@ const Web8TabSystemSimple: React.FC = () => {
             />
             <button
               type="submit"
+              aria-label="Execute search"
+              title="Execute search"
               style={{
                 backgroundColor: 'rgba(245, 158, 11, 0.2)',
                 border: '1px solid #f59e0b',
@@ -400,35 +419,47 @@ const Web8TabSystemSimple: React.FC = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' } as any}>
           <div style={{ display: 'flex', gap: '8px' } as any}>
-            <button style={{
-              backgroundColor: 'rgba(30, 41, 59, 0.5)',
-              border: '1px solid #475569',
-              color: '#94a3b8',
-              padding: '6px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s'
-            } as any}>
+            <button
+              title="Go back"
+              aria-label="Navigate back to previous page"
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                border: '1px solid #475569',
+                color: '#94a3b8',
+                padding: '6px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s'
+              } as any}
+            >
               ←
             </button>
-            <button style={{
-              backgroundColor: 'rgba(30, 41, 59, 0.5)',
-              border: '1px solid #475569',
-              color: '#94a3b8',
-              padding: '6px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'background-color 0.3s'
-            } as any}>
+            <button
+              title="Go forward"
+              aria-label="Navigate forward to next page"
+              style={{
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
+                border: '1px solid #475569',
+                color: '#94a3b8',
+                padding: '6px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s'
+              } as any}
+            >
               →
             </button>
           </div>
 
           <div style={{ flex: 1 } as any}>
+            <label htmlFor="url-input" style={srOnlyStyles}>Current page URL</label>
             <input
+              id="url-input"
               type="text"
-              value={activeTab.url}
+              value={activeTab?.url || ''}
               readOnly
+              title="Current URL"
+              aria-label="Current page URL (read-only)"
               style={{
                 width: '100%',
                 backgroundColor: 'rgba(30, 41, 59, 0.8)',

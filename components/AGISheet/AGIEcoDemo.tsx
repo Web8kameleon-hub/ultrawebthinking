@@ -3,7 +3,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import { AGIEco } from '../../frontend/src/components/AGISheet/AGIEco';
+// import { AGIEco } from '../components/AGISheet/AGIEco'; // Temporarily disabled due to missing module
+
+// Placeholder component
+const AGIEco = ({ ecosystemHealth, analysisMode, onDataUpdate }: any) => (
+  <div className="p-4 border rounded bg-green-50">
+    <h3 className="text-lg font-semibold text-green-700">AGI Eco System</h3>
+    <p className="text-green-600">Ecosystem Health: {ecosystemHealth}%</p>
+    <p className="text-sm text-gray-600">Analysis Mode: {analysisMode}</p>
+    <p className="text-xs text-gray-500">Placeholder - AGIEco module not found</p>
+  </div>
+);
 import styles from './AGIEcoDemo.module.css';
 
 const containerVariants = cva(styles.container, {
@@ -326,3 +336,4 @@ export const AGIEcoDemo = ({
     </div>
   );
 };
+

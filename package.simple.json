@@ -1,0 +1,38 @@
+{
+  "name": "ultrawebthinking",
+  "version": "8.0.0-WEB8",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:vite": "vite",
+    "build": "next build",
+    "build:vite": "vite build",
+    "start": "next start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --config .eslintrc.simple.json",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --config .eslintrc.simple.json --fix",
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "type-check:strict": "tsc --noEmit",
+    "clean": "rm -rf .next dist node_modules/.cache",
+    "fix:auto": "tsx fix-typescript-auto.ts",
+    "dev:full": "concurrently \"yarn dev\" \"yarn dev:backend\"",
+    "dev:backend": "tsx backend/realtime-server.ts",
+    "industrial:build": "yarn clean && yarn build && yarn type-check",
+    "vercel:deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "next": "15.5.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5",
+    "vite": "^6.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tsx": "^4.19.2",
+    "eslint": "^8",
+    "eslint-config-next": "15.5.2"
+  }
+}

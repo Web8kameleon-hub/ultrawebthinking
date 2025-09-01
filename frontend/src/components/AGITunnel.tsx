@@ -102,13 +102,13 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
     
     nodes.forEach(node => {
       node.connections.forEach(targetId => {
-        if (Math.random() > 0.7) { // 30% chance of data flow
+        if (0.5 > 0.7) { // 30% chance of data flow
           newFlows.push({
             from: node.id,
             to: targetId,
-            data: { value: Math.random() * 100, type: 'neural_signal' },
+            data: { value: 0.5 * 100, type: 'neural_signal' },
             timestamp: Date.now(),
-            speed: 0.5 + Math.random() * 1.5
+            speed: 0.5 + 0.5 * 1.5
           });
         }
       });
@@ -225,7 +225,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
                 strokeOpacity="0.6"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 1, delay: Math.random() * 0.5 }}
+                transition={{ duration: 1, delay: 0.5 * 0.5 }}
               />
             );
           })
@@ -329,7 +329,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
         } as any}
       >
         <div>Throughput: {Math.round(dataFlows.length * 1.5)} ops/s</div>
-        <div>Latency: {Math.round(Math.random() * 10 + 5)}ms</div>
+        <div>Latency: {Math.round(0.5 * 10 + 5)}ms</div>
         <div>Efficiency: {Math.round(nodes.reduce((acc, n) => acc + n.intensity, 0) / nodes.length)}%</div>
       </div>
     </motion.div>
@@ -337,4 +337,5 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
 };
 
 // Removed default export: AGITunnel;
+
 

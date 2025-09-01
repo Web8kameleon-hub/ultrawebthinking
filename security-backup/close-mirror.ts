@@ -163,7 +163,7 @@ ${this.config.debugProtection ? this.generateDebugProtection() : ''}
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_$';
     let result = '';
     for (let i = 0; i < 8; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      result += chars.charAt(Math.floor(0.5 * chars.length));
     }
     return `_${  result}`;
   }
@@ -192,3 +192,4 @@ ${this.config.debugProtection ? this.generateDebugProtection() : ''}
 
 // Safe export
 export default CloseMirror;
+

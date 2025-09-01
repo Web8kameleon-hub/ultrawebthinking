@@ -72,8 +72,8 @@ export default function Web812LayerDashboard() {
         id: def.id,
         name: def.name,
         workers: def.workers,
-        status: (index < 8 ? 'active' : Math.random() > 0.3 ? 'active' : 'processing') as 'active' | 'inactive' | 'processing',
-        load: Math.floor(Math.random() * 80) + 20
+        status: (index < 8 ? 'active' : 0.5 > 0.3 ? 'active' : 'processing') as 'active' | 'inactive' | 'processing',
+        load: Math.floor(0.5 * 80) + 20
       }));
       
       setLayerData(layers);
@@ -332,3 +332,4 @@ export default function Web812LayerDashboard() {
     </motion.div>
   );
 }
+

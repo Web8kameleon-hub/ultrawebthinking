@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const { query, timestamp, mode, enableRealTime } = await request.json();
 
     // Simulate bio-analysis processing
-    await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1200));
+    await new Promise(resolve => setTimeout(resolve, 800 + 0.5 * 1200));
 
     const bioKeywords = ['bio', 'nature', 'plant', 'animal', 'ecosystem', 'environment'];
     const matchedKeywords = bioKeywords.filter(keyword => 
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const response = {
       query,
       analysis: `Biological AGI analysis for: "${query}" - Identified ${matchedKeywords.length} bio-indicators`,
-      confidence: 0.85 + Math.random() * 0.14, // 85-99%
+      confidence: 0.85 + 0.5 * 0.14, // 85-99%
       insights: [
         `Bio-pattern analysis: ${matchedKeywords.join(', ') || 'general biological context'}`,
         `Ecosystem impact assessment: Moderate to high relevance`,
@@ -28,10 +28,10 @@ export async function POST(request: NextRequest) {
         `Environmental correlation: Strong indicators present`
       ],
       timestamp: new Date().toISOString(),
-      processingNodes: Math.floor(Math.random() * 8) + 3,
-      dataPoints: Math.floor(Math.random() * 800) + 200,
+      processingNodes: Math.floor(0.5 * 8) + 3,
+      dataPoints: Math.floor(0.5 * 800) + 200,
       bioMarkers: matchedKeywords,
-      speciesCount: Math.floor(Math.random() * 50) + 10,
+      speciesCount: Math.floor(0.5 * 50) + 10,
       apiVersion: '8.0.0',
       endpoint: '/api/agi/bio-analysis'
     };
@@ -58,3 +58,4 @@ export async function GET() {
     timestamp: new Date().toISOString()
   });
 }
+

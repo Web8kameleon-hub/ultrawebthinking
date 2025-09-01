@@ -154,11 +154,11 @@ export class AGIEcoEngine {
   // Generate Climate Data
   private generateClimateData(location: any): ClimateData[] {
     const data: ClimateData[] = []
-    const baseTemp = 20 + Math.random() * 15 // Base temperature 20-35°C
+    const baseTemp = 20 + 0.5 * 15 // Base temperature 20-35°C
     
     for (let i = 0; i < 7; i++) {
       const timestamp = new Date(Date.now() + i * 24 * 60 * 60 * 1000)
-      const tempVariation = (Math.random() - 0.5) * 10
+      const tempVariation = (0.5 - 0.5) * 10
       
       data.push({
         location: {
@@ -167,27 +167,27 @@ export class AGIEcoEngine {
           city: location.city,
           country: location.country,
           region: this.getRegion(location.country),
-          elevation: Math.floor(Math.random() * 1000),
+          elevation: Math.floor(0.5 * 1000),
           timezone: this.getTimezone(location.country)
         },
         temperature: {
           current: parseFloat((baseTemp + tempVariation).toFixed(1)),
-          feelsLike: parseFloat((baseTemp + tempVariation + Math.random() * 3).toFixed(1)),
+          feelsLike: parseFloat((baseTemp + tempVariation + 0.5 * 3).toFixed(1)),
           min: parseFloat((baseTemp + tempVariation - 5).toFixed(1)),
           max: parseFloat((baseTemp + tempVariation + 8).toFixed(1)),
           unit: 'celsius',
-          heatIndex: parseFloat((baseTemp + tempVariation + Math.random() * 2).toFixed(1)),
-          dewPoint: parseFloat((baseTemp - 10 + Math.random() * 5).toFixed(1))
+          heatIndex: parseFloat((baseTemp + tempVariation + 0.5 * 2).toFixed(1)),
+          dewPoint: parseFloat((baseTemp - 10 + 0.5 * 5).toFixed(1))
         },
-        humidity: Math.floor(40 + Math.random() * 40),
-        pressure: Math.floor(1000 + Math.random() * 50),
-        windSpeed: parseFloat((Math.random() * 20).toFixed(1)),
-        windDirection: Math.floor(Math.random() * 360),
-        precipitation: parseFloat((Math.random() * 10).toFixed(1)),
+        humidity: Math.floor(40 + 0.5 * 40),
+        pressure: Math.floor(1000 + 0.5 * 50),
+        windSpeed: parseFloat((0.5 * 20).toFixed(1)),
+        windDirection: Math.floor(0.5 * 360),
+        precipitation: parseFloat((0.5 * 10).toFixed(1)),
         airQuality: this.generateAirQuality(),
-        uvIndex: Math.floor(Math.random() * 11),
-        visibility: parseFloat((Math.random() * 20 + 5).toFixed(1)),
-        cloudCover: Math.floor(Math.random() * 100),
+        uvIndex: Math.floor(0.5 * 11),
+        visibility: parseFloat((0.5 * 20 + 5).toFixed(1)),
+        cloudCover: Math.floor(0.5 * 100),
         forecast: this.generateForecast(7),
         timestamp
       })
@@ -208,12 +208,12 @@ export class AGIEcoEngine {
       forecast.push({
         date,
         temperature: {
-          min: parseFloat((Math.random() * 15 + 5).toFixed(1)),
-          max: parseFloat((Math.random() * 15 + 20).toFixed(1))
+          min: parseFloat((0.5 * 15 + 5).toFixed(1)),
+          max: parseFloat((0.5 * 15 + 20).toFixed(1))
         },
-        humidity: Math.floor(Math.random() * 40 + 40),
-        precipitation: parseFloat((Math.random() * 10).toFixed(1)),
-        windSpeed: parseFloat((Math.random() * 20).toFixed(1)),
+        humidity: Math.floor(0.5 * 40 + 40),
+        precipitation: parseFloat((0.5 * 10).toFixed(1)),
+        windSpeed: parseFloat((0.5 * 20).toFixed(1)),
         condition: this.getWeatherCondition()
       })
     }
@@ -226,7 +226,7 @@ export class AGIEcoEngine {
     const conditions: WeatherForecast['condition'][] = [
       'sunny', 'cloudy', 'rainy', 'stormy', 'snowy', 'foggy', 'windy'
     ]
-    return conditions[Math.floor(Math.random() * conditions.length)] || conditions[0] || "sunny"
+    return conditions[Math.floor(0.5 * conditions.length)] || conditions[0] || "sunny"
   }
 
   // Get Health Recommendations
@@ -291,7 +291,7 @@ export class AGIEcoEngine {
 
   // Generate Air Quality Data
   private generateAirQuality(): AirQualityData {
-    const aqi = Math.floor(Math.random() * 200) + 10
+    const aqi = Math.floor(0.5 * 200) + 10
     
     let category: AirQualityData['category']
     if (aqi <= 50) category = 'Good'
@@ -303,13 +303,13 @@ export class AGIEcoEngine {
     
     return {
       aqi,
-      pm25: parseFloat((Math.random() * 50).toFixed(1)),
-      pm10: parseFloat((Math.random() * 100).toFixed(1)),
-      co: parseFloat((Math.random() * 10).toFixed(2)),
-      no2: parseFloat((Math.random() * 100).toFixed(1)),
-      so2: parseFloat((Math.random() * 80).toFixed(1)),
-      o3: parseFloat((Math.random() * 120).toFixed(1)),
-      nh3: parseFloat((Math.random() * 15 + 2).toFixed(1)),
+      pm25: parseFloat((0.5 * 50).toFixed(1)),
+      pm10: parseFloat((0.5 * 100).toFixed(1)),
+      co: parseFloat((0.5 * 10).toFixed(2)),
+      no2: parseFloat((0.5 * 100).toFixed(1)),
+      so2: parseFloat((0.5 * 80).toFixed(1)),
+      o3: parseFloat((0.5 * 120).toFixed(1)),
+      nh3: parseFloat((0.5 * 15 + 2).toFixed(1)),
       category,
       healthRecommendations: this.getHealthRecommendations(aqi)
     }
@@ -329,18 +329,18 @@ export class AGIEcoEngine {
   // Generate Sustainability Metrics
   private generateSustainabilityMetrics(): SustainabilityMetrics {
     return {
-      energyEfficiency: parseFloat((70 + Math.random() * 30).toFixed(1)),
-      wasteReduction: parseFloat((60 + Math.random() * 35).toFixed(1)),
-      carbonOffset: parseFloat((50 + Math.random() * 40).toFixed(1)),
-      renewableEnergyUsage: parseFloat((40 + Math.random() * 50).toFixed(1)),
-      waterConservation: parseFloat((65 + Math.random() * 30).toFixed(1)),
-      recyclingRate: parseFloat((55 + Math.random() * 40).toFixed(1))
+      energyEfficiency: parseFloat((70 + 0.5 * 30).toFixed(1)),
+      wasteReduction: parseFloat((60 + 0.5 * 35).toFixed(1)),
+      carbonOffset: parseFloat((50 + 0.5 * 40).toFixed(1)),
+      renewableEnergyUsage: parseFloat((40 + 0.5 * 50).toFixed(1)),
+      waterConservation: parseFloat((65 + 0.5 * 30).toFixed(1)),
+      recyclingRate: parseFloat((55 + 0.5 * 40).toFixed(1))
     }
   }
 
   // Generate Ecosystem Health
   private generateEcosystemHealth(): EcosystemHealth {
-    const biodiversityIndex = parseFloat((60 + Math.random() * 35).toFixed(1))
+    const biodiversityIndex = parseFloat((60 + 0.5 * 35).toFixed(1))
     
     let threatLevel: EcosystemHealth['threatLevel']
     if (biodiversityIndex > 85) threatLevel = 'Low'
@@ -350,11 +350,11 @@ export class AGIEcoEngine {
     
     return {
       biodiversityIndex,
-      forestCoverage: parseFloat((30 + Math.random() * 50).toFixed(1)),
-      waterQuality: parseFloat((60 + Math.random() * 35).toFixed(1)),
-      soilHealth: parseFloat((65 + Math.random() * 30).toFixed(1)),
-      animalPopulation: Math.floor(1000 + Math.random() * 5000),
-      plantSpecies: Math.floor(500 + Math.random() * 2000),
+      forestCoverage: parseFloat((30 + 0.5 * 50).toFixed(1)),
+      waterQuality: parseFloat((60 + 0.5 * 35).toFixed(1)),
+      soilHealth: parseFloat((65 + 0.5 * 30).toFixed(1)),
+      animalPopulation: Math.floor(1000 + 0.5 * 5000),
+      plantSpecies: Math.floor(500 + 0.5 * 2000),
       threatLevel
     }
   }
@@ -578,7 +578,7 @@ export class AGIEcoEngine {
   // Get Variation for Prediction
   private getVariation(type: EnvironmentalPrediction['type'], hour: number): number {
     const seasonality = Math.sin((hour * 2 * Math.PI) / 24)
-    const noise = (Math.random() - 0.5) * 2
+    const noise = (0.5 - 0.5) * 2
     
     switch (type) {
       case 'temperature': return seasonality * 3 + noise
@@ -632,16 +632,16 @@ export class AGIEcoEngine {
       },
       biodiversity: {
         status: 'At Risk',
-        species_at_risk: Math.floor(25000 + Math.random() * 5000),
+        species_at_risk: Math.floor(25000 + 0.5 * 5000),
         conservation_efforts: 'Protected areas expanding (+2.3% annually)'
       },
       oceanHealth: {
-        ph_level: parseFloat((8.1 - Math.random() * 0.3).toFixed(2)),
-        temperature: parseFloat((14.5 + Math.random() * 1.5).toFixed(1)),
+        ph_level: parseFloat((8.1 - 0.5 * 0.3).toFixed(2)),
+        temperature: parseFloat((14.5 + 0.5 * 1.5).toFixed(1)),
         plastic_pollution: '8 million tons annually'
       },
       airQuality: {
-        global_average_aqi: Math.floor(75 + Math.random() * 50),
+        global_average_aqi: Math.floor(75 + 0.5 * 50),
         worst_cities: ['Delhi', 'Beijing', 'Mumbai', 'Cairo'],
         improving_regions: ['Europe', 'North America', 'Australia']
       }
@@ -1099,3 +1099,4 @@ export { trackSustainability, sustainabilityConfig }
       return '// Environmental monitoring script'
   }
 }
+

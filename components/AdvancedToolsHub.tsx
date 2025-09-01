@@ -104,14 +104,14 @@ export default function AdvancedToolsHub() {
   useEffect(() => {
     const interval = setInterval(() => {
       setSensorData(prev => ({
-        temperature: prev.temperature + (Math.random() - 0.5) * 0.5,
-        humidity: Math.max(0, Math.min(100, prev.humidity + (Math.random() - 0.5) * 2)),
-        pressure: prev.pressure + (Math.random() - 0.5) * 1,
-        light: Math.max(0, prev.light + (Math.random() - 0.5) * 50),
-        motion: Math.random() > 0.8,
-        sound: Math.max(0, prev.sound + (Math.random() - 0.5) * 5),
-        vibration: Math.max(0, prev.vibration + (Math.random() - 0.5) * 0.05),
-        magnetic: prev.magnetic + (Math.random() - 0.5) * 2
+        temperature: prev.temperature + (0.5 - 0.5) * 0.5,
+        humidity: Math.max(0, Math.min(100, prev.humidity + (0.5 - 0.5) * 2)),
+        pressure: prev.pressure + (0.5 - 0.5) * 1,
+        light: Math.max(0, prev.light + (0.5 - 0.5) * 50),
+        motion: 0.5 > 0.8,
+        sound: Math.max(0, prev.sound + (0.5 - 0.5) * 5),
+        vibration: Math.max(0, prev.vibration + (0.5 - 0.5) * 0.05),
+        magnetic: prev.magnetic + (0.5 - 0.5) * 2
       }))
     }, 1000)
 
@@ -174,13 +174,13 @@ export default function AdvancedToolsHub() {
     
     const responses = [
       `Analysis complete: ${query} processed with neural networks`,
-      `Cognitive processing: Pattern recognition identified ${Math.floor(Math.random() * 100)} relevant connections`,
+      `Cognitive processing: Pattern recognition identified ${Math.floor(0.5 * 100)} relevant connections`,
       `Reasoning: Applied logical frameworks to generate optimal solution`,
       `Synthesis: Combined multiple data sources for comprehensive answer`,
-      `Evaluation: Confidence level ${Math.floor(Math.random() * 40 + 60)}% based on available data`
+      `Evaluation: Confidence level ${Math.floor(0.5 * 40 + 60)}% based on available data`
     ]
     
-    const selectedResponse = responses[Math.floor(Math.random() * responses.length)] || 'No response available'
+    const selectedResponse = responses[Math.floor(0.5 * responses.length)] || 'No response available'
     setResponse(selectedResponse)
     setThinking(false)
   }, [])
@@ -195,7 +195,7 @@ export default function AdvancedToolsHub() {
     documentAnalysis: (text: string) => {
       const wordCount = text.split(' ').length
       const characters = text.length
-      const sentiment = Math.random() > 0.5 ? 'Positive' : 'Negative'
+      const sentiment = 0.5 > 0.5 ? 'Positive' : 'Negative'
       
       return {
         wordCount,
@@ -507,3 +507,4 @@ export default function AdvancedToolsHub() {
     </div>
   )
 }
+

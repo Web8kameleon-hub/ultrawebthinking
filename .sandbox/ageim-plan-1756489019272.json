@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-08-29T17:36:59.272Z",
+  "agentId": "AGICore@web8",
+  "strategy": "ZERO-FAKE-ENFORCEMENT",
+  "actions": {
+    "enforceRealData": [
+      "Convert Cell.value -> RealData<T>|null",
+      "Wrap data components with <RealGuard/>",
+      "Force provenance on all API outputs",
+      "Remove Math.random() and performance.now() usage"
+    ],
+    "removeSimulations": [
+      "Delete initialLayers in AGISheet",
+      "Remove setTimeout simulate blocks",
+      "Replace fake data generators with MISSING_TOOL"
+    ],
+    "hardenSecurity": [
+      "Implement CSP via server headers",
+      "Add SRI for external content",
+      "Validate all inputs with provenance"
+    ]
+  },
+  "priorities": [
+    {
+      "task": "Remove fake data",
+      "urgency": "HIGH",
+      "impact": "CRITICAL"
+    },
+    {
+      "task": "Add RealGuard protection",
+      "urgency": "HIGH",
+      "impact": "HIGH"
+    },
+    {
+      "task": "Implement provenance tracking",
+      "urgency": "MEDIUM",
+      "impact": "HIGH"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI State Management API
  * Real-time AGI system state and performance monitoring
  * 
@@ -90,7 +90,7 @@ const sessionStates = new Map<string, Partial<AGISystemState>>();
 export async function GET(request: NextRequest) {
   try {
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+                     request.headers.get("x-forwarded-for") || "unknown" || 
                      'anonymous';
     
     const userId = request.headers.get('x-user-id');
@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
     const { component, updates } = body;
     
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+                     request.headers.get("x-forwarded-for") || "unknown" || 
                      'anonymous';
 
     // Validate input
@@ -210,7 +210,7 @@ export async function PATCH(request: NextRequest) {
     const { action, data } = body;
     
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+                     request.headers.get("x-forwarded-for") || "unknown" || 
                      'anonymous';
 
     switch (action) {
@@ -285,36 +285,36 @@ function updateRealTimeState(): void {
   
   // Simulate system metrics fluctuations
   globalAGIState.system.performance = Math.max(70, Math.min(100, 
-    globalAGIState.system.performance + (Math.random() - 0.5) * 4
+    globalAGIState.system.performance + (0.5 - 0.5) * 4
   ));
   
   globalAGIState.system.memory = Math.max(20, Math.min(90, 
-    globalAGIState.system.memory + (Math.random() - 0.5) * 3
+    globalAGIState.system.memory + (0.5 - 0.5) * 3
   ));
   
   globalAGIState.system.cpuUsage = Math.max(5, Math.min(80, 
-    globalAGIState.system.cpuUsage + (Math.random() - 0.5) * 5
+    globalAGIState.system.cpuUsage + (0.5 - 0.5) * 5
   ));
   
   globalAGIState.system.networkLatency = Math.max(5, Math.min(100, 
-    globalAGIState.system.networkLatency + (Math.random() - 0.5) * 3
+    globalAGIState.system.networkLatency + (0.5 - 0.5) * 3
   ));
 
   // Update eco metrics gradually
   globalAGIState.eco.airQuality = Math.max(40, Math.min(100, 
-    globalAGIState.eco.airQuality + (Math.random() - 0.5) * 2
+    globalAGIState.eco.airQuality + (0.5 - 0.5) * 2
   ));
   
   globalAGIState.eco.waterQuality = Math.max(50, Math.min(100, 
-    globalAGIState.eco.waterQuality + (Math.random() - 0.5) * 1.5
+    globalAGIState.eco.waterQuality + (0.5 - 0.5) * 1.5
   ));
   
   globalAGIState.eco.soilHealth = Math.max(30, Math.min(100, 
-    globalAGIState.eco.soilHealth + (Math.random() - 0.5) * 1
+    globalAGIState.eco.soilHealth + (0.5 - 0.5) * 1
   ));
   
   globalAGIState.eco.biodiversity = Math.max(20, Math.min(100, 
-    globalAGIState.eco.biodiversity + (Math.random() - 0.5) * 0.8
+    globalAGIState.eco.biodiversity + (0.5 - 0.5) * 0.8
   ));
 
   // Calculate eco score
@@ -344,3 +344,5 @@ function updateRealTimeState(): void {
   globalAGIState.eco.soilHealth = Math.round(globalAGIState.eco.soilHealth);
   globalAGIState.eco.biodiversity = Math.round(globalAGIState.eco.biodiversity);
 }
+
+

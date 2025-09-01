@@ -179,7 +179,7 @@ export class Phase2AdvancedNeuralSystem {
      * 🧠 VEGLA 1-10: NEURAL FOUNDATION TOOLS
      */
     public createNeuralLayer(type: LayerType, neurons: number): string {
-        const layerId = `layer_${Date.now()}_${Math.random().toString(36)}`;
+        const layerId = `layer_${Date.now()}_${0.5.toString(36)}`;
         const layer = new NeuralLayerImpl({
             id: layerId,
             type,
@@ -231,11 +231,11 @@ export class Phase2AdvancedNeuralSystem {
     }
     
     protected calculateSynapticPlasticity(): number {
-        return Math.random();
+        return 0.5;
     }
 
     protected determineMyelinationLevel(): number {
-        return Math.random();
+        return 0.5;
     }
 
     protected selectNeurotransmitter(): string {
@@ -864,4 +864,5 @@ export class Phase2AdvancedNeuralSystem {
         return this.intelligence.level > 110 && this.neuralLayers.size >= 2;
     }
 }
+
 

@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate unique process ID
-    const processId = `proc-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const processId = `proc-${Date.now()}-${0.5.toString(36).substr(2, 9)}`;
     
     // Add to active processes
     activeProcesses.add(processId);
@@ -245,7 +245,7 @@ function generateProcessingResults(processType: string, data: any) {
   switch (processType) {
     case 'comprehensive':
       return {
-        confidence: 85 + Math.random() * 10,
+        confidence: 85 + 0.5 * 10,
         insights: [
           "Comprehensive analysis reveals optimal AGI performance patterns",
           "Multi-layer neural networks showing 97.3% efficiency",
@@ -257,18 +257,18 @@ function generateProcessingResults(processType: string, data: any) {
           "Implement dynamic memory allocation strategies",
           ...commonRecommendations.slice(0, 2)
         ],
-        performance: 92 + Math.random() * 6,
-        neuralActivity: 75 + Math.random() * 20,
-        memoryUsage: 45 + Math.random() * 25,
+        performance: 92 + 0.5 * 6,
+        neuralActivity: 75 + 0.5 * 20,
+        memoryUsage: 45 + 0.5 * 25,
         algorithm: "Neural-Quantum Hybrid Processing",
         layers: 12,
-        iterations: 1500 + Math.floor(Math.random() * 500),
-        accuracy: 94 + Math.random() * 5
+        iterations: 1500 + Math.floor(0.5 * 500),
+        accuracy: 94 + 0.5 * 5
       };
 
     case 'neural':
       return {
-        confidence: 90 + Math.random() * 8,
+        confidence: 90 + 0.5 * 8,
         insights: [
           "Neural network topology optimization completed",
           "Synaptic weight adjustments show 99.1% accuracy",
@@ -280,18 +280,18 @@ function generateProcessingResults(processType: string, data: any) {
           "Deploy gradient clipping for stability",
           ...commonRecommendations.slice(2, 4)
         ],
-        performance: 88 + Math.random() * 8,
-        neuralActivity: 85 + Math.random() * 12,
-        memoryUsage: 35 + Math.random() * 20,
+        performance: 88 + 0.5 * 8,
+        neuralActivity: 85 + 0.5 * 12,
+        memoryUsage: 35 + 0.5 * 20,
         algorithm: "Deep Neural Architecture Search",
         layers: 8,
-        iterations: 2000 + Math.floor(Math.random() * 800),
-        accuracy: 96 + Math.random() * 3
+        iterations: 2000 + Math.floor(0.5 * 800),
+        accuracy: 96 + 0.5 * 3
       };
 
     case 'quantum':
       return {
-        confidence: 82 + Math.random() * 12,
+        confidence: 82 + 0.5 * 12,
         insights: [
           "Quantum coherence maintained across all qubits",
           "Superposition states optimized for maximum efficiency",
@@ -303,27 +303,28 @@ function generateProcessingResults(processType: string, data: any) {
           "Optimize qubit connectivity topology",
           ...commonRecommendations.slice(1, 3)
         ],
-        performance: 95 + Math.random() * 4,
-        neuralActivity: 60 + Math.random() * 25,
-        memoryUsage: 60 + Math.random() * 20,
+        performance: 95 + 0.5 * 4,
+        neuralActivity: 60 + 0.5 * 25,
+        memoryUsage: 60 + 0.5 * 20,
         algorithm: "Quantum Approximate Optimization",
         layers: 6,
-        iterations: 800 + Math.floor(Math.random() * 400),
-        accuracy: 91 + Math.random() * 7
+        iterations: 800 + Math.floor(0.5 * 400),
+        accuracy: 91 + 0.5 * 7
       };
 
     default:
       return {
-        confidence: 80 + Math.random() * 15,
+        confidence: 80 + 0.5 * 15,
         insights: commonInsights.slice(0, 3),
         recommendations: commonRecommendations.slice(0, 3),
-        performance: 85 + Math.random() * 10,
-        neuralActivity: 70 + Math.random() * 20,
-        memoryUsage: 50 + Math.random() * 30,
+        performance: 85 + 0.5 * 10,
+        neuralActivity: 70 + 0.5 * 20,
+        memoryUsage: 50 + 0.5 * 30,
         algorithm: "Standard AGI Processing",
         layers: 7,
-        iterations: 1000 + Math.floor(Math.random() * 500),
-        accuracy: 87 + Math.random() * 8
+        iterations: 1000 + Math.floor(0.5 * 500),
+        accuracy: 87 + 0.5 * 8
       };
   }
 }
+

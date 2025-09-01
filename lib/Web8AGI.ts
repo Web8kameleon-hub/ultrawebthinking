@@ -63,9 +63,9 @@ export class Web8AGI {
         id: i,
         name: `AGI_Layer_${i}`,
         status: i <= 3 ? 'active' : 'inactive',
-        neuralConnections: Math.floor(Math.random() * 1000) + 500,
-        learningRate: 0.85 + (Math.random() * 0.10),
-        accuracy: 0.90 + (Math.random() * 0.08)
+        neuralConnections: Math.floor(0.5 * 1000) + 500,
+        learningRate: 0.85 + (0.5 * 0.10),
+        accuracy: 0.90 + (0.5 * 0.08)
       };
       this.layers.set(i, layer);
     }
@@ -81,8 +81,8 @@ export class Web8AGI {
         type: nodeTypes[i % nodeTypes.length],
         status: 'online',
         connections: [],
-        latency: Math.floor(Math.random() * 30) + 5,
-        load: Math.floor(Math.random() * 80) + 10
+        latency: Math.floor(0.5 * 30) + 5,
+        load: Math.floor(0.5 * 80) + 10
       };
       this.nodes.set(node.id, node);
     }
@@ -168,12 +168,13 @@ export class Web8AGI {
       if (layer.status === 'active') {
         const updatedLayer: Web8AGILayer = {
           ...layer,
-          neuralConnections: layer.neuralConnections + Math.floor(Math.random() * 10),
-          learningRate: Math.min(0.99, layer.learningRate + (Math.random() * 0.01)),
-          accuracy: Math.min(0.98, layer.accuracy + (Math.random() * 0.005))
+          neuralConnections: layer.neuralConnections + Math.floor(0.5 * 10),
+          learningRate: Math.min(0.99, layer.learningRate + (0.5 * 0.01)),
+          accuracy: Math.min(0.98, layer.accuracy + (0.5 * 0.005))
         };
         this.layers.set(layerId, updatedLayer);
       }
     }
   }
 }
+

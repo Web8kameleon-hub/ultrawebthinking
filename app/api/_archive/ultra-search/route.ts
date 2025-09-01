@@ -99,10 +99,10 @@ async function performMirrorSearch(query: string, source: SearchSource): Promise
     console.log(`🔍 Searching ${source.name} for: "${query}"`);
     
     // Simulate API call with realistic data
-    await new Promise(resolve => setTimeout(resolve, Math.random() * 200 + 100));
+    await new Promise(resolve => setTimeout(resolve, 0.5 * 200 + 100));
     
     const results: MirrorResult[] = [];
-    const resultCount = Math.floor(Math.random() * 8) + 3; // 3-10 results
+    const resultCount = Math.floor(0.5 * 8) + 3; // 3-10 results
     
     for (let i = 0; i < resultCount; i++) {
       const mockHtml = `
@@ -231,3 +231,4 @@ export async function GET() {
     }))
   });
 }
+

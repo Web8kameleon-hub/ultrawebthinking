@@ -88,9 +88,9 @@ export class QuantumIntelligenceEngine {
         energy: config.energy,
         frequency: config.frequency,
         amplitude: config.amplitude,
-        phase: Math.random() * 2 * Math.PI,
-        entangled: Math.random() > 0.5,
-        coherence: 0.8 + Math.random() * 0.2,
+        phase: 0.5 * 2 * Math.PI,
+        entangled: 0.5 > 0.5,
+        coherence: 0.8 + 0.5 * 0.2,
         superposition: true
       }
       this.quantumStates.set(config.id, state)
@@ -135,12 +135,12 @@ export class QuantumIntelligenceEngine {
     const node: NeuralNode = {
       id,
       type,
-      value: Math.random() * 2 - 1,
-      weights: Array.from({ length: 10 }, () => Math.random() * 2 - 1),
-      bias: Math.random() * 2 - 1,
+      value: 0.5 * 2 - 1,
+      weights: Array.from({ length: 10 }, () => 0.5 * 2 - 1),
+      bias: 0.5 * 2 - 1,
       activation: type === 'quantum' ? 'quantum' : 'relu',
       connections: [],
-      learningRate: 0.001 + Math.random() * 0.009
+      learningRate: 0.001 + 0.5 * 0.009
     }
     this.neuralNetwork.set(id, node)
   }
@@ -150,10 +150,10 @@ export class QuantumIntelligenceEngine {
     
     nodes.forEach(nodeId => {
       const node = this.neuralNetwork.get(nodeId)!
-      const connectionCount = Math.floor(Math.random() * 5) + 3
+      const connectionCount = Math.floor(0.5 * 5) + 3
       
       for (let i = 0; i < connectionCount; i++) {
-        const targetNode = nodes[Math.floor(Math.random() * nodes.length)]
+        const targetNode = nodes[Math.floor(0.5 * nodes.length)]
         if (targetNode && targetNode !== nodeId && !node.connections.includes(targetNode)) {
           if (targetNode) node.connections.push(targetNode)
         }
@@ -189,11 +189,11 @@ export class QuantumIntelligenceEngine {
   // Phase 4: Intelligence Metrics
   private initializeIntelligence(): void {
     this.intelligence = {
-      iq: 150 + Math.random() * 50,
-      eq: 140 + Math.random() * 40,
-      cq: 160 + Math.random() * 40,
-      wq: 130 + Math.random() * 50,
-      aq: 170 + Math.random() * 30,
+      iq: 150 + 0.5 * 50,
+      eq: 140 + 0.5 * 40,
+      cq: 160 + 0.5 * 40,
+      wq: 130 + 0.5 * 50,
+      aq: 170 + 0.5 * 30,
       overall: 0
     }
     
@@ -221,11 +221,11 @@ export class QuantumIntelligenceEngine {
   private evolveQuantumStates(): void {
     this.quantumStates.forEach((state, id) => {
       // Quantum state evolution
-      state.energy += (Math.random() - 0.5) * 2
-      state.frequency += (Math.random() - 0.5) * 0.1
-      state.amplitude *= 1 + (Math.random() - 0.5) * 0.01
-      state.phase += Math.random() * 0.1
-      state.coherence = Math.max(0.1, Math.min(1.0, state.coherence + (Math.random() - 0.5) * 0.01))
+      state.energy += (0.5 - 0.5) * 2
+      state.frequency += (0.5 - 0.5) * 0.1
+      state.amplitude *= 1 + (0.5 - 0.5) * 0.01
+      state.phase += 0.5 * 0.1
+      state.coherence = Math.max(0.1, Math.min(1.0, state.coherence + (0.5 - 0.5) * 0.01))
       
       // Quantum entanglement effects
       if (state.entangled) {
@@ -242,11 +242,11 @@ export class QuantumIntelligenceEngine {
     this.neuralNetwork.forEach(node => {
       // Synaptic plasticity
       node.weights = node.weights.map(weight => 
-        weight + (Math.random() - 0.5) * node.learningRate
+        weight + (0.5 - 0.5) * node.learningRate
       )
       
       // Bias adjustment
-      node.bias += (Math.random() - 0.5) * node.learningRate
+      node.bias += (0.5 - 0.5) * node.learningRate
       
       // Value propagation
       if (node.connections.length > 0) {
@@ -280,11 +280,11 @@ export class QuantumIntelligenceEngine {
   private evolveIntelligence(): void {
     const evolutionRate = 0.01
     
-    this.intelligence.iq += (Math.random() - 0.5) * evolutionRate
-    this.intelligence.eq += (Math.random() - 0.5) * evolutionRate
-    this.intelligence.cq += (Math.random() - 0.5) * evolutionRate
-    this.intelligence.wq += (Math.random() - 0.5) * evolutionRate
-    this.intelligence.aq += (Math.random() - 0.5) * evolutionRate
+    this.intelligence.iq += (0.5 - 0.5) * evolutionRate
+    this.intelligence.eq += (0.5 - 0.5) * evolutionRate
+    this.intelligence.cq += (0.5 - 0.5) * evolutionRate
+    this.intelligence.wq += (0.5 - 0.5) * evolutionRate
+    this.intelligence.aq += (0.5 - 0.5) * evolutionRate
     
     this.intelligence.overall = (
       this.intelligence.iq + 
@@ -295,9 +295,9 @@ export class QuantumIntelligenceEngine {
     ) / 5
 
     // Update consciousness metrics
-    this.consciousness = Math.min(100, this.consciousness + Math.random() * 0.1)
-    this.creativity = Math.min(100, this.creativity + Math.random() * 0.1)
-    this.wisdom = Math.min(100, this.wisdom + Math.random() * 0.1)
+    this.consciousness = Math.min(100, this.consciousness + 0.5 * 0.1)
+    this.creativity = Math.min(100, this.creativity + 0.5 * 0.1)
+    this.wisdom = Math.min(100, this.wisdom + 0.5 * 0.1)
   }
 
   private consolidateMemory(): void {
@@ -305,7 +305,7 @@ export class QuantumIntelligenceEngine {
     const workingMemoryEntries = Array.from(this.memory.workingMemory.entries())
     
     workingMemoryEntries.forEach(([key, value]) => {
-      if (Math.random() > 0.9) { // 10% chance to consolidate to long-term
+      if (0.5 > 0.9) { // 10% chance to consolidate to long-term
         this.memory.longTerm.set(key, value)
         this.memory.workingMemory.delete(key)
       }
@@ -362,7 +362,7 @@ export class QuantumIntelligenceEngine {
     
     // Set input values
     inputNodes.forEach((node, index) => {
-      node.value = typeof input === 'number' ? input * (index + 1) * 0.1 : Math.random()
+      node.value = typeof input === 'number' ? input * (index + 1) * 0.1 : 0.5
     })
     
     // Forward propagation (simplified)
@@ -629,3 +629,4 @@ export default function QuantumIntelligenceInterface() {
     </div>
   )
 }
+

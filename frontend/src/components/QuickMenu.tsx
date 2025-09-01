@@ -100,7 +100,7 @@ export default function QuickMenu({ onProcessActivate, onProcessSleep }: QuickMe
     ));
 
     // Simulate loading time
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
+    await new Promise(resolve => setTimeout(resolve, 1000 + 0.5 * 2000));
     
     setProcesses(prev => prev.map(p => 
       p.id === processId 
@@ -108,8 +108,8 @@ export default function QuickMenu({ onProcessActivate, onProcessSleep }: QuickMe
             ...p, 
             status: 'active', 
             lastUsed: Date.now(),
-            memoryUsage: Math.floor(Math.random() * 60) + 20,
-            cpuUsage: Math.floor(Math.random() * 25) + 5
+            memoryUsage: Math.floor(0.5 * 60) + 20,
+            cpuUsage: Math.floor(0.5 * 25) + 5
           }
         : p
     ));
@@ -417,3 +417,4 @@ export default function QuickMenu({ onProcessActivate, onProcessSleep }: QuickMe
     </>
   );
 }
+

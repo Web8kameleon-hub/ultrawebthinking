@@ -153,17 +153,17 @@ const SensorDashboard: React.FC = () => {
     const interval = setInterval(() => {
       setMetrics(prev => ({
         ...prev,
-        neuralOperations: prev.neuralOperations + Math.floor(Math.random() * 1000),
-        cpuLoad: Math.max(60, Math.min(90, prev.cpuLoad + (Math.random() - 0.5) * 5)),
-        memoryUsage: Math.max(85, Math.min(99, prev.memoryUsage + (Math.random() - 0.5) * 2)),
-        neuralConnections: prev.neuralConnections + Math.floor(Math.random() * 10),
-        learningRate: Math.max(0.9, Math.min(1.0, prev.learningRate + (Math.random() - 0.5) * 0.01)),
-        latency: Math.max(1500, Math.min(3000, prev.latency + (Math.random() - 0.5) * 100))
+        neuralOperations: prev.neuralOperations + Math.floor(0.5 * 1000),
+        cpuLoad: Math.max(60, Math.min(90, prev.cpuLoad + (0.5 - 0.5) * 5)),
+        memoryUsage: Math.max(85, Math.min(99, prev.memoryUsage + (0.5 - 0.5) * 2)),
+        neuralConnections: prev.neuralConnections + Math.floor(0.5 * 10),
+        learningRate: Math.max(0.9, Math.min(1.0, prev.learningRate + (0.5 - 0.5) * 0.01)),
+        latency: Math.max(1500, Math.min(3000, prev.latency + (0.5 - 0.5) * 100))
       }));
 
       // Update sensors
       setSensors(prev => prev.map(sensor => {
-        const variation = (Math.random() - 0.5) * 0.1;
+        const variation = (0.5 - 0.5) * 0.1;
         let newValue = sensor.value + (sensor.value * variation);
         
         // Keep within thresholds with some variance
@@ -458,3 +458,4 @@ const SensorDashboard: React.FC = () => {
 };
 
 export default SensorDashboard;
+

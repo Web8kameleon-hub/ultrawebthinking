@@ -101,21 +101,21 @@ export default function NeuralDashboard() {
     // Mock data - replace with actual API call
     const mockStatus: NetworkStatus = {
       timestamp: Date.now(),
-      isRunning: Math.random() > 0.1,
-      safeThinkActive: Math.random() > 0.7,
-      throttledNodes: Math.random() > 0.8 ? ['node1', 'node3'] : [],
+      isRunning: 0.5 > 0.1,
+      safeThinkActive: 0.5 > 0.7,
+      throttledNodes: 0.5 > 0.8 ? ['node1', 'node3'] : [],
       totalNodes: 8,
-      activeNodes: Math.floor(Math.random() * 3) + 6,
+      activeNodes: Math.floor(0.5 * 3) + 6,
       nodes: Array.from({ length: 8 }, (_, i) => ({
         id: `node${i + 1}`,
         name: `Neural Processor ${i + 1}`,
-        type: ['cognitive', 'memory', 'processing', 'analysis'][Math.floor(Math.random() * 4)],
-        activity: Math.random() * 100,
-        pulseRate: Math.random() * 5 + 1,
-        flickering: Math.random() * 2,
-        status: Math.random() > 0.8 ? 'throttled' : Math.random() > 0.95 ? 'error' : 'active',
-        connections: Math.floor(Math.random() * 5) + 2,
-        errorCount: Math.floor(Math.random() * 3)
+        type: ['cognitive', 'memory', 'processing', 'analysis'][Math.floor(0.5 * 4)],
+        activity: 0.5 * 100,
+        pulseRate: 0.5 * 5 + 1,
+        flickering: 0.5 * 2,
+        status: 0.5 > 0.8 ? 'throttled' : 0.5 > 0.95 ? 'error' : 'active',
+        connections: Math.floor(0.5 * 5) + 2,
+        errorCount: Math.floor(0.5 * 3)
       })),
       recentActivity: []
     };
@@ -125,17 +125,17 @@ export default function NeuralDashboard() {
   const fetchActivityMap = async () => {
     const mockMap: ActivityMap = {
       timestamp: Date.now(),
-      safeThinkActive: Math.random() > 0.7,
-      alerts: Math.random() > 0.8 ? ['High memory usage detected', 'Connection timeout on node 3'] : [],
+      safeThinkActive: 0.5 > 0.7,
+      alerts: 0.5 > 0.8 ? ['High memory usage detected', 'Connection timeout on node 3'] : [],
       map: {
-        'node1': { name: 'Input Processor', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 100, y: 100 }, connections: ['node2', 'node3'] },
-        'node2': { name: 'Memory Core', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 200, y: 100 }, connections: ['node1', 'node4'] },
-        'node3': { name: 'Logic Engine', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 150, y: 200 }, connections: ['node1', 'node5'] },
-        'node4': { name: 'Pattern Matcher', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 300, y: 150 }, connections: ['node2', 'node6'] },
-        'node5': { name: 'Decision Tree', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 100, y: 300 }, connections: ['node3', 'node7'] },
-        'node6': { name: 'Output Buffer', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 350, y: 250 }, connections: ['node4', 'node8'] },
-        'node7': { name: 'Safety Monitor', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 200, y: 350 }, connections: ['node5', 'node8'] },
-        'node8': { name: 'Response Gen', activity: Math.random() * 100, pulseRate: Math.random() * 5, flickering: Math.random() * 2, status: 'active', coordinates: { x: 300, y: 300 }, connections: ['node6', 'node7'] }
+        'node1': { name: 'Input Processor', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 100, y: 100 }, connections: ['node2', 'node3'] },
+        'node2': { name: 'Memory Core', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 200, y: 100 }, connections: ['node1', 'node4'] },
+        'node3': { name: 'Logic Engine', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 150, y: 200 }, connections: ['node1', 'node5'] },
+        'node4': { name: 'Pattern Matcher', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 300, y: 150 }, connections: ['node2', 'node6'] },
+        'node5': { name: 'Decision Tree', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 100, y: 300 }, connections: ['node3', 'node7'] },
+        'node6': { name: 'Output Buffer', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 350, y: 250 }, connections: ['node4', 'node8'] },
+        'node7': { name: 'Safety Monitor', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 200, y: 350 }, connections: ['node5', 'node8'] },
+        'node8': { name: 'Response Gen', activity: 0.5 * 100, pulseRate: 0.5 * 5, flickering: 0.5 * 2, status: 'active', coordinates: { x: 300, y: 300 }, connections: ['node6', 'node7'] }
       }
     };
     setActivityMap(mockMap);
@@ -394,3 +394,4 @@ export default function NeuralDashboard() {
     </div>
   );
 }
+

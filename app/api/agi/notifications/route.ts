@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Notifications API
  * Real notification management and delivery system
  * 
@@ -41,7 +41,7 @@ function generateSampleNotifications(): Notification[] {
   return [
     {
       id: 'agi-system-ready',
-      title: '🧠 AGI System Ready',
+      title: 'ðŸ§  AGI System Ready',
       message: 'AGI neural networks initialized and ready for processing',
       type: 'agi',
       priority: 'high',
@@ -52,7 +52,7 @@ function generateSampleNotifications(): Notification[] {
     },
     {
       id: 'performance-optimized',
-      title: '⚡ Performance Optimized',
+      title: 'âš¡ Performance Optimized',
       message: 'System performance improved by 23% using AGI optimization',
       type: 'success',
       priority: 'medium',
@@ -62,7 +62,7 @@ function generateSampleNotifications(): Notification[] {
     },
     {
       id: 'eco-analysis-complete',
-      title: '🌱 Eco Analysis Complete',
+      title: 'ðŸŒ± Eco Analysis Complete',
       message: 'Environmental analysis finished with 3 recommendations',
       type: 'info',
       priority: 'medium',
@@ -73,7 +73,7 @@ function generateSampleNotifications(): Notification[] {
     },
     {
       id: 'security-scan',
-      title: '🛡️ Security Scan Alert',
+      title: 'ðŸ›¡ï¸ Security Scan Alert',
       message: 'Unusual activity detected, running enhanced monitoring',
       type: 'warning',
       priority: 'high',
@@ -83,7 +83,7 @@ function generateSampleNotifications(): Notification[] {
     },
     {
       id: 'backup-complete',
-      title: '💾 Backup Complete',
+      title: 'ðŸ’¾ Backup Complete',
       message: 'Daily system backup completed successfully',
       type: 'success',
       priority: 'low',
@@ -102,7 +102,7 @@ if (globalNotifications.length === 0) {
 export async function GET(request: NextRequest) {
   try {
     const userId = request.headers.get('x-user-id');
-    const sessionId = request.headers.get('x-session-id') || request.ip || 'anonymous';
+    const sessionId = request.headers.get('x-session-id') || request.headers.get("x-forwarded-for") || "unknown" || 'anonymous';
     const limit = parseInt(request.nextUrl.searchParams.get('limit') || '10');
     const type = request.nextUrl.searchParams.get('type');
     const priority = request.nextUrl.searchParams.get('priority');
@@ -179,7 +179,7 @@ export async function POST(request: NextRequest) {
     const { title, message, type = 'info', priority = 'medium', actionUrl, data } = body;
     
     const userId = request.headers.get('x-user-id');
-    const sessionId = request.headers.get('x-session-id') || request.ip || 'anonymous';
+    const sessionId = request.headers.get('x-session-id') || request.headers.get("x-forwarded-for") || "unknown" || 'anonymous';
 
     // Validate input
     if (!title || !message) {
@@ -194,10 +194,10 @@ export async function POST(request: NextRequest) {
       id: `notif-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       title,
       message,
-      type,
-      priority,
+      type: type as Notification['type'],
+      priority: priority as Notification['priority'],
       timestamp: Date.now(),
-      userId: userId || undefined,
+      userId: userId || 'anonymous',
       sessionId,
       read: false,
       actionUrl,
@@ -240,7 +240,7 @@ export async function PATCH(request: NextRequest) {
     const { notificationId, action } = body;
     
     const userId = request.headers.get('x-user-id');
-    const sessionId = request.headers.get('x-session-id') || request.ip || 'anonymous';
+    const sessionId = request.headers.get('x-session-id') || request.headers.get("x-forwarded-for") || "unknown" || 'anonymous';
 
     if (!notificationId || !action) {
       return NextResponse.json(
@@ -257,12 +257,14 @@ export async function PATCH(request: NextRequest) {
       const userNotifs = notifications.get(userId) || [];
       const notifIndex = userNotifs.findIndex(n => n.id === notificationId);
       if (notifIndex !== -1) {
-        if (action === 'mark_read') {
-          (userNotifs[notifIndex] || {}).read = true;
+        const notif = userNotifs[notifIndex];
+        if (action === 'mark_read' && notif) {
+          notif.read = true;
           updated = true;
-        } else if (action === 'mark_unread') {
-          (userNotifs[notifIndex] || {}).read = false;
+        } else if (action === 'mark_unread' && notif) {
+          notif.read = false;
           updated = true;
+        } else if (action === 'delete') {
         } else if (action === 'delete') {
           userNotifs.splice(notifIndex, 1);
           updated = true;
@@ -270,16 +272,15 @@ export async function PATCH(request: NextRequest) {
         notifications.set(userId, userNotifs);
       }
     }
-    
-    // Check global notifications
     if (!updated) {
       const globalIndex = globalNotifications.findIndex(n => n.id === notificationId);
       if (globalIndex !== -1) {
-        if (action === 'mark_read') {
-          (globalNotifications[globalIndex] || {}).read = true;
+        const notif = globalNotifications[globalIndex];
+        if (action === 'mark_read' && notif) {
+          notif.read = true;
           updated = true;
-        } else if (action === 'mark_unread') {
-          (globalNotifications[globalIndex] || {}).read = false;
+        } else if (action === 'mark_unread' && notif) {
+          notif.read = false;
           updated = true;
         } else if (action === 'delete') {
           globalNotifications.splice(globalIndex, 1);
@@ -358,3 +359,5 @@ export async function DELETE(request: NextRequest) {
     );
   }
 }
+
+

@@ -207,7 +207,7 @@ export class LaserController extends EventEmitter {
       }
 
       const beam: LaserBeam = {
-        id: `beam_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        id: `beam_${Date.now()}_${0.5.toString(36).substr(2, 9)}`,
         target,
         intensity: intensity || this.config.focusIntensity,
         duration: this.calculateBeamDuration(target),
@@ -268,7 +268,7 @@ export class LaserController extends EventEmitter {
   private determineOptimizationEffect(target: LaserTarget): LaserBeam['effect'] {
     switch (target.type) {
       case 'component':
-        return Math.random() > 0.5 ? 'loading' : 'preload';
+        return 0.5 > 0.5 ? 'loading' : 'preload';
       case 'module':
         return 'optimization';
       case 'data':
@@ -485,3 +485,4 @@ export async function quickOptimize(targets: string[] = []): Promise<void> {
 }
 
 export default LaserController;
+

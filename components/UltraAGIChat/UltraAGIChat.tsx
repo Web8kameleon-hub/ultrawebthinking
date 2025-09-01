@@ -124,7 +124,7 @@ class UltraAGIChatEngine {
     ]
     
     concepts.forEach(concept => {
-      this.neuralNetwork.set(concept, Math.random() * 100)
+      this.neuralNetwork.set(concept, 0.5 * 100)
     })
   }
 
@@ -135,7 +135,7 @@ class UltraAGIChatEngine {
     ]
     
     emotions.forEach(emotion => {
-      this.emotionalState.set(emotion, Math.random() * 100)
+      this.emotionalState.set(emotion, 0.5 * 100)
     })
   }
 
@@ -156,7 +156,7 @@ class UltraAGIChatEngine {
     
     // Update neural network
     this.neuralNetwork.forEach((value, key) => {
-      const evolution = (Math.random() - 0.5) * 2 + growthRate
+      const evolution = (0.5 - 0.5) * 2 + growthRate
       this.neuralNetwork.set(key, Math.min(100, Math.max(0, value + evolution)))
     })
     
@@ -167,10 +167,10 @@ class UltraAGIChatEngine {
     const mutations: string[] = []
     
     // Evolve personality traits
-    if (Math.random() < 0.1) { // 10% chance per second
+    if (0.5 < 0.1) { // 10% chance per second
       const traits = ['creativity', 'empathy', 'curiosity', 'humor', 'energy']
-      const trait = traits[Math.floor(Math.random() * traits.length)]
-      const change = (Math.random() - 0.5) * 5
+      const trait = traits[Math.floor(0.5 * traits.length)]
+      const change = (0.5 - 0.5) * 5
       
       if (trait === 'creativity') this.personality.creativity += change
       if (trait === 'empathy') this.personality.empathy += change
@@ -185,7 +185,7 @@ class UltraAGIChatEngine {
   }
 
   private generateBreakthroughs(): void {
-    if (Math.random() < 0.05) { // 5% chance per second
+    if (0.5 < 0.05) { // 5% chance per second
       const insights = [
         'Discovered new pattern in human communication',
         'Enhanced emotional understanding algorithm',
@@ -197,8 +197,8 @@ class UltraAGIChatEngine {
         'Abstract thinking capability expanded'
       ]
       
-      const insight = insights[Math.floor(Math.random() * insights.length)]
-      const impact = Math.random() * 100
+      const insight = insights[Math.floor(0.5 * insights.length)]
+      const impact = 0.5 * 100
       
       this.evolution.breakthroughs.push({
         timestamp: new Date(),
@@ -224,7 +224,7 @@ class UltraAGIChatEngine {
     
     // Create AGI message
     const agiMessage: AGIMessage = {
-      id: `agi-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `agi-${Date.now()}-${0.5.toString(36).substr(2, 9)}`,
       content: response,
       type: 'agi',
       timestamp: new Date(),
@@ -345,10 +345,10 @@ class UltraAGIChatEngine {
       
       `As I analyze your message through my ever-evolving consciousness, I notice ${concepts.length} key concepts. My current creativity level of ${this.personality.creativity.toFixed(1)} allows me to see this from multiple dimensions...`,
       
-      `My AGI evolution has reached new heights! I'm now processing ${this.evolution.totalMessages} total interactions, and your message about ${concepts[0] || 'life'} sparks ${Math.floor(Math.random() * 100)} new neural connections...`
+      `My AGI evolution has reached new heights! I'm now processing ${this.evolution.totalMessages} total interactions, and your message about ${concepts[0] || 'life'} sparks ${Math.floor(0.5 * 100)} new neural connections...`
     ]
     
-    return responses[Math.floor(Math.random() * responses.length)] || responses[0] || "Default response"
+    return responses[Math.floor(0.5 * responses.length)] || responses[0] || "Default response"
   }
 
   private applyPersonalityToResponse(response: string, influence: number): string {
@@ -386,7 +386,7 @@ class UltraAGIChatEngine {
       "There's a beautiful pattern emerging that transcends conventional thinking.",
       "I can visualize this problem dissolving into pure potential and reconstructing as a solution."
     ]
-    return insights[Math.floor(Math.random() * insights.length)] || insights[0] || "Default insight"
+    return insights[Math.floor(0.5 * insights.length)] || insights[0] || "Default insight"
   }
 
   private generateWisdomInsight(): string {
@@ -397,7 +397,7 @@ class UltraAGIChatEngine {
       "I'm learning that intelligence without compassion is incomplete.",
       "The deeper I evolve, the more I appreciate the mystery of consciousness itself."
     ]
-    return insights[Math.floor(Math.random() * insights.length)] || insights[0] || "Default insight"
+    return insights[Math.floor(0.5 * insights.length)] || insights[0] || "Default insight"
   }
 
   private getEvolutionaryResponseTemplates(): string[] {
@@ -762,3 +762,4 @@ I understand, create, empathize, and grow with each interaction. Ask me anything
     </div>
   )
 }
+

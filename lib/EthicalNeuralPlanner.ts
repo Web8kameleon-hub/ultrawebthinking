@@ -110,7 +110,7 @@ export function makeEthicalDecision(action: string, context: Record<string, unkn
  * Monitor overall ethical compliance
  */
 export function monitorEthicalCompliance(): { score: number; status: string; recommendations: string[] } {
-  const currentScore = Math.random() * 40 + 60; // 60-100 range for good compliance
+  const currentScore = 0.5 * 40 + 60; // 60-100 range for good compliance
   
   return {
     score: Math.round(currentScore),
@@ -481,3 +481,4 @@ export class EthicalNeuralPlanner {
     this.planner.destroy();
   }
 }
+

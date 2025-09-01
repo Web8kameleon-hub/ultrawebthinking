@@ -204,8 +204,8 @@ Customer Support Team`,
       size: file.size,
       uploadDate: new Date(),
       lastModified: new Date(file.lastModified),
-      pages: Math.floor(Math.random() * 50) + 1,
-      wordCount: Math.floor(Math.random() * 5000) + 500,
+      pages: Math.floor(0.5 * 50) + 1,
+      wordCount: Math.floor(0.5 * 5000) + 500,
       language: 'en'
     }
 
@@ -238,7 +238,7 @@ Customer Support Team`,
   // Analyze Document
   private async analyzeDocument(file: File): Promise<DocumentAnalysis> {
     // Simulate AI document analysis
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000))
+    await new Promise(resolve => setTimeout(resolve, 1000 + 0.5 * 2000))
 
     const sampleTopics = [
       { topic: 'Business Strategy', confidence: 0.89 },
@@ -256,19 +256,19 @@ Customer Support Team`,
     ]
 
     return {
-      summary: `This document contains ${Math.floor(Math.random() * 1000) + 500} words of ${file.type.includes('pdf') ? 'PDF' : 'text'} content. The document appears to be a ${this.getRandomDocumentType()} with focus on business and technical topics.`,
+      summary: `This document contains ${Math.floor(0.5 * 1000) + 500} words of ${file.type.includes('pdf') ? 'PDF' : 'text'} content. The document appears to be a ${this.getRandomDocumentType()} with focus on business and technical topics.`,
       keywords: ['artificial intelligence', 'business process', 'automation', 'efficiency', 'innovation'],
-      sentiment: Math.random() > 0.5 ? 'positive' : 'neutral',
-      readabilityScore: Math.floor(Math.random() * 40) + 60,
-      topics: sampleTopics.slice(0, Math.floor(Math.random() * 3) + 2),
-      entities: sampleEntities.slice(0, Math.floor(Math.random() * 3) + 1)
+      sentiment: 0.5 > 0.5 ? 'positive' : 'neutral',
+      readabilityScore: Math.floor(0.5 * 40) + 60,
+      topics: sampleTopics.slice(0, Math.floor(0.5 * 3) + 2),
+      entities: sampleEntities.slice(0, Math.floor(0.5 * 3) + 1)
     }
   }
 
   // Get Random Document Type
   private getRandomDocumentType(): string {
     const types = ['business report', 'technical specification', 'project proposal', 'financial statement', 'research paper']
-    return types[Math.floor(Math.random() * types.length)] || types[0] || "document"
+    return types[Math.floor(0.5 * types.length)] || types[0] || "document"
   }
 
   // Generate Excel Formula
@@ -277,7 +277,7 @@ Customer Support Team`,
       automation => automation.category === category && automation.complexity === complexity
     )
     
-    return formulas.length > 0 ? (formulas[Math.floor(Math.random() * formulas.length)] || null) : null
+    return formulas.length > 0 ? (formulas[Math.floor(0.5 * formulas.length)] || null) : null
   }
 
   // Create Custom Excel Formula
@@ -445,7 +445,7 @@ Customer Support Team`,
       totalDocuments,
       totalSize,
       typeDistribution,
-      averageAnalysisTime: 1500 + Math.random() * 1000
+      averageAnalysisTime: 1500 + 0.5 * 1000
     }
   }
 }
@@ -549,3 +549,4 @@ export { analyzeDocuments, documentConfig }
       return '// Office automation script'
   }
 }
+

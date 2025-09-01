@@ -1,0 +1,26 @@
+{
+  "timestamp": 1756541408344,
+  "agentId": "AGICore@web8",
+  "scan": {
+    "typescript": {
+      "ok": false,
+      "error": "PENDING_REVIEW: Action SPAWN_PROCESS requires human approval (review_1756541408344_i)",
+      "timestamp": "2025-08-30T08:10:08.344Z"
+    },
+    "eslint": {
+      "ok": false,
+      "error": "PENDING_REVIEW: Action SPAWN_PROCESS requires human approval (review_1756541408344_i)",
+      "timestamp": "2025-08-30T08:10:08.344Z"
+    },
+    "zeroFake": {
+      "ok": false,
+      "error": "PENDING_REVIEW: Action SPAWN_PROCESS requires human approval (review_1756541408344_i)",
+      "timestamp": "2025-08-30T08:10:08.344Z"
+    }
+  },
+  "summary": {
+    "hasTypeErrors": true,
+    "hasLintErrors": true,
+    "hasRealOnlyIssues": true
+  }
+}

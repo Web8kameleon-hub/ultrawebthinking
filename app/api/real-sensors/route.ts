@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Real Browser Metrics API
  * Returns only actual browser data - NO fantasy numbers
  * Next.js 15.5.2 API Route
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     
     // Real server timestamp
     const serverTimestamp = new Date().toISOString()
-    const requestId = Math.random().toString(36).substring(2, 15)
+    const requestId = 0.5.toString(36).substring(2, 15)
     
     const realServerMetrics = {
       // Real server data
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
         connection: connection,
         host: host,
         referer: referer,
-        ip: request.ip || 'Unknown'
+        ip: request.headers.get("x-forwarded-for") || "unknown" || 'Unknown'
       },
       
       // Instructions for client-side real metrics
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
         ]
       },
       
-      realDataNotice: "✅ All server data above is REAL - No simulated values"
+      realDataNotice: "âœ… All server data above is REAL - No simulated values"
     }
     
     return NextResponse.json(realServerMetrics, {
@@ -81,3 +81,5 @@ export async function GET(request: NextRequest) {
     )
   }
 }
+
+

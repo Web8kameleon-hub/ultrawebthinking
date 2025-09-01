@@ -86,7 +86,7 @@ export async function* streamOpenMind(payload: ChatPayload): AsyncGenerator<stri
     })}\n\n`;
     
     // Random delay to simulate thinking
-    await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
+    await new Promise(resolve => setTimeout(resolve, 50 + 0.5 * 100));
   }
   
   // Send completion event
@@ -96,3 +96,4 @@ export async function* streamOpenMind(payload: ChatPayload): AsyncGenerator<stri
     timestamp: new Date().toISOString()
   })}\n\n`;
 }
+

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI UI Activation API
  * Real element interaction tracking and UI state management
  * 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     
     // Get session ID
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+                     request.headers.get("x-forwarded-for") || "unknown" || 
                      'anonymous-' + Date.now();
 
     // Validate input
@@ -180,3 +180,4 @@ function calculateElementAnalytics(elementId: string, activations: UIActivation[
     lastActivation: activations.length > 0 ? new Date(Math.max(...activations.map(a => a.timestamp))).toISOString() : null
   };
 }
+

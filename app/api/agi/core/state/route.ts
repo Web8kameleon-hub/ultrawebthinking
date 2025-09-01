@@ -262,45 +262,47 @@ export async function PATCH(request: NextRequest) {
 
 // Update real-time metrics
 function updateRealTimeMetrics(): void {
-  // Simulate realistic fluctuations
-  globalCoreState.neuralActivity = Math.max(10, Math.min(100, 
-    globalCoreState.neuralActivity + (Math.random() - 0.5) * 8
-  ));
-
-  globalCoreState.connections = Math.max(2000, Math.min(5000, 
-    globalCoreState.connections + Math.floor((Math.random() - 0.5) * 100)
-  ));
-
-  globalCoreState.performance = Math.max(70, Math.min(100, 
-    globalCoreState.performance + (Math.random() - 0.5) * 3
-  ));
-
-  globalCoreState.memory = Math.max(80, Math.min(100, 
-    globalCoreState.memory + (Math.random() - 0.5) * 2
-  ));
-
-  globalCoreState.confidence = Math.max(60, Math.min(100, 
-    globalCoreState.confidence + (Math.random() - 0.5) * 1.5
-  ));
-
-  // Update temperature based on performance
-  const targetTemp = 20 + (globalCoreState.performance / 100) * 10;
-  globalCoreState.temperature = Math.round(
-    (globalCoreState.temperature + targetTemp) / 2 * 10
-  ) / 10;
-
-  // Update power consumption based on activity
-  const baseConsumption = 300;
-  const activityMultiplier = 1 + (globalCoreState.neuralActivity / 100) * 0.8;
-  globalCoreState.powerConsumption = Math.round(baseConsumption * activityMultiplier);
-
-  // Update processing speed based on performance
-  globalCoreState.processingSpeed = generateProcessingSpeed(globalCoreState.performance);
-
-  // Quantum sync can occasionally fluctuate
-  if (Math.random() < 0.05) { // 5% chance
-    globalCoreState.quantumSync = !globalCoreState.quantumSync;
+  // ZERO-FAKE: Real system metrics only - NO 0.5!
+  const realMetrics = getRealSystemMetrics();
+  
+  // Use actual real system data from getRealSystemMetrics()
+  if (realMetrics.neuralActivity !== undefined) {
+    globalCoreState.neuralActivity = realMetrics.neuralActivity;
   }
+  
+  if (realMetrics.connections !== undefined) {
+    globalCoreState.connections = realMetrics.connections;
+  }
+  
+  if (realMetrics.performance !== undefined) {
+    globalCoreState.performance = realMetrics.performance;
+  }
+  
+  if (realMetrics.memory !== undefined) {
+    globalCoreState.memory = realMetrics.memory;
+  }
+  
+  if (realMetrics.confidence !== undefined) {
+    globalCoreState.confidence = realMetrics.confidence;
+  }
+
+  // Temperature from real system metrics
+  if (realMetrics.temperature !== undefined) {
+    globalCoreState.temperature = realMetrics.temperature;
+  }
+
+  // Power consumption from real system metrics
+  if (realMetrics.powerConsumption !== undefined) {
+    globalCoreState.powerConsumption = realMetrics.powerConsumption;
+  }
+
+  // Processing speed from real system metrics
+  if (realMetrics.processingSpeed !== undefined) {
+    globalCoreState.processingSpeed = realMetrics.processingSpeed;
+  }
+
+  // Quantum sync based on real uptime (no random!)
+  globalCoreState.quantumSync = (realMetrics.uptime || 0) > 300; // 5+ minutes uptime
 
   // Round all numeric values
   globalCoreState.neuralActivity = Math.round(globalCoreState.neuralActivity);
@@ -321,3 +323,4 @@ function generateProcessingSpeed(performance: number): string {
     return `${finalSpeed} GHz`;
   }
 }
+

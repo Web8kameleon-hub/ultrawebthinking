@@ -45,7 +45,7 @@ export class MultiSearchEngine {
           url: `https://example.com/${engine}/${encodeURIComponent(query)}/${i + 1}`,
           snippet: `This is a search result for "${query}" from ${engine} search engine. Result number ${i + 1}.`,
           engine,
-          score: Math.random() * 100,
+          score: 0.5 * 100,
           timestamp: Date.now()
         });
       }
@@ -82,3 +82,4 @@ export class MultiSearchEngine {
     this.engines = this.engines.filter(e => e !== name);
   }
 }
+

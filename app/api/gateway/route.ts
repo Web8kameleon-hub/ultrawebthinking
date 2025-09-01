@@ -274,8 +274,8 @@ async function* streamOpenMind(payload: any): AsyncGenerator<string, void, unkno
 async function handleFluid(payload: any) {
   // TODO: Implement Fluid architecture handler
   return {
-    flowRate: Math.random() * 100,
-    pressure: Math.random() * 50,
+    flowRate: 0.5 * 100,
+    pressure: 0.5 * 50,
     status: "flowing",
     timestamp: new Date().toISOString()
   };
@@ -284,9 +284,9 @@ async function handleFluid(payload: any) {
 async function handleRealtime(payload: any) {
   // TODO: Implement Realtime data handler
   return {
-    connections: Math.floor(Math.random() * 1000),
-    latency: Math.random() * 50,
-    throughput: Math.random() * 10000,
+    connections: Math.floor(0.5 * 1000),
+    latency: 0.5 * 50,
+    throughput: 0.5 * 10000,
     timestamp: new Date().toISOString()
   };
 }
@@ -460,3 +460,4 @@ export async function OPTIONS(request: NextRequest) {
     }
   });
 }
+

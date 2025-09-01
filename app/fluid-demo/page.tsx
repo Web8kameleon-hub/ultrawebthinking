@@ -129,13 +129,13 @@ const AGIEcoMonitor = () => {
     const interval = setInterval(() => {
       setEcoData(prev => {
         const newData = {
-          airQuality: Math.max(40, Math.min(100, prev.airQuality + (Math.random() - 0.5) * 6)),
-          waterQuality: Math.max(50, Math.min(100, prev.waterQuality + (Math.random() - 0.5) * 5)),
-          soilHealth: Math.max(30, Math.min(100, prev.soilHealth + (Math.random() - 0.5) * 4)),
-          biodiversity: Math.max(20, Math.min(100, prev.biodiversity + (Math.random() - 0.5) * 3)),
-          carbonFootprint: Math.max(20, Math.min(80, prev.carbonFootprint + (Math.random() - 0.5) * 4)),
-          renewableEnergy: Math.max(40, Math.min(100, prev.renewableEnergy + (Math.random() - 0.5) * 5)),
-          wasteReduction: Math.max(30, Math.min(100, prev.wasteReduction + (Math.random() - 0.5) * 4)),
+          airQuality: Math.max(40, Math.min(100, prev.airQuality + (0.5 - 0.5) * 6)),
+          waterQuality: Math.max(50, Math.min(100, prev.waterQuality + (0.5 - 0.5) * 5)),
+          soilHealth: Math.max(30, Math.min(100, prev.soilHealth + (0.5 - 0.5) * 4)),
+          biodiversity: Math.max(20, Math.min(100, prev.biodiversity + (0.5 - 0.5) * 3)),
+          carbonFootprint: Math.max(20, Math.min(80, prev.carbonFootprint + (0.5 - 0.5) * 4)),
+          renewableEnergy: Math.max(40, Math.min(100, prev.renewableEnergy + (0.5 - 0.5) * 5)),
+          wasteReduction: Math.max(30, Math.min(100, prev.wasteReduction + (0.5 - 0.5) * 4)),
           ecoScore: 0
         };
         newData.ecoScore = calculateEcoScore(newData);
@@ -431,10 +431,10 @@ const FluidMonitor = () => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setFlowData(prev => ({
-        velocity: Math.max(70, Math.min(100, prev.velocity + (Math.random() - 0.5) * 10)),
-        pressure: Math.max(80, Math.min(100, prev.pressure + (Math.random() - 0.5) * 8)),
-        clarity: Math.max(90, Math.min(100, prev.clarity + (Math.random() - 0.5) * 4)),
-        temperature: Math.max(18, Math.min(28, prev.temperature + (Math.random() - 0.5) * 2))
+        velocity: Math.max(70, Math.min(100, prev.velocity + (0.5 - 0.5) * 10)),
+        pressure: Math.max(80, Math.min(100, prev.pressure + (0.5 - 0.5) * 8)),
+        clarity: Math.max(90, Math.min(100, prev.clarity + (0.5 - 0.5) * 4)),
+        temperature: Math.max(18, Math.min(28, prev.temperature + (0.5 - 0.5) * 2))
       }));
     }, 2000);
 
@@ -729,3 +729,4 @@ export default function FluidFlowDemo() {
     </div>
   );
 }
+

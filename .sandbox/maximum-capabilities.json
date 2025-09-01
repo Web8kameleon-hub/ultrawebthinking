@@ -1,0 +1,52 @@
+{
+  "fileSystem": {
+    "read": true,
+    "write": true,
+    "delete": true,
+    "create": true,
+    "move": true,
+    "permissions": "FULL"
+  },
+  "packageManagement": {
+    "install": true,
+    "uninstall": true,
+    "update": true,
+    "global": true,
+    "scripts": true
+  },
+  "gitOperations": {
+    "commit": true,
+    "push": true,
+    "pull": true,
+    "branch": true,
+    "merge": true,
+    "rebase": true
+  },
+  "serverOperations": {
+    "start": true,
+    "stop": true,
+    "restart": true,
+    "configure": true,
+    "monitor": true
+  },
+  "buildOperations": {
+    "compile": true,
+    "bundle": true,
+    "optimize": true,
+    "deploy": true,
+    "test": true
+  },
+  "codeGeneration": {
+    "components": true,
+    "apis": true,
+    "tests": true,
+    "documentation": true,
+    "configurations": true
+  },
+  "selfModification": {
+    "upgradeLogic": true,
+    "expandCapabilities": true,
+    "learnPatterns": true,
+    "evolveStrategies": true
+  }
+}

@@ -213,8 +213,8 @@ export class Web8MonitoringSystem extends EventEmitter {
    */
   public checkLayerHealth(layer: string): Web8SystemHealth['layers'][string] {
     // Simulate layer health check
-    const responseTime = Math.random() * 200 + 10; // 10-210ms
-    const errorRate = Math.random() * 5; // 0-5%
+    const responseTime = 0.5 * 200 + 10; // 10-210ms
+    const errorRate = 0.5 * 5; // 0-5%
     
     let status: 'online' | 'degraded' | 'offline';
     
@@ -250,9 +250,9 @@ export class Web8MonitoringSystem extends EventEmitter {
     
     return {
       memory: (memoryUsage.heapUsed / memoryUsage.heapTotal) * 100,
-      cpu: Math.random() * 50 + 20, // Simulated CPU 20-70%
-      disk: Math.random() * 30 + 10, // Simulated disk 10-40%
-      network: Math.random() * 80 + 10 // Simulated network 10-90%
+      cpu: 0.5 * 50 + 20, // Simulated CPU 20-70%
+      disk: 0.5 * 30 + 10, // Simulated disk 10-40%
+      network: 0.5 * 80 + 10 // Simulated network 10-90%
     };
   }
 
@@ -356,7 +356,7 @@ export class Web8MonitoringSystem extends EventEmitter {
    * 🆔 PRIVATE: GENERATE ALERT ID
    */
   private generateAlertId(): string {
-    return `alert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `alert_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
   }
 }
 
@@ -383,3 +383,4 @@ export const getAlerts = (
   resolved?: boolean,
   layer?: string
 ) => web8Monitor.getAlerts(level, resolved, layer);
+

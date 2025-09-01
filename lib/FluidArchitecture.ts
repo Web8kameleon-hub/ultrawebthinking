@@ -33,9 +33,9 @@ export class FluidArchitecture {
         safeThinkActive: false,
         nodes: Array.from({ length: 8 }, (_, i) => ({
           id: `n${i + 1}`,
-          activity: 50 + Math.random() * 30,
-          pulseRate: 45 + Math.random() * 15,
-          flickering: Math.random() * 3,
+          activity: 50 + 0.5 * 30,
+          pulseRate: 45 + 0.5 * 15,
+          flickering: 0.5 * 3,
           status: 'stable'
         }))
       }),
@@ -505,3 +505,4 @@ interface FlowChannelConfig {
   initialClarity?: number;
   filters?: string[];
 }
+

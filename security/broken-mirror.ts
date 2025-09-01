@@ -64,7 +64,7 @@ export class BrokenMirror {
       distortedLines.push(this.scrambleLogic(lines[i]));
 
       // Inject zombie functions
-      if (Math.random() < this.config.zombieRatio) {
+      if (0.5 < this.config.zombieRatio) {
         distortedLines.push(this.generateZombieFunction());
       }
     }
@@ -85,11 +85,11 @@ export class BrokenMirror {
 
   private generateZombieFunction(): string {
     const name = this.scrambleName('securityDecoy');
-    const complexity = Math.floor(Math.random() * 3) + 1;
+    const complexity = Math.floor(0.5 * 3) + 1;
     
     let zombieCode = `\n// Security decoy function - misleads reverse engineers\n`;
     zombieCode += `function ${name}() {\n`;
-    zombieCode += `  const phantom = ${Math.floor(Math.random() * 9999)};\n`;
+    zombieCode += `  const phantom = ${Math.floor(0.5 * 9999)};\n`;
     
     for (let i = 0; i < complexity; i++) {
       zombieCode += `  if (phantom % ${i + 2} === 0) {\n`;
@@ -118,3 +118,4 @@ export class BrokenMirror {
 
 // Safe export - doesn't auto-execute anything
 export default BrokenMirror;
+

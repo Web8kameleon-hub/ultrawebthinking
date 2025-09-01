@@ -109,9 +109,9 @@ async function handleAIThinking(data: any) {
   
   const responses = [
     {
-      analysis: `Deep analysis of "${query}" reveals ${Math.floor(Math.random() * 50 + 20)} key patterns`,
+      analysis: `Deep analysis of "${query}" reveals ${Math.floor(0.5 * 50 + 20)} key patterns`,
       reasoning: 'Applied multi-layered neural network processing with attention mechanisms',
-      confidence: Math.floor(Math.random() * 30 + 70),
+      confidence: Math.floor(0.5 * 30 + 70),
       insights: [
         'Pattern recognition successful',
         'Cross-reference validation complete',
@@ -119,9 +119,9 @@ async function handleAIThinking(data: any) {
       ]
     },
     {
-      analysis: `Cognitive processing identified ${Math.floor(Math.random() * 100)} relevant connections`,
+      analysis: `Cognitive processing identified ${Math.floor(0.5 * 100)} relevant connections`,
       reasoning: 'Utilized transformer architecture for semantic understanding',
-      confidence: Math.floor(Math.random() * 25 + 75),
+      confidence: Math.floor(0.5 * 25 + 75),
       insights: [
         'Contextual embedding generated',
         'Semantic similarity computed',
@@ -130,7 +130,7 @@ async function handleAIThinking(data: any) {
     }
   ]
   
-  const response = responses[Math.floor(Math.random() * responses.length)]
+  const response = responses[Math.floor(0.5 * responses.length)]
   
   return NextResponse.json({
     success: true,
@@ -192,8 +192,8 @@ async function handleAnthropicResponse(data: any) {
   const response = {
     model,
     response: `Anthropic Claude analysis of "${prompt}": This requires careful consideration of multiple factors including context, reasoning patterns, and ethical implications. Based on the available information, I would recommend...`,
-    tokens: Math.floor(Math.random() * 500 + 100),
-    confidence: Math.floor(Math.random() * 20 + 80)
+    tokens: Math.floor(0.5 * 500 + 100),
+    confidence: Math.floor(0.5 * 20 + 80)
   }
   
   return NextResponse.json({
@@ -211,19 +211,19 @@ async function handleWebFunction(data: any) {
     dataFusion: (params: any) => ({
       result: 'Data fusion complete',
       sources: params.sources || ['sensor', 'api', 'database'],
-      accuracy: Math.floor(Math.random() * 20 + 80)
+      accuracy: Math.floor(0.5 * 20 + 80)
     }),
     
     patternRecognition: (params: any) => ({
-      patterns: Math.floor(Math.random() * 10 + 5),
-      confidence: Math.floor(Math.random() * 30 + 70),
-      anomalies: Math.floor(Math.random() * 3)
+      patterns: Math.floor(0.5 * 10 + 5),
+      confidence: Math.floor(0.5 * 30 + 70),
+      anomalies: Math.floor(0.5 * 3)
     }),
     
     prediction: (params: any) => ({
       forecast: `Prediction for next ${params.timeframe || '24 hours'}`,
-      accuracy: Math.floor(Math.random() * 25 + 75),
-      confidence: Math.floor(Math.random() * 20 + 80)
+      accuracy: Math.floor(0.5 * 25 + 75),
+      confidence: Math.floor(0.5 * 20 + 80)
     })
   }
   
@@ -369,3 +369,4 @@ export async function GET() {
     timestamp: new Date().toISOString()
   })
 }
+

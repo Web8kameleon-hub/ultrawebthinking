@@ -1,10 +1,11 @@
 /**
  * @author Ledjan Ahmati
- * @version 8.0.0-WEB8
+ * @version 8.0.0-WEB8-REAL-ONLY
  * @contact dealsjona@gmail.com
  * 
- * Web8 AGI Spreadsheet System - Core Component
+ * Web8 AGI Spreadsheet System - REAL-ONLY Component
  * Industrial-grade AGI spreadsheet with real-time neural processing
+ * NO FAKE DATA - ALL VALUES MUST HAVE PROVENANCE
  */
 
 'use client'
@@ -17,6 +18,42 @@ import { AGISheetDemo } from './AGISheetDemo'
 import { AGISpreadsheetEngine } from './AGISpreadsheetEngine'
 import { useClientOnly } from '../../../../hooks/useClientOnly'
 import styles from './AGISheet.module.css'
+
+// REAL-ONLY Types
+type Provenance = {
+  source: string
+  fetchedAt: string
+  ttlSeconds: number
+  responseTimeMs?: number
+}
+
+type RealData<T> = {
+  data: T
+  provenance: Provenance
+}
+
+type RealResult<T> = 
+  | { ok: true; data: T & { provenance: Provenance } }
+  | { ok: false; kind: "NO_DATA" | "MISSING_TOOL" | "ERROR"; message: string; fix?: string[] }
+
+// AGI Client for real calls
+async function agiCall<T>(kind: string, args: any): Promise<RealResult<T>> {
+  try {
+    const response = await fetch('/api/agi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind, args })
+    })
+    return await response.json()
+  } catch (error) {
+    return {
+      ok: false,
+      kind: "ERROR",
+      message: String(error),
+      fix: ["Check API connection", "Verify AGI service"]
+    }
+  }
+}
 
 const sheetVariants = cva(styles.sheet, {
   variants: {
@@ -50,13 +87,59 @@ interface AGISheetProps {
   className?: string
 }
 
+// REAL-ONLY Cell Data Structure  
 interface CellData {
   id: string
-  value: string | number
+  value: RealData<string | number> | null  // ONLY real data with provenance
   formula?: string
   type: 'text' | 'number' | 'formula' | 'agi'
-  computed?: any
-  neural?: any
+  agiBinding?: string  // AGI capability binding (e.g., "WEATHER.NOW lat=51.5 lon=7.0")
+  lastUpdate?: number
+  error?: string | undefined
+}
+
+// Real Guard Component
+function RealGuard({ data, children, className }: { 
+  data?: any; 
+  children: React.ReactNode; 
+  className?: string 
+}) {
+  if (data === undefined) {
+    return (
+      <div className={`flex items-center justify-center p-4 ${className}`}>
+        <div className="text-gray-500">Loading real data...</div>
+      </div>
+    )
+  }
+  
+  if (data === null) {
+    return (
+      <div className={`flex items-center justify-center p-4 ${className}`}>
+        <div className="text-yellow-600">No real data available</div>
+      </div>
+    )
+  }
+  
+  // Check if data has valid provenance
+  if (!data?.provenance?.source || !data?.provenance?.fetchedAt) {
+    return (
+      <div className={`flex items-center justify-center p-4 border border-red-300 ${className}`}>
+        <div className="text-red-600">Invalid data: Missing provenance</div>
+      </div>
+    )
+  }
+  
+  // Check if data is stale
+  const age = (Date.now() - new Date(data.provenance.fetchedAt).getTime()) / 1000
+  if (age > data.provenance.ttlSeconds) {
+    return (
+      <div className={`flex items-center justify-center p-4 border border-yellow-300 ${className}`}>
+        <div className="text-yellow-600">Data stale (TTL expired)</div>
+      </div>
+    )
+  }
+  
+  return <>{children}</>
 }
 
 export const AGISheet: React.FC<AGISheetProps> = ({
@@ -74,114 +157,161 @@ export const AGISheet: React.FC<AGISheetProps> = ({
   const [selectedCell, setSelectedCell] = useState<string | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
   const [mode, setMode] = useState<'sheet' | 'demo' | 'engine'>('sheet')
+  const [isInitialized, setIsInitialized] = useState(false)
 
   // Initialize engines
   const cellEngine = useMemo(() => new CellEngine(), [])
 
   useEffect(() => {
-    if (initialData.length > 0) {
-      const initialCells = initialData.map((data, index) => ({
-        id: `A${index + 1}`,
-        value: data.value || '',
-        type: data.type || 'text',
-        formula: data.formula
-      }))
-      setCells(initialCells)
-    } else {
-      // Create default grid
-      const defaultCells: CellData[] = []
-      for (let row = 1; row <= 10; row++) {
-        for (let col = 0; col < 5; col++) {
-          const columnLetter = String.fromCharCode(65 + col) // A, B, C, D, E
-          defaultCells.push({
-            id: `${columnLetter}${row}`,
-            value: '',
-            type: 'text'
-          })
-        }
+    // Only initialize once to prevent infinite loops
+    if (!isInitialized) {
+      if (initialData.length > 0) {
+        const initialCells = initialData.map((data, index) => ({
+          id: `A${index + 1}`,
+          value: data.value ? {
+            data: data.value,
+            provenance: {
+              source: 'initial-data',
+              fetchedAt: new Date().toISOString(),
+              ttlSeconds: 3600
+            }
+          } : null,
+          type: data.type || 'text' as const,
+          formula: data.formula
+        }))
+        setCells(initialCells)
+      } else {
+        // DON'T create default fake data - wait for real data
+        setCells([])
       }
-      setCells(defaultCells)
+      setIsInitialized(true)
     }
-  }, [initialData])
+  }, [initialData, isInitialized])
 
-  const handleCellUpdate = async (cellId: string, value: string) => {
+  // REAL-ONLY cell update - no fake processing
+  const handleCellUpdate = async (cellId: string, newValue: string) => {
     setIsProcessing(true)
     
     try {
       let cellType: CellData['type'] = 'text'
-      let computed: any = value
-      let neural: any = null
+      let realValue: RealData<string | number> | null = null
+      let error: string | undefined
 
-      // Detect cell type
-      if (value.startsWith('=')) {
+      if (newValue === '') {
+        // Empty cell
+        realValue = null
+      } else if (newValue.startsWith('=')) {
         cellType = 'formula'
         if (enableFormulas) {
-          // Simple formula evaluation - can be enhanced later
-          computed = value // For now, just store the formula
+          // TODO: Connect to real formula engine
+          error = "Formula engine not connected"
         }
-      } else if (value.startsWith('agi:') && enableAGI) {
+      } else if (newValue.startsWith('agi:') && enableAGI) {
         cellType = 'agi'
-        // AGI processing placeholder - can be enhanced later
-        neural = { result: `AGI: Processing "${value}"...` }
-        computed = neural.result
-      } else if (!isNaN(Number(value)) && value !== '') {
-        cellType = 'number'
-        computed = Number(value)
+        // Extract AGI command
+        const command = newValue.slice(4).trim()
+        
+        // Call REAL AGI service
+        const result = await agiCall<{value: string | number}>('CELL.PROCESS', { command, cellId })
+        if (result.ok) {
+          realValue = {
+            data: result.data.value,
+            provenance: result.data.provenance
+          }
+        } else {
+          error = `AGI Error: ${result.message}`
+        }
+      } else {
+        // Regular value with manual provenance
+        cellType = !isNaN(Number(newValue)) && newValue !== '' ? 'number' : 'text'
+        realValue = {
+          data: cellType === 'number' ? Number(newValue) : newValue,
+          provenance: {
+            source: 'user-input',
+            fetchedAt: new Date().toISOString(),
+            ttlSeconds: 3600
+          }
+        }
       }
 
-      // Update cell
+      // Update cell with REAL data only
       setCells(prev => prev.map(cell => 
         cell.id === cellId 
-          ? { ...cell, value, type: cellType, computed, neural }
+          ? { ...cell, value: realValue, type: cellType, lastUpdate: Date.now(), error }
           : cell
       ))
 
-      onCellChange?.(cellId, { value, computed, neural })
+      onCellChange?.(cellId, realValue)
       
     } catch (error) {
       console.error('Cell update error:', error)
+      setCells(prev => prev.map(cell => 
+        cell.id === cellId 
+          ? { ...cell, error: String(error), lastUpdate: Date.now() }
+          : cell
+      ))
     } finally {
       setIsProcessing(false)
     }
   }
 
+  // REAL-ONLY cell renderer
   const renderCell = (cell: CellData) => {
     const isSelected = selectedCell === cell.id
-    const displayValue = cell.computed !== undefined ? cell.computed : cell.value
+    
+    // Extract display value from real data
+    const displayValue = cell.value ? String(cell.value.data) : ''
+    const hasRealData = cell.value !== null
+    const hasError = !!cell.error
     
     return (
-      <motion.div
-        key={cell.id}
-        className={`
-          relative border border-gray-200 dark:border-gray-700 p-2 min-h-[40px] 
-          flex items-center justify-center text-sm transition-all duration-200
-          ${isSelected ? 'ring-2 ring-purple-500 bg-purple-50 dark:bg-purple-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-800'}
-          ${cell.type === 'formula' ? 'text-blue-600 dark:text-blue-400' : ''}
-          ${cell.type === 'agi' ? 'text-purple-600 dark:text-purple-400' : ''}
-          ${cell.neural ? 'bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20' : ''}
-        `}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        onClick={() => setSelectedCell(cell.id)}
-      >
-        <input
-          type="text"
-          value={cell.value}
-          onChange={(e) => handleCellUpdate(cell.id, e.target.value)}
-          className="w-full h-full bg-transparent border-none outline-none text-center"
-          placeholder={cell.id}
-        />
-        
-        {cell.neural && (
-          <div className="absolute -top-1 -right-1 w-3 h-3 bg-purple-500 rounded-full animate-pulse" />
-        )}
-        
-        {isProcessing && selectedCell === cell.id && (
-          <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 bg-opacity-50 flex items-center justify-center">
-            <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
-      </motion.div>
+      <RealGuard data={cell.value} key={cell.id}>
+        <motion.div
+          className={`
+            relative border border-gray-200 dark:border-gray-700 p-2 min-h-[40px] 
+            flex items-center justify-center text-sm transition-all duration-200
+            ${isSelected ? 'ring-2 ring-purple-500 bg-purple-50 dark:bg-purple-900/20' : 'hover:bg-gray-50 dark:hover:bg-gray-800'}
+            ${cell.type === 'formula' ? 'text-blue-600 dark:text-blue-400' : ''}
+            ${cell.type === 'agi' ? 'text-purple-600 dark:text-purple-400' : ''}
+            ${hasRealData ? 'bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20' : ''}
+            ${hasError ? 'bg-red-50 dark:bg-red-900/20 border-red-300' : ''}
+          `}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => setSelectedCell(cell.id)}
+        >
+          <input
+            type="text"
+            value={displayValue}
+            onChange={(e) => handleCellUpdate(cell.id, e.target.value)}
+            className="w-full h-full bg-transparent border-none outline-none text-center"
+            placeholder={hasError ? "ERROR" : cell.id}
+          />
+          
+          {/* Real data indicator */}
+          {hasRealData && cell.value && (
+            <div 
+              className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"
+              title={`Source: ${cell.value.provenance.source}`}
+            />
+          )}
+          
+          {/* Error indicator */}
+          {hasError && (
+            <div 
+              className="absolute -top-1 -left-1 w-3 h-3 bg-red-500 rounded-full"
+              title={cell.error}
+            />
+          )}
+          
+          {/* Processing indicator */}
+          {isProcessing && selectedCell === cell.id && (
+            <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 bg-opacity-50 flex items-center justify-center">
+              <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+        </motion.div>
+      </RealGuard>
     )
   }
 
@@ -268,7 +398,21 @@ export const AGISheet: React.FC<AGISheetProps> = ({
                 {/* Cells */}
                 {['A', 'B', 'C', 'D', 'E'].map(col => {
                   const cellId = `${col}${rowIndex + 1}`
-                  const cell = cells.find(c => c.id === cellId) || { id: cellId, value: '', type: 'text' as const }
+                  const cell = cells.find(c => c.id === cellId)
+                  
+                  // Only render existing cells with real data
+                  if (!cell) {
+                    return (
+                      <div 
+                        key={cellId}
+                        className="border border-gray-200 dark:border-gray-700 p-2 min-h-[40px] flex items-center justify-center text-sm text-gray-400"
+                        onClick={() => setSelectedCell(cellId)}
+                      >
+                        <span className="text-xs">{cellId}</span>
+                      </div>
+                    )
+                  }
+                  
                   return renderCell(cell)
                 })}
               </div>

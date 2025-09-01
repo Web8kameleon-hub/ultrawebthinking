@@ -168,7 +168,7 @@ class Web8LightningPool extends EventEmitter {
    * Submit task për processing në specific layer
    */
   async submitTask(task: Omit<Web8Task, 'id' | 'timestamp'>): Promise<string> {
-    const taskId = `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const taskId = `task_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
     
     const fullTask: Web8Task = {
       id: taskId,
@@ -351,3 +351,4 @@ class Web8LightningPool extends EventEmitter {
 
 export { Web8LightningPool, Web8LayerType };
 export type { Web8Task, Web8LayerConfig };
+

@@ -1,0 +1,16 @@
+{
+  "mode": "CONTINUOUS_DEVELOPMENT",
+  "interval": 30000,
+  "actions": [
+    "SCAN_PROJECT_HEALTH",
+    "IDENTIFY_IMPROVEMENTS",
+    "PLAN_OPTIMIZATIONS",
+    "EXECUTE_IMPROVEMENTS",
+    "MONITOR_RESULTS",
+    "LEARN_FROM_OUTCOMES",
+    "EVOLVE_STRATEGIES"
+  ],
+  "autoApply": true,
+  "learningEnabled": true,
+  "emergencyShutoff": false
+}

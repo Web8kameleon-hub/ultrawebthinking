@@ -6,6 +6,8 @@
  * @version 8.0.0-WEB8
  */
 
+'use client'
+
 import dynamic from 'next/dynamic'
 
 // Dynamic import për performance
@@ -20,8 +22,7 @@ const UltraAGIChat = dynamic(() => import('../../components/UltraAGIChat/UltraAG
         <p className="text-gray-600 mt-2">World Champion AI • Evolving Every Second</p>
       </div>
     </div>
-  ),
-  ssr: false
+  )
 })
 
 export default function UltraAGIChatPage() {
@@ -30,10 +31,4 @@ export default function UltraAGIChatPage() {
       <UltraAGIChat />
     </div>
   )
-}
-
-export const metadata = {
-  title: 'Ultra AGI Ω - World Champion AI Chat',
-  description: 'The most advanced AI chat system in the world. Evolves every second with unprecedented intelligence, creativity, and empathy.',
-  keywords: 'AI, AGI, Chat, Intelligence, Evolution, Advanced, World Champion, Ultra'
 }

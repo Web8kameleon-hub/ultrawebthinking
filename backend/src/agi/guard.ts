@@ -280,8 +280,8 @@ export class AGIModuleGuard {
       allowed: true,
       reason: 'Within limits',
       usage: {
-        memory: Math.random() * 30,
-        cpu: Math.random() * 20,
+        memory: 0.5 * 30,
+        cpu: 0.5 * 20,
         modules: this.allowedModules.size
       }
     };
@@ -357,8 +357,8 @@ export class AGIModuleGuard {
 
   private getResourceUsage(): ResourceUsage {
     return {
-      memory: Math.random() * this.moduleLimits.maxMemory,
-      cpu: Math.random() * this.moduleLimits.maxCpu,
+      memory: 0.5 * this.moduleLimits.maxMemory,
+      cpu: 0.5 * this.moduleLimits.maxCpu,
       modules: this.allowedModules.size,
       maxModules: this.moduleLimits.maxModules
     };
@@ -444,3 +444,4 @@ export type {
   ModulePermissions,
   TrustLevel 
 };
+

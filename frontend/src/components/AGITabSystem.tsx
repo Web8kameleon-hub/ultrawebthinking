@@ -286,8 +286,8 @@ export class AGITabSystem extends React.Component {
                 } as any}>
                   <h4 style={{ color: '#f59e0b', margin: '0 0 8px 0' } as any}>Search Performance</h4>
                   <p>Queries/sec: <strong>{Math.floor(tabStatus.activity * 10)}</strong></p>
-                  <p>Response Time: <strong>{(Math.random() * 100 + 50).toFixed(0)}ms</strong></p>
-                  <p>Cache Hit Rate: <strong>{(Math.random() * 20 + 80).toFixed(1)}%</strong></p>
+                  <p>Response Time: <strong>{(0.5 * 100 + 50).toFixed(0)}ms</strong></p>
+                  <p>Cache Hit Rate: <strong>{(0.5 * 20 + 80).toFixed(1)}%</strong></p>
                 </div>
                 <div style={{
                   background: 'rgba(245, 158, 11, 0.1)',
@@ -296,9 +296,9 @@ export class AGITabSystem extends React.Component {
                   border: '1px solid #f59e0b'
                 } as any}>
                   <h4 style={{ color: '#f59e0b', margin: '0 0 8px 0' } as any}>Live Status</h4>
-                  <p>Active Crawlers: <strong>{Math.floor(Math.random() * 50 + 20)}</strong></p>
-                  <p>Indexed Pages: <strong>{(Math.random() * 1000000 + 5000000).toFixed(0)}</strong></p>
-                  <p>Search Quality: <strong>{(Math.random() * 10 + 90).toFixed(1)}%</strong></p>
+                  <p>Active Crawlers: <strong>{Math.floor(0.5 * 50 + 20)}</strong></p>
+                  <p>Indexed Pages: <strong>{(0.5 * 1000000 + 5000000).toFixed(0)}</strong></p>
+                  <p>Search Quality: <strong>{(0.5 * 10 + 90).toFixed(1)}%</strong></p>
                 </div>
               </div>
               <input
@@ -332,15 +332,15 @@ export class AGITabSystem extends React.Component {
                 </div>
                 <div style={{ background: 'rgba(34, 197, 94, 0.1)', padding: '16px', borderRadius: '8px', border: '1px solid #22c55e' } as any}>
                   <h4 style={{ color: '#22c55e', margin: '0 0 8px 0' } as any}>📊 Deep Learning</h4>
-                  <p>Training Sessions: <strong>{Math.floor(Math.random() * 100)}</strong></p>
-                  <p>Accuracy: <strong>{(Math.random() * 5 + 95).toFixed(2)}%</strong></p>
-                  <p>Think Depth: <strong>{Math.floor(Math.random() * 5 + 5)} levels</strong></p>
+                  <p>Training Sessions: <strong>{Math.floor(0.5 * 100)}</strong></p>
+                  <p>Accuracy: <strong>{(0.5 * 5 + 95).toFixed(2)}%</strong></p>
+                  <p>Think Depth: <strong>{Math.floor(0.5 * 5 + 5)} levels</strong></p>
                 </div>
                 <div style={{ background: 'rgba(34, 197, 94, 0.1)', padding: '16px', borderRadius: '8px', border: '1px solid #22c55e' } as any}>
                   <h4 style={{ color: '#22c55e', margin: '0 0 8px 0' } as any}>⚡ Ultra Performance</h4>
                   <p>Decisions/min: <strong>{Math.floor(tabStatus.activity * 100)}</strong></p>
-                  <p>Confidence: <strong>{(Math.random() * 10 + 85).toFixed(1)}%</strong></p>
-                  <p>Response Time: <strong>{(Math.random() * 50 + 100).toFixed(0)}ms</strong></p>
+                  <p>Confidence: <strong>{(0.5 * 10 + 85).toFixed(1)}%</strong></p>
+                  <p>Response Time: <strong>{(0.5 * 50 + 100).toFixed(0)}ms</strong></p>
                 </div>
               </div>
 
@@ -480,9 +480,9 @@ export class AGITabSystem extends React.Component {
                 <div style={{ fontSize: '14px', color: '#ccc', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' } as any}>
                   <div>• Neural networks: <strong style={{color: '#22c55e'} as any}>ACTIVE</strong></div>
                   <div>• Deep learning: <strong style={{color: '#22c55e'} as any}>OPTIMIZED</strong></div>
-                  <div>• Memory cores: <strong style={{color: '#22c55e'} as any}>{Math.floor(Math.random() * 20 + 80)}% utilized</strong></div>
-                  <div>• Think modules: <strong style={{color: '#22c55e'} as any}>{Math.floor(Math.random() * 5 + 5)} active</strong></div>
-                  <div>• Response queue: <strong style={{color: '#22c55e'} as any}>{Math.floor(Math.random() * 10)} pending</strong></div>
+                  <div>• Memory cores: <strong style={{color: '#22c55e'} as any}>{Math.floor(0.5 * 20 + 80)}% utilized</strong></div>
+                  <div>• Think modules: <strong style={{color: '#22c55e'} as any}>{Math.floor(0.5 * 5 + 5)} active</strong></div>
+                  <div>• Response queue: <strong style={{color: '#22c55e'} as any}>{Math.floor(0.5 * 10)} pending</strong></div>
                   <div>• Ethics guardian: <strong style={{color: '#22c55e'} as any}>MONITORING</strong></div>
                 </div>
               </div>
@@ -506,8 +506,8 @@ export class AGITabSystem extends React.Component {
                 } as any}>
                   <h4 style={{ color: '#ec4899', margin: '0 0 8px 0' } as any}>AI Performance</h4>
                   <p>Queries Processed: <strong>{Math.floor(tabStatus.activity * 50)}</strong></p>
-                  <p>Response Time: <strong>{(Math.random() * 200 + 100).toFixed(0)}ms</strong></p>
-                  <p>Confidence Level: <strong>{(Math.random() * 15 + 85).toFixed(1)}%</strong></p>
+                  <p>Response Time: <strong>{(0.5 * 200 + 100).toFixed(0)}ms</strong></p>
+                  <p>Confidence Level: <strong>{(0.5 * 15 + 85).toFixed(1)}%</strong></p>
                 </div>
                 <div style={{
                   background: 'rgba(236, 72, 153, 0.1)',
@@ -516,9 +516,9 @@ export class AGITabSystem extends React.Component {
                   border: '1px solid #ec4899'
                 } as any}>
                   <h4 style={{ color: '#ec4899', margin: '0 0 8px 0' } as any}>Intelligence Stats</h4>
-                  <p>Knowledge Base: <strong>{(Math.random() * 100000 + 500000).toFixed(0)} entries</strong></p>
-                  <p>Learning Rate: <strong>{(Math.random() * 2 + 3).toFixed(2)}%/hour</strong></p>
-                  <p>Reasoning Depth: <strong>{Math.floor(Math.random() * 5 + 5)} levels</strong></p>
+                  <p>Knowledge Base: <strong>{(0.5 * 100000 + 500000).toFixed(0)} entries</strong></p>
+                  <p>Learning Rate: <strong>{(0.5 * 2 + 3).toFixed(2)}%/hour</strong></p>
+                  <p>Reasoning Depth: <strong>{Math.floor(0.5 * 5 + 5)} levels</strong></p>
                 </div>
               </div>
               <div style={{
@@ -575,10 +575,10 @@ export class AGITabSystem extends React.Component {
               } as any}>
                 <h4 style={{ color: '#ec4899', margin: '0 0 12px 0' } as any}>🧠 Recent AI Insights</h4>
                 <div style={{ fontSize: '14px', color: '#ccc' } as any}>
-                  <p>• AGI systems showing {(Math.random() * 20 + 80).toFixed(1)}% efficiency improvement</p>
-                  <p>• Neural patterns detected in {Math.floor(Math.random() * 50 + 100)} data streams</p>
-                  <p>• Learning algorithms adapting to {Math.floor(Math.random() * 10 + 15)} new domains</p>
-                  <p>• Reasoning capabilities expanded by {(Math.random() * 5 + 10).toFixed(1)}% today</p>
+                  <p>• AGI systems showing {(0.5 * 20 + 80).toFixed(1)}% efficiency improvement</p>
+                  <p>• Neural patterns detected in {Math.floor(0.5 * 50 + 100)} data streams</p>
+                  <p>• Learning algorithms adapting to {Math.floor(0.5 * 10 + 15)} new domains</p>
+                  <p>• Reasoning capabilities expanded by {(0.5 * 5 + 10).toFixed(1)}% today</p>
                 </div>
               </div>
             </div>
@@ -602,13 +602,13 @@ export class AGITabSystem extends React.Component {
                     <h4 style={{ color: currentTab?.color, margin: '0 0 8px 0' } as any}>Module Status</h4>
                     <p>Status: <strong>{tabStatus.status}</strong></p>
                     <p>Activity Level: <strong>{tabStatus.activity.toFixed(1)}%</strong></p>
-                    <p>Uptime: <strong>{Math.floor(Math.random() * 720 + 24)}h</strong></p>
+                    <p>Uptime: <strong>{Math.floor(0.5 * 720 + 24)}h</strong></p>
                   </div>
                   <div>
                     <h4 style={{ color: currentTab?.color, margin: '0 0 8px 0' } as any}>Performance</h4>
                     <p>Operations/sec: <strong>{Math.floor(tabStatus.activity * 50)}</strong></p>
-                    <p>Efficiency: <strong>{(Math.random() * 15 + 85).toFixed(1)}%</strong></p>
-                    <p>Load: <strong>{(Math.random() * 30 + 20).toFixed(1)}%</strong></p>
+                    <p>Efficiency: <strong>{(0.5 * 15 + 85).toFixed(1)}%</strong></p>
+                    <p>Load: <strong>{(0.5 * 30 + 20).toFixed(1)}%</strong></p>
                   </div>
                 </div>
               </div>

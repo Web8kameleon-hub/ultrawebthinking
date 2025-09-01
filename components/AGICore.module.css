@@ -1,0 +1,287 @@
+/**
+ * AGI Core Styles - Web8 Platform
+ * @author Ledjan Ahmati
+ * @version 8.0.0-WEB8-REAL-ONLY
+ * NO INLINE STYLES - PROPER CSS MODULES
+ */
+
+/* Loading States */
+.loading {
+  color: #6b7280;
+}
+
+.noData {
+  color: #f59e0b;
+}
+
+.invalidData {
+  color: #ef4444;
+}
+
+.staleData {
+  color: #f59e0b;
+}
+
+/* Main Container */
+.container {
+  padding: 40px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #f8fafc;
+}
+
+.innerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Typography */
+.title {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #cbd5e1;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Loading Screen */
+.loadingScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingContent {
+  text-align: center;
+}
+
+.loadingIcon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.loadingSubtext {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+/* Error Screen */
+.errorScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorContent {
+  text-align: center;
+  color: #ef4444;
+}
+
+.errorIcon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.errorMessage {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.errorFix {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 5px;
+}
+
+/* Cards Grid */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+/* Neural Card */
+.neuralCard {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.neuralCardTitle {
+  color: #6366f1;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.neuralCardDescription {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.neuralCardStatus {
+  margin-top: 20px;
+  padding: 10px;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #10b981;
+}
+
+/* Realtime Card */
+.realtimeCard {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.realtimeCardTitle {
+  color: #10b981;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.realtimeCardDescription {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.realtimeCardStatus {
+  margin-top: 20px;
+  padding: 10px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #6366f1;
+}
+
+/* Security Card */
+.securityCard {
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.securityCardTitle {
+  color: #a855f7;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.securityCardDescription {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.securityCardStatus {
+  margin-top: 20px;
+  padding: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* Control Panel */
+.controlPanel {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+}
+
+.controlPanelTitle {
+  color: #f8fafc;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Metric Cards */
+.metricCard {
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.neuralMetric {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.speedMetric {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.learningMetric {
+  background: rgba(168, 85, 247, 0.1);
+}
+
+.responseMetric {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+/* Metric Values */
+.metricValue {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.neuralValue {
+  color: #6366f1;
+}
+
+.speedValue {
+  color: #10b981;
+}
+
+.learningValue {
+  color: #a855f7;
+}
+
+.responseValue {
+  color: #f59e0b;
+}
+
+.metricLabel {
+  font-size: 12px;
+  color: #cbd5e1;
+}
+
+.metricSource {
+  font-size: 8px;
+  color: #6b7280;
+}
+
+/* No Data States */
+.noDataValue {
+  font-size: 16px;
+  color: #ef4444;
+}
+
+.noDataHelp {
+  font-size: 10px;
+  color: #6b7280;
+}

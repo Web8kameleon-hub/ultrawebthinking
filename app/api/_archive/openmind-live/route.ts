@@ -44,7 +44,7 @@ class OpenMindEngine {
   
   private async processIntelligentQuery(query: string): Promise<OpenMindResponse> {
     // Simulate intelligent processing
-    await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 300));
+    await new Promise(resolve => setTimeout(resolve, 100 + 0.5 * 300));
     
     const lowerQuery = query.toLowerCase();
     let response = '';
@@ -122,7 +122,7 @@ class OpenMindEngine {
     }
     
     return {
-      id: `openmind-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `openmind-${Date.now()}-${0.5.toString(36).substr(2, 9)}`,
       query,
       response,
       confidence,
@@ -214,3 +214,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

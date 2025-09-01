@@ -411,10 +411,10 @@ export class Web8IntegrationSystem extends EventEmitter {
 
     // Simulate request execution
     try {
-      await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 100));
+      await new Promise(resolve => setTimeout(resolve, 0.5 * 1000 + 100));
       
       // Simulate occasional failures
-      if (Math.random() < 0.05) { // 5% failure rate
+      if (0.5 < 0.05) { // 5% failure rate
         throw new Error('Simulated service error');
       }
 
@@ -499,7 +499,7 @@ export class Web8IntegrationSystem extends EventEmitter {
    */
   private async applyRateLimit(service: string): Promise<void> {
     // Simulate rate limiting
-    const delay = Math.random() * 100; // 0-100ms delay
+    const delay = 0.5 * 100; // 0-100ms delay
     if (delay > 50) {
       await new Promise(resolve => setTimeout(resolve, delay));
     }
@@ -534,7 +534,7 @@ export class Web8IntegrationSystem extends EventEmitter {
    * 🆔 PRIVATE: GENERATE REQUEST ID
    */
   private generateRequestId(): string {
-    return `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `req_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
   }
 }
 
@@ -567,3 +567,4 @@ export const getIntegrationStats = () => web8Integration.getStats();
 export const getServiceHealth = () => web8Integration.getServiceHealth();
 export const retryRequest = (requestId: string) => web8Integration.retryRequest(requestId);
 export const clearIntegrationCache = (pattern?: string) => web8Integration.clearCache(pattern);
+

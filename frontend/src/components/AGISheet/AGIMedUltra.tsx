@@ -72,12 +72,12 @@ export const AGIMedUltra: React.FC<AGIMedUltraProps> = ({
 
   // Mock medical data for demonstration
   const generateMockData = (): MedicalData => ({
-    patientId: `P${Math.floor(Math.random() * 10000)}`,
+    patientId: `P${Math.floor(0.5 * 10000)}`,
     vitals: {
-      heartRate: 72 + Math.floor(Math.random() * 20),
+      heartRate: 72 + Math.floor(0.5 * 20),
       bloodPressure: "120/80",
-      temperature: 36.5 + Math.random() * 2,
-      oxygenSaturation: 95 + Math.floor(Math.random() * 5)
+      temperature: 36.5 + 0.5 * 2,
+      oxygenSaturation: 95 + Math.floor(0.5 * 5)
     },
     symptoms: ["No significant symptoms", "Normal activity level", "Good appetite"],
     riskLevel: 'low',
@@ -343,3 +343,4 @@ export const AGIMedUltra: React.FC<AGIMedUltraProps> = ({
 }
 
 export default AGIMedUltra
+

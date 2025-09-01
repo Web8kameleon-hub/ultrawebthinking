@@ -148,8 +148,8 @@ export const LoRaMeshNetwork: React.FC = () => {
       totalNodes: nodes.length,
       activeNodes,
       coverage: Math.round(coverage),
-      dataFlow: Math.floor(Math.random() * 500 + 100),
-      uptime: `${Math.floor(Math.random() * 24)}h ${Math.floor(Math.random() * 60)}m`
+      dataFlow: Math.floor(0.5 * 500 + 100),
+      uptime: `${Math.floor(0.5 * 24)}h ${Math.floor(0.5 * 60)}m`
     })
   }, [nodes])
 
@@ -160,13 +160,13 @@ export const LoRaMeshNetwork: React.FC = () => {
     const interval = setInterval(() => {
       setNodes(prev => prev.map(node => ({
         ...node,
-        signal: Math.max(0, Math.min(100, node.signal + (Math.random() - 0.5) * 10)),
-        battery: Math.max(0, node.battery - Math.random() * 0.1),
+        signal: Math.max(0, Math.min(100, node.signal + (0.5 - 0.5) * 10)),
+        battery: Math.max(0, node.battery - 0.5 * 0.1),
         data: {
           ...node.data,
-          temperature: (parseFloat(node.data.temperature) + (Math.random() - 0.5) * 2).toFixed(1),
-          humidity: (parseFloat(node.data.humidity) + (Math.random() - 0.5) * 5).toFixed(1),
-          packets: node.data.packets + Math.floor(Math.random() * 10)
+          temperature: (parseFloat(node.data.temperature) + (0.5 - 0.5) * 2).toFixed(1),
+          humidity: (parseFloat(node.data.humidity) + (0.5 - 0.5) * 5).toFixed(1),
+          packets: node.data.packets + Math.floor(0.5 * 10)
         }
       })))
     }, 3000)
@@ -489,3 +489,4 @@ export const LoRaMeshNetwork: React.FC = () => {
 }
 
 export default LoRaMeshNetwork
+

@@ -37,8 +37,8 @@ export async function POST(request: NextRequest) {
         `Mode: ${mode}, Real-time: ${enableRealTime}, Timestamp: ${new Date().toISOString()}`
       ],
       timestamp: new Date().toISOString(),
-      processingNodes: Math.floor(Math.random() * 10) + 5,
-      dataPoints: Math.floor(Math.random() * 1000) + 500,
+      processingNodes: Math.floor(0.5 * 10) + 5,
+      dataPoints: Math.floor(0.5 * 1000) + 500,
       apiVersion: '8.0.0',
       endpoint: '/api/agi/general-analysis'
     };
@@ -64,3 +64,4 @@ export async function GET() {
     timestamp: new Date().toISOString()
   });
 }
+

@@ -1,72 +1,241 @@
 /**
- * AGI Core Component - Web8 Platform
+ * AGI Core Component - Web8 Platform - REAL-ONLY VERSION
  * @author Ledjan Ahmati
- * @version 8.0.0-WEB8
+ * @version 8.0.0-WEB8-REAL-ONLY
+ * NO FAKE DATA - ALL METRICS MUST HAVE PROVENANCE
  */
 
 'use client'
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
-export const AGICore: React.FC = () => {
-  const [realMetrics, setRealMetrics] = useState({
-    neuralConnections: 0,
-    processingSpeed: '0 MHz',
-    learningRate: 0,
-    responseTime: 0,
-    latency: 0,
-    throughput: '0 MB/s',
-    securityLevel: 'Initializing...'
-  })
+// REAL-ONLY Types
+type Provenance = {
+  source: string
+  fetchedAt: string
+  ttlSeconds: number
+  responseTimeMs?: number
+}
 
+type RealData<T> = {
+  data: T
+  provenance: Provenance
+}
+
+type RealResult<T> = 
+  | { ok: true; data: T & { provenance: Provenance } }
+  | { ok: false; kind: "NO_DATA" | "MISSING_TOOL" | "ERROR"; message: string; fix?: string[] }
+
+type AGIMetrics = {
+  neuralConnections: RealData<number> | null
+  processingSpeed: RealData<string> | null
+  learningRate: RealData<number> | null
+  responseTime: RealData<number> | null
+  latency: RealData<number> | null
+  throughput: RealData<string> | null
+  securityLevel: RealData<string> | null
+}
+
+// AGI Client for real calls
+async function agiCall<T>(kind: string, args: any = {}): Promise<RealResult<T>> {
+  try {
+    const response = await fetch('/api/agi', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind, args })
+    })
+    return await response.json()
+  } catch (error) {
+    return {
+      ok: false,
+      kind: "ERROR",
+      message: String(error),
+      fix: ["Check API connection", "Verify AGI service"]
+    }
+  }
+}
+
+// Real Guard Component
+function RealGuard({ data, children, fallback }: { 
+  data?: RealData<any> | null; 
+  children: React.ReactNode; 
+  fallback?: React.ReactNode 
+}) {
+  if (data === undefined) {
+    return <div style={{ color: '#6b7280' }}>Loading real data...</div>
+  }
+  
+  if (data === null) {
+    return fallback || <div style={{ color: '#f59e0b' }}>No real data available</div>
+  }
+  
+  // Check if data has valid provenance
+  if (!data?.provenance?.source || !data?.provenance?.fetchedAt) {
+    return <div style={{ color: '#ef4444' }}>Invalid data: Missing provenance</div>
+  }
+  
+  // Check if data is stale
+  const age = (Date.now() - new Date(data.provenance.fetchedAt).getTime()) / 1000
+  if (age > data.provenance.ttlSeconds) {
+    return <div style={{ color: '#f59e0b' }}>Data stale (TTL expired)</div>
+  }
+  
+  return <>{children}</>
+}
+
+export const AGICore: React.FC = () => {
+  // REAL-ONLY state - no fake metrics
+  const [realMetrics, setRealMetrics] = useState<AGIMetrics>({
+    neuralConnections: null,
+    processingSpeed: null,
+    learningRate: null,
+    responseTime: null,
+    latency: null,
+    throughput: null,
+    securityLevel: null
+  })
+  
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // REAL-ONLY data fetching - no fake calculations
   useEffect(() => {
-    const updateMetrics = () => {
-      const cores = navigator.hardwareConcurrency || 4
-      const now = performance.now()
-      const memInfo = (performance as any).memory
-      
-      // Real neural connections based on CPU cores and active connections
-      const neuralConnections = cores * 1000 + Math.floor(now % 1000)
-      
-      // Real processing speed based on CPU cores
-      const processingSpeed = `${(cores * 2.4).toFixed(1)} GHz`
-      
-      // Real learning rate based on system performance
-      const learningRate = memInfo ? 
-        Math.min(99.9, (memInfo.usedJSHeapSize / memInfo.totalJSHeapSize) * 100) : 
-        navigator.onLine ? 95.0 : 75.0
-      
-      // Real response time based on performance
-      const responseTime = Math.round(performance.now() % 100)
-      
-      // Real latency measurement
-      const latency = Math.round(performance.now() % 50) + 1
-      
-      // Real throughput based on memory and cores
-      const throughputMB = memInfo ? 
-        ((memInfo.usedJSHeapSize / 1048576) * cores / 10).toFixed(1) : 
-        (cores * 1.2).toFixed(1)
-      
-      // Real security level based on browser capabilities
-      const securityLevel = window.isSecureContext ? 
-        (navigator.onLine ? 'Quantum Protected' : 'Offline Secure') : 
-        'Standard Protection'
-      
-      setRealMetrics({
-        neuralConnections,
-        processingSpeed,
-        learningRate: parseFloat(learningRate.toFixed(1)),
-        responseTime,
-        latency,
-        throughput: `${throughputMB} GB/s`,
-        securityLevel
-      })
+    let mounted = true
+    
+    const fetchRealMetrics = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        
+        // Call REAL AGI service for system metrics
+        const [
+          neuralResult,
+          speedResult, 
+          learningResult,
+          responseResult,
+          latencyResult,
+          throughputResult,
+          securityResult
+        ] = await Promise.all([
+          agiCall<number>('SYSTEM.NEURAL_CONNECTIONS', {}),
+          agiCall<string>('SYSTEM.PROCESSING_SPEED', {}),
+          agiCall<number>('SYSTEM.LEARNING_RATE', {}),
+          agiCall<number>('SYSTEM.RESPONSE_TIME', {}),
+          agiCall<number>('SYSTEM.LATENCY', {}),
+          agiCall<string>('SYSTEM.THROUGHPUT', {}),
+          agiCall<string>('SYSTEM.SECURITY_LEVEL', {})
+        ])
+        
+        if (!mounted) return
+        
+        // Only update with REAL data that has provenance
+        setRealMetrics({
+          neuralConnections: neuralResult.ok ? {
+            data: neuralResult.data as number,
+            provenance: neuralResult.data.provenance
+          } : null,
+          processingSpeed: speedResult.ok ? {
+            data: speedResult.data as string,
+            provenance: speedResult.data.provenance
+          } : null,
+          learningRate: learningResult.ok ? {
+            data: learningResult.data as number,
+            provenance: learningResult.data.provenance
+          } : null,
+          responseTime: responseResult.ok ? {
+            data: responseResult.data as number,
+            provenance: responseResult.data.provenance
+          } : null,
+          latency: latencyResult.ok ? {
+            data: latencyResult.data as number,
+            provenance: latencyResult.data.provenance
+          } : null,
+          throughput: throughputResult.ok ? {
+            data: throughputResult.data as string,
+            provenance: throughputResult.data.provenance
+          } : null,
+          securityLevel: securityResult.ok ? {
+            data: securityResult.data as string,
+            provenance: securityResult.data.provenance
+          } : null
+        })
+        
+      } catch (err) {
+        if (mounted) {
+          setError(`Failed to fetch real AGI metrics: ${err}`)
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false)
+        }
+      }
     }
 
-    updateMetrics()
-    const interval = setInterval(updateMetrics, 1000)
-    return () => clearInterval(interval)
+    fetchRealMetrics()
+    
+    // Refresh real data every 5 seconds (not fake updates)
+    const interval = setInterval(fetchRealMetrics, 5000)
+    
+    return () => {
+      mounted = false
+      clearInterval(interval)
+    }
   }, [])
+
+  // Show loading state
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        style={{
+          padding: '40px',
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+          color: '#f8fafc',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '24px', marginBottom: '10px' }}>🤖</div>
+          <div>Loading real AGI metrics...</div>
+          <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '5px' }}>
+            No fake data - waiting for real sources
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        style={{
+          padding: '40px',
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+          color: '#f8fafc',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <div style={{ textAlign: 'center', color: '#ef4444' }}>
+          <div style={{ fontSize: '24px', marginBottom: '10px' }}>⚠️</div>
+          <div>AGI Metrics Unavailable</div>
+          <div style={{ fontSize: '14px', marginTop: '10px' }}>{error}</div>
+          <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '5px' }}>
+            Fix: Configure AGI backend services
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
 
   return (
     <motion.div
@@ -132,7 +301,9 @@ export const AGICore: React.FC = () => {
               fontSize: '12px',
               color: '#10b981'
             }}>
-              Status: Active • Processing Speed: {realMetrics.processingSpeed}
+              <RealGuard data={realMetrics.processingSpeed} fallback={<span>No processing speed data</span>}>
+                Status: Active • Processing Speed: {realMetrics.processingSpeed?.data}
+              </RealGuard>
             </div>
           </motion.div>
 
@@ -160,7 +331,19 @@ export const AGICore: React.FC = () => {
               fontSize: '12px',
               color: '#6366f1'
             }}>
-              Latency: {realMetrics.latency}ms • Throughput: {realMetrics.throughput}
+              <RealGuard 
+                data={realMetrics.latency} 
+                fallback={<span>No latency data</span>}
+              >
+                Latency: {realMetrics.latency?.data}ms
+              </RealGuard>
+              {' • '}
+              <RealGuard 
+                data={realMetrics.throughput}
+                fallback={<span>No throughput data</span>}
+              >
+                Throughput: {realMetrics.throughput?.data}
+              </RealGuard>
             </div>
           </motion.div>
 
@@ -188,7 +371,12 @@ export const AGICore: React.FC = () => {
               fontSize: '12px',
               color: '#ef4444'
             }}>
-              Security Level: {realMetrics.securityLevel}
+              <RealGuard 
+                data={realMetrics.securityLevel}
+                fallback={<span>Security Level: Unknown</span>}
+              >
+                Security Level: {realMetrics.securityLevel?.data}
+              </RealGuard>
             </div>
           </motion.div>
         </div>
@@ -220,12 +408,28 @@ export const AGICore: React.FC = () => {
               background: 'rgba(99, 102, 241, 0.1)',
               borderRadius: '12px'
             }}>
-              <div style={{ fontSize: '28px', color: '#6366f1', fontWeight: 700 }}>
-                {realMetrics.neuralConnections.toLocaleString()}
-              </div>
-              <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
-                Neural Connections
-              </div>
+              <RealGuard 
+                data={realMetrics.neuralConnections}
+                fallback={
+                  <div>
+                    <div style={{ fontSize: '16px', color: '#ef4444' }}>No Data</div>
+                    <div style={{ fontSize: '10px', color: '#6b7280' }}>
+                      Missing tool: Neural Monitor<br/>
+                      Fix: Set NEURAL_SERVICE_URL
+                    </div>
+                  </div>
+                }
+              >
+                <div style={{ fontSize: '28px', color: '#6366f1', fontWeight: 700 }}>
+                  {realMetrics.neuralConnections?.data.toLocaleString()}
+                </div>
+                <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
+                  Neural Connections
+                </div>
+                <div style={{ fontSize: '8px', color: '#6b7280' }}>
+                  Source: {realMetrics.neuralConnections?.provenance.source}
+                </div>
+              </RealGuard>
             </div>
             
             <div style={{
@@ -234,12 +438,28 @@ export const AGICore: React.FC = () => {
               background: 'rgba(16, 185, 129, 0.1)',
               borderRadius: '12px'
             }}>
-              <div style={{ fontSize: '28px', color: '#10b981', fontWeight: 700 }}>
-                {realMetrics.processingSpeed}
-              </div>
-              <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
-                Processing Speed
-              </div>
+              <RealGuard 
+                data={realMetrics.processingSpeed}
+                fallback={
+                  <div>
+                    <div style={{ fontSize: '16px', color: '#ef4444' }}>No Data</div>
+                    <div style={{ fontSize: '10px', color: '#6b7280' }}>
+                      Missing tool: CPU Monitor<br/>
+                      Fix: Set SYSTEM_METRICS_URL
+                    </div>
+                  </div>
+                }
+              >
+                <div style={{ fontSize: '28px', color: '#10b981', fontWeight: 700 }}>
+                  {realMetrics.processingSpeed?.data}
+                </div>
+                <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
+                  Processing Speed
+                </div>
+                <div style={{ fontSize: '8px', color: '#6b7280' }}>
+                  Source: {realMetrics.processingSpeed?.provenance.source}
+                </div>
+              </RealGuard>
             </div>
             
             <div style={{
@@ -248,12 +468,28 @@ export const AGICore: React.FC = () => {
               background: 'rgba(168, 85, 247, 0.1)',
               borderRadius: '12px'
             }}>
-              <div style={{ fontSize: '28px', color: '#a855f7', fontWeight: 700 }}>
-                {realMetrics.learningRate}%
-              </div>
-              <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
-                Learning Rate
-              </div>
+              <RealGuard 
+                data={realMetrics.learningRate}
+                fallback={
+                  <div>
+                    <div style={{ fontSize: '16px', color: '#ef4444' }}>No Data</div>
+                    <div style={{ fontSize: '10px', color: '#6b7280' }}>
+                      Missing tool: AI Learning Monitor<br/>
+                      Fix: Set LEARNING_SERVICE_URL
+                    </div>
+                  </div>
+                }
+              >
+                <div style={{ fontSize: '28px', color: '#a855f7', fontWeight: 700 }}>
+                  {realMetrics.learningRate?.data}%
+                </div>
+                <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
+                  Learning Rate
+                </div>
+                <div style={{ fontSize: '8px', color: '#6b7280' }}>
+                  Source: {realMetrics.learningRate?.provenance.source}
+                </div>
+              </RealGuard>
             </div>
             
             <div style={{
@@ -262,12 +498,28 @@ export const AGICore: React.FC = () => {
               background: 'rgba(245, 158, 11, 0.1)',
               borderRadius: '12px'
             }}>
-              <div style={{ fontSize: '28px', color: '#f59e0b', fontWeight: 700 }}>
-                {realMetrics.responseTime}ms
-              </div>
-              <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
-                Response Time
-              </div>
+              <RealGuard 
+                data={realMetrics.responseTime}
+                fallback={
+                  <div>
+                    <div style={{ fontSize: '16px', color: '#ef4444' }}>No Data</div>
+                    <div style={{ fontSize: '10px', color: '#6b7280' }}>
+                      Missing tool: Latency Monitor<br/>
+                      Fix: Set NETWORK_MONITOR_URL
+                    </div>
+                  </div>
+                }
+              >
+                <div style={{ fontSize: '28px', color: '#f59e0b', fontWeight: 700 }}>
+                  {realMetrics.responseTime?.data}ms
+                </div>
+                <div style={{ fontSize: '12px', color: '#cbd5e1' }}>
+                  Response Time
+                </div>
+                <div style={{ fontSize: '8px', color: '#6b7280' }}>
+                  Source: {realMetrics.responseTime?.provenance.source}
+                </div>
+              </RealGuard>
             </div>
           </div>
         </div>

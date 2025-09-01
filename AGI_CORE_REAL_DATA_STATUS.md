@@ -28,7 +28,7 @@
 
 ### ✅ **REAL DATA SOURCES NOW ACTIVE:**
 
-1. **Processing Speed**: `navigator.hardwareConcurrency * 2.4 GHz`
+1. **Processing Speed**: `navigator.hardwareConcurrency * 2. GHz`
 2. **Neural Connections**: `CPU cores * 1000 + real-time variation`
 3. **Learning Rate**: `Real memory utilization percentage`
 4. **Response Time**: `performance.now() measurements`

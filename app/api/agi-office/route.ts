@@ -109,7 +109,7 @@ const agiOfficeEngine = {
 
   analyzeEmailContent(emailContent: string) {
     const wordCount = emailContent.split(' ').length
-    const sentimentScore = Math.random() * 2 - 1 // -1 to 1
+    const sentimentScore = 0.5 * 2 - 1 // -1 to 1
     
     return {
       wordCount,
@@ -120,7 +120,7 @@ const agiOfficeEngine = {
       language: 'en',
       summary: emailContent.substring(0, 100) + '...',
       keyTopics: ['business', 'communication', 'professional'],
-      urgency: Math.random() > 0.7 ? 'high' : 'normal'
+      urgency: 0.5 > 0.7 ? 'high' : 'normal'
     }
   },
 
@@ -495,3 +495,4 @@ export async function GET(request: NextRequest) {
     }, { status: 500 })
   }
 }
+

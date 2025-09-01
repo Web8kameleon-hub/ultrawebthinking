@@ -117,7 +117,7 @@ router.get('/nodes/:nodeId', (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
       data: {
         ...node,
@@ -127,7 +127,7 @@ router.get('/nodes/:nodeId', (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to get node details'
     });
@@ -151,13 +151,13 @@ router.post('/activate', async (req, res) => {
     console.log('🚀 Starting mesh network activation...');
     await meshActivator.discoverAndActivateNodes();
 
-    res.json({
+    return res.json({
       success: true,
       message: 'Mesh network activation started',
       data: meshActivator.getNetworkStatus()
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to activate mesh network',
       details: error instanceof Error ? error.message : 'Unknown error'
@@ -184,19 +184,19 @@ router.post('/nodes', async (req, res) => {
     const success = await meshActivator.addNode(nodeConfig);
     
     if (success) {
-      res.json({
+      return res.json({
         success: true,
         message: 'Node added successfully',
         data: meshActivator.getNetworkStatus()
       });
     } else {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         error: 'Failed to add node - node may be unreachable'
       });
     }
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: 'Failed to add node',
       details: error instanceof Error ? error.message : 'Unknown error'

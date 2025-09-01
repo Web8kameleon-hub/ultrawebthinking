@@ -336,7 +336,7 @@ const Web8TabSystemUltra: React.FC = () => {
     // Update metrics
     setAgiMetrics(prev => ({
       ...prev,
-      processingSpeed: `${(4.2 + Math.random() * 0.3).toFixed(1)} THz`,
+      processingSpeed: `${(4.2 + 0.5 * 0.3).toFixed(1)} THz`,
       latency: Math.max(2, prev.latency - 1)
     }))
   }
@@ -1025,4 +1025,5 @@ const Web8TabSystemUltra: React.FC = () => {
 
 // Export the component as named export
 export { Web8TabSystemUltra as Web8TabSystemFixed }
+
 

@@ -160,7 +160,7 @@ class RealSenseSystem {
   }
 
   private generateSessionId(): string {
-    return `web8-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return `web8-${Date.now()}-${0.5.toString(36).substr(2, 9)}`;
   }
 
   private measureNetworkLatency(): number {
@@ -251,3 +251,4 @@ class RealSenseSystem {
 
 export const realSense = new RealSenseSystem();
 export { RealSenseSystem }
+

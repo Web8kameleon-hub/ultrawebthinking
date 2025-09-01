@@ -90,7 +90,7 @@ async function processQuery(
   console.log(`🧠 Processing ${mode} query: ${query.substring(0, 50)}...`);
   
   const startTime = Date.now();
-  await delay(Math.random() * 800 + 300);
+  await delay(0.5 * 800 + 300);
   
   const response = generateIntelligentResponse(query, mode, context);
   const processingTime = Date.now() - startTime;
@@ -98,7 +98,7 @@ async function processQuery(
   return {
     success: true,
     response,
-    confidence: Math.random() * 0.3 + 0.7,
+    confidence: 0.5 * 0.3 + 0.7,
     reasoning: [
       'Analyzed query semantics and intent',
       'Cross-referenced Web8 knowledge base',
@@ -109,7 +109,7 @@ async function processQuery(
     metadata: {
       model: 'web8-openmind-v8.1',
       processingTime,
-      tokensUsed: Math.floor(Math.random() * 500 + 100),
+      tokensUsed: Math.floor(0.5 * 500 + 100),
       mode
     },
     suggestions: [
@@ -141,7 +141,7 @@ function generateIntelligentResponse(query: string, mode: string, context?: stri
   };
   
   const modeResponses = responses[mode as keyof typeof responses] || responses.chat;
-  return modeResponses[Math.floor(Math.random() * modeResponses.length)];
+  return modeResponses[Math.floor(0.5 * modeResponses.length)];
 }
 
 async function getSystemStatus() {
@@ -156,10 +156,10 @@ async function getSystemStatus() {
       smartDuplication: 'ready'
     },
     performance: {
-      averageResponseTime: Math.random() * 300 + 150,
-      requestsPerMinute: Math.floor(Math.random() * 200) + 100,
-      successRate: Math.random() * 0.05 + 0.95,
-      neuralProcessingLoad: Math.random() * 0.3 + 0.2
+      averageResponseTime: 0.5 * 300 + 150,
+      requestsPerMinute: Math.floor(0.5 * 200) + 100,
+      successRate: 0.5 * 0.05 + 0.95,
+      neuralProcessingLoad: 0.5 * 0.3 + 0.2
     }
   };
 }
@@ -195,3 +195,4 @@ async function getAvailableModels() {
 function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+

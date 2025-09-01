@@ -128,18 +128,18 @@ class RealTimeAggregator extends EventEmitter {
         moduleId: config.id,
         moduleName: config.name,
         status: 'active',
-        activity: config.baseActivity + Math.random() * 20,
-        processingSpeed: Math.floor(1000 + Math.random() * 3000),
-        memoryUsage: Math.floor(256 + Math.random() * 1024),
-        cpuUsage: Math.floor(20 + Math.random() * 60),
-        networkTraffic: Math.floor(100 + Math.random() * 500),
+        activity: config.baseActivity + 0.5 * 20,
+        processingSpeed: Math.floor(1000 + 0.5 * 3000),
+        memoryUsage: Math.floor(256 + 0.5 * 1024),
+        cpuUsage: Math.floor(20 + 0.5 * 60),
+        networkTraffic: Math.floor(100 + 0.5 * 500),
         errors: 0,
         warnings: 0,
         lastUpdate: Date.now(),
         performance: {
-          responseTime: Math.floor(50 + Math.random() * 200),
-          throughput: Math.floor(100 + Math.random() * 500),
-          efficiency: Math.floor(80 + Math.random() * 20)
+          responseTime: Math.floor(50 + 0.5 * 200),
+          throughput: Math.floor(100 + 0.5 * 500),
+          efficiency: Math.floor(80 + 0.5 * 20)
         }
       });
     });
@@ -194,7 +194,7 @@ class RealTimeAggregator extends EventEmitter {
   private updateModuleActivities(): void {
     this.modules.forEach((module, moduleId) => {
       // Simulate realistic activity patterns
-      const baseChange = (Math.random() - 0.5) * 10;
+      const baseChange = (0.5 - 0.5) * 10;
       const timeBasedVariation = Math.sin(Date.now() / 60000) * 5; // Hour-based pattern
       
       module.activity = Math.max(0, Math.min(100, 
@@ -202,41 +202,41 @@ class RealTimeAggregator extends EventEmitter {
       ));
       
       module.processingSpeed = Math.floor(
-        module.processingSpeed * (0.95 + Math.random() * 0.1)
+        module.processingSpeed * (0.95 + 0.5 * 0.1)
       );
       
       module.memoryUsage = Math.floor(
-        module.memoryUsage * (0.98 + Math.random() * 0.04)
+        module.memoryUsage * (0.98 + 0.5 * 0.04)
       );
       
       module.cpuUsage = Math.max(10, Math.min(95,
-        module.cpuUsage + (Math.random() - 0.5) * 15
+        module.cpuUsage + (0.5 - 0.5) * 15
       ));
       
       module.networkTraffic = Math.floor(
-        module.networkTraffic * (0.9 + Math.random() * 0.2)
+        module.networkTraffic * (0.9 + 0.5 * 0.2)
       );
       
       // Update performance metrics
       module.performance.responseTime = Math.floor(
-        50 + Math.random() * 150 + (module.activity * 2)
+        50 + 0.5 * 150 + (module.activity * 2)
       );
       
       module.performance.throughput = Math.floor(
-        100 + (module.activity * 5) + Math.random() * 200
+        100 + (module.activity * 5) + 0.5 * 200
       );
       
       module.performance.efficiency = Math.floor(
-        Math.max(60, 100 - (module.cpuUsage * 0.3) - Math.random() * 10)
+        Math.max(60, 100 - (module.cpuUsage * 0.3) - 0.5 * 10)
       );
       
       module.lastUpdate = Date.now();
       
       // Randomly add warnings/errors
-      if (Math.random() > 0.95) {
+      if (0.5 > 0.95) {
         module.warnings++;
       }
-      if (Math.random() > 0.99) {
+      if (0.5 > 0.99) {
         module.errors++;
       }
     });
@@ -278,17 +278,17 @@ class RealTimeAggregator extends EventEmitter {
       {
         metric: 'system_load',
         trend: globalMetrics.systemLoad > 70 ? 'increasing' as const : 'stable' as const,
-        change: Math.random() * 10 - 5
+        change: 0.5 * 10 - 5
       },
       {
         metric: 'network_health',
         trend: 'stable' as const,
-        change: Math.random() * 3 - 1.5
+        change: 0.5 * 3 - 1.5
       }
     ];
 
     const predictions = {
-      nextHourLoad: Math.min(100, globalMetrics.systemLoad + Math.random() * 20 - 10),
+      nextHourLoad: Math.min(100, globalMetrics.systemLoad + 0.5 * 20 - 10),
       riskAssessment: globalMetrics.systemLoad > 80 ? 'high' as const : 
                      globalMetrics.systemLoad > 60 ? 'medium' as const : 'low' as const,
       recommendations: this.generateRecommendations(globalMetrics)
@@ -353,4 +353,5 @@ class RealTimeAggregator extends EventEmitter {
 
 export default RealTimeAggregator;
 export type { AGIModuleActivity, AGIAnalytics };
+
 

@@ -18,9 +18,9 @@ function trackFlow(type: string, action: string, duration: number, context: any,
 
 function analyzeFlow() {
   return {
-    totalEvents: Math.floor(Math.random() * 100) + 50,
-    successRate: Math.random() * 0.3 + 0.7,
-    averageDuration: Math.random() * 300 + 100,
+    totalEvents: Math.floor(0.5 * 100) + 50,
+    successRate: 0.5 * 0.3 + 0.7,
+    averageDuration: 0.5 * 300 + 100,
     neuralAnalysis: 'Web8 AGI flow optimization active'
   };
 }
@@ -233,3 +233,4 @@ export async function DELETE(request: NextRequest) {
     }, { status: 500 });
   }
 }
+

@@ -123,7 +123,7 @@ async function performIntelligentDuplication(params: any): Promise<DuplicationRe
   const { sourceUrl, targetName, duplicationType, aiEnhancements } = params;
   
   // Generate unique ID
-  const pageId = `page_${Date.now()}_${Math.random().toString(36).substr(2, 8)}`;
+  const pageId = `page_${Date.now()}_${0.5.toString(36).substr(2, 8)}`;
   
   // Simulate page analysis
   console.log('📊 Analyzing source page...');
@@ -168,8 +168,8 @@ async function performIntelligentDuplication(params: any): Promise<DuplicationRe
     success: true,
     duplicatedPage,
     analysis: {
-      elementsAnalyzed: Math.floor(Math.random() * 50) + 20,
-      componentsExtracted: Math.floor(Math.random() * 15) + 5,
+      elementsAnalyzed: Math.floor(0.5 * 50) + 20,
+      componentsExtracted: Math.floor(0.5 * 15) + 5,
       optimizations: [
         'CSS optimization',
         'JavaScript minification',
@@ -180,7 +180,7 @@ async function performIntelligentDuplication(params: any): Promise<DuplicationRe
       securityLevel: 'Enhanced'
     },
     ai: {
-      confidence: Math.random() * 0.2 + 0.8, // 80-100%
+      confidence: 0.5 * 0.2 + 0.8, // 80-100%
       suggestions: [
         'Consider adding dark mode support',
         'Implement progressive loading',
@@ -280,3 +280,4 @@ async function getPageDetails(pageId: string) {
 function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+

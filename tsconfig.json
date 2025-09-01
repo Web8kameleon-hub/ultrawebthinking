@@ -1,28 +1,55 @@
 {
   /**
-   * 🏗️ UltraWeb Root TypeScript Configuration
+   * 🏗️ EuroWeb Ultra TypeScript Configuration
    * @author Ledjan Ahmati
-   * @version 8.1.0-WEB8
+   * @version 8.1.0-EUROWEB-ULTRA
    */
-  // Zgjeroj nga baza
-  "extends": "./tsconfig.base.json",
-  // Next.js specifics për root
   "compilerOptions": {
+    // ES Module Configuration - FIX për esModuleInterop errors
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+
+    // Next.js Required
+    "lib": [ "dom", "dom.iterable", "ES6", "ES2020" ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "jsx": "preserve",
+
+    // Path Resolution
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [ "./*" ],
+      "@/components/*": [ "./components/*" ],
+      "@/lib/*": [ "./lib/*" ],
+      "@/app/*": [ "./app/*" ],
+      "@/backend/*": [ "./backend/*" ],
+      "@/sandbox/*": [ "./sandbox/*" ]
+    },
+
+    // Next.js Plugins
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "jsx": "preserve",
-    "strictNullChecks": true
+    ]
   },
-  // Include Next.js specifics
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "app/**/*",
-    "components/**/*",
-    "lib/**/*",
-    "backend/**/*"
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out"
   ]
 }

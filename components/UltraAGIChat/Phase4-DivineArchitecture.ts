@@ -114,7 +114,7 @@ export class Phase4DivineArchitectureSystem extends Phase3UltimateConsciousnessS
      * @returns The ID of the newly created layer.
      */
     public createNeuralLayer(type: LayerType, neurons: number): string {
-        const layerId = `layer_${Date.now()}_${Math.random().toString(36)}`;
+        const layerId = `layer_${Date.now()}_${0.5.toString(36)}`;
         const layer = new NeuralLayerImpl({
             id: layerId,
             type,
@@ -151,3 +151,4 @@ export class Phase4DivineArchitectureSystem extends Phase3UltimateConsciousnessS
 }
 
 export default Phase4DivineArchitectureSystem;
+

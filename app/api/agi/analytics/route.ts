@@ -50,13 +50,16 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { action, data, timestamp, url, referrer } = body;
     
-    // Get session and user info
+    // Get session and user info  
+    const forwarded = request.headers.get('x-forwarded-for')
+    const realIp = request.headers.get('x-real-ip')
+    const ipAddress = forwarded?.split(',')[0] || realIp || 'unknown'
+    
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+                     ipAddress || 
                      'anonymous-' + Date.now();
     const userId = request.headers.get('x-user-id') || undefined;
     const userAgent = request.headers.get('user-agent') || undefined;
-    const ipAddress = request.ip || 'unknown';
 
     // Validate input
     if (!action || typeof timestamp !== 'number' || !url) {
@@ -74,8 +77,8 @@ export async function POST(request: NextRequest) {
       url,
       referrer,
       sessionId,
-      userId,
-      userAgent,
+      userId: userId || '',
+      userAgent: userAgent || '',
       ipAddress
     };
 
@@ -86,24 +89,26 @@ export async function POST(request: NextRequest) {
         sessionId,
         startTime: timestamp,
         lastActivity: timestamp,
-        events: [],
-        pageViews: [],
-        userAgent,
+        events: [] as any[],
+        pageViews: [] as string[],
+        userAgent: userAgent || '',
         ipAddress
       };
     }
 
-    session.lastActivity = timestamp;
-    session.events.push(event);
-    
-    // Track page views
-    if (action === 'page_view' || action === 'navbar_loaded') {
-      if (!session.pageViews.includes(url)) {
-        session.pageViews.push(url);
+    if (session) {
+      session.lastActivity = timestamp;
+      session.events.push(event);
+      
+      // Track page views
+      if (action === 'page_view' || action === 'navbar_loaded') {
+        if (!session.pageViews.includes(url)) {
+          session.pageViews.push(url);
+        }
       }
-    }
 
-    userSessions.set(sessionId, session);
+      userSessions.set(sessionId, session);
+    }
 
     // Store event in analytics
     const sessionEvents = analyticsEvents.get(sessionId) || [];
@@ -225,7 +230,7 @@ function generateAnalyticsReport(timeFilter?: number): AnalyticsReport {
   }, {} as Record<string, number>);
 
   const mostCommonActions = Object.entries(actionCounts)
-    .sort((a, b) => (b[1] || {}) - (a[1] || {}))
+    .sort((a, b) => (b[1] || 0) - (a[1] || 0))
     .slice(0, 10)
     .map(([action, count]) => ({ action, count }));
 
@@ -238,7 +243,7 @@ function generateAnalyticsReport(timeFilter?: number): AnalyticsReport {
     }, {} as Record<string, number>);
 
   const topPages = Object.entries(pageViews)
-    .sort((a, b) => (b[1] || {}) - (a[1] || {}))
+    .sort((a, b) => (b[1] || 0) - (a[1] || 0))
     .slice(0, 10)
     .map(([url, views]) => ({ url, views }));
 

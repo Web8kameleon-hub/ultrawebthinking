@@ -260,7 +260,7 @@ export class UltraSearchAPIServer {
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       this.requestCount++;
       this.activeConnections++;
-      req.requestId = `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      req.requestId = `req_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
       req.startTime = Date.now();
 
       // Track RPS
@@ -772,3 +772,4 @@ export class UltraSearchAPIServer {
 
 // Export singleton instance
 export const ultraSearchAPIServer = new UltraSearchAPIServer();
+

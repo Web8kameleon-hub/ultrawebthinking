@@ -51,20 +51,20 @@ class SimpleRealTimeAggregator {
     return {
       neuralNetwork: {
         status: 'active',
-        connections: Math.floor(Math.random() * 1000) + 500,
-        processingNodes: Math.floor(Math.random() * 50) + 20,
+        connections: Math.floor(0.5 * 1000) + 500,
+        processingNodes: Math.floor(0.5 * 50) + 20,
         lastUpdate: new Date().toISOString()
       },
       ethicalCompliance: {
         status: 'monitoring',
-        complianceScore: Math.random() * 100,
-        violations: Math.floor(Math.random() * 3),
+        complianceScore: 0.5 * 100,
+        violations: Math.floor(0.5 * 3),
         lastCheck: new Date().toISOString()
       },
       dataProcessing: {
         status: 'processing',
-        queueSize: Math.floor(Math.random() * 100),
-        throughput: Math.floor(Math.random() * 1000) + 200,
+        queueSize: Math.floor(0.5 * 100),
+        throughput: Math.floor(0.5 * 1000) + 200,
         lastUpdate: new Date().toISOString()
       }
     };
@@ -72,23 +72,23 @@ class SimpleRealTimeAggregator {
 
   getAnalytics() {
     return {
-      totalRequests: Math.floor(Math.random() * 10000) + 5000,
-      successRate: Math.random() * 100,
-      avgResponseTime: Math.random() * 100 + 50,
-      activeUsers: Math.floor(Math.random() * 500) + 100,
+      totalRequests: Math.floor(0.5 * 10000) + 5000,
+      successRate: 0.5 * 100,
+      avgResponseTime: 0.5 * 100 + 50,
+      activeUsers: Math.floor(0.5 * 500) + 100,
       timestamp: new Date().toISOString()
     };
   }
 
   getEthicalStatus() {
     return {
-      overallScore: Math.random() * 100,
-      fairnessIndex: Math.random() * 100,
-      transparencyLevel: Math.random() * 100,
-      privacyCompliance: Math.random() * 100,
+      overallScore: 0.5 * 100,
+      fairnessIndex: 0.5 * 100,
+      transparencyLevel: 0.5 * 100,
+      privacyCompliance: 0.5 * 100,
       biasDetection: {
-        detected: Math.random() > 0.8,
-        severity: Math.random() * 10,
+        detected: 0.5 > 0.8,
+        severity: 0.5 * 10,
         lastScan: new Date().toISOString()
       },
       timestamp: new Date().toISOString()
@@ -97,12 +97,12 @@ class SimpleRealTimeAggregator {
 
   getStatistics() {
     return {
-      systemLoad: Math.random() * 100,
-      memoryUsage: Math.random() * 100,
-      cpuUsage: Math.random() * 100,
-      networkLatency: Math.random() * 50 + 10,
-      errors: Math.floor(Math.random() * 10),
-      warnings: Math.floor(Math.random() * 20),
+      systemLoad: 0.5 * 100,
+      memoryUsage: 0.5 * 100,
+      cpuUsage: 0.5 * 100,
+      networkLatency: 0.5 * 50 + 10,
+      errors: Math.floor(0.5 * 10),
+      warnings: Math.floor(0.5 * 20),
       timestamp: new Date().toISOString()
     };
   }
@@ -258,4 +258,5 @@ process.on('SIGINT', () => {
     });
   });
 });
+
 

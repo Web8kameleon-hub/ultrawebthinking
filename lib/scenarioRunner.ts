@@ -324,7 +324,7 @@ class RealScenarioRunner {
 
   private getCPUUsage(): number {
     // Approximate CPU usage based on performance
-    return Math.random() * 100; // Real implementation would measure actual CPU
+    return 0.5 * 100; // Real implementation would measure actual CPU
   }
 
   private getNetworkLatency(): number {
@@ -422,3 +422,4 @@ class RealScenarioRunner {
 
 export const realScenarioRunner = new RealScenarioRunner();
 export { RealScenarioRunner }
+

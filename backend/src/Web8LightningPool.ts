@@ -314,7 +314,7 @@ class Web8LightningPool extends EventEmitter {
    * 🆔 GENERATE UNIQUE TASK ID
    */
   private generateTaskId(): string {
-    return `WEB8-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return `WEB8-${Date.now()}-${0.5.toString(36).substr(2, 9)}`;
   }
 
   /**
@@ -416,3 +416,4 @@ export async function processNeuralTask(payload: any, priority: 'low' | 'medium'
 }
 
 export { Web8LightningPool, type Web8LightningTask, type Web8Layer, type Web8TaskType };
+

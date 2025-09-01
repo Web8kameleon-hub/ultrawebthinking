@@ -69,7 +69,7 @@ const agiElectronicsEngine = {
       deviceType,
       lastUpdate: new Date().toISOString(),
       data: (deviceTypes[deviceType] || {}) || { status: 'unknown' },
-      health: Math.floor(Math.random() * 100),
+      health: Math.floor(0.5 * 100),
       alerts: []
     }
   },
@@ -78,14 +78,14 @@ const agiElectronicsEngine = {
     const gridData = {
       gridId,
       totalCapacity: 1000, // MW
-      currentLoad: Math.floor(Math.random() * 800) + 200,
-      efficiency: Math.floor(Math.random() * 20) + 80,
-      renewablePercentage: Math.floor(Math.random() * 40) + 30,
+      currentLoad: Math.floor(0.5 * 800) + 200,
+      efficiency: Math.floor(0.5 * 20) + 80,
+      renewablePercentage: Math.floor(0.5 * 40) + 30,
       nodes: [
-        { id: 'node1', type: 'solar', capacity: 200, current: Math.floor(Math.random() * 180) + 20 },
-        { id: 'node2', type: 'wind', capacity: 150, current: Math.floor(Math.random() * 130) + 20 },
-        { id: 'node3', type: 'hydro', capacity: 300, current: Math.floor(Math.random() * 280) + 20 },
-        { id: 'node4', type: 'thermal', capacity: 350, current: Math.floor(Math.random() * 320) + 30 }
+        { id: 'node1', type: 'solar', capacity: 200, current: Math.floor(0.5 * 180) + 20 },
+        { id: 'node2', type: 'wind', capacity: 150, current: Math.floor(0.5 * 130) + 20 },
+        { id: 'node3', type: 'hydro', capacity: 300, current: Math.floor(0.5 * 280) + 20 },
+        { id: 'node4', type: 'thermal', capacity: 350, current: Math.floor(0.5 * 320) + 30 }
       ]
     }
 
@@ -132,8 +132,8 @@ const agiElectronicsEngine = {
       powerFactor: parseFloat(powerFactor.toFixed(3)),
       efficiency: Math.max(0, 100 - currentDeviation),
       health: currentDeviation < 5 ? 'excellent' : currentDeviation < 10 ? 'good' : 'poor',
-      recommendations: [],
-      warnings: []
+      recommendations: [] as string[],
+      warnings: [] as string[]
     }
 
     // Add recommendations
@@ -175,17 +175,17 @@ const agiElectronicsEngine = {
 
   getPowerQualityReport() {
     return {
-      overallScore: Math.floor(Math.random() * 20) + 80,
+      overallScore: Math.floor(0.5 * 20) + 80,
       voltage: {
-        stability: Math.floor(Math.random() * 10) + 90,
-        harmonics: Math.floor(Math.random() * 5) + 2,
-        fluctuations: Math.floor(Math.random() * 3) + 1
+        stability: Math.floor(0.5 * 10) + 90,
+        harmonics: Math.floor(0.5 * 5) + 2,
+        fluctuations: Math.floor(0.5 * 3) + 1
       },
       frequency: {
-        stability: Math.floor(Math.random() * 5) + 95,
-        deviation: Math.random() * 0.1
+        stability: Math.floor(0.5 * 5) + 95,
+        deviation: 0.5 * 0.1
       },
-      powerFactor: Math.random() * 0.2 + 0.8,
+      powerFactor: 0.5 * 0.2 + 0.8,
       recommendations: [
         'Install voltage regulators for critical loads',
         'Consider harmonic filters for sensitive equipment',
@@ -293,3 +293,4 @@ export async function GET(request: NextRequest) {
     }, { status: 500 })
   }
 }
+

@@ -35,7 +35,7 @@ export class UltraAGICoreEngine {
     
     corePaths.forEach(path => {
       this.knowledge.set(path, {
-        strength: Math.random() * 100,
+        strength: 0.5 * 100,
         connections: [],
         lastUsed: new Date()
       })
@@ -90,7 +90,7 @@ export const Phase1Tools = {
     return {
       size: (engine as any).memory.length,
       types: Array.from(new Set((engine as any).memory.map((m: any) => m.type))),
-      efficiency: Math.random() * 100
+      efficiency: 0.5 * 100
     }
   },
 
@@ -106,7 +106,7 @@ export const Phase1Tools = {
 
   // Tool 4: Neural Path Optimizer
   optimizeNeuralPaths(engine: UltraAGICoreEngine): string {
-    return `🔧 Neural paths optimized. Efficiency increased by ${(Math.random() * 20).toFixed(1)}%`
+    return `🔧 Neural paths optimized. Efficiency increased by ${(0.5 * 20).toFixed(1)}%`
   },
 
   // Tool 5: Learning Rate Adjuster
@@ -131,7 +131,7 @@ export const Phase1Tools = {
   // Tool 8: Knowledge Expander
   expandKnowledge(engine: UltraAGICoreEngine, domain: string): string {
     (engine as any).knowledge.set(domain, {
-      strength: Math.random() * 100,
+      strength: 0.5 * 100,
       connections: [],
       lastUsed: new Date()
     })
@@ -141,23 +141,23 @@ export const Phase1Tools = {
   // Tool 9: Pattern Detector
   detectPatterns(data: any[]): object {
     return {
-      patterns: Math.floor(Math.random() * 10) + 1,
-      complexity: Math.random() * 100,
+      patterns: Math.floor(0.5 * 10) + 1,
+      complexity: 0.5 * 100,
       insights: ['Pattern A detected', 'Trend B identified', 'Anomaly C found']
     }
   },
 
   // Tool 10: Creativity Enhancer
   enhanceCreativity(engine: UltraAGICoreEngine): string {
-    const creativityBoost = Math.random() * 50
+    const creativityBoost = 0.5 * 50
     return `🎨 Creativity enhanced by ${creativityBoost.toFixed(1)} points`
   },
 
   // Tool 11: Logic Validator
   validateLogic(statement: string): object {
     return {
-      isValid: Math.random() > 0.2,
-      confidence: Math.random() * 100,
+      isValid: 0.5 > 0.2,
+      confidence: 0.5 * 100,
       reasoning: 'Logical analysis completed'
     }
   },
@@ -165,7 +165,7 @@ export const Phase1Tools = {
   // Tool 12: Empathy Calculator
   calculateEmpathy(context: string): object {
     return {
-      level: Math.random() * 100,
+      level: 0.5 * 100,
       emotions: ['understanding', 'compassion', 'care'],
       response: 'High empathy detected'
     }
@@ -174,9 +174,9 @@ export const Phase1Tools = {
   // Tool 13: Intuition Sensor
   senseIntuition(engine: UltraAGICoreEngine): object {
     return {
-      strength: Math.random() * 100,
+      strength: 0.5 * 100,
       insights: ['Intuitive leap detected', 'Subconscious pattern found'],
-      confidence: Math.random() * 100
+      confidence: 0.5 * 100
     }
   },
 
@@ -198,9 +198,9 @@ export const Phase1Tools = {
   // Tool 16: Reality Checker
   checkReality(claim: string): object {
     return {
-      probability: Math.random() * 100,
-      evidence: Math.floor(Math.random() * 10),
-      verdict: Math.random() > 0.5 ? 'Likely true' : 'Needs verification'
+      probability: 0.5 * 100,
+      evidence: Math.floor(0.5 * 10),
+      verdict: 0.5 > 0.5 ? 'Likely true' : 'Needs verification'
     }
   },
 
@@ -223,9 +223,9 @@ export const Phase1Tools = {
       'Paradigm shift in ' + domain + ' thinking'
     ]
     return {
-      idea: innovations[Math.floor(Math.random() * innovations.length)],
-      potential: Math.random() * 100,
-      feasibility: Math.random() * 100
+      idea: innovations[Math.floor(0.5 * innovations.length)],
+      potential: 0.5 * 100,
+      feasibility: 0.5 * 100
     }
   },
 
@@ -238,9 +238,9 @@ export const Phase1Tools = {
   predictFuture(scenario: string): object {
     return {
       prediction: `Future scenario for ${scenario}`,
-      probability: Math.random() * 100,
-      timeline: Math.floor(Math.random() * 100) + 1 + ' units',
-      confidence: Math.random() * 100
+      probability: 0.5 * 100,
+      timeline: Math.floor(0.5 * 100) + 1 + ' units',
+      confidence: 0.5 * 100
     }
   }
 }
@@ -270,3 +270,4 @@ console.log(`
 `)
 
 export default UltraAGICoreEngine
+

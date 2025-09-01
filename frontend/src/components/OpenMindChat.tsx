@@ -109,14 +109,6 @@ export const OpenMindChat = () => {
     const lowercaseText = text.toLowerCase();
     return albanianKeywords.some(keyword => lowercaseText.includes(keyword));
   };
-        provider: selectedProvider,
-        timestamp: new Date()
-      };
-      
-      setMessages(prev => [...prev, aiMessage]);
-      setIsLoading(false);
-    }, 1000);
-  };
 
   return (
     <div style={{

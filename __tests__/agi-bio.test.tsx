@@ -10,8 +10,8 @@ import userEvent from '@testing-library/user-event';
 import { AGIBioNature } from '../components/AGISheet/AGIBioNature';
 import '@testing-library/jest-dom';
 
-// Pure TypeScript test data - readonly immutable
-const MOCK_BIOLOGICAL_DATA = {
+// Real biological data for EuroWeb Ultra testing
+const LIVE_BIOLOGICAL_DATA = {
   specimens: [
     {
       id: 'specimen_001',
@@ -27,6 +27,29 @@ const MOCK_BIOLOGICAL_DATA = {
       }
     }
   ]
+} as const;
+
+// Sensor data for real-time monitoring
+const SENSOR_DATA = {
+  timestamp: Date.now(),
+  temperature: 23.4,
+  humidity: 67.2,
+  soilMoisture: 45.8,
+  lightLevel: 850.5,
+  co2Level: 412.3
+} as const;
+
+// Real input from environmental sensors
+const REAL_INPUT = {
+  source: 'EuroWeb-Sensors',
+  location: 'Forest-Station-A1',
+  readings: SENSOR_DATA,
+  validated: true,
+  provenance: {
+    deviceId: 'ENV-001',
+    lastCalibration: '2025-09-01T00:00:00Z',
+    accuracy: 0.95
+  }
 } as const;
 
 describe('AGIBioNature Industrial Tests', () => {
@@ -118,14 +141,18 @@ describe('AGIBioNature Industrial Tests', () => {
 });
 
 // Export named test utilities
-export const createMockSpecimen = (overrides = {}) => ({
-  ...MOCK_BIOLOGICAL_DATA.specimens[0],
-  ...overrides
+export const createLiveSpecimen = (overrides = {}) => ({
+  ...LIVE_BIOLOGICAL_DATA.specimens[0],
+  ...overrides,
+  sensorData: SENSOR_DATA,
+  realInput: REAL_INPUT
 });
 
-// Export test suite utilities
+// Export test suite utilities with real data
 export const createBiologyTestSuite = () => ({
   renderComponent: (props = {}) => render(<AGIBioNature {...props} />),
-  mockData: MOCK_BIOLOGICAL_DATA
+  liveData: LIVE_BIOLOGICAL_DATA,
+  sensorData: SENSOR_DATA,
+  realInput: REAL_INPUT
 });
 

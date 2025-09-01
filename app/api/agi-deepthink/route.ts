@@ -43,7 +43,7 @@ class AGIDeepThinkEngine {
     }
     
     // Deep thinking simulation - analyzing query deeply
-    await new Promise(resolve => setTimeout(resolve, 500 + Math.random() * 1000));
+    await new Promise(resolve => setTimeout(resolve, 500 + 0.5 * 1000));
     
     const response = await this.generateDeepResponse(query);
     
@@ -191,7 +191,7 @@ Bazuar në të dhënat e disponueshme, ju rekomandoj të specifikoni më shumë 
     }
     
     return {
-      id: `deepthink-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `deepthink-${Date.now()}-${0.5.toString(36).substr(2, 9)}`,
       query,
       response,
       deepAnalysis: {
@@ -201,12 +201,12 @@ Bazuar në të dhënat e disponueshme, ju rekomandoj të specifikoni më shumë 
         implications
       },
       ultraThink: {
-        philosophicalDepth: Math.round((Math.random() * 30 + 70) * 100) / 100,
-        creativityScore: Math.round((Math.random() * 25 + 75) * 100) / 100,
-        logicalConsistency: Math.round((Math.random() * 20 + 80) * 100) / 100,
-        innovationLevel: Math.round((Math.random() * 35 + 65) * 100) / 100
+        philosophicalDepth: Math.round((0.5 * 30 + 70) * 100) / 100,
+        creativityScore: Math.round((0.5 * 25 + 75) * 100) / 100,
+        logicalConsistency: Math.round((0.5 * 20 + 80) * 100) / 100,
+        innovationLevel: Math.round((0.5 * 35 + 65) * 100) / 100
       },
-      confidence: Math.round((Math.random() * 15 + 85) * 100) / 100,
+      confidence: Math.round((0.5 * 15 + 85) * 100) / 100,
       thinkingTime: 0, // Will be set later
       suggestions,
       followUpQuestions,
@@ -302,3 +302,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

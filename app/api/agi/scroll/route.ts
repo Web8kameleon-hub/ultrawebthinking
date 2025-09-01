@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI Scroll Tracking API
  * Real-time scroll position and user behavior analysis
  * 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     
     // Get session ID from headers or generate one
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+      request.headers.get("x-forwarded-for") || "unknown" || 
                      'anonymous-' + Date.now();
 
     // Validate input
@@ -52,8 +52,11 @@ export async function POST(request: NextRequest) {
       position,
       timestamp,
       sessionId,
-      userId: request.headers.get('x-user-id') || undefined
     };
+    const userId = request.headers.get('x-user-id');
+    if (userId) {
+      scrollData.userId = userId;
+    }
     
     currentSession.push(scrollData);
     scrollSessions.set(sessionId, currentSession);
@@ -133,9 +136,14 @@ function calculateScrollAnalytics(scrollData: ScrollData[]): ScrollAnalytics {
   // Calculate scroll velocity (pixels per second)
   let scrollVelocity = 0;
   if (scrollData.length > 1) {
-    const timeSpan = scrollData[scrollData.length - 1].timestamp - (scrollData[0] || {}).timestamp;
-    const positionChange = Math.abs(scrollData[scrollData.length - 1].position - (scrollData[0] || {}).position);
-    scrollVelocity = timeSpan > 0 ? (positionChange / timeSpan) * 1000 : 0; // px/second
+    const firstItem = scrollData[0]
+    const lastItem = scrollData[scrollData.length - 1]
+
+    if (firstItem && lastItem) {
+      const timeSpan = lastItem.timestamp - firstItem.timestamp;
+      const positionChange = Math.abs(lastItem.position - firstItem.position);
+      scrollVelocity = timeSpan > 0 ? (positionChange / timeSpan) * 1000 : 0; // px/second
+    }
   }
 
   // Calculate engagement score (0-100)
@@ -153,3 +161,4 @@ function calculateScrollAnalytics(scrollData: ScrollData[]): ScrollAnalytics {
     engagementScore: Math.round(engagementScore)
   };
 }
+

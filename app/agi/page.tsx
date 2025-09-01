@@ -14,7 +14,7 @@ import nextDynamic from 'next/dynamic';
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-const AGIMainController = nextDynamic(() => import('../../frontend/src/components/AGIMainController'), {
+const AGIMainController = nextDynamic(() => import('../../components/AGIMainController'), {
   ssr: false,
   loading: () => (
     <div style={{

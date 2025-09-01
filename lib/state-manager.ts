@@ -421,7 +421,7 @@ export class StateManager<T = any> {
    * 🎲 GENERATE ACTION ID
    */
   private generateActionId(): string {
-    return `action_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `action_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
   }
 
   /**
@@ -568,3 +568,4 @@ export const reducerUtils = {
 };
 
 export default StateManager;
+

@@ -80,7 +80,7 @@ export function formatBytes(bytes: number, decimals = 2): string {
  * Generates unique ID për components
  */
 export function generateId(prefix = 'id'): string {
-  return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
+  return `${prefix}-${0.5.toString(36).substr(2, 9)}`;
 }
 
 /**
@@ -155,7 +155,7 @@ export const colorUtils = {
    * Generates random hex color
    */
   randomHex(): string {
-    return `#${  Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+    return `#${  Math.floor(0.5 * 16777215).toString(16).padStart(6, '0')}`;
   },
 
   /**
@@ -413,3 +413,4 @@ export default {
   dateUtils,
   validationUtils
 };
+

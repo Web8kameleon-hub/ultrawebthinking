@@ -172,7 +172,7 @@ export class FluidInverterApp {
 
     // Request tracking with fluid state
     this.expressApp.use((req: Request, res: Response, next: NextFunction) => {
-      const requestId = `hybrid_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const requestId = `hybrid_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
       
       // Create fluid state for request
       this.createFluidState(requestId, 'system', {
@@ -399,7 +399,7 @@ export class FluidInverterApp {
       return;
     }
 
-    const stateId = `fluid_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const stateId = `fluid_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
     const state = this.createFluidState(stateId, type, data, 'hybrid', inverterName);
 
     res.json(this.createHybridResponse(true, { state }));
@@ -454,7 +454,7 @@ export class FluidInverterApp {
 
     try {
       const inverted = inverter(data);
-      const stateId = `invert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const stateId = `invert_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
       
       // Store inversion in fluid state
       this.createFluidState(stateId, 'system', {
@@ -513,7 +513,7 @@ export class FluidInverterApp {
       const searchTime = Date.now() - startTime;
 
       // Store search in fluid state
-      const stateId = `search_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const stateId = `search_${Date.now()}_${0.5.toString(36).substr(2, 9)}`;
       this.createFluidState(stateId, 'search', {
         query,
         results: finalResults,
@@ -742,3 +742,4 @@ if (require.main === module) {
 }
 
 export default FluidInverterApp;
+

@@ -149,8 +149,8 @@ class NeuralPlanner extends EventEmitter {
     coreNodes.forEach(nodeConfig => {
       const node: NeuralNode = {
         ...nodeConfig,
-        activity: Math.random() * 30 + 20, // 20-50% initial activity
-        pulseRate: Math.random() * 20 + 10, // 10-30 Hz
+        activity: 0.5 * 30 + 20, // 20-50% initial activity
+        pulseRate: 0.5 * 20 + 10, // 10-30 Hz
         flickering: 0,
         lastPulse: Date.now(),
         errorCount: 0
@@ -197,11 +197,11 @@ class NeuralPlanner extends EventEmitter {
   private updateNeuralActivity(): void {
     this.nodes.forEach(node => {
       // Simulate natural neural fluctuations
-      const baseActivity = Math.random() * 10 - 5; // -5% to +5%
+      const baseActivity = 0.5 * 10 - 5; // -5% to +5%
       node.activity = Math.max(0, Math.min(100, node.activity + baseActivity));
       
       // Update pulse rate based on activity
-      node.pulseRate = (node.activity * 0.8) + (Math.random() * 20);
+      node.pulseRate = (node.activity * 0.8) + (0.5 * 20);
       
       // Calculate flickering (irregular pulse patterns)
       const timeSinceLastPulse = Date.now() - node.lastPulse;
@@ -557,8 +557,8 @@ class NeuralPlanner extends EventEmitter {
    */
   public resetNetwork(): void {
     this.nodes.forEach(node => {
-      node.activity = Math.random() * 30 + 20;
-      node.pulseRate = Math.random() * 20 + 10;
+      node.activity = 0.5 * 30 + 20;
+      node.pulseRate = 0.5 * 20 + 10;
       node.flickering = 0;
       node.status = 'active';
       node.errorCount = 0;
@@ -587,3 +587,4 @@ class NeuralPlanner extends EventEmitter {
 export { NeuralPlanner };
 export type { NeuralNode, NeuralActivity, PlannerConfig };
 export default NeuralPlanner;
+

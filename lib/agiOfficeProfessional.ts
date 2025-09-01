@@ -438,7 +438,7 @@ export class AGIScannerEngine {
       confidence: 0.94,
       format: options.format,
       resolution: options.quality === 'high' ? '600 DPI' : '300 DPI',
-      fileSize: Math.floor(Math.random() * 5000000) + 1000000
+      fileSize: Math.floor(0.5 * 5000000) + 1000000
     }
   }
 
@@ -566,7 +566,7 @@ export class AGICopyEngine {
 
   private static simulateCopyProgress(operation: CopyOperation): void {
     const interval = setInterval(() => {
-      operation.progress += Math.random() * 10
+      operation.progress += 0.5 * 10
       
       if (operation.progress >= 100) {
         operation.progress = 100
@@ -576,7 +576,7 @@ export class AGICopyEngine {
         clearInterval(interval)
       } else {
         operation.status = 'copying'
-        operation.speed = `${(Math.random() * 50 + 10).toFixed(1)} MB/s`
+        operation.speed = `${(0.5 * 50 + 10).toFixed(1)} MB/s`
         operation.timeRemaining = `${Math.floor((100 - operation.progress) / 10)}s`
       }
     }, 500)
@@ -645,3 +645,4 @@ export class AGIOfficeProfessional {
     ]
   }
 }
+

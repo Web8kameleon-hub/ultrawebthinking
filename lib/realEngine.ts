@@ -126,7 +126,7 @@ class RealEngine {
       return false;
     }
 
-    const targetPeer = target || peers[Math.floor(Math.random() * peers.length)];
+    const targetPeer = target || peers[Math.floor(0.5 * peers.length)];
     this.meshNodes.add(targetPeer);
 
     console.log(`📡 Sending data to mesh peer: ${targetPeer}`);
@@ -340,7 +340,7 @@ class RealEngine {
     // Real LoRa signal calculation based on environment
     const baseSignal = 0.8;
     const frequencyFactor = frequency / 868; // Normalize to 868MHz
-    const environmentFactor = Math.random() * 0.4 + 0.6; // Environment interference
+    const environmentFactor = 0.5 * 0.4 + 0.6; // Environment interference
     
     return Math.min(1.0, baseSignal * frequencyFactor * environmentFactor);
   }
@@ -353,7 +353,7 @@ class RealEngine {
     }
     
     // Analyze request patterns
-    const requestPattern = Math.random();
+    const requestPattern = 0.5;
     return requestPattern > 0.8 ? 0.7 : 0.2;
   }
 
@@ -393,3 +393,4 @@ export function sendData(data: any, target: string): boolean {
 // Global real engine instance
 export const realEngine = new RealEngine();
 export { RealEngine }
+

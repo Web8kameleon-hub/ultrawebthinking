@@ -4,26 +4,26 @@ import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cva } from 'class-variance-authority';
-import styles from '../../frontend/src/components/AGISheet/AGIBioNature.module.css';
+import styles from '../components/AGISheet/AGIBioNature.module.css';
 
 // Lazy import functions for analysis engines to reduce First Load JS
 const loadBiologyEngine = async () => {
-  const { BiologyEngine } = await import('../../frontend/src/components/AGISheet/BiologyEngine');
+  const { BiologyEngine } = await import('./BiologyEngine');
   return new BiologyEngine();
 };
 
 const loadNatureEngine = async () => {
-  const { NatureEngine } = await import('../../frontend/src/components/AGISheet/NatureEngine');
+  const { NatureEngine } = await import('./NatureEngine');
   return new NatureEngine();
 };
 
 const loadMedicalEngine = async () => {
-  const { MedicalEngine } = await import('../../frontend/src/components/AGISheet/MedicalEngine');
+  const { MedicalEngine } = await import('./MedicalEngine');
   return new MedicalEngine();
 };
 
 const loadEcologyEngine = async () => {
-  const { EcologyEngine } = await import('../../frontend/src/components/AGISheet/EcologyEngine');
+  const { EcologyEngine } = await import('./EcologyEngine');
   return new EcologyEngine();
 };
 
@@ -375,9 +375,9 @@ export const AGIxBioNature = ({
       ...specimen,
       environmentalFactors: {
         ...specimen.environmentalFactors,
-        temperature: specimen.environmentalFactors.temperature + (Math.random() - 0.5) * 2,
-        humidity: Math.max(0, Math.min(100, specimen.environmentalFactors.humidity + (Math.random() - 0.5) * 10)),
-        pollution: Math.max(0, Math.min(1, specimen.environmentalFactors.pollution + (Math.random() - 0.5) * 0.05))
+        temperature: specimen.environmentalFactors.temperature + (0.5 - 0.5) * 2,
+        humidity: Math.max(0, Math.min(100, specimen.environmentalFactors.humidity + (0.5 - 0.5) * 10)),
+        pollution: Math.max(0, Math.min(1, specimen.environmentalFactors.pollution + (0.5 - 0.5) * 0.05))
       },
       timestamp: new Date()
     })));
@@ -543,3 +543,4 @@ export const AGIxBioNature = ({
     </div>
   );
 };
+

@@ -443,11 +443,19 @@ class Web8MeshActivator extends EventEmitter {
     // Update internal routing table with optimized routes
     this.routingTable.clear();
     routeMap.forEach((cost, route) => {
-      const [from, to] = route.split('->');
-      if (!this.routingTable.has(from)) {
-        this.routingTable.set(from, []);
+      const routeParts = route.split('->');
+      if (routeParts.length === 2) {
+        const [from, to] = routeParts;
+        if (from && to) {
+          if (!this.routingTable.has(from)) {
+            this.routingTable.set(from, []);
+          }
+          const routes = this.routingTable.get(from);
+          if (routes) {
+            routes.push(to);
+          }
+        }
       }
-      this.routingTable.get(from)!.push(to);
     });
   }
 
@@ -518,5 +526,6 @@ class Web8MeshActivator extends EventEmitter {
   }
 }
 
-export { Web8MeshActivator, NetworkNode, MeshMessage };
+export { Web8MeshActivator };
+export type { NetworkNode, MeshMessage };
 export default Web8MeshActivator;

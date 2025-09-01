@@ -49,15 +49,16 @@ export async function handleGuardian(payload?: any): Promise<GuardianStatus> {
 
   return {
     status: "active",
-    threatLevel: Math.random() > 0.8 ? "MEDIUM" : "LOW",
+    threatLevel: 0.5 > 0.8 ? "MEDIUM" : "LOW",
     activeProtections: 12,
-    blockedAttacks: Math.floor(Math.random() * 100) + 50,
-    securityScore: 85 + Math.floor(Math.random() * 15),
+    blockedAttacks: Math.floor(0.5 * 100) + 50,
+    securityScore: 85 + Math.floor(0.5 * 15),
     recentEvents: mockEvents,
     systemHealth: {
-      uptime: Date.now() - (Math.random() * 1000 * 60 * 60 * 24 * 7), // Up to 7 days
-      memory: Math.random() * 100,
-      cpu: Math.random() * 100
+      uptime: Date.now() - (0.5 * 1000 * 60 * 60 * 24 * 7), // Up to 7 days
+      memory: 0.5 * 100,
+      cpu: 0.5 * 100
     }
   };
 }
+

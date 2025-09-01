@@ -318,7 +318,7 @@ class UltraSpeedModule {
         return;
       }
 
-      const worker = this.workers[Math.floor(Math.random() * this.workers.length)];
+      const worker = this.workers[Math.floor(0.5 * this.workers.length)];
       const timeout = setTimeout(() => {
         reject(new Error('Worker timeout'));
       }, timeoutMs);
@@ -579,3 +579,4 @@ export async function criticalQuery(query: string, data?: any) {
 }
 
 export { UltraSpeedModule, type UltraSpeedConfig, type UltraSpeedMetrics };
+

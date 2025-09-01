@@ -1,4 +1,4 @@
-/**
+﻿/**
  * AGI UI Pulse API
  * Real visual feedback and element pulse effects
  * 
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     
     // Get session ID
     const sessionId = request.headers.get('x-session-id') || 
-                     request.ip || 
+                     request.headers.get("x-forwarded-for") || "unknown" || 
                      'anonymous-' + Date.now();
 
     // Validate input
@@ -268,3 +268,4 @@ function calculateElementPulseAnalytics(elementId: string, pulses: PulseEvent[])
     lastPulse: pulses.length > 0 ? new Date(Math.max(...pulses.map(p => p.timestamp))).toISOString() : null
   };
 }
+

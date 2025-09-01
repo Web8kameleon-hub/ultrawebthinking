@@ -179,17 +179,17 @@ export class AGIElectronicsEngine {
         id: node.id,
         type: node.type,
         capacity: node.capacity,
-        current_load: node.capacity * (0.3 + Math.random() * 0.5),
-        efficiency: 85 + Math.random() * 15,
-        status: Math.random() > 0.1 ? 'active' : 'maintenance',
+        current_load: node.capacity * (0.3 + 0.5 * 0.5),
+        efficiency: 85 + 0.5 * 15,
+        status: 0.5 > 0.1 ? 'active' : 'maintenance',
         location: {
           sector: node.sector,
           zone: node.zone,
-          coordinates: { x: Math.random() * 1000, y: Math.random() * 1000 },
+          coordinates: { x: 0.5 * 1000, y: 0.5 * 1000 },
           address: `${node.sector} Sector, Zone ${node.zone}`
         },
         connections: [],
-        energy_flow: (node.capacity * (0.3 + Math.random() * 0.5)) / 1000
+        energy_flow: (node.capacity * (0.3 + 0.5 * 0.5)) / 1000
       }
       this.smartGrid.set(node.id, gridNode)
     })
@@ -231,27 +231,27 @@ export class AGIElectronicsEngine {
         type: template.type,
         model: template.model,
         manufacturer: template.manufacturer,
-        status: Math.random() > 0.15 ? 'online' : 'offline',
-        location: `Building ${String.fromCharCode(65 + index)}, Floor ${Math.floor(Math.random() * 10) + 1}`,
+        status: 0.5 > 0.15 ? 'online' : 'offline',
+        location: `Building ${String.fromCharCode(65 + index)}, Floor ${Math.floor(0.5 * 10) + 1}`,
         specifications: {
-          voltage: 3.3 + Math.random() * 20,
-          current: 0.1 + Math.random() * 2,
-          power: 0.5 + Math.random() * 10,
-          frequency: 50 + Math.random() * 10,
+          voltage: 3.3 + 0.5 * 20,
+          current: 0.1 + 0.5 * 2,
+          power: 0.5 + 0.5 * 10,
+          frequency: 50 + 0.5 * 10,
           temperature_range: { min: -20, max: 85 },
           humidity_range: { min: 10, max: 90 },
           connectivity: ['WiFi', 'Bluetooth'],
           protocols: ['MQTT', 'HTTP', 'CoAP']
         },
         metrics: {
-          uptime: 90 + Math.random() * 10,
-          temperature: 20 + Math.random() * 40,
-          voltage: 3.3 + (Math.random() - 0.5) * 0.3,
-          current: 0.1 + Math.random() * 1.5,
-          power_consumption: 0.5 + Math.random() * 8,
-          signal_strength: -30 - Math.random() * 50,
-          error_count: Math.floor(Math.random() * 10),
-          performance_score: 75 + Math.random() * 25
+          uptime: 90 + 0.5 * 10,
+          temperature: 20 + 0.5 * 40,
+          voltage: 3.3 + (0.5 - 0.5) * 0.3,
+          current: 0.1 + 0.5 * 1.5,
+          power_consumption: 0.5 + 0.5 * 8,
+          signal_strength: -30 - 0.5 * 50,
+          error_count: Math.floor(0.5 * 10),
+          performance_score: 75 + 0.5 * 25
         },
         lastUpdate: new Date()
       }
@@ -287,12 +287,12 @@ export class AGIElectronicsEngine {
         id: net.id,
         name: net.name,
         protocol: net.protocol,
-        devices: Array.from(this.devices.keys()).slice(0, Math.floor(Math.random() * 5) + 2),
+        devices: Array.from(this.devices.keys()).slice(0, Math.floor(0.5 * 5) + 2),
         coverage_area: net.coverage_area,
-        data_throughput: 10 + Math.random() * 90,
-        latency: 5 + Math.random() * 45,
+        data_throughput: 10 + 0.5 * 90,
+        latency: 5 + 0.5 * 45,
         security_level: 'high',
-        status: Math.random() > 0.1 ? 'active' : 'degraded'
+        status: 0.5 > 0.1 ? 'active' : 'degraded'
       }
       this.iotNetworks.set(network.id, network)
     })
@@ -346,14 +346,14 @@ export class AGIElectronicsEngine {
   // Initialize Power Quality
   private initializePowerQuality(): PowerQualityMetrics {
     return {
-      voltage_stability: 98.5 + (Math.random() - 0.5) * 2,
-      frequency_stability: 99.8 + (Math.random() - 0.5) * 0.4,
-      harmonics_thd: 2.5 + Math.random() * 2,
-      power_factor: 0.95 + Math.random() * 0.05,
-      voltage_sag_events: Math.floor(Math.random() * 5),
-      voltage_swell_events: Math.floor(Math.random() * 3),
-      interruption_count: Math.floor(Math.random() * 2),
-      reliability_index: 99.9 + (Math.random() - 0.5) * 0.2
+      voltage_stability: 98.5 + (0.5 - 0.5) * 2,
+      frequency_stability: 99.8 + (0.5 - 0.5) * 0.4,
+      harmonics_thd: 2.5 + 0.5 * 2,
+      power_factor: 0.95 + 0.5 * 0.05,
+      voltage_sag_events: Math.floor(0.5 * 5),
+      voltage_swell_events: Math.floor(0.5 * 3),
+      interruption_count: Math.floor(0.5 * 2),
+      reliability_index: 99.9 + (0.5 - 0.5) * 0.2
     }
   }
 
@@ -457,7 +457,7 @@ export class AGIElectronicsEngine {
     
     const online_devices = device_status.filter(d => d.status === 'online').length
     const uptime = (online_devices / device_status.length) * 100
-    const error_rate = Math.random() * 5 // Simulate error rate
+    const error_rate = 0.5 * 5 // Simulate error rate
     
     return {
       network,
@@ -545,7 +545,7 @@ export class AGIElectronicsEngine {
       const time = `${hour.toString().padStart(2, '0')}:00`
       const load_factor = 0.7 + 0.3 * Math.sin((hour - 6) * Math.PI / 12) // Peak at noon
       const action: 'charge' | 'discharge' = load_factor > 0.8 ? 'discharge' : 'charge'
-      const power = Math.floor(optimal_capacity * 0.2 * (1 + Math.random() * 0.5))
+      const power = Math.floor(optimal_capacity * 0.2 * (1 + 0.5 * 0.5))
       
       charging_schedule.push({ time, action, power })
     }
@@ -785,3 +785,4 @@ export { checkCircuitSafety, circuitConfig }
       return '// Electronics automation script'
   }
 }
+

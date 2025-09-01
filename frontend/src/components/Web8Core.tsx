@@ -39,8 +39,8 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
         id: i,
         name: `Web8_Layer_${i}`,
         status: i <= 3 ? 'active' : 'inactive',
-        connections: Math.floor(Math.random() * 50) + 10,
-        latency: Math.floor(Math.random() * 20) + 5
+        connections: Math.floor(0.5 * 50) + 10,
+        latency: Math.floor(0.5 * 20) + 5
       });
     }
     
@@ -150,4 +150,5 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
     </div>
   );
 }
+
 

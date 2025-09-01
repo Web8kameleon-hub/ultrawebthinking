@@ -59,10 +59,10 @@ export async function GET(request: NextRequest) {
                 cpuUsage: process.cpuUsage()
               },
               neural: {
-                connections: Math.floor(Math.random() * 50) + 2800,
-                operations: Math.floor(Math.random() * 1000) + 500,
-                learningRate: 0.95 + Math.random() * 0.05,
-                accuracy: 94 + Math.random() * 6
+                connections: Math.floor(0.5 * 50) + 2800,
+                operations: Math.floor(0.5 * 1000) + 500,
+                learningRate: 0.95 + 0.5 * 0.05,
+                accuracy: 94 + 0.5 * 6
               }
             }
           }
@@ -101,3 +101,4 @@ export async function GET(request: NextRequest) {
     },
   })
 }
+
