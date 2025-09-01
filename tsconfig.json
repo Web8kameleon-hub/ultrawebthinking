@@ -13,33 +13,48 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "downlevelIteration": true,
-
     // Next.js Required
-    "lib": [ "dom", "dom.iterable", "ES6", "ES2020" ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES6",
+      "ES2020"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
     "incremental": true,
     "jsx": "preserve",
-
     // Path Resolution
     "baseUrl": ".",
     "paths": {
-      "@/*": [ "./*" ],
-      "@/components/*": [ "./components/*" ],
-      "@/lib/*": [ "./lib/*" ],
-      "@/app/*": [ "./app/*" ],
-      "@/backend/*": [ "./backend/*" ],
-      "@/sandbox/*": [ "./sandbox/*" ]
+      "@/*": [
+        "./*"
+      ],
+      "@/components/*": [
+        "./components/*"
+      ],
+      "@/lib/*": [
+        "./lib/*"
+      ],
+      "@/app/*": [
+        "./app/*"
+      ],
+      "@/backend/*": [
+        "./backend/*"
+      ],
+      "@/sandbox/*": [
+        "./sandbox/*"
+      ]
     },
-
     // Next.js Plugins
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "isolatedModules": true
   },
   "include": [
     "next-env.d.ts",

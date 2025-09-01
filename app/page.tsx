@@ -15,8 +15,8 @@ import nextDynamic from 'next/dynamic'
 // Force dynamic rendering - no static generation
 export const dynamic = 'force-dynamic'
 
-const Web8TabSystem = nextDynamic(
-  () => import('../components/Web8TabSystem'),
+const UnifiedTabSystem = nextDynamic(
+  () => import('../components/UnifiedTabSystem'),
   { 
     ssr: false,
     loading: () => (
@@ -39,10 +39,10 @@ const Web8TabSystem = nextDynamic(
             margin: '0 auto 20px'
           }}></div>
           <h1 style={{ fontSize: '2rem', marginBottom: '10px', color: 'white' }}>
-            � Web8 Tab System Loading...
+            🌐 EuroWeb Ultra Loading...
           </h1>
           <p style={{ fontSize: '1.2rem', color: 'rgba(255,255,255,0.8)' }}>
-            Initializing Web8 Command Center...
+            Initializing Unified Command Center...
           </p>
           <style dangerouslySetInnerHTML={{
             __html: `
@@ -90,7 +90,7 @@ export default function Home() {
         </div>
       }
     >
-      <Web8TabSystem />
+      <UnifiedTabSystem className="" />
     </NoSSR>
   )
 }
