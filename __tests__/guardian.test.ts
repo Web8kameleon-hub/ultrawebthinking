@@ -9,7 +9,7 @@
 
 // Guardian Test - Real Data Only
 // No imports needed for Jest globals: describe, it, expect, beforeEach are available
-// Note: 'vi' is replaced with 'jest' for mocking
+// Real data source
 import { Guardian } from '../backend/guardian/Guardian';
 
 describe('Guardian Security System', () => {

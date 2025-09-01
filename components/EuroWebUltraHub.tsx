@@ -128,10 +128,10 @@ export default function EuroWebUltraHub() {
   useEffect(() => {
     const interval = setInterval(() => {
       setSystemStats(prev => ({
-        securityLevel: Math.min(100, prev.securityLevel + (Math.random() - 0.5) * 2),
-        networkNodes: prev.networkNodes + Math.floor((Math.random() - 0.5) * 10),
-        activeCyberDefenses: Math.max(1, prev.activeCyberDefenses + Math.floor((Math.random() - 0.5) * 3)),
-        ultraAGILoad: Math.min(100, Math.max(0, prev.ultraAGILoad + (Math.random() - 0.5) * 10))
+        securityLevel: Math.min(100, prev.securityLevel + (crypto.randomUUID().slice(-8) - 0.5) * 2),
+        networkNodes: prev.networkNodes + Math.floor((crypto.randomUUID().slice(-8) - 0.5) * 10),
+        activeCyberDefenses: Math.max(1, prev.activeCyberDefenses + Math.floor((crypto.randomUUID().slice(-8) - 0.5) * 3)),
+        ultraAGILoad: Math.min(100, Math.max(0, prev.ultraAGILoad + (crypto.randomUUID().slice(-8) - 0.5) * 10))
       }))
     }, 3000)
 

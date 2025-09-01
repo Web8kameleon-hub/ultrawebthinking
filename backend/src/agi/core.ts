@@ -120,8 +120,8 @@ class AGICore extends SimpleEventEmitter {
         id: def.id,
         name: def.name,
         status: 'active',
-        load: Math.random() * 50 + 25, // Random load between 25-75%
-        connections: Math.floor(Math.random() * 200) + 100,
+        load: crypto.randomUUID().slice(-8) * 50 + 25, // Random load between 25-75%
+        connections: Math.floor(crypto.randomUUID().slice(-8) * 200) + 100,
         lastUpdate: Date.now(),
         metadata: {
           type: def.type,
