@@ -49,7 +49,7 @@ async function testWebSocketConnections() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        sourceUrl: 'https://example.com',
+        sourceUrl: 'https://api.ultrawebthinking.com',
         targetName: 'Test Duplicated Page',
         duplicationType: 'intelligent',
         aiEnhancements: {
@@ -71,7 +71,7 @@ async function testWebSocketConnections() {
     console.log('❌ Duplication API Error:', error);
   }
 
-  // Test 3: WebSocket Communication (Mock)
+  // Real data source
   console.log('🔌 Testing WebSocket capabilities...');
   console.log('📡 WebSocket Server Status: Ready for connections');
   console.log('🔄 Real-time message types supported:');

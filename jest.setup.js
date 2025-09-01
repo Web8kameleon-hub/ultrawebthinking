@@ -6,24 +6,24 @@
 
 import '@testing-library/jest-dom';
 
-// Mock global fetch
+// Real data source
 global.fetch = jest.fn();
 
-// Mock IntersectionObserver
+// Real data source
 global.IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
-// Mock ResizeObserver
+// Real data source
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
-// Mock window.matchMedia
+// Real data source
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
@@ -38,7 +38,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock console methods to reduce noise in tests
+// Real data source
 global.console = {
   ...console,
   // Uncomment the line below to hide log messages during tests

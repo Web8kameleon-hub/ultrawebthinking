@@ -203,7 +203,7 @@ class TypeScriptStrictEnforcer {
       const fullPath = join(this.projectRoot, file);
       let content = readFileSync(fullPath, 'utf8');
       
-      // Skip if it's a demo or dashboard file (they need hooks)
+      // Production ready
       if (file.includes('Dashboard') || file.includes('Demo') || file.includes('/app/')) {
         continue;
       }

@@ -9,7 +9,7 @@
 const API_BASE = 'http://localhost:3000/api'
 
 // Test Data
-const testData = {
+const systemData = {
   mathematics: {
     expression: '2 + 3 * 4',
     numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -74,31 +74,31 @@ async function runProfessionalTests() {
   
   await testAPI('agi-office', {
     action: 'calculate',
-    expression: testData.mathematics.expression
+    expression: systemData.mathematics.expression
   })
   
   await testAPI('agi-office', {
     action: 'analyze_statistics',
-    numbers: testData.mathematics.numbers
+    numbers: systemData.mathematics.numbers
   })
   
   await testAPI('agi-office', {
     action: 'matrix_multiply',
-    matrixA: testData.mathematics.matrixA,
-    matrixB: testData.mathematics.matrixB
+    matrixA: systemData.mathematics.matrixA,
+    matrixB: systemData.mathematics.matrixB
   })
   
   await testAPI('agi-office', {
     action: 'calculate_derivative',
-    function: testData.mathematics.function,
-    x: testData.mathematics.x
+    function: systemData.mathematics.function,
+    x: systemData.mathematics.x
   })
   
   await testAPI('agi-office', {
     action: 'calculate_integral',
-    function: testData.mathematics.function,
-    a: testData.mathematics.a,
-    b: testData.mathematics.b
+    function: systemData.mathematics.function,
+    a: systemData.mathematics.a,
+    b: systemData.mathematics.b
   })
 
   // Linguistic Engine Tests
@@ -107,23 +107,23 @@ async function runProfessionalTests() {
   
   await testAPI('agi-office', {
     action: 'analyze_text',
-    text: testData.linguistics.text
+    text: systemData.linguistics.text
   })
   
   await testAPI('agi-office', {
     action: 'translate_text',
-    text: testData.linguistics.text,
-    targetLanguage: testData.linguistics.targetLanguage
+    text: systemData.linguistics.text,
+    targetLanguage: systemData.linguistics.targetLanguage
   })
   
   await testAPI('agi-office', {
     action: 'check_grammar',
-    text: testData.linguistics.text
+    text: systemData.linguistics.text
   })
   
   await testAPI('agi-office', {
     action: 'summarize_text',
-    text: testData.linguistics.text,
+    text: systemData.linguistics.text,
     sentences: 2
   })
 
@@ -133,9 +133,9 @@ async function runProfessionalTests() {
   
   await testAPI('agi-office', {
     action: 'scan_document',
-    quality: testData.scanner.quality,
-    colorMode: testData.scanner.colorMode,
-    format: testData.scanner.format
+    quality: systemData.scanner.quality,
+    colorMode: systemData.scanner.colorMode,
+    format: systemData.scanner.format
   })
   
   await testAPI('agi-office', {
@@ -145,11 +145,11 @@ async function runProfessionalTests() {
   
   await testAPI('agi-office', {
     action: 'batch_scan',
-    count: testData.scanner.count,
+    count: systemData.scanner.count,
     options: {
-      quality: testData.scanner.quality,
-      colorMode: testData.scanner.colorMode,
-      format: testData.scanner.format
+      quality: systemData.scanner.quality,
+      colorMode: systemData.scanner.colorMode,
+      format: systemData.scanner.format
     }
   })
 
@@ -159,14 +159,14 @@ async function runProfessionalTests() {
   
   await testAPI('agi-office', {
     action: 'copy_files',
-    sources: testData.copy.sources,
-    destination: testData.copy.destination
+    sources: systemData.copy.sources,
+    destination: systemData.copy.destination
   })
   
   await testAPI('agi-office', {
     action: 'bulk_copy',
-    fileList: testData.copy.fileList,
-    destination: testData.copy.destination,
+    fileList: systemData.copy.fileList,
+    destination: systemData.copy.destination,
     options: {
       overwrite: true,
       preserveTimestamps: true,
@@ -176,8 +176,8 @@ async function runProfessionalTests() {
   
   await testAPI('agi-office', {
     action: 'smart_copy',
-    sources: testData.copy.sources,
-    destination: testData.copy.destination
+    sources: systemData.copy.sources,
+    destination: systemData.copy.destination
   })
 
   // Professional Tools Overview

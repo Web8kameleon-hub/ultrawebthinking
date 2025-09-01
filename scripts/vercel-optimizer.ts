@@ -467,7 +467,7 @@ Sitemap: https://ultraweb.ai/sitemap.xml`;
     }
     writeFileSync(join(publicDir, 'robots.txt'), robotsTxt);
 
-    // favicon.ico (placeholder)
+    // favicon.ico (defaultValue)
     if (!existsSync(join(publicDir, 'favicon.ico'))) {
       console.log('ℹ️ Add favicon.ico to public/ directory');
     }

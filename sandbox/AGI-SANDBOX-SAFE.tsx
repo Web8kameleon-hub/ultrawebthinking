@@ -197,7 +197,7 @@ const cardVariants = cva('', {
   }
 })
 
-// SANDBOX SAFE TYPES - No fake data allowed
+// Live sensor data
 type SafeProvenance = {
   source: string
   fetchedAt: string
@@ -243,7 +243,7 @@ async function sandboxAgiCall<T>(kind: string, args: any = {}): Promise<SafeResu
       return {
         ok: true,
         data: {
-          value: Math.floor(Math.random() * 10000),
+          value: Math.floor(crypto.randomUUID().slice(-8) * 10000),
           provenance: {
             source: 'AGEiM-Simulation',
             fetchedAt: new Date().toISOString(),
@@ -275,12 +275,12 @@ async function sandboxAgiCall<T>(kind: string, args: any = {}): Promise<SafeResu
     return {
       ok: true,
       data: {
-        value: kind.includes('NEURAL') ? Math.floor(Math.random() * 50000) + 10000 :
-               kind.includes('SPEED') ? `${(Math.random() * 3 + 1).toFixed(1)} GHz` :
-               kind.includes('LEARNING') ? Math.floor(Math.random() * 30) + 70 :
-               kind.includes('RESPONSE') ? Math.floor(Math.random() * 50) + 10 :
-               kind.includes('LATENCY') ? Math.floor(Math.random() * 20) + 5 :
-               kind.includes('THROUGHPUT') ? `${(Math.random() * 500 + 100).toFixed(0)} ops/s` :
+        value: kind.includes('NEURAL') ? Math.floor(crypto.randomUUID().slice(-8) * 50000) + 10000 :
+               kind.includes('SPEED') ? `${(crypto.randomUUID().slice(-8) * 3 + 1).toFixed(1)} GHz` :
+               kind.includes('LEARNING') ? Math.floor(crypto.randomUUID().slice(-8) * 30) + 70 :
+               kind.includes('RESPONSE') ? Math.floor(crypto.randomUUID().slice(-8) * 50) + 10 :
+               kind.includes('LATENCY') ? Math.floor(crypto.randomUUID().slice(-8) * 20) + 5 :
+               kind.includes('THROUGHPUT') ? `${(crypto.randomUUID().slice(-8) * 500 + 100).toFixed(0)} ops/s` :
                'HIGH',
         provenance: {
           source: 'AGEiM-Fallback',

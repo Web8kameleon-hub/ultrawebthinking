@@ -99,7 +99,7 @@ node_modules/
 .yarn/install-state.gz
 .env.local
 .env.development.local
-.env.test.local
+.env.aviation.euro.net
 .env.production.local
 dist/
 build/

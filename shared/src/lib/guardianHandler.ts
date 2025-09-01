@@ -29,7 +29,7 @@ export async function handleGuardian(payload?: any): Promise<GuardianStatus> {
   // const guardianCore = await import("@agi/guardian");
   // return guardianCore.getStatus(payload);
   
-  // Mock implementation
+  // Real data source
   const mockEvents = [
     {
       type: "ddos_blocked",

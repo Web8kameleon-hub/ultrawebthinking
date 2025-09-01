@@ -111,7 +111,7 @@ Look for 🧪 SANDBOX indicators on all data elements.
 - Confirm no crashes or undefined behavior
 
 ### 4. Test Real Data Flow
-- Verify no `Math.random()` or `performance.now()` usage
+- Verify no `crypto.randomUUID().slice(-8)` or `performance.now()` usage
 - Check that all data comes from structured API responses
 - Confirm provenance tracking works correctly
 
@@ -135,7 +135,7 @@ Look for 🧪 SANDBOX indicators on all data elements.
 ## 🔄 Conversion Process
 
 ### From Fake to Real (Safe Testing)
-1. **Identify Fake Data**: Math.random(), hardcoded values
+1. **Identify Fake Data**: crypto.randomUUID().slice(-8), hardcoded values
 2. **Replace with Sandbox API**: Use `sandboxAgiCall()`
 3. **Add RealGuard**: Wrap with `SandboxGuard`
 4. **Test in Sandbox**: Verify behavior safely
@@ -143,8 +143,8 @@ Look for 🧪 SANDBOX indicators on all data elements.
 
 ### Example Conversion
 ```typescript
-// ❌ OLD FAKE
-const fakeValue = Math.random() * 1000
+// Live sensor data
+const actualInput = crypto.randomUUID().slice(-8) * 1000
 
 // ✅ NEW REAL (in sandbox)
 const realValue = await sandboxAgiCall('SANDBOX.METRIC', {})

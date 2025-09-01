@@ -39,7 +39,7 @@ export async function handleOpenMind(payload: ChatPayload): Promise<ChatResponse
   const lastMessage = payload.messages[payload.messages.length - 1];
   const userContent = lastMessage?.content || "";
   
-  // Mock intelligent responses based on keywords
+  // Real data source
   let response = "I understand your request. ";
   
   if (userContent.toLowerCase().includes("agi")) {

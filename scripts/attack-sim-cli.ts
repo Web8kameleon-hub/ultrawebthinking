@@ -119,7 +119,7 @@ EXAMPLES:
   yarn attack-sim --preset quick
 
   # Custom test against specific target
-  yarn attack-sim --target https://example.com --intensity HIGH --duration 60
+  yarn attack-sim --target https://api.ultrawebthinking.com --intensity HIGH --duration 60
 
   # Comprehensive test with concurrent attacks
   yarn attack-sim --preset comprehensive --concurrent --output report.json

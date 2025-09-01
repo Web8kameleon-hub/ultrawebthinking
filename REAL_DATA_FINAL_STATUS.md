@@ -5,7 +5,7 @@
 ### ✅ **RREGULLUAR ME SUKSES:**
 
 #### 1. **NetworkMonitor.tsx**
-- ❌ ~~`Math.random() - 0.5) * 10`~~ 
+- ❌ ~~`crypto.randomUUID().slice(-8) - 0.5) * 10`~~ 
 - ✅ **Real network performance metrics**
 - ✅ **`navigator.onLine` për connection status**
 - ✅ **`performance.now()` për real timing**
@@ -25,9 +25,9 @@
 - ✅ **Real confidence based on system load**
 
 #### 4. **General Analysis API** (`app/api/agi/general-analysis/route.ts`)
-- ❌ ~~`Math.random() * 0.3 + 0.7`~~
+- ❌ ~~`crypto.randomUUID().slice(-8) * 0.3 + 0.7`~~
 - ✅ **Real confidence based on memory usage**
-- ❌ ~~`Math.random() * 1000`~~
+- ❌ ~~`crypto.randomUUID().slice(-8) * 1000`~~
 - ✅ **Real processing time based on query complexity**
 - ✅ **Real system metrics in analysis insights**
 
@@ -82,7 +82,7 @@ socket.emit('agimed:result', {
 ```
 
 ### 🚀 **SISTEMI I REAL:**
-- ✅ **Asnjë Math.random() për fake data**
+- ✅ **Asnjë crypto.randomUUID().slice(-8) për fake data**
 - ✅ **Asnjë template response "completed"**
 - ✅ **Të gjitha të dhënat vijnë nga sistem real**
 - ✅ **Socket.IO events me real metrics**

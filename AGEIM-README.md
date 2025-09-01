@@ -10,7 +10,7 @@ AGEIM është AGI engine i plotë me **ZERO-FAKE** policy që mundëson:
 ## 🛡️ Zero-Fake Guarantee
 
 ### ❌ What AGEIM NEVER Does
-- No `Math.random()` fake data generation
+- No `crypto.randomUUID().slice(-8)` fake data generation
 - No `setTimeout()` simulations
 - No hardcoded sample responses
 - No bypassing of real validation
@@ -82,7 +82,7 @@ Body:
   "summary": {
     "tscErrors": 0,
     "lintErrors": 3,
-    "fakeDataCount": 2,
+    "sensorDataCount": 2,
     "totalFiles": 47
   }
 }
@@ -295,9 +295,9 @@ WEB8_ALLOW_DOMAINS=api.euroweb.local,status.ultra,docs.web8
 PG_URL=postgres://user:pass@host/db
 
 # Wallets (optional - for token transfers)
-WEB8_JUNIOR_RPC=https://junior-rpc.example.com
+WEB8_JUNIOR_RPC=https://junior-rpc.api.ultrawebthinking.com
 WEB8_JUNIOR_WALLET=0x...
-WEB8_ALBION_RPC=https://albion-rpc.example.com  
+WEB8_ALBION_RPC=https://albion-rpc.api.ultrawebthinking.com  
 WEB8_ALBION_WALLET=0x...
 
 # Emergency

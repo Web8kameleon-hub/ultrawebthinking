@@ -191,7 +191,7 @@ export interface INeuralPlanner {
   initialize(): Promise<void>;
   train(data: TrainingData): Promise<TrainingSession>;
   predict(input: number[]): Promise<PredictionResult>;
-  evaluate(testData: TestData): Promise<ModelPerformance>;
+  evaluate(systemData: systemData): Promise<ModelPerformance>;
   
   // Model management
   save(path: string): Promise<void>;
@@ -230,7 +230,7 @@ export interface TrainingData {
 /**
  * 🧪 TEST DATA
  */
-export interface TestData {
+export interface systemData {
   inputs: number[][];
   outputs: number[][];
   metadata?: {

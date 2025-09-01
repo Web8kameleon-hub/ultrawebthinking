@@ -29,24 +29,16 @@
     // Path Resolution
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@/components/*": [
-        "./components/*"
-      ],
-      "@/lib/*": [
-        "./lib/*"
-      ],
-      "@/app/*": [
-        "./app/*"
-      ],
-      "@/backend/*": [
-        "./backend/*"
-      ],
-      "@/sandbox/*": [
-        "./sandbox/*"
-      ]
+      "@/*": [ "./", "./*" ],
+      "@/components/*": [ "./components/*" ],
+      "@/lib/*": [ "./lib/*" ],
+      "@/app/*": [ "./app/*" ],
+      "@/backend/*": [ "./backend/*" ],
+      "@/sandbox/*": [ "./sandbox/*" ],
+      "@/scripts/*": [ "./scripts/*" ],
+      "@/shared/*": [ "./shared/*" ],
+      "@/hooks/*": [ "./hooks/*" ],
+      "@/types/*": [ "./types/*" ]
     },
     // Next.js Plugins
     "plugins": [

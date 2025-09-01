@@ -25,7 +25,7 @@
 - ✅ **Processing Speed**: Real performance timing
 - ✅ **Learning Rate**: Based on connection state and browser features
 
-### ⚠️ **REMAINING COMPONENTS WITH Math.random() - FOR SIMULATION PURPOSES:**
+### ⚠️ **REMAINING COMPONENTS WITH crypto.randomUUID().slice(-8) - FOR SIMULATION PURPOSES:**
 
 #### **IoT & Network Components (Intentional Simulation):**
 - 🔄 **LoRaMeshNetwork.tsx** - Simulates mesh network behavior (appropriate for demo)

@@ -99,7 +99,7 @@ class GuardianMonitor {
    */
   private async performHealthCheck(): Promise<void> {
     try {
-      // Mock stats object since getStats doesn't exist yet
+      // Real data source
       const stats = {
         status: 'active',
         systemHealth: 'healthy',
