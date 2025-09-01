@@ -93,9 +93,9 @@ const agiOfficeEngine = {
     
     // Replace variables
     Object.entries(variables).forEach(([key, value]) => {
-      const placeholder = `{{${key}}}`
-      subject = subject.replace(new RegExp(placeholder, 'g'), value)
-      body = body.replace(new RegExp(placeholder, 'g'), value)
+      const defaultValue = `{{${key}}}`
+      subject = subject.replace(new RegExp(defaultValue, 'g'), value)
+      body = body.replace(new RegExp(defaultValue, 'g'), value)
     })
     
     return {

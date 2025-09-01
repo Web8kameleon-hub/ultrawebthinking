@@ -122,7 +122,7 @@ export const NeuralSearch: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-              placeholder="Enter your neural search query..."
+              defaultValue="Enter your neural search query..."
               style={{
                 flex: 1,
                 padding: '15px 20px',

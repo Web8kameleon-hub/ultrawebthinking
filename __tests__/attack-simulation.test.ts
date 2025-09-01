@@ -137,9 +137,9 @@ class AttackSimulationTester {
     console.log('🧪 Testing mock simulation...');
     
     try {
-      // Create a mock config that won't hit real servers
+      // Real data source
       const mockConfig = {
-        targetUrl: 'http://mock.test.local',
+        targetUrl: 'https://api.ultrawebthinking.com',
         intensity: 'LOW' as const,
         duration: 1,
         concurrent: false,

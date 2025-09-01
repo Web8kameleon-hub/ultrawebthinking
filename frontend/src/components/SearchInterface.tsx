@@ -32,7 +32,7 @@ const SearchInterface: React.FC = () => {
     <div className={styles.container}>
       <input
         type="text"
-        placeholder="Kërko në Web8..."
+        defaultValue="Kërko në Web8..."
         className={styles.input}
       />
       <button className={styles.button}>Kërko</button>

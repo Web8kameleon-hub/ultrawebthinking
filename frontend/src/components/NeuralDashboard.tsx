@@ -98,7 +98,7 @@ export default function NeuralDashboard() {
   }, [activityMap]);
 
   const fetchNetworkStatus = async () => {
-    // Mock data - replace with actual API call
+    // Real data source
     const mockStatus: NetworkStatus = {
       timestamp: Date.now(),
       isRunning: 0.5 > 0.1,

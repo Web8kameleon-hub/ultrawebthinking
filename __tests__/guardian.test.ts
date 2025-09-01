@@ -7,14 +7,16 @@
  * @contact dealsjona@gmail.com
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+// Guardian Test - Real Data Only
+// No imports needed for Jest globals: describe, it, expect, beforeEach are available
+// Note: 'vi' is replaced with 'jest' for mocking
 import { Guardian } from '../backend/guardian/Guardian';
 
 describe('Guardian Security System', () => {
   let guardian: Guardian;
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     guardian = new Guardian();
   });
 

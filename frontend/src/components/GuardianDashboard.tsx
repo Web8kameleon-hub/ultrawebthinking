@@ -265,14 +265,14 @@ export default function GuardianDashboard() {
         <div className={styles.blockForm}>
           <input
             type="text"
-            placeholder="IP Address"
+            defaultValue="IP Address"
             value={blockIP}
             onChange={(e) => setBlockIP(e.target.value)}
             className={styles.input}
           />
           <input
             type="text"
-            placeholder="Block Reason"
+            defaultValue="Block Reason"
             value={blockReason}
             onChange={(e) => setBlockReason(e.target.value)}
             className={styles.input}

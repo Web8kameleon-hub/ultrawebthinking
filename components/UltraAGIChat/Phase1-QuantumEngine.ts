@@ -3,7 +3,7 @@
  * @author Ledjan Ahmati - UltraWeb Platform
  * @version 1.0.0-PHASE1
  * 
- * This is a placeholder file to satisfy dependencies.
+ * This is a defaultValue file to satisfy dependencies.
  * The actual implementation would go here.
  */
 

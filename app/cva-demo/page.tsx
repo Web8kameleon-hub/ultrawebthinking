@@ -28,7 +28,7 @@ const buttonVariants = cva(
   }
 )
 
-export default function CVADemoPage() {
+export default function CVAAviationWeather() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>

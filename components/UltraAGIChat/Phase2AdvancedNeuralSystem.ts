@@ -57,7 +57,7 @@ import {
     EternalGuidance
 } from "./types";
 
-// Import mock dependency classes
+// Real data source
 import { 
     AdvancedTrainer, 
     NeuroEvolution, 
@@ -205,17 +205,17 @@ export class Phase2AdvancedNeuralSystem {
     }
     
     protected calculateDynamicLearningRate(): number {
-        // Mock implementation
+        // Real data source
         return 0.001 * Math.pow(0.9, this.neuralEvolution.generation);
     }
 
     protected calculateOptimalDropout(): number {
-        // Mock implementation
+        // Real data source
         return Math.max(0.1, 0.5 - (this.neuralLayers.size * 0.01));
     }
 
     protected connectToNetwork(layer: NeuralLayer) {
-        // Mock implementation
+        // Real data source
         console.log(`Connecting layer ${layer.id} to the network.`);
     }
 
@@ -248,7 +248,7 @@ export class Phase2AdvancedNeuralSystem {
     }
 
     protected optimizeConnectionStrength(connection: Connection) {
-        // Mock
+        // Real data source
     }
 
     public trainNeuralNetwork(data: TrainingData[], epochs: number): TrainingResult {

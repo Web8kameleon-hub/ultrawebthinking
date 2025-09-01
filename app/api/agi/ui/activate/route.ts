@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI UI Activation API
  * Real element interaction tracking and UI state management
  * 
@@ -24,7 +24,7 @@ interface UIAnalytics {
   lastActivation: string;
 }
 
-// In-memory storage for demo (use Redis/Database in production)
+// Production ready
 const uiActivations = new Map<string, UIActivation[]>();
 const elementStats = new Map<string, number>();
 

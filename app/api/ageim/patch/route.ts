@@ -249,7 +249,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Real patch validation (no fake checks)
+// Live sensor data
 function validatePatches(patches: PatchRequest['patches']): string[] {
   const errors: string[] = []
   

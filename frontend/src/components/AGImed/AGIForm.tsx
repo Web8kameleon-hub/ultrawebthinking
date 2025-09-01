@@ -100,7 +100,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false })
               id="symptoms"
               value={input}
               onChange={handleInputChange}
-              placeholder="Shembull: kam dhimbje koke, temperaturë 38°C, lodhje të madhe që zgjat prej 2 ditësh, dhimbje muskujsh..."
+              defaultValue="Shembull: kam dhimbje koke, temperaturë 38°C, lodhje të madhe që zgjat prej 2 ditësh, dhimbje muskujsh..."
               disabled={isLoading}
               style={{
                 width: '100%',

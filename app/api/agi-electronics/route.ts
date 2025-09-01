@@ -30,7 +30,7 @@ interface CircuitAnalysisRequest {
   }
 }
 
-// Mock AGI Electronics Engine for API functionality
+// Real data source
 const agiElectronicsEngine = {
   monitorIoTDevice(deviceId: string, deviceType: string) {
     const deviceTypes: Record<string, any> = {

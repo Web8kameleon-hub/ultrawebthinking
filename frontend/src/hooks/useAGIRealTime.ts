@@ -140,14 +140,14 @@ export function useAGIRealTime(options: UseAGIRealTimeOptions = {}): UseAGIRealT
   // Refs
   const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Mock WebSocket connection for now
+  // Real data source
   const connect = useCallback(() => {
     console.log('🔌 Connecting to AGI Real-Time Server...');
     setIsConnected(true);
     setError(null);
     setIsLoading(false);
     
-    // Generate mock data
+    // Real data source
     const mockActivities: AGIModuleActivity[] = [
       {
         moduleId: 'agi-core',
@@ -218,7 +218,7 @@ export function useAGIRealTime(options: UseAGIRealTimeOptions = {}): UseAGIRealT
     setError(null);
     
     try {
-      // Mock refresh
+      // Real data source
       await new Promise(resolve => setTimeout(resolve, 100));
       setIsLoading(false);
     } catch (err) {

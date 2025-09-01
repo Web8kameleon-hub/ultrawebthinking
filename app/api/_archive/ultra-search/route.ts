@@ -111,7 +111,7 @@ async function performMirrorSearch(query: string, source: SearchSource): Promise
           <p>Detailed information about "${query}" from ${source.name}. 
              This content has been processed through our Out/In Mirror technology 
              and filtered for ethical compliance.</p>
-          <span class="url">https://example.com/result/${i + 1}</span>
+          <span class="url">https://api.ultrawebthinking.com/result/${i + 1}</span>
         </div>
       `;
       
@@ -122,7 +122,7 @@ async function performMirrorSearch(query: string, source: SearchSource): Promise
         results.push({
           title: `${query} - ${source.name} Result ${i + 1}`,
           description: `High-quality information about "${query}" from ${source.name}. Content verified through ethical AI filtering.`,
-          url: `https://example.com/${source.name.toLowerCase().replace(' ', '')}/result/${i + 1}`,
+          url: `https://api.ultrawebthinking.com/${source.name.toLowerCase().replace(' ', '')}/result/${i + 1}`,
           source: source.name,
           html: cleanContent,
           ethical_score: ethicalScore

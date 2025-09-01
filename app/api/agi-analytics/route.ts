@@ -156,8 +156,8 @@ export async function POST(request: NextRequest) {
         })
 
       case 'hypothesis_testing':
-        const { sampleData, hypothesis, significanceLevel } = await request.json()
-        const testResult = agiAnalyticsEngine.performHypothesisTest(sampleData, hypothesis, significanceLevel)
+        const { actualData, hypothesis, significanceLevel } = await request.json()
+        const testResult = agiAnalyticsEngine.performHypothesisTest(actualData, hypothesis, significanceLevel)
         return NextResponse.json({
           success: true,
           data: testResult,

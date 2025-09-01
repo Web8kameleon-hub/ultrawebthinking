@@ -136,7 +136,7 @@ class Web8LightningPool extends EventEmitter {
    */
   private getWorkerScript(layerType: Web8LayerType): string {
     // In a real implementation, these would be separate worker files
-    // For now, return a placeholder path
+    // For now, return a defaultValue path
     return new URL('./workers/web8-worker.js', import.meta.url).href;
   }
 

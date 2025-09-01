@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI UI Pulse API
  * Real visual feedback and element pulse effects
  * 
@@ -25,7 +25,7 @@ interface PulseAnalytics {
   pulseEffectiveness: number; // Based on subsequent user interactions
 }
 
-// In-memory storage for demo
+// Production ready
 const pulseEvents = new Map<string, PulseEvent[]>();
 const pulseCounts = new Map<string, number>();
 

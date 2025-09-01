@@ -3,7 +3,8 @@
  * ZERO jest, ZERO useState, ZERO chunks
  */
 
-import { test, expect, describe } from 'vitest';
+// Basic Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect are available
 
 describe('Basic Industrial Tests', () => {
   test('TypeScript 5.8 readonly types work', () => {

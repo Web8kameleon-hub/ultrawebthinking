@@ -84,7 +84,7 @@ function RealGuard({ data, children, fallback }: {
 }
 
 export const AGICore: React.FC = () => {
-  // REAL-ONLY state - no fake metrics
+  // Live sensor data
   const [realMetrics, setRealMetrics] = useState<AGIMetrics>({
     neuralConnections: null,
     processingSpeed: null,
@@ -98,7 +98,7 @@ export const AGICore: React.FC = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // REAL-ONLY data fetching - no fake calculations
+  // Live sensor data
   useEffect(() => {
     let mounted = true
     
@@ -173,7 +173,7 @@ export const AGICore: React.FC = () => {
 
     fetchRealMetrics()
     
-    // Refresh real data every 5 seconds (not fake updates)
+    // Live sensor data
     const interval = setInterval(fetchRealMetrics, 5000)
     
     return () => {

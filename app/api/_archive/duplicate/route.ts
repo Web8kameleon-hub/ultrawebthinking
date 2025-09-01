@@ -261,7 +261,7 @@ async function getPageDetails(pageId: string) {
     id: pageId,
     name: `Page ${pageId}`,
     url: `/pages/${pageId}`,
-    originalUrl: 'https://example.com',
+    originalUrl: 'https://api.ultrawebthinking.com',
     type: 'intelligent',
     createdAt: new Date().toISOString(),
     content: {

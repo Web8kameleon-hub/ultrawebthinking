@@ -9,7 +9,8 @@
  */
 
 import React from 'react';
-import { test, expect, describe, beforeEach } from 'vitest';
+// AGI Sheet Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect, beforeEach are available
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';

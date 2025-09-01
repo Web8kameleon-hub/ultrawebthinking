@@ -21,7 +21,7 @@ type AGEIMConfig = {
   albionBudget: number
 }
 
-// AGEIM Results - ZERO-FAKE
+// Live sensor data
 type ScanResult = {
   ok: true
   report: string
@@ -155,7 +155,7 @@ export class AGEIM {
         cwd: this.cfg.repoRoot 
       }, { dryRun: false })
 
-      // Real Zero-fake scanner (if exists)
+      // Live sensor data
       let realResult = null
       try {
         realResult = await this.sbx.execute("SPAWN_PROCESS", { 

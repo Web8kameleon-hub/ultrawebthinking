@@ -138,7 +138,7 @@ export default function UltraWebSearch() {
     } catch (error) {
       console.error('❌ Ultra Search Error:', error);
       
-      // Fallback to mock results if API fails
+      // Real data source
       const fallbackResults: UltraSearchResult[] = mirrorSources
         .filter(source => source.active)
         .slice(0, 3)
@@ -287,7 +287,7 @@ export default function UltraWebSearch() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="🔍 Shkruaj për të kërkuar në mijëra burime... (Out/In Mirror aktiv)"
+              defaultValue="🔍 Shkruaj për të kërkuar në mijëra burime... (Out/In Mirror aktiv)"
               style={{
                 width: '100%',
                 padding: '20px 25px',

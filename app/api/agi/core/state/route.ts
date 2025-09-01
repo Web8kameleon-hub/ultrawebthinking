@@ -262,7 +262,7 @@ export async function PATCH(request: NextRequest) {
 
 // Update real-time metrics
 function updateRealTimeMetrics(): void {
-  // ZERO-FAKE: Real system metrics only - NO 0.5!
+  // Live sensor data
   const realMetrics = getRealSystemMetrics();
   
   // Use actual real system data from getRealSystemMetrics()

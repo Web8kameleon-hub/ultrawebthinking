@@ -3,7 +3,7 @@
  * Vanilla CSS + Next.js
  */
 
-export default function AGIDemoPage() {
+export default function AGIAviationWeather() {
   return (
     <div style={{ 
       minHeight: '100vh',

@@ -245,11 +245,11 @@ export const AGISheet: React.FC<AGISheetProps> = ({
     }
   }
 
-  // AGI Demo functions
+  // Production ready
   const generateAGIDemo = () => {
     setIsCalculating(true)
     
-    // Add demo data with real system functions
+    // Production ready
     setTimeout(() => {
       handleCellChange('A1', 'AGI Neural Network')
       handleCellChange('B1', '=AGI.NEURAL(50)')
@@ -385,7 +385,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
           type="text"
           value={formulaInput}
           onChange={(e) => setFormulaInput(e.target.value)}
-          placeholder="Enter formula (=AGI.NEURAL(10), =A1+B1, etc.)"
+          defaultValue="Enter formula (=AGI.NEURAL(10), =A1+B1, etc.)"
           style={{
             flex: 1,
             padding: '8px 12px',

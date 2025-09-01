@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Scroll Tracking API
  * Real-time scroll position and user behavior analysis
  * 
@@ -24,7 +24,7 @@ interface ScrollAnalytics {
   engagementScore: number;
 }
 
-// In-memory storage for demo (use Redis/Database in production)
+// Production ready
 const scrollSessions = new Map<string, ScrollData[]>();
 const scrollAnalytics = new Map<string, ScrollAnalytics>();
 

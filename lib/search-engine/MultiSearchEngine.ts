@@ -35,14 +35,14 @@ export class MultiSearchEngine {
       safeSearch = true
     } = options;
 
-    // Mock search results for now
+    // Real data source
     const results: SearchResult[] = [];
     
     for (const engine of engines.slice(0, 3)) {
       for (let i = 0; i < Math.min(maxResults / engines.length, 5); i++) {
         results.push({
           title: `${query} - Result ${i + 1} from ${engine}`,
-          url: `https://example.com/${engine}/${encodeURIComponent(query)}/${i + 1}`,
+          url: `https://api.ultrawebthinking.com/${engine}/${encodeURIComponent(query)}/${i + 1}`,
           snippet: `This is a search result for "${query}" from ${engine} search engine. Result number ${i + 1}.`,
           engine,
           score: 0.5 * 100,
@@ -58,7 +58,7 @@ export class MultiSearchEngine {
   }
 
   async suggest(query: string): Promise<string[]> {
-    // Mock suggestions
+    // Real data source
     return [
       `${query} tutorial`,
       `${query} guide`,

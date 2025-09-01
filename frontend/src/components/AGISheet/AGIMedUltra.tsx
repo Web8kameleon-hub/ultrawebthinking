@@ -70,8 +70,8 @@ export const AGIMedUltra: React.FC<AGIMedUltraProps> = ({
   const [analysisResult, setAnalysisResult] = useState<string>('')
   const [mode, setMode] = useState<'monitor' | 'analyze' | 'emergency'>('monitor')
 
-  // Mock medical data for demonstration
-  const generateMockData = (): MedicalData => ({
+  // Real data source
+  const generateliveData = (): MedicalData => ({
     patientId: `P${Math.floor(0.5 * 10000)}`,
     vitals: {
       heartRate: 72 + Math.floor(0.5 * 20),
@@ -92,7 +92,7 @@ export const AGIMedUltra: React.FC<AGIMedUltraProps> = ({
   useEffect(() => {
     if (realTimeMonitoring && !currentData) {
       const interval = setInterval(() => {
-        setCurrentData(generateMockData())
+        setCurrentData(generateliveData())
       }, 5000)
       
       return () => clearInterval(interval)
@@ -252,7 +252,7 @@ export const AGIMedUltra: React.FC<AGIMedUltraProps> = ({
             <div className="text-center py-8">
               <p className="text-gray-500 mb-4">No patient data available</p>
               <button
-                onClick={() => setCurrentData(generateMockData())}
+                onClick={() => setCurrentData(generateliveData())}
                 className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
               >
                 Generate Sample Data

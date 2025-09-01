@@ -225,7 +225,7 @@ export const ErrorHandlingExample = () => {
   )
 }
 
-// Complete Demo App
+// Production ready
 export const LazyLoadingDemo = () => {
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' } as any}>

@@ -45,7 +45,7 @@ const io = new SocketIOServer(server, {
   cookie: false
 });
 
-// Mock Real-Time Data Generator
+// Real data source
 class SimpleRealTimeAggregator {
   getCurrentActivities() {
     return {

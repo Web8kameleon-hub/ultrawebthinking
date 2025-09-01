@@ -3,7 +3,8 @@
  * Cache + CDN + Browser optimization
  */
 
-import { test, expect, describe } from 'vitest';
+// Utilities Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect are available
 
 describe('Utilities Industrial Tests', () => {
   test('cache utilities are pure functions', () => {

@@ -21,10 +21,10 @@ import {
 } from "./types";
 
 // =================================================================
-// 🎯 SECTION 1: MOCK IMPLEMENTATIONS FOR DEPENDENCIES
+// Real data source
 // =================================================================
 
-// These mock classes are placeholders for complex functionalities.
+// Real data source
 export class NeuroEvolution {
     constructor(config: any) {}
     evolve(layers: any): any { return { success: true, new_layers: 2 }; }

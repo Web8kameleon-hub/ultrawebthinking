@@ -254,7 +254,7 @@ const Web8TabSystemSimple: React.FC = () => {
               name="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="🔍 Search..."
+              defaultValue="🔍 Search..."
               aria-label="Search AGI modules and content"
               title="Search AGI modules and content"
               style={{

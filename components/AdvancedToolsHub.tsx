@@ -256,7 +256,7 @@ export default function AdvancedToolsHub() {
                 type="text"
                 value={calculatorInput}
                 onChange={(e) => setCalculatorInput(e.target.value)}
-                placeholder="Enter expression (sin, cos, sqrt, pow, pi, e)"
+                defaultValue="Enter expression (sin, cos, sqrt, pow, pi, e)"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               
@@ -342,7 +342,7 @@ export default function AdvancedToolsHub() {
             <div className="space-y-4">
               <input
                 type="text"
-                placeholder="Enter your query for AI analysis"
+                defaultValue="Enter your query for AI analysis"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
@@ -391,7 +391,7 @@ export default function AdvancedToolsHub() {
                 type="text"
                 value={formulaInput}
                 onChange={(e) => setFormulaInput(e.target.value)}
-                placeholder="Enter formula (e.g., 2*pi*r, E=mc²)"
+                defaultValue="Enter formula (e.g., 2*pi*r, E=mc²)"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               
@@ -426,7 +426,7 @@ export default function AdvancedToolsHub() {
             
             <div className="space-y-4">
               <textarea
-                placeholder="Paste your document text here for analysis"
+                defaultValue="Paste your document text here for analysis"
                 className="w-full p-3 border rounded-lg h-24 resize-none focus:outline-none focus:ring-2 focus:ring-green-500"
                 onChange={(e) => {
                   const analysis = webFunctions.documentAnalysis(e.target.value)
@@ -465,7 +465,7 @@ export default function AdvancedToolsHub() {
               
               <input
                 type="text"
-                placeholder="Enter prompt for response generation"
+                defaultValue="Enter prompt for response generation"
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               

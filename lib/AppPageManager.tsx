@@ -105,7 +105,7 @@ export class AppPageManager {
       id: 'home',
       route: '/',
       title: 'EuroWeb Web8 Platform',
-      component: () => <div>Home Page</div>, // Placeholder
+      component: () => <div>Home Page</div>, // defaultValue
       metadata: {
         title: 'EuroWeb Web8 Platform - AGI-Powered Browser',
         description: 'Platforma më e avancuar për Web8 me AGI të integruar',
@@ -122,7 +122,7 @@ export class AppPageManager {
       id: 'agi-tunnel',
       route: '/agi-tunnel',
       title: 'AGI Tunnel Visualization',
-      component: () => <div>AGI Tunnel</div>, // Placeholder
+      component: () => <div>AGI Tunnel</div>, // defaultValue
       metadata: {
         title: 'AGI Tunnel - Neural Network Visualization',
         description: 'Vizualizimi i rrjetit neural AGI në kohë reale',
@@ -139,7 +139,7 @@ export class AppPageManager {
       id: 'openmind',
       route: '/openmind',
       title: 'OpenMind AI Gateway',
-      component: () => <div>OpenMind AI</div>, // Placeholder
+      component: () => <div>OpenMind AI</div>, // defaultValue
       metadata: {
         title: 'OpenMind - Universal AI Gateway',
         description: 'Qasja universale për të gjitha shërbimet AI',

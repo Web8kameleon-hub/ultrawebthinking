@@ -13,7 +13,7 @@ import { NeuralPlanner } from './NeuralPlanner';
  * FluidFlow System - Creates seamless transitions between all components
  */
 export class FluidArchitecture {
-  private readonly neuralPlanner: any; // Simple mock for natural flow
+  private readonly neuralPlanner: any; // Real data source
   private readonly flowStreams: Map<string, FlowStream> = new Map();
   private globalFlowState: FlowState = {
     turbulence: 0,
@@ -363,7 +363,7 @@ export class FluidArchitecture {
 
   private isObstacleResolved(obstacle: string, stream: FlowStream): boolean {
     // Implement obstacle resolution logic
-    return false; // Placeholder
+    return false; // defaultValue
   }
 
   private applyFilters(stream: FlowStream): number {
@@ -406,7 +406,7 @@ export class FluidArchitecture {
   }
 
   private checkApiHealth(): number {
-    // Placeholder for API health check
+    // defaultValue for API health check
     return 95;
   }
 

@@ -16,7 +16,7 @@ import { motion } from 'framer-motion'
 import { AGICore } from './AGICore'
 import { useBrowserData, useRealTimeMetrics, ClientOnly } from '../hooks/useClientOnly'
 
-// Placeholder components for missing imports
+// defaultValue components for missing imports
 const RealTimeDataTest = () => (
   <div className="p-4 bg-gradient-to-r from-green-900/20 to-emerald-900/20 border border-green-500/30 rounded-lg">
     <h3 className="text-lg font-bold text-green-300 mb-2">📊 Real-Time Data</h3>
@@ -686,7 +686,7 @@ export const Web8TabSystem: React.FC = () => {
                   <div style={{ marginBottom: '20px' } as any}>
                     <input
                       type="text"
-                      placeholder="Location (e.g., 'New York, USA')"
+                      defaultValue="Location (e.g., 'New York, USA')"
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -799,7 +799,7 @@ export const Web8TabSystem: React.FC = () => {
                     </select>
                     <input
                       type="number"
-                      placeholder="Monthly Energy Usage (kWh)"
+                      defaultValue="Monthly Energy Usage (kWh)"
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -886,7 +886,7 @@ export const Web8TabSystem: React.FC = () => {
                   <div style={{ marginBottom: '20px' } as any}>
                     <input
                       type="text"
-                      placeholder="Organization or Project Name"
+                      defaultValue="Organization or Project Name"
                       style={{
                         width: '100%',
                         padding: '12px',
@@ -1678,7 +1678,7 @@ const analyzeEnvironmentalData = (data: ClimateData): EcoAnalysis => {
                   value={queryInput}
                   onChange={(e) => setQueryInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && sendQuery()}
-                  placeholder="Enter AGI query..."
+                  defaultValue="Enter AGI query..."
                   style={{
                     flex: 1,
                     padding: '12px',

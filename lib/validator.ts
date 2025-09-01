@@ -1,5 +1,5 @@
 // Real validator for Web8 memory and responses
-// No mocks - validates against real memory and real data
+// Real data source
 import { agiCore, AGIMemoryStore } from './AGICore';
 import { realSense, RealInputPayload } from './sense';
 

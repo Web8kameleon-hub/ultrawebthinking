@@ -540,7 +540,7 @@ export default function QuantumIntelligenceInterface() {
             type="text"
             value={inputThought}
             onChange={(e) => setInputThought(e.target.value)}
-            placeholder="Enter a thought to process..."
+            defaultValue="Enter a thought to process..."
             className="flex-1 p-3 bg-white/10 border border-white/20 rounded-lg backdrop-blur-sm"
             onKeyPress={(e) => e.key === 'Enter' && handleProcessThought()}
           />
@@ -557,14 +557,14 @@ export default function QuantumIntelligenceInterface() {
             type="text"
             value={memoryKey}
             onChange={(e) => setMemoryKey(e.target.value)}
-            placeholder="Memory key..."
+            defaultValue="Memory key..."
             className="flex-1 p-3 bg-white/10 border border-white/20 rounded-lg backdrop-blur-sm"
           />
           <input
             type="text"
             value={memoryValue}
             onChange={(e) => setMemoryValue(e.target.value)}
-            placeholder="Memory value..."
+            defaultValue="Memory value..."
             className="flex-1 p-3 bg-white/10 border border-white/20 rounded-lg backdrop-blur-sm"
           />
           <button

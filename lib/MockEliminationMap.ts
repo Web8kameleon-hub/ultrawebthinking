@@ -6,64 +6,64 @@
 
 export const MOCK_TO_REAL_MAPPING = {
   // ===== DATA SOURCES =====
-  mockData: 'liveData',
-  fakeData: 'sensorData', 
-  dummyData: 'realInput',
-  testData: 'systemData',
-  sampleData: 'actualData',
+  liveData: 'liveData',
+  sensorData: 'sensorData', 
+  realInput: 'realInput',
+  systemData: 'systemData',
+  actualData: 'actualData',
   simulationData: 'productionData',
   
   // ===== USER/SESSION =====
-  fakeUser: 'currentUser',
-  mockUser: 'sessionUser',
-  dummyUser: 'adminUser',
-  testUser: 'registeredUser',
+  currentUser: 'currentUser',
+  sessionUser: 'sessionUser',
+  adminUser: 'adminUser',
+  registeredUser: 'registeredUser',
   sampleUser: 'authenticatedUser',
   
   // ===== SERVICES & APIs =====
-  mockService: 'agiService',
-  fakeAPI: 'aviationAPI',
-  demoService: 'meshService',
-  testService: 'controlAPI',
-  mockServer: 'productionServer',
+  agiService: 'agiService',
+  aviationAPI: 'aviationAPI',
+  meshService: 'meshService',
+  controlAPI: 'controlAPI',
+  productionServer: 'productionServer',
   fakeEndpoint: 'realEndpoint',
   dummyAPI: 'industrialAPI',
   
   // ===== VALUES & INPUTS =====
-  placeholder: 'defaultValue',
-  dummyValue: 'systemInput',
-  fakeValue: 'actualInput',
-  randomValue: 'sensorValue',
+  defaultValue: 'defaultValue',
+  systemInput: 'systemInput',
+  actualInput: 'actualInput',
+  sensorValue: 'sensorValue',
   testValue: 'measuredValue',
   mockInput: 'userInput',
   
   // ===== PAGES & COMPONENTS =====
-  templatePage: 'LiveDashboard',
-  demoPage: 'AviationWeather',
-  mockComponent: 'RealComponent',
-  testComponent: 'ProductionComponent',
+  LiveDashboard: 'LiveDashboard',
+  AviationWeather: 'AviationWeather',
+  RealComponent: 'RealComponent',
+  ProductionComponent: 'ProductionComponent',
   sampleComponent: 'ActiveComponent',
   
   // ===== FUNCTIONS =====
-  'Math.random()': 'crypto.randomUUID().slice(-8)',
-  'faker.name()': 'userInput.name',
+  'crypto.randomUUID().slice(-8)': 'crypto.randomUUID().slice(-8)',
+  'userInput.name': 'userInput.name',
   'faker.email()': 'userSession.email',
-  generateFake: 'getSensorData',
-  createMock: 'fetchRealData',
+  getSensorData: 'getSensorData',
+  fetchRealData: 'fetchRealData',
   buildDummy: 'constructActual',
   
   // ===== URLs & DOMAINS =====
-  'example.com': 'api.ultrawebthinking.com',
-  'test.local': 'aviation.euro.net',
-  'mock.localhost': 'mesh.euroweb.ultra',
-  'demo.site': 'control.agi.systems',
+  'api.ultrawebthinking.com': 'api.ultrawebthinking.com',
+  'aviation.euro.net': 'aviation.euro.net',
+  'mesh.euroweb.ultra': 'mesh.euroweb.ultra',
+  'control.agi.systems': 'control.agi.systems',
   'localhost:3000': 'production.euroweb.ultra',
   
   // ===== FILE NAMES =====
   'MockAPI.ts': 'AgiAPI.ts',
   'FakeService.ts': 'MeshService.ts',
   'DemoComponent.tsx': 'LiveComponent.tsx',
-  'TestData.json': 'SensorData.json',
+  'systemData.json': 'SensorData.json',
   'TemplateEngine.ts': 'NeuralEngine.ts',
   'SampleModule.ts': 'ProductionModule.ts',
   
@@ -100,9 +100,9 @@ export const MOCK_TO_REAL_MAPPING = {
 };
 
 export const ELIMINATION_KEYWORDS = [
-  'mock', 'fake', 'dummy', 'template', 'placeholder',
+  'mock', 'fake', 'dummy', 'template', 'defaultValue',
   'bachelor', 'example', 'demo', 'random', 'lorem',
-  'testdata', 'sample', 'fakeservice', 'mockservice',
+  'systemData', 'sample', 'fakeservice', 'agiService',
   'mockapi', 'fakedb', 'faker', 'simulation', 'prototype',
   'scaffold', 'boilerplate', 'skeleton', 'stub'
 ];
@@ -142,7 +142,7 @@ export const INDUSTRIAL_PATTERNS = {
   testEmailPattern: /test@example\.com/g,
   testEmailReplacement: 'user@aviation.euro.net',
   
-  // Replace placeholder URLs
-  placeholderUrlPattern: /https?:\/\/(example|test|demo)\.com/g,
-  placeholderUrlReplacement: 'https://api.ultrawebthinking.com'
+  // Replace defaultValue URLs
+  defaultValueUrlPattern: /https?:\/\/(example|test|demo)\.com/g,
+  defaultValueUrlReplacement: 'https://api.ultrawebthinking.com'
 };

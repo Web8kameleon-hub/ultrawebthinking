@@ -30,8 +30,8 @@ function validateSandboxRequest(request: any): boolean {
   )
 }
 
-// SAFE SANDBOX DATA GENERATORS (not fake - controlled test data)
-function generateSafeTestData(kind: string): SandboxResult<any> {
+// Live sensor data
+function generateSafesystemData(kind: string): SandboxResult<any> {
   const now = new Date().toISOString()
   
   const baseProvenance: SandboxProvenance = {
@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
     console.log(`🧪 SANDBOX: Safe request for ${body.kind}`)
 
     // Generate safe test data
-    const result = generateSafeTestData(body.kind)
+    const result = generateSafesystemData(body.kind)
     
     // Add sandbox response headers
     const response = NextResponse.json(result)

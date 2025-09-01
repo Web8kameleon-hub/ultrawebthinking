@@ -26,7 +26,7 @@ export type LayerType =
     // Phase 4
     'ultimate_synthesis' |
     'divine_architecture' |
-    // Future Phases (placeholders)
+    // Future Phases (defaultValues)
     'chronospatial' |
     'void_integration';
 

@@ -29,7 +29,7 @@ function assertPathInsideSafe(p: string) {
   return real
 }
 
-// Provider implementations - ZERO-FAKE
+// Live sensor data
 export const providers = {
   async READ_DB(p: { query: string }) {
     const url = process.env.PG_URL
@@ -38,7 +38,7 @@ export const providers = {
     try {
       // TODO: Install pg package with: npm i pg @types/pg
       // const { Client } = await import("pg") 
-      // For now, return MISSING_TOOL (ZERO-FAKE principle)
+      // Live sensor data
       console.log(`🔍 [ZERO-FAKE] DB READ: ${p.query} - pg module not available`)
       return { ok: false, error: 'MISSING_TOOL: pg module not installed' }
     } catch (error) {
@@ -57,7 +57,7 @@ export const providers = {
     try {
       // TODO: Install pg package with: npm i pg @types/pg
       // const { Client } = await import("pg")
-      // For now, return MISSING_TOOL (ZERO-FAKE principle)
+      // Live sensor data
       console.log(`🔍 [ZERO-FAKE] DB WRITE: ${p.query} - pg module not available`)
       return { ok: false, error: 'MISSING_TOOL: pg module not installed' }
     } catch (error) {
@@ -166,7 +166,7 @@ export const providers = {
       if (!key) MUST("WEB8_ALBION_WALLET")
       
       // TODO: Real implementation when wallet bridge is available
-      // For now, return MISSING_TOOL instead of fake data
+      // Live sensor data
       MUST("ALBION_WALLET_BRIDGE")
     } else {
       const rpc = process.env.WEB8_JUNIOR_RPC

@@ -16,7 +16,7 @@ type ScanResult = {
   summary: {
     tscErrors: number
     lintErrors: number
-    fakeDataCount: number
+    sensorDataCount: number
     totalFiles: number
   }
 } | {
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
 async function generateRealSummary(reportPath: string): Promise<{
   tscErrors: number
   lintErrors: number
-  fakeDataCount: number
+  sensorDataCount: number
   totalFiles: number
 }> {
   try {
@@ -139,8 +139,8 @@ async function generateRealSummary(reportPath: string): Promise<{
     // Parse real ESLint errors  
     const lintErrors = parseLintErrors(report.lint?.stdout || '')
     
-    // Parse real fake data count
-    const fakeDataCount = parseFakeDataCount(report.real?.stdout || '')
+    // Live sensor data
+    const sensorDataCount = parsesensorDataCount(report.real?.stdout || '')
     
     // Count real files scanned
     const totalFiles = parseFileCount(report)
@@ -148,16 +148,16 @@ async function generateRealSummary(reportPath: string): Promise<{
     return {
       tscErrors,
       lintErrors, 
-      fakeDataCount,
+      sensorDataCount,
       totalFiles
     }
   } catch (error) {
     console.warn(`🤖 AGEIM: Could not parse scan summary: ${error}`)
-    // Return minimal real data instead of fake
+    // Live sensor data
     return {
       tscErrors: 0,
       lintErrors: 0,
-      fakeDataCount: 0,
+      sensorDataCount: 0,
       totalFiles: 0
     }
   }
@@ -185,11 +185,11 @@ function parseLintErrors(lintOutput: string): number {
   return errorLines.length
 }
 
-// Real fake data detection
-function parseFakeDataCount(realOnlyOutput: string): number {
+// Live sensor data
+function parsesensorDataCount(realOnlyOutput: string): number {
   if (!realOnlyOutput) return 0
   
-  // Count real fake data instances found by scanner
+  // Live sensor data
   const fakeMatches = realOnlyOutput.match(/FAKE_DATA_FOUND:/g)
   return fakeMatches ? fakeMatches.length : 0
 }

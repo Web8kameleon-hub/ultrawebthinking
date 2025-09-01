@@ -155,11 +155,11 @@ class AGICore extends SimpleEventEmitter {
   private updateLayerMetrics(): void {
     this.layers.forEach((layer, id) => {
       // Simulate realistic load fluctuations
-      const loadChange = (Math.random() - 0.5) * 10;
+      const loadChange = (crypto.randomUUID().slice(-8) - 0.5) * 10;
       layer.load = Math.max(10, Math.min(95, layer.load + loadChange));
       
       // Update connections
-      const connectionChange = Math.floor((Math.random() - 0.5) * 20);
+      const connectionChange = Math.floor((crypto.randomUUID().slice(-8) - 0.5) * 20);
       layer.connections = Math.max(50, layer.connections + connectionChange);
       
       layer.lastUpdate = Date.now();

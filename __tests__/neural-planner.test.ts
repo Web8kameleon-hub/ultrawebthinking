@@ -7,7 +7,9 @@
  * @contact dealsjona@gmail.com
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+// Neural Planner Test - Real Data Only
+// No imports needed for Jest globals: describe, it, expect, beforeEach, afterEach are available
+// Note: 'vi' is replaced with 'jest' for mocking
 import NeuralPlanner from '../lib/NeuralPlanner';
 
 describe('Neural Planner System', () => {
@@ -52,7 +54,7 @@ describe('Neural Planner System', () => {
 
   describe('n1 Node Monitoring', () => {
     it('should detect n1 overload and throttle input', async () => {
-      const alertsSpy = vi.fn();
+      const alertsSpy = jest.fn();
       planner.on('nodeOverload', alertsSpy);
 
       // Simulate high pulse rate for n1
@@ -91,7 +93,7 @@ describe('Neural Planner System', () => {
 
   describe('n7 Ethical Monitoring', () => {
     it('should detect n7 ethical pulse anomaly and activate SafeThink', async () => {
-      const safeThinkSpy = vi.fn();
+      const safeThinkSpy = jest.fn();
       planner.on('safeThinkActivated', safeThinkSpy);
 
       // Simulate excessive flickering for n7 by triggering irregular pulses
@@ -105,7 +107,7 @@ describe('Neural Planner System', () => {
     });
 
     it('should deactivate SafeThink after duration', async () => {
-      const deactivateSpy = vi.fn();
+      const deactivateSpy = jest.fn();
       planner.on('safeThinkDeactivated', deactivateSpy);
 
       // If SafeThink becomes active during test, wait for deactivation
@@ -168,7 +170,7 @@ describe('Neural Planner System', () => {
 
   describe('Emergency Procedures', () => {
     it('should trigger emergency shutdown for extreme pulse rates', async () => {
-      const emergencySpy = vi.fn();
+      const emergencySpy = jest.fn();
       planner.on('emergencyShutdown', emergencySpy);
 
       // Force extreme activity to trigger emergency
@@ -213,7 +215,7 @@ describe('Neural Planner System', () => {
 
   describe('Event System', () => {
     it('should emit warning events', async () => {
-      const warningSpy = vi.fn();
+      const warningSpy = jest.fn();
       planner.on('warning', warningSpy);
 
       // Trigger condition that might cause warning
@@ -226,7 +228,7 @@ describe('Neural Planner System', () => {
     });
 
     it('should emit alert events', async () => {
-      const alertSpy = vi.fn();
+      const alertSpy = jest.fn();
       planner.on('alert', alertSpy);
 
       // Trigger condition that might cause alert
@@ -323,7 +325,7 @@ describe('Neural Planner System', () => {
     });
 
     it('should clean up event listeners', () => {
-      const testListener = vi.fn();
+      const testListener = jest.fn();
       planner.on('test', testListener);
       
       planner.destroy();

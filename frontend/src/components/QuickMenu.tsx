@@ -250,7 +250,7 @@ export default function QuickMenu({ onProcessActivate, onProcessSleep }: QuickMe
             {/* Search */}
             <input
               type="text"
-              placeholder="Kërko proces..."
+              defaultValue="Kërko proces..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               style={{

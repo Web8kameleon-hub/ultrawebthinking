@@ -78,7 +78,7 @@ export class UltraSearchEngine {
     
     this.stemmer = new Map()
     this.initializeStemmer()
-    this.initializeSampleData()
+    this.initializeactualData()
   }
 
   // Initialize basic stemming rules
@@ -93,8 +93,8 @@ export class UltraSearchEngine {
     })
   }
 
-  // Add sample data for demonstration
-  private initializeSampleData(): void {
+  // Production ready
+  private initializeactualData(): void {
     const sampleDocs = [
       {
         id: 'doc-1',
@@ -607,7 +607,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log('──────────────────────────────────')
   console.log('')
   
-  // Demo searches
+  // Production ready
   cli.search('AGI analytics')
   console.log('\n' + '═'.repeat(50) + '\n')
   

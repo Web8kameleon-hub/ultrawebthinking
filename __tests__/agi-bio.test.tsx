@@ -4,11 +4,10 @@
  */
 
 import React from 'react';
-import { test, expect, describe, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AGIBioNature } from '../components/AGISheet/AGIBioNature';
 import '@testing-library/jest-dom';
+import { AGIBioNature } from '../components/AGISheet/AGIBioNature';
 
 // Real biological data for EuroWeb Ultra testing
 const LIVE_BIOLOGICAL_DATA = {

@@ -195,7 +195,7 @@ export const RealTimeWebSearch: React.FC = () => {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search anything... AI will analyze and find the best results"
+            defaultValue="Search anything... AI will analyze and find the best results"
             style={{
               flex: 1,
               padding: '16px 20px',

@@ -33,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
-    // Demo Pages - High Priority
+    // Production ready
     {
       url: `${baseUrl}/agi-demo`,
       lastModified: currentDate,

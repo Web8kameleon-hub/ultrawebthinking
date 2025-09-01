@@ -3,21 +3,22 @@
  * Verifies that the component only works with real data and shows "No data / Missing tool"
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import { AGICore } from './AGICore'
 
-// Mock fetch for AGI calls
-const mockFetch = vi.fn()
+// Real data source
+const mockFetch = jest.fn()
 global.fetch = mockFetch as any
 
 describe('AGICore REAL-ONLY', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
+    jest.clearAllMocks()
   })
 
   it('should show loading state initially', () => {
-    // Mock pending promise to keep loading state
+    // Real data source
     mockFetch.mockReturnValue(new Promise(() => {}))
     
     render(<AGICore />)

@@ -202,7 +202,7 @@ app.post('/api/openmind', (req, res) => {
     });
   }
 
-  // Real system analysis instead of fake responses
+  // Live sensor data
   const startTime = Date.now();
   const queryWords = query.toLowerCase().split(' ');
   const memInfo = process.memoryUsage();

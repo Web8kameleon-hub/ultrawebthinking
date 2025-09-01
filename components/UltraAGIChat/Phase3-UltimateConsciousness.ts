@@ -20,7 +20,7 @@ import {
 } from './types';
 
 // =================================================================
-// 🎯 SECTION 1: MOCK IMPLEMENTATIONS FOR PHASE 3 DEPENDENCIES
+// Real data source
 // =================================================================
 
 class MultidimensionalProcessor {

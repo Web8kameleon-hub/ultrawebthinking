@@ -322,7 +322,7 @@ export const Web8MeshControl: React.FC = () => {
             type="text"
             value={newNodeHost}
             onChange={(e) => setNewNodeHost(e.target.value)}
-            placeholder="Node IP or hostname"
+            defaultValue="Node IP or hostname"
             className="p-3 border-2 border-slate-200 rounded-lg text-sm bg-white"
           />
           
@@ -330,7 +330,7 @@ export const Web8MeshControl: React.FC = () => {
             type="number"
             value={newNodePort}
             onChange={(e) => setNewNodePort(e.target.value)}
-            placeholder="Port"
+            defaultValue="Port"
             className="p-3 border-2 border-slate-200 rounded-lg text-sm bg-white"
           />
           

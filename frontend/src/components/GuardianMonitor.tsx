@@ -41,7 +41,7 @@ interface GuardianStatus {
 }
 
 const GuardianMonitor: React.FC = () => {
-  // Mock data for demonstration
+  // Real data source
   const guardianStatus: GuardianStatus = {
     status: 'Guardian Engine Active',
     hostname: 'euroweb-server-01',

@@ -3,11 +3,12 @@
  * Zero mocks, zero hooks, pure functions only
  */
 
-import { test, expect, describe } from 'vitest';
+// AGI Bio Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect are available
 
 describe('AGIBioNature Pure Logic Tests', () => {
   test('data formatting functions work correctly', () => {
-    // Pure TypeScript functions - no React, no mocks
+    // Real data source
     const formatNumber = (value: number, decimals = 2): string => value.toFixed(decimals);
     const formatPopulation = (value: number): string => {
       if (value >= 1e9) return `${(value / 1e9).toFixed(1)}B`;

@@ -4,7 +4,7 @@ export const NeuralDashboard = () => {
   return (
     <div>
       <h2>Neural Dashboard</h2>
-      <p>This is a placeholder component for Neural Dashboard</p>
+      <p>This is a defaultValue component for Neural Dashboard</p>
     </div>
   );
 };

@@ -39,7 +39,7 @@ interface SpreadsheetTemplate {
   description: string
   category: 'personal' | 'business' | 'financial' | 'legal' | 'government' | 'military'
   columns: string[]
-  sampleData: any[]
+  actualData: any[]
 }
 
 // Sample spreadsheet templates
@@ -51,7 +51,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
     description: 'Track personal income, expenses, and savings',
     category: 'personal',
     columns: ['Date', 'Description', 'Category', 'Income', 'Expense', 'Balance'],
-    sampleData: [
+    actualData: [
       ['2024-01-01', 'Salary', 'Income', 5000, 0, 5000],
       ['2024-01-02', 'Groceries', 'Food', 0, 250, 4750],
       ['2024-01-03', 'Rent', 'Housing', 0, 1200, 3550]
@@ -64,7 +64,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
     description: 'Track KPIs, revenue, and business metrics',
     category: 'business',
     columns: ['Month', 'Revenue', 'Costs', 'Profit', 'ROI %', 'Growth %'],
-    sampleData: [
+    actualData: [
       ['Jan 2024', 125000, 85000, 40000, 32.0, 15.2],
       ['Feb 2024', 138000, 92000, 46000, 33.3, 18.5],
       ['Mar 2024', 155000, 98000, 57000, 36.8, 24.0]
@@ -77,7 +77,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
     description: 'Track legal cases, deadlines, and outcomes',
     category: 'legal',
     columns: ['Case ID', 'Client', 'Type', 'Status', 'Deadline', 'Priority'],
-    sampleData: [
+    actualData: [
       ['C2024-001', 'ABC Corp', 'Contract', 'Active', '2024-03-15', 'High'],
       ['C2024-002', 'John Smith', 'Personal Injury', 'Review', '2024-02-28', 'Medium'],
       ['C2024-003', 'XYZ Ltd', 'Intellectual Property', 'Pending', '2024-04-10', 'High']
@@ -90,7 +90,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
     description: 'Track investments, stocks, and financial assets',
     category: 'financial',
     columns: ['Asset', 'Type', 'Quantity', 'Purchase Price', 'Current Price', 'P&L'],
-    sampleData: [
+    actualData: [
       ['AAPL', 'Stock', 100, 150.00, 185.25, 3525],
       ['MSFT', 'Stock', 50, 280.50, 315.75, 1762.5],
       ['BTC', 'Crypto', 0.5, 45000, 52000, 3500]
@@ -103,7 +103,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
     description: 'Track government spending and budget allocation',
     category: 'government',
     columns: ['Department', 'Allocated Budget', 'Spent', 'Remaining', 'Utilization %'],
-    sampleData: [
+    actualData: [
       ['Healthcare', 500000000, 425000000, 75000000, 85.0],
       ['Education', 350000000, 290000000, 60000000, 82.9],
       ['Defense', 800000000, 720000000, 80000000, 90.0]
@@ -116,7 +116,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
     description: 'Track military operations and resource allocation',
     category: 'military',
     columns: ['Operation', 'Status', 'Personnel', 'Equipment', 'Budget', 'Timeline'],
-    sampleData: [
+    actualData: [
       ['Op Alpha', 'Active', 250, 'Heavy', 2500000, '30 days'],
       ['Op Beta', 'Planning', 150, 'Medium', 1800000, '45 days'],
       ['Op Gamma', 'Completed', 400, 'Full', 5200000, 'Completed']
@@ -427,7 +427,7 @@ const AGISpreadsheetEngine: React.FC = () => {
           </div>
           <input
             type="text"
-            placeholder="Enter formula or value..."
+            defaultValue="Enter formula or value..."
             style={{
               flex: 1,
               background: 'rgba(30, 34, 52, 0.8)',

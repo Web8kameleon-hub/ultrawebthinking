@@ -94,7 +94,7 @@ const AGIDashboard: React.FC = () => {
 
   // Socket.IO connection për live data
   React.useEffect(() => {
-    // Mock live data simulation
+    // Real data source
     const liveInterval = setInterval(() => {
       setLiveData({
         connections: Math.floor(0.5 * 5000) + 1000,

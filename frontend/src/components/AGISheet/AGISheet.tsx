@@ -181,14 +181,14 @@ export const AGISheet: React.FC<AGISheetProps> = ({
         }))
         setCells(initialCells)
       } else {
-        // DON'T create default fake data - wait for real data
+        // Live sensor data
         setCells([])
       }
       setIsInitialized(true)
     }
   }, [initialData, isInitialized])
 
-  // REAL-ONLY cell update - no fake processing
+  // Live sensor data
   const handleCellUpdate = async (cellId: string, newValue: string) => {
     setIsProcessing(true)
     
@@ -285,7 +285,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
             value={displayValue}
             onChange={(e) => handleCellUpdate(cell.id, e.target.value)}
             className="w-full h-full bg-transparent border-none outline-none text-center"
-            placeholder={hasError ? "ERROR" : cell.id}
+            defaultValue={hasError ? "ERROR" : cell.id}
           />
           
           {/* Real data indicator */}

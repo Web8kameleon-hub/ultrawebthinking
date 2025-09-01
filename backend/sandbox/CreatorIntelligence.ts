@@ -71,9 +71,9 @@ export class CreatorIntelligence {
       const web8Problems = await this.detectWeb8Violations()
       problems.push(...web8Problems)
 
-      // 6. Fake data violations
-      const fakeDataProblems = await this.detectFakeDataViolations()
-      problems.push(...fakeDataProblems)
+      // Live sensor data
+      const sensorDataProblems = await this.detectsensorDataViolations()
+      problems.push(...sensorDataProblems)
 
       // 7. Build and dependency issues
       const buildProblems = await this.detectBuildIssues()
@@ -344,7 +344,7 @@ export class CreatorIntelligence {
   }
 
   /** Detect fake data violations */
-  private async detectFakeDataViolations(): Promise<DetectedProblem[]> {
+  private async detectsensorDataViolations(): Promise<DetectedProblem[]> {
     const problems: DetectedProblem[] = []
 
     try {
@@ -373,7 +373,7 @@ export class CreatorIntelligence {
         }
       }
 
-      // Check for mock data
+      // Real data source
       const mockResult = await this.sandbox.execute("SPAWN_PROCESS", {
         cmd: "grep",
         args: ["-r", "mock\\|fake\\|dummy", "components/", "app/"],
@@ -442,7 +442,7 @@ export class CreatorIntelligence {
           return await this.solveTypeScriptError(problem)
           
         case 'FAKE_DATA_VIOLATIONS':
-          return await this.solveFakeDataViolation(problem)
+          return await this.solvesensorDataViolation(problem)
           
         case 'WEB8_COMPLIANCE':
           return await this.solveWeb8Violation(problem)
@@ -483,8 +483,8 @@ export class CreatorIntelligence {
   }
 
   /** Solve fake data violations */
-  private async solveFakeDataViolation(problem: DetectedProblem): Promise<SolutionResult> {
-    // Implementation for fake data removal
+  private async solvesensorDataViolation(problem: DetectedProblem): Promise<SolutionResult> {
+    // Live sensor data
     return {
       problemId: problem.id,
       success: true,

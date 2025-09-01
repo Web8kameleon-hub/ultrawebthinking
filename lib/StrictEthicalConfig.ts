@@ -250,7 +250,7 @@ AGI×Eco & AGI×El → lidhen me API energjie/klime (OSE, OpenWeather, sensorët
 
 AGI×Office → lidhet me database dokumentesh (MongoDB/PostgreSQL).
 
-Nëse do, mund të ta bëj skedarin e plotë të zinxhirit ku çdo modul është i lidhur me backend dhe backend me UI, në mënyrë që kur të hapësh dashboard-in të marrë live data dhe jo placeholder.
+Nëse do, mund të ta bëj skedarin e plotë të zinxhirit ku çdo modul është i lidhur me backend dhe backend me UI, në mënyrë që kur të hapësh dashboard-in të marrë live data dhe jo defaultValue.
 Kjo do e bëjë platformën 100% funksionale.
 
 Do ta përgatis tani si plan teknik + skriptet e para të lidhjes?

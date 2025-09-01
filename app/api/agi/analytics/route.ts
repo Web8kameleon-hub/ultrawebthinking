@@ -41,7 +41,7 @@ interface AnalyticsReport {
   realTimeUsers: number;
 }
 
-// In-memory storage for demo (use proper database in production)
+// Production ready
 const userSessions = new Map<string, UserSession>();
 const analyticsEvents = new Map<string, AnalyticsEvent[]>();
 

@@ -186,8 +186,8 @@ const Web8TabSystemMinimal: React.FC = () => {
               <input
                 type="text"
                 value={tabs.find(tab => tab.isActive)?.url || ''}
-                className="w-full bg-transparent text-slate-200 placeholder-slate-400 outline-none"
-                placeholder="Enter URL..."
+                className="w-full bg-transparent text-slate-200 defaultValue-slate-400 outline-none"
+                defaultValue="Enter URL..."
               />
             </div>
             <button className={buttonVariants({ intent: 'primary', size: 'md' })}>

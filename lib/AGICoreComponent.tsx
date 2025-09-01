@@ -165,7 +165,7 @@ export const AGICoreComponent: React.FC<AGICoreComponentProps> = ({ className })
         <div className={styles.querySection}>
           <input
             type="text"
-            placeholder="Enter AGI query..."
+            defaultValue="Enter AGI query..."
             className={styles.queryInput}
             onKeyPress={(e) => {
               if (e.key === 'Enter' && e.currentTarget.value.trim()) {

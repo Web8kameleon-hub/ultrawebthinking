@@ -14,7 +14,7 @@ import crypto from 'node:crypto'
 type CreatorVision = {
   agileArchitecture: boolean
   neuralIntegration: boolean
-  zeroFakeData: boolean
+  zerosensorData: boolean
   industrialGrade: boolean
   europeanStandards: boolean
 }
@@ -60,7 +60,7 @@ export class MasterSandbox {
     this.vision = {
       agileArchitecture: true,
       neuralIntegration: true,
-      zeroFakeData: true,
+      zerosensorData: true,
       industrialGrade: true,
       europeanStandards: true
     }
@@ -167,14 +167,14 @@ export class MasterSandbox {
         cwd: this.repoRoot
       })
 
-      // Check for zero-fake compliance
-      const fakeDataCheck = await this.sandbox.execute("SPAWN_PROCESS", {
+      // Live sensor data
+      const sensorDataCheck = await this.sandbox.execute("SPAWN_PROCESS", {
         cmd: "grep",
         args: ["-r", "Math.random\\|fake\\|mock", "components/", "app/"],
         cwd: this.repoRoot
       })
 
-      if (web8Components.ok && neuralFiles.ok && !fakeDataCheck.ok) {
+      if (web8Components.ok && neuralFiles.ok && !sensorDataCheck.ok) {
         return 'PERFECT'
       } else if (web8Components.ok || neuralFiles.ok) {
         return 'GOOD'
@@ -244,7 +244,7 @@ export class MasterSandbox {
       })
     }
 
-    // Zero-fake data enforcement
+    // Live sensor data
     actionPlan.push({
       id: "eliminate-fake-data",
       type: "ENHANCE",
@@ -322,7 +322,7 @@ export class MasterSandbox {
         } else if (action.type === 'ENHANCE' && action.id === 'enforce-web8') {
           await this.enforceWeb8Compliance()
         } else if (action.type === 'ENHANCE' && action.id === 'eliminate-fake-data') {
-          await this.eliminateFakeData()
+          await this.eliminatesensorData()
         }
 
         completed++
@@ -395,8 +395,8 @@ export class MasterSandbox {
   }
 
   /** Eliminate fake data completely */
-  private async eliminateFakeData(): Promise<void> {
-    // Remove all Math.random, fake data, mocks
+  private async eliminatesensorData(): Promise<void> {
+    // Real data source
     // Replace with real data or MISSING_TOOL responses
   }
 

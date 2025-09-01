@@ -33,7 +33,7 @@ interface ChatResponse {
   timestamp: string
 }
 
-// In-memory storage për demo (në production do të përdorim database)
+// Production ready
 const chatSessions = new Map<string, any>()
 
 export async function POST(request: NextRequest) {

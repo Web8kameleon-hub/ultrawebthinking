@@ -3,17 +3,18 @@
  * Verifies that the component only works with real data and provenance
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import React from 'react'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import '@testing-library/jest-dom'
 import AGISheet from './AGISheet'
 
-// Mock AGI call
-const mockFetch = vi.fn()
+// Real data source
+const mockFetch = jest.fn()
 global.fetch = mockFetch as any
 
 describe('AGISheet REAL-ONLY', () => {
   beforeEach(() => {
-    vi.clearAllMocks()
+    jest.clearAllMocks()
   })
 
   it('should not render fake data without provenance', () => {
@@ -78,7 +79,7 @@ describe('AGISheet REAL-ONLY', () => {
 
     render(<AGISheet enableAGI={true} />)
     
-    const cellInput = screen.getByPlaceholderText('A1')
+    const cellInput = screen.getBydefaultValueText('A1')
     fireEvent.change(cellInput, { target: { value: 'agi:test command' } })
 
     await waitFor(() => {
@@ -106,7 +107,7 @@ describe('AGISheet REAL-ONLY', () => {
 
     render(<AGISheet enableAGI={true} />)
     
-    const cellInput = screen.getByPlaceholderText('A1')
+    const cellInput = screen.getBydefaultValueText('A1')
     fireEvent.change(cellInput, { target: { value: 'agi:test' } })
 
     await waitFor(() => {

@@ -410,7 +410,7 @@ const Web8TabSystemUltra: React.FC = () => {
                 type="text"
                 name="search"
                 value={searchQuery}
-                placeholder="🔍 Neural Search..."
+                defaultValue="🔍 Neural Search..."
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={styles['search-input']}
               />

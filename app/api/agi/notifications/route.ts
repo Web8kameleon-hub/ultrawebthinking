@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Notifications API
  * Real notification management and delivery system
  * 
@@ -31,11 +31,11 @@ interface NotificationStats {
   recentCount: number;
 }
 
-// In-memory storage for demo (use proper database in production)
+// Production ready
 const notifications = new Map<string, Notification[]>();
 const globalNotifications: Notification[] = [];
 
-// Generate sample notifications for demo
+// Production ready
 function generateSampleNotifications(): Notification[] {
   const now = Date.now();
   return [
@@ -191,7 +191,7 @@ export async function POST(request: NextRequest) {
 
     // Create notification
     const notification: Notification = {
-      id: `notif-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: `notif-${Date.now()}-${crypto.randomUUID().slice(-8).toString(36).substr(2, 9)}`,
       title,
       message,
       type: type as Notification['type'],

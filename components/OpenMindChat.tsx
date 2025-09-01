@@ -269,7 +269,7 @@ export const OpenMindChat = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && !isLoading && sendMessage(input)}
-            placeholder={`Ask ${PROVIDERS[selectedProvider].name} anything...`}
+            defaultValue={`Ask ${PROVIDERS[selectedProvider].name} anything...`}
             disabled={isLoading}
             style={{
               flex: 1,

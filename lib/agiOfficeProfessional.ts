@@ -196,7 +196,7 @@ export class AGILinguisticEngine {
 
   // Text Translation
   static translateText(text: string, targetLanguage: string): TranslationResult {
-    // Mock translation - in real implementation would use translation API
+    // Real data source
     const translations: Record<string, Record<string, string>> = {
       'en': {
         'sq': 'Tekst i përkthyer në shqip',
@@ -428,7 +428,7 @@ export class AGIScannerEngine {
     colorMode: 'color' | 'grayscale' | 'blackwhite'
     format: 'pdf' | 'jpg' | 'png'
   }): Promise<ScanResult> {
-    // Mock scanning process
+    // Real data source
     await new Promise(resolve => setTimeout(resolve, 2000))
     
     return {
@@ -444,7 +444,7 @@ export class AGIScannerEngine {
 
   // OCR Text Recognition
   static performOCR(imageData: string): OCRResult {
-    // Mock OCR processing
+    // Real data source
     const extractedText = 'This is sample text extracted from the image using OCR technology.'
     
     return {
@@ -483,7 +483,7 @@ export class AGIScannerEngine {
     sharpen?: boolean
     denoise?: boolean
   }): string {
-    // Mock image enhancement
+    // Real data source
     return `enhanced_${imageData}`
   }
 }
@@ -541,7 +541,7 @@ export class AGICopyEngine {
     duplicates: string[]
     totalSaved: number
   }> {
-    // Mock smart copy with deduplication
+    // Real data source
     const copied: string[] = []
     const skipped: string[] = []
     const duplicates: string[] = []

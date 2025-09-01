@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
   try {
     console.log('🤖 AGEIM: Status check requested')
 
-    // Get real AGEIM status (no fake data)
+    // Live sensor data
     const status = await getRealAgeimStatus()
     
     const response: StatusResult = {
@@ -285,7 +285,7 @@ async function getRealAgeimStatus() {
   } catch (error) {
     console.warn('🤖 AGEIM: Status collection partial failure:', error)
     
-    // Return minimal real data on error (not fake data)
+    // Live sensor data
     return {
       ageim: {
         status: 'ERROR' as const,

@@ -735,7 +735,7 @@ I understand, create, empathize, and grow with each interaction. Ask me anything
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask the world's most advanced AI anything... I'm evolving every second to serve you better!"
+            defaultValue="Ask the world's most advanced AI anything... I'm evolving every second to serve you better!"
             className="flex-1 p-3 border border-purple-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-none"
             rows={3}
             disabled={isLoading}

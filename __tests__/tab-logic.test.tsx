@@ -4,7 +4,8 @@
  */
 
 import React from 'react';
-import { test, expect, describe } from 'vitest';
+// Tab Logic Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect are available
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -24,7 +25,7 @@ describe('Tab Logic Industrial Tests', () => {
       timestamp: new Date().toISOString()
     } as const);
     
-    const tab = createTab('tab1', 'Test', 'https://example.com');
+    const tab = createTab('tab1', 'Test', 'https://api.ultrawebthinking.com');
     
     expect(tab.id).toBe('tab1');
     expect(tab.title).toBe('Test');

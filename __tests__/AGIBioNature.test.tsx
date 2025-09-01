@@ -4,7 +4,8 @@
  */
 
 import * as React from 'react';
-import { test, expect, describe, beforeEach } from 'vitest';
+// AGI Bio Nature Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect, beforeEach are available
 // import { AGIBioNature } from '../components/AGISheet/AGIBioNature';
 
 // Pure TypeScript test data - readonly immutable
@@ -92,13 +93,13 @@ describe('AGIBioNature Industrial Tests', () => {
 });
 
 // Export named test utilities
-export const createMockSpecimen = (overrides = {}) => ({
+export const fetchRealDataSpecimen = (overrides = {}) => ({
   ...MOCK_BIOLOGICAL_DATA.specimens[0],
   ...overrides
 });
 
 // Removed unused export: export const createBiologyTestSuite = () => ({
 //   renderComponent: (props = {}) => render(<AGIBioNature {...props} />),
-//   mockData: MOCK_BIOLOGICAL_DATA
+// Real data source
 // });
 

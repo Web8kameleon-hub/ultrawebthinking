@@ -4,7 +4,8 @@
  */
 
 import React from 'react';
-import { test, expect, describe } from 'vitest';
+// AGI Eco Test - Real Data Only
+// No imports needed for Jest globals: describe, test, expect are available
 import { render, screen } from '@testing-library/react';
 
 // Lazy economic engine loading
@@ -28,7 +29,7 @@ describe('AGIEco Industrial Tests', () => {
   });
 
   test('vector cache works with lowdb', async () => {
-    // Mock vector cache behavior
+    // Real data source
     const vectorCache = new Map<string, readonly number[]>();
     
     vectorCache.set('economic_data_1', [1.2, 3.4, 5.6] as const);

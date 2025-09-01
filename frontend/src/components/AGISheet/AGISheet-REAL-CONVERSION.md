@@ -21,7 +21,7 @@
 
 ### 1. Type System (REAL-ONLY)
 ```typescript
-// OLD (FAKE)
+// Live sensor data
 interface CellData {
   value: string | number
   computed?: any
@@ -47,7 +47,7 @@ type RealData<T> = {
 
 ### 2. AGI Integration (REAL-ONLY)
 ```typescript
-// OLD (FAKE)
+// Live sensor data
 neural = { result: `AGI: Processing "${value}"...` }
 
 // NEW (REAL-ONLY)
@@ -72,7 +72,7 @@ if (result.ok) {
 
 ### 4. No Fake Default Data
 ```typescript
-// OLD (FAKE) - hardcoded grid
+// Live sensor data
 const defaultCells = []
 for (let row = 1; row <= 10; row++) {
   defaultCells.push({ id: `A${row}`, value: '', type: 'text' })

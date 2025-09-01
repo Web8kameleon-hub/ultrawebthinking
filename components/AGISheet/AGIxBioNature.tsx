@@ -147,7 +147,7 @@ export const AGIxBioNature = ({
   const [medicalEngine, setMedicalEngine] = useState<any>(null);
   const [ecologyEngine, setEcologyEngine] = useState<any>(null);
 
-  // Initialize demo data
+  // Production ready
   useEffect(() => {
     initializeBiologicalData();
     if (dataSource === 'realtime') {
@@ -180,7 +180,7 @@ export const AGIxBioNature = ({
   }, [enginesLoaded]);
 
   const initializeBiologicalData = useCallback(() => {
-    // Generate demo biological data
+    // Production ready
     const demoData: BiologicalData[] = [
       {
         id: 'specimen_001',
@@ -486,7 +486,7 @@ export const AGIxBioNature = ({
         
         <input
           type="text"
-          placeholder="Research query..."
+          defaultValue="Research query..."
           value={researchQuery}
           onChange={(e) => setResearchQuery(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && performSpecimenResearch(researchQuery)}

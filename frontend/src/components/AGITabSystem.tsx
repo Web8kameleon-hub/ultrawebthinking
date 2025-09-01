@@ -303,7 +303,7 @@ export class AGITabSystem extends React.Component {
               </div>
               <input
                 type="text"
-                placeholder="🔍 Enter your search query..."
+                defaultValue="🔍 Enter your search query..."
                 style={{
                   width: '100%',
                   padding: '12px 16px',
@@ -358,7 +358,7 @@ export class AGITabSystem extends React.Component {
                 
                 <input
                   type="text"
-                  placeholder="🔮 Enter your query for deep AGI analysis..."
+                  defaultValue="🔮 Enter your query for deep AGI analysis..."
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -530,7 +530,7 @@ export class AGITabSystem extends React.Component {
               } as any}>
                 <input
                   type="text"
-                  placeholder="🎯 Ask OpenMind AI anything..."
+                  defaultValue="🎯 Ask OpenMind AI anything..."
                   style={{
                     width: '100%',
                     padding: '12px 16px',
