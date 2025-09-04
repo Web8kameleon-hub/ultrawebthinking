@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 const SidebarNavigation: React.FC = () => {
   return (
@@ -16,3 +16,4 @@ const SidebarNavigation: React.FC = () => {
 };
 
 // Removed default export: SidebarNavigation;
+

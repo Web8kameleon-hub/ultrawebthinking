@@ -1,4 +1,4 @@
-﻿import { ReactElement } from 'react';
+import { ReactElement } from 'react';
 
 /**
  * EuroWeb Web8 - Core AGI Interface
@@ -150,4 +150,5 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
     </div>
   );
 }
+
 

@@ -7,6 +7,7 @@
 
 "use client";
 
+import { css } from "@emotion/css";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 
@@ -41,29 +42,52 @@ const Surfing: React.FC = () => {
     setState(prev => ({ ...prev, loading: true, error: "", response: "" }));
 
     try {
-      const res = await fetch(`/api/${state.mode}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: state.input })
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      let response;
+      
+      if (state.mode === 'search') {
+        // Real AGI Memory search
+        const res = await fetch('/api/agi/memory', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        response = `Memory Status: ${data.blocks?.length || 0} active blocks\nTotal Memory: ${data.metrics?.totalMemory ? (data.metrics.totalMemory / 1024 / 1024 / 1024).toFixed(2) + 'GB' : 'N/A'}\nUptime: ${data.metrics?.uptime || 'N/A'}`;
+      } else if (state.mode === 'chat') {
+        // Real AGI Core processing
+        const res = await fetch('/api/agi/command', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            command: 'ANALYZE', 
+            binding: 'semantic',
+            parameters: { text: state.input }
+          })
+        });
+        const data = await res.json();
+        response = data.success ? 
+          `Analysis: ${data.data?.sentiment || 'neutral'}\nTokens: ${data.data?.tokens || 0}\nLanguage: ${data.data?.language || 'unknown'}` :
+          `Error: ${data.error}`;
+      } else {
+        // Real AGI Core status
+        const res = await fetch('/api/agi/core', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        response = `System Status: ${data.status}\nAGI Modules: ${data.data?.agi?.modules?.join(', ') || 'none'}\nSystem Health: ${data.systemHealth}%\nCPU Usage: ${data.data?.cpu?.total || 0}ms`;
       }
-
-      const data = await res.json();
 
       setState(prev => ({
         ...prev,
         loading: false,
-        response: data.response || data.message || "Përgjigje e pranuar",
+        response: response,
         input: ""
       }));
     } catch (err: any) {
       setState(prev => ({
         ...prev,
         loading: false,
-        error: err.message || "Gabim në lidhje"
+        error: err.message || "Gabim në lidhje me AGI API"
       }));
     }
   };
@@ -78,50 +102,51 @@ const Surfing: React.FC = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={css({
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: '2rem',
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, slate.50 0%, blue.50 100%)',
-        fontFamily: 'Inter, sans-serif'
-      })}
+      className={css`
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+        font-family: Inter, sans-serif;
+      `}
     >
       {/* Header */}
       <motion.div
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
-        className={css({
-          textAlign: 'center',
-          marginBottom: '2rem'
-        })}
+        className={css`
+          text-align: center;
+          margin-bottom: 2rem;
+        `}
       >
-        <h1 className={css({
-          fontSize: '3xl',
-          fontWeight: 'bold',
-          background: 'linear-gradient(45deg, blue.600, purple.600)',
-          backgroundClip: 'text',
-          color: 'transparent',
-          marginBottom: '0.5rem'
-        })}>
+        <h1 className={css`
+          font-size: 3rem;
+          font-weight: bold;
+          background: linear-gradient(45deg, #2563eb, #9333ea);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          margin-bottom: 0.5rem;
+        `}>
           🌊 Surfing Ultra
         </h1>
-        <p className={css({
-          color: 'slate.600',
-          fontSize: 'lg'
-        })}>
+        <p className={css`
+          color: #64748b;
+          font-size: 1.125rem;
+        `}>
           AGI-powered intelligent assistance
         </p>
       </motion.div>
 
       {/* Mode Selector */}
       <motion.div
-        className={css({
-          display: 'flex',
-          gap: '1rem',
-          marginBottom: '2rem',
-          justifyContent: 'center'
-        })}
+        className={css`
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 2rem;
+          justify-content: center;
+        `}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -132,19 +157,18 @@ const Surfing: React.FC = () => {
             onClick={() => switchMode(mode as any)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className={css({
-              padding: '0.75rem 1.5rem',
-              borderRadius: 'lg',
-              border: '2px solid',
-              borderColor: state.mode === mode ? config.color : 'transparent',
-              background: state.mode === mode ? 'white' : 'rgba(255,255,255,0.5)',
-              color: state.mode === mode ? config.color : 'slate.700',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              boxShadow: state.mode === mode ? 'lg' : 'sm',
-              backdropFilter: 'blur(10px)'
-            })}
+            className={css`
+              padding: 0.75rem 1.5rem;
+              border-radius: 0.5rem;
+              border: 2px solid ${state.mode === mode ? (config.color === 'blue.500' ? '#3b82f6' : config.color === 'green.500' ? '#10b981' : '#8b5cf6') : 'transparent'};
+              background: ${state.mode === mode ? 'white' : 'rgba(255,255,255,0.5)'};
+              color: ${state.mode === mode ? (config.color === 'blue.500' ? '#3b82f6' : config.color === 'green.500' ? '#10b981' : '#8b5cf6') : '#374151'};
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s;
+              box-shadow: ${state.mode === mode ? '0 10px 15px -3px rgba(0, 0, 0, 0.1)' : '0 1px 3px 0 rgba(0, 0, 0, 0.1)'};
+              backdrop-filter: blur(10px);
+            `}
           >
             {config.icon} {config.label}
           </motion.button>
@@ -153,20 +177,19 @@ const Surfing: React.FC = () => {
 
       {/* Main Interface */}
       <motion.div
-        className={css({
-          background: 'white',
-          borderRadius: 'xl',
-          padding: '2rem',
-          boxShadow: 'xl',
-          border: '1px solid',
-          borderColor: 'slate.200'
-        })}
+        className={css`
+          background: white;
+          border-radius: 0.75rem;
+          padding: 2rem;
+          box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+          border: 1px solid #e2e8f0;
+        `}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
         {/* Input */}
-        <div className={css({ marginBottom: '1rem' })}>
+        <div className={css`margin-bottom: 1rem;`}>
           <motion.input
             type="text"
             placeholder={`${modeConfig[state.mode].icon} ${
@@ -178,20 +201,28 @@ const Surfing: React.FC = () => {
             onChange={handleInputChange}
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
             whileFocus={{ scale: 1.02 }}
-            className={css({
-              width: '100%',
-              padding: '1rem',
-              borderRadius: 'lg',
-              border: '2px solid',
-              borderColor: modeConfig[state.mode].color,
-              fontSize: 'lg',
-              outline: 'none',
-              transition: 'all 0.2s',
-              _focus: {
-                borderColor: modeConfig[state.mode].color,
-                boxShadow: `0 0 0 3px ${modeConfig[state.mode].color}20`
+            className={css`
+              width: 100%;
+              padding: 1rem;
+              border-radius: 0.5rem;
+              border: 2px solid ${
+                modeConfig[state.mode].color === 'blue.500' ? '#3b82f6' :
+                modeConfig[state.mode].color === 'green.500' ? '#10b981' : '#8b5cf6'
+              };
+              font-size: 1.125rem;
+              outline: none;
+              transition: all 0.2s;
+              &:focus {
+                border-color: ${
+                  modeConfig[state.mode].color === 'blue.500' ? '#3b82f6' :
+                  modeConfig[state.mode].color === 'green.500' ? '#10b981' : '#8b5cf6'
+                };
+                box-shadow: 0 0 0 3px ${
+                  modeConfig[state.mode].color === 'blue.500' ? '#3b82f620' :
+                  modeConfig[state.mode].color === 'green.500' ? '#10b98120' : '#8b5cf620'
+                };
               }
-            })}
+            `}
           />
         </div>
 
@@ -201,35 +232,41 @@ const Surfing: React.FC = () => {
           disabled={state.loading || !state.input.trim()}
           whileHover={{ scale: state.loading ? 1 : 1.02 }}
           whileTap={{ scale: state.loading ? 1 : 0.98 }}
-          className={css({
-            width: '100%',
-            padding: '1rem',
-            borderRadius: 'lg',
-            border: 'none',
-            background: state.loading ? 'slate.400' : `linear-gradient(45deg, ${modeConfig[state.mode].color}, ${modeConfig[state.mode].color}80)`,
-            color: 'white',
-            fontSize: 'lg',
-            fontWeight: '600',
-            cursor: state.loading ? 'not-allowed' : 'pointer',
-            transition: 'all 0.2s',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem'
-          })}
+          className={css`
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            background: ${state.loading ? '#94a3b8' : `linear-gradient(45deg, ${
+              modeConfig[state.mode].color === 'blue.500' ? '#3b82f6' :
+              modeConfig[state.mode].color === 'green.500' ? '#10b981' : '#8b5cf6'
+            }, ${
+              modeConfig[state.mode].color === 'blue.500' ? '#3b82f680' :
+              modeConfig[state.mode].color === 'green.500' ? '#10b98180' : '#8b5cf680'
+            })`};
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: ${state.loading ? 'not-allowed' : 'pointer'};
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          `}
         >
           {state.loading ? (
             <>
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className={css({
-                  width: '1.5rem',
-                  height: '1.5rem',
-                  border: '2px solid rgba(255,255,255,0.3)',
-                  borderTop: '2px solid white',
-                  borderRadius: 'full'
-                })}
+                className={css`
+                  width: 1.5rem;
+                  height: 1.5rem;
+                  border: 2px solid rgba(255,255,255,0.3);
+                  border-top: 2px solid white;
+                  border-radius: 50%;
+                `}
               />
               Duke përpunuar...
             </>
@@ -251,15 +288,14 @@ const Surfing: React.FC = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className={css({
-                marginTop: '1rem',
-                padding: '1rem',
-                background: 'red.50',
-                border: '1px solid',
-                borderColor: 'red.200',
-                borderRadius: 'lg',
-                color: 'red.600'
-              })}
+              className={css`
+                margin-top: 1rem;
+                padding: 1rem;
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                border-radius: 0.5rem;
+                color: #dc2626;
+              `}
             >
               ❌ {state.error}
             </motion.div>
@@ -273,17 +309,16 @@ const Surfing: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className={css({
-                marginTop: '1.5rem',
-                padding: '1.5rem',
-                background: 'slate.50',
-                border: '1px solid',
-                borderColor: 'slate.200',
-                borderRadius: 'lg',
-                whiteSpace: 'pre-wrap',
-                fontSize: 'md',
-                lineHeight: '1.6'
-              })}
+              className={css`
+                margin-top: 1.5rem;
+                padding: 1.5rem;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 0.5rem;
+                white-space: pre-wrap;
+                font-size: 1rem;
+                line-height: 1.6;
+              `}
             >
               {state.response}
             </motion.div>
@@ -293,12 +328,12 @@ const Surfing: React.FC = () => {
 
       {/* Status Footer */}
       <motion.div
-        className={css({
-          textAlign: 'center',
-          marginTop: '2rem',
-          color: 'slate.500',
-          fontSize: 'sm'
-        })}
+        className={css`
+          text-align: center;
+          margin-top: 2rem;
+          color: #64748b;
+          font-size: 0.875rem;
+        `}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
@@ -310,3 +345,4 @@ const Surfing: React.FC = () => {
 };
 
 export default Surfing;
+

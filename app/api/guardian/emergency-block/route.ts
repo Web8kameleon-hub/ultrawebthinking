@@ -1,4 +1,4 @@
-﻿import * as fs from 'fs';
+import * as fs from 'fs';
 import { NextRequest, NextResponse } from 'next/server';
 import * as path from 'path';
 
@@ -151,7 +151,7 @@ async function notifySecurityTeam(ip: string, reason: string) {
   
   console.log(`🚨 SECURITY ALERT: IP ${ip} blocked for: ${reason}`);
   
-  // Example: Send to monitoring service
+  // : Send to monitoring service
   try {
     // await fetch('YOUR_MONITORING_WEBHOOK', {
     //   method: 'POST',

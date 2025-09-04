@@ -1,0 +1,628 @@
+/* UltraDashboardKristal.module.css */
+/* Kristal & Diamant Technology - Swiss Precision CSS */
+
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  overflow-x: hidden;
+}
+
+.navigation {
+  padding: 1rem 2rem 0;
+}
+
+/* ——————————————————————————————————————————————————————
+   Header - Kristal Design
+   —————————————————————————————————————————————————————— */
+
+.header {
+  background: rgba(0, 0, 0, 0.9);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-bottom: 2px solid #00ff88;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+}
+
+.brandSection {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.brandTitle {
+  font-size: 28px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #00ff88, #0088ff, #ff8800);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.brandSubtitle {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.statusSection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.healthBadge {
+  background: linear-gradient(135deg, #00ff88, #00cc66);
+  padding: 12px 20px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.4);
+}
+
+.healthStatus {
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+}
+
+.healthUptime {
+  font-size: 10px;
+  color: #003300;
+  margin-top: 2px;
+}
+
+.liveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  color: #00ff88;
+  font-size: 12px;
+}
+
+.liveDot {
+  width: 12px;
+  height: 12px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 10px #00ff88;
+}
+
+/* ——————————————————————————————————————————————————————
+   Main Grid Layout
+   —————————————————————————————————————————————————————— */
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 30px;
+  padding: 30px 40px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.chartsSection {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.controlsSection {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.alertsSection {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.logsSection {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+/* ——————————————————————————————————————————————————————
+   Live Charts - Crystal Technology
+   —————————————————————————————————————————————————————— */
+
+.chartsSection h2 {
+  color: #00ff88;
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.chartsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.chartContainer {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chartContainer:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 255, 136, 0.2);
+}
+
+.chartLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00ff88;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.chart {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* ——————————————————————————————————————————————————————
+   Quick Controls - Diamond Interface
+   —————————————————————————————————————————————————————— */
+
+.quickControls {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 25px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.quickControls h3 {
+  color: #0088ff;
+  margin-bottom: 20px;
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(0, 136, 255, 0.5);
+}
+
+.toggleGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.toggleItem {
+  display: flex;
+  align-items: center;
+}
+
+.toggleLabel {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.toggleInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toggleSlider {
+  width: 50px;
+  height: 24px;
+  background: #333;
+  border-radius: 12px;
+  position: relative;
+  transition: background 0.3s ease;
+  border: 1px solid #555;
+}
+
+.toggleSlider::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.toggleInput:checked + .toggleSlider {
+  background: linear-gradient(135deg, #00ff88, #00cc66);
+}
+
+.toggleInput:checked + .toggleSlider::before {
+  transform: translateX(26px);
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.toggleText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.toggleText small {
+  color: #888;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* ——————————————————————————————————————————————————————
+   Alert System - Diamond Precision
+   —————————————————————————————————————————————————————— */
+
+.alertPanel {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 25px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.alertHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.alertHeader h3 {
+  color: #ff8800;
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(255, 136, 0, 0.5);
+}
+
+.alertStats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.alertCount {
+  background: #ff4444;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  min-width: 20px;
+  text-align: center;
+}
+
+.clearAllBtn {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.clearAllBtn:hover {
+  background: #555;
+}
+
+.alertList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.alertItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid;
+  transition: opacity 0.3s ease;
+}
+
+.alertError {
+  background: rgba(255, 68, 68, 0.1);
+  border-left-color: #ff4444;
+}
+
+.alertWarning {
+  background: rgba(255, 193, 7, 0.1);
+  border-left-color: #ffc107;
+}
+
+.alertInfo {
+  background: rgba(0, 136, 255, 0.1);
+  border-left-color: #0088ff;
+}
+
+.alertSuccess {
+  background: rgba(0, 255, 136, 0.1);
+  border-left-color: #00ff88;
+}
+
+.alertAcknowledged {
+  opacity: 0.5;
+}
+
+.alertIcon {
+  font-size: 16px;
+  margin-top: 2px;
+}
+
+.alertContent {
+  flex: 1;
+}
+
+.alertTitle {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.alertMessage {
+  font-size: 11px;
+  color: #ccc;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.alertTime {
+  font-size: 10px;
+  color: #888;
+}
+
+.ackBtn {
+  background: #00ff88;
+  color: #000;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.ackBtn:hover {
+  background: #00cc66;
+}
+
+/* ——————————————————————————————————————————————————————
+   Log Stream - Real-Time Events
+   —————————————————————————————————————————————————————— */
+
+.logStream {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #333;
+  border-radius: 15px;
+  padding: 25px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.logHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logHeader h3 {
+  color: #0088ff;
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(0, 136, 255, 0.5);
+}
+
+.logFilter {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.logContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: 'Monaco', monospace;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.logEntry {
+  display: flex;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 3px solid;
+  transition: background 0.2s ease;
+}
+
+.logEntry:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.logError {
+  border-left-color: #ff4444;
+  background: rgba(255, 68, 68, 0.05);
+}
+
+.logWarning {
+  border-left-color: #ffc107;
+  background: rgba(255, 193, 7, 0.05);
+}
+
+.logInfo {
+  border-left-color: #0088ff;
+  background: rgba(0, 136, 255, 0.05);
+}
+
+.logAgi {
+  border-left-color: #00ff88;
+  background: rgba(0, 255, 136, 0.05);
+}
+
+.logDebug {
+  border-left-color: #888;
+  background: rgba(136, 136, 136, 0.05);
+}
+
+.logTime {
+  color: #888;
+  min-width: 70px;
+}
+
+.logLevel {
+  color: #fff;
+  font-weight: bold;
+  min-width: 60px;
+}
+
+.logSource {
+  color: #00ff88;
+  min-width: 80px;
+}
+
+.logMessage {
+  color: #ccc;
+  flex: 1;
+}
+
+/* ——————————————————————————————————————————————————————
+   Footer
+   —————————————————————————————————————————————————————— */
+
+.footer {
+  background: rgba(0, 0, 0, 0.9);
+  border-top: 1px solid #333;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  color: #888;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ——————————————————————————————————————————————————————
+   Animations - Kristal Effects
+   —————————————————————————————————————————————————————— */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+  }
+}
+
+/* ——————————————————————————————————————————————————————
+   Responsive Design
+   —————————————————————————————————————————————————————— */
+
+@media (max-width: 1200px) {
+  .mainGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+  
+  .chartsSection {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  
+  .controlsSection {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
+  
+  .alertsSection {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
+  
+  .logsSection {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .mainGrid {
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}

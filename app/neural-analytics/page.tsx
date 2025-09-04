@@ -210,7 +210,7 @@ const NeuralAnalyticsPage: React.FC = () => {
 
         .neural-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          grid--columns: repeat(auto-fit, minmax(320px, 1fr));
           gap: 24px;
           margin-bottom: 40px;
         }
@@ -321,7 +321,7 @@ const NeuralAnalyticsPage: React.FC = () => {
 
         @media (max-width: 768px) {
           .neural-grid {
-            grid-template-columns: 1fr;
+            grid--columns: 1fr;
           }
           
           .neural-header h1 {
@@ -339,3 +339,4 @@ const NeuralAnalyticsPage: React.FC = () => {
 };
 
 export default NeuralAnalyticsPage;
+

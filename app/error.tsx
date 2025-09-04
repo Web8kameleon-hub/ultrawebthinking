@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect } from 'react';
 
@@ -64,3 +64,4 @@ export function Error({
 
 // Dynamic export
 export default Error;
+

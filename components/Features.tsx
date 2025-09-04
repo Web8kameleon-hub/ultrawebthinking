@@ -1,4 +1,4 @@
-﻿// components/Features.tsx
+// components/Features.tsx
 import React from "react";
 import { Zap, ShieldCheck, Globe, Brain } from "lucide-react";
 import styles from "./Features.module.css";
@@ -51,3 +51,4 @@ const Features = () => {
 };
 
 export default Features;
+

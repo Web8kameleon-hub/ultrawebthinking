@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Ultra Platform - No-SSR Client Only Component
  * Completely prevents hydration errors by only rendering on client
  * 
@@ -107,3 +107,4 @@ export default function NoSSRWrapper() {
   // Render the main component only on client side
   return <TabSystem />
 }
+

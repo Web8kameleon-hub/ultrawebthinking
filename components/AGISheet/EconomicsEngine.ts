@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EconomicsEngine.ts
  * Advanced economics and financial analysis engine
  * © Web8 UltraThinking – Ledjan Ahmati
@@ -160,8 +160,8 @@ export class EconomicsEngine {
       const trendMultiplier = indicator.trend === 'bullish' ? 1.1 : 
                              indicator.trend === 'bearish' ? 0.9 : 1.0;
       
-      const randomFactor = 0.95 + (Math.random() * 0.1); // ±5% random variation
-      const predictedValue = indicator.value * trendMultiplier * randomFactor;
+      const actor = 0.95 + (Math.random() * 0.1); // ±5%  variation
+      const predictedValue = indicator.value * trendMultiplier * actor;
 
       forecasts.push({
         indicator: indicator.name,

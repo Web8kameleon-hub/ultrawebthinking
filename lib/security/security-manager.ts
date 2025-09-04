@@ -1,5 +1,5 @@
-﻿import { NextRequest } from 'next/server';
 import crypto from 'crypto';
+import { NextRequest } from 'next/server';
 
 // Security Configuration Types
 interface SecurityConfig {
@@ -84,7 +84,7 @@ class SecurityManager {
 
     // Initialize encryption key
     this.encryptionKey = Buffer.from(
-      process.env.ENCRYPTION_KEY || crypto.randomBytes(32).toString('hex'),
+      process.env.ENCRYPTION_KEY || crypto.ytes(32).toString('hex'),
       'hex'
     );
   }
@@ -309,7 +309,7 @@ class SecurityManager {
 
   // Encryption/Decryption
   encrypt(text: string): { encrypted: string; iv: string; tag: string } {
-    const iv = crypto.randomBytes(this.config.encryption.ivLength);
+    const iv = crypto.ytes(this.config.encryption.ivLength);
     const cipher = crypto.createCipheriv(this.config.encryption.algorithm, this.encryptionKey, iv);
     
     let encrypted = cipher.update(text, 'utf8', 'hex');
@@ -388,11 +388,11 @@ class SecurityManager {
   }
 
   generateSecureToken(length: number = 32): string {
-    return crypto.randomBytes(length).toString('hex');
+    return crypto.ytes(length).toString('hex');
   }
 
   hashPassword(password: string): { hash: string; salt: string } {
-    const salt = crypto.randomBytes(16).toString('hex');
+    const salt = crypto.ytes(16).toString('hex');
     const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
     return { hash, salt };
   }

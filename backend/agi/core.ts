@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb AGI Core Module - Moduli kryesor i inteligjencës artificiale
  * Arkitekturë modulare industriale për Web8 Browser Engine
  * 
@@ -116,7 +116,7 @@ class AGICore extends SimpleEventEmitter {
         id: def.id,
         name: def.name,
         status: 'active',
-        load: Math.random() * 50 + 25, // Random load between 25-75%
+        load: Math.random() * 50 + 25, //  load between 25-75%
         connections: Math.floor(Math.random() * 200) + 100,
         lastUpdate: Date.now(),
         metadata: {

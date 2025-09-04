@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Enhanced ALB Security Dashboard
  * EuroWeb Platform - Real Token Analysis & Risk Management
  * 
@@ -500,3 +500,4 @@ const ALBSecurityDashboard: React.FC = () => {
 }
 
 export default ALBSecurityDashboard
+

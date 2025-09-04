@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 
@@ -37,3 +37,4 @@ const EuroWebProfessionalPlatform: React.FC = () => {
 };
 
 export default EuroWebProfessionalPlatform;
+

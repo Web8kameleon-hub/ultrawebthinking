@@ -1,4 +1,4 @@
-﻿// Advanced Error Handling System for EuroWeb Ultra
+// Advanced Error Handling System for EuroWeb Ultra
 import { NextResponse } from 'next/server';
 
 // Error Types

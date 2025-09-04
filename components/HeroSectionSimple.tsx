@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 export const HeroSectionSimple = () => {
   return (
@@ -37,3 +37,4 @@ export const HeroSectionSimple = () => {
     </section>
   );
 };
+

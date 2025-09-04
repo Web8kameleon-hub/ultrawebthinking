@@ -1,4 +1,4 @@
-﻿// Virtual Scrolling Component for Large Lists - TypeScript
+// Virtual Scrolling Component for Large Lists - TypeScript
 // High-performance rendering for AGI data lists
 
 'use client';
@@ -421,3 +421,4 @@ export function useVirtualScroll<T extends VirtualScrollItem>(
 }
 
 export default VirtualScrollList;
+

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -30,17 +30,17 @@ export default function DataTable({ onLoad }: DataTableProps) {
     // Simulate heavy data loading
     const timer = setTimeout(() => {
       /**
-       * Generates an array of 100 `TableRow` objects with randomized data for use in a data table.
+       * Generates an array of 100 `TableRow` objects with zed data for use in a data table.
        *
        * - `id`: Sequential identifier starting from 1.
-       * - `name`: Randomly selected from the `names` array if available, otherwise an empty string.
+       * - `name`: y selected from the `names` array if available, otherwise an empty string.
        * - `email`: Generated in the format `user{id}@euroweb.al`.
-       * - `department`: Randomly selected from the `departments` array if available, otherwise an empty string.
-       * - `salary`: Random integer between 30,000 and 79,999.
-       * - `status`: Randomly assigned as either `'active'`, `'inactive'`, or `'pending'`.
+       * - `department`: y selected from the `departments` array if available, otherwise an empty string.
+       * - `salary`:  integer between 30,000 and 79,999.
+       * - `status`: y assigned as either `'active'`, `'inactive'`, or `'pending'`.
        *
        * @remarks
-       * Useful for populating mock data in development or testing environments.
+       * Useful for populating  data in development or testing environments.
        */
       const tableData: TableRow[] = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
@@ -202,3 +202,4 @@ export default function DataTable({ onLoad }: DataTableProps) {
     </motion.div>
   );
 }
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 Platform - Advanced Laptop Browser Experience
  * Pure TypeScript + CVA Components with Laptop Integration
  *
@@ -20,3 +20,4 @@ const BrowserPage = (): React.ReactElement => {
 
 export { BrowserPage };
 export default BrowserPage;
+

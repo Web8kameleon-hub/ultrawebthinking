@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb - Sitemap Generator
  * Next.js App Router Sitemap
  * 
@@ -25,19 +25,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/AGIbionature-demo`,
+      url: `${baseUrl}/AGIbionature-`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/AGIeco-demo`,
+      url: `${baseUrl}/AGIeco-`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/cva-demo`,
+      url: `${baseUrl}/cva-`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,

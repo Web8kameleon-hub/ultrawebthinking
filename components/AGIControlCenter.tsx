@@ -535,7 +535,7 @@ const AGIControlCenter: React.FC = () => {
           display: grid;
         }
         .grid-cols-2 {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid--columns: repeat(2, minmax(0, 1fr));
         }
         .gap-2 {
           gap: 0.5rem;
@@ -648,3 +648,4 @@ const AGIControlCenter: React.FC = () => {
 }
 
 export default AGIControlCenter
+

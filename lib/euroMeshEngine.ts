@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroMesh Network Engine - 12 Layer Architecture
  * Motori i Rrjetit EuroMesh - Arkitekturë 12 Shtresore
  * 
@@ -132,7 +132,7 @@ export class EuroMeshEngine extends EventEmitter {
   constructor() {
     super();
     this.initializeLayers();
-    this.generateMockNetwork();
+    this.generateetwork();
   }
 
   private initializeLayers() {
@@ -174,13 +174,13 @@ export class EuroMeshEngine extends EventEmitter {
     });
   }
 
-  private generateMockNetwork() {
-    // Generate mock nodes for each layer
+  private generateetwork() {
+    // Generate  nodes for each layer
     for (let layer = 1; layer <= 12; layer++) {
       const nodeCount = this.getNodesForLayer(layer);
       
       for (let i = 0; i < nodeCount; i++) {
-        const node = this.createMockNode(layer, i);
+        const node = this.createode(layer, i);
         this.nodes.set(node.id, node);
         
         const layerObj = this.layers.get(layer);
@@ -200,7 +200,7 @@ export class EuroMeshEngine extends EventEmitter {
     return counts[layer - 1] || 1;
   }
 
-  private createMockNode(layer: number, index: number): MeshNode {
+  private createode(layer: number, index: number): MeshNode {
     const nodeTypes = ['access', 'relay', 'backbone', 'gateway', 'edge', 'core'];
     const type = nodeTypes[Math.min(Math.floor(layer / 2), nodeTypes.length - 1)] as any;
     
@@ -379,16 +379,16 @@ export class EuroMeshEngine extends EventEmitter {
       );
     });
 
-    // Generate random events
+    // Generate  events
     if (Math.random() < 0.1) { // 10% chance per update
-      this.generateRandomEvent();
+      this.generatevent();
     }
 
     this.updateMetrics();
     this.emit('network_update', this.getTopology());
   }
 
-  private generateRandomEvent() {
+  private generatevent() {
     const eventTypes = ['node_join', 'node_leave', 'connection_lost', 'route_change', 'performance_alert'] as const;
     const severities = ['info', 'warning', 'error', 'critical'] as const;
     const nodeIds = Array.from(this.nodes.keys());

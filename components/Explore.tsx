@@ -1,4 +1,4 @@
-﻿// components/Explore.tsx
+// components/Explore.tsx
 import { css } from "../css";
 
 export function Explore() {
@@ -76,4 +76,5 @@ const styles = {
     color: "gray.700",
   }),
 };
+
 

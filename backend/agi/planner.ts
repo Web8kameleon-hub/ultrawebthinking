@@ -1,4 +1,4 @@
-﻿// backend/agi/planner.ts
+// backend/agi/planner.ts
 /**
  * Planner.ts
  * Planifikues strategjik për detyra AGI

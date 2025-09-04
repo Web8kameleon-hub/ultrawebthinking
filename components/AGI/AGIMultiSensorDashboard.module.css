@@ -1,0 +1,627 @@
+/**
+ * AGI Multi-Sensor Dashboard - Industrial Grade Styling
+ * Crystal/Diamond Level Visual Design for Real-time Module Monitoring
+ * 
+ * @author Ledjan Ahmati
+ * @contact dealsjona@gmail.com
+ * @version 1.0.0 INDUSTRIAL
+ * @license MIT
+ */
+
+/* ====================================================================
+   MAIN CONTAINER & LAYOUT
+   ==================================================================== */
+
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  min-height: 100vh;
+  color: #ffffff;
+  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+.dashboardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 123, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  border-radius: 16px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1);
+}
+
+.dashboardTitle {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ff88 0%, #00b4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.dashboardStats {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 12px;
+  min-width: 120px;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.connectionStatus {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.connected {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: #00ff88;
+  color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.disconnected {
+  background: rgba(255, 149, 0, 0.1);
+  border-color: #ff9500;
+  color: #ff9500;
+  box-shadow: 0 0 20px rgba(255, 149, 0, 0.3);
+}
+
+/* ====================================================================
+   SYSTEM INFO BAR
+   ==================================================================== */
+
+.systemInfo {
+  display: flex;
+  gap: 32px;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.systemInfo span {
+  padding: 8px 16px;
+  background: rgba(0, 255, 136, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+/* ====================================================================
+   MODULES GRID
+   ==================================================================== */
+
+.modulesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.moduleCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(0, 255, 136, 0.02) 100%);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 16px;
+  padding: 24px;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff88, transparent);
+  transition: left 0.5s ease;
+}
+
+.moduleCard:hover::before {
+  left: 100%;
+}
+
+.moduleCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 64px rgba(0, 255, 136, 0.15);
+  border-color: rgba(0, 255, 136, 0.4);
+}
+
+.moduleHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.moduleIcon {
+  font-size: 32px;
+  padding: 12px;
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.moduleInfo {
+  flex: 1;
+}
+
+.moduleName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.moduleLocation {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.moduleStatus {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid;
+}
+
+.active {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: #00ff88;
+  color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.inactive {
+  background: rgba(102, 102, 102, 0.1);
+  border-color: #666666;
+  color: #666666;
+}
+
+/* ====================================================================
+   METRICS DISPLAY
+   ==================================================================== */
+
+.moduleMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metricRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.metricRow:hover {
+  background: rgba(0, 255, 136, 0.02);
+  border-color: rgba(0, 255, 136, 0.1);
+}
+
+.metricInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricName {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.metricValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00ff88;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.metricChart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.metricStatus {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  min-width: 80px;
+  text-align: center;
+}
+
+.metricStatus.online {
+  color: #00ff88;
+}
+
+.metricStatus.warning {
+  color: #ff9500;
+}
+
+.metricStatus.critical {
+  color: #ff4444;
+}
+
+.metricStatus.offline {
+  color: #666666;
+}
+
+/* ====================================================================
+   SPARKLINE CHARTS
+   ==================================================================== */
+
+.sparklineContainer {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sparklineContainerSize {
+  width: 120px;
+  height: 40px;
+}
+
+.sparklinePlaceholderSize {
+  width: 120px;
+  height: 40px;
+}
+
+.sparklineSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sparklineLine {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.sparklinePoint {
+  filter: drop-shadow(0 0 6px currentColor);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.sparklineValue {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.sparklinePlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ====================================================================
+   MODULE FOOTER
+   ==================================================================== */
+
+.moduleFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.moduleUptime {
+  padding: 4px 8px;
+  background: rgba(0, 255, 136, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.moduleUpdate {
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+}
+
+/* ====================================================================
+   LOADING & ERROR STATES
+   ==================================================================== */
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 24px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 64px;
+  height: 64px;
+  border: 4px solid rgba(0, 255, 136, 0.1);
+  border-top: 4px solid #00ff88;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingContainer h2 {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00ff88 0%, #00b4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.loadingContainer p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 24px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.errorContainer h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ff4444;
+  margin: 0;
+}
+
+.errorContainer p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  max-width: 600px;
+}
+
+.retryButton {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00ff88 0%, #00b4ff 100%);
+  border: none;
+  border-radius: 8px;
+  color: #000000;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.retryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+}
+
+.errorBanner {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid #ff4444;
+  border-radius: 12px;
+  color: #ff4444;
+  font-weight: 500;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(255, 68, 68, 0.1);
+  z-index: 1000;
+}
+
+.dismissButton {
+  background: none;
+  border: none;
+  color: #ff4444;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.dismissButton:hover {
+  background: rgba(255, 68, 68, 0.1);
+}
+
+/* ====================================================================
+   RESPONSIVE DESIGN
+   ==================================================================== */
+
+@media (max-width: 1200px) {
+  .modulesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+  
+  .dashboardHeader {
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .dashboardStats {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardContainer {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .modulesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboardHeader {
+    padding: 24px;
+  }
+  
+  .dashboardTitle {
+    font-size: 24px;
+  }
+  
+  .dashboardStats {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .systemInfo {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .moduleCard {
+    padding: 16px;
+  }
+  
+  .metricRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .metricChart {
+    align-self: stretch;
+    min-width: auto;
+  }
+}
+
+/* ====================================================================
+   ACCESSIBILITY & ANIMATIONS
+   ==================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboardContainer,
+  .dashboardContainer * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.moduleCard:focus-within {
+  outline: 2px solid #00ff88;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dashboardContainer {
+    background: #000000;
+  }
+  
+  .moduleCard {
+    border-color: #ffffff;
+    background: #111111;
+  }
+  
+  .metricValue {
+    color: #ffffff;
+  }
+}

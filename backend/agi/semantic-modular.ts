@@ -1,4 +1,4 @@
-﻿// backend/agi/semantic.ts
+// backend/agi/semantic.ts
 /**
  * SemanticAnalyzer.ts - Real Modular Instance-Based Architecture
  * Analizues semantik për procesimine e gjuhës natyrore

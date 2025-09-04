@@ -1,5 +1,5 @@
 // Logger Plugin
-// Ky plugin demonstron si të logosh evente dhe të përdorësh konfigurim të jashtëm
+// Ky plugin stron si të logosh evente dhe të përdorësh konfigurim të jashtëm
 
 export interface LoggerPluginOptions {
     prefix?: string;

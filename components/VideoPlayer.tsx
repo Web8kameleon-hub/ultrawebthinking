@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
@@ -29,7 +29,7 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
 
   const categories = ['all', 'edukimi', 'teknologji', 'lojëra', 'muzikë', 'udhëtime'];
 
-  // Generate demo videos
+  // Generate  videos
   useEffect(() => {
     const timer = setTimeout(() => {
       const videoData: VideoItem[] = [
@@ -37,8 +37,8 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
           id: 1,
           title: 'Hyrje në Inteligjencën Artificiale',
           description: 'Një prezantim i plotë mbi bazat e AI dhe aplikacionet e saj.',
-          thumbnail: 'https://picsum.photos/320/180?random=101',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          thumbnail: 'https://picsum.photos/320/180?=101',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket//BigBuckBunny.mp4',
           duration: '10:45',
           category: 'edukimi',
           views: 12500,
@@ -48,8 +48,8 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
           id: 2,
           title: 'React dhe TypeScript - Tutorial',
           description: 'Mëso të përdorësh React me TypeScript për projekte moderne.',
-          thumbnail: 'https://picsum.photos/320/180?random=102',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+          thumbnail: 'https://picsum.photos/320/180?=102',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket//ElephantsDream.mp4',
           duration: '25:30',
           category: 'teknologji',
           views: 8900,
@@ -59,8 +59,8 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
           id: 3,
           title: 'Arkitektura Moderne Shqiptare',
           description: 'Eksplorimi i zhvillimeve të fundit në arkitekturën e Shqipërisë.',
-          thumbnail: 'https://picsum.photos/320/180?random=103',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+          thumbnail: 'https://picsum.photos/320/180?=103',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket//ForBiggerBlazes.mp4',
           duration: '15:20',
           category: 'edukimi',
           views: 5600,
@@ -70,8 +70,8 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
           id: 4,
           title: 'Muzikë Tradicionale Ballkanike',
           description: 'Koleksion i këngëve të vjetra tradicionale nga Ballkani.',
-          thumbnail: 'https://picsum.photos/320/180?random=104',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+          thumbnail: 'https://picsum.photos/320/180?=104',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket//ForBiggerEscapes.mp4',
           duration: '45:15',
           category: 'muzikë',
           views: 15200,
@@ -81,8 +81,8 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
           id: 5,
           title: 'Udhëtim nëpër Alpe Shqiptare',
           description: 'Tur virtual në malet më të bukura të Shqipërisë.',
-          thumbnail: 'https://picsum.photos/320/180?random=105',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+          thumbnail: 'https://picsum.photos/320/180?=105',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket//ForBiggerFun.mp4',
           duration: '32:08',
           category: 'udhëtime',
           views: 22100,
@@ -92,8 +92,8 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
           id: 6,
           title: 'Gaming në Shqipëri - Të ardhmat',
           description: 'Si po zhvillohet industria e lojërave në vendin tonë.',
-          thumbnail: 'https://picsum.photos/320/180?random=106',
-          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+          thumbnail: 'https://picsum.photos/320/180?=106',
+          videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket//ForBiggerJoyrides.mp4',
           duration: '18:45',
           category: 'lojëra',
           views: 7800,
@@ -310,3 +310,4 @@ export default function VideoPlayer({ onLoad }: VideoPlayerProps) {
     </motion.div>
   );
 }
+

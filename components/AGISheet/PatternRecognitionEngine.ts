@@ -1,4 +1,4 @@
-﻿/**
+/**
  * PatternRecognitionEngine.ts
  * Advanced pattern recognition and predictive analytics engine
  * © Web8 UltraThinking – Ledjan Ahmati
@@ -60,7 +60,7 @@ export class PatternRecognitionEngine {
 
   constructor() {
     this.initializeModels();
-    this.generateSampleData();
+    this.generateata();
   }
 
   private initializeModels(): void {
@@ -82,17 +82,17 @@ export class PatternRecognitionEngine {
         training_data_size: 50000,
         last_trained: new Date(Date.now() - 172800000), // 2 days ago
         features: ['value', 'rate_of_change', 'moving_std', 'local_outlier_factor'],
-        hyperparameters: { n_estimators: 100, contamination: 0.1, max_samples: 256 },
+        hyperparameters: { n_estimators: 100, contamination: 0.1, max_: 256 },
         validation_score: 0.90
       },
       {
         name: 'Pattern Classification',
-        algorithm: 'Random Forest',
+        algorithm: ' Forest',
         accuracy: 0.89,
         training_data_size: 25000,
         last_trained: new Date(Date.now() - 259200000), // 3 days ago
         features: ['trend_slope', 'autocorrelation', 'spectral_density', 'entropy'],
-        hyperparameters: { n_trees: 200, max_depth: 15, min_samples_split: 5 },
+        hyperparameters: { n_trees: 200, max_depth: 15, min__split: 5 },
         validation_score: 0.88
       },
       {
@@ -112,14 +112,14 @@ export class PatternRecognitionEngine {
     });
   }
 
-  private generateSampleData(): void {
+  private generateata(): void {
     const datasets = ['sales', 'traffic', 'revenue', 'users', 'conversion'];
     
     datasets.forEach(dataset => {
       const data = this.generateTimeSeriesData(365); // 1 year of data
       this.dataHistory.set(dataset, data);
       
-      // Detect patterns in sample data
+      // Detect patterns in  data
       const patterns = this.detectPatterns(data, dataset);
       patterns.forEach(pattern => {
         this.patterns.set(pattern.id, pattern);
@@ -220,7 +220,7 @@ export class PatternRecognitionEngine {
     for (let i = 1; i <= periods; i++) {
       const trendValue = trend * i;
       const seasonal = seasonalComponent[i % seasonalComponent.length];
-      const noise = (Math.random() - 0.5) * 5; // Small random component
+      const noise = (Math.random() - 0.5) * 5; // Small  component
       
       const predictedValue = lastValue + trendValue + seasonal + noise;
       const confidence = Math.max(0.3, 0.9 - (i * 0.05)); // Decreasing confidence
@@ -613,10 +613,10 @@ export class PatternRecognitionEngine {
     return denominator === 0 ? 0 : numerator / denominator;
   }
 
-  private calculateCorrelationSignificance(correlation: number, sampleSize: number): number {
+  private calculateCorrelationSignificance(correlation: number, ize: number): number {
     // Simplified p-value calculation
-    const tStat = correlation * Math.sqrt((sampleSize - 2) / (1 - correlation * correlation));
-    return 2 * (1 - this.cdf(Math.abs(tStat), sampleSize - 2));
+    const tStat = correlation * Math.sqrt((ize - 2) / (1 - correlation * correlation));
+    return 2 * (1 - this.cdf(Math.abs(tStat), ize - 2));
   }
 
   private cdf(x: number, df: number): number {

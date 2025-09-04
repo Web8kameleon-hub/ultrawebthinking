@@ -1,4 +1,4 @@
-﻿// AGI Tunnel Component - Pure TypeScript + Framer Motion - Industrial Grade
+// AGI Tunnel Component - Pure TypeScript + Framer Motion - Industrial Grade
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -337,4 +337,5 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
 };
 
 // Removed default export: AGITunnel;
+
 

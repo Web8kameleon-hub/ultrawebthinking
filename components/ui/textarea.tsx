@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Textarea UI Component
  * Reusable textarea component for EuroWeb platform
  * 
@@ -17,7 +17,7 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export const Textarea: React.FC<TextareaProps> = ({ className = '', ...props }) => {
-  const baseStyles = 'w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:pointer-events-none'
+  const baseStyles = 'w-full px-3 py-2 text-sm border border-gray-300 rounded-md shadow-sm -gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:pointer-events-none'
   
   return (
     <textarea
@@ -26,3 +26,4 @@ export const Textarea: React.FC<TextareaProps> = ({ className = '', ...props }) 
     />
   )
 }
+

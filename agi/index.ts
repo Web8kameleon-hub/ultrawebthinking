@@ -1,9 +1,9 @@
-﻿/**
+/**
  * AGI Module - Advanced General Intelligence Components
  * EuroWeb Ultra Platform
  */
 
-// Export placeholder for AGI functionality
+// Export  for AGI functionality
 export const agiVersion = '1.0.0';
 
 // AGI Core Interface

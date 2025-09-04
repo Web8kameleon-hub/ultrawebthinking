@@ -378,7 +378,7 @@ function AGIEcoTab() {
             <form className={styles['agi-eco-form']}>
               <input 
                 type="text" 
-                placeholder="Energy target (kWh)" 
+ placeholder="Energy target (kWh)" 
                 className={styles['agi-eco-input']}
               />
               <select 
@@ -407,7 +407,7 @@ function AGIEcoTab() {
             <form className={styles['agi-eco-form']}>
               <input 
                 type="text" 
-                placeholder="Resource type" 
+ placeholder="Resource type" 
                 className={styles['agi-eco-input']}
               />
               <select 
@@ -432,3 +432,4 @@ function AGIEcoTab() {
     </div>
   );
 }
+

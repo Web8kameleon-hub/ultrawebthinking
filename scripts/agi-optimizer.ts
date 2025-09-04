@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env tsx
+#!/usr/bin/env tsx
 /**
  * AGI Ultra Optimizer Script
  * Aktivizon dhe optimizon të gjithë sistemin AGI të EuroWeb Ultra

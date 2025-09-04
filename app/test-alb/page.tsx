@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ALB Security Dashboard Test Page
  * EuroWeb Platform - Test ALB Dashboard in isolation
  * 
@@ -25,3 +25,4 @@ export default function TestALBPage() {
     </div>
   )
 }
+

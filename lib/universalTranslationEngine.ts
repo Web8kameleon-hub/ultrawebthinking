@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Universal Language Translation Engine
  * Motori Universal i Përkthimit të Gjuhëve
  * 
@@ -393,7 +393,7 @@ export class UniversalTranslationEngine {
     
     const translations = this.getCommonTranslations(fromLang.code, toLang.code);
     
-    // Simple word-by-word translation for demonstration
+    // Simple word-by-word translation for stration
     let result = request.text;
     
     for (const [source, target] of Object.entries(translations)) {

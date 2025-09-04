@@ -1,4 +1,4 @@
-﻿// components/Footer.tsx
+// components/Footer.tsx
 import { StatusFooter } from "@/components/StatusFooter";
 import styles from "./Footer.module.css";
 
@@ -48,3 +48,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

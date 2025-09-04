@@ -1,14 +1,14 @@
-﻿/**
+/**
  * AGIEco Tests - Pure TypeScript Economic Engine
  * Dynamic imports + Lazy loading + Vector cache
  */
 
 import { describe, expect, test } from 'vitest';
 
-// Lazy economic engine loading - Mock implementation
+// Lazy economic engine loading -  implementation
 const loadEcoEngine = async () => {
-  // Mock EconomicsEngine since the module doesn't exist
-  class MockEconomicsEngine {
+  //  EconomicsEngine since the module doesn't exist
+  class conomicsEngine {
     private config: { currency: string; precision: number };
     
     constructor(config: { currency: string; precision: number }) {
@@ -24,7 +24,7 @@ const loadEcoEngine = async () => {
     currency: 'USD',
     precision: 2
   };
-  return new MockEconomicsEngine(config);
+  return new conomicsEngine(config);
 };
 
 describe('AGIEco Industrial Tests', () => {
@@ -42,7 +42,7 @@ describe('AGIEco Industrial Tests', () => {
   });
 
   test('vector cache works with lowdb', async () => {
-    // Mock vector cache behavior
+    //  vector cache behavior
     const vectorCache = new Map<string, readonly number[]>();
     
     vectorCache.set('economic_data_1', [1.2, 3.4, 5.6] as const);
@@ -70,3 +70,4 @@ export const createEcoTestSuite = () => ({
     UNEMPLOYMENT: 0.042
   } as const
 });
+

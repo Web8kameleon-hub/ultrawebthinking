@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { css } from "../css";
 
 const styles = {
@@ -33,3 +33,4 @@ const TabManager: React.FC = () => {
 };
 
 // Removed default export: TabManager;
+

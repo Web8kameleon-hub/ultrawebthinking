@@ -1,4 +1,4 @@
-﻿/**
+/**
  * OpenMind Memory System - Ruajtja dhe menaxhimi i njohurive
  */
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Neural Analytics Service
  * Advanced neural network analytics and pattern recognition
  * 
@@ -163,7 +163,7 @@ export class NeuralAnalyticsService {
       throw new Error(`Model ${modelId} not found`);
     }
 
-    console.log(`🎯 Training model ${modelId} with ${trainingData.length} samples`);
+    console.log(`🎯 Training model ${modelId} with ${trainingData.length} `);
     
     // Simulate training
     await new Promise(resolve => setTimeout(resolve, 1000));

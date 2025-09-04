@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGISheet Office Suite - Real-time Universal Office Platform
  * EuroWeb Ultra Platform - Revolutionary Office System
  * 
@@ -10,8 +10,8 @@
 
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
 
 // ==== REAL-TIME DATA INTERFACES ====
 interface RealTimeMetrics {
@@ -148,7 +148,7 @@ const generateOfficeModules = (): OfficeModule[] => {
   ]
 }
 
-const generateWorkspaceTemplates = (): WorkspaceTemplate[] => {
+const generateWorkspace = (): WorkspaceTemplate[] => {
   const baseTime = Date.now()
   
   return [
@@ -212,7 +212,7 @@ const generateWorkspaceTemplates = (): WorkspaceTemplate[] => {
         '📅 Court Calendar & Deadlines',
         '🔐 Attorney-Client Privilege Protection',
         '📊 Legal Analytics & Case Insights',
-        '💼 Contract Management & Templates',
+        '💼 Contract Management & ',
         '🏛️ Court Filing & e-Discovery',
         '📞 Secure Client Communication',
         '💰 Legal Billing & Payment Processing'
@@ -298,8 +298,8 @@ const AGISheetOfficeSuite: React.FC = () => {
   // Real-time State Management
   const [metrics, setMetrics] = useState<RealTimeMetrics>(generateRealTimeMetrics())
   const [modules, setModules] = useState<OfficeModule[]>(generateOfficeModules())
-  const [templates, setTemplates] = useState<WorkspaceTemplate[]>(generateWorkspaceTemplates())
-  const [activeView, setActiveView] = useState<'overview' | 'modules' | 'templates'>('overview')
+  const [workspaces, setWorkspaces] = useState<WorkspaceTemplate[]>(generateWorkspace())
+  const [activeView, setActiveView] = useState<'overview' | 'modules' | 'workspace'>('overview')
   const [isRealTime, setIsRealTime] = useState(true)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -309,7 +309,7 @@ const AGISheetOfficeSuite: React.FC = () => {
       intervalRef.current = setInterval(() => {
         setMetrics(generateRealTimeMetrics())
         setModules(generateOfficeModules())
-        setTemplates(generateWorkspaceTemplates())
+        setWorkspaces(generateWorkspace())
       }, 2000) // Update every 2 seconds for real-time feel
     }
 
@@ -394,7 +394,7 @@ const AGISheetOfficeSuite: React.FC = () => {
             {[
               { id: 'overview', label: 'System Overview', icon: '📊' },
               { id: 'modules', label: 'Core Modules', icon: '🛠️' },
-              { id: 'templates', label: 'Workspace Templates', icon: '🏗️' }
+              { id: '', label: 'Workspace ', icon: '🏗️' }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -636,38 +636,38 @@ const AGISheetOfficeSuite: React.FC = () => {
             </motion.div>
           )}
 
-          {activeView === 'templates' && (
+          {activeView === 'workspace' && (
             <motion.div
-              key="templates"
+              key=""
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {templates.map((template) => {
-                  const securityBadge = getSecurityBadge(template.securityLevel)
+                {workspaces.map((workspace) => {
+                  const securityBadge = getSecurityBadge(workspace.securityLevel)
                   
                   return (
                     <motion.div
-                      key={template.id}
+                      key={workspace.id}
                       className="bg-slate-800/50 backdrop-blur-sm border border-slate-600 rounded-xl p-6"
                       whileHover={{ scale: 1.02 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
                       <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-white">{template.name}</h3>
+                        <h3 className="text-lg font-semibold text-white">{workspace.name}</h3>
                         <span className={`px-2 py-1 ${securityBadge.color} text-white rounded-lg text-xs font-medium`}>
                           {securityBadge.text}
                         </span>
                       </div>
 
-                      <p className="text-gray-400 text-sm mb-4">{template.description}</p>
+                      <p className="text-gray-400 text-sm mb-4">{workspace.description}</p>
 
                       <div className="mb-4">
                         <h4 className="text-sm font-medium text-gray-300 mb-2">Target Users:</h4>
                         <div className="flex flex-wrap gap-1">
-                          {template.targetUsers.map((user) => (
+                          {workspace.targetUsers.map((user) => (
                             <span key={user} className="px-2 py-1 bg-purple-600/20 text-purple-400 rounded text-xs">
                               {user}
                             </span>
@@ -678,7 +678,7 @@ const AGISheetOfficeSuite: React.FC = () => {
                       <div className="mb-4">
                         <h4 className="text-sm font-medium text-gray-300 mb-2">Key Features:</h4>
                         <div className="flex flex-wrap gap-1">
-                          {template.features.map((feature) => (
+                          {workspace.features.map((feature) => (
                             <span key={feature} className="px-2 py-1 bg-green-600/20 text-green-400 rounded text-xs">
                               {feature}
                             </span>
@@ -688,11 +688,11 @@ const AGISheetOfficeSuite: React.FC = () => {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <div className="text-xl font-bold text-blue-400">{formatNumber(template.activeInstances)}</div>
+                          <div className="text-xl font-bold text-blue-400">{formatNumber(workspace.activeInstances)}</div>
                           <div className="text-xs text-gray-400">Active Instances</div>
                         </div>
                         <div>
-                          <div className="text-xl font-bold text-green-400">{template.efficiency.toFixed(1)}%</div>
+                          <div className="text-xl font-bold text-green-400">{workspace.efficiency.toFixed(1)}%</div>
                           <div className="text-xs text-gray-400">Efficiency</div>
                         </div>
                       </div>
@@ -722,3 +722,4 @@ const AGISheetOfficeSuite: React.FC = () => {
 }
 
 export default AGISheetOfficeSuite
+

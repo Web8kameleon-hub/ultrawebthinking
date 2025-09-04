@@ -1,8 +1,5 @@
-﻿import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata } from 'next'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'EuroWeb Ultra Platform - Universal AI Gateway',
@@ -20,9 +17,10 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className={`${inter.className} theme-euroweb`} suppressHydrationWarning={true}>
+      <body className="theme-euroweb font-sans" suppressHydrationWarning={true}>
         {children}
       </body>
     </html>
   )
 }
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGIXmed Form Component
  * Medical AI Analysis Input Form
  * 
@@ -100,7 +100,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ action, isLoading = false })
               id="symptoms"
               value={input}
               onChange={handleInputChange}
-              placeholder="Shembull: kam dhimbje koke, temperaturë 38°C, lodhje të madhe që zgjat prej 2 ditësh, dhimbje muskujsh..."
+ placeholder="Shembull: kam dhimbje koke, temperaturë 38°C, lodhje të madhe që zgjat prej 2 ditësh, dhimbje muskujsh..."
               disabled={isLoading}
               style={{
                 width: '100%',
@@ -232,3 +232,4 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ action, isLoading = false })
 }
 
 export default AGIXForm
+

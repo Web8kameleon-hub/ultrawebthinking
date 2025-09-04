@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 - Industrial App Page Manager
  * Ultra-High Performance Page Management for app/ Directory
  * 
@@ -105,7 +105,7 @@ export class AppPageManager {
       id: 'home',
       route: '/',
       title: 'EuroWeb Web8 Platform',
-      component: () => <div>Home Page</div>, // Placeholder
+      component: () => <div>Home Page</div>, // 
       metadata: {
         title: 'EuroWeb Web8 Platform - AGI-Powered Browser',
         description: 'Platforma më e avancuar për Web8 me AGI të integruar',
@@ -122,7 +122,7 @@ export class AppPageManager {
       id: 'agi-tunnel',
       route: '/agi-tunnel',
       title: 'AGI Tunnel Visualization',
-      component: () => <div>AGI Tunnel</div>, // Placeholder
+      component: () => <div>AGI Tunnel</div>, // 
       metadata: {
         title: 'AGI Tunnel - Neural Network Visualization',
         description: 'Vizualizimi i rrjetit neural AGI në kohë reale',
@@ -139,7 +139,7 @@ export class AppPageManager {
       id: 'openmind',
       route: '/openmind',
       title: 'OpenMind AI Gateway',
-      component: () => <div>OpenMind AI</div>, // Placeholder
+      component: () => <div>OpenMind AI</div>, // 
       metadata: {
         title: 'OpenMind - Universal AI Gateway',
         description: 'Qasja universale për të gjitha shërbimet AI',
@@ -332,8 +332,8 @@ export const usePagePerformance = (pageId: string) => {
 // Singleton instance export
 export const PageManager = AppPageManager.getInstance();
 
-// Pre-built page templates for app/ directory
-export const AppPageTemplates = {
+// Pre-built page  for app/ directory
+export const AppPage = {
   /**
    * Standard app page layout
    */
@@ -416,3 +416,4 @@ export const AppPageTemplates = {
     </div>
   )
 };
+

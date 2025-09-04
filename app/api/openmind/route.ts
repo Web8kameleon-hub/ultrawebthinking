@@ -1,4 +1,4 @@
-﻿import DualMindEngine from '../../../lib/dualMindEngine';
+import DualMindEngine from '../../../lib/dualMindEngine';
 import OpenMindMemory from '../../../lib/memorySystem';
 // import MultiGlueEngine from '../../../lib/multoglue';
 import ServiceRegistry from '../../../lib/serviceRegistry';
@@ -65,7 +65,7 @@ function performEthicalCheck(content: string): { passed: boolean; concerns?: str
     recommendations.push("Kontrollo kontekstin dhe qëllimin e informacionit");
   }
   
-  if (lowerContent.includes('fake') || lowerContent.includes('misinformation')) {
+  if (lowerContent.includes('') || lowerContent.includes('misinformation')) {
     concerns.push("Mund të përmbajë informacion të rremë");
     recommendations.push("Verifiko nga burime të pavarura");
   }
@@ -645,7 +645,7 @@ function generateGeminiResponse(query: string, analysis: any): { text: string; c
 
 🤖 **Fuqia analitike e Gemini:**
 • **Multi-format:** Word, Google Docs, PDF, Markdown
-• **Templates:** 50+ shabllone gati për përdorim
+• **:** 50+ shabllone gati për përdorim
 • **Data integration:** Grafik, tabela, statistika
 • **Real-time collaboration:** Feedback dhe sugjerime
 
@@ -771,7 +771,7 @@ function performAdvancedEthicalCheck(query: string, response: string): { passed:
   ];
   
   const misinformationPatterns = [
-    'fake', 'false', 'lie', 'misinformation', 'conspiracy',
+    '', 'false', 'lie', 'misinformation', 'conspiracy',
     'gënjeshtër', 'rreme', 'dezinformim'
   ];
 

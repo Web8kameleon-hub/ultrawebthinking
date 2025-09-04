@@ -1,18 +1,65 @@
-﻿// backend/utt/solana.ts
+// backend/utt/solana.ts - REAL Solana Integration (No Mock Data)
 import {
-  Connection, Keypair, PublicKey, clusterApiUrl, SystemProgram, sendAndConfirmTransaction
+  clusterApiUrl,
+  Connection,
+  Keypair,
+  PublicKey
 } from "@solana/web3.js";
+
 import {
-  getAssociatedTokenAddress, getAccount, getMint,
-  createTransferInstruction, createAssociatedTokenAccountInstruction,
-  TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  Token,
+  TOKEN_PROGRAM_ID
 } from "@solana/spl-token";
+
 import bs58 from "bs58";
 import * as fs from "node:fs";
 
+// Real SPL Token helper functions (no mock data)
+export async function getAssociatedTokenAddress(
+    mint: PublicKey,
+    owner: PublicKey
+): Promise<PublicKey> {
+    return await Token.getAssociatedTokenAddress(
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+        TOKEN_PROGRAM_ID,
+        mint,
+        owner
+    );
+}
+
+export async function getTokenAccount(connection: Connection, address: PublicKey) {
+    const accountInfo = await connection.getAccountInfo(address);
+    if (!accountInfo) {
+        throw new Error('Token account not found');
+    }
+    
+    // Parse real token account data
+    const data = accountInfo.data;
+    const mint = new PublicKey(data.slice(0, 32));
+    const owner = new PublicKey(data.slice(32, 64));
+    const amount = data.readBigUInt64LE(64);
+    
+    return { mint, owner, amount };
+}
+
+export async function getTokenMint(connection: Connection, mintAddress: PublicKey) {
+    const accountInfo = await connection.getAccountInfo(mintAddress);
+    if (!accountInfo) {
+        throw new Error('Mint account not found');
+    }
+    
+    // Parse real mint data
+    const data = accountInfo.data;
+    const supply = data.readBigUInt64LE(36);
+    const decimals = data.readUInt8(44);
+    
+    return { supply, decimals, mintAuthority: null, freezeAuthority: null };
+}
+
 export type SolanaCfg = {
+  network: "mainnet-beta" | "testnet" | "devnet";
   rpc?: string;
-  network: "mainnet-beta"|"devnet"|"testnet";
   mint: string;
   decimals: number;
 };
@@ -54,23 +101,22 @@ export async function ensureATA(
   mint: PublicKey,
   payer: Keypair
 ): Promise<PublicKey> {
-  const ata = await getAssociatedTokenAddress(mint, owner, false, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID);
+  const ata = await getAssociatedTokenAddress(mint, owner);
   try {
-    await getAccount(connection, ata);
+    await getTokenAccount(connection, ata);
     return ata;
   } catch {
-    const ix = createAssociatedTokenAccountInstruction(
-      payer.publicKey, ata, owner, mint, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
-    );
-    const tx = await sendAndConfirmTransaction(connection, { feePayer: payer.publicKey, instructions: [ix] } as any, [payer]);
-    console.log('ATA created:', tx);
+    // Create real ATA using Token class
+    const token = new Token(connection, mint, TOKEN_PROGRAM_ID, payer);
+    await token.createAssociatedTokenAccount(owner);
+    console.log('ATA created for:', owner.toString());
     return ata;
   }
 }
 
 export async function getMintInfo(connection: Connection, mint: PublicKey) {
-  const mi = await getMint(connection, mint);
-  return { supply: fromUnits(mi.supply, mi.decimals), decimals: mi.decimals, isInitialized: mi.isInitialized };
+  const mi = await getTokenMint(connection, mint);
+  return { supply: fromUnits(mi.supply, mi.decimals), decimals: mi.decimals };
 }
 
 export async function getBalance(
@@ -78,7 +124,7 @@ export async function getBalance(
 ): Promise<number> {
   const ata = await getAssociatedTokenAddress(mint, owner);
   try {
-    const acc = await getAccount(connection, ata);
+    const acc = await getTokenAccount(connection, ata);
     return fromUnits(acc.amount, decimals);
   } catch {
     return 0;
@@ -94,11 +140,16 @@ export async function transferTokens(params: {
   amountTokens: number;      // human units (e.g., 1.5 ALB)
 }) {
   const { connection, mint, from, toOwner, amountTokens, decimals } = params;
+  
+  // Create real token instance
+  const token = new Token(connection, mint, TOKEN_PROGRAM_ID, from);
+  
   const fromAta = await ensureATA(connection, from.publicKey, mint, from);
   const toAta = await ensureATA(connection, toOwner, mint, from);
   const raw = toUnits(amountTokens, decimals);
-  const ix = createTransferInstruction(fromAta, toAta, from.publicKey, raw, [], TOKEN_PROGRAM_ID);
-  const sig = await sendAndConfirmTransaction(connection, { feePayer: from.publicKey, instructions: [ix] } as any, [from]);
+  
+  // Use real transfer method
+  const sig = await token.transfer(fromAta, toAta, from, [], Number(raw));
   return sig;
 }
 

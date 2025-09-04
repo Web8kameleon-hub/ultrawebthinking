@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Card UI Components
  * Reusable card components for EuroWeb platform
  * 
@@ -41,3 +41,4 @@ export const CardContent: React.FC<CardContentProps> = ({ className = '', childr
     </div>
   )
 }
+

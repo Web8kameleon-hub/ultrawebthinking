@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 - Industrial Page Service
  * Pure TypeScript + ESM + Yarn Berry + Vanilla CSS + Framer Motion ONLY
  * 
@@ -319,10 +319,10 @@ export const IndustrialWrapper: React.FC<{
 // Export engines for advanced usage
 export { CSSClassEngine, IndustrialMemory, MotionEngine };
 
-// Predefined page templates
-export const IndustrialTemplates = {
+// Predefined page 
+export const Industrial = {
   /**
-   * AGI page template
+   * AGI page 
    */
   AGIPage: (title: string, children: React.ReactNode): React.ReactNode => {
     return React.createElement('div', {
@@ -353,7 +353,7 @@ export const IndustrialTemplates = {
   },
 
   /**
-   * Performance dashboard template
+   * Performance dashboard 
    */
   PerformancePage: (title: string, children: React.ReactNode): React.ReactNode => {
     return React.createElement('div', {

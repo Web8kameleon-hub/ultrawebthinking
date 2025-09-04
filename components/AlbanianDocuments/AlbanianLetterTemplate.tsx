@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 
@@ -199,7 +199,7 @@ Zoti i dhëntë paqe shpirtit të [emri i të ndjarit/së ndjares] dhe forcë ju
   }
 ]
 
-export const AlbanianLetterTemplate: React.FC = () => {
+export const AlbanianLetterTemplate: React.FC = (): React.JSX.Element => {
   const [selectedTemplate, setSelectedTemplate] = useState<LetterTemplate | null>(null)
   const [letterData, setLetterData] = useState({
     sender: {
@@ -256,7 +256,7 @@ export const AlbanianLetterTemplate: React.FC = () => {
 
   const saveLetter = () => {
     const letterContent = {
-      template: selectedTemplate?.name || 'Letër e Personalizuar',
+      name: selectedTemplate?.name || 'Letër e Personalizuar',
       data: letterData,
       timestamp: new Date().toISOString()
     }
@@ -265,7 +265,7 @@ export const AlbanianLetterTemplate: React.FC = () => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `Leter_${letterContent.template.replace(/\s+/g, '_')}.json`
+    a.download = `Leter_${letterContent.name.replace(/\s+/g, '_')}.json`
     a.click()
   }
 
@@ -459,27 +459,27 @@ export const AlbanianLetterTemplate: React.FC = () => {
                   <div className="grid grid-cols-1 gap-3">
                     <input
                       type="text"
-                      placeholder="Emri dhe mbiemri"
+ placeholder="Emri dhe mbiemri"
                       value={letterData.sender.name}
                       onChange={(e) => updateLetterData('sender', 'name', e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     />
                     <input
                       type="text"
-                      placeholder="Pozicioni/Titulli"
+ placeholder="Pozicioni/Titulli"
                       value={letterData.sender.title}
                       onChange={(e) => updateLetterData('sender', 'title', e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     />
                     <input
                       type="text"
-                      placeholder="Kompania/Institucioni"
+ placeholder="Kompania/Institucioni"
                       value={letterData.sender.company}
                       onChange={(e) => updateLetterData('sender', 'company', e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     />
                     <textarea
-                      placeholder="Adresa"
+ placeholder="Adresa"
                       value={letterData.sender.address}
                       onChange={(e) => updateLetterData('sender', 'address', e.target.value)}
                       className="w-full p-3 border rounded-lg h-20 resize-none"
@@ -487,14 +487,14 @@ export const AlbanianLetterTemplate: React.FC = () => {
                     <div className="grid grid-cols-2 gap-3">
                       <input
                         type="tel"
-                        placeholder="Telefoni"
+ placeholder="Telefoni"
                         value={letterData.sender.phone}
                         onChange={(e) => updateLetterData('sender', 'phone', e.target.value)}
                         className="w-full p-3 border rounded-lg"
                       />
                       <input
                         type="email"
-                        placeholder="Email"
+ placeholder="Email"
                         value={letterData.sender.email}
                         onChange={(e) => updateLetterData('sender', 'email', e.target.value)}
                         className="w-full p-3 border rounded-lg"
@@ -509,27 +509,27 @@ export const AlbanianLetterTemplate: React.FC = () => {
                   <div className="grid grid-cols-1 gap-3">
                     <input
                       type="text"
-                      placeholder="Emri dhe mbiemri"
+ placeholder="Emri dhe mbiemri"
                       value={letterData.recipient.name}
                       onChange={(e) => updateLetterData('recipient', 'name', e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     />
                     <input
                       type="text"
-                      placeholder="Pozicioni/Titulli"
+ placeholder="Pozicioni/Titulli"
                       value={letterData.recipient.title}
                       onChange={(e) => updateLetterData('recipient', 'title', e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     />
                     <input
                       type="text"
-                      placeholder="Kompania/Institucioni"
+ placeholder="Kompania/Institucioni"
                       value={letterData.recipient.company}
                       onChange={(e) => updateLetterData('recipient', 'company', e.target.value)}
                       className="w-full p-3 border rounded-lg"
                     />
                     <textarea
-                      placeholder="Adresa"
+ placeholder="Adresa"
                       value={letterData.recipient.address}
                       onChange={(e) => updateLetterData('recipient', 'address', e.target.value)}
                       className="w-full p-3 border rounded-lg h-20 resize-none"
@@ -549,7 +549,7 @@ export const AlbanianLetterTemplate: React.FC = () => {
                     />
                     <input
                       type="text"
-                      placeholder="Lënda e letrës"
+ placeholder="Lënda e letrës"
                       value={letterData.subject}
                       onChange={(e) => updateDirectField('subject', e.target.value)}
                       className="w-full p-3 border rounded-lg"
@@ -578,7 +578,7 @@ export const AlbanianLetterTemplate: React.FC = () => {
                 value={letterData.content}
                 onChange={(e) => updateDirectField('content', e.target.value)}
                 className="w-full h-96 p-4 border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Shkruani përmbajtjen e letrës këtu..."
+ placeholder="Shkruani përmbajtjen e letrës këtu..."
                 style={{ fontFamily: 'Times New Roman, serif', lineHeight: '1.6' }}
               />
               
@@ -615,3 +615,4 @@ export const AlbanianLetterTemplate: React.FC = () => {
 }
 
 export default AlbanianLetterTemplate
+

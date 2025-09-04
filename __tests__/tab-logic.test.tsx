@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Tab Logic Tests - Pure TypeScript Browser
  * Dynamic imports + Edge splitting + Turbo pack
  */
@@ -20,7 +20,7 @@ describe('Tab Logic Industrial Tests', () => {
       timestamp: new Date().toISOString()
     } as const);
     
-    const tab = createTab('tab1', 'Test', 'https://example.com');
+    const tab = createTab('tab1', 'Test', 'https://.com');
     
     expect(tab.id).toBe('tab1');
     expect(tab.title).toBe('Test');
@@ -62,3 +62,4 @@ export const createTabTestSuite = () => ({
       tabs.map(tab => ({ ...tab, isActive: tab.id === id }))
   }
 });
+

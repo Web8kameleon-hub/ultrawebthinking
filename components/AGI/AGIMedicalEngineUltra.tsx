@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Medical Engine Ultra - Healthcare Intelligence Dashboard
  * EuroWeb Platform - Medical AI & Healthcare Analytics
  * 
@@ -729,3 +729,4 @@ const AGIMedicalEngineUltra: React.FC = () => {
 }
 
 export default AGIMedicalEngineUltra
+

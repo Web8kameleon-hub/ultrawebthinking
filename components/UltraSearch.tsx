@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Ultra Search Component - Clean Build
  * Temporary stub for build compatibility
  */
@@ -26,3 +26,4 @@ export const UltraSearch: React.FC<UltraSearchProps> = ({
 };
 
 export default UltraSearch;
+

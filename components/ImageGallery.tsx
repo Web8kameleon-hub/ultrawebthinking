@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -25,12 +25,12 @@ export default function ImageGallery({ onLoad }: ImageGalleryProps) {
 
   const categories = ['all', 'natyrë', 'teknologji', 'arkitekturë', 'art'];
 
-  // Generate placeholder images
+  // Generate  images
   useEffect(() => {
     const timer = setTimeout(() => {
       const imageData: ImageItem[] = Array.from({ length: 24 }, (_, i) => ({
         id: i + 1,
-        src: `https://picsum.photos/300/200?random=${i + 1}`,
+        src: `https://picsum.photos/300/200?=${i + 1}`,
         alt: `Imazh ${i + 1}`,
         title: `Titull i Imazhit ${i + 1}`,
         category: categories[Math.floor(Math.random() * (categories.length - 1)) + 1],
@@ -221,3 +221,4 @@ export default function ImageGallery({ onLoad }: ImageGalleryProps) {
     </motion.div>
   );
 }
+

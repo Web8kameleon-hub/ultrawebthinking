@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGIXmed Results Component
  * Medical AI Analysis Results Display
  * 
@@ -350,3 +350,4 @@ export const AGIXResults: React.FC<AGIXResultsProps> = ({ result, onNewAnalysisA
 }
 
 export default AGIXResults
+

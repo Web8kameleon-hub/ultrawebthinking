@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb AGI×Eco Ultra - Environmental AI Tab System
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 
@@ -839,3 +839,4 @@ const AGIEcoUltra: React.FC = () => {
 
 export { AGIEcoUltra };
 export default AGIEcoUltra;
+

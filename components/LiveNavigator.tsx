@@ -1,4 +1,4 @@
-﻿// components/LiveNavigator.tsx
+// components/LiveNavigator.tsx
 import React from 'react';
 import styles from '../styles/LiveNavigator.module.css';
 
@@ -37,3 +37,4 @@ const LiveNavigator = () => {
 };
 
 export default LiveNavigator;
+

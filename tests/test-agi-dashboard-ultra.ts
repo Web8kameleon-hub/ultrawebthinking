@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Test script për AGI Core Dashboard Engine Ultra
  * @author EuroWeb Platform
  */
@@ -63,7 +63,7 @@ async function testAGIDashboard() {
     console.log(`✅ Dashboard memory query returned ${dashboardRecords.length} records`)
 
     // Simulate dashboard metrics
-    const mockMetrics = {
+    const etrics = {
       totalProcessingPower: '47.3 TFLOPS',
       globalUptime: '99.97%',
       connectedNodes: 15847,
@@ -74,7 +74,7 @@ async function testAGIDashboard() {
       memoryUsage: 67.4,
       networkThroughput: 1247.8
     }
-    console.log('✅ Dashboard metrics simulation:', mockMetrics)
+    console.log('✅ Dashboard metrics simulation:', etrics)
 
     // Test multiple engine types
     const engineTypes = [
@@ -91,7 +91,7 @@ async function testAGIDashboard() {
     console.log('✅ Dashboard real-time updates: Simulated every 2-3 seconds')
 
     // Test notification system
-    const mockNotification = {
+    const otification = {
       id: `dashboard_test_${Date.now()}`,
       type: 'success' as const,
       title: 'Dashboard Test Complete',
@@ -99,7 +99,7 @@ async function testAGIDashboard() {
       timestamp: new Date(),
       persistent: false
     }
-    console.log('✅ Dashboard notification system:', mockNotification)
+    console.log('✅ Dashboard notification system:', otification)
 
     // Test component status
     const componentStatuses = [

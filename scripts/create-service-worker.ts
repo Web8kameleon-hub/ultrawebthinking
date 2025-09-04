@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env tsx
+#!/usr/bin/env tsx
 /**
  * EuroWeb Service Worker Creator
  * Creates PWA service worker and fixes 404 issues
@@ -303,11 +303,11 @@ console.log('🚀 EuroWeb Service Worker loaded - AGI ready!')
   }
 
   private async createFavicon(): Promise<void> {
-    // Create a simple favicon placeholder
+    // Create a simple favicon 
     const faviconPath = join(this.publicDir, 'favicon.ico');
     
     if (!existsSync(faviconPath)) {
-      // Create a minimal ICO file (this is a placeholder - in production you'd use a real icon)
+      // Create a minimal ICO file (this is a  - in production you'd use a real icon)
       const faviconContent = Buffer.from('AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAA');
       writeFileSync(faviconPath, faviconContent, 'base64');
       console.log('✅ Created /public/favicon.ico');

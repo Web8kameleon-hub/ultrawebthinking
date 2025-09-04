@@ -80,7 +80,7 @@ export class InlineStyleEngine {
   /**
    * Button styles industriale
    */
-  static button = {
+  static button: { [key: string]: ComponentStyles } = {
     primary: {
       base: {
         padding: '12px 24px',

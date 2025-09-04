@@ -1,6 +1,6 @@
-﻿'use client';
+'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface AIResponse {
   provider: string;
@@ -375,3 +375,4 @@ export default function OpenMindPage() {
     </div>
   );
 }
+

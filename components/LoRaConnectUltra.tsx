@@ -1,17 +1,17 @@
-﻿/**
+/**
  * LoRa Connect Ultra Dashboard Component
  * Komponenti i Dashboard-it LoRa Connect Ultra
  */
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import LoRaConnectEngine, { 
-  LoRaDevice, 
-  LoRaGateway, 
-  LoRaMessage, 
-  SensorReading 
+import { useEffect, useState } from 'react';
+import LoRaConnectEngine, {
+    LoRaDevice,
+    LoRaGateway,
+    LoRaMessage,
+    SensorReading
 } from '../lib/loraConnectEngine';
 
 const LoRaConnectUltra = () => {
@@ -565,3 +565,4 @@ const LoRaConnectUltra = () => {
 };
 
 export default LoRaConnectUltra;
+

@@ -1,4 +1,4 @@
-﻿// AGI Core Engine - Neural Memory & Intelligence System
+// AGI Core Engine - Neural Memory & Intelligence System
 import { useCallback, useState } from 'react';
 
 export interface AGIMemoryStore {
@@ -201,3 +201,4 @@ export const getAGIMemory = () => {
 };
 
 export default agiCore;
+

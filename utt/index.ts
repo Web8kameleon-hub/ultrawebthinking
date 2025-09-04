@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT (Universal Task Tracker) Service
  * Advanced task management and workflow orchestration
  * 

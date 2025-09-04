@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra - System Performance Dashboard
+// EuroWeb Ultra - System Performance Dashboard
 // Monitorim i performancës në kohë reale për të gjithë sistemin
 
 'use client';
@@ -620,3 +620,4 @@ export default function SystemPerformanceDashboard() {
     </div>
   );
 }
+

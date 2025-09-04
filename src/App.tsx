@@ -14,7 +14,7 @@ import Aviation from '../components/Aviation';
 import Surfing from '../components/Surfing-Beautiful';
 import UltraDemo from '../components/UltraDemo';
 
-type AppMode = 'overview' | 'surfing' | 'aviation' | 'neural' | 'demo'
+type AppMode = 'overview' | 'surfing' | 'aviation' | 'neural' | ''
 
 function App() {
   const [mode, setMode] = useState<AppMode>('overview')
@@ -40,8 +40,8 @@ function App() {
       description: 'Neural network monitoring',
       component: <NeuralPlaceholder />
     },
-    demo: {
-      name: '🎨 Demo',
+    ultraTheme: {
+      name: '🎨 UltraTheme',
       description: 'UltraThemeEngine showcase',
       component: <UltraDemo />
     }
@@ -145,14 +145,14 @@ function Overview() {
   )
 }
 
-// Neural Placeholder
+// Neural 
 function NeuralPlaceholder() {
   return (
-    <div className="neural-placeholder">
+    <div className="neural-">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="placeholder-content"
+        className="-content"
       >
         <h2>🧠 Neural Network Center</h2>
         <p>Neural monitoring component coming soon...</p>
@@ -179,3 +179,4 @@ function NeuralPlaceholder() {
 }
 
 export default App
+

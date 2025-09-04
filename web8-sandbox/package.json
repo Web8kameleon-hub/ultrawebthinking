@@ -1,0 +1,14 @@
+{
+  "name": "web8-sandbox",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --loader ts-node/esm test-sandbox.ts",
+    "sandbox": "node --loader ts-node/esm sandbox-engine.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  }
+}

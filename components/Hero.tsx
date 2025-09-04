@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
@@ -87,3 +87,4 @@ const Hero = () => {
 
 export { Hero }
 export default Hero
+

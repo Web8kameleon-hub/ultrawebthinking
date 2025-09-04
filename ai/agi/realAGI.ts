@@ -1,4 +1,4 @@
-﻿/**
+/**
  * RealAGI - Web8 UltraWebThinking AGI Core
  * Mendja Galaktike - Advanced General Intelligence System
  */
@@ -72,7 +72,7 @@ export class RealAGI {
   }
 
   private simulateThinking(): void {
-    // Simulate processing time (synchronous placeholder)
+    // Simulate processing time (synchronous )
     console.log('AGI thinking...');
   }
 }

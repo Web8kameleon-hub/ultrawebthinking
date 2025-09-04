@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 interface BrowserLayoutProps {
   children: React.ReactNode;
@@ -11,4 +11,5 @@ export default function BrowserLayout({ children }: BrowserLayoutProps) {
     </div>
   );
 }
+
 

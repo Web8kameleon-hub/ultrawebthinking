@@ -1,0 +1,426 @@
+/* Web8TabSystemVanilla.module.css */
+/* Swiss Precision CSS Module - Zero Dependencies */
+
+.root {
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  background-color: #111;
+  border-bottom: 2px solid #333;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4f46e5;
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.pill {
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.pillActive {
+  background-color: #4f46e5;
+  color: #fff;
+}
+
+.statusSide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.livePill {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.liveOk {
+  background-color: #10b981;
+  color: #fff;
+}
+
+.liveError {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.clock {
+  font-size: 12px;
+  color: #888;
+}
+
+.health {
+  background-color: #1e40af20;
+  border: 1px solid #3b82f6;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.tabbar {
+  background-color: #111;
+  border-bottom: 1px solid #333;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tabRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.tab {
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #ccc;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabActive {
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+}
+
+.tabActiveSecondary {
+  background-color: #059669;
+  color: #fff;
+  border: none;
+}
+
+.addressBar {
+  background-color: #111;
+  border-bottom: 1px solid #333;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addrBtn {
+  background-color: #4f46e5;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.addrInput {
+  flex: 1;
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.secureBtn {
+  background-color: #059669;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  background-color: #000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.skeleton {
+  background-color: #222;
+  border-radius: 6px;
+  padding: 20px;
+  color: #888;
+  text-align: center;
+  border: 2px dashed #444;
+}
+
+.panelCenter {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 8px;
+  color: #4f46e5;
+}
+
+.h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 8px;
+  color: #fff;
+}
+
+.muted {
+  color: #888;
+  font-size: 14px;
+}
+
+.card {
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.cardText {
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.btn {
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 8px 16px;
+  color: #ccc;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btnPrimary {
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+}
+
+.btnSuccess {
+  background-color: #059669;
+  color: #fff;
+  border: none;
+}
+
+.btnDanger {
+  background-color: #dc2626;
+  color: #fff;
+  border: none;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.metricCard {
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.metricCardActive {
+  border-color: #059669;
+}
+
+.metricCardError {
+  border-color: #dc2626;
+}
+
+.metricCardDegraded {
+  border-color: #d97706;
+}
+
+.metricValue {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.metricLabel {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.kvRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #222;
+}
+
+.statusBadge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.statusActive {
+  background-color: #059669;
+  color: #fff;
+}
+
+.statusError {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.statusDegraded {
+  background-color: #d97706;
+  color: #fff;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #059669;
+  animation: pulse 2s infinite;
+}
+
+.pulseError {
+  background-color: #dc2626;
+  animation: none;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #444;
+  border-top: 2px solid #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.padding20 {
+  padding: 20px;
+}
+
+.flexRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.flexRowSpaced {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flexWrap {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.marginTop8 {
+  margin-top: 8px;
+}
+
+.liveMetricsBadge {
+  background-color: #059669;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.liveMetricsTitle {
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.liveMetricsSubtitle {
+  color: #ccc;
+  font-size: 10px;
+}
+
+.tabClose {
+  opacity: 0.6;
+  margin-left: auto;
+}
+
+.newTabBtn {
+  margin-left: 10px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

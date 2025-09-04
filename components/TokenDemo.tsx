@@ -1,6 +1,6 @@
-﻿/**
- * EuroWeb Industrial Token System Demo
- * Demonstrates comprehensive CVA token usage with vanilla motion
+/**
+ * EuroWeb Industrial Token System 
+ * strates comprehensive CVA token usage with vanilla motion
  */
 
 import { cva } from 'class-variance-authority';
@@ -167,7 +167,7 @@ export const TokenDemo: React.FC = () => {
         </motion.p>
       </div>
 
-      {/* Color Palette Demo */}
+      {/* Color Palette  */}
       <div className={stackVariants({ gap: '8' })}>
         <h2 className={textVariants({ size: '2xl', weight: 'semibold', color: 'default' })}>
           Color System
@@ -246,7 +246,7 @@ export const TokenDemo: React.FC = () => {
         </motion.div>
       </div>
 
-      {/* Token Usage Examples */}
+      {/* Token Usage  */}
       <div className={stackVariants({ gap: '6' })}>
         <h2 className={textVariants({ size: '2xl', weight: 'semibold', color: 'default' })}>
           Direct Token Usage
@@ -304,3 +304,4 @@ export const TokenDemo: React.FC = () => {
 };
 
 export default TokenDemo;
+

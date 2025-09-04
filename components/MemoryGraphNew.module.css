@@ -1,0 +1,245 @@
+/* MemoryGraph CSS Module - Simple Industrial Theme */
+
+.root {
+  width: 100%;
+  padding: 24px;
+  background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%);
+  border: 1px solid #334155;
+  border-radius: 16px;
+  color: #e2e8f0;
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin: 0;
+}
+
+.graphContainer {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.svgCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Node Styles */
+.node {
+  position: absolute;
+  width: 120px;
+  height: 80px;
+  border: 2px solid #334155;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.node:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.nodeOnline {
+  border-color: #22c55e;
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.nodeDegraded {
+  border-color: #f59e0b;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+.nodeDown {
+  border-color: #ef4444;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.nodeLabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.nodeStatus {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.nodeLatency {
+  font-size: 10px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* Port Styles */
+.port {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #334155;
+  background: #111827;
+  transition: all 0.2s ease;
+}
+
+.portRight {
+  right: -6px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.portLeft {
+  left: -6px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.portOnline {
+  background: #22c55e;
+  border-color: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.portError {
+  background: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+/* Connection Lines */
+.connectionLine {
+  stroke: #334155;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.connectionActive {
+  stroke: #22c55e;
+  opacity: 1;
+  stroke-width: 3;
+}
+
+.connectionError {
+  stroke: #ef4444;
+  opacity: 1;
+  stroke-width: 3;
+}
+
+/* Status Panel */
+.statusPanel {
+  margin-top: 24px;
+  padding: 16px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 12px;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.statusIndicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusOk {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+}
+
+.statusWarn {
+  background: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.statusError {
+  background: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+.statusText {
+  color: #e2e8f0;
+  font-size: 12px;
+}
+
+.statusMeta {
+  margin-top: 12px;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* Animations */
+@keyframes pulseOk {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  50% { 
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+  }
+}
+
+@keyframes pulseWarn {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  }
+  50% { 
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+  }
+}
+
+@keyframes pulseError {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% { 
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+.animatePulseOk {
+  animation: pulseOk 2s infinite;
+}
+
+.animatePulseWarn {
+  animation: pulseWarn 2s infinite;
+}
+
+.animatePulseError {
+  animation: pulseError 2s infinite;
+}

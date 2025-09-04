@@ -242,7 +242,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"url\": \"https://example.com\",\n  \"extractContent\": true,\n  \"followRedirects\": true,\n  \"timeout\": 30000\n}"
+              "raw": "{\n  \"url\": \"https://.com\",\n  \"extractContent\": true,\n  \"followRedirects\": true,\n  \"timeout\": 30000\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/surfing/browse",
@@ -263,7 +263,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"domain\": \"example.com\",\n  \"maxPages\": 100,\n  \"respectRobots\": true,\n  \"depth\": 3\n}"
+              "raw": "{\n  \"domain\": \".com\",\n  \"maxPages\": 100,\n  \"respectRobots\": true,\n  \"depth\": 3\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/surfing/crawl",
@@ -289,7 +289,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Q1 2025 Analytics\",\n  \"description\": \"Quarterly business analytics workspace\",\n  \"template\": \"analytics\",\n  \"permissions\": {\n    \"public\": false,\n    \"collaborators\": [\"user@example.com\"]\n  }\n}"
+              "raw": "{\n  \"name\": \"Q1 2025 Analytics\",\n  \"description\": \"Quarterly business analytics workspace\",\n  \"\": \"analytics\",\n  \"permissions\": {\n    \"public\": false,\n    \"collaborators\": [\"user@.com\"]\n  }\n}"
             },
             "url": {
               "raw": "{{base_url}}/api/gisheet/workspace",

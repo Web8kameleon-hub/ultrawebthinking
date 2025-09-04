@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Guardian Middleware - Edge Runtime Compatible
  * Pure TypeScript Security Middleware for Vercel Edge
  * 
@@ -31,7 +31,7 @@ const blockedIPs = new Map<string, BlockedIP>();
 
 // Predefined blocked IPs and patterns
 const BLOCKED_IPS = new Set([
-  '192.168.1.100', // Example blocked IP
+  '192.168.1.100', //  blocked IP
 ]);
 
 const BLOCKED_USER_AGENTS = [

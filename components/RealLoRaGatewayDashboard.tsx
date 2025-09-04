@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Real LoRa Gateway Dashboard
  * Dashboard për Gateway LoRa të Vërtetë
  * 
@@ -483,3 +483,4 @@ const RealLoRaGatewayDashboard: React.FC = () => {
 };
 
 export default RealLoRaGatewayDashboard;
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Label UI Component
  * Reusable label component for EuroWeb platform
  * 
@@ -26,3 +26,4 @@ export const Label: React.FC<LabelProps> = ({ className = '', children, ...props
     </label>
   )
 }
+

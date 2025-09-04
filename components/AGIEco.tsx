@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 interface AGIEcoProps {
   mode: 'monitoring' | 'analysis' | 'optimization';
@@ -23,3 +23,4 @@ export const AGIEco: React.FC<AGIEcoProps> = ({ mode, ecosystem, dataSource }) =
     </div>
   );
 };
+

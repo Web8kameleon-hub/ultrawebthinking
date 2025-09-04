@@ -1,4 +1,4 @@
-﻿// scripts/utt/generate-qr.ts
+// scripts/utt/generate-qr.ts
 // Usage: npx tsx scripts/utt/generate-qr.ts ALB-0001 SERIAL-0001 <WALLET_ADDRESS>
 import fs from "node:fs";
 import path from "node:path";
@@ -8,7 +8,7 @@ async function main() {
   const [tokenId, serial, wallet] = process.argv.slice(2);
   if (!tokenId || !serial || !wallet) {
     console.error("Usage: npx tsx scripts/utt/generate-qr.ts <TOKEN_ID> <SERIAL> <SOL_WALLET>");
-    console.error("Example: npx tsx scripts/utt/generate-qr.ts ALB-0001 S-0001 HSEcf132J4dNz46gw5fsVV7xfgedeFyTZXMSHcroz3BU");
+    console.error(": npx tsx scripts/utt/generate-qr.ts ALB-0001 S-0001 HSEcf132J4dNz46gw5fsVV7xfgedeFyTZXMSHcroz3BU");
     process.exit(1);
   }
 

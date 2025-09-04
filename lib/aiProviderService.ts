@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Real AI Provider Integration for DualMind Engine
  * Enables connection to OpenAI, Anthropic, and other AI services
  */

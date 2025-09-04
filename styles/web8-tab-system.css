@@ -1,0 +1,268 @@
+/* Web8TabSystem Global Styles */
+
+:root {
+  --bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+  --surface: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  --card: rgba(255,255,255,0.9);
+  --muted: #64748b;
+  --ink: #1e293b;
+
+  --blue: #3b82f6;
+  --indigo: #6366f1;
+  --violet: #8b5cf6;
+  --purple: #a855f7;
+  --green: #22c55e;
+  --amber: #f59e0b;
+  --red: #ef4444;
+
+  --ring: rgba(99,102,241,0.2);
+  --border: #e2e8f0;
+  --shadow: 0 8px 32px rgba(99,102,241,0.1);
+}
+
+[data-theme="dark"] {
+  --bg: linear-gradient(135deg, #0f172a 0%, #111827 50%, #0b1220 100%);
+  --surface: linear-gradient(135deg, #0b1220 0%, #111827 100%);
+  --card: rgba(20,27,45,0.9);
+  --muted: #94a3b8;
+  --ink: #e5e7eb;
+
+  --border: #263043;
+  --ring: rgba(139,92,246,0.25);
+  --shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+.web8-root {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+}
+
+/* Topbar */
+.web8-topbar {
+  background: var(--surface);
+  backdrop-filter: blur(18px);
+  border-bottom: 3px solid var(--indigo);
+  box-shadow: var(--shadow);
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.web8-brandSide { display: flex; align-items: center; gap: 18px; }
+.web8-brand {
+  font-size: 22px; font-weight: 800;
+  background: linear-gradient(45deg, var(--indigo), var(--violet));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  letter-spacing: .4px;
+}
+.web8-nav { display: flex; gap: 10px; }
+.web8-pill {
+  background: rgba(255,255,255,0.85); border: 2px solid var(--border);
+  color: #475569; padding: 8px 14px; border-radius: 18px; font-weight: 500; cursor: pointer;
+  transition: transform .15s ease;
+}
+.web8-pillPrimary {
+  background: linear-gradient(135deg, var(--indigo), var(--violet));
+  color: #fff; border: none; box-shadow: 0 4px 15px rgba(99,102,241,.3);
+}
+.web8-pill:hover { transform: translateY(-1px); }
+
+.web8-statusSide { display: flex; align-items: center; gap: 14px; }
+.web8-livePill {
+  padding: 8px 14px; border-radius: 18px; color: #fff; font-weight: 700;
+  box-shadow: 0 4px 15px rgba(0,0,0,.1);
+}
+.web8-liveOk { background: linear-gradient(135deg, #10b981, #059669); }
+.web8-liveWarn { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.web8-liveError { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.web8-clock { font-weight: 500; color: #475569; }
+.web8-health {
+  font-size: 14px; color: var(--indigo);
+  padding: 6px 12px; border-radius: 14px; background: rgba(99,102,241,0.1); border: 2px solid var(--ring); font-weight: 700;
+}
+
+/* Tabbar */
+.web8-tabbar {
+  background: linear-gradient(135deg, #fefefe 0%, #f8fafc 100%);
+  border-bottom: 2px solid rgba(99, 102, 241, .2);
+  padding: 8px 16px; display: flex; flex-direction: column; gap: 8px; min-height: 104px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.05);
+}
+.web8-tabRow { display: flex; align-items: center; gap: 8px; }
+.web8-tab {
+  background: rgba(255,255,255,.78); border: 2px solid var(--border);
+  border-radius: 14px; padding: 8px 12px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  max-width: 220px; color: #475569; font-weight: 500; transition: box-shadow .15s ease, transform .15s ease;
+}
+.web8-tab:hover { transform: translateY(-1px); }
+.web8-tabActivePrimary { background: linear-gradient(135deg, var(--indigo), var(--violet)); color: #fff; border: none; box-shadow: 0 4px 15px rgba(99,102,241,.3); }
+.web8-tabActiveSecondary { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; box-shadow: 0 4px 15px rgba(16,185,129,.3); }
+.web8-tabText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.web8-tabClose { margin-left: auto; opacity: .6; }
+.web8-newTab {
+  margin-left: 10px; background: var(--surface); border: 2px solid var(--border); border-radius: 14px; color: #475569;
+  padding: 8px 12px; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+/* Address bar */
+.web8-addressBar {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-bottom: 2px solid rgba(99,102,241,.12);
+  padding: 12px 16px; display: flex; gap: 12px; align-items: center;
+}
+.web8-addrBtns { display: flex; gap: 10px; }
+.web8-addrBtn, .web8-addrBtnPrimary {
+  border: none; border-radius: 12px; color: #fff; padding: 10px 12px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+.web8-addrBtn { background: linear-gradient(135deg, var(--indigo), var(--violet)); }
+.web8-addrBtnPrimary { background: linear-gradient(135deg, #10b981, #059669); }
+.web8-addrInput {
+  flex: 1; background: rgba(255,255,255,.9); border: 2px solid var(--border); border-radius: 14px;
+  padding: 10px 14px; color: var(--ink); font-size: 14px; box-shadow: inset 0 2px 4px rgba(0,0,0,.05);
+}
+.web8-secureBtn {
+  background: linear-gradient(135deg, #10b981, #059669); border: none; border-radius: 14px; color: #fff;
+  padding: 10px 16px; font-weight: 700; box-shadow: 0 4px 15px rgba(16,185,129,.3); cursor: pointer;
+}
+
+/* Main */
+.web8-main { flex: 1; display: flex; overflow: hidden; }
+.web8-content { flex: 1; display: flex; flex-direction: column; background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); overflow: auto; }
+
+/* Dashboard */
+.web8-dashboardRoot { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+.web8-headerCard {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 16px; border: 1px solid rgba(59,130,246,.2); border-radius: 12px;
+  background: linear-gradient(135deg, rgba(59,130,246,.08) 0%, rgba(139,92,246,.08) 100%);
+}
+.web8-h1 { font-size: 26px; font-weight: 800; margin: 0 0 6px; background: linear-gradient(45deg, var(--blue), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.web8-h2 { font-size: 18px; font-weight: 800; margin: 0 0 10px; color: var(--ink); }
+.web8-meta { color: #64748b; font-size: 14px; }
+.web8-muted { color: var(--muted); font-size: 14px; }
+
+.web8-statusPill {
+  background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3); border-radius: 8px;
+  padding: 10px 14px; text-align: center;
+}
+.web8-statusTitle { color: #16a34a; font-size: 14px; font-weight: 700; }
+.web8-statusSub { color: #15803d; font-size: 12px; }
+
+.web8-gridMetrics {
+  display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.web8-metricCard {
+  background: rgba(30,35,45,.8); border-radius: 8px; padding: 14px; border: 1px solid rgba(100,116,139,.25); color: #f8fafc;
+}
+.web8-borderBlue { border-color: rgba(59,130,246,.35); }
+.web8-borderViolet { border-color: rgba(139,92,246,.35); }
+.web8-borderGreen { border-color: rgba(34,197,94,.35); }
+.web8-borderRed { border-color: rgba(239,68,68,.35); }
+.web8-borderAmber { border-color: rgba(245,158,11,.35); }
+.web8-borderIndigo { border-color: rgba(99,102,241,.35); }
+.web8-metricLab { font-size: 12px; font-weight: 700; margin-bottom: 6px; opacity: .9; }
+.web8-metricBig { font-size: 22px; font-weight: 800; }
+.web8-metricSub { font-size: 11px; opacity: .8; }
+
+.web8-gridSmall {
+  display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+.web8-smallCard {
+  background: rgba(30,35,45,.6); padding: 12px; border-radius: 6px; text-align: center; border: 1px solid rgba(100,116,139,.2); color: #cbd5e1;
+}
+.web8-smallLab { font-size: 11px; color: #94a3b8; }
+.web8-smallVal { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-top: 2px; }
+.web8-smallSub { font-size: 10px; color: #94a3b8; }
+
+/* Controls */
+.web8-controlBlock {
+  background: rgba(30,35,45,.85); border: 1px solid rgba(100,116,139,.3); border-radius: 12px; padding: 18px; color: #f8fafc;
+}
+.web8-actionsRow, .web8-controlsRow { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.web8-btn {
+  padding: 8px 12px; border-radius: 6px; border: 1px solid transparent; font-weight: 700; cursor: pointer; transition: opacity .12s ease;
+}
+.web8-btn:disabled { opacity: .6; cursor: not-allowed; }
+.web8-btnBlue { background: rgba(59,130,246,.2); border-color: #3b82f6; color: #3b82f6; }
+.web8-btnGreen { background: rgba(34,197,94,.2); border-color: #22c55e; color: #22c55e; }
+.web8-btnAmber { background: rgba(245,158,11,.2); border-color: #f59e0b; color: #f59e0b; }
+.web8-btnViolet { background: rgba(168,85,247,.2); border-color: #a855f7; color: #a855f7; }
+.web8-btnRed { background: rgba(239,68,68,.2); border-color: #ef4444; color: #ef4444; }
+.web8-btnIndigo { background: rgba(99,102,241,.2); border-color: #6366f1; color: #6366f1; }
+
+.web8-ctrlBtn {
+  padding: 6px 10px; border-radius: 4px; border: 1px solid transparent; font-size: 12px; font-weight: 700; cursor: pointer;
+}
+.web8-accentGreen { background: rgba(34,197,94,.15); border-color: rgba(34,197,94,.3); color: #22c55e; }
+.web8-accentBlue { background: rgba(59,130,246,.15); border-color: rgba(59,130,246,.3); color: #3b82f6; }
+.web8-accentAmber { background: rgba(245,158,11,.15); border-color: rgba(245,158,11,.3); color: #f59e0b; }
+.web8-accentPurple { background: rgba(168,85,247,.15); border-color: rgba(168,85,247,.3); color: #a855f7; }
+.web8-accentViolet { background: rgba(139,92,246,.15); border-color: rgba(139,92,246,.3); color: #8b5cf6; }
+
+.web8-footerBar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; background: rgba(30,35,45,.6); border: 1px solid rgba(100,116,139,.2);
+  border-radius: 6px; font-size: 11px; color: #94a3b8;
+}
+
+/* Panels / Generics */
+.web8-panelCenter { padding: 24px; text-align: center; }
+.web8-kvRow { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 0; color: var(--ink); }
+.web8-ok { color: #16a34a; font-weight: 800; }
+.web8-btnRow { display: flex; gap: 10px; margin-top: 10px; }
+.web8-cardRow { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.web8-card {
+  background: var(--card); border: 2px solid var(--border); border-radius: 16px; padding: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+}
+.web8-cardTitle { font-weight: 800; margin-bottom: 6px; color: #1f2937; }
+.web8-cardText { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+.web8-cardAccentBlue { border-color: rgba(59,130,246,.35); }
+.web8-cardAccentIndigo { border-color: rgba(99,102,241,.35); }
+.web8-cardAccentAmber { border-color: rgba(245,158,11,.35); }
+.web8-cardAccentPurple { border-color: rgba(168,85,247,.35); }
+.web8-cardAccentViolet { border-color: rgba(139,92,246,.35); }
+
+.web8-skeleton {
+  padding: 20px; text-align: center; color: var(--muted);
+  border: 2px dashed var(--border); border-radius: 12px; margin: 16px;
+}
+
+/* Edge-to-cloud */
+.web8-edgeRoot { padding: 24px; }
+.web8-edgeGrid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.web8-meshRow { display: flex; gap: 8px; flex-wrap: wrap; }
+.web8-nodeOk, .web8-nodeDown {
+  padding: 6px 10px; border-radius: 10px; font-weight: 700; border: 1px solid;
+}
+.web8-nodeOk { background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.3); color: #16a34a; }
+.web8-nodeDown { background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.3); color: #ef4444; }
+
+/* Tools / Eco / System */
+.web8-toolsRoot, .web8-ecoRoot, .web8-systemRoot, .web8-gatewayRoot { padding: 24px; }
+.web8-metricsRow { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.web8-metric { background: var(--card); border: 2px solid var(--border); border-radius: 14px; padding: 14px; text-align: center; }
+.web8-metricVal { font-size: 20px; font-weight: 800; color: #111827; }
+.web8-metricLab { color: var(--muted); font-size: 12px; }
+
+/* AGI Control wrapper */
+.web8-agiControl { padding: 16px; }
+
+/* Spinner animation */
+.web8-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: web8-spin 1s linear infinite;
+}
+
+@keyframes web8-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGISheet Tests - Pure TypeScript Excel Engine
  * Lazy FormulaEngine + @popperjs/core + Dynamic imports
  */
@@ -42,16 +42,16 @@ describe('AGISheet Industrial Excel Tests', () => {
   });
 
   test('popperjs integration works', async () => {
-    // Test popperjs mock integration (since @popperjs/core is not installed)
-    const mockCreatePopper = () => ({
+    // Test popperjs  integration (since @popperjs/core is not installed)
+    const reatePopper = () => ({
       destroy: () => {},
       forceUpdate: () => {},
       update: () => Promise.resolve({}),
       state: { elements: {}, styles: {}, attributes: {}, modifiersData: {} }
     });
     
-    expect(mockCreatePopper).toBeDefined();
-    const popper = mockCreatePopper();
+    expect(reatePopper).toBeDefined();
+    const popper = reatePopper();
     expect(popper.destroy).toBeDefined();
   });
 });
@@ -63,3 +63,4 @@ export const createExcelTestSuite = () => ({
     COUNT: (...values: any[]) => values.length
   }
 });
+

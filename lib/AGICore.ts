@@ -1,4 +1,4 @@
-﻿// AGICore - Intelligent state management for Web8
+// AGICore - Intelligent state management for Web8
 import React from 'react';
 
 export interface AGIMemoryStore {

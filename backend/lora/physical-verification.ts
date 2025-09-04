@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LoRa Physical Token Verification Module
  * EuroWeb Platform - IoT Integration for UTT-ALB Bridge
  * 
@@ -308,7 +308,7 @@ export class LoRaPhysicalVerification extends EventEmitter {
    * Simulate physical token event (for testing)
    */
   public simulatePhysicalTokenEvent(nodeId: string, tokenId: string) {
-    const mockPacket = {
+    const acket = {
       deviceId: nodeId,
       temperature: 22 + Math.random() * 10,
       humidity: 50 + Math.random() * 20,
@@ -324,7 +324,7 @@ export class LoRaPhysicalVerification extends EventEmitter {
       lng: 19.8187 + (Math.random() - 0.5) * 0.01
     }
 
-    this.handleLoRaPacket(mockPacket)
+    this.handleLoRaPacket(acket)
   }
 }
 

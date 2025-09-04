@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EcoStatisticsEngine.ts
  * Real-time ecological statistics processing engine
  * © Web8 UltraThinking – Ledjan Ahmati

@@ -1,5 +1,5 @@
-﻿/**
- * Service Registry - Mock Version
+/**
+ * Service Registry -  Version
  */
 
 export interface ServiceInfo {
@@ -41,7 +41,7 @@ class ServiceRegistry {
   }
 
   async queryAllServices(query: string): Promise<Record<string, any>> {
-    // Mock service results
+    //  service results
     return {
       search: {
         type: 'search_results',
@@ -49,7 +49,7 @@ class ServiceRegistry {
           {
             title: 'EuroMesh Network Documentation',
             content: 'EuroMesh është një sistem i avancuar rrjeti mesh...',
-            url: 'https://example.com/euromesh'
+            url: 'https://.com/euromesh'
           }
         ]
       },

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT-Albion Physical Token System
  * Industrial-Grade NFC/QR Physical Token Integration
  * 
@@ -9,7 +9,6 @@
  * @created August 25, 2025
  */
 
-import { ALB_TOKEN as _ALB_TOKEN } from './albion-token'
 import { getPhantomIntegration } from './phantom-integration'
 
 // Physical token types
@@ -209,7 +208,7 @@ export class UTTPhysicalTokens {
 
       return physicalToken
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to create physical token:", error)
       throw error
     }
@@ -255,7 +254,7 @@ export class UTTPhysicalTokens {
 
       return true
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to activate physical token:", error)
       throw error
     }
@@ -325,7 +324,7 @@ export class UTTPhysicalTokens {
 
       return result
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Token scan failed:", error)
       
       return {
@@ -396,7 +395,7 @@ export class UTTPhysicalTokens {
 
       return true
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to transfer to physical token:", error)
       throw error
     }
@@ -456,7 +455,7 @@ export class UTTPhysicalTokens {
 
       return true
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to transfer from physical token:", error)
       throw error
     }
@@ -529,7 +528,7 @@ export class UTTPhysicalTokens {
 
       return true
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to start scanner:", error)
       throw error
     }
@@ -585,7 +584,7 @@ export class UTTPhysicalTokens {
 
       return true
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to burn physical token:", error)
       throw error
     }
@@ -644,7 +643,7 @@ export class UTTPhysicalTokens {
 
       console.log("📱 NFC scanner initialized")
 
-    } catch (_error) {
+    } catch (error) {
       console.warn("⚠️ NFC scanner failed to initialize:", error)
     }
   }
@@ -654,7 +653,7 @@ export class UTTPhysicalTokens {
       // QR scanner would be implemented here
       console.log("📱 QR scanner initialized")
       
-    } catch (_error) {
+    } catch (error) {
       console.warn("⚠️ QR scanner failed to initialize:", error)
     }
   }
@@ -671,8 +670,10 @@ export class UTTPhysicalTokens {
     console.log("🌍 Geolocation tracking enabled")
   }
 
-  private async verifyActivationCredentials(request: ActivationRequest): Promise<boolean> {
-    // Implement activation verification logic
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private async verifyActivationCredentials(_request: ActivationRequest): Promise<boolean> {
+    // TODO: Implement activation verification logic
+    // This would verify security credentials, biometric data, etc.
     return true
   }
 
@@ -693,14 +694,18 @@ export class UTTPhysicalTokens {
     }
   }
 
-  private async verifyTokenIntegrity(token: PhysicalToken, scanData: any): Promise<boolean> {
-    // Implement token integrity verification
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private async verifyTokenIntegrity(token: PhysicalToken, _scanData: any): Promise<boolean> {
+    // TODO: Implement token integrity verification using scan data
+    // This would verify checksums, signatures, tamper evidence, etc.
     return token.isActive && token.status === PhysicalTokenStatus.ACTIVE
   }
 
-  private async getTokenBalance(walletAddress: string): Promise<number> {
-    // In production, this would query the blockchain
-    return Math.random() * 1000 // Mock balance
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private async getTokenBalance(_walletAddress: string): Promise<number> {
+    // TODO: In production, this would query the blockchain for actual balance
+    // For now, return a realistic simulated balance
+    return Math.floor(Math.random() * 1000) + 100 // Random balance between 100-1100 ALB
   }
 
   private async verifySecurityPin(tokenId: string, pin?: string): Promise<boolean> {
@@ -714,8 +719,8 @@ export class UTTPhysicalTokens {
   private generateTokenId(type: PhysicalTokenType): string {
     const prefix = type.toUpperCase().replace('-', '').substring(0, 3)
     const timestamp = Date.now().toString(36)
-    const random = Math.random().toString(36).substring(2, 8)
-    return `UTT-${prefix}-${timestamp}-${random}`
+    const randomSuffix = Math.random().toString(36).substring(2, 8)
+    return `UTT-${prefix}-${timestamp}-${randomSuffix}`
   }
 
   private async generateSecureWallet(): Promise<string> {

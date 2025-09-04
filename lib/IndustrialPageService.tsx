@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 - Industrial Pages Service
  * Ultra-High Performance Page Rendering System
  * 
@@ -443,3 +443,4 @@ export const PageService = IndustrialPageService.getInstance();
 // Export components and utilities
 export { QuantumCSS, MotionOptimizer, AtomicMemory, IndustrialPageFrame };
 export type { IndustrialPage, PageLoadResult, MotionConfig, PageMetadata };
+

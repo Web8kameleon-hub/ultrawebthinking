@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 interface AGIBioNatureProps {
   mode: 'comprehensive' | 'biology' | 'medical';
@@ -17,3 +17,4 @@ export const AGIBioNature: React.FC<AGIBioNatureProps> = ({ mode, theme, dataSou
     </div>
   );
 };
+

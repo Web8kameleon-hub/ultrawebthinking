@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Professional Tab System Component
  * Temporary stub for build compatibility
  */
@@ -25,3 +25,4 @@ export const ProfessionalTabSystem: React.FC<ProfessionalTabSystemProps> = ({
 };
 
 export default ProfessionalTabSystem;
+

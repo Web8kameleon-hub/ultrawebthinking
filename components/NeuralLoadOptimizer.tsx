@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra - Neural Load Optimizer
+// EuroWeb Ultra - Neural Load Optimizer
 // Reduktimi i ngarkesës nga 90% në 70-75%
 
 'use client';
@@ -253,3 +253,4 @@ export default function NeuralLoadOptimizer({
     </motion.div>
   );
 }
+

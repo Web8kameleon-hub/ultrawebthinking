@@ -1,245 +1,146 @@
-﻿'use client'
+'use client'
 
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 
-interface DocumentFormat {
-  fontFamily: string
-  fontSize: number
-  lineHeight: number
-  margins: {
-    top: number
-    right: number
-    bottom: number
-    left: number
-  }
-  headerHeight: number
-  footerHeight: number
-}
-
-const traditionalAlbanianFormat: DocumentFormat = {
-  fontFamily: 'Times New Roman, serif',
-  fontSize: 12,
-  lineHeight: 1.5,
-  margins: {
-    top: 2.5,
-    right: 2,
-    bottom: 2.5,
-    left: 3
-  },
-  headerHeight: 1.5,
-  footerHeight: 1.5
-}
-
-export const AlbanianWordProcessor: React.FC = () => {
+export const AlbanianWordProcessor: React.FC = (): React.JSX.Element => {
   const [content, setContent] = useState('')
   const [documentTitle, setDocumentTitle] = useState('Dokument i Ri')
   const [letterhead, setLetterhead] = useState('')
-  const [showFormatting, setShowFormatting] = useState(false)
-  const [currentFormat, setCurrentFormat] = useState(traditionalAlbanianFormat)
-  const editorRef = useRef<HTMLDivElement>(null)
-
-  const albanianTemplates = [
-    {
-      name: 'Letër Zyrtare',
-      content: `[Vendosni logos/shenja të institucionit]
-
-${new Date().toLocaleDateString('sq-AL')}
-
-LËNDA: [Shkruani lëndën e letrës]
-
-I/E nderuar/e [Emri i marrësit],
-
-[Teksti kryesor i letrës...]
-
-Me respekt,
-
-[Emri dhe mbiemri]
-[Pozicioni]
-[Kontaktet]`
-    },
-    {
-      name: 'Aplikim për Punë',
-      content: `${new Date().toLocaleDateString('sq-AL')}
-
-Drejtuar: [Emri i kompanisë/institucionit]
-Departamenti i Burimeve Njerëzore
-
-LËNDA: Aplikim për pozicionin [Emri i pozicionit]
-
-I/E nderuar/e,
-
-Me anë të kësaj letre dëshiroj të shpreh interesimin tim për pozicionin e [emri i pozicionit] të publikuar në [burimi].
-
-[Arsyet pse jeni kandidati i përshtatshëm...]
-
-[Përvojat dhe kualifikimet...]
-
-[Përfundim dhe falënderim...]
-
-Me konsideratë të veçantë,
-
-[Emri dhe mbiemri]
-[Telefoni]
-[Email-i]`
-    },
-    {
-      name: 'Raport Zyrtar',
-      content: `REPUBLIKA E SHQIPËRISË
-[EMRI I INSTITUCIONIT]
-
-RAPORT
-
-Për: [Titulli i raportit]
-Data: ${new Date().toLocaleDateString('sq-AL')}
-Përgatitur nga: [Emri]
-
-1. HYRJE
-[Qëllimi i raportit...]
-
-2. METODOLOGJIA
-[Si është realizuar puna...]
-
-3. GJETJET KRYESORE
-[Rezultatet e analizës...]
-
-4. REKOMANDIME
-[Rekomandimet për veprim...]
-
-5. PËRFUNDIME
-[Përfundimi i raportit...]
-
-Përpiloi:                           Miratoi:
-______________                    ______________
-[Emri, Pozicioni]                 [Emri, Pozicioni]`
-    }
-  ]
+  const [isPreview, setIsPreview] = useState(false)
 
   const insertTemplate = (template: any) => {
     setContent(template.content)
     setDocumentTitle(template.name)
   }
 
-  const formatText = (command: string, value?: string) => {
-    document.execCommand(command, false, value)
-    if (editorRef.current) {
-      editorRef.current.focus()
+  const templates = [
+    {
+      name: 'Letër Zyrtare',
+      content: `${letterhead}
+
+Data: ${new Date().toLocaleDateString('sq-AL')}
+
+I/E nderuar/e [Emri i marrësit],
+
+[Përmbajtja e letrës]
+
+Me respekt,
+[Emri juaj]
+[Pozicioni]`
+    },
+    {
+      name: 'Raport',
+      content: `RAPORT
+
+Titull: [Titulli i raportit]
+Data: ${new Date().toLocaleDateString('sq-AL')}
+Përgatitur nga: [Emri]
+
+1. PËRMBLEDHJE EKZEKUTIVE
+[Përmbledhja kryesore]
+
+2. OBJEKTIVI
+[Objektivi i raportit]
+
+3. GJETJET
+[Gjetjet kryesore]
+
+4. REKOMANDIMET
+[Rekomandimet]
+
+5. KONKLUZION
+[Konkluzion]`
     }
+  ]
+
+  const formatText = (command: string) => {
+    document.execCommand(command, false)
   }
 
-  const insertSpecialChar = (char: string) => {
-    const selection = window.getSelection()
-    if (selection && selection.rangeCount > 0) {
-      const range = selection.getRangeAt(0)
-      range.deleteContents()
-      range.insertNode(document.createTextNode(char))
-      range.collapse(false)
-      selection.removeAllRanges()
-      selection.addRange(range)
-    }
+  const downloadDocument = () => {
+    const element = document.createElement('a')
+    const file = new Blob([content], { type: 'text/plain' })
+    element.href = URL.createObjectURL(file)
+    element.download = `${documentTitle}.txt`
+    element.click()
   }
 
-  const exportToPDF = () => {
-    // Implementim për eksportim në PDF
-    window.print()
+  const printDocument = () => {
+    const printWindow = window.open('', '_blank')
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>${documentTitle}</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
+              h1 { text-align: center; }
+            </style>
+          </head>
+          <body>
+            <h1>${documentTitle}</h1>
+            <div>${content.replace(/\n/g, '<br>')}</div>
+          </body>
+        </html>
+      `)
+      printWindow.document.close()
+      printWindow.print()
+    }
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Toolbar */}
-      <div className="bg-white border-b shadow-sm p-4">
-        <div className="flex flex-wrap items-center gap-4">
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="bg-white rounded-lg shadow-sm border p-4 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-bold text-gray-900">📝 Përpunues Tekstesh Shqip</h1>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIsPreview(!isPreview)}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                {isPreview ? '✏️ Redakto' : '👁️ Shiko'}
+              </button>
+              <button
+                onClick={downloadDocument}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              >
+                💾 Ruaj
+              </button>
+              <button
+                onClick={printDocument}
+                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+              >
+                🖨️ Shtyp
+              </button>
+            </div>
+          </div>
+
           {/* Document Title */}
           <input
             type="text"
             value={documentTitle}
             onChange={(e) => setDocumentTitle(e.target.value)}
-            className="text-lg font-bold border-none bg-transparent focus:outline-none focus:bg-gray-50 px-2 py-1 rounded"
+            className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Titulli i dokumentit"
           />
 
-          <div className="flex items-center space-x-2 border-l pl-4">
-            {/* Text Formatting */}
-            <button
-              onClick={() => formatText('bold')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Të trasha (Ctrl+B)"
-            >
-              <strong>B</strong>
-            </button>
-            <button
-              onClick={() => formatText('italic')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Të pjerrta (Ctrl+I)"
-            >
-              <em>I</em>
-            </button>
-            <button
-              onClick={() => formatText('underline')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Të nënvizuara (Ctrl+U)"
-            >
-              <u>U</u>
-            </button>
-          </div>
-
-          <div className="flex items-center space-x-2 border-l pl-4">
-            {/* Alignment */}
-            <button
-              onClick={() => formatText('justifyLeft')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Rreshtim majtas"
-            >
-              ←
-            </button>
-            <button
-              onClick={() => formatText('justifyCenter')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Rreshtim në qendër"
-            >
-              ↔
-            </button>
-            <button
-              onClick={() => formatText('justifyRight')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Rreshtim djathtas"
-            >
-              →
-            </button>
-            <button
-              onClick={() => formatText('justifyFull')}
-              className="p-2 hover:bg-gray-100 rounded"
-              title="Justifikim"
-            >
-              ═
-            </button>
-          </div>
-
-          <div className="flex items-center space-x-2 border-l pl-4">
-            {/* Albanian Special Characters */}
-            {['ë', 'ç', 'Ë', 'Ç'].map((char) => (
-              <button
-                key={char}
-                onClick={() => insertSpecialChar(char)}
-                className="p-2 hover:bg-gray-100 rounded font-bold"
-                title={`Vendos shkronjën: ${char}`}
-              >
-                {char}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center space-x-2 border-l pl-4">
-            {/* Templates */}
+          {/* Templates */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Shablone:</label>
             <select
               onChange={(e) => {
-                const template = albanianTemplates[parseInt(e.target.value)]
-                if (template) insertTemplate(template)
+                if (e.target.value) {
+                  const template = templates[parseInt(e.target.value)]
+                  insertTemplate(template)
+                }
               }}
-              className="px-3 py-1 border rounded"
+              className="px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               defaultValue=""
             >
               <option value="">Zgjidhni shablon...</option>
-              {albanianTemplates.map((template, index) => (
+              {templates.map((template, index) => (
                 <option key={index} value={index}>
                   {template.name}
                 </option>
@@ -247,130 +148,61 @@ ______________                    ______________
             </select>
           </div>
 
-          <div className="flex items-center space-x-2 border-l pl-4">
-            {/* Export Options */}
-            <button
-              onClick={exportToPDF}
-              className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-            >
-              📄 PDF
-            </button>
-            <button
-              onClick={() => {
-                const element = document.createElement('a')
-                const file = new Blob([content], { type: 'text/plain' })
-                element.href = URL.createObjectURL(file)
-                element.download = `${documentTitle}.txt`
-                element.click()
-              }}
-              className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              💾 Ruaj
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Editor */}
-      <div className="flex">
-        {/* Sidebar - Format Options */}
-        {showFormatting && (
-          <div className="w-64 bg-white border-r p-4">
-            <h3 className="font-bold mb-4">Formatimi</h3>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Fonti</label>
-                <select
-                  value={currentFormat.fontFamily}
-                  onChange={(e) => setCurrentFormat({...currentFormat, fontFamily: e.target.value})}
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="Times New Roman, serif">Times New Roman</option>
-                  <option value="Arial, sans-serif">Arial</option>
-                  <option value="Calibri, sans-serif">Calibri</option>
-                  <option value="Georgia, serif">Georgia</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">Madhësia e fontit</label>
-                <input
-                  type="number"
-                  value={currentFormat.fontSize}
-                  onChange={(e) => setCurrentFormat({...currentFormat, fontSize: parseInt(e.target.value)})}
-                  className="w-full p-2 border rounded"
-                  min="8"
-                  max="72"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">Lartësia e rreshtit</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={currentFormat.lineHeight}
-                  onChange={(e) => setCurrentFormat({...currentFormat, lineHeight: parseFloat(e.target.value)})}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
+          {/* Formatting Toolbar */}
+          {!isPreview && (
+            <div className="flex gap-2 mb-4 p-2 bg-gray-50 rounded">
+              <button
+                onClick={() => formatText('bold')}
+                className="px-3 py-1 bg-white border rounded hover:bg-gray-100"
+                title="Trash (Ctrl+B)"
+              >
+                <strong>B</strong>
+              </button>
+              <button
+                onClick={() => formatText('italic')}
+                className="px-3 py-1 bg-white border rounded hover:bg-gray-100"
+                title="Pjerrtë (Ctrl+I)"
+              >
+                <em>I</em>
+              </button>
+              <button
+                onClick={() => formatText('underline')}
+                className="px-3 py-1 bg-white border rounded hover:bg-gray-100"
+                title="Nënvizim (Ctrl+U)"
+              >
+                <u>U</u>
+              </button>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Document Area */}
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            {/* Document Header */}
-            {letterhead && (
-              <div className="text-center border-b pb-4 mb-6">
-                <div dangerouslySetInnerHTML={{ __html: letterhead }} />
-              </div>
-            )}
-
-            {/* Main Document */}
-            <div
-              className="bg-white shadow-lg min-h-[11in] p-8"
-              style={{
-                fontFamily: currentFormat.fontFamily,
-                fontSize: `${currentFormat.fontSize}pt`,
-                lineHeight: currentFormat.lineHeight,
-                marginTop: `${currentFormat.margins.top}cm`,
-                marginRight: `${currentFormat.margins.right}cm`,
-                marginBottom: `${currentFormat.margins.bottom}cm`,
-                marginLeft: `${currentFormat.margins.left}cm`,
-                width: '21cm' // A4 width
-              }}
-            >
-              <div
-                ref={editorRef}
-                contentEditable
-                className="outline-none min-h-full"
-                onInput={(e) => setContent((e.target as HTMLDivElement).innerHTML)}
-                style={{ whiteSpace: 'pre-wrap' }}
-                dangerouslySetInnerHTML={{ __html: content }}
+        {/* Editor/Preview */}
+        <div className="bg-white rounded-lg shadow-sm border p-6">
+          {isPreview ? (
+            <div className="prose max-w-none">
+              <h1 className="text-center mb-6">{documentTitle}</h1>
+              <div 
+                className="whitespace-pre-wrap leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br>') }}
               />
             </div>
-          </div>
+          ) : (
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="w-full h-96 p-4 border-none resize-none focus:outline-none"
+              placeholder="Filloni të shkruani dokumentin tuaj këtu..."
+              style={{ minHeight: '500px', fontFamily: 'Georgia, serif', fontSize: '16px', lineHeight: '1.6' }}
+            />
+          )}
         </div>
-      </div>
 
-      {/* Status Bar */}
-      <div className="bg-white border-t p-2 text-sm text-gray-600">
-        <div className="flex justify-between items-center">
-          <div>
-            Fjalë: {content.replace(/<[^>]*>/g, '').split(/\s+/).length} | 
-            Karaktere: {content.replace(/<[^>]*>/g, '').length}
-          </div>
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => setShowFormatting(!showFormatting)}
-              className="text-blue-600 hover:underline"
-            >
-              {showFormatting ? 'Fshih' : 'Shfaq'} formatimin
-            </button>
-            <span>Format: A4 | {currentFormat.fontSize}pt</span>
+        {/* Status Bar */}
+        <div className="mt-4 bg-gray-100 rounded-lg p-3 text-sm text-gray-600">
+          <div className="flex justify-between">
+            <span>Karaktere: {content.length}</span>
+            <span>Fjalë: {content.trim() ? content.trim().split(/\s+/).length : 0}</span>
+            <span>Mënyrë: {isPreview ? 'Shikim' : 'Redaktim'}</span>
           </div>
         </div>
       </div>

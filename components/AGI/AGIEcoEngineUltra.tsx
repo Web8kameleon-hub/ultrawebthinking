@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Eco Engine Ultra - Environmental Intelligence Dashboard
  * EuroWeb Platform - Green AI & Sustainability Intelligence
  * 
@@ -477,3 +477,4 @@ const AGIEcoEngineUltra: React.FC = () => {
 }
 
 export default AGIEcoEngineUltra
+

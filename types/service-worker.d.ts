@@ -1,4 +1,4 @@
-﻿// Service Worker Type Definitions për EuroWeb Ultra
+// Service Worker Type Definitions për EuroWeb Ultra
 // TypeScript types për Service Worker environment
 
 /// <reference lib="webworker" />

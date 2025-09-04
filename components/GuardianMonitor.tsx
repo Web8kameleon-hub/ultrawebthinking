@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Guardian Status Component
  * Real-time monitoring of Guardian Engine DDoS protection
  * 
@@ -41,7 +41,7 @@ interface GuardianStatus {
 }
 
 const GuardianMonitor: React.FC = () => {
-  // Mock data for demonstration
+  //  data for stration
   const guardianStatus: GuardianStatus = {
     status: 'Guardian Engine Active',
     hostname: 'euroweb-server-01',
@@ -443,3 +443,4 @@ const GuardianMonitor: React.FC = () => {
 }
 
 export default GuardianMonitor
+

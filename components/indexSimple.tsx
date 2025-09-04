@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 - Simple Index Component
  * Pure Panda CSS - No styled-system - Industrial Grade
  * 
@@ -63,4 +63,5 @@ const IndexSimple = (): React.ReactElement => {
 
 // Named export (required by EuroWeb Web8 standards)
 export { IndexSimple };
+
 

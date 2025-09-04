@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb OpenMind Ultra Test - DualMind Engine Test
  * Testing ALBI & JONA Dual Personality System
  * 

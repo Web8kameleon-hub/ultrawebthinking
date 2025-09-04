@@ -1,0 +1,131 @@
+version: 1
+real_mode: ${REAL_MODE}
+
+services:
+  agisheet:
+    name: "AGI Sheet"
+    source: postgres
+    endpoint: ${DB_URL}
+    protocol: sql
+    auth: service-account
+    health: "SELECT 1"
+    ui_terms: [workbook, worksheet, range, formula, dataSource, refreshInterval]
+    status_endpoint: "/api/sheet/health"
+
+  agieco:
+    name: "AGI Eco Intelligence"
+    meters: 
+      endpoint: ${ENERGY_GATEWAY_URL}/readings
+      protocol: http
+      auth: bearer
+    tariff: 
+      endpoint: ${ENTSOE_API_URL}/tariffs?region=AL
+      protocol: http
+      auth: api-key
+    co2:
+      endpoint: ${CO2_API_URL}?region=AL
+      protocol: http
+      auth: api-key
+    sensors:
+      topic: "eco/+/reading"
+      protocol: mqtt
+      broker: ${MQTT_URL}
+    health: ["${ENERGY_GATEWAY_URL}/health"]
+    status_endpoint: "/api/eco/health"
+
+  agitrading:
+    name: "AGI Trading Engine"
+    fx:
+      endpoint: https://api.exchangerate.host/latest?base=EUR
+      protocol: http
+    crypto:
+      ws: wss://ws-feed.exchange.coinbase.com
+      protocol: websocket
+    solana:
+      rpc: ${SOLANA_RPC}
+      protocol: json-rpc
+    health: ["${SOLANA_RPC}", "https://api.exchangerate.host/status"]
+    status_endpoint: "/api/trading/health"
+
+  agistatistic:
+    name: "AGI Statistics Engine"
+    source: timescaledb
+    endpoint: ${DB_URL}
+    protocol: sql
+    health: "SELECT NOW()"
+    status_endpoint: "/api/stats/health"
+
+  agibionature:
+    name: "AGI Bio Nature"
+    sensors:
+      topic: "bio/+/reading"
+      protocol: mqtt
+      broker: ${MQTT_URL}
+    air:
+      endpoint: ${AIR_QUALITY_API}/pm25?city=${CITY}
+      protocol: http
+      auth: api-key
+    health: ["${MQTT_URL}/health"]
+    status_endpoint: "/api/bio/health"
+
+  agimed:
+    name: "AGI Medical"
+    fhir:
+      base: ${FHIR_BASE}
+      protocol: http
+      auth: bearer
+    devices:
+      topic: "med/device/ingest"
+      protocol: mqtt
+      broker: ${MQTT_URL}
+    health: ["${FHIR_BASE}/metadata"]
+    status_endpoint: "/api/med/health"
+
+  openmind:
+    name: "Open Mind Neural Search"
+    websearch:
+      endpoint: /api/search
+      protocol: http
+      auth: internal
+    kb_index:
+      endpoint: ${SEARCH_BASE}/indexes/kb/search
+      protocol: http
+      auth: api-key
+    docs:
+      storage: ${DOC_STORE_URL}
+      protocol: http
+    health: ["/api/search?q=ping", "${SEARCH_BASE}/health"]
+    status_endpoint: "/api/openmind/health"
+
+  aviation:
+    name: "Aviation Weather"
+    metar_taf:
+      endpoint: ${AVIATION_METAR_URL}?format=JSON
+      protocol: http
+    health: ["${AVIATION_METAR_URL}"]
+    status_endpoint: "/api/aviation/health"
+
+  lora:
+    name: "LoRa Mesh Network"
+    gateway:
+      endpoint: ${LORA_BASE_URL}/gateway/status
+      protocol: http
+    broker:
+      url: ${MQTT_URL}
+      protocol: mqtt
+    health: ["${LORA_BASE_URL}/health", "${MQTT_URL}/health"]
+    status_endpoint: "/api/lora/health"
+
+  system:
+    name: "System Monitoring"
+    cpu:
+      endpoint: /api/system/cpu
+      protocol: http
+    memory:
+      endpoint: /api/system/memory
+      protocol: http
+    network:
+      endpoint: /api/system/network
+      protocol: http
+    health: ["/api/system/cpu", "/api/system/memory"]
+    status_endpoint: "/api/system/health"

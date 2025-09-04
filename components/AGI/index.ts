@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Components Index - Central Export Hub
  * EuroWeb Platform - Quantum-Enhanced AGI System
  * 

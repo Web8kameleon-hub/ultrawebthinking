@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra - Custom Dashboard Builder
+// EuroWeb Ultra - Custom Dashboard Builder
 // Drag-and-drop widgets për personalizim të plotë
 
 'use client';
@@ -506,3 +506,4 @@ export default function CustomDashboardBuilder() {
     </div>
   );
 }
+

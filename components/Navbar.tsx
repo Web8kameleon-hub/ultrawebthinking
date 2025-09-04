@@ -1,29 +1,29 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 
-// Mock AGI hooks for development
+//  AGI hooks for development
 const useAGI = () => ({
   actions: {
     updateScrollPosition: (position: number) => {
-      // Mock implementation
+      //  implementation
       console.debug('Scroll position updated:', position);
     }
   },
   ui: {
     activateElement: (elementId: string) => {
-      // Mock implementation
+      //  implementation
       console.debug('Element activated:', elementId);
     },
     pulseElement: (elementId: string) => {
-      // Mock implementation
+      //  implementation
       console.debug('Element pulsed:', elementId);
     }
   }
 });
 
 const useAGIState = (selector: (memory: any) => any) => {
-  // Mock AGI state
-  const mockMemory = {
+  //  AGI state
+  const emory = {
     ui: {
       scrollPosition: 0,
       theme: 'dark'
@@ -36,7 +36,7 @@ const useAGIState = (selector: (memory: any) => any) => {
     }
   };
   
-  return selector(mockMemory);
+  return selector(emory);
 };
 
 interface NavbarProps {

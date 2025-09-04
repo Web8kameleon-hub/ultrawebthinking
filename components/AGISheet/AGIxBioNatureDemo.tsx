@@ -1,10 +1,10 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AGIBioNature } from './AGIBioNature';
 
-interface AGIBioNatureDemoProps {
+interface AGIBioNaturerops {
   initialMode?: 'biology' | 'medical' | 'comprehensive';
   initialTheme?: 'forest' | 'laboratory' | 'ecosystem' | 'medical';
 }
@@ -12,7 +12,7 @@ interface AGIBioNatureDemoProps {
 export const AGIBioNatureDemo = ({
   initialMode = 'comprehensive',
   initialTheme = 'forest'
-}: AGIBioNatureDemoProps) => {
+}: AGIBioNaturerops) => {
   const [mode, setMode] = useState<'biology' | 'medical' | 'comprehensive'>(initialMode);
   const [theme, setTheme] = useState<'forest' | 'laboratory' | 'ecosystem' | 'medical'>(initialTheme);
   const [dataSource, setDataSource] = useState<'simulation' | 'live' | 'cached'>('simulation');
@@ -41,7 +41,7 @@ export const AGIBioNatureDemo = ({
       <div className="p-6">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-green-800 mb-4">
-            🌿 AGI BioNature Demo
+            🌿 AGI BioNature 
           </h1>
           <p className="text-lg text-green-600">
             Advanced Biological Analysis & Ecosystem Intelligence
@@ -88,3 +88,4 @@ export const AGIBioNatureDemo = ({
 };
 
 export default AGIBioNatureDemo;
+

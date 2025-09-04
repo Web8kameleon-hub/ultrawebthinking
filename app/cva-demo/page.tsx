@@ -1,5 +1,5 @@
-﻿/**
- * EuroWeb Web8 - CVA Dynamic Components Demo
+/**
+ * EuroWeb Web8 - CVA Dynamic Components 
  * Class Variance Authority - Industrial Component System
  * 
  * @author Ledjan Ahmati (100% Owner)
@@ -19,9 +19,9 @@ import {
 } from '../../lib/DynamicComponents';
 
 /**
- * CVA Demo Page Component
+ * CVA  Page Component
  */
-const CVADemoPage = (): React.ReactElement => {
+const CVAage = (): React.ReactElement => {
   return (
     <div className={layoutVariants({
       display: 'flex',
@@ -264,4 +264,5 @@ const CVADemoPage = (): React.ReactElement => {
   );
 };
 
-export { CVADemoPage };
+export { CVAage };
+

@@ -1,4 +1,4 @@
-﻿// backend/agi/planner-modular.ts
+// backend/agi/planner-modular.ts
 /**
  * Planner.ts - Real Modular Instance-Based Architecture
  * Planifikues strategjik për detyra AGI
@@ -42,32 +42,32 @@ interface PlanningContext {
 
 export class Planner {
   private activePlans: Map<string, Plan> = new Map();
-  private taskTemplates: Map<string, Partial<Task>> = new Map();
+  private task: Map<string, Partial<Task>> = new Map();
   private planningHistory: Map<string, any> = new Map();
   private optimizationRules: Map<string, any> = new Map();
 
   constructor() {
-    this.initializeTemplates();
+    this.initialize();
     this.initializeOptimizationRules();
   }
 
-  private initializeTemplates(): void {
-    // Initialize common task templates
-    this.taskTemplates.set('analysis', {
+  private initialize(): void {
+    // Initialize common task 
+    this.task.set('analysis', {
       name: 'Data Analysis',
       description: 'Analyze provided data and extract insights',
       priority: 'normal',
       estimated_duration: 300000, // 5 minutes in ms
     });
 
-    this.taskTemplates.set('optimization', {
+    this.task.set('optimization', {
       name: 'System Optimization',
       description: 'Optimize system performance and efficiency',
       priority: 'high',
       estimated_duration: 600000, // 10 minutes in ms
     });
 
-    this.taskTemplates.set('configuration', {
+    this.task.set('configuration', {
       name: 'Configuration Setup',
       description: 'Configure system settings and parameters',
       priority: 'normal',
@@ -298,15 +298,15 @@ export class Planner {
     // Generate tasks based on requirements
     Object.entries(requirements.requirements).forEach(([reqType, needed]) => {
       if (needed) {
-        const template = this.getTaskTemplate(reqType);
+        const taskTemplate = this.getTaskTemplate(reqType);
         const task: Task = {
           id: `task_${taskCounter++}_${Date.now()}`,
-          name: template.name || this.generateTaskName(reqType),
-          description: template.description || this.generateTaskDescription(reqType),
-          priority: this.adjustPriority(template.priority || 'normal', requirements.urgency),
+          name: taskTemplate.name || this.generateTaskName(reqType),
+          description: taskTemplate.description || this.generateTaskDescription(reqType),
+          priority: this.adjustPriority(taskTemplate.priority || 'normal', requirements.urgency),
           status: 'pending',
           dependencies: this.determineDependencies(reqType, tasks),
-          estimated_duration: this.adjustDuration(template.estimated_duration || 300000, requirements.complexity),
+          estimated_duration: this.adjustDuration(taskTemplate.estimated_duration || 300000, requirements.complexity),
           created_at: Date.now(),
           updated_at: Date.now()
         };
@@ -363,7 +363,7 @@ export class Planner {
   }
 
   private getTaskTemplate(reqType: string): Partial<Task> {
-    return this.taskTemplates.get(reqType) || {};
+    return this.task.get(reqType) || {};
   }
 
   private generateTaskName(reqType: string): string {
@@ -588,7 +588,7 @@ export class Planner {
       total_tasks: plans.reduce((sum, p) => sum + p.tasks.length, 0),
       avg_completion: plans.reduce((sum, p) => sum + p.completion_percentage, 0) / Math.max(1, plans.length),
       optimization_rules: this.optimizationRules.size,
-      task_templates: this.taskTemplates.size,
+      task_: this.task.size,
       planning_sessions: this.planningHistory.size,
       last_plan_created: plans.length > 0 ? Math.max(...plans.map(p => p.created_at)) : null
     };
@@ -600,7 +600,7 @@ export class Planner {
   exportData(): any {
     return {
       active_plans: Object.fromEntries(this.activePlans),
-      task_templates: Object.fromEntries(this.taskTemplates),
+      task_: Object.fromEntries(this.task),
       planning_history: Object.fromEntries(this.planningHistory),
       optimization_rules: Object.fromEntries(this.optimizationRules),
       exported_at: new Date().toISOString()

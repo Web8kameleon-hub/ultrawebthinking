@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 async function searchWeb(query: string) {
   // Real web search using search APIs
   try {
-    // Example: Use actual search API like Bing, Google Custom Search, etc.
+    // : Use actual search API like Bing, Google Custom Search, etc.
     const response = await fetch(`https://api.bing.microsoft.com/v7.0/search?q=${encodeURIComponent(query)}`, {
       headers: {
         'Ocp-Apim-Subscription-Key': process.env.BING_SEARCH_API_KEY || ''

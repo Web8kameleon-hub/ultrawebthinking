@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 

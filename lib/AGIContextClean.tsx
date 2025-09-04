@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Context - Simple and Clean
  * Context i thjeshtë për AGI Core Integration
  * 
@@ -152,4 +152,5 @@ export function useAGIActions(): AGIContextActions {
 export type {
     AGIContextActions, AGIContextState, AGIContextValue
 };
+
 

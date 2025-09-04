@@ -1,10 +1,10 @@
-﻿'use client'
+'use client'
 
-import React, { useState } from 'react'
-import AlbanianWordProcessor from '@/components/AlbanianDocuments/AlbanianWordProcessor'
-import AlbanianSpreadsheet from '@/components/AlbanianDocuments/AlbanianSpreadsheet'
 import AlbanianFormCreator from '@/components/AlbanianDocuments/AlbanianFormCreator'
 import AlbanianLetterTemplate from '@/components/AlbanianDocuments/AlbanianLetterTemplate'
+import { AlbanianSpreadsheet } from '@/components/AlbanianDocuments/AlbanianSpreadsheet'
+import AlbanianWordProcessor from '@/components/AlbanianDocuments/AlbanianWordProcessor'
+import React, { useState } from 'react'
 
 interface DocumentType {
   id: string
@@ -195,3 +195,4 @@ export const AlbanianDocumentSuite: React.FC = () => {
 }
 
 export default AlbanianDocumentSuite
+

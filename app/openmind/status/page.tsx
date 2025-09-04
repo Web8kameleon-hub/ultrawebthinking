@@ -1,4 +1,4 @@
-﻿/**
+/**
  * OpenMind System Status Dashboard
  * Real-time monitoring and analytics
  * 
@@ -350,3 +350,4 @@ export default function OpenMindStatusPage() {
     </div>
   );
 }
+

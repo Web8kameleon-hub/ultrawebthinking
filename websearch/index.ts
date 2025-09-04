@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Advanced Web Search Service - Professional Grade
  * AI-powered search with semantic analysis and source verification
  * 
@@ -173,7 +173,7 @@ export class WebSearchService {
         title: 'Web8 Success Stories - Projekte të Suksesshme dhe Testimonialet e Klientëve',
         url: 'https://web8.dev/portfolio',
         content: 'Web8 ka realizuar me sukses më shumë se 150 projekte për klientë të ndryshëm. Disa nga projektet më të suksesshme përfshijnë platformën e-commerce për retail chains, sistemin ERP për kompani logjistike, dhe aplikacionet mobile për startup-e teknologjike. Klientët vlerësojnë cilësinë e kodit, profesionalizmin e ekipit, dhe aftësinë për të dorëzuar projekte në kohë.',
-        summary: 'Case studies dhe testimonialet që demonstrojnë suksesin dhe ekspertizën e Web8',
+        summary: 'Case studies dhe testimonialet që strojnë suksesin dhe ekspertizën e Web8',
         relevanceScore: 0.92,
         credibilityScore: 0.95,
         lastModified: new Date('2025-07-18'),
@@ -450,7 +450,7 @@ export class WebSearchService {
     const queryWords = query.toLowerCase().split(' ');
     queryWords.forEach(word => {
       if (word.length > 3) {
-        suggestions.push(`${word} tutorial`, `${word} examples`, `latest ${word} developments`);
+        suggestions.push(`${word} tutorial`, `${word} `, `latest ${word} developments`);
       }
     });
 
@@ -461,7 +461,7 @@ export class WebSearchService {
     const related: string[] = [];
     
     if (analysis.intent === 'definitional') {
-      related.push(`How does ${query} work?`, `${query} examples`, `${query} applications`);
+      related.push(`How does ${query} work?`, `${query} `, `${query} applications`);
     } else if (analysis.intent === 'instructional') {
       related.push(`What is ${query}?`, `${query} tutorial`, `${query} step by step`);
     }

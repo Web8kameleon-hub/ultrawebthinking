@@ -1,7 +1,7 @@
-﻿/**
+/**
  * CommandBridge Real Test Suite
  * Teston integrimin real të CommandBridge me AGI sistemin backend
- * Pa mock, pa random, pa fake – Vetëm funksione reale
+ * Pa , pa , pa  – Vetëm funksione reale
  * © Web8 UltraThinking – Ledjan Ahmati
  */
 

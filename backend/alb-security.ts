@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Enhanced ALB Security & Monitoring Module
  * EuroWeb Platform - Advanced Risk Management
  * 

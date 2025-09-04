@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
@@ -30,7 +30,7 @@ const HeavyChart: React.FC<HeavyChartProps> = ({ onLoad }) => {
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">📊 Grafiku i Performancës</h2>
         <p className="text-gray-600 mb-6">
-          Ky është një komponent i ngarkuar me lazy loading për demonstrim.
+          Ky është një komponent i ngarkuar me lazy loading për strim.
         </p>
         
         {/* Simulated Chart */}
@@ -73,3 +73,4 @@ const HeavyChart: React.FC<HeavyChartProps> = ({ onLoad }) => {
 };
 
 export default HeavyChart;
+

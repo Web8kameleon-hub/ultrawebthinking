@@ -1,8 +1,8 @@
-﻿/**
+/**
  * EuroWeb Ultra - Real System Tests (Pure TypeScript + React)
  * Real tests with vanilla+motion+CVA, panda tokens only
  * Author: Ledjan Ahmati (100% Owner)
- * No mocks - Real component and system testing
+ * No  - Real component and system testing
  */
 
 import '@testing-library/jest-dom';
@@ -10,7 +10,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-// Mock SimpleButton component for testing
+//  SimpleButton component for testing
 interface SimpleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   readonly variant?: 'industrial' | 'quantum' | 'neural' | 'ultra';
   readonly children: React.ReactNode;
@@ -39,7 +39,7 @@ const SimpleButton = React.memo<SimpleButtonProps>(({
   );
 });
 
-// Mock DataCompression for testing
+//  DataCompression for testing
 const DataCompressor = {
   compress: (data: any) => ({
     data: btoa(JSON.stringify(data)),
@@ -700,3 +700,4 @@ describe('🚀 EuroWeb Ultra Real System Tests', () => {
 // Export test utilities for reuse
 export { ModularSystemTest, TestComponent };
 export type TestComponentProps = Parameters<typeof TestComponent>[0];
+

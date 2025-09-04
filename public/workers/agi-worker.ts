@@ -1,4 +1,4 @@
-﻿// Performance optimization worker for heavy AGI computations
+// Performance optimization worker for heavy AGI computations
 // TypeScript Web Worker for client-side processing
 
 interface AGIWorkerMessage {

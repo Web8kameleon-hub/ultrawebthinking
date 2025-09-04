@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import styles from './LoadingSpinner.module.css';
 
 const LoadingSpinner: React.FC = () => {
@@ -12,3 +12,4 @@ const LoadingSpinner: React.FC = () => {
 
 export default LoadingSpinner;
 export { LoadingSpinner };
+

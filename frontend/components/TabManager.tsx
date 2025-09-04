@@ -1,5 +1,5 @@
+import { css } from "@emotion/css";
 import React from "react";
-import { css } from "..//css";
 
 const styles = {
   wrapper: css({
@@ -33,3 +33,4 @@ const TabManager: React.FC = () => {
 };
 
 // Removed default export: TabManager;
+

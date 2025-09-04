@@ -394,7 +394,7 @@ const AGIControlPanel: React.FC<Props> = ({
 
         .system-status-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          grid--columns: repeat(auto-fit, minmax(150px, 1fr));
           gap: 12px;
           margin-bottom: 24px;
         }
@@ -474,7 +474,7 @@ const AGIControlPanel: React.FC<Props> = ({
 
         .command-buttons {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          grid--columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 12px;
         }
 
@@ -550,7 +550,7 @@ const AGIControlPanel: React.FC<Props> = ({
 
         .quick-actions-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          grid--columns: repeat(auto-fit, minmax(160px, 1fr));
           gap: 8px;
         }
 
@@ -614,3 +614,4 @@ const AGIControlPanel: React.FC<Props> = ({
 }
 
 export default AGIControlPanel
+

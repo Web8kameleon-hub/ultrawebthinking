@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroMesh Network Dashboard - 12 Layer Visualization
  * Dashboard i Rrjetit EuroMesh - Vizualizim 12 Shtresash
  * 
@@ -730,3 +730,4 @@ const EuroMeshDashboard: React.FC = () => {
 };
 
 export default EuroMeshDashboard;
+

@@ -1,16 +1,22 @@
-﻿/**
- * EuroWeb Ultra Platform - Root Redirect Page
- * Redirects to default locale (Albanian)
+/**
+ * EuroWeb Ultra Platform - Main Dashboard Page
+ * Real-Time System Monitoring Dashboard
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
- * @version Ultra 2.0.0 i18n
+ * @version 8.0.0 Quantum Industrial
  * @license MIT
+ * @created September 3, 2025
  */
 
-import { redirect } from 'next/navigation'
+import GlobalDataDashboard from '../components/GlobalDataDashboard'
 
-export default function RootPage() {
-  // Redirect to default locale (Albanian)
-  redirect('/sq')
+export default function HomePage() {
+  return <GlobalDataDashboard />
 }
+
+export const metadata = {
+  title: 'EuroWeb Ultra Dashboard | Real-Time Monitoring',
+  description: 'Swiss Precision Engineering • Real-Time System Monitoring • Quantum Infrastructure',
+}
+

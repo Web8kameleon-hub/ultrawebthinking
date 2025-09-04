@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -95,33 +95,33 @@ export const AGIEco = ({
   const economicsEngine = new EconomicsEngine();
   const cryptoEngine = new CryptoAnalysisEngine();
 
-  // Initialize demo data
+  // Initialize  data
   useEffect(() => {
-    initializeDemoData();
+    initializeata();
     if (autoUpdate) {
       const interval = setInterval(updateData, 30000); // Update every 30 seconds
       return () => clearInterval(interval);
     }
   }, [autoUpdate]);
 
-  const initializeDemoData = useCallback(() => {
-    // Generate demo economic data
-    const demoEcoData: EcoData[] = [];
+  const initializeata = useCallback(() => {
+    // Generate  economic data
+    const coData: EcoData[] = [];
     const now = new Date();
     
     for (let i = 0; i < 100; i++) {
-      demoEcoData.push({
+      coData.push({
         timestamp: new Date(now.getTime() - i * 3600000), // Hourly data
         value: Math.random() * 1000 + 500,
         category: ['GDP', 'Inflation', 'Employment', 'Trade'][i % 4],
-        metadata: { source: 'demo', confidence: Math.random() * 0.4 + 0.6 }
+        metadata: { source: '', confidence: Math.random() * 0.4 + 0.6 }
       });
     }
     
-    setEcoData(demoEcoData);
+    setEcoData(coData);
 
-    // Generate demo market indicators
-    const demoIndicators: MarketIndicator[] = [
+    // Generate  market indicators
+    const ndicators: MarketIndicator[] = [
       { name: 'S&P 500', value: 4567.89, change: 23.45, trend: 'up', confidence: 0.85 },
       { name: 'NASDAQ', value: 15234.67, change: -45.23, trend: 'down', confidence: 0.78 },
       { name: 'EUR/USD', value: 1.0856, change: 0.0023, trend: 'up', confidence: 0.72 },
@@ -129,17 +129,17 @@ export const AGIEco = ({
       { name: 'Oil (WTI)', value: 78.92, change: -2.34, trend: 'down', confidence: 0.83 }
     ];
     
-    setMarketIndicators(demoIndicators);
+    setMarketIndicators(ndicators);
 
-    // Generate demo crypto metrics
-    const demoCrypto: CryptoMetrics[] = [
+    // Generate  crypto metrics
+    const rypto: CryptoMetrics[] = [
       { symbol: 'BTC', price: 67234.56, volume: 28456789123, marketCap: 1345678901234, change24h: 2.34, volatility: 0.045, sentiment: 'bullish' },
       { symbol: 'ETH', price: 3456.78, volume: 15678901234, marketCap: 456789012345, change24h: -1.23, volatility: 0.067, sentiment: 'bearish' },
       { symbol: 'ADA', price: 0.4567, volume: 987654321, marketCap: 15678901234, change24h: 5.67, volatility: 0.089, sentiment: 'bullish' },
       { symbol: 'SOL', price: 123.45, volume: 2345678901, marketCap: 56789012345, change24h: -0.89, volatility: 0.123, sentiment: 'neutral' }
     ];
     
-    setCryptoMetrics(demoCrypto);
+    setCryptoMetrics(rypto);
   }, []);
 
   const updateData = useCallback(async () => {
@@ -431,3 +431,4 @@ export const AGIEco = ({
     </motion.div>
   );
 };
+

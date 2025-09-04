@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env tsx
+#!/usr/bin/env tsx
 /**
  * EuroWeb Port Manager - Menaxhuesi i Porteve për Web8
  * Handles port conflicts and finds available ports
@@ -31,10 +31,10 @@ class PortManager {
       }
     }
 
-    // Generate random port if all defaults are taken
-    const randomPort = Math.floor(Math.random() * (9999 - 3005) + 3005);
-    console.log(chalk.yellow(`🎲 Duke përdorur port të rastësishëm: ${randomPort} / Using random port: ${randomPort}`));
-    return randomPort;
+    // Generate  port if all defaults are taken
+    const ort = Math.floor(Math.random() * (9999 - 3005) + 3005);
+    console.log(chalk.yellow(`🎲 Duke përdorur port të rastësishëm: ${ort} / Using  port: ${ort}`));
+    return ort;
   }
 
   async isPortAvailable(port: number): Promise<boolean> {
@@ -354,8 +354,8 @@ class PortManager {
     }
     
     // If all quick ports are taken, find any available
-    const randomPort = await this.findAvailablePort(5000);
-    await this.startDevelopment(randomPort);
+    const ort = await this.findAvailablePort(5000);
+    await this.startDevelopment(ort);
   }
 }
 

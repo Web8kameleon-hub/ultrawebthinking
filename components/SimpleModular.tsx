@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SimpleModular Components - Pure TypeScript + CVA
  * Author: EuroWeb Ultra Platform
  */
@@ -47,3 +47,4 @@ export const SimpleButton = React.memo<SimpleButtonProps>(({
 });
 
 SimpleButton.displayName = 'SimpleButton';
+

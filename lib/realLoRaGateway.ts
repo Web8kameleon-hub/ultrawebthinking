@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Real LoRa Gateway Integration
  * Integrimi i Gateway LoRa të Vërtetë
  * 
@@ -251,7 +251,7 @@ export class RealLoRaGateway extends EventEmitter {
         // Header: Version(1) + Token(2) + PULL_RESP(1)
         const header = Buffer.alloc(4);
         header[0] = 0x02; // Protocol version
-        header[1] = Math.floor(Math.random() * 256); // Random token
+        header[1] = Math.floor(Math.random() * 256); //  token
         header[2] = Math.floor(Math.random() * 256);
         header[3] = 0x03; // PULL_RESP type
 
@@ -321,7 +321,7 @@ export class RealLoRaGateway extends EventEmitter {
   }
 }
 
-// Demo/Test server
+// /Test server
 async function startLoRaGatewayServer() {
   console.log('🚀 Starting Real LoRa Gateway Integration Server...\n');
 

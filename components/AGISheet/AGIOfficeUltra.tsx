@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb AGI×Office Ultra - Universal Workspace & Data Management
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 
@@ -10,8 +10,8 @@
 
 'use client'
 
-import React from 'react'
 import { motion } from 'framer-motion'
+import React from 'react'
 
 // Interface definitions for Office AI
 interface QuantumOfficeMetrics {
@@ -117,7 +117,7 @@ const officeModules: OfficeModule[] = [
   }
 ]
 
-const workspaceTemplates: WorkspaceTemplate[] = [
+const workspace: WorkspaceTemplate[] = [
   {
     id: 'individual',
     name: 'Personal Workspace',
@@ -280,7 +280,7 @@ const AGIOfficeUltra: React.FC = () => {
         ))}
       </motion.div>
 
-      {/* Workspace Templates */}
+      {/* Workspace  */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -294,16 +294,16 @@ const AGIOfficeUltra: React.FC = () => {
           marginBottom: '20px',
           textAlign: 'center'
         }}>
-          🏗️ Universal Workspace Templates
+          🏗️ Universal Workspace 
         </h2>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
           gap: '20px'
         }}>
-          {workspaceTemplates.map((template, index) => (
+          {workspace.map((item, index) => (
             <motion.div
-              key={template.id}
+              key={item.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.5 }}
@@ -322,14 +322,14 @@ const AGIOfficeUltra: React.FC = () => {
                 gap: '12px',
                 marginBottom: '16px'
               }}>
-                <span style={{ fontSize: '32px' }}>{template.icon}</span>
+                <span style={{ fontSize: '32px' }}>{item.icon}</span>
                 <h3 style={{
                   fontSize: '18px',
                   fontWeight: 600,
                   color: '#f8fafc',
                   margin: 0
                 }}>
-                  {template.name}
+                  {item.name}
                 </h3>
               </div>
               
@@ -339,7 +339,7 @@ const AGIOfficeUltra: React.FC = () => {
                 marginBottom: '16px',
                 lineHeight: '1.5'
               }}>
-                {template.description}
+                {item.description}
               </p>
 
               <div style={{ marginBottom: '16px' }}>
@@ -356,7 +356,7 @@ const AGIOfficeUltra: React.FC = () => {
                   flexWrap: 'wrap',
                   gap: '6px'
                 }}>
-                  {template.targetUsers.map((user) => (
+                  {item.targetUsers.map((user: any) => (
                     <span key={user} style={{
                       background: 'rgba(59, 130, 246, 0.2)',
                       color: '#3b82f6',
@@ -384,7 +384,7 @@ const AGIOfficeUltra: React.FC = () => {
                   flexWrap: 'wrap',
                   gap: '6px'
                 }}>
-                  {template.features.map((feature) => (
+                  {item.features.map((feature: any) => (
                     <span key={feature} style={{
                       background: 'rgba(34, 197, 94, 0.2)',
                       color: '#22c55e',
@@ -667,5 +667,6 @@ const AGIOfficeUltra: React.FC = () => {
   )
 }
 
-export { AGIOfficeUltra };
+export { AGIOfficeUltra }
 export default AGIOfficeUltra;
+

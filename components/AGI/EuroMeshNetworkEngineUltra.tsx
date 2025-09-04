@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroMesh Network Engine Ultra - Distributed Mesh Network Intelligence
  * EuroWeb Platform - Advanced Mesh Networking & Distributed Systems AI
  * 
@@ -984,3 +984,4 @@ const EuroMeshNetworkEngineUltra: React.FC = () => {
 }
 
 export default EuroMeshNetworkEngineUltra
+

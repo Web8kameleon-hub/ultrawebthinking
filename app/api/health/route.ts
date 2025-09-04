@@ -1,23 +1,40 @@
-import { NextResponse } from "next/server";
+/**
+ * Health Monitor API - Real Services Only
+ * Uses service matrix library to check all real upstream services
+ * @author Ledjan Ahmati
+ * @version 8.0.0 Industrial Production
+ */
 
-export async function GET(req: Request) {
-    const url = new URL(req.url);
-    const base = `${url.protocol}//${url.host}`;
+import { assertReal, healthCheckAll } from '@/lib/services';
+import { NextResponse } from 'next/server';
 
-    const [utt, lora] = await Promise.all([
-        fetch(`${base}/api/utt/info`, { cache: "no-store" }).then(r => r.json()).catch(() => null),
-        fetch(`${base}/api/lora/status`, { cache: "no-store" }).then(r => r.json()).catch(() => null),
-    ]);
+export const runtime = 'nodejs' // Requires fs for YAML reading
+export const revalidate = 0
 
-    const uttOk = !!utt && (utt.status === "ready" || utt.transfersEnabled === true);
-    const loraOk = !!lora && (typeof lora.verified === "number" || lora.status === "ok");
-
-    return NextResponse.json({
-        ok: uttOk && loraOk,
-        services: {
-            utt: { ok: uttOk, info: utt ?? null },
-            lora: { ok: loraOk, info: lora ?? null }
-        },
-        ts: Date.now()
+export async function GET() {
+  try {
+    assertReal("health.api");
+    
+    // Use service matrix library for comprehensive health checking
+    const report = await healthCheckAll();
+    
+    return NextResponse.json(report, { 
+      headers: { 
+        "cache-control": "no-store",
+        "content-type": "application/json"
+      } 
     });
+    
+  } catch (error) {
+    console.error('Health check error:', error);
+    
+    const errorResponse = {
+      status: "down" as const,
+      items: [],
+      ts: Date.now(),
+      error: error instanceof Error ? error.message : String(error)
+    };
+    
+    return NextResponse.json(errorResponse, { status: 500 });
+  }
 }

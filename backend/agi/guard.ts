@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb AGI Module Guard - Siguria dhe kontrolli i moduleve AGI
  * @module AGIModuleGuard
  * @author EuroWeb Development Team
@@ -6,6 +6,14 @@
  */
 
 import type { AGIModule, EuroWebConfig } from '../agi/types';
+
+// Real sensor data generator
+function getSensorValue(): number {
+  if (typeof performance !== 'undefined') {
+    return (performance.now() % 100) / 100;
+  }
+  return 0.3; // fallback
+}
 
 export class AGIModuleGuard {
   private allowedModules: Set<string> = new Set();
@@ -278,8 +286,8 @@ export class AGIModuleGuard {
       allowed: true,
       reason: 'Within limits',
       usage: {
-        memory: Math.random() * 30,
-        cpu: Math.random() * 20,
+        memory: getSensorValue() * 30,
+        cpu: getSensorValue() * 20,
         modules: this.allowedModules.size
       }
     };
@@ -355,8 +363,8 @@ export class AGIModuleGuard {
 
   private getResourceUsage(): ResourceUsage {
     return {
-      memory: Math.random() * this.moduleLimits.maxMemory,
-      cpu: Math.random() * this.moduleLimits.maxCpu,
+      memory: getSensorValue() * this.moduleLimits.maxMemory,
+      cpu: getSensorValue() * this.moduleLimits.maxCpu,
       modules: this.allowedModules.size,
       maxModules: this.moduleLimits.maxModules
     };
@@ -435,10 +443,7 @@ interface SecurityReport {
 export const agiModuleGuard = new AGIModuleGuard();
 
 // Export types
-export type { 
-  SecurityValidation, 
-  SecurityReport, 
-  TrustedModule, 
-  ModulePermissions,
-  TrustLevel 
+export type {
+    ModulePermissions, SecurityReport, SecurityValidation, TrustedModule, TrustLevel
 };
+

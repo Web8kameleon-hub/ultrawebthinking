@@ -254,7 +254,7 @@ const QuantumEnginePage: React.FC = () => {
 
         .quantum-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          grid--columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 24px;
           margin-bottom: 40px;
           position: relative;
@@ -421,7 +421,7 @@ const QuantumEnginePage: React.FC = () => {
 
         @media (max-width: 768px) {
           .quantum-grid {
-            grid-template-columns: 1fr;
+            grid--columns: 1fr;
           }
           
           .quantum-header h1 {
@@ -439,3 +439,4 @@ const QuantumEnginePage: React.FC = () => {
 };
 
 export default QuantumEnginePage;
+

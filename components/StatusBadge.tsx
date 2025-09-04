@@ -17,3 +17,4 @@ export function StatusBadge({ label, ok }: { label: string; ok?: boolean }) {
         </span>
     );
 }
+

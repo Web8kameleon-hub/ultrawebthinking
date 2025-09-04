@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LazyLoader.tsx - Advanced Dynamic Loading System for EuroWeb Ultra
  * High-Performance Component Loading with AGI Intelligence
  * © Web8 UltraThinking - Ledjan Ahmati
@@ -591,3 +591,4 @@ export const componentLoaders: Record<string, LoaderConfig> = {
 };
 
 export default LazyLoader;
+

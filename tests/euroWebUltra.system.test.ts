@@ -17,7 +17,7 @@ describe('EuroWeb Ultra System Tests', () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.clearAll();
   });
 
   describe('🌐 System Architecture Tests', () => {

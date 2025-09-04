@@ -1,4 +1,4 @@
-﻿// backend/agi/executor-modular.ts
+// backend/agi/executor-modular.ts
 /**
  * Executor.ts - Real Modular Instance-Based Architecture
  * Ekzekutues për komandat dhe planet AGI
@@ -145,8 +145,8 @@ export class Executor {
    */
   async run(input: string, context?: any): Promise<ExecutionResult> {
     const startTime = Date.now();
-    const executionId = `exec_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    
+    const executionId = `exec_${Date.now()}_${crypto.randomUUID().substring(0, 9)}`;
+
     const execContext: ExecutionContext = {
       command: input,
       parameters: context?.parameters || {},

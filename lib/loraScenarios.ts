@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Advanced LoRa Connect Scenarios
  * Skenare të Avancuara LoRa Connect
  * 
@@ -138,19 +138,19 @@ class LoRaScenarioEngine {
       console.log('🔧 Scenario: Network Maintenance - Simulating device outages');
       
       const devices = this.loraEngine.getDevices();
-      const randomDevice = devices[Math.floor(Math.random() * devices.length)];
+      const evice = devices[Math.floor(Math.random() * devices.length)];
       
-      if (randomDevice) {
-        randomDevice.isOnline = false;
-        randomDevice.rssi = -120; // Very poor signal
+      if (evice) {
+        evice.isOnline = false;
+        evice.rssi = -120; // Very poor signal
         
-        console.log(`🔧 Device ${randomDevice.name} temporarily offline for maintenance`);
+        console.log(`🔧 Device ${evice.name} temporarily offline for maintenance`);
         
         // Bring it back online after 10 seconds
         setTimeout(() => {
-          randomDevice.isOnline = true;
-          randomDevice.rssi = -80 + Math.random() * 20;
-          console.log(`✅ Device ${randomDevice.name} back online`);
+          evice.isOnline = true;
+          evice.rssi = -80 + Math.random() * 20;
+          console.log(`✅ Device ${evice.name} back online`);
         }, 10000);
       }
     });
@@ -179,27 +179,27 @@ class LoRaScenarioEngine {
     }
   }
 
-  public async runRandomScenarios(): Promise<void> {
+  public async runcenarios(): Promise<void> {
     if (this.isRunning) return;
     
     this.isRunning = true;
-    console.log('🎲 Starting random scenario generator...\n');
+    console.log('🎲 Starting  scenario generator...\n');
 
     const scenarioNames = Array.from(this.scenarios.keys());
     
-    const runRandomScenario = () => {
+    const runcenario = () => {
       if (!this.isRunning) return;
       
-      const randomScenario = scenarioNames[Math.floor(Math.random() * scenarioNames.length)];
-      this.runScenario(randomScenario);
+      const cenario = scenarioNames[Math.floor(Math.random() * scenarioNames.length)];
+      this.runScenario(cenario);
       
       // Schedule next scenario in 15-45 seconds
       const nextDelay = 15000 + Math.random() * 30000;
-      setTimeout(runRandomScenario, nextDelay);
+      setTimeout(runcenario, nextDelay);
     };
 
     // Start first scenario after 5 seconds
-    setTimeout(runRandomScenario, 5000);
+    setTimeout(runcenario, 5000);
   }
 
   public stopScenarios(): void {
@@ -212,14 +212,14 @@ class LoRaScenarioEngine {
   }
 }
 
-// Demo execution
+//  execution
 async function runLoRaScenarios() {
-  console.log('🎭 LoRa Connect Advanced Scenarios Demo\n');
+  console.log('🎭 LoRa Connect Advanced Scenarios \n');
   
   const scenarioEngine = new LoRaScenarioEngine();
   
   console.log('Available scenarios:', scenarioEngine.listScenarios().join(', '));
-  console.log('\n🚀 Starting demo sequence...\n');
+  console.log('\n🚀 Starting  sequence...\n');
   
   // Run specific scenarios in sequence
   await scenarioEngine.runScenario('smart_city');
@@ -234,22 +234,22 @@ async function runLoRaScenarios() {
   await scenarioEngine.runScenario('emergency');
   await new Promise(resolve => setTimeout(resolve, 5000));
   
-  // Start random scenario generator
-  scenarioEngine.runRandomScenarios();
+  // Start  scenario generator
+  scenarioEngine.runcenarios();
   
-  console.log('\n✨ Demo sequence complete!');
-  console.log('🎲 Random scenarios will continue running...');
+  console.log('\n✨  sequence complete!');
+  console.log('🎲  scenarios will continue running...');
   console.log('🌐 Open http://localhost:3000 and go to LoRa Connect tab to see live updates');
   console.log('💡 The dashboard updates every 3 seconds with real-time data');
   
-  // Stop after 2 minutes for demo
+  // Stop after 2 minutes for 
   setTimeout(() => {
     scenarioEngine.stopScenarios();
-    console.log('\n🏁 Demo completed - scenarios stopped');
+    console.log('\n🏁  completed - scenarios stopped');
   }, 120000);
 }
 
-// Run demo automatically
+// Run  automatically
 runLoRaScenarios().catch(console.error);
 
 export { LoRaScenarioEngine };

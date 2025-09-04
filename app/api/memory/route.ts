@@ -1,4 +1,4 @@
-﻿import OpenMindMemory from '../../../lib/memorySystem';
+import OpenMindMemory from '../../../lib/memorySystem';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {

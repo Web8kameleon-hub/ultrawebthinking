@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb LoRa Connect Ultra - Long Range IoT Communication
  * Industrial-Grade LoRa Architecture with AI Enhancement
  * 
@@ -538,3 +538,4 @@ const LoRaConnectUltra: React.FC = () => {
 
 export default LoRaConnectUltra
 export { LoRaConnectUltra }
+

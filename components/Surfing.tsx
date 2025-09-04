@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Surfing - Pure Real Functions Only
  * @author Ledjan Ahmati (100% Owner)
  * @version 8.0.0 Real-Only
@@ -93,7 +93,7 @@ const Surfing: React.FC = () => {
 
       <input
         type="text"
-        placeholder="Shkruaj komandën..."
+ placeholder="Shkruaj komandën..."
         value={state.input}
         onChange={handleInputChange}
         onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
@@ -193,3 +193,4 @@ const Surfing: React.FC = () => {
 };
 
 export default Surfing;
+

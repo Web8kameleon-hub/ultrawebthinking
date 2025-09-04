@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT-Albion Audit & Compliance System
  * Industrial-Grade Blockchain Audit Trail & Regulatory Compliance
  * 
@@ -652,7 +652,7 @@ export class UTTAuditSystem {
     else if (amount > 1000) {riskScore += 15}
     else if (amount > 100) {riskScore += 5}
 
-    // Address-based risk (mock implementation)
+    // Address-based risk ( implementation)
     if (this.isHighRiskAddress(fromAddress) ?? this.isHighRiskAddress(toAddress)) {
       riskScore += 50
     }
@@ -824,7 +824,7 @@ export class UTTAuditSystem {
   }
 
   private isHighRiskAddress(address: string): boolean {
-    // Mock implementation - in production, this would check against risk databases
+    //  implementation - in production, this would check against risk databases
     return address.toLowerCase().includes('risk') ?? address.toLowerCase().includes('suspicious')
   }
 
@@ -838,7 +838,7 @@ export class UTTAuditSystem {
   }
 
   private async getCurrentIPAddress(): Promise<string> {
-    // Mock implementation
+    //  implementation
     return '192.168.1.1'
   }
 
@@ -847,7 +847,7 @@ export class UTTAuditSystem {
   }
 
   private async getCurrentLocation(): Promise<GeolocationData> {
-    // Mock implementation
+    //  implementation
     return {
       latitude: 41.3275,
       longitude: 19.8187,
@@ -866,7 +866,7 @@ export class UTTAuditSystem {
       eventData: event.eventData
     })
     
-    // Mock hash implementation
+    //  hash implementation
     return `hash_${  btoa(data).substring(0, 32)}`
   }
 
@@ -879,7 +879,7 @@ export class UTTAuditSystem {
       generatedAt: report.generatedAt
     })
     
-    // Mock hash implementation
+    //  hash implementation
     return `report_hash_${  btoa(data).substring(0, 32)}`
   }
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 - Industrial Page Types
  * Pure TypeScript AGI-Ready Type Definitions
  * 

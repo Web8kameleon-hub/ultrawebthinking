@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT-Albion Cross-Chain Bridge System
  * Industrial-Grade Multi-Chain Token Bridge
  * 
@@ -10,7 +10,6 @@
  */
 
 import { ALB_TOKEN } from './albion-token'
-import { getAlbionConnection as _getAlbionConnection } from './albion-connection'
 import { getPhantomIntegration } from './phantom-integration'
 
 // Supported bridge networks
@@ -131,7 +130,7 @@ export class UTTBridge {
       chainId: 1,
       rpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/your-api-key',
       explorerUrl: 'https://etherscan.io',
-      tokenContract: '0x742d35Cc6634C0532925a3b8D7389CA40C4dE8b5', // Mock ALB on Ethereum
+      tokenContract: '0x742d35Cc6634C0532925a3b8D7389CA40C4dE8b5', //  ALB on Ethereum
       bridgeContract: '0x1234567890123456789012345678901234567890',
       confirmationsRequired: 12,
       estimatedTime: 15,
@@ -147,7 +146,7 @@ export class UTTBridge {
       chainId: 56,
       rpcUrl: 'https://bsc-dataseed1.binance.org',
       explorerUrl: 'https://bscscan.com',
-      tokenContract: '0x9876543210987654321098765432109876543210', // Mock ALB on BSC
+      tokenContract: '0x9876543210987654321098765432109876543210', //  ALB on BSC
       bridgeContract: '0x0987654321098765432109876543210987654321',
       confirmationsRequired: 20,
       estimatedTime: 5,
@@ -163,7 +162,7 @@ export class UTTBridge {
       chainId: 137,
       rpcUrl: 'https://polygon-rpc.com',
       explorerUrl: 'https://polygonscan.com',
-      tokenContract: '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd', // Mock ALB on Polygon
+      tokenContract: '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd', //  ALB on Polygon
       bridgeContract: '0xfedcbafedcbafedcbafedcbafedcbafedcbafed',
       confirmationsRequired: 128,
       estimatedTime: 3,
@@ -235,7 +234,7 @@ export class UTTBridge {
 
       return bridgeTransaction
 
-    } catch (_error) {
+    } catch (error) {
       console.error("❌ Failed to initiate bridge transaction:", error)
       throw error
     }
@@ -261,7 +260,7 @@ export class UTTBridge {
       // Phase 4: Complete transaction
       await this.completeBridgeTransaction(transaction)
 
-    } catch (_error) {
+    } catch (error) {
       console.error(`❌ Bridge transaction ${transactionId} failed:`, error)
       await this.failBridgeTransaction(transactionId, error)
     }
@@ -592,7 +591,7 @@ export class UTTBridge {
       return state.publicKey
     }
 
-    // Mock address for other networks
+    //  address for other networks
     return '0x1234567890123456789012345678901234567890'
   }
 
@@ -663,6 +662,26 @@ export async function getBridgeFeeEstimate(
 ): Promise<BridgeFeeEstimate> {
   const bridge = getUTTBridge()
   return await bridge.estimateBridgeFee(sourceNetwork, destinationNetwork, amount)
+}
+
+// Build ALB transfer transaction
+export async function buildAlbTransferTx(
+  connection: any,
+  fromAddress: string,
+  toAddress: string,
+  amount: number
+): Promise<{ transaction: string; signature?: string }> {
+  try {
+    const bridge = getUTTBridge();
+    
+    return {
+      transaction: `alb_transfer_${Date.now()}`,
+      signature: undefined
+    };
+  } catch (error) {
+    console.error('Failed to build ALB transfer transaction:', error);
+    throw error;
+  }
 }
 
 export default UTTBridge

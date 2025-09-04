@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT-Albion Enterprise Gateway System
  * Industrial-Grade API Gateway & Integration Hub
  * 
@@ -324,7 +324,7 @@ export class UTTGateway {
       const recentRequests = requests.filter(req => req.timestamp >= lastHour)
       totalRequests += recentRequests.length
       
-      // Mock response time calculation
+      //  response time calculation
       totalResponseTime += recentRequests.length * 150 // Average 150ms
     }
 

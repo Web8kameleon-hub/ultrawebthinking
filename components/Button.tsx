@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { css } from "../css";
 
 interface ButtonProps {
@@ -39,3 +39,4 @@ export default function Button({
 
 
 export { Button };
+

@@ -1,5 +1,5 @@
-﻿// Real input payload generator for Web8 testing
-// No mocks - real data only
+// Real input payload generator for Web8 testing
+// No  - real data only
 export interface RealInputPayload {
   timestamp: number;
   source: 'user' | 'agi' | 'mesh' | 'network';

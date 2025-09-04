@@ -1,5 +1,5 @@
-﻿// Mock engine replacement - Real engine for Web8
-// No mocks - only real AGI processing and mesh networking
+//  engine replacement - Real engine for Web8
+// No  - only real AGI processing and mesh networking
 import { agiCore } from './AGICore';
 import { realSense } from './sense';
 import { realValidator } from './validator';
@@ -359,7 +359,7 @@ class RealEngine {
 
   private generateModuleCode(type: string, requirements: any): string {
     // Real code generation based on type and requirements
-    const templates = {
+    const moduleTemplates = {
       validator: `
 // Auto-generated validator module
 export function validate(data: any): boolean {
@@ -378,7 +378,7 @@ export function sendData(data: any, target: string): boolean {
 }`,
     };
 
-    return templates[type as keyof typeof templates] || '// Unknown module type';
+    return moduleTemplates[type as keyof typeof moduleTemplates] || '// Unknown module type';
   }
 
   private calculateAGIRate(): number {

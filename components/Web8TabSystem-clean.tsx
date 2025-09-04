@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Web8 Platform - Tab System Component
  * Pure TypeScript Industrial Architecture - No Hooks
  * 
@@ -464,4 +464,5 @@ const Web8TabSystem = (): React.ReactElement => {
 
 export { Web8TabSystem };
 // Removed default export: Web8TabSystem;
+
 

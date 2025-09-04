@@ -16,3 +16,4 @@ const SidebarNavigation: React.FC = () => {
 };
 
 // Removed default export: SidebarNavigation;
+

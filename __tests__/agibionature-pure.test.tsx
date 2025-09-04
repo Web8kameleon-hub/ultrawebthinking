@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI BioNature Pure Test Suite
  * Comprehensive testing for biological intelligence systems
  * 
@@ -11,7 +11,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-// Mock AGI BioNature Component
+//  AGI BioNature Component
 const AGIBioNature: React.FC<{
   mode?: 'analysis' | 'monitoring' | 'simulation';
   species?: string;
@@ -146,15 +146,15 @@ interface SpeciesData {
   threats: string[];
 }
 
-// Mock services for testing
-const mockBioNatureService = {
+//  services for testing
+const ioNatureService = {
   analyzeEcosystem: vi.fn(),
   monitorSpecies: vi.fn(),
   generateRecommendations: vi.fn(),
   getRealTimeData: vi.fn()
 };
 
-const mockEcosystemData: EcosystemData = {
+const cosystemData: EcosystemData = {
   temperature: 22.5,
   humidity: 65,
   airQuality: 85,
@@ -162,7 +162,7 @@ const mockEcosystemData: EcosystemData = {
   soilHealth: 92
 };
 
-const mockSpeciesData: SpeciesData[] = [
+const peciesData: SpeciesData[] = [
   {
     name: 'European Robin',
     population: 15000,
@@ -181,11 +181,11 @@ const mockSpeciesData: SpeciesData[] = [
 
 describe('AGI BioNature Pure Tests', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.clearAll();
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.restoreAll();
   });
 
   describe('Component Rendering', () => {
@@ -264,22 +264,22 @@ describe('AGI BioNature Pure Tests', () => {
 
   describe('Service Integration', () => {
     test('ecosystem analysis service integration', async () => {
-      mockBioNatureService.analyzeEcosystem.mockResolvedValue(mockEcosystemData);
+      ioNatureService.analyzeEcosystem.esolvedValue(cosystemData);
       
-      const result = await mockBioNatureService.analyzeEcosystem('forest');
+      const result = await ioNatureService.analyzeEcosystem('forest');
       
-      expect(mockBioNatureService.analyzeEcosystem).toHaveBeenCalledWith('forest');
-      expect(result).toEqual(mockEcosystemData);
+      expect(ioNatureService.analyzeEcosystem).toHaveBeenCalledWith('forest');
+      expect(result).toEqual(cosystemData);
       expect(result.temperature).toBe(22.5);
       expect(result.airQuality).toBe(85);
     });
 
     test('species monitoring service integration', async () => {
-      mockBioNatureService.monitorSpecies.mockResolvedValue(mockSpeciesData);
+      ioNatureService.monitorSpecies.esolvedValue(peciesData);
       
-      const species = await mockBioNatureService.monitorSpecies('forest');
+      const species = await ioNatureService.monitorSpecies('forest');
       
-      expect(mockBioNatureService.monitorSpecies).toHaveBeenCalledWith('forest');
+      expect(ioNatureService.monitorSpecies).toHaveBeenCalledWith('forest');
       expect(species).toHaveLength(2);
       expect(species[0].name).toBe('European Robin');
       expect(species[1].conservationStatus).toBe('declining');
@@ -293,11 +293,11 @@ describe('AGI BioNature Pure Tests', () => {
         activeSpecies: 15
       };
       
-      mockBioNatureService.getRealTimeData.mockResolvedValue(realTimeData);
+      ioNatureService.getRealTimeData.esolvedValue(realTimeData);
       
-      const data = await mockBioNatureService.getRealTimeData();
+      const data = await ioNatureService.getRealTimeData();
       
-      expect(mockBioNatureService.getRealTimeData).toHaveBeenCalled();
+      expect(ioNatureService.getRealTimeData).toHaveBeenCalled();
       expect(data.activeSpecies).toBe(15);
       expect(data.temperature).toBe(23.1);
     });
@@ -313,7 +313,7 @@ describe('AGI BioNature Pure Tests', () => {
         return ((stableSpecies + recoveringSpecies) / totalSpecies) * 100;
       };
       
-      const index = calculateBiodiversityIndex(mockSpeciesData);
+      const index = calculateBiodiversityIndex(peciesData);
       
       expect(index).toBe(50); // 1 stable out of 2 total = 50%
     });
@@ -329,7 +329,7 @@ describe('AGI BioNature Pure Tests', () => {
         return metrics.reduce((sum, metric) => sum + metric, 0) / metrics.length;
       };
       
-      const health = evaluateEcosystemHealth(mockEcosystemData);
+      const health = evaluateEcosystemHealth(cosystemData);
       
       expect(health).toBeCloseTo(85); // (85 + 78 + 92) / 3 = 85
     });
@@ -400,7 +400,7 @@ describe('AGI BioNature Pure Tests', () => {
         return recommendations;
       };
       
-      const salmonRecommendations = getSpeciesRecommendations(mockSpeciesData[1] as SpeciesData);
+      const salmonRecommendations = getSpeciesRecommendations(peciesData[1] as SpeciesData);
       
       expect(salmonRecommendations).toContain('Protect Atlantic Salmon habitat');
       expect(salmonRecommendations).toContain('Reduce environmental pollutants');
@@ -409,10 +409,10 @@ describe('AGI BioNature Pure Tests', () => {
 
   describe('Error Handling', () => {
     test('handles analysis service errors gracefully', async () => {
-      mockBioNatureService.analyzeEcosystem.mockRejectedValue(new Error('Service unavailable'));
+      ioNatureService.analyzeEcosystem.ejectedValue(new Error('Service unavailable'));
       
       try {
-        await mockBioNatureService.analyzeEcosystem('forest');
+        await ioNatureService.analyzeEcosystem('forest');
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe('Service unavailable');
@@ -469,15 +469,15 @@ describe('AGI BioNature Pure Tests', () => {
 
     test('handles concurrent analysis requests', async () => {
       const concurrentRequests = Array.from({ length: 10 }, (_, i) => 
-        mockBioNatureService.analyzeEcosystem(`ecosystem-${i}`)
+        ioNatureService.analyzeEcosystem(`ecosystem-${i}`)
       );
       
-      mockBioNatureService.analyzeEcosystem.mockResolvedValue(mockEcosystemData);
+      ioNatureService.analyzeEcosystem.esolvedValue(cosystemData);
       
       const results = await Promise.all(concurrentRequests);
       
       expect(results).toHaveLength(10);
-      expect(mockBioNatureService.analyzeEcosystem).toHaveBeenCalledTimes(10);
+      expect(ioNatureService.analyzeEcosystem).toHaveBeenCalledTimes(10);
     });
   });
 
@@ -504,7 +504,7 @@ describe('AGI BioNature Pure Tests', () => {
       // Verify callback was called
       expect(onAnalysisComplete).toHaveBeenCalled();
       
-      const callbackData = onAnalysisComplete.mock.calls[0]?.[0];
+      const callbackData = onAnalysisComplete..calls[0]?.[0];
       expect(callbackData).toHaveProperty('biodiversityIndex');
       expect(callbackData).toHaveProperty('healthScore');
       expect(callbackData).toHaveProperty('threatLevel');
@@ -512,3 +512,4 @@ describe('AGI BioNature Pure Tests', () => {
     });
   });
 });
+

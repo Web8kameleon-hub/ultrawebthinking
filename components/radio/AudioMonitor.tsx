@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
 export default function AudioMonitor({ title = "HF Live", src }: { title?: string; src: string }) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -7,14 +7,21 @@ export default function AudioMonitor({ title = "HF Live", src }: { title?: strin
   const [err, setErr] = useState<string | null>(null)
 
   useEffect(() => {
-    let raf = 0, ctx: AudioContext | null = null, analyser: AnalyserNode | null = null, srcNode: MediaElementAudioSourceNode | null = null
+    let raf = 0
+    let ctx: AudioContext | null = null
+    let analyser: AnalyserNode | null = null
+    let srcNode: MediaElementAudioSourceNode | null = null;
+    
     (async () => {
       try {
         const el = audioRef.current!
         await el.play().catch(() => {}) // user gesture mund të nevojitet
         ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
-        analyser = ctx.createAnalyser(); analyser.fftSize = 512
-        srcNode = ctx.createMediaElementSource(el); srcNode.connect(analyser); analyser.connect(ctx.destination)
+        analyser = ctx.createAnalyser()
+        analyser.fftSize = 512
+        srcNode = ctx.createMediaElementSource(el)
+        srcNode.connect(analyser)
+        analyser.connect(ctx.destination)
         const data = new Uint8Array(analyser.frequencyBinCount)
         const loop = () => {
           analyser!.getByteTimeDomainData(data)
@@ -38,3 +45,4 @@ export default function AudioMonitor({ title = "HF Live", src }: { title?: strin
     </div>
   )
 }
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * CryptoAnalysisEngine.ts
  * Advanced cryptocurrency analysis and trading engine
  * © Web8 UltraThinking – Ledjan Ahmati
@@ -104,7 +104,7 @@ export class CryptoAnalysisEngine {
         timestamp: new Date()
       });
 
-      // Initialize price history with sample data
+      // Initialize price history with  data
       this.priceHistory.set(crypto.symbol, this.generatePriceHistory(crypto.price));
     });
   }
@@ -231,8 +231,8 @@ export class CryptoAnalysisEngine {
 
     for (let day = 1; day <= days; day++) {
       const trendInfluence = trend * 0.01 * day; // Trend impact increases over time
-      const randomWalk = (Math.random() - 0.5) * volatility * 2;
-      const priceChange = trendInfluence + randomWalk;
+      const alk = (Math.random() - 0.5) * volatility * 2;
+      const priceChange = trendInfluence + alk;
       
       price = price * (1 + priceChange);
       

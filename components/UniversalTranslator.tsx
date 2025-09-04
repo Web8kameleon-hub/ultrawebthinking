@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Universal Translation Component
  * Komponenti Universal i Përkthimit
  */
@@ -267,7 +267,7 @@ const UniversalTranslator = () => {
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder="Type or paste text here... / Shkruani ose ngjitni tekstin këtu..."
+ placeholder="Type or paste text here... / Shkruani ose ngjitni tekstin këtu..."
               style={{
                 width: '100%',
                 height: '120px',
@@ -438,3 +438,4 @@ const UniversalTranslator = () => {
 };
 
 export default UniversalTranslator;
+

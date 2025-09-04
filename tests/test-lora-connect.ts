@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Test LoRa Connect Engine
  * Testimi i Motorit LoRa Connect
  */

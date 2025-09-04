@@ -191,3 +191,4 @@ const MemoryGraph: React.FC = () => {
 }
 
 export default MemoryGraph
+

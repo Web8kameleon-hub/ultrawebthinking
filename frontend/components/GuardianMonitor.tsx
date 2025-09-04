@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 
 export const GuardianMonitor: React.FC = () => {
   return (
@@ -8,3 +8,4 @@ export const GuardianMonitor: React.FC = () => {
     </div>
   );
 };
+

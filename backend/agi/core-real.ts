@@ -8,7 +8,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { decideAction, type MindResult } from './mind';
-import { logEvent } from './monitor';
+import { logRealEvent as logEvent } from './monitor';
 import { generateResponse } from './response';
 import { analyzeInput, type SenseResult } from './sense';
 

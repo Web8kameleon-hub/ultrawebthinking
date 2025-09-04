@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGIBioNature Tests - Pure TypeScript Industrial
  * Modern JSX syntax + React TypeScript best practices
  */
@@ -132,7 +132,7 @@ describe('AGIBioNature Industrial Tests', () => {
 });
 
 // Export named test utilities
-export const createMockSpecimen = (overrides = {}) => ({
+export const createpecimen = (overrides = {}) => ({
   ...MOCK_BIOLOGICAL_DATA.specimens[0],
   ...overrides
 });
@@ -146,5 +146,6 @@ export const createBiologyTestSuite = () => ({
     };
     return render(<AGIBioNature {...defaultProps} {...props} />);
   },
-  mockData: MOCK_BIOLOGICAL_DATA
+  ata: MOCK_BIOLOGICAL_DATA
 });
+

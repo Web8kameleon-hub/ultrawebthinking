@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env tsx
+#!/usr/bin/env tsx
 /**
  * EuroWeb Domain Setup Script
  * Automatic domain configuration dhe deployment setup
@@ -158,7 +158,7 @@ function createDNSConfig(): void {
 # Add these records to your DNS provider (Cloudflare recommended)
 
 # A Records (IPv4)
-A    @              76.76.19.19        # Vercel IP (example)
+A    @              76.76.19.19        # Vercel IP ()
 A    www            76.76.19.19        # WWW subdomain
 A    api            76.76.19.19        # API subdomain
 A    admin          76.76.19.19        # Admin subdomain
@@ -170,7 +170,7 @@ A    dev            76.76.19.19        # Development
 A    staging        76.76.19.19        # Staging
 
 # AAAA Records (IPv6)
-AAAA @              2606:4700::6810:84e5  # Vercel IPv6 (example)
+AAAA @              2606:4700::6810:84e5  # Vercel IPv6 ()
 AAAA www            2606:4700::6810:84e5  # WWW IPv6
 
 # CNAME Records
@@ -196,7 +196,7 @@ TXT  @              "security-policy=strict-transport-security"
 TXT  _vercel        "vc-domain-verify=euroweb-ai-verification-token"
 
 # Notes:
-# 1. Replace example IPs with actual Vercel IPs
+# 1. Replace  IPs with actual Vercel IPs
 # 2. Update verification tokens with real values
 # 3. Configure SSL/TLS to "Full (strict)" in Cloudflare
 # 4. Enable HSTS and security features

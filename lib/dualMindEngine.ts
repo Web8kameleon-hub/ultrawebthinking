@@ -1,4 +1,4 @@
-﻿/**
+/**
  * DualMind AI Engine - Advanced Conversational AI with Dual Personality System
  * ALBI - Male voice assistant: Analytical, systematic, technical approach
  * JONA - Female voice assistant: Creative, empathetic, intuitive approach

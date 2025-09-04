@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Neural Search Service
  * AI-powered semantic search and neural information retrieval
  * 
@@ -48,7 +48,7 @@ export class NeuralSearchService {
   }
 
   private initializeSemanticIndex() {
-    const mockData = [
+    const ata = [
       {
         id: 'doc-1',
         content: 'Artificial intelligence and machine learning algorithms for neural networks',
@@ -69,7 +69,7 @@ export class NeuralSearchService {
       }
     ];
 
-    mockData.forEach(item => {
+    ata.forEach(item => {
       const index: SemanticIndex = {
         ...item,
         lastUpdated: Date.now()

@@ -7,8 +7,8 @@
     "README.html",
     "*.md",
     "_img_sources/*",
-    "_examples_data/example.png",
-    "_examples_data/example_highres.png",
+    "__data/.png",
+    "__data/example_highres.png",
     "flightindicators.jquery.json",
     "bower.json"
   ],

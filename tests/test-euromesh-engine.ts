@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Test EuroMesh Network Engine
  * Test për Motorin e Rrjetit EuroMesh
  * 
@@ -65,11 +65,11 @@ async function testEuroMeshEngine() {
     console.log(`      Reliability: ${layer.performance.reliability.toFixed(1)}%`);
   });
 
-  console.log('\n📊 Sample Nodes by Layer:');
+  console.log('\n📊  Nodes by Layer:');
   initialTopology.layers.slice(0, 5).forEach((layer, index) => {
     if (layer.nodes.length > 0) {
       const node = layer.nodes[0];
-      console.log(`   L${index + 1} Sample - ${node.name}:`);
+      console.log(`   L${index + 1}  - ${node.name}:`);
       console.log(`      Type: ${node.type}`);
       console.log(`      Status: ${node.status}`);
       console.log(`      Connections: ${node.connections.length}`);
@@ -153,7 +153,7 @@ async function testEuroMeshEngine() {
   // Connection analysis
   console.log('\n🔗 Connection Analysis:');
   const connections = engine.getConnectionsForNode(testNode?.id || '');
-  console.log(`   Total connections for sample node: ${connections.length}`);
+  console.log(`   Total connections for  node: ${connections.length}`);
   connections.slice(0, 3).forEach((conn, index) => {
     console.log(`   Connection ${index + 1}:`);
     console.log(`      To: ${conn.toNode}`);
@@ -170,7 +170,7 @@ async function testEuroMeshEngine() {
 
   console.log('\n✅ EuroMesh Network Engine test completed successfully!');
   console.log('🎉 All 12 layers are operational and communicating effectively.');
-  console.log('📊 Network demonstrates excellent scalability and reliability.');
+  console.log('📊 Network strates excellent scalability and reliability.');
   console.log('🔧 Ready for production deployment!\n');
 }
 

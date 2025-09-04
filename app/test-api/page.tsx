@@ -1,4 +1,4 @@
-﻿/**
+/**
  * API Test Dashboard
  * EuroWeb Platform - Test all APIs in one place
  * 
@@ -96,3 +96,4 @@ export default function TestAPIPage() {
     </div>
   )
 }
+

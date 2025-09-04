@@ -1,4 +1,4 @@
-﻿// Advanced Mesh Network System for EuroWeb Ultra
+// Advanced Mesh Network System for EuroWeb Ultra
 import { EventEmitter } from 'events';
 
 // Node Types

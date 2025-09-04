@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 
@@ -26,7 +26,7 @@ export function GuardianPanel() {
 
   // Simulate real-time alerts
   useEffect(() => {
-    const mockAlerts: SecurityAlert[] = [
+    const lerts: SecurityAlert[] = [
       {
         id: '1',
         type: 'high_rate',
@@ -52,7 +52,7 @@ export function GuardianPanel() {
         blocked: false,
       },
     ];
-    setAlerts(mockAlerts);
+    setAlerts(lerts);
   }, []);
 
   const executeEmergencyBlock = async (ip: string, reason: string) => {
@@ -307,3 +307,4 @@ export function GuardianPanel() {
 }
 
 export default GuardianPanel;
+

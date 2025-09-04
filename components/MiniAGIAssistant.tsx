@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useAGI } from '../lib/AGIContext';
 import { motion } from 'framer-motion';
 import styles from '../styles/MiniAGIAssistant.module.css';
@@ -80,7 +80,7 @@ const MiniAGIAssistant: React.FC = () => {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Ask the AGI something..."
+ placeholder="Ask the AGI something..."
           className={`${styles.inputField} agi-reactive`}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
@@ -110,3 +110,4 @@ const MiniAGIAssistant: React.FC = () => {
 };
 
 export default MiniAGIAssistant;
+

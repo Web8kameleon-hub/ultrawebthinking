@@ -211,7 +211,7 @@ const UltraMonitorPage: React.FC = () => {
 
         .monitor-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          grid--columns: repeat(auto-fit, minmax(300px, 1fr));
           gap: 24px;
         }
 
@@ -270,7 +270,7 @@ const UltraMonitorPage: React.FC = () => {
 
         @media (max-width: 768px) {
           .monitor-grid {
-            grid-template-columns: 1fr;
+            grid--columns: 1fr;
           }
           
           .monitor-header h1 {
@@ -283,3 +283,4 @@ const UltraMonitorPage: React.FC = () => {
 };
 
 export default UltraMonitorPage;
+

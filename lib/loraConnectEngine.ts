@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LoRa Connect Ultra - Real-time IoT Management System
  * Sistema e Menaxhimit të IoT në Kohë Reale
  * 
@@ -578,8 +578,8 @@ export class LoRaConnectEngine {
       // This would connect to a real LoRa Gateway using UDP or TCP
       console.log(`Attempting to connect to LoRa Gateway at ${ip}:${port}`);
       
-      // For demonstration, we'll simulate a connection attempt
-      const isConnected = Math.random() > 0.5; // 50% success rate for demo
+      // For stration, we'll simulate a connection attempt
+      const isConnected = Math.random() > 0.5; // 50% success rate for 
       
       if (isConnected) {
         this.isSimulationMode = false;

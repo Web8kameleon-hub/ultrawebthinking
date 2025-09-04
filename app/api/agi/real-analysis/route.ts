@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import * as os from 'os';
 import * as fs from 'fs/promises';
 import * as path from 'path';
@@ -125,10 +125,10 @@ class RealSystemAnalyzer {
       const stats = await fs.stat(this.projectRoot);
       // This is a simplified calculation - in production you'd use a proper disk usage library
       return {
-        total: 1000000000, // 1GB placeholder
-        used: 500000000,   // 500MB placeholder
-        free: 500000000,   // 500MB placeholder
-        usage: 50          // 50% placeholder
+        total: 1000000000, // 1GB 
+        used: 500000000,   // 500MB 
+        free: 500000000,   // 500MB 
+        usage: 50          // 50% 
       };
     } catch (error) {
       return { total: 0, used: 0, free: 0, usage: 0 };

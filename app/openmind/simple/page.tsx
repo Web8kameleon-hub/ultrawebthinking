@@ -1,6 +1,6 @@
-﻿'use client';
+'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ChatMessage {
   id: string;
@@ -254,7 +254,7 @@ export default function SimpleOpenMindPage() {
                 Një AI i avancuar që kombinon dijen nga të gjitha burimet për t'ju dhënë përgjigje të sakta
               </p>
               
-              {/* Quick Examples */}
+              {/* Quick  */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
                 <button
                   onClick={() => setQuery('du te me ndihmosh te bej nje projekt')}
@@ -286,7 +286,7 @@ export default function SimpleOpenMindPage() {
 
           {/* Messages */}
           <div className={`space-y-6 ${isCompactMode ? '' : 'grid grid-cols-1 lg:grid-cols-2 gap-8'}`}>
-            {messages.map((message, index) => (
+            {messages.map((message) => (
               <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[85%] px-5 py-4 rounded-2xl transition-all duration-200 ${
                   message.type === 'user' 
@@ -416,6 +416,7 @@ export default function SimpleOpenMindPage() {
 
       {/* Hidden File Input */}
       <input
+        title="File Upload"
         ref={fileInputRef}
         type="file"
         accept=".txt,.pdf,.doc,.docx,.md"
@@ -430,3 +431,4 @@ export default function SimpleOpenMindPage() {
     </div>
   );
 }
+

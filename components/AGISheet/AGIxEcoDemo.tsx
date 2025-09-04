@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -33,7 +33,7 @@ const controlVariants = cva(styles.control, {
   }
 });
 
-interface AGIEcoDemoProps {
+interface AGIEcorops {
   layout?: 'fullscreen' | 'windowed' | 'embedded';
   showControls?: boolean;
 }
@@ -41,7 +41,7 @@ interface AGIEcoDemoProps {
 export const AGIEcoDemo = ({ 
   layout = 'windowed',
   showControls = true 
-}: AGIEcoDemoProps) => {
+}: AGIEcorops) => {
   const [mode, setMode] = useState<'statistics' | 'economics' | 'crypto' | 'comprehensive'>('comprehensive');
   const [theme, setTheme] = useState<'green' | 'blue' | 'gold' | 'dark'>('green');
   const [autoUpdate, setAutoUpdate] = useState(true);
@@ -64,7 +64,7 @@ export const AGIEcoDemo = ({
 
   const dataSources = [
     { value: 'real-time', label: '⚡ Real-time', description: 'Live market data' },
-    { value: 'demo', label: '🎭 Demo', description: 'Simulated data for testing' },
+    { value: '', label: '🎭 ', description: 'Simulated data for testing' },
     { value: 'historical', label: '📚 Historical', description: 'Historical market data' }
   ];
 
@@ -74,7 +74,7 @@ export const AGIEcoDemo = ({
 
   return (
     <div className={containerVariants({ layout: isFullscreen ? 'fullscreen' : layout })}>
-      {/* Demo Controls */}
+      {/*  Controls */}
       {showControls && (
         <motion.div
           className={styles.controls}
@@ -84,7 +84,7 @@ export const AGIEcoDemo = ({
         >
           <div className={styles.controlsHeader}>
             <h2 className={styles.controlsTitle}>
-              🧠 AGI×Eco Demo Controls
+              🧠 AGI×Eco  Controls
             </h2>
             <motion.button
               className={controlVariants({ type: 'secondary' })}
@@ -233,15 +233,15 @@ export const AGIEcoDemo = ({
         />
       </motion.div>
 
-      {/* Demo Information */}
+      {/*  Information */}
       {showControls && !isFullscreen && (
         <motion.div
-          className={styles.demoInfo}
+          className={styles.nfo}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <h3 className={styles.demoInfoTitle}>🎯 Demo Features</h3>
+          <h3 className={styles.nfoTitle}>🎯  Features</h3>
           <div className={styles.featureGrid}>
             <div className={styles.feature}>
               <div className={styles.featureIcon}>📊</div>
@@ -326,3 +326,4 @@ export const AGIEcoDemo = ({
     </div>
   );
 };
+

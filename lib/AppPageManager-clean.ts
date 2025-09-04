@@ -139,7 +139,7 @@ export class AppPageManager {
 
 export const pageManager = new AppPageManager();
 
-export const IndustrialPageTemplates = {
+export const IndustrialPage = {
   agiDashboard: (content: React.ReactNode) => 
     pageManager.createPageWrapper(content, 'slideIn', 'sidebar', 'industrial'),
 

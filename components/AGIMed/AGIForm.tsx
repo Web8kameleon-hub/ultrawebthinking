@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Medical Form Component
  * Medical AI Analysis Input Form
  * 
@@ -62,7 +62,7 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmitAction, isLoading = fa
             onChange={handleInputChange}
             placeholder="Enter symptoms, medical history, or questions for AI analysis..."
             disabled={isLoading}
-            className="w-full h-32 p-4 border border-gray-300 rounded-xl text-gray-800 placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full h-32 p-4 border border-gray-300 rounded-xl text-gray-800 -gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:bg-gray-100 disabled:cursor-not-allowed"
           />
           <div className="absolute bottom-3 right-3 text-sm text-gray-500">
             {charCount}/{maxChars}
@@ -98,3 +98,4 @@ export const AGIForm: React.FC<AGIFormProps> = ({ onSubmitAction, isLoading = fa
     </motion.div>
   )
 }
+

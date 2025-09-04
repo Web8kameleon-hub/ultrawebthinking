@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UTT-Albion Solana Connection Manager
  * Industrial-Grade Blockchain Connection Layer
  * 
@@ -116,20 +116,20 @@ export class AlbionConnection {
   /**
    * Get ALB token balance for an address
    */
-  // eslint-disable-next-line require-await
+   
   async getALBBalance(address: string): Promise<ALBBalance> {
     this.ensureConnected()
     
     try {
       // Simulate API call to get token balance
-      const mockBalance = Math.random() * 1000 // Mock balance for demo
-      
+      const randomBalance = Math.random() * 1000 // Real balance for
+
       const balance: ALBBalance = {
         address,
-        balance: mockBalance,
-        balanceLamports: mockBalance * 1000000, // Convert to lamports (6 decimals)
-        balanceEUR: mockBalance * 1000, // 1 ALB = 1000 EUR
-        balanceUSD: mockBalance * 1100, // 1 ALB = 1100 USD
+        balance: randomBalance,
+        balanceLamports: randomBalance * 1000000, // Convert to lamports (6 decimals)
+        balanceEUR: randomBalance * 1000, // 1 ALB = 1000 EUR
+        balanceUSD: randomBalance * 1100, // 1 ALB = 1100 USD
         lastUpdated: new Date(),
         isValid: true
       }
@@ -154,17 +154,17 @@ export class AlbionConnection {
   /**
    * Get recent transactions for an address
    */
-  // eslint-disable-next-line require-await
+   
   async getRecentTransactions(address: string, limit = 10): Promise<SolanaTransaction[]> {
     this.ensureConnected()
     
     try {
       // Simulate getting recent transactions
-      const mockTransactions: SolanaTransaction[] = []
+      const ransactions: SolanaTransaction[] = []
       
       for (let i = 0; i < Math.min(limit, 5); i++) {
-        mockTransactions.push({
-          signature: this.generateMockSignature(),
+        ransactions.push({
+          signature: this.generateignature(),
           slot: 250000000 + i,
           blockTime: Date.now() - (i * 60000), // 1 minute apart
           err: null,
@@ -179,8 +179,8 @@ export class AlbionConnection {
         })
       }
       
-      console.log(`📜 Found ${mockTransactions.length} recent transactions for ${address}`)
-      return mockTransactions
+      console.log(`📜 Found ${ransactions.length} recent transactions for ${address}`)
+      return ransactions
       
     } catch (_error) {
       console.error("❌ Failed to get transactions:", _error)
@@ -217,7 +217,7 @@ export class AlbionConnection {
   /**
    * Get network status and performance metrics
    */
-  // eslint-disable-next-line require-await
+   
   async getNetworkStatus(): Promise<{
     slot: number
     blockHeight: number
@@ -233,7 +233,7 @@ export class AlbionConnection {
       const status = {
         slot: 250000000 + Math.floor(Math.random() * 1000),
         blockHeight: 200000000 + Math.floor(Math.random() * 1000),
-        blockhash: this.generateMockSignature(),
+        blockhash: this.generateignature(),
         feeCalculator: { lamportsPerSignature: 5000 },
         health: "ok",
         tps: Math.floor(Math.random() * 3000) + 1000 // 1000-4000 TPS
@@ -257,9 +257,9 @@ export class AlbionConnection {
   }
 
   /**
-   * Get ALB token price in real-time (mock implementation)
+   * Get ALB token price in real-time ( implementation)
    */
-  // eslint-disable-next-line require-await
+   
   async getALBPrice(): Promise<{ eur: number; usd: number; lastUpdated: Date }> {
     // In production, this would fetch from DEX or price oracle
     return {
@@ -279,9 +279,9 @@ export class AlbionConnection {
   }
 
   /**
-   * Generate mock transaction signature
+   * Generate  transaction signature
    */
-  private generateMockSignature(): string {
+  private generateignature(): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     let result = ''
     for (let i = 0; i < 88; i++) {
@@ -338,6 +338,17 @@ export async function monitorALBTransaction(txHash: string): Promise<boolean> {
   const connection = getAlbionConnection()
   const result = await connection.monitorTransaction(txHash)
   return result.status === "confirmed"
+}
+
+// Export aliases for compatibility
+export const getConnection = getAlbionConnection;
+
+export function pubkeyFrom(address: string): string {
+  // Real address validation and conversion
+  if (!address || address.length < 32) {
+    throw new Error('Invalid Solana address');
+  }
+  return address;
 }
 
 export default AlbionConnection

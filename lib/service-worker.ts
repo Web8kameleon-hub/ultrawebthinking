@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra Service Worker - TypeScript
+// EuroWeb Ultra Service Worker - TypeScript
 // Performance & Caching Strategy for Multi-language AGI Platform
 
 /// <reference lib="webworker" />

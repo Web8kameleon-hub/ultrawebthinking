@@ -1,8 +1,11 @@
-﻿/**
+/**
  * UTT-Albion Module Stack - Main Index
  * Industrial-Grade Solana Blockchain Integration Suite
  * 
- * @author Ledjan Ahmati (100% Owner)
+ * @author Ledj  } catch (_error) {
+    console.error("❌ Failed to initialize UTT-Albion Suite:", _error)
+    throw _error
+  }hmati (100% Owner)
  * @contact dealsjona@gmail.com
  * @version 1.0.0 Industrial
  * @license MIT
@@ -10,67 +13,46 @@
  */
 
 // Core token configuration and utilities
-export { 
-  ALB_TOKEN,
-  ALBTokenUtils
+export {
+    ALBTokenUtils, ALB_TOKEN
 } from './albion-token'
 
 // Solana blockchain connection and management
 export {
-  AlbionConnection,
-  getAlbionConnection
+    AlbionConnection,
+    getAlbionConnection
 } from './albion-connection'
 
 // Phantom wallet integration
 export {
-  PhantomIntegration,
-  getPhantomIntegration,
-  connectPhantom,
-  transferALB,
-  getWalletBalance
+    PhantomIntegration, connectPhantom, getPhantomIntegration, getWalletBalance, transferALB
 } from './phantom-integration'
 
 // Cross-chain bridge system
 export {
-  UTTBridge,
-  getUTTBridge,
-  bridgeALB,
-  getBridgeFeeEstimate,
-  BridgeNetwork,
-  BridgeStatus
+    BridgeNetwork,
+    BridgeStatus, UTTBridge, bridgeALB,
+    getBridgeFeeEstimate, getUTTBridge
 } from './utt-bridge'
 
 // Physical token system (NFC/QR)
 export {
-  UTTPhysicalTokens,
-  getUTTPhysicalTokens,
-  createPhysicalALBToken,
-  scanALBToken,
-  PhysicalTokenType,
-  PhysicalTokenStatus,
-  SecurityLevel
+    PhysicalTokenStatus, PhysicalTokenType, SecurityLevel, UTTPhysicalTokens, createPhysicalALBToken, getUTTPhysicalTokens, scanALBToken
 } from './utt-physical'
 
 // Audit and compliance system
 export {
-  UTTAuditSystem,
-  getUTTAuditSystem,
-  logAuditEvent,
-  analyzeTransactionCompliance,
-  AuditEventType,
-  ComplianceStatus,
-  RiskLevel,
-  RegulatoryFramework
+    AuditEventType,
+    ComplianceStatus, RegulatoryFramework, RiskLevel, UTTAuditSystem, analyzeTransactionCompliance, getUTTAuditSystem,
+    logAuditEvent
 } from './utt-audit'
 
 // Enterprise gateway and API system
 export {
-  UTTGateway,
-  getUTTGateway,
-  processAPIRequest,
-  registerAPIClient,
-  GatewayServiceType,
-  APIEndpoint
+    APIEndpoint, GatewayServiceType, UTTGateway,
+    getUTTGateway,
+    processAPIRequest,
+    registerAPIClient
 } from './utt-gateway'
 
 /**
@@ -121,7 +103,7 @@ export async function initializeUTTSuite(): Promise<{
       gateway
     }
 
-  } catch (_error) {
+  } catch (error) {
     console.error("❌ Failed to initialize UTT-Albion Suite:", error)
     throw error
   }
@@ -166,43 +148,43 @@ export async function getUTTSuiteStatus(): Promise<{
 }
 
 /**
- * UTT-Albion Quick Start Examples
+ * UTT-Albion Quick Start 
  */
-export const UTTExamples = {
-  // Example usage patterns
+export const UTT = {
+  //  usage patterns
   async connectWallet() {
     console.log("Use getPhantomIntegration().connect() to connect wallet")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   },
 
   async transferTokens() {
     console.log("Use getPhantomIntegration().createTransferTransaction() to transfer")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   },
 
   async bridgeTokens() {
     console.log("Use getUTTBridge().initiateBridge() to bridge tokens")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   },
 
   async createPhysicalToken() {
     console.log("Use getUTTPhysicalTokens().createPhysicalToken() to create")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   },
 
   async scanPhysicalToken() {
     console.log("Use getUTTPhysicalTokens().scanPhysicalToken() to scan")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   },
 
   async logAuditEvent() {
     console.log("Use getUTTAuditSystem().logAuditEvent() to log")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   },
 
   async processAPICall() {
     console.log("Use processAPIRequest() to make API calls")
-    return { message: "Example function - implement in your code" }
+    return { message: " function - implement in your code" }
   }
 }
 
@@ -246,7 +228,7 @@ export const UTTConfig = {
 export default {
   // Configuration
   UTTConfig,
-  UTTExamples,
+  UTT,
   
   // Initialization functions
   initializeUTTSuite,

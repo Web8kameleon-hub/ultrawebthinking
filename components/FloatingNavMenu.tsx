@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -10,9 +10,9 @@ export function FloatingNavMenu() {
     { href: '/openmind', label: '🧠 OpenMind AI', description: 'Universal AI Gateway' },
     { href: '/guardian', label: '🛡️ Guardian', description: 'Security Control' },
     { href: '/browser', label: '🌐 Web8 Browser', description: 'Advanced Browser' },
-    { href: '/agi-demo', label: '🤖 AGI Demo', description: 'AI Demonstration' },
-    { href: '/agibionature-demo', label: '🌿 AGI Bio', description: 'Bio Nature AI' },
-    { href: '/agieco-demo', label: '♻️ AGI Eco', description: 'Ecological AI' },
+    { href: '/agi-', label: '🤖 AGI ', description: 'AI stration' },
+    { href: '/agibionature-', label: '🌿 AGI Bio', description: 'Bio Nature AI' },
+    { href: '/agieco-', label: '♻️ AGI Eco', description: 'Ecological AI' },
     { href: '/ultra-live', label: '⚡ Ultra Live', description: 'Live Platform' }
   ];
 
@@ -74,3 +74,4 @@ export function FloatingNavMenu() {
 }
 
 export default FloatingNavMenu;
+

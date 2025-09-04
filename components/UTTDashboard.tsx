@@ -409,7 +409,7 @@ const UTTDashboard: React.FC = () => {
                   type="text"
                   value={transferForm.to}
                   onChange={(e) => setTransferForm(prev => ({ ...prev, to: e.target.value }))}
-                  placeholder="Solana wallet address..."
+ placeholder="Solana wallet address..."
                   style={{
                     width: '100%',
                     padding: '12px',
@@ -433,7 +433,7 @@ const UTTDashboard: React.FC = () => {
                   min="0"
                   value={transferForm.amount}
                   onChange={(e) => setTransferForm(prev => ({ ...prev, amount: e.target.value }))}
-                  placeholder="0.000000"
+ placeholder="0.000000"
                   style={{
                     width: '100%',
                     padding: '12px',
@@ -491,7 +491,7 @@ const UTTDashboard: React.FC = () => {
                       type="text"
                       value={physicalForm.tokenId}
                       onChange={(e) => setPhysicalForm(prev => ({ ...prev, tokenId: e.target.value }))}
-                      placeholder="Token ID (e.g., ALB-0001)"
+ placeholder="Token ID (e.g., ALB-0001)"
                       style={{
                         width: '100%',
                         padding: '8px',
@@ -509,7 +509,7 @@ const UTTDashboard: React.FC = () => {
                       type="text"
                       value={physicalForm.serial}
                       onChange={(e) => setPhysicalForm(prev => ({ ...prev, serial: e.target.value }))}
-                      placeholder="Serial Number (e.g., S-0001)"
+ placeholder="Serial Number (e.g., S-0001)"
                       style={{
                         width: '100%',
                         padding: '8px',
@@ -527,7 +527,7 @@ const UTTDashboard: React.FC = () => {
                       type="text"
                       value={physicalForm.owner}
                       onChange={(e) => setPhysicalForm(prev => ({ ...prev, owner: e.target.value }))}
-                      placeholder="Owner Wallet (optional)"
+ placeholder="Owner Wallet (optional)"
                       style={{
                         width: '100%',
                         padding: '8px',
@@ -568,7 +568,7 @@ const UTTDashboard: React.FC = () => {
                   <textarea
                     value={verifyData}
                     onChange={(e) => setVerifyData(e.target.value)}
-                    placeholder="Paste signed token data (JSON) here..."
+ placeholder="Paste signed token data (JSON) here..."
                     rows={6}
                     style={{
                       width: '100%',
@@ -726,4 +726,5 @@ const UTTDashboard: React.FC = () => {
 }
 
 export default UTTDashboard
+
 

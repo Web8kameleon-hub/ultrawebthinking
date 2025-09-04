@@ -1,8 +1,8 @@
-﻿'use client';
+'use client';
 
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { OPENMIND_CONFIG, AIProvider } from '../config/openmind';
+import { useState } from 'react';
+import { AIProvider, OPENMIND_CONFIG } from '../config/openmind';
 import DualMindEngine from '../lib/dualMindEngine';
 import UniversalTranslationEngine from '../lib/universalTranslationEngine';
 
@@ -407,4 +407,5 @@ const OpenMindChat = () => {
 
 export { OpenMindChat };
 // Removed default export: OpenMindChat;
+
 

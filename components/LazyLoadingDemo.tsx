@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { Suspense, lazy, useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ import React, { Suspense, lazy, useEffect, useState } from 'react';
  * to reduce the initial bundle size and improve application startup time.
  * The chart will only be loaded when it's actually needed in the UI.
  * 
- * @example
+ * @
  * ```tsx
  * <Suspense fallback={<div>Loading chart...</div>}>
  *   <HeavyChart data={chartData} />
@@ -127,7 +127,7 @@ export default function LazyLoadingDemo() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-6"
       >
-        <h1 className="text-3xl font-bold mb-2">🚀 Demo e Ngarkimit të Vonuar</h1>
+        <h1 className="text-3xl font-bold mb-2">🚀  e Ngarkimit të Vonuar</h1>
         <p className="text-blue-100">
           Eksploroni komponentët e ngarkuar dinamikisht me React.lazy dhe Suspense
         </p>
@@ -239,3 +239,4 @@ export default function LazyLoadingDemo() {
     </div>
   );
 }
+

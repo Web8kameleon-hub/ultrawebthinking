@@ -1,8 +1,8 @@
-﻿/**
+/**
  * EuroMesh Network Test Script
  * Test i Plotë për Sistemin 12-Layer
  * 
- * Script për testimin dhe demonstrimin e sistemit EuroMesh
+ * Script për testimin dhe strimin e sistemit EuroMesh
  */
 
 import { euroMeshEngine } from './lib/euroMeshEngine';

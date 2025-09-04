@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
 import { getConnection, pubkeyFrom } from "@/lib/utt/albion-connection";
 import { connectPhantom, signAndSendWithPhantom } from "@/lib/utt/phantom-integration";
 import { buildAlbTransferTx } from "@/lib/utt/utt-bridge";
+import { useState } from "react";
 
 export default function Page() {
   const [sig, setSig] = useState<string>("");
@@ -15,7 +15,7 @@ export default function Page() {
     if (!me) { alert("Phantom not connected"); return; }
     const tx = await buildAlbTransferTx(conn, me, pubkeyFrom(dest), 0.1);
     const s = await signAndSendWithPhantom(conn, tx);
-    setSig(s);
+    setSig(s.signature);
   }
 
   return (
@@ -26,4 +26,5 @@ export default function Page() {
     </div>
   );
 }
+
 

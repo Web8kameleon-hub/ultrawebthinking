@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb Platform Backend Server
  * Industrial-grade server për Web8 AGI Platform
  * Integrated with Guardian Engine DDoS Protection
@@ -141,7 +141,7 @@ app.post('/api/agixmed/analyze', (req, res) => {
     });
   }
 
-  // Mock AGIXmed analysis response
+  //  AGIXmed analysis response
   const analysis = {
     symptoms: symptoms,
     confidence: 0.85,

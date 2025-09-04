@@ -1,4 +1,4 @@
-﻿// EuroWeb Web8 - Global Type Declarations
+// EuroWeb Web8 - Global Type Declarations
 /// <reference types="react" />
 /// <reference types="react-dom" />
 

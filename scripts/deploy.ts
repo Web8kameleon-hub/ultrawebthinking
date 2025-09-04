@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env tsx
+#!/usr/bin/env tsx
 /**
  * EuroWeb Platform - Deployment Manager
  * Handles Vercel, Docker, and domain deployment
@@ -194,7 +194,7 @@ class DeploymentManager {
     console.log('  staging');
     console.log('  production');
     console.log('');
-    console.log(colors.yellow('Examples:'));
+    console.log(colors.yellow(':'));
     console.log('  yarn deploy vercel production');
     console.log('  yarn deploy docker development');
     console.log('  yarn deploy local staging');

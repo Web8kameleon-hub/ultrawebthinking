@@ -1,4 +1,4 @@
-﻿/**
+/**
  * EuroWeb AGI×El Ultra - Electrical Engineering AI Tab System
  * Ultra-Industrial Quantum-Enhanced Architecture
  * 
@@ -439,3 +439,4 @@ const AGIElUltra: React.FC = () => {
 
 export { AGIElUltra };
 export default AGIElUltra;
+

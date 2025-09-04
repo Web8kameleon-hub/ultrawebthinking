@@ -292,3 +292,4 @@ export const DynamicEuroWebApp = () => {
 }
 
 export default DynamicEuroWebApp
+

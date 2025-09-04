@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { lazy, Suspense } from 'react';
 
@@ -36,3 +36,4 @@ const EuroWebMainPlatform: React.FC<EuroWebMainPlatformProps> = ({
 };
 
 export default EuroWebMainPlatform;
+

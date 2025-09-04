@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra - Main Dashboard Integration
+// EuroWeb Ultra - Main Dashboard Integration
 // Dashboard kryesor që integron të gjitha modulet
 
 'use client';
@@ -186,7 +186,7 @@ export default function EuroWebUltraDashboard() {
         return <SecurityDashboard />;
       case 'performance':
         return <SystemPerformanceDashboard />;
-      case 'demo':
+      case '':
         return <LazyLoadingDemo />;
       default:
         return renderOverview();
@@ -415,7 +415,7 @@ export default function EuroWebUltraDashboard() {
     { id: 'green', label: 'Green AI', icon: '🌱' },
     { id: 'security', label: 'Security', icon: '🛡️' },
     { id: 'dashboard', label: 'Custom Dashboard', icon: '🎛️' },
-    { id: 'demo', label: 'Lazy Loading Demo', icon: '🚀' }
+    { id: '', label: 'Lazy Loading ', icon: '🚀' }
   ];
 
   return (
@@ -493,3 +493,4 @@ export default function EuroWebUltraDashboard() {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Button UI Component
  * Reusable button component for EuroWeb platform
  * 
@@ -49,3 +49,4 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   )
 }
+

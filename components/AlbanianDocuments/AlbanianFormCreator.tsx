@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 
@@ -24,7 +24,7 @@ interface FormTemplate {
   category: 'administrative' | 'business' | 'personal' | 'legal'
 }
 
-const albanianFormTemplates: FormTemplate[] = [
+const albanianForm: FormTemplate[] = [
   {
     name: 'Aplikim për Leje Qëndrimi',
     description: 'Formular zyrtar për aplikim leje qëndrimi në Shqipëri',
@@ -109,12 +109,12 @@ const albanianFormTemplates: FormTemplate[] = [
   }
 ]
 
-export const AlbanianFormCreator: React.FC = () => {
+const AlbanianFormCreator: React.FC = (): React.JSX.Element => {
   const [selectedTemplate, setSelectedTemplate] = useState<FormTemplate | null>(null)
   const [formData, setFormData] = useState<{ [key: string]: string }>({})
   const [isPreview, setIsPreview] = useState(false)
   const [customForm, setCustomForm] = useState<FormField[]>([])
-  const [showTemplates, setShowTemplates] = useState(true)
+  const [show, setShow] = useState(true)
 
   const handleFieldChange = (fieldId: string, value: string) => {
     setFormData(prev => ({
@@ -147,7 +147,7 @@ export const AlbanianFormCreator: React.FC = () => {
 
   const saveForm = () => {
     const formContent = {
-      template: selectedTemplate?.name || 'Formular i Personalizuar',
+      title: selectedTemplate?.name || 'Formular i Personalizuar',
       data: formData,
       timestamp: new Date().toISOString()
     }
@@ -156,7 +156,7 @@ export const AlbanianFormCreator: React.FC = () => {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${formContent.template.replace(/\s+/g, '_')}.json`
+    a.download = `${formContent.title.replace(/\s+/g, '_')}.json`
     a.click()
   }
 
@@ -171,7 +171,7 @@ export const AlbanianFormCreator: React.FC = () => {
             type="text"
             value={value}
             onChange={(e) => handleFieldChange(field.id, e.target.value)}
-            placeholder={field.placeholder}
+            placeholder={field.placeholder || field.value}
             className={fieldClass}
             required={field.required}
           />
@@ -229,12 +229,14 @@ export const AlbanianFormCreator: React.FC = () => {
         return (
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
+              id={field.id}
               type="checkbox"
               checked={value === 'true'}
               onChange={(e) => handleFieldChange(field.id, e.target.checked.toString())}
               className="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500"
+              title={field.label}
             />
-            <span>Po, pranoj</span>
+            <span>{field.label}</span>
           </label>
         )
       
@@ -262,7 +264,7 @@ export const AlbanianFormCreator: React.FC = () => {
     }
   }
 
-  if (showTemplates) {
+  if (show) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-gray-50 p-6">
         <div className="max-w-6xl mx-auto">
@@ -276,15 +278,15 @@ export const AlbanianFormCreator: React.FC = () => {
             </p>
           </div>
 
-          {/* Template Categories */}
+          {/*  Categories */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {Object.entries(
-              albanianFormTemplates.reduce((acc, template) => {
-                if (!acc[template.category]) acc[template.category] = []
-                acc[template.category].push(template)
+              albanianForm.reduce((acc, form) => {
+                if (!acc[form.category]) acc[form.category] = []
+                acc[form.category].push(form)
                 return acc
               }, {} as { [key: string]: FormTemplate[] })
-            ).map(([category, templates]) => (
+            ).map(([category, forms]) => (
               <div key={category} className="bg-white rounded-xl shadow-lg p-6">
                 <h3 className="font-bold text-lg mb-4 capitalize">
                   {category === 'administrative' && '🏛️ Administrative'}
@@ -293,18 +295,18 @@ export const AlbanianFormCreator: React.FC = () => {
                   {category === 'legal' && '⚖️ Ligjore'}
                 </h3>
                 <div className="space-y-2">
-                  {templates.map((template, index) => (
+                  {forms.map((form, index) => (
                     <button
                       key={index}
                       onClick={() => {
-                        setSelectedTemplate(template)
-                        setShowTemplates(false)
+                        setSelectedTemplate(form)
+                        setShow(false)
                         setFormData({})
                       }}
                       className="w-full text-left p-3 rounded-lg hover:bg-red-50 border border-gray-200 hover:border-red-200 transition-colors"
                     >
-                      <div className="font-medium text-sm">{template.name}</div>
-                      <div className="text-xs text-gray-500 mt-1">{template.description}</div>
+                      <div className="font-medium text-sm">{form.name}</div>
+                      <div className="text-xs text-gray-500 mt-1">{form.description}</div>
                     </button>
                   ))}
                 </div>
@@ -322,7 +324,7 @@ export const AlbanianFormCreator: React.FC = () => {
             <button
               onClick={() => {
                 setSelectedTemplate(null)
-                setShowTemplates(false)
+                setShow(false)
                 setCustomForm([])
               }}
               className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -344,7 +346,7 @@ export const AlbanianFormCreator: React.FC = () => {
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
-              onClick={() => setShowTemplates(true)}
+              onClick={() => setShow(true)}
               className="text-gray-600 hover:text-red-600"
             >
               ← Kthehu te shabllonet
@@ -431,7 +433,7 @@ export const AlbanianFormCreator: React.FC = () => {
                           value={field.label}
                           onChange={(e) => updateCustomField(index, { label: e.target.value })}
                           className="font-medium text-lg border-none bg-transparent"
-                          placeholder="Etiketa e fushës"
+ placeholder="Etiketa e fushës"
                         />
                         <button
                           type="button"
@@ -468,9 +470,11 @@ export const AlbanianFormCreator: React.FC = () => {
                     </div>
                   )}
                   
-                  <label className="block text-sm font-medium text-gray-700">
-                    {field.label} {field.required && <span className="text-red-500">*</span>}
-                  </label>
+                  {field.type !== 'checkbox' && (
+                    <label htmlFor={field.id} className="block text-sm font-medium text-gray-700">
+                      {field.label} {field.required && <span className="text-red-500">*</span>}
+                    </label>
+                  )}
                   {renderField(field)}
                 </div>
               ))}
@@ -483,3 +487,4 @@ export const AlbanianFormCreator: React.FC = () => {
 }
 
 export default AlbanianFormCreator
+

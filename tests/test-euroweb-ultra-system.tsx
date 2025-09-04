@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra - Comprehensive System Test
+// EuroWeb Ultra - Comprehensive System Test
 // Test i plotë për të gjitha modulet e reja
 
 import '@testing-library/jest-dom';
@@ -6,8 +6,8 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-// Mock framer-motion
-vi.mock('framer-motion', () => ({
+//  framer-motion
+vi.('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: any) => React.createElement('div', props, children),
     button: ({ children, ...props }: any) => React.createElement('button', props, children),
@@ -21,8 +21,8 @@ vi.mock('framer-motion', () => ({
   }
 }));
 
-// Mock React.lazy and Suspense
-vi.mock('react', async () => {
+//  React.lazy and Suspense
+vi.('react', async () => {
   const actual = await vi.importActual('react');
   return {
     ...actual,
@@ -34,8 +34,8 @@ vi.mock('react', async () => {
   };
 });
 
-// Mock the component imports since they might not exist
-const MockEuroWebUltraDashboard = () => React.createElement('div', null, 
+//  the component imports since they might not exist
+const uroWebUltraDashboard = () => React.createElement('div', null, 
   React.createElement('h1', null, 'EuroWeb Ultra'),
   React.createElement('p', null, 'Advanced AI Platform Dashboard'),
   React.createElement('nav', null,
@@ -61,7 +61,7 @@ const MockEuroWebUltraDashboard = () => React.createElement('div', null,
   React.createElement('div', null, 'Duke ngarkuar...')
 );
 
-const MockNeuralLoadOptimizer = () => React.createElement('div', null,
+const euralLoadOptimizer = () => React.createElement('div', null,
   React.createElement('h1', null, 'Neural Load Optimizer'),
   React.createElement('div', null, 'Neural Load'),
   React.createElement('div', null, 'Throughput'),
@@ -71,7 +71,7 @@ const MockNeuralLoadOptimizer = () => React.createElement('div', null,
   React.createElement('div', null, 'Recommendations')
 );
 
-const MockGreenAIEdgeManager = () => React.createElement('div', null,
+const reenAIEdgeManager = () => React.createElement('div', null,
   React.createElement('h1', null, 'Green AI & Edge Computing'),
   React.createElement('div', null, 'Green AI Metrics'),
   React.createElement('div', null, 'Edge Computing Nodes'),
@@ -88,7 +88,7 @@ const MockGreenAIEdgeManager = () => React.createElement('div', null,
   React.createElement('div', null, 'Monthly Projection')
 );
 
-const MockCustomDashboardBuilder = () => React.createElement('div', null,
+const ustomDashboardBuilder = () => React.createElement('div', null,
   React.createElement('h1', null, 'Custom Dashboard Builder'),
   React.createElement('button', null, 'Edit Dashboard'),
   React.createElement('button', null, 'Add Widgets'),
@@ -100,7 +100,7 @@ const MockCustomDashboardBuilder = () => React.createElement('div', null,
   React.createElement('div', null, 'Edge Nodes Status')
 );
 
-const MockSecurityDashboard = () => React.createElement('div', null,
+const ecurityDashboard = () => React.createElement('div', null,
   React.createElement('h1', null, 'Security & Penetration Testing'),
   React.createElement('div', null, 'Security Metrics'),
   React.createElement('div', null, 'Live Threat Detection'),
@@ -128,7 +128,7 @@ describe('EuroWeb Ultra System Tests', () => {
       key: vi.fn(),
     };
     
-    // Mock performance.now
+    //  performance.now
     global.performance = {
       ...global.performance,
       now: vi.fn(() => Date.now()),
@@ -136,12 +136,12 @@ describe('EuroWeb Ultra System Tests', () => {
   });
 
   afterEach(() => {
-    vi.clearAllMocks();
+    vi.clearAll();
   });
 
   describe('🌐 EuroWebUltraDashboard', () => {
     it('renders main dashboard with all navigation items', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Check if main title is rendered
       expect(screen.getByText('EuroWeb Ultra')).toBeInTheDocument();
@@ -156,7 +156,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('displays system overview metrics', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Check for system metrics
       expect(screen.getByText('Total Users')).toBeInTheDocument();
@@ -166,7 +166,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('shows AGI module status cards', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Check for AGI modules
       expect(screen.getByText('AGI×Med')).toBeInTheDocument();
@@ -177,7 +177,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('navigates between modules correctly', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Click on Neural Load navigation
       fireEvent.click(screen.getByText('Neural Load'));
@@ -191,7 +191,7 @@ describe('EuroWeb Ultra System Tests', () => {
 
   describe('🧠 NeuralLoadOptimizer', () => {
     it('renders neural load metrics correctly', async () => {
-      render(React.createElement(MockNeuralLoadOptimizer));
+      render(React.createElement(euralLoadOptimizer));
       
       expect(screen.getByText('Neural Load Optimizer')).toBeInTheDocument();
       expect(screen.getByText('Neural Load')).toBeInTheDocument();
@@ -200,7 +200,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('shows optimization controls', async () => {
-      render(React.createElement(MockNeuralLoadOptimizer));
+      render(React.createElement(euralLoadOptimizer));
       
       expect(screen.getByText('Neural Throttling')).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /optimize now/i })).toBeInTheDocument();
@@ -229,7 +229,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('displays recommendations based on system state', async () => {
-      render(React.createElement(MockNeuralLoadOptimizer));
+      render(React.createElement(euralLoadOptimizer));
       
       expect(screen.getByText('Recommendations')).toBeInTheDocument();
     });
@@ -237,7 +237,7 @@ describe('EuroWeb Ultra System Tests', () => {
 
   describe('🌱 GreenAIEdgeManager', () => {
     it('renders green AI metrics dashboard', async () => {
-      render(React.createElement(MockGreenAIEdgeManager));
+      render(React.createElement(reenAIEdgeManager));
       
       expect(screen.getByText('Green AI & Edge Computing')).toBeInTheDocument();
       expect(screen.getByText('Green AI Metrics')).toBeInTheDocument();
@@ -245,7 +245,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('shows energy consumption metrics', async () => {
-      render(React.createElement(MockGreenAIEdgeManager));
+      render(React.createElement(reenAIEdgeManager));
       
       expect(screen.getByText('kWh consumed')).toBeInTheDocument();
       expect(screen.getByText('kg CO2 emissions')).toBeInTheDocument();
@@ -254,7 +254,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('displays edge nodes with locations', async () => {
-      render(React.createElement(MockGreenAIEdgeManager));
+      render(React.createElement(reenAIEdgeManager));
       
       expect(screen.getByText('Tiranë, Albania')).toBeInTheDocument();
       expect(screen.getByText('Prishtinë, Kosovo')).toBeInTheDocument();
@@ -283,7 +283,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('shows energy savings impact calculations', async () => {
-      render(React.createElement(MockGreenAIEdgeManager));
+      render(React.createElement(reenAIEdgeManager));
       
       expect(screen.getByText('Energy Savings Impact')).toBeInTheDocument();
       expect(screen.getByText('Daily Impact')).toBeInTheDocument();
@@ -293,7 +293,7 @@ describe('EuroWeb Ultra System Tests', () => {
 
   describe('🎛️ CustomDashboardBuilder', () => {
     it('renders dashboard builder interface', async () => {
-      render(React.createElement(MockCustomDashboardBuilder));
+      render(React.createElement(ustomDashboardBuilder));
       
       expect(screen.getByText('Custom Dashboard Builder')).toBeInTheDocument();
       expect(screen.getByText('Edit Dashboard')).toBeInTheDocument();
@@ -301,7 +301,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('shows available widgets palette', async () => {
-      render(React.createElement(MockCustomDashboardBuilder));
+      render(React.createElement(ustomDashboardBuilder));
       
       const addWidgetsButton = screen.getByRole('button', { name: /add widgets/i });
       fireEvent.click(addWidgetsButton);
@@ -315,7 +315,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('creates new dashboard layouts', async () => {
-      render(React.createElement(MockCustomDashboardBuilder));
+      render(React.createElement(ustomDashboardBuilder));
       
       const newLayoutButton = screen.getByRole('button', { name: /new layout/i });
       fireEvent.click(newLayoutButton);
@@ -325,20 +325,20 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('manages localStorage for dashboard persistence', async () => {
-      render(React.createElement(MockCustomDashboardBuilder));
+      render(React.createElement(ustomDashboardBuilder));
       
       // Interact with component to trigger localStorage operations
       const addWidgetsButton = screen.getByRole('button', { name: /add widgets/i });
       fireEvent.click(addWidgetsButton);
       
-      // Check if localStorage is being used (mocked)
+      // Check if localStorage is being used (d)
       expect(global.localStorage.getItem).toHaveBeenCalled();
     });
   });
 
   describe('🛡️ SecurityDashboard', () => {
     it('renders security monitoring interface', async () => {
-      render(React.createElement(MockSecurityDashboard));
+      render(React.createElement(ecurityDashboard));
       
       expect(screen.getByText('Security & Penetration Testing')).toBeInTheDocument();
       expect(screen.getByText('Security Metrics')).toBeInTheDocument();
@@ -347,7 +347,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('displays security metrics correctly', async () => {
-      render(React.createElement(MockSecurityDashboard));
+      render(React.createElement(ecurityDashboard));
       
       expect(screen.getByText('Threats Blocked')).toBeInTheDocument();
       expect(screen.getByText('DDoS Attempts')).toBeInTheDocument();
@@ -379,14 +379,14 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('shows threat detection with no active threats initially', async () => {
-      render(React.createElement(MockSecurityDashboard));
+      render(React.createElement(ecurityDashboard));
       
       // Should show no threats initially
       expect(screen.getByText('No active threats detected')).toBeInTheDocument();
     });
 
     it('displays biometric authentication logs', async () => {
-      render(React.createElement(MockSecurityDashboard));
+      render(React.createElement(ecurityDashboard));
       
       // Should show no biometric authentications initially
       expect(screen.getByText('No biometric authentications yet')).toBeInTheDocument();
@@ -395,21 +395,21 @@ describe('EuroWeb Ultra System Tests', () => {
 
   describe('🔄 System Integration Tests', () => {
     it('all components render without errors', async () => {
-      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      const consoleSpy = vi.spyOn(console, 'error').mplementation(() => {});
       
-      render(React.createElement(MockEuroWebUltraDashboard));
-      render(React.createElement(MockNeuralLoadOptimizer));
-      render(React.createElement(MockGreenAIEdgeManager));
-      render(React.createElement(MockCustomDashboardBuilder));
-      render(React.createElement(MockSecurityDashboard));
+      render(React.createElement(uroWebUltraDashboard));
+      render(React.createElement(euralLoadOptimizer));
+      render(React.createElement(reenAIEdgeManager));
+      render(React.createElement(ustomDashboardBuilder));
+      render(React.createElement(ecurityDashboard));
       
       expect(consoleSpy).not.toHaveBeenCalled();
-      consoleSpy.mockRestore();
+      consoleSpy.estore();
     });
 
     it('handles lazy loading gracefully', async () => {
       // Test that lazy loaded components don't cause errors
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Navigate to different modules
       fireEvent.click(screen.getByText('Neural Load'));
@@ -421,7 +421,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('maintains consistent styling across components', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Check for consistent button elements
       const elements = screen.getAllByRole('button');
@@ -429,7 +429,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('handles real-time updates without memory leaks', async () => {
-      const { unmount } = render(React.createElement(MockNeuralLoadOptimizer));
+      const { unmount } = render(React.createElement(euralLoadOptimizer));
       
       // Wait for component to render
       await waitFor(() => {
@@ -448,7 +448,7 @@ describe('EuroWeb Ultra System Tests', () => {
     it('renders components within acceptable time', async () => {
       const startTime = Date.now();
       
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       const endTime = Date.now();
       const renderTime = endTime - startTime;
@@ -458,7 +458,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('handles multiple rapid state updates', async () => {
-      render(React.createElement(MockNeuralLoadOptimizer));
+      render(React.createElement(euralLoadOptimizer));
       
       const optimizeButton = screen.getByRole('button', { name: /optimize now/i });
       
@@ -473,7 +473,7 @@ describe('EuroWeb Ultra System Tests', () => {
 
   describe('♿ Accessibility Tests', () => {
     it('has proper heading structure', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       const headings = screen.getAllByRole('heading');
       expect(headings.length).toBeGreaterThan(0);
@@ -483,7 +483,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('has accessible buttons with proper labels', async () => {
-      render(React.createElement(MockSecurityDashboard));
+      render(React.createElement(ecurityDashboard));
       
       const buttons = screen.getAllByRole('button');
       buttons.forEach(button => {
@@ -493,7 +493,7 @@ describe('EuroWeb Ultra System Tests', () => {
     });
 
     it('provides keyboard navigation support', async () => {
-      render(React.createElement(MockCustomDashboardBuilder));
+      render(React.createElement(ustomDashboardBuilder));
       
       const buttons = screen.getAllByRole('button');
       
@@ -506,14 +506,14 @@ describe('EuroWeb Ultra System Tests', () => {
 
   describe('🌐 Internationalization (Albanian) Tests', () => {
     it('displays Albanian text correctly', async () => {
-      render(React.createElement(MockEuroWebUltraDashboard));
+      render(React.createElement(uroWebUltraDashboard));
       
       // Check for Albanian text in system notifications
       expect(screen.getByText(/duke ngarkuar/i)).toBeInTheDocument();
     });
 
     it('handles Albanian characters in component names', async () => {
-      render(React.createElement(MockGreenAIEdgeManager));
+      render(React.createElement(reenAIEdgeManager));
       
       // Check for location names with Albanian characters
       expect(screen.getByText('Tiranë, Albania')).toBeInTheDocument();
@@ -528,4 +528,5 @@ export {
     fireEvent, render,
     screen, waitFor
 };
+
 

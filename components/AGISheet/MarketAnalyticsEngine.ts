@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MarketAnalyticsEngine.ts
  * Advanced market analytics and business intelligence engine
  * © Web8 UltraThinking – Ledjan Ahmati
@@ -38,7 +38,7 @@ export interface MarketOpportunity {
 }
 
 export interface ConsumerInsight {
-  demographic: string;
+  raphic: string;
   behavior_patterns: string[];
   preferences: string[];
   pain_points: string[];
@@ -207,7 +207,7 @@ export class MarketAnalyticsEngine {
   private initializeConsumerInsights(): void {
     const insights = [
       {
-        demographic: 'Gen Z (18-26)',
+        raphic: 'Gen Z (18-26)',
         behavior_patterns: ['Mobile-first', 'Social media driven', 'Instant gratification', 'Sustainability conscious'],
         preferences: ['Video content', 'Personalized experiences', 'Social commerce', 'Authentic brands'],
         pain_points: ['Financial stress', 'Information overload', 'Privacy concerns', 'Career uncertainty'],
@@ -216,7 +216,7 @@ export class MarketAnalyticsEngine {
         digital_adoption: 0.95
       },
       {
-        demographic: 'Millennials (27-42)',
+        raphic: 'Millennials (27-42)',
         behavior_patterns: ['Research-heavy', 'Brand conscious', 'Experience-focused', 'Tech-savvy'],
         preferences: ['Quality over quantity', 'Convenient solutions', 'Ethical brands', 'Subscription services'],
         pain_points: ['Work-life balance', 'Housing costs', 'Debt management', 'Time constraints'],
@@ -225,7 +225,7 @@ export class MarketAnalyticsEngine {
         digital_adoption: 0.88
       },
       {
-        demographic: 'Gen X (43-58)',
+        raphic: 'Gen X (43-58)',
         behavior_patterns: ['Value-conscious', 'Brand loyal', 'Traditional channels', 'Quality-focused'],
         preferences: ['Proven solutions', 'Customer service', 'Long-term value', 'Simplicity'],
         pain_points: ['Technology complexity', 'Healthcare costs', 'Retirement planning', 'Elder care'],
@@ -234,7 +234,7 @@ export class MarketAnalyticsEngine {
         digital_adoption: 0.72
       },
       {
-        demographic: 'Baby Boomers (59+)',
+        raphic: 'Baby Boomers (59+)',
         behavior_patterns: ['Traditional shopping', 'Word-of-mouth', 'Brand trust', 'In-person service'],
         preferences: ['Reliability', 'Human interaction', 'Clear communication', 'Established brands'],
         pain_points: ['Technology adoption', 'Health concerns', 'Fixed income', 'Digital security'],
@@ -245,7 +245,7 @@ export class MarketAnalyticsEngine {
     ];
 
     insights.forEach(insight => {
-      this.consumerInsights.set(insight.demographic, insight);
+      this.consumerInsights.set(insight.raphic, insight);
     });
   }
 
@@ -362,7 +362,7 @@ export class MarketAnalyticsEngine {
     const insights = Array.from(this.consumerInsights.values());
     
     const behaviorAnalysis = insights.map(insight => ({
-      demographic: insight.demographic,
+      raphic: insight.raphic,
       purchasing_power: Math.round(insight.purchasing_power * 100),
       loyalty_score: Math.round(insight.loyalty_score * 100),
       digital_adoption: Math.round(insight.digital_adoption * 100),
@@ -376,7 +376,7 @@ export class MarketAnalyticsEngine {
     const purchasingPowerAnalysis = this.analyzePurchasingPower(insights);
 
     return {
-      demographic_insights: behaviorAnalysis,
+      raphic_insights: behaviorAnalysis,
       digital_transformation: digitalTrends,
       loyalty_analysis: loyaltyTrends,
       purchasing_power_distribution: purchasingPowerAnalysis,
@@ -403,7 +403,7 @@ export class MarketAnalyticsEngine {
       {
         priority: 'Digital Transformation',
         recommendation: 'Accelerate digital adoption across all consumer touchpoints',
-        rationale: 'All demographics showing increased digital adoption',
+        rationale: 'All raphics showing increased digital adoption',
         timeline: '3-6 months',
         investment_level: 'medium'
       },
@@ -555,7 +555,7 @@ export class MarketAnalyticsEngine {
 
   private generateInvestmentRecommendations(opportunities: any[]): any[] {
     const highPriority = opportunities.filter(o => o.priority === 'high');
-    const totalBudget = 200000000; // Example budget
+    const totalBudget = 200000000; //  budget
 
     return [
       {
@@ -618,8 +618,8 @@ export class MarketAnalyticsEngine {
     
     return {
       average_adoption: Math.round(avgAdoption * 100),
-      digital_leaders: insights.filter(i => i.digital_adoption > 0.8).map(i => i.demographic),
-      digital_laggards: insights.filter(i => i.digital_adoption < 0.6).map(i => i.demographic),
+      digital_leaders: insights.filter(i => i.digital_adoption > 0.8).map(i => i.raphic),
+      digital_laggards: insights.filter(i => i.digital_adoption < 0.6).map(i => i.raphic),
       growth_trend: 'accelerating'
     };
   }
@@ -629,15 +629,15 @@ export class MarketAnalyticsEngine {
     
     return {
       average_loyalty: Math.round(avgLoyalty * 100),
-      most_loyal: insights.reduce((max, i) => i.loyalty_score > max.loyalty_score ? i : max).demographic,
-      least_loyal: insights.reduce((min, i) => i.loyalty_score < min.loyalty_score ? i : min).demographic,
+      most_loyal: insights.reduce((max, i) => i.loyalty_score > max.loyalty_score ? i : max).raphic,
+      least_loyal: insights.reduce((min, i) => i.loyalty_score < min.loyalty_score ? i : min).raphic,
       trend: 'declining'
     };
   }
 
   private analyzePurchasingPower(insights: ConsumerInsight[]): any {
     return insights.map(insight => ({
-      demographic: insight.demographic,
+      raphic: insight.raphic,
       purchasing_power: Math.round(insight.purchasing_power * 100),
       category: insight.purchasing_power > 0.8 ? 'high' : 
                insight.purchasing_power > 0.6 ? 'medium' : 'low'
@@ -646,11 +646,11 @@ export class MarketAnalyticsEngine {
 
   private generateMarketingRecommendations(insights: ConsumerInsight[]): string[] {
     return [
-      'Develop multi-channel approach to reach different demographic preferences',
-      'Invest in mobile-first experiences for younger demographics',
+      'Develop multi-channel approach to reach different raphic preferences',
+      'Invest in mobile-first experiences for younger raphics',
       'Create personalized content strategies for each consumer segment',
       'Build trust through transparent communication and authentic brand positioning',
-      'Implement loyalty programs tailored to demographic-specific behaviors'
+      'Implement loyalty programs tailored to raphic-specific behaviors'
     ];
   }
 

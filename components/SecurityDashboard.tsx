@@ -1,4 +1,4 @@
-﻿// EuroWeb Ultra - Security & Penetration Testing Dashboard
+// EuroWeb Ultra - Security & Penetration Testing Dashboard
 // Monitorim i sigurisë dhe testim penetrimi
 
 'use client';
@@ -502,3 +502,4 @@ export default function SecurityDashboard() {
     </div>
   );
 }
+

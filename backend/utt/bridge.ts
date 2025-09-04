@@ -1,4 +1,4 @@
-﻿// backend/utt/bridge.ts
+// backend/utt/bridge.ts
 import { PublicKey } from "@solana/web3.js";
 import { z } from "zod";
 import { getConnection, loadBridgeKeypair, mintPubkey, getBalance, transferTokens, readCfg, albEurValue } from "./solana";

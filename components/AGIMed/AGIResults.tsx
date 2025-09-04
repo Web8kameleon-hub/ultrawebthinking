@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGI Medical Results Component
  * Medical AI Analysis Results Display
  * 
@@ -173,3 +173,4 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysisAct
 }
 
 export type { AGIMedResult, AGIResultsProps }
+

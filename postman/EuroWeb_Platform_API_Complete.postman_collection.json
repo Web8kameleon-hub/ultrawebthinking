@@ -288,7 +288,7 @@
         "exec": [
           "// Set dynamic variables",
           "pm.environment.set('timestamp', Date.now());",
-          "pm.environment.set('random_id', Math.random().toString(36).substr(2, 9));"
+          "pm.environment.set('random_id', Math.().toString(36).substr(2, 9));"
         ]
       }
     },

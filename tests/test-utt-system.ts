@@ -1,4 +1,4 @@
-﻿// test-utt-system.ts
+// test-utt-system.ts
 // Test script për UTT-ALB integration
 // Usage: npx tsx test-utt-system.ts
 
@@ -37,7 +37,7 @@ async function testPhysicalTokenSigning() {
     const payload = {
       tokenId: 'ALB-TEST-001',
       serial: 'TEST-SERIAL-001',
-      owner: 'HSEcf132J4dNz46gw5fsVV7xfgedeFyTZXMSHcroz3BU', // Example wallet
+      owner: 'HSEcf132J4dNz46gw5fsVV7xfgedeFyTZXMSHcroz3BU', //  wallet
       expiresAt: Date.now() + 365 * 24 * 60 * 60 * 1000 // 1 year from now
     };
 
@@ -101,7 +101,7 @@ async function testTransfer() {
   console.log('\n💸 Testing Transfer (Shadow Mode)...');
   try {
     const payload = {
-      to: 'HSEcf132J4dNz46gw5fsVV7xfgedeFyTZXMSHcroz3BU', // Example wallet
+      to: 'HSEcf132J4dNz46gw5fsVV7xfgedeFyTZXMSHcroz3BU', //  wallet
       amount: 0.1 // Small test amount
     };
 

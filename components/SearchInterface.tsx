@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { css } from "../css";
 
 const styles = {
@@ -32,7 +32,7 @@ const SearchInterface: React.FC = () => {
     <div className={styles.container}>
       <input
         type="text"
-        placeholder="Kërko në Web8..."
+ placeholder="Kërko në Web8..."
         className={styles.input}
       />
       <button className={styles.button}>Kërko</button>
@@ -41,3 +41,4 @@ const SearchInterface: React.FC = () => {
 };
 
 // Removed default export: SearchInterface;
+

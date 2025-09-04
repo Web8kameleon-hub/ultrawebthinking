@@ -1,4 +1,4 @@
-﻿/**
+/**
  * LoRa Physical Verification Dashboard
  * EuroWeb Platform - IoT Integration for UTT-ALB
  * 
@@ -289,7 +289,7 @@ export default function LoRaPhysicalDashboard() {
                     type="text"
                     value={testTokenId}
                     onChange={(e) => setTestTokenId(e.target.value)}
-                    placeholder="token_test_001"
+ placeholder="token_test_001"
                     style={{
                       width: '100%',
                       padding: '8px 12px',
@@ -360,3 +360,4 @@ export default function LoRaPhysicalDashboard() {
     </div>
   )
 }
+

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * AGIBioNature.tsx - Pure TypeScript Biology Engine
  * Real modular AGI biology component without x
  * © Web8 UltraThinking – Ledjan Ahmati
@@ -115,7 +115,7 @@ const getHealthStatusColor = (status: Specimen['properties']['healthStatus']): s
   return colors[status];
 };
 
-// Mock data for simulation
+//  data for simulation
 const SIMULATION_DATA: BiologyData = {
   specimens: [
     {
@@ -307,3 +307,4 @@ export { formatNumber, formatPopulation, getHealthStatusColor };
 
 // Default export
 export default AGIBioNature;
+

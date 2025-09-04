@@ -35,3 +35,4 @@ const Navbar: React.FC = () => {
 };
 
 // Removed default export: Navbar;
+
