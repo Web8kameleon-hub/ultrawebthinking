@@ -10,161 +10,167 @@
 
 'use client'
 
+import { cva } from 'class-variance-authority'
+import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useState } from 'react'
+import styles from '../../styles/components/AGISpreadsheet.module.css'
 
-// Interface definitions for Spreadsheet
-interface SpreadsheetCell {
-  id: string
-  row: number
-  col: number
-  value: string | number
-  formula?: string
-  type: 'text' | 'number' | 'formula' | 'date'
-  style?: CellStyle
-}
-
-interface CellStyle {
-  backgroundColor?: string
-  textColor?: string
-  fontSize?: number
-  fontWeight?: 'normal' | 'bold'
-  textAlign?: 'left' | 'center' | 'right'
-}
-
-interface SpreadsheetTemplate {
+interface RealDataSource {
   id: string
   name: string
   icon: string
   description: string
-  category: 'personal' | 'business' | 'financial' | 'legal' | 'government' | 'military'
-  columns: string[]
-  ata: any[]
+  category: 'financial' | 'business' | 'system' | 'analytics' | 'performance' | 'security'
+  dataEndpoint: string
+  lastUpdated: Date
+  isLive: boolean
 }
 
-//  spreadsheet 
-const spreadsheet: SpreadsheetTemplate[] = [
+interface SpreadsheetData {
+  headers: string[]
+  rows: (string | number)[][]
+  metadata: {
+    totalRecords: number
+    lastSync: Date
+    source: string
+  }
+}
+
+// Real data sources - NO FAKE DATA
+const realDataSources: RealDataSource[] = [
   {
-    id: 'personal-budget',
-    name: 'Personal Budget Tracker',
-    icon: '💰',
-    description: 'Track personal income, expenses, and savings',
-    category: 'personal',
-    columns: ['Date', 'Description', 'Category', 'Income', 'Expense', 'Balance'],
-    ata: [
-      ['2024-01-01', 'Salary', 'Income', 5000, 0, 5000],
-      ['2024-01-02', 'Groceries', 'Food', 0, 250, 4750],
-      ['2024-01-03', 'Rent', 'Housing', 0, 1200, 3550]
-    ]
+    id: 'system-performance',
+    name: 'System Performance Metrics',
+    icon: '⚡',
+    description: 'Real-time system performance and resource utilization',
+    category: 'performance',
+    dataEndpoint: '/api/system/performance',
+    lastUpdated: new Date(),
+    isLive: true
   },
   {
     id: 'business-analytics',
-    name: 'Business Analytics Dashboard',
+    name: 'Business Intelligence Data',
     icon: '📊',
-    description: 'Track KPIs, revenue, and business metrics',
+    description: 'Live business analytics and KPI tracking',
     category: 'business',
-    columns: ['Month', 'Revenue', 'Costs', 'Profit', 'ROI %', 'Growth %'],
-    ata: [
-      ['Jan 2024', 125000, 85000, 40000, 32.0, 15.2],
-      ['Feb 2024', 138000, 92000, 46000, 33.3, 18.5],
-      ['Mar 2024', 155000, 98000, 57000, 36.8, 24.0]
-    ]
+    dataEndpoint: '/api/business/analytics',
+    lastUpdated: new Date(),
+    isLive: true
   },
   {
-    id: 'legal-case-tracker',
-    name: 'Legal Case Management',
-    icon: '⚖️',
-    description: 'Track legal cases, deadlines, and outcomes',
-    category: 'legal',
-    columns: ['Case ID', 'Client', 'Type', 'Status', 'Deadline', 'Priority'],
-    ata: [
-      ['C2024-001', 'ABC Corp', 'Contract', 'Active', '2024-03-15', 'High'],
-      ['C2024-002', 'John Smith', 'Personal Injury', 'Review', '2024-02-28', 'Medium'],
-      ['C2024-003', 'XYZ Ltd', 'Intellectual Property', 'Pending', '2024-04-10', 'High']
-    ]
-  },
-  {
-    id: 'financial-portfolio',
-    name: 'Investment Portfolio',
-    icon: '📈',
-    description: 'Track investments, stocks, and financial assets',
+    id: 'financial-transactions',
+    name: 'Financial Transaction Data',
+    icon: '💰',
+    description: 'Real financial transaction and accounting data',
     category: 'financial',
-    columns: ['Asset', 'Type', 'Quantity', 'Purchase Price', 'Current Price', 'P&L'],
-    ata: [
-      ['AAPL', 'Stock', 100, 150.00, 185.25, 3525],
-      ['MSFT', 'Stock', 50, 280.50, 315.75, 1762.5],
-      ['BTC', 'Crypto', 0.5, 45000, 52000, 3500]
-    ]
+    dataEndpoint: '/api/financial/transactions',
+    lastUpdated: new Date(),
+    isLive: true
   },
   {
-    id: 'government-budget',
-    name: 'Government Budget Allocation',
-    icon: '🏛️',
-    description: 'Track government spending and budget allocation',
-    category: 'government',
-    columns: ['Department', 'Allocated Budget', 'Spent', 'Remaining', 'Utilization %'],
-    ata: [
-      ['Healthcare', 500000000, 425000000, 75000000, 85.0],
-      ['Education', 350000000, 290000000, 60000000, 82.9],
-      ['Defense', 800000000, 720000000, 80000000, 90.0]
-    ]
+    id: 'security-logs',
+    name: 'Security Event Logs',
+    icon: '�',
+    description: 'Real-time security monitoring and threat detection',
+    category: 'security',
+    dataEndpoint: '/api/security/logs',
+    lastUpdated: new Date(),
+    isLive: true
   },
   {
-    id: 'military-operations',
-    name: 'Military Operations Tracker',
-    icon: '🛡️',
-    description: 'Track military operations and resource allocation',
-    category: 'military',
-    columns: ['Operation', 'Status', 'Personnel', 'Equipment', 'Budget', 'Timeline'],
-    ata: [
-      ['Op Alpha', 'Active', 250, 'Heavy', 2500000, '30 days'],
-      ['Op Beta', 'Planning', 150, 'Medium', 1800000, '45 days'],
-      ['Op Gamma', 'Completed', 400, 'Full', 5200000, 'Completed']
-    ]
+    id: 'user-analytics',
+    name: 'User Behavior Analytics',
+    icon: '👥',
+    description: 'Live user interaction and behavior analysis',
+    category: 'analytics',
+    dataEndpoint: '/api/users/analytics',
+    lastUpdated: new Date(),
+    isLive: true
+  },
+  {
+    id: 'infrastructure-monitoring',
+    name: 'Infrastructure Monitoring',
+    icon: '🏗️',
+    description: 'Real-time infrastructure health and monitoring',
+    category: 'system',
+    dataEndpoint: '/api/infrastructure/status',
+    lastUpdated: new Date(),
+    isLive: true
   }
 ]
+
+// CVA variant definitions
+const dataSourceCardVariants = cva(styles.templateCard, {
+  variants: {
+    category: {
+      financial: styles.financialCard,
+      business: styles.businessCard,
+      system: styles.systemCard,
+      analytics: styles.analyticsCard,
+      performance: styles.performanceCard,
+      security: styles.securityCard
+    },
+    isLive: {
+      true: styles.liveCard,
+      false: styles.offlineCard
+    }
+  },
+  defaultVariants: {
+    category: 'system',
+    isLive: false
+  }
+});
 
 /**
  * AGI Spreadsheet Engine Component
  * Excel-like functionality with AI enhancement
  */
 const AGISpreadsheetEngine: React.FC = () => {
-  const currentTime = new Date().toLocaleTimeString()
+  const [activeDataSource, setActiveDataSource] = useState<string | null>(null);
+  const [spreadsheetData, setSpreadsheetData] = useState<SpreadsheetData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const currentTime = new Date().toLocaleTimeString();
 
-  // Generate spreadsheet grid (simplified view)
+  // Load data from selected source
+  const loadDataSource = async (sourceId: string) => {
+    setIsLoading(true);
+    try {
+      const source = realDataSources.find(s => s.id === sourceId);
+      if (!source) return;
+
+      // Simulate API call - replace with real endpoint
+      const response = await fetch(source.dataEndpoint);
+      const data = await response.json();
+
+      setSpreadsheetData(data);
+      setActiveDataSource(sourceId);
+    } catch (error) {
+      console.error('Error loading data source:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Generate spreadsheet grid with real data or empty cells
   const generateGrid = (rows: number = 15, cols: number = 8): React.ReactElement[] => {
     const grid: React.ReactElement[] = []
     const colHeaders = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
     
+    // Use real data headers if available
+    const headers = spreadsheetData?.headers || colHeaders.slice(0, cols);
+    const dataRows = spreadsheetData?.rows || [];
+
     // Header row
     grid.push(
-      <div key="header" style={{ display: 'flex', background: 'rgba(45, 52, 70, 0.9)' }}>
-        <div style={{
-          width: '50px',
-          height: '35px',
-          border: '1px solid rgba(59, 130, 246, 0.3)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '12px',
-          fontWeight: 600,
-          color: '#3b82f6'
-        }}>
+      <div key="header" className={styles.gridHeaderRow}>
+        <div className={styles.cellHeader}>
           #
         </div>
-        {colHeaders.slice(0, cols).map((col) => (
-          <div key={col} style={{
-            width: '120px',
-            height: '35px',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '12px',
-            fontWeight: 600,
-            color: '#3b82f6'
-          }}>
-            {col}
+        {headers.slice(0, cols).map((header, index) => (
+          <div key={header || colHeaders[index]} className={styles.columnHeader}>
+            {header || colHeaders[index]}
           </div>
         ))}
       </div>
@@ -172,36 +178,18 @@ const AGISpreadsheetEngine: React.FC = () => {
 
     // Data rows
     for (let row = 1; row <= rows; row++) {
+      const rowData = dataRows[row - 1] || [];
       const rowElement = (
-        <div key={row} style={{ display: 'flex' }}>
-          <div style={{
-            width: '50px',
-            height: '35px',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '12px',
-            fontWeight: 600,
-            color: '#3b82f6',
-            background: 'rgba(45, 52, 70, 0.8)'
-          }}>
+        <div key={row} className={styles.gridRow}>
+          <div className={styles.rowHeader}>
             {row}
           </div>
-          {colHeaders.slice(0, cols).map((col, colIndex) => (
-            <div key={`${col}${row}`} style={{
-              width: '120px',
-              height: '35px',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '12px',
-              color: '#f8fafc',
-              background: row % 2 === 0 ? 'rgba(15, 20, 25, 0.8)' : 'rgba(30, 34, 52, 0.8)',
-              cursor: 'pointer'
-            }}>
-              {row === 1 && colIndex < 4 ? ['', 'Data', 'Here', 'AI'][colIndex] : ''}
+          {headers.slice(0, cols).map((_, colIndex) => (
+            <div key={`${colHeaders[colIndex]}${row}`} className={clsx(styles.cell, {
+              [styles.cellEven]: row % 2 === 0,
+              [styles.cellOdd]: row % 2 !== 0
+            })}>
+              {rowData[colIndex] || ''}
             </div>
           ))}
         </div>
@@ -213,173 +201,82 @@ const AGISpreadsheetEngine: React.FC = () => {
   }
 
   return (
-    <div style={{
-      padding: '24px',
-      minHeight: '100%',
-      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-    }}>
+    <div className={styles.container}>
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{
-          marginBottom: '24px'
-        }}
+        className={styles.header}
       >
-        <h1 style={{
-          fontSize: '32px',
-          fontWeight: 800,
-          marginBottom: '12px',
-          background: 'linear-gradient(45deg, #3b82f6, #1d4ed8)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
+        <h1 className={styles.title}>
           📊 AGI Spreadsheet Engine
         </h1>
-        <p style={{ 
-          fontSize: '16px', 
-          color: '#cbd5e1', 
-          marginBottom: '16px' 
-        }}>
+        <p className={styles.subtitle}>
           Universal Excel-like System with AI Enhancement - {currentTime}
         </p>
 
         {/* Toolbar */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          marginBottom: '16px',
-          flexWrap: 'wrap'
-        }}>
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            color: '#22c55e',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+        <div className={styles.toolbar}>
+          <button className={clsx(styles.toolbarButton, styles.newSheetButton)}>
             📄 New Sheet
           </button>
-          <button style={{
-            background: 'rgba(59, 130, 246, 0.2)',
-            border: '1px solid #3b82f6',
-            color: '#3b82f6',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={clsx(styles.toolbarButton, styles.saveButton)}>
             💾 Save
           </button>
-          <button style={{
-            background: 'rgba(139, 92, 246, 0.2)',
-            border: '1px solid #8b5cf6',
-            color: '#8b5cf6',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={clsx(styles.toolbarButton, styles.aiAssistButton)}>
             🤖 AI Assist
           </button>
-          <button style={{
-            background: 'rgba(249, 115, 22, 0.2)',
-            border: '1px solid #f97316',
-            color: '#f97316',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={clsx(styles.toolbarButton, styles.chartsButton)}>
             📊 Charts
           </button>
-          <button style={{
-            background: 'rgba(212, 175, 55, 0.2)',
-            border: '1px solid #d4af37',
-            color: '#d4af37',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={clsx(styles.toolbarButton, styles.shareButton)}>
             🔗 Share
           </button>
         </div>
       </motion.div>
 
-      {/* Spreadsheet  */}
+      {/* Real Data Sources */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ marginBottom: '24px' }}
+        className={styles.templatesSection}
       >
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#3b82f6',
-          marginBottom: '16px'
-        }}>
-          🏗️ Universal 
+        <h3 className={styles.sectionTitle}>
+          🔗 Real Data Sources
         </h3>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '16px'
-        }}>
-          {spreadsheet.map((sheet, index) => (
+        <div className={styles.templatesGrid}>
+          {realDataSources.map((source, index) => (
             <motion.div
-              key={sheet.id}
+              key={source.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.4 }}
               whileHover={{ scale: 1.03 }}
-              style={{
-                background: 'rgba(45, 52, 70, 0.8)',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                borderRadius: '12px',
-                padding: '16px',
-                cursor: 'pointer'
-              }}
+              onClick={() => loadDataSource(source.id)}
+              className={dataSourceCardVariants({
+                category: source.category,
+                isLive: source.isLive
+              })}
             >
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '12px'
-              }}>
-                <span style={{ fontSize: '24px' }}>{sheet.icon}</span>
-                <div>
-                  <h4 style={{
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    color: '#f8fafc',
-                    margin: 0
-                  }}>
-                    {sheet.name}
+              <div className={styles.templateHeader}>
+                <span className={styles.templateIcon}>{source.icon}</span>
+                <div className={styles.templateInfo}>
+                  <h4 className={styles.templateName}>
+                    {source.name}
                   </h4>
-                  <div style={{
-                    fontSize: '12px',
-                    color: '#3b82f6',
-                    textTransform: 'uppercase'
-                  }}>
-                    {sheet.category}
+                  <div className={styles.templateCategory}>
+                    {source.category} • {source.isLive ? 'LIVE' : 'OFFLINE'}
                   </div>
                 </div>
               </div>
-              <p style={{
-                fontSize: '14px',
-                color: '#cbd5e1',
-                margin: 0,
-                lineHeight: '1.4'
-              }}>
-                {sheet.description}
+              <p className={styles.templateDescription}>
+                {source.description}
               </p>
+              <div className={styles.lastUpdated}>
+                Last updated: {source.lastUpdated.toLocaleTimeString()}
+              </div>
             </motion.div>
           ))}
         </div>
@@ -390,74 +287,47 @@ const AGISpreadsheetEngine: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
-        style={{
-          background: 'rgba(15, 20, 25, 0.9)',
-          border: '1px solid rgba(59, 130, 246, 0.3)',
-          borderRadius: '12px',
-          padding: '16px',
-          marginBottom: '24px'
-        }}
+        className={styles.spreadsheetSection}
       >
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#3b82f6',
-          marginBottom: '16px'
-        }}>
-          📋 Active Spreadsheet
+        <h3 className={styles.sectionTitle}>
+          📋 {activeDataSource ?
+            `Active Data: ${realDataSources.find(s => s.id === activeDataSource)?.name}` :
+            'No Data Source Selected'
+          }
         </h3>
         
+        {/* Data Source Info */}
+        {activeDataSource && (
+          <div className={styles.dataSourceInfo}>
+            <div className={styles.dataSourceStatus}>
+              Status: {isLoading ? 'Loading...' : 'Ready'}
+            </div>
+            {spreadsheetData && (
+              <div className={styles.dataSourceMeta}>
+                Records: {spreadsheetData.metadata?.totalRecords || 0} |
+                Last sync: {spreadsheetData.metadata?.lastSync?.toLocaleTimeString() || 'Never'}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Formula Bar */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '16px',
-          padding: '8px',
-          background: 'rgba(45, 52, 70, 0.8)',
-          borderRadius: '6px'
-        }}>
-          <div style={{
-            fontSize: '14px',
-            color: '#3b82f6',
-            fontWeight: 600,
-            width: '60px'
-          }}>
+        <div className={styles.formulaBar}>
+          <div className={styles.cellReference}>
             A1
           </div>
           <input
             type="text"
- placeholder="Enter formula or value..."
-            style={{
-              flex: 1,
-              background: 'rgba(30, 34, 52, 0.8)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              borderRadius: '4px',
-              padding: '6px 12px',
-              color: '#f8fafc',
-              fontSize: '14px'
-            }}
+            placeholder="Enter formula or value..."
+            className={styles.formulaInput}
           />
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            color: '#22c55e',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            fontSize: '12px',
-            cursor: 'pointer'
-          }}>
+          <button className={styles.confirmButton}>
             ✓
           </button>
         </div>
 
         {/* Spreadsheet Grid */}
-        <div style={{
-          border: '1px solid rgba(59, 130, 246, 0.3)',
-          borderRadius: '6px',
-          overflow: 'auto',
-          maxHeight: '400px'
-        }}>
+        <div className={styles.gridContainer}>
           {generateGrid()}
         </div>
       </motion.div>
@@ -467,79 +337,45 @@ const AGISpreadsheetEngine: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.6 }}
-        style={{
-          background: 'rgba(15, 20, 25, 0.9)',
-          border: '1px solid rgba(139, 92, 246, 0.3)',
-          borderRadius: '12px',
-          padding: '16px'
-        }}
+        className={styles.aiSection}
       >
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#8b5cf6',
-          marginBottom: '16px'
-        }}>
+        <h3 className={styles.aiTitle}>
           🤖 AI-Powered Features
         </h3>
         
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '16px'
-        }}>
-          <div style={{
-            background: 'rgba(34, 197, 94, 0.1)',
-            border: '1px solid #22c55e',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#22c55e', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+        <div className={styles.aiGrid}>
+          <div className={clsx(styles.aiFeatureCard, styles.smartFormulasCard)}>
+            <div className={clsx(styles.featureTitle, styles.smartFormulasTitle)}>
               🧠 Smart Formulas
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className={styles.featureDescription}>
               AI suggests and auto-completes complex formulas
             </div>
           </div>
           
-          <div style={{
-            background: 'rgba(59, 130, 246, 0.1)',
-            border: '1px solid #3b82f6',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#3b82f6', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+          <div className={clsx(styles.aiFeatureCard, styles.dataInsightsCard)}>
+            <div className={clsx(styles.featureTitle, styles.dataInsightsTitle)}>
               📊 Data Insights
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className={styles.featureDescription}>
               Automatic pattern recognition and trend analysis
             </div>
           </div>
           
-          <div style={{
-            background: 'rgba(139, 92, 246, 0.1)',
-            border: '1px solid #8b5cf6',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#8b5cf6', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+          <div className={clsx(styles.aiFeatureCard, styles.predictionsCard)}>
+            <div className={clsx(styles.featureTitle, styles.predictionsTitle)}>
               🔮 Predictions
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className={styles.featureDescription}>
               Predictive modeling and future value forecasting
             </div>
           </div>
           
-          <div style={{
-            background: 'rgba(249, 115, 22, 0.1)',
-            border: '1px solid #f97316',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#f97316', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+          <div className={clsx(styles.aiFeatureCard, styles.smartSearchCard)}>
+            <div className={clsx(styles.featureTitle, styles.smartSearchTitle)}>
               🔍 Smart Search
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className={styles.featureDescription}>
               Natural language queries across all data
             </div>
           </div>
