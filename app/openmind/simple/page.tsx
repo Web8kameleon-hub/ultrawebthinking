@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import styles from './page.module.css';
 
 interface ChatMessage {
   id: string;
@@ -344,9 +345,9 @@ export default function SimpleOpenMindPage() {
                     <div className="font-medium text-gray-700 mb-1">OpenMind</div>
                     <div className="flex items-center gap-2">
                       <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        <div className={styles.loadingDot}></div>
+                        <div className={`${styles.loadingDot} ${styles.loadingDotDelay1}`}></div>
+                        <div className={`${styles.loadingDot} ${styles.loadingDotDelay2}`}></div>
                       </div>
                       <span className="text-gray-600 text-sm">Duke menduar...</span>
                     </div>

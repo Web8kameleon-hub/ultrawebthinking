@@ -1,0 +1,36 @@
+/**
+ * OpenMind Simple Page Styles
+ * CSS Module for openmind/simple page component
+ * 
+ * @author Ledjan Ahmati (100% Owner)
+ * @contact dealsjona@gmail.com
+ * @version 8.0.0 Industrial
+ * @license MIT
+ */
+
+/* Loading animation dots with different delays */
+.loadingDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: rgb(96 165 250); /* bg-blue-400 */
+  border-radius: 9999px;
+  animation: bounce 1s infinite;
+}
+
+.loadingDotDelay1 {
+  animation-delay: 0.1s;
+}
+
+.loadingDotDelay2 {
+  animation-delay: 0.2s;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.25rem);
+  }
+}
