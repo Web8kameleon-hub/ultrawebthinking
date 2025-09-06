@@ -6,8 +6,10 @@
 
 "use client";
 
+import clsx from "clsx";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import styles from "./page.module.css";
 
 interface SystemMetrics {
   cpuUsage: number;
@@ -42,52 +44,67 @@ const UltraMonitorPage: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const getStatusColor = (value: number, type: 'cpu' | 'memory' | 'disk' | 'temp') => {
+  const getStatusColorClass = (value: number, type: 'cpu' | 'memory' | 'disk' | 'temp') => {
     switch (type) {
       case 'cpu':
       case 'memory':
-        if (value < 50) return '#10b981';
-        if (value < 80) return '#f59e0b';
-        return '#ef4444';
+        if (value < 50) return styles.statusGreen;
+        if (value < 80) return styles.statusYellow;
+        return styles.statusRed;
       case 'temp':
-        if (value < 45) return '#10b981';
-        if (value < 60) return '#f59e0b';
-        return '#ef4444';
+        if (value < 45) return styles.statusGreen;
+        if (value < 60) return styles.statusYellow;
+        return styles.statusRed;
       default:
-        return '#3b82f6';
+        return styles.statusBlue;
+    }
+  };
+
+  const getBarColorClass = (value: number, type: 'cpu' | 'memory' | 'disk' | 'temp') => {
+    switch (type) {
+      case 'cpu':
+      case 'memory':
+        if (value < 50) return styles.barGreen;
+        if (value < 80) return styles.barYellow;
+        return styles.barRed;
+      case 'temp':
+        if (value < 45) return styles.barGreen;
+        if (value < 60) return styles.barYellow;
+        return styles.barRed;
+      default:
+        return styles.barBlue;
     }
   };
 
   return (
-    <div className="ultra-monitor-page">
+    <div className={styles.ultraMonitorPage}>
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="monitor-header"
+        className={styles.monitorHeader}
       >
-        <h1>📊 Ultra Monitor</h1>
-        <p>Real-time system performance monitoring</p>
+        <h1 className={styles.monitorTitle}>📊 Ultra Monitor</h1>
+        <p className={styles.monitorSubtitle}>Real-time system performance monitoring</p>
       </motion.header>
 
-      <div className="monitor-grid">
+      <div className={styles.monitorGrid}>
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.1 }}
-          className="monitor-card"
+          className={styles.monitorCard}
         >
-          <div className="monitor-icon">🔥</div>
-          <h3>CPU Usage</h3>
-          <div className="monitor-value" style={{ color: getStatusColor(metrics.cpuUsage, 'cpu') }}>
+          <div className={styles.monitorIcon}>🔥</div>
+          <h3 className={styles.monitorCardTitle}>CPU Usage</h3>
+          <div className={clsx(styles.monitorValue, getStatusColorClass(metrics.cpuUsage, 'cpu'))}>
             {metrics.cpuUsage.toFixed(1)}%
           </div>
-          <div className="monitor-bar">
-            <div 
-              className="monitor-bar-fill"
-              style={{ 
-                width: `${metrics.cpuUsage}%`,
-                background: getStatusColor(metrics.cpuUsage, 'cpu')
-              }}
+          <div className={styles.monitorBar}>
+            <motion.div
+              className={clsx(styles.monitorBarFill, getBarColorClass(metrics.cpuUsage, 'cpu'))}
+              initial={{ width: 0 }}
+              animate={{ width: `${metrics.cpuUsage}%` }}
+              transition={{ duration: 0.3 }}
             />
           </div>
         </motion.div>
@@ -96,20 +113,19 @@ const UltraMonitorPage: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="monitor-card"
+          className={styles.monitorCard}
         >
-          <div className="monitor-icon">💾</div>
-          <h3>Memory Usage</h3>
-          <div className="monitor-value" style={{ color: getStatusColor(metrics.memoryUsage, 'memory') }}>
+          <div className={styles.monitorIcon}>💾</div>
+          <h3 className={styles.monitorCardTitle}>Memory Usage</h3>
+          <div className={clsx(styles.monitorValue, getStatusColorClass(metrics.memoryUsage, 'memory'))}>
             {metrics.memoryUsage.toFixed(1)}%
           </div>
-          <div className="monitor-bar">
-            <div 
-              className="monitor-bar-fill"
-              style={{ 
-                width: `${metrics.memoryUsage}%`,
-                background: getStatusColor(metrics.memoryUsage, 'memory')
-              }}
+          <div className={styles.monitorBar}>
+            <motion.div
+              className={clsx(styles.monitorBarFill, getBarColorClass(metrics.memoryUsage, 'memory'))}
+              initial={{ width: 0 }}
+              animate={{ width: `${metrics.memoryUsage}%` }}
+              transition={{ duration: 0.3 }}
             />
           </div>
         </motion.div>
@@ -118,20 +134,19 @@ const UltraMonitorPage: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.3 }}
-          className="monitor-card"
+          className={styles.monitorCard}
         >
-          <div className="monitor-icon">💿</div>
-          <h3>Disk Usage</h3>
-          <div className="monitor-value" style={{ color: getStatusColor(metrics.diskUsage, 'disk') }}>
+          <div className={styles.monitorIcon}>💿</div>
+          <h3 className={styles.monitorCardTitle}>Disk Usage</h3>
+          <div className={clsx(styles.monitorValue, getStatusColorClass(metrics.diskUsage, 'disk'))}>
             {metrics.diskUsage.toFixed(1)}%
           </div>
-          <div className="monitor-bar">
-            <div 
-              className="monitor-bar-fill"
-              style={{ 
-                width: `${metrics.diskUsage}%`,
-                background: getStatusColor(metrics.diskUsage, 'disk')
-              }}
+          <div className={styles.monitorBar}>
+            <motion.div
+              className={clsx(styles.monitorBarFill, getBarColorClass(metrics.diskUsage, 'disk'))}
+              initial={{ width: 0 }}
+              animate={{ width: `${metrics.diskUsage}%` }}
+              transition={{ duration: 0.3 }}
             />
           </div>
         </motion.div>
@@ -140,28 +155,28 @@ const UltraMonitorPage: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.4 }}
-          className="monitor-card"
+          className={styles.monitorCard}
         >
-          <div className="monitor-icon">🌐</div>
-          <h3>Network Speed</h3>
-          <div className="monitor-value" style={{ color: '#3b82f6' }}>
+          <div className={styles.monitorIcon}>🌐</div>
+          <h3 className={styles.monitorCardTitle}>Network Speed</h3>
+          <div className={clsx(styles.monitorValue, styles.statusBlue)}>
             {metrics.networkSpeed.toFixed(0)} Mbps
           </div>
-          <div className="monitor-status">High speed connection</div>
+          <div className={styles.monitorStatus}>High speed connection</div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
-          className="monitor-card"
+          className={styles.monitorCard}
         >
-          <div className="monitor-icon">🌡️</div>
-          <h3>Temperature</h3>
-          <div className="monitor-value" style={{ color: getStatusColor(metrics.temperature, 'temp') }}>
+          <div className={styles.monitorIcon}>🌡️</div>
+          <h3 className={styles.monitorCardTitle}>Temperature</h3>
+          <div className={clsx(styles.monitorValue, getStatusColorClass(metrics.temperature, 'temp'))}>
             {metrics.temperature.toFixed(1)}°C
           </div>
-          <div className="monitor-status">
+          <div className={styles.monitorStatus}>
             {metrics.temperature < 45 ? 'Cool' : metrics.temperature < 60 ? 'Warm' : 'Hot'}
           </div>
         </motion.div>
@@ -170,114 +185,16 @@ const UltraMonitorPage: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6 }}
-          className="monitor-card"
+          className={styles.monitorCard}
         >
-          <div className="monitor-icon">⏰</div>
-          <h3>Uptime</h3>
-          <div className="monitor-value" style={{ color: '#10b981' }}>
+          <div className={styles.monitorIcon}>⏰</div>
+          <h3 className={styles.monitorCardTitle}>Uptime</h3>
+          <div className={clsx(styles.monitorValue, styles.statusGreen)}>
             {metrics.uptime}
           </div>
-          <div className="monitor-status">System stable</div>
+          <div className={styles.monitorStatus}>System stable</div>
         </motion.div>
       </div>
-
-      <style jsx>{`
-        .ultra-monitor-page {
-          min-height: 100vh;
-          background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #374151 100%);
-          color: #f9fafb;
-          padding: 24px;
-          font-family: 'Inter', sans-serif;
-        }
-
-        .monitor-header {
-          text-align: center;
-          margin-bottom: 40px;
-        }
-
-        .monitor-header h1 {
-          font-size: 3rem;
-          font-weight: 700;
-          background: linear-gradient(45deg, #fbbf24, #f59e0b);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          margin-bottom: 12px;
-        }
-
-        .monitor-header p {
-          font-size: 1.2rem;
-          color: #9ca3af;
-        }
-
-        .monitor-grid {
-          display: grid;
-          grid--columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 24px;
-        }
-
-        .monitor-card {
-          background: linear-gradient(135deg, #1f2937, #374151);
-          padding: 24px;
-          border-radius: 16px;
-          border: 2px solid #4b5563;
-          transition: all 0.3s ease;
-          text-align: center;
-        }
-
-        .monitor-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-          border-color: #6b7280;
-        }
-
-        .monitor-icon {
-          font-size: 2.5rem;
-          margin-bottom: 12px;
-        }
-
-        .monitor-card h3 {
-          font-size: 1.1rem;
-          font-weight: 600;
-          margin-bottom: 16px;
-          color: #e5e7eb;
-        }
-
-        .monitor-value {
-          font-size: 2rem;
-          font-weight: 700;
-          margin-bottom: 12px;
-        }
-
-        .monitor-status {
-          font-size: 0.9rem;
-          color: #9ca3af;
-        }
-
-        .monitor-bar {
-          width: 100%;
-          height: 8px;
-          background: #374151;
-          border-radius: 4px;
-          overflow: hidden;
-          margin-top: 12px;
-        }
-
-        .monitor-bar-fill {
-          height: 100%;
-          transition: width 0.3s ease;
-          border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-          .monitor-grid {
-            grid--columns: 1fr;
-          }
-          
-          .monitor-header h1 {
-            font-size: 2rem;
-          }
-        }
-      `}</style>
     </div>
   );
 };
