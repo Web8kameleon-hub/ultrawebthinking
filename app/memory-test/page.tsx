@@ -7,6 +7,7 @@
 
 import { useEffect, useState } from 'react'
 import MemoryGraph from '../../components/MemoryGraph-Clean'
+import styles from './page.module.css'
 
 export default function MemoryTestPage() {
   const [apiStatus, setApiStatus] = useState('checking...')
@@ -34,26 +35,13 @@ export default function MemoryTestPage() {
   }, [])
 
   return (
-    <div className="theme-euroweb" style={{ padding: '20px', minHeight: '100vh' }}>
-      <h1 style={{ color: '#f8fafc', marginBottom: '20px' }}>AGI Memory System Test</h1>
+    <div className={`theme-euroweb ${styles.container}`}>
+      <h1 className={styles.title}>AGI Memory System Test</h1>
       
-      <div style={{ 
-        backgroundColor: '#1e293b', 
-        border: '1px solid #475569', 
-        borderRadius: '8px', 
-        padding: '16px', 
-        marginBottom: '20px',
-        color: '#f8fafc'
-      }}>
+      <div className={styles.statusCard}>
         <h3>API Status: {apiStatus}</h3>
         {memoryData && (
-          <pre style={{ 
-            backgroundColor: '#0f172a', 
-            padding: '10px', 
-            borderRadius: '4px', 
-            overflow: 'auto',
-            fontSize: '12px'
-          }}>
+          <pre className={styles.jsonOutput}>
             {JSON.stringify(memoryData, null, 2)}
           </pre>
         )}
