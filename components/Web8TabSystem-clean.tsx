@@ -10,8 +10,10 @@
 
 'use client';
 
-import React from 'react';
+import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import React from 'react';
+import styles from './Web8TabSystem-clean.module.css';
 
 // Interface definitions
 interface Tab {
@@ -66,87 +68,37 @@ const Web8TabSystem = (): React.ReactElement => {
   const currentTime = new Date().toLocaleTimeString();
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
+    <div className={styles.container}>
       {/* Top Navigation Bar */}
       <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        style={{
-          background: 'rgba(45, 52, 70, 0.9)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.3)',
-          padding: '12px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
+        className={styles.header}
       >
         {/* Left side - Logo and navigation */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
+        <div className={styles.headerLeft}>
+          <div className={styles.logo}>
             EuroWeb
           </div>
           
-          <nav style={{ display: 'flex', gap: '16px' }}>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: '1px solid #d4af37',
-              color: '#d4af37',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+          <nav className={styles.nav}>
+            <button className={styles.navButtonActive}>
               🧠 AGI Core
             </button>
-            <button style={{
-              background: 'transparent',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              color: '#cbd5e1',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+            <button className={styles.navButton}>
               📊 Analytics
             </button>
           </nav>
         </div>
 
         {/* Right side - Status and time */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
-            background: 'rgba(34, 197, 94, 0.2)',
-            borderRadius: '6px',
-            fontSize: '14px'
-          }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              background: '#22c55e',
-              borderRadius: '50%'
-            }} />
+        <div className={styles.headerRight}>
+          <div className={styles.statusIndicator}>
+            <div className={styles.statusDot} />
             AGI Active
           </div>
-          <div style={{ fontSize: '14px', color: '#cbd5e1' }}>
+          <div className={styles.timeDisplay}>
             {currentTime}
           </div>
         </div>
@@ -157,76 +109,28 @@ const Web8TabSystem = (): React.ReactElement => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        style={{
-          background: 'rgba(30, 34, 52, 0.8)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)',
-          padding: '0 20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          minHeight: '48px'
-        }}
+        className={styles.tabBar}
       >
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            style={{
-              background: tab.isActive ? 'rgba(212, 175, 55, 0.2)' : 'transparent',
-              border: tab.isActive ? '1px solid #d4af37' : '1px solid transparent',
-              borderRadius: '8px',
-              padding: '8px 16px',
-              fontSize: '14px',
-              color: tab.isActive ? '#d4af37' : '#cbd5e1',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              maxWidth: '200px'
-            }}
+            className={clsx(styles.tab, {
+              [styles.tabActive]: tab.isActive
+            })}
           >
             {tab.isLoading && (
-              <div style={{
-                width: '12px',
-                height: '12px',
-                border: '2px solid rgba(212, 175, 55, 0.3)',
-                borderTop: '2px solid #d4af37',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite'
-              }} />
+              <div className={styles.loadingSpinner} />
             )}
-            <span style={{ 
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
-            }}>
+            <span className={styles.tabTitle}>
               {tab.title}
             </span>
-            <button style={{
-              background: 'none',
-              border: 'none',
-              color: 'inherit',
-              fontSize: '12px',
-              cursor: 'pointer',
-              opacity: 0.7,
-              padding: '0',
-              marginLeft: 'auto'
-            }}>
+            <button className={styles.tabCloseButton}>
               ×
             </button>
           </div>
         ))}
         
-        <button style={{
-          background: 'none',
-          border: '1px solid rgba(212, 175, 55, 0.3)',
-          borderRadius: '6px',
-          color: '#cbd5e1',
-          padding: '6px 12px',
-          fontSize: '14px',
-          cursor: 'pointer',
-          marginLeft: '8px'
-        }}>
+        <button className={styles.newTabButton}>
           + New Tab
         </button>
       </motion.div>
@@ -236,49 +140,17 @@ const Web8TabSystem = (): React.ReactElement => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        style={{
-          background: 'rgba(26, 29, 41, 0.9)',
-          padding: '12px 20px',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)'
-        }}
+        className={styles.addressBar}
       >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px'
-        }}>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+        <div className={styles.addressControls}>
+          <div className={styles.navigationButtons}>
+            <button className={styles.navControlButton}>
               ←
             </button>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+            <button className={styles.navControlButton}>
               →
             </button>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+            <button className={styles.navControlButton}>
               ↻
             </button>
           </div>
@@ -287,26 +159,11 @@ const Web8TabSystem = (): React.ReactElement => {
             type="text"
             value={activeTab.url}
             readOnly
-            style={{
-              flex: 1,
-              background: 'rgba(45, 52, 70, 0.8)',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              borderRadius: '6px',
-              padding: '8px 12px',
-              color: '#f8fafc',
-              fontSize: '14px'
-            }}
+            aria-label="Current URL"
+            className={styles.urlInput}
           />
 
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            borderRadius: '6px',
-            color: '#22c55e',
-            padding: '8px 12px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={styles.secureButton}>
             🛡️ Secure
           </button>
         </div>
@@ -317,79 +174,32 @@ const Web8TabSystem = (): React.ReactElement => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        style={{
-          flex: 1,
-          display: 'flex',
-          overflow: 'hidden'
-        }}
+        className={styles.mainContent}
       >
         {/* Content Area */}
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          background: 'rgba(15, 20, 25, 0.8)'
-        }}>
+        <div className={styles.contentArea}>
           {/* AGI Dashboard */}
-          <div style={{
-            padding: '40px',
-            textAlign: 'center'
-          }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+          <div className={styles.dashboardContainer}>
+            <h1 className={styles.dashboardTitle}>
               AGI Core Dashboard
             </h1>
             
-            <p style={{
-              fontSize: '20px',
-              color: '#cbd5e1',
-              marginBottom: '40px',
-              maxWidth: '600px',
-              margin: '0 auto 40px'
-            }}>
+            <p className={styles.dashboardSubtitle}>
               Advanced General Intelligence System - Industrial Grade TypeScript Architecture
             </p>
 
             {/* AGI Metrics Grid */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
-              maxWidth: '800px',
-              margin: '0 auto'
-            }}>
+            <div className={styles.metricsGrid}>
               {Object.entries(agiMetrics).map(([key, value]) => (
                 <motion.div
                   key={key}
                   whileHover={{ scale: 1.05 }}
-                  style={{
-                    background: 'rgba(45, 52, 70, 0.8)',
-                    border: '1px solid rgba(212, 175, 55, 0.3)',
-                    borderRadius: '12px',
-                    padding: '20px',
-                    textAlign: 'center'
-                  }}
+                  className={styles.metricCard}
                 >
-                  <div style={{
-                    fontSize: '24px',
-                    fontWeight: 600,
-                    color: '#d4af37',
-                    marginBottom: '8px'
-                  }}>
+                  <div className={styles.metricValue}>
                     {value}
                   </div>
-                  <div style={{
-                    fontSize: '14px',
-                    color: '#cbd5e1',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px'
-                  }}>
+                  <div className={styles.metricLabel}>
                     {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                   </div>
                 </motion.div>
@@ -397,26 +207,11 @@ const Web8TabSystem = (): React.ReactElement => {
             </div>
 
             {/* Action Buttons */}
-            <div style={{
-              display: 'flex',
-              gap: '20px',
-              justifyContent: 'center',
-              marginTop: '40px',
-              flexWrap: 'wrap'
-            }}>
+            <div className={styles.actionButtons}>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                style={{
-                  background: '#d4af37',
-                  color: '#000',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '12px 24px',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
+                className={styles.primaryButton}
               >
                 🧠 Launch AGI Core
               </motion.button>
@@ -424,16 +219,7 @@ const Web8TabSystem = (): React.ReactElement => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                style={{
-                  background: 'transparent',
-                  color: '#d4af37',
-                  border: '2px solid #d4af37',
-                  borderRadius: '8px',
-                  padding: '12px 24px',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
+                className={styles.secondaryButton}
               >
                 📊 Analytics Center
               </motion.button>
@@ -441,16 +227,7 @@ const Web8TabSystem = (): React.ReactElement => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                style={{
-                  background: 'rgba(34, 197, 94, 0.2)',
-                  color: '#22c55e',
-                  border: '2px solid #22c55e',
-                  borderRadius: '8px',
-                  padding: '12px 24px',
-                  fontSize: '16px',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
+                className={styles.successButton}
               >
                 🛡️ Security Center
               </motion.button>
