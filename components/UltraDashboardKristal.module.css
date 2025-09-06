@@ -603,6 +603,68 @@
   }
 }
 
+/* Dynamic Status Colors */
+.statusSuccess {
+  color: #10b981 !important;
+}
+
+.statusWarning {
+  color: #f59e0b !important;
+}
+
+.statusError {
+  color: #ef4444 !important;
+}
+
+.statusInfo {
+  color: #3b82f6 !important;
+}
+
+.statusNeutral {
+  color: #6b7280 !important;
+}
+
+/* Health Badge Colors */
+.healthBadgeSuccess {
+  background-color: #10b981 !important;
+}
+
+.healthBadgeWarning {
+  background-color: #f59e0b !important;
+}
+
+.healthBadgeError {
+  background-color: #ef4444 !important;
+}
+
+.healthBadgeInfo {
+  background-color: #3b82f6 !important;
+}
+
+.healthBadgeNeutral {
+  background-color: #6b7280 !important;
+}
+
+/* Chart Dynamic Colors */
+.chartValueBlue {
+  color: #3b82f6;
+}
+
+.chartValueGreen {
+  color: #10b981;
+}
+
+.chartValueOrange {
+  color: #f59e0b;
+}
+
+.chartValuePurple {
+  color: #8b5cf6;
+}
+
+.chartValueRed {
+  color: #ef4444;
+}
 @media (max-width: 768px) {
   .header {
     padding: 15px 20px;

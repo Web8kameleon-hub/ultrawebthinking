@@ -8,6 +8,7 @@
 
 'use client';
 
+import { clsx } from 'clsx';
 import React, { useRef, useState } from 'react';
 import { useSystemStream } from '../hooks/useSystemStream';
 import NavBreadcrumb from './NavBreadcrumb';
@@ -126,7 +127,7 @@ const LiveChart: React.FC<{
     <div className={styles.chartContainer}>
       <div className={styles.chartHeader}>
         <span className={styles.chartLabel}>{label}</span>
-        <span className={styles.chartValue} style={{ color }}>
+        <span className={styles.chartValue}>
           {data.length > 0 ? `${data[data.length - 1].value.toFixed(1)}${unit}` : `0${unit}`}
         </span>
       </div>
@@ -157,6 +158,23 @@ const UltraDashboardKristal: React.FC = () => {
     agi: [],
     network: []
   })
+
+  // Helper functions for dynamic CSS classes
+  const getStatusColorClass = (value: number, warningThreshold: number, errorThreshold: number) => {
+    if (value > errorThreshold) return styles.statusError
+    if (value > warningThreshold) return styles.statusWarning
+    return styles.statusSuccess
+  }
+
+  const getHealthBadgeClass = (color: string) => {
+    switch (color) {
+      case '#10b981': return styles.healthBadgeSuccess
+      case '#3b82f6': return styles.healthBadgeInfo
+      case '#f59e0b': return styles.healthBadgeWarning
+      case '#ef4444': return styles.healthBadgeError
+      default: return styles.healthBadgeNeutral
+    }
+  }
 
   // Client-side mounting check
   React.useEffect(() => {
@@ -256,17 +274,6 @@ const UltraDashboardKristal: React.FC = () => {
     }
   }
 
-  const getHealthColor = () => {
-    if (!data) return '#6b7280'
-    switch (data.health.overall) {
-      case 'excellent': return '#10b981'
-      case 'good': return '#3b82f6'
-      case 'warning': return '#f59e0b'
-      case 'critical': return '#ef4444'
-      default: return '#6b7280'
-    }
-  }
-
   const getStatusBadge = () => {
     if (loading) return { text: 'LOADING', color: '#6b7280' }
     if (error) return { text: 'ERROR', color: '#ef4444' }
@@ -321,7 +328,7 @@ const UltraDashboardKristal: React.FC = () => {
             </span>
           </div>
           
-          <div className={styles.healthBadge} style={{ backgroundColor: statusBadge.color }}>
+          <div className={clsx(styles.healthBadge, getHealthBadgeClass(statusBadge.color))}>
             {statusBadge.text}
           </div>
           
@@ -390,7 +397,7 @@ const UltraDashboardKristal: React.FC = () => {
           <div className={styles.metricsGrid}>
             <div className={styles.metricCard}>
               <div className={styles.metricLabel}>AGI Processing</div>
-              <div className={styles.metricValue} style={{ color: agiProcessing > 85 ? '#ef4444' : '#10b981' }}>
+              <div className={clsx(styles.metricValue, getStatusColorClass(agiProcessing, 70, 85))}>
                 {agiProcessing.toFixed(1)}%
               </div>
               <div className={styles.metricTrend}>
@@ -404,7 +411,7 @@ const UltraDashboardKristal: React.FC = () => {
 
             <div className={styles.metricCard}>
               <div className={styles.metricLabel}>CPU Cores</div>
-              <div className={styles.metricValue} style={{ color: cpuUsage > 70 ? '#f59e0b' : '#3b82f6' }}>
+              <div className={clsx(styles.metricValue, getStatusColorClass(cpuUsage, 60, 70))}>
                 {cpuUsage.toFixed(1)}%
               </div>
               <div className={styles.metricSubtext}>32 cores active</div>
@@ -412,7 +419,7 @@ const UltraDashboardKristal: React.FC = () => {
 
             <div className={styles.metricCard}>
               <div className={styles.metricLabel}>Memory</div>
-              <div className={styles.metricValue} style={{ color: memoryUsage > 80 ? '#f59e0b' : '#10b981' }}>
+              <div className={clsx(styles.metricValue, getStatusColorClass(memoryUsage, 70, 80))}>
                 {memoryUsage.toFixed(1)}%
               </div>
               <div className={styles.metricSubtext}>
@@ -422,7 +429,7 @@ const UltraDashboardKristal: React.FC = () => {
 
             <div className={styles.metricCard}>
               <div className={styles.metricLabel}>Network</div>
-              <div className={styles.metricValue} style={{ color: networkLatency > 100 ? '#f59e0b' : '#10b981' }}>
+              <div className={clsx(styles.metricValue, getStatusColorClass(networkLatency, 80, 100))}>
                 {networkLatency.toFixed(0)}ms
               </div>
               <div className={styles.metricSubtext}>Latency</div>
@@ -509,6 +516,7 @@ const UltraDashboardKristal: React.FC = () => {
                 value={logFilter}
                 onChange={(e) => setLogFilter(e.target.value as any)}
                 className={styles.logFilter}
+                aria-label="Filter log entries by type"
               >
                 <option value="all">All Logs</option>
                 <option value="error">Errors</option>
