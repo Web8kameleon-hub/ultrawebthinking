@@ -1,11 +1,11 @@
 // backend/agi/CommandBridge.ts
 /**
  * CommandBridge.ts
- * Lidhës ndërmjet UI (AGISheet) dhe AGICore për ekzekutim komandash AGI
+ * Lidhës ndërmjet UI (AGISheet) dhe Web8UltraThinkingCore për ekzekutim komandash AGI
  * © Web8 UltraThinking – Ledjan Ahmati
  */
 
-import { AGICore } from './core';
+import ultraThinkingCore, { Web8UltraThinkingCore } from './core';
 import { AGIExecutionResult } from './types';
 
 // Komandat e mbështetura
@@ -25,10 +25,10 @@ interface CommandPayload {
 }
 
 export class CommandBridge {
-  private agiCore: AGICore;
+  private ultraCore: Web8UltraThinkingCore;
 
   constructor() {
-    this.agiCore = new AGICore();
+    this.ultraCore = ultraThinkingCore;
   }
 
   async processCommand(cmd: CommandPayload): Promise<AGIExecutionResult> {

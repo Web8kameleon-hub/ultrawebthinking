@@ -1,0 +1,116 @@
+/* AGI Tunnel Styles */
+
+.container {
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 2px solid;
+}
+
+.backgroundGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 40px 40px;
+  opacity: 0.3;
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.infoPanel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 12px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.performanceMetrics {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  font-size: 10px;
+  font-family: monospace;
+}
+
+/* Theme variations */
+.light {
+  background-color: #f8f9fa;
+  border-color: #6c757d;
+  color: #212529;
+}
+
+.light .backgroundGrid {
+  background-image: radial-gradient(circle at 2px 2px, rgba(173, 181, 189, 0.4) 1px, transparent 0);
+}
+
+.dark {
+  background-color: #212529;
+  border-color: #6c757d;
+  color: #f8f9fa;
+}
+
+.dark .backgroundGrid {
+  background-image: radial-gradient(circle at 2px 2px, rgba(73, 80, 87, 0.4) 1px, transparent 0);
+}
+
+.agi {
+  background-color: rgba(0, 0, 0, 0.95);
+  border-color: #8a2be2;
+  color: #ffffff;
+}
+
+.agi .backgroundGrid {
+  background-image: radial-gradient(circle at 2px 2px, rgba(221, 160, 221, 0.4) 1px, transparent 0);
+}
+
+.node {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+  color: black;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.nodeSelected {
+  border: 3px solid white;
+}
+
+.nodeInput {
+  background-color: #00ff7f;
+}
+
+.nodeProcessing {
+  background-color: #ffff00;
+}
+
+.nodeRelay {
+  background-color: #ff69b4;
+}
+
+.nodeOutput {
+  background-color: #ff1493;
+}

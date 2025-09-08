@@ -1,0 +1,470 @@
+/**
+ * Continental Mesh Network Dashboard Styles
+ * Industrial design with continental color scheme
+ */
+
+.container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  min-height: 100vh;
+  color: #f1f5f9;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  border-color: #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  transform: translateY(-2px);
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d4af37;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.statTrend {
+  font-size: 0.8rem;
+  color: #10b981;
+  font-weight: 500;
+}
+
+/* Continental Filter */
+.continentFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+}
+
+.filterButton {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #475569;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+}
+
+.filterButton:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: #d4af37;
+  color: #d4af37;
+}
+
+.filterButton.active {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+  color: #d4af37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Protocol Coverage */
+.protocolCoverage {
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.protocolGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.protocolCard {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.protocolCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.protocolIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.protocolName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin-bottom: 0.25rem;
+}
+
+.protocolCount {
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+/* Nodes Section */
+.nodesSection {
+  margin-bottom: 3rem;
+}
+
+.nodesSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.toggleButton {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid #3b82f6;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  color: #3b82f6;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggleButton:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.toggleButton.active {
+  background: #3b82f6;
+  color: white;
+}
+
+.nodesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.nodeCard {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+  border-left: 4px solid #3b82f6;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.nodeCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Continental colors */
+.nodeCard[data-continent="europe"] {
+  border-left-color: #3b82f6;
+}
+
+.nodeCard[data-continent="asia"] {
+  border-left-color: #ef4444;
+}
+
+.nodeCard[data-continent="north_america"] {
+  border-left-color: #10b981;
+}
+
+.nodeCard[data-continent="south_america"] {
+  border-left-color: #f59e0b;
+}
+
+.nodeCard[data-continent="africa"] {
+  border-left-color: #8b5cf6;
+}
+
+.nodeCard[data-continent="oceania"] {
+  border-left-color: #06b6d4;
+}
+
+.nodeCard[data-continent="antarctica"] {
+  border-left-color: #6b7280;
+}
+
+.nodeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.nodeTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.nodeStatusDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.nodeStatusDot.online {
+  background-color: #10b981;
+}
+
+.nodeStatusDot.degraded {
+  background-color: #f59e0b;
+}
+
+.nodeStatusDot.offline {
+  background-color: #ef4444;
+}
+
+.nodeStatusDot.maintenance {
+  background-color: #6b7280;
+}
+
+.nodeLocation {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+.nodeMetrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metricLabel {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.metricValue {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d4af37;
+}
+
+.nodeProtocols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.protocolBadge {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid #3b82f6;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #3b82f6;
+  text-transform: uppercase;
+}
+
+.nodeFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #334155;
+  font-size: 0.8rem;
+}
+
+.nodeSecurity {
+  color: #10b981;
+  font-weight: 500;
+}
+
+.nodeUpdate {
+  color: #64748b;
+}
+
+/* Health Summary */
+.healthSummary {
+  margin-bottom: 2rem;
+}
+
+.healthGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minpal(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.healthCard {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.healthCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.healthValue {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.healthValue.success {
+  color: #10b981;
+}
+
+.healthValue.warning {
+  color: #f59e0b;
+}
+
+.healthValue.error {
+  color: #ef4444;
+}
+
+.healthValue.info {
+  color: #06b6d4;
+}
+
+.healthLabel {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Continental Filter Colors */
+.continenteurope {
+  border-color: #3b82f6 !important;
+}
+
+.continentasia {
+  border-color: #ef4444 !important;
+}
+
+.continentnorthamerica {
+  border-color: #10b981 !important;
+}
+
+.continentsouthamerica {
+  border-color: #f59e0b !important;
+}
+
+.continentafrica {
+  border-color: #8b5cf6 !important;
+}
+
+.continentoceania {
+  border-color: #06b6d4 !important;
+}
+
+.continentantarctica {
+  border-color: #6b7280 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nodesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nodesSectionHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .continentFilter {
+    justify-content: flex-start;
+  }
+}

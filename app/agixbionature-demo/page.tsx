@@ -1,12 +1,12 @@
 "use client";
 
-import { AGIxBioNatureDemo } from '../../components/AGISheet/AGIxBioNatureDemo';
+import { AGIBioDemo } from '../../components/AGISheet/AGIBioDemo';
 import type { ReactElement } from 'react';
 
 // Named function for better debugging and consistency
-const AGIxBioNatureDemoPage = (): ReactElement => {
-  return <AGIxBioNatureDemo />;
+const AGIBioDemoPage = (): ReactElement => {
+  return <AGIBioDemo />;
 };
 
 // Next.js requires default export for pages
-export default AGIxBioNatureDemoPage;
+export default AGIBioDemoPage;

@@ -1,0 +1,38 @@
+/* Simple HomePage styles */
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  color: #16a34a;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.description {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.linksContainer {
+  margin-top: 20px;
+}
+
+.link {
+  color: #2563eb;
+  text-decoration: underline;
+  margin: 0 5px;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #1d4ed8;
+}
+
+.separator {
+  margin: 0 10px;
+  color: #6b7280;
+}

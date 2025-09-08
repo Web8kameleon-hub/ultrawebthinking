@@ -24,7 +24,7 @@ describe('Tab Logic Industrial Tests', () => {
       timestamp: new Date().toISOString()
     } as const);
     
-    const tab = createTab('tab1', 'Test', 'https://example.com');
+    const tab = createTab('tab1', 'Test', 'https://api.ultrawebthinking.com');
     
     expect(tab.id).toBe('tab1');
     expect(tab.title).toBe('Test');

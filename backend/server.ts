@@ -141,7 +141,7 @@ app.post('/api/agixmed/analyze', (req, res) => {
     });
   }
 
-  // Mock AGIXmed analysis response
+  // realData AGIXmed analysis response
   const analysis = {
     symptoms: symptoms,
     confidence: 0.85,

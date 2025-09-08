@@ -1,0 +1,281 @@
+/* ModuleNavigation.module.css */
+.moduleNavigation {
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  margin: 2rem 0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.moduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.moduleCard {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.moduleCard:hover {
+  border-color: #667eea;
+  box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+}
+
+.moduleCard.active {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+}
+
+.moduleCard.statusActive {
+  border-left: 4px solid #10b981;
+}
+
+.moduleCard.statusDevelopment {
+  border-left: 4px solid #f59e0b;
+}
+
+.moduleCard.statusPlanning {
+  border-left: 4px solid #6b7280;
+}
+
+.statusIndicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.statusActive .statusIndicator {
+  background-color: #10b981;
+}
+
+.statusDevelopment .statusIndicator {
+  background-color: #f59e0b;
+}
+
+.statusPlanning .statusIndicator {
+  background-color: #6b7280;
+}
+
+.moduleIcon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.moduleInfo {
+  margin-bottom: 1.5rem;
+}
+
+.moduleName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.moduleDescription {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.moduleStatus {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actionButton {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.actionButton:active {
+  transform: translateY(0);
+}
+
+.activeModuleDetails {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 2rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.activeModuleDetails h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.activeModuleDetails p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.quickActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.quickActions button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #667eea;
+  background: transparent;
+  color: #667eea;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.quickActions button:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
+}
+
+.quickActions button:first-child {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.quickActions button:first-child:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .moduleNavigation {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .moduleGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .moduleCard {
+    padding: 1.5rem;
+  }
+  
+  .quickActions {
+    flex-direction: column;
+  }
+  
+  .quickActions button {
+    width: 100%;
+  }
+}
+
+/* Accessibility */
+.moduleCard:focus {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+.actionButton:focus,
+.quickActions button:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .moduleCard {
+    border-width: 3px;
+  }
+  
+  .actionButton,
+  .quickActions button {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .statusIndicator {
+    animation: none;
+  }
+  
+  .moduleCard {
+    transition: none;
+  }
+  
+  .actionButton,
+  .quickActions button {
+    transition: none;
+  }
+}

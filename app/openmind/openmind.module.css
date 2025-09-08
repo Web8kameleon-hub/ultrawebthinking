@@ -1,0 +1,457 @@
+/* Open Mind AGI Interface Styles */
+
+.container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #00d4ff, #5f27cd, #ff9ff3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.header p {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  margin-bottom: 1.5rem;
+}
+
+.consciousnessIndicator {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #00d4ff;
+}
+
+.consciousnessIndicator span {
+  padding: 0.5rem 1rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 0.5rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.mindInterface {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.inputForm {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1rem;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.inputContainer:focus-within {
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.mindInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.5rem;
+}
+
+.mindInput::placeholder {
+  color: #a0a0a0;
+}
+
+.mindInput.thinking {
+  color: #00d4ff;
+}
+
+.mindInput.error {
+  color: #ff6b6b;
+}
+
+.mindInput.expanded {
+  min-height: 4rem;
+}
+
+.submitButton {
+  background: linear-gradient(45deg, #00d4ff, #5f27cd);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(26, 26, 46, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  margin-top: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  z-index: 100;
+}
+
+.suggestion {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
+}
+
+.suggestion:hover,
+.suggestion.active {
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+}
+
+.suggestion:last-child {
+  border-bottom: none;
+}
+
+.responseArea {
+  min-height: 300px;
+}
+
+.thinkingProcess {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.thinkingProcess h3 {
+  color: #00d4ff;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.thought {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.thought:last-child {
+  border-bottom: none;
+}
+
+.step {
+  background: linear-gradient(45deg, #00d4ff, #5f27cd);
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.thought .text {
+  flex: 1;
+  color: #e0e0e0;
+}
+
+.thought .confidence {
+  color: #00d4ff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.response {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #00d4ff;
+}
+
+.response.lowConfidence {
+  border-left-color: #ff9500;
+}
+
+.response.mediumConfidence {
+  border-left-color: #00d4ff;
+}
+
+.response.highConfidence {
+  border-left-color: #00ff88;
+}
+
+.response.error {
+  border-left-color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.responseHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.responseHeader h3 {
+  color: #00d4ff;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.metadata {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}
+
+.responseContent {
+  margin-bottom: 1rem;
+}
+
+.responseContent p {
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.reasoning {
+  margin-bottom: 1rem;
+}
+
+.reasoning summary {
+  color: #00d4ff;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.reasoning ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.reasoning li {
+  color: #c0c0c0;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.reasoning li::before {
+  content: "→";
+  color: #00d4ff;
+  position: absolute;
+  left: -1rem;
+}
+
+.relatedTopics,
+.followUp {
+  margin-bottom: 1rem;
+}
+
+.relatedTopics h4,
+.followUp h4 {
+  color: #00d4ff;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.topic {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  color: #00d4ff;
+}
+
+.followUp ul {
+  list-style: none;
+  padding: 0;
+}
+
+.followUpQuestion {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #e0e0e0;
+}
+
+.followUpQuestion:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.3);
+  color: #00d4ff;
+  transform: translateX(10px);
+}
+
+.sessionHistory {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+}
+
+.sessionHistory h3 {
+  color: #00d4ff;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.historyItem {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  border-left: 3px solid #5f27cd;
+}
+
+.historyQuery {
+  font-weight: 500;
+  color: #00d4ff;
+  margin-bottom: 0.5rem;
+}
+
+.historyResponse {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  color: #00d4ff;
+  font-size: 1.2rem;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  color: #ff6b6b;
+  text-align: center;
+}
+
+.error h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.error p {
+  font-size: 1.1rem;
+  color: #c0c0c0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .consciousnessIndicator {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .inputContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .submitButton {
+    width: 100%;
+  }
+  
+  .responseHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .metadata {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .container :global(*) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

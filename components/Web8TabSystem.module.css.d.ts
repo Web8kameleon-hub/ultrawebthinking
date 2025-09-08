@@ -6,6 +6,8 @@ declare const styles: {
   readonly searchForm: string;
   readonly 'search-input': string;
   readonly searchInput: string;
+  readonly 'search-container': string;
+  readonly searchContainer: string;
   readonly 'search-button': string;
   readonly searchButton: string;
   readonly 'nav-section': string;

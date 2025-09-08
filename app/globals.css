@@ -1,6 +1,7 @@
 /**
  * EuroWeb Global CSS - Pure Vanilla Implementation
  * Zero dependencies, zero CSS-in-JS, zero Tailwind
+ * Colors imported from v8.0.1-stabil branch
  * 
  * @author Ledjan Ahmati
  * @contact dealsjona@gmail.com
@@ -8,6 +9,8 @@
  * @license MIT
  */
 
+/* Import EuroWeb Design Tokens */
+@import '../styles/euroweb-tokens.css';
 /* Reset and Base Styles */
 *,
 *::before,
@@ -26,23 +29,37 @@ html {
 
 body {
   margin: 0;
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background: var(--euroweb-bg-primary);
+    background: linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%);
+    color: var(--euroweb-text-primary);
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* Global CSS Custom Properties */
+/* EuroWeb Color Palette - From Version Stabil */
 :root {
-  /* Colors */
-  --color-primary: #3b82f6;
-  --color-secondary: #6366f1;
-  --color-success: #10b981;
+  /* EuroWeb Primary Colors */
+    --euroweb-primary: #d4af37;
+    --euroweb-secondary: #b8982d;
+    --euroweb-bg-primary: #1a1d29;
+    --euroweb-bg-secondary: #2d2a45;
+    --euroweb-text-primary: #f8fafc;
+    --euroweb-text-secondary: #cbd5e1;
+    --euroweb-border: rgba(212, 175, 55, 0.3);
+    --euroweb-accent: #22c55e;
+    --euroweb-warning: #f59e0b;
+    --euroweb-error: #ef4444;
+  
+    /* Compatibility aliases for existing code */
+    --color-primary: #d4af37;
+    --color-secondary: #b8982d;
+    --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-muted: #94a3b8;
+  --color-background: #1a1d29;
+    --color-surface: #2d2a45;
+    --color-text: #f8fafc;
+    --color-text-muted: #cbd5e1;
   
   /* Spacing */
   --spacing-xs: 0.25rem;

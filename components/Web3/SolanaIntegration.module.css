@@ -1,0 +1,445 @@
+/**
+ * EuroWeb Web8 Platform - Solana Integration Styles
+ * Industrial-grade Web3 UI with Phantom wallet theming
+ * 
+ * @author Ledjan Ahmati (100% Owner)
+ * @version 8.0.0 Solana Industrial
+ */
+
+.solanaContainer {
+  background: linear-gradient(135deg, rgba(20, 20, 40, 0.95), rgba(40, 20, 60, 0.9));
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  max-width: 100%;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+/* Header Styles */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(45deg, #9945ff, #14f195);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.solanaLogo {
+  font-size: 32px;
+  color: #9945ff;
+  font-weight: bold;
+}
+
+.networkBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(25, 197, 149, 0.2);
+  border: 1px solid #19c595;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #19c595;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #19c595;
+  animation: pulse 2s infinite;
+}
+
+/* Error Banner */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #fca5a5;
+}
+
+.errorBanner button {
+  background: none;
+  border: none;
+  color: #fca5a5;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0;
+  margin-left: auto;
+}
+
+/* Wallet Section */
+.walletSection {
+  margin-bottom: 24px;
+}
+
+.connectCard {
+  text-align: center;
+  background: rgba(138, 43, 226, 0.1);
+  border: 2px dashed rgba(138, 43, 226, 0.3);
+  border-radius: 12px;
+  padding: 40px 24px;
+}
+
+.phantomLogo {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.connectCard h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #f8fafc;
+}
+
+.connectCard p {
+  color: #cbd5e1;
+  margin: 0 0 24px 0;
+}
+
+.connectButton {
+  background: linear-gradient(135deg, #9945ff, #7c3aed);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+
+.connectButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(153, 69, 255, 0.4);
+}
+
+.connectButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Wallet Info */
+.walletInfo {
+  background: rgba(138, 43, 226, 0.05);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.accountHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.accountAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9945ff, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.accountHeader h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #f8fafc;
+}
+
+.address {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.disconnectButton {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  color: #fca5a5;
+  font-size: 14px;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: all 0.2s ease;
+}
+
+.disconnectButton:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+/* Balance Card */
+.balanceCard {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.balanceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.refreshButton {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.refreshButton:hover {
+  background: rgba(138, 43, 226, 0.2);
+}
+
+.balanceAmount {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.amount {
+  font-size: 32px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.currency {
+  font-size: 20px;
+  font-weight: 600;
+  color: #9945ff;
+}
+
+.balanceUSD {
+  font-size: 16px;
+  color: #9ca3af;
+}
+
+/* Actions Row */
+.actionsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.actionButton {
+  background: rgba(138, 43, 226, 0.1);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 8px;
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: rgba(138, 43, 226, 0.2);
+  transform: translateY(-1px);
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.actionButton span {
+  font-size: 20px;
+}
+
+/* Transactions Section */
+.transactionsSection {
+  margin-bottom: 24px;
+}
+
+.transactionsSection h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #f8fafc;
+}
+
+.transactionsList {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.transactionItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.1);
+  transition: background 0.2s ease;
+}
+
+.transactionItem:last-child {
+  border-bottom: none;
+}
+
+.transactionItem:hover {
+  background: rgba(138, 43, 226, 0.05);
+}
+
+.txIcon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.txDetails {
+  flex: 1;
+}
+
+.txSignature {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f8fafc;
+  margin-bottom: 4px;
+}
+
+.txMeta {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.txAmount {
+  font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fca5a5;
+}
+
+/* Footer */
+.footer {
+  padding-top: 20px;
+  border-top: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.footerLinks a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:hover {
+  color: #9945ff;
+}
+
+.poweredBy {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .solanaContainer {
+    padding: 16px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .accountHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .disconnectButton {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+  
+  .actionsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .footerLinks {
+    justify-content: center;
+  }
+}

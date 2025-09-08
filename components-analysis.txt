@@ -1,0 +1,2 @@
+ANALIZA E KOMPONENTËVE - DUBLIKIMET:
+Web8TabSystem versione: Microsoft.PowerShell.Commands.GenericMeasureInfo.Count

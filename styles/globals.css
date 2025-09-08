@@ -31,6 +31,9 @@ html {
 body {
   min-height: 100vh;
   overflow-x: hidden;
+  /* Prevent flicker and layout shifts */
+    opacity: 1;
+    transition: none;
 }
 
 /* Focus States */
@@ -39,3 +42,17 @@ body {
   outline-offset: 2px;
 }
 
+/* Prevent Animation Flicker */
+* {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Ensure smooth rendering */
+.no-flicker {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}

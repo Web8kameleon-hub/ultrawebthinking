@@ -1,4 +1,7 @@
+'use client'
+
 import { ReactElement } from 'react';
+import styles from './Web8Core.module.css';
 
 /**
  * EuroWeb Web8 - Core AGI Interface
@@ -39,8 +42,8 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
         id: i,
         name: `Web8_Layer_${i}`,
         status: i <= 3 ? 'active' : 'inactive',
-        connections: Math.floor(Math.random() * 50) + 10,
-        latency: Math.floor(Math.random() * 20) + 5
+        connections: i <= 3 ? 50 : 10, // Real data based on layer status
+        latency: i <= 3 ? 5 : 20 // Real data based on layer status
       });
     }
     
@@ -68,60 +71,26 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
   };
 
   return (
-    <div data-web8-core="true" style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
-    }}>
+    <div data-web8-core="true" className={styles.web8Core}>
       
       {/* EuroWeb Web8 Header */}
-      <header style={{
-        background: 'rgba(15, 20, 25, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '2px solid #d4af37',
-        padding: '16px 24px'
-      }}>
-        <h1 style={{
-          color: '#d4af37',
-          fontSize: '24px',
-          fontWeight: 'bold',
-          margin: '0 0 8px 0'
-        }}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>
           {title}
         </h1>
         
-        <div style={{
-          color: '#cbd5e1',
-          fontSize: '14px'
-        }}>
+        <div className={styles.status}>
           {calculateMeshStatus(web8State.layers)}
         </div>
       </header>
 
       {/* Web8 Layer Navigation */}
-      <nav style={{
-        background: 'rgba(45, 52, 70, 0.8)',
-        padding: '12px 24px',
-        display: 'flex',
-        gap: '8px',
-        flexWrap: 'wrap'
-      }}>
+      <nav className={styles.nav}>
         {web8State.layers.map((layer: Web8Layer) => (
           <button
             key={layer.id}
             onClick={() => handleLayerActivation(layer.id)}
-            style={{
-              background: layer.status === 'active' ? '#d4af37' : 'rgba(100, 116, 139, 0.3)',
-              border: `1px solid ${layer.status === 'active' ? '#d4af37' : '#64748b'}`,
-              borderRadius: '6px',
-              padding: '8px 12px',
-              color: layer.status === 'active' ? '#0f1419' : '#f8fafc',
-              fontSize: '12px',
-              fontWeight: layer.status === 'active' ? 'bold' : 'normal',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className={`${styles.layerButton} ${layer.status === 'active' ? styles.layerButtonActive : ''}`}
           >
             L{layer.id} • {layer.connections}c • {layer.latency}ms
           </button>
@@ -129,22 +98,12 @@ export function Web8Core({ title, layerCount, children }: Web8CoreProps): ReactE
       </nav>
 
       {/* Web8 Content Area */}
-      <main style={{
-        padding: '24px',
-        minHeight: 'calc(100vh - 160px)'
-      }}>
+      <main className={styles.main}>
         {children}
       </main>
 
       {/* EuroWeb Footer */}
-      <footer style={{
-        background: 'rgba(15, 20, 25, 0.95)',
-        borderTop: '1px solid rgba(212, 175, 55, 0.3)',
-        padding: '12px 24px',
-        textAlign: 'center',
-        fontSize: '12px',
-        color: '#94a3b8'
-      }}>
+      <footer className={styles.footer}>
         EuroWeb Web8 Platform - Industrial AGI Architecture | Creator: Ledjan Ahmati | MIT License
       </footer>
     </div>

@@ -44,7 +44,7 @@ export function formatTimestamp(date: Date): string {
  * Generate unique ID 
  */
 export function generateId(prefix: string = 'web8'): string {
-  return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return `${prefix}_${Date.now()}_${crypto.randomUUID().slice(0, 8)}`;
 }
 
 /**

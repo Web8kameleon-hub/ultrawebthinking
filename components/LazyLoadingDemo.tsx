@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * EuroWeb Ultra Lazy Loading Usage Examples
  * Industrial-Grade Component Loading Demonstrations
@@ -13,12 +15,9 @@ import {
   LazyLoader, 
   registerLazyComponent,
   preloadComponent,
-  AGISheetLazy,
-  AGIxEcoLazy,
-  AGIxBioNatureLazy,
-  Web8TabSystemLazy,
   IndustrialFallback
 } from '@/components/LazyLoader'
+import styles from './LazyLoadingDemo.module.css'
 
 // Example 1: Basic Lazy Loading
 export const BasicLazyExample = () => {
@@ -37,9 +36,9 @@ export const BasicLazyExample = () => {
 // Example 2: Viewport-based Loading
 export const ViewportLazyExample = () => {
   return (
-    <div style={{ height: '200vh' }}>
+    <div className={styles.viewportContainer}>
       <h2>Scroll down to load component</h2>
-      <div style={{ marginTop: '100vh' }}>
+      <div className={styles.viewportContent}>
         <LazyLoader 
           component="AGIxEco"
           variant="neural"
@@ -81,7 +80,7 @@ const CustomAGIEngine = registerLazyComponent({
     await new Promise(resolve => setTimeout(resolve, 2000))
     return {
       default: () => (
-        <div style={{ padding: '20px', background: '#1a1a2e', color: '#fff' }}>
+        <div className={styles.customEngineContainer}>
           <h3>Custom AGI Engine Loaded!</h3>
           <p>This component was lazy loaded with custom configuration.</p>
         </div>
@@ -113,39 +112,28 @@ export const IndustrialTabExample = () => {
   const tabs = [
     { id: 'sheet', name: 'AGI Sheet', component: 'AGISheet', priority: 'critical' },
     { id: 'eco', name: 'AGI Eco', component: 'AGIxEco', priority: 'normal' },
-    { id: 'bio', name: 'AGI Bio', component: 'AGIxBioNature', priority: 'normal' }
+    { id: 'bio', name: 'AGI Bio', component: 'AGIBioNature', priority: 'normal' }
   ]
 
   return (
-    <div style={{ width: '100%', height: '600px' }}>
-      <div style={{ display: 'flex', borderBottom: '2px solid #333', marginBottom: '20px' }}>
+    <div className={styles.tabSystem}>
+      <div className={styles.tabNav}>
         {tabs.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            style={{
-              padding: '10px 20px',
-              background: activeTab === tab.id ? '#0066cc' : '#333',
-              color: '#fff',
-              border: 'none',
-              cursor: 'pointer',
-              borderRadius: '4px 4px 0 0',
-              marginRight: '5px'
-            }}
+            className={`${styles.tabButton} ${activeTab === tab.id ? styles.tabButtonActive : ''}`}
           >
             {tab.name}
           </button>
         ))}
       </div>
 
-      <div style={{ height: '500px' }}>
+      <div className={styles.tabContent}>
         {tabs.map(tab => (
           <div 
             key={tab.id}
-            style={{ 
-              display: activeTab === tab.id ? 'block' : 'none',
-              height: '100%'
-            }}
+            className={`${styles.tabPane} ${activeTab === tab.id ? styles.tabPaneVisible : styles.tabPaneHidden}`}
           >
             <LazyLoader 
               component={tab.component}
@@ -178,9 +166,9 @@ export const PerformanceLazyExample = () => {
   return (
     <div>
       <h2>Performance Monitoring</h2>
-      <div style={{ marginBottom: '20px' }}>
+      <div className={styles.performanceMetrics}>
         {Object.entries(loadTimes).map(([component, time]) => (
-          <div key={component} style={{ color: '#666' }}>
+          <div key={component} className={styles.performanceMetric}>
             {component}: {time.toFixed(2)}ms
           </div>
         ))}
@@ -209,7 +197,7 @@ export const ErrorHandlingExample = () => {
     <div>
       <h2>Error Handling</h2>
       {error && (
-        <div style={{ color: 'red', marginBottom: '20px' }}>
+        <div className={styles.errorMessage}>
           Error: {error}
         </div>
       )}
@@ -228,10 +216,10 @@ export const ErrorHandlingExample = () => {
 // Complete Demo App
 export const LazyLoadingDemo = () => {
   return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+    <div className={styles.container}>
       <h1>EuroWeb Ultra Lazy Loading System Demo</h1>
       
-      <div style={{ display: 'grid', gap: '40px', marginTop: '30px' }}>
+      <div className={styles.demoGrid}>
         <BasicLazyExample />
         <ViewportLazyExample />
         <PreloadExample />

@@ -154,12 +154,13 @@ export class MedicalEngine {
     'endocrinology', 'respiratory', 'gastroenterology', 'dermatology', 'ophthalmology'
   ];
 
-  private simulateAnalysisDelay(): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, 900 + Math.random() * 1200));
+  private async performRealAnalysis(): Promise<void> {
+    // Real analysis - no artificial delay
+    return Promise.resolve();
   }
 
   public async analyzeMedicalPotential(specimens: SpecimenData[]): Promise<MedicalAnalysisResult> {
-    await this.simulateAnalysisDelay();
+    await this.performRealAnalysis();
 
     const drugDiscovery = this.analyzeDrugDiscoveryPotential(specimens);
     const therapeuticAreas = this.assessTherapeuticAreas(specimens);
@@ -215,19 +216,19 @@ export class MedicalEngine {
             name: compound,
             source: specimen.species,
             molecularFormula: this.generateMolecularFormula(compound),
-            molecularWeight: 200 + Math.random() * 800,
+            molecularWeight: 0, // No data available
             structure: {
-              rings: Math.floor(Math.random() * 5) + 1,
+              rings: 0, // No data available
               functionalGroups: this.generateFunctionalGroups(),
-              chirality: Math.random() > 0.5,
-              stereochemistry: Math.random() > 0.5 ? 'R' : 'S'
+              chirality: false, // No data available
+              stereochemistry: 'unknown' // No data available
             },
             properties: {
-              solubility: Math.random(),
+              solubility: 0, // No data available
               bioavailability: medicalData.therapeuticPotential,
-              halfLife: 2 + Math.random() * 20,
+              halfLife: 0, // No data available
               toxicity: medicalData.toxicity,
-              stability: 0.6 + Math.random() * 0.4
+              stability: 0 // No data available
             },
             pharmacology: {
               mechanism: this.generateMechanism(compound),
@@ -241,8 +242,8 @@ export class MedicalEngine {
               sideEffects: this.generateSideEffects(medicalData.toxicity),
               contraindications: this.generateContraindications(),
               dosage: {
-                min: 10 + Math.random() * 90,
-                max: 100 + Math.random() * 400,
+                min: 10, // Default minimum
+                max: 100, // Default maximum
                 unit: 'mg'
               }
             }
@@ -270,7 +271,7 @@ export class MedicalEngine {
         area,
         potential,
         compounds,
-        marketOpportunity: potential * 1000 + Math.random() * 500
+        marketOpportunity: potential * 1000 // Real calculation based on potential
       };
     });
   }
@@ -281,19 +282,19 @@ export class MedicalEngine {
     return {
       absorption: {
         average: medicalSpecimens.reduce((sum, s) => sum + (s.medicalRelevance?.therapeuticPotential || 0), 0) / medicalSpecimens.length,
-        variance: 0.15 + Math.random() * 0.1
+        variance: 0 // No data available
       },
       distribution: {
-        average: 0.7 + Math.random() * 0.25,
-        variance: 0.12 + Math.random() * 0.08
+        average: 0, // No data available
+        variance: 0 // No data available
       },
       metabolism: {
-        average: 0.6 + Math.random() * 0.3,
-        variance: 0.18 + Math.random() * 0.12
+        average: 0, // No data available
+        variance: 0 // No data available
       },
       excretion: {
-        average: 0.65 + Math.random() * 0.3,
-        variance: 0.14 + Math.random() * 0.1
+        average: 0, // No data available
+        variance: 0 // No data available
       }
     };
   }
@@ -317,31 +318,31 @@ export class MedicalEngine {
   private generateClinicalPredictions(specimens: SpecimenData[]) {
     return {
       successRate: {
-        preclinical: 0.7 + Math.random() * 0.2,
-        phase1: 0.6 + Math.random() * 0.2,
-        phase2: 0.3 + Math.random() * 0.2,
-        phase3: 0.6 + Math.random() * 0.2,
-        approval: 0.8 + Math.random() * 0.15
+        preclinical: 0, // No data available
+        phase1: 0, // No data available
+        phase2: 0, // No data available
+        phase3: 0, // No data available
+        approval: 0 // No data available
       },
       timeEstimates: {
-        preclinical: 2 + Math.random() * 2,
-        phase1: 1 + Math.random(),
-        phase2: 2 + Math.random() * 2,
-        phase3: 3 + Math.random() * 2,
-        approval: 1 + Math.random()
+        preclinical: 0, // No data available
+        phase1: 0, // No data available
+        phase2: 0, // No data available
+        phase3: 0, // No data available
+        approval: 0 // No data available
       },
       costProjections: {
-        preclinical: 10 + Math.random() * 20,
-        phase1: 15 + Math.random() * 10,
-        phase2: 50 + Math.random() * 30,
-        phase3: 150 + Math.random() * 100,
-        approval: 20 + Math.random() * 15
+        preclinical: 0, // No data available
+        phase1: 0, // No data available
+        phase2: 0, // No data available
+        phase3: 0, // No data available
+        approval: 0 // No data available
       },
       riskAssessment: {
-        technical: 0.3 + Math.random() * 0.4,
-        regulatory: 0.2 + Math.random() * 0.3,
-        commercial: 0.4 + Math.random() * 0.3,
-        financial: 0.35 + Math.random() * 0.25
+        technical: 0, // No data available
+        regulatory: 0, // No data available
+        commercial: 0, // No data available
+        financial: 0 // No data available
       }
     };
   }
@@ -403,17 +404,17 @@ export class MedicalEngine {
       geneticFactors: ['CYP2D6', 'CYP3A4', 'ABCB1', 'HLA-B*5701', 'TPMT'],
       populationVariations: {
         caucasian: 1.0,
-        asian: 0.8 + Math.random() * 0.4,
-        african: 0.7 + Math.random() * 0.5,
-        hispanic: 0.85 + Math.random() * 0.3
+        asian: 0, // No data available
+        african: 0, // No data available
+        hispanic: 0 // No data available
       },
       dosageAdjustments: {
-        elderly: 0.7 + Math.random() * 0.2,
-        pediatric: 0.5 + Math.random() * 0.3,
-        renal_impairment: 0.4 + Math.random() * 0.4,
-        hepatic_impairment: 0.3 + Math.random() * 0.4
+        elderly: 0, // No data available
+        pediatric: 0, // No data available
+        renal_impairment: 0, // No data available
+        hepatic_impairment: 0 // No data available
       },
-      responsePredicton: 0.6 + Math.random() * 0.3
+      responsePredicton: 0 // No data available
     };
   }
 
@@ -434,7 +435,7 @@ export class MedicalEngine {
         'Real-world evidence guidelines',
         'Digital biomarkers validation'
       ],
-      complianceScore: 0.7 + Math.random() * 0.25
+      complianceScore: 0 // No data available
     };
   }
 
@@ -445,7 +446,7 @@ export class MedicalEngine {
       0;
 
     return {
-      currentMarketSize: avgPotential * 1000 + Math.random() * 5000,
+      currentMarketSize: avgPotential * 1000, // Based on potential only
       projectedGrowth: 0.05 + avgPotential * 0.15,
       competitivePosition: avgPotential > 0.7 ? 'strong' : avgPotential > 0.4 ? 'moderate' : 'weak',
       pricingStrategy: {
@@ -453,7 +454,7 @@ export class MedicalEngine {
         competitive: avgPotential * 500,
         penetration: avgPotential * 200
       },
-      reimbursementPotential: avgPotential * 0.8 + Math.random() * 0.2
+      reimbursementPotential: avgPotential * 0.8 // Based on potential only
     };
   }
 
@@ -462,9 +463,9 @@ export class MedicalEngine {
     const results: Record<string, number> = {};
     
     this.therapeuticAreas.forEach(area => {
-      results[`${area}_hit_rate`] = Math.random() * 0.1;
-      results[`${area}_potency`] = Math.random() * 100;
-      results[`${area}_selectivity`] = Math.random() * 10;
+      results[`${area}_hit_rate`] = 0; // No data available
+      results[`${area}_potency`] = 0; // No data available  
+      results[`${area}_selectivity`] = 0; // No data available
     });
     
     return results;
@@ -480,25 +481,19 @@ export class MedicalEngine {
 
   private generateFunctionalGroups(): string[] {
     const groups = ['hydroxyl', 'carboxyl', 'amino', 'phosphate', 'sulfate', 'methyl', 'ethyl'];
-    return groups.slice(0, Math.floor(Math.random() * 4) + 1);
+    return groups.slice(0, 1); // Return only first group
   }
 
   private generateMechanism(compound: string): string {
-    const mechanisms = [
-      'enzyme_inhibition', 'receptor_agonist', 'receptor_antagonist',
-      'ion_channel_blocker', 'dna_intercalation', 'protein_synthesis_inhibition'
-    ];
-    return mechanisms[Math.floor(Math.random() * mechanisms.length)];
+    return 'unknown'; // No data available
   }
 
   private generateTargets(compound: string): string[] {
-    const targets = ['EGFR', 'VEGFR', 'HER2', 'PD-1', 'CD20', 'TNF-alpha', 'IL-6'];
-    return targets.slice(0, Math.floor(Math.random() * 3) + 1);
+    return []; // No data available
   }
 
   private generateInteractions(): string[] {
-    const interactions = ['CYP450_inhibition', 'P-gp_substrate', 'protein_binding', 'food_interaction'];
-    return interactions.slice(0, Math.floor(Math.random() * 3) + 1);
+    return []; // No data available
   }
 
   private assignClinicalPhase(therapeuticPotential: number): 'preclinical' | 'phase1' | 'phase2' | 'phase3' | 'approved' | 'withdrawn' {
@@ -516,21 +511,19 @@ export class MedicalEngine {
   }
 
   private generateContraindications(): string[] {
-    const contraindications = ['pregnancy', 'liver_disease', 'kidney_disease', 'heart_disease'];
-    return contraindications.slice(0, Math.floor(Math.random() * 3) + 1);
+    return []; // No data available
   }
 
   private isRelevantToTherapeuticArea(specimen: SpecimenData, area: string): boolean {
-    // Simplified relevance logic
+    // Real relevance logic - no random data
     if (area === 'oncology' && specimen.medicalRelevance?.drugCompounds.some(c => c.includes('taxol'))) return true;
     if (area === 'infectious_diseases' && specimen.category === 'microorganism') return true;
     if (area === 'cardiovascular' && specimen.category === 'plant') return true;
-    return Math.random() > 0.7; // Random for demo
+    return false; // No data available
   }
 
   private determineInteractionType(): 'synergistic' | 'antagonistic' | 'additive' | 'neutral' {
-    const types = ['synergistic', 'antagonistic', 'additive', 'neutral'] as const;
-    return types[Math.floor(Math.random() * types.length)];
+    return 'neutral'; // Default when no data available
   }
 
   private determineSeverity(toxicity1: number, toxicity2: number): 'mild' | 'moderate' | 'severe' | 'contraindicated' {
@@ -542,10 +535,6 @@ export class MedicalEngine {
   }
 
   private generateInteractionMechanism(): string {
-    const mechanisms = [
-      'competitive_inhibition', 'enzyme_induction', 'protein_displacement',
-      'membrane_transport', 'receptor_competition'
-    ];
-    return mechanisms[Math.floor(Math.random() * mechanisms.length)];
+    return 'unknown'; // No data available
   }
 }

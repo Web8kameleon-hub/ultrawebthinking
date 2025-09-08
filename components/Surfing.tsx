@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * EuroWeb Surfing Ultra - Ultra-Fluid Hybrid Navigation
  * Ultra-Fast Performance with Quantum-Enhanced Animations
@@ -12,6 +14,35 @@
 
 import React, { useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
+import { cva, type VariantProps } from "class-variance-authority";
+import { clsx } from "clsx";
+import styles from "./surfing.module.css";
+
+// CVA Variants for mode styling
+const modeContainerVariants = cva(styles.container, {
+  variants: {
+    mode: {
+      search: styles.searchMode,
+      chat: styles.chatMode,
+      navigate: styles.navigateMode
+    }
+  },
+  defaultVariants: {
+    mode: "search"
+  }
+});
+
+const modeButtonVariants = cva(styles.modeButton, {
+  variants: {
+    active: {
+      true: styles.active,
+      false: ""
+    }
+  },
+  defaultVariants: {
+    active: false
+  }
+});
 
 // Ultra-fluid animation variants
 const ultraFluidVariants = {
@@ -147,64 +178,25 @@ const Surfing: React.FC = () => {
   }), []);
 
   return (
-    <section style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 25%, #24243e 50%, #1a1a2e 75%, #16213e 100%)',
-      color: 'white',
-      padding: '32px',
-      overflow: 'hidden',
-      position: 'relative'
-    }}>
+    <section className={modeContainerVariants({ mode: state.mode })}>
       {/* Ultra-fluid background particles */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: 'radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%)',
-        animation: 'ultraFloat 20s ease-in-out infinite'
-      }} />
+      <div className={styles.backgroundParticles} />
 
       <motion.div
         variants={containerVariants}
         initial="initial"
         animate="animate"
-        style={{
-          position: 'relative',
-          zIndex: 10,
-          width: '100%',
-          maxWidth: '600px'
-        }}
+        className={styles.contentWrapper}
       >
         {/* Ultra-fluid header */}
         <motion.div
           variants={ultraFluidVariants}
-          style={{
-            textAlign: 'center',
-            marginBottom: '32px'
-          }}
+          className={styles.header}
         >
-          <h1 style={{
-            fontSize: '48px',
-            fontWeight: 800,
-            marginBottom: '16px',
-            background: 'linear-gradient(45deg, #3b82f6, #8b5cf6, #22c55e)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textShadow: '0 0 30px rgba(59, 130, 246, 0.5)'
-          }}>
+          <h1 className={styles.title}>
             🌊 Surfing Ultra
           </h1>
-          <p style={{
-            fontSize: '18px',
-            color: 'rgba(255, 255, 255, 0.8)',
-            marginBottom: '24px'
-          }}>
+          <p className={styles.subtitle}>
             Ultra-Fluid Hybrid Navigation - Quantum-Enhanced Performance
           </p>
         </motion.div>
@@ -212,12 +204,7 @@ const Surfing: React.FC = () => {
         {/* Mode selector */}
         <motion.div
           variants={itemVariants}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '16px',
-            marginBottom: '32px'
-          }}
+          className={styles.modeSelector}
         >
           {Object.entries(modeConfig).map(([mode, config]) => (
             <motion.button
@@ -225,18 +212,7 @@ const Surfing: React.FC = () => {
               onClick={() => switchMode(mode as any)}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              style={{
-                background: state.mode === mode ? config.bg : 'rgba(255, 255, 255, 0.1)',
-                border: state.mode === mode ? `2px solid ${config.color}` : '2px solid transparent',
-                borderRadius: '12px',
-                padding: '12px 20px',
-                color: state.mode === mode ? config.color : 'rgba(255, 255, 255, 0.7)',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                backdropFilter: 'blur(10px)',
-                transition: 'all 0.3s ease'
-              }}
+              className={modeButtonVariants({ active: state.mode === mode })}
             >
               {config.icon} {mode.charAt(0).toUpperCase() + mode.slice(1)}
             </motion.button>
@@ -246,17 +222,10 @@ const Surfing: React.FC = () => {
         {/* Ultra-fluid main interface */}
         <motion.div
           variants={ultraFluidVariants}
-          style={{
-            background: 'rgba(255, 255, 255, 0.08)',
-            padding: '32px',
-            borderRadius: '20px',
-            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
-          }}
+          className={styles.mainInterface}
         >
           {/* Input section */}
-          <div style={{ marginBottom: '24px' }}>
+          <div className={styles.inputSection}>
             <motion.input
               type="text"
               placeholder={`${modeConfig[state.mode].icon} ${
@@ -268,26 +237,14 @@ const Surfing: React.FC = () => {
               onChange={handleInputChange}
               onKeyPress={(e) => e.key === 'Enter' && handleAsk()}
               whileFocus={{ scale: 1.02 }}
-              style={{
-                width: '100%',
-                padding: '16px 20px',
-                marginBottom: '16px',
-                borderRadius: '12px',
-                border: `2px solid ${modeConfig[state.mode].color}`,
-                background: 'rgba(255, 255, 255, 0.1)',
-                color: 'white',
-                fontSize: '16px',
-                outline: 'none',
-                backdropFilter: 'blur(10px)',
-                transition: 'all 0.3s ease'
-              }}
+              className={styles.input}
             />
 
             {state.error && (
               <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                style={{ color: '#ef4444', marginBottom: '16px', fontSize: '14px' }}
+                className={styles.error}
               >
                 {state.error}
               </motion.p>
@@ -299,36 +256,11 @@ const Surfing: React.FC = () => {
               disabled={state.loading || !state.input.trim()}
               whileHover={{ scale: 1.05, boxShadow: `0 10px 25px ${modeConfig[state.mode].color}40` }}
               whileTap={{ scale: 0.95 }}
-              style={{
-                width: '100%',
-                background: state.loading ? 'rgba(107, 114, 128, 0.3)' : `linear-gradient(45deg, ${modeConfig[state.mode].color}, ${modeConfig[state.mode].color}80)`,
-                color: 'white',
-                padding: '16px 24px',
-                borderRadius: '12px',
-                border: 'none',
-                cursor: state.loading ? 'not-allowed' : 'pointer',
-                fontWeight: 600,
-                fontSize: '16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                transition: 'all 0.3s ease'
-              }}
+              className={styles.submitButton}
             >
               {state.loading ? (
                 <>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    style={{
-                      width: '20px',
-                      height: '20px',
-                      border: '2px solid rgba(255, 255, 255, 0.3)',
-                      borderTop: '2px solid white',
-                      borderRadius: '50%'
-                    }}
-                  />
+                  <div className={styles.loader} />
                   Ultra Processing...
                 </>
               ) : (
@@ -355,18 +287,7 @@ const Surfing: React.FC = () => {
                   stiffness: 300,
                   damping: 25
                 }}
-                style={{
-                  marginTop: '24px',
-                  padding: '24px',
-                  background: modeConfig[state.mode].bg,
-                  border: `1px solid ${modeConfig[state.mode].color}40`,
-                  borderRadius: '16px',
-                  color: 'white',
-                  fontSize: '14px',
-                  lineHeight: '1.6',
-                  whiteSpace: 'pre-wrap',
-                  backdropFilter: 'blur(10px)'
-                }}
+                className={styles.response}
               >
                 {state.response}
               </motion.div>
@@ -377,12 +298,7 @@ const Surfing: React.FC = () => {
         {/* Performance metrics */}
         <motion.div
           variants={itemVariants}
-          style={{
-            display: 'flex',
-            justifyContent: 'space-around',
-            marginTop: '24px',
-            gap: '16px'
-          }}
+          className={styles.metricsContainer}
         >
           {[
             { label: 'Response Time', value: '0.8ms', icon: '⚡' },
@@ -392,41 +308,15 @@ const Surfing: React.FC = () => {
             <motion.div
               key={metric.label}
               whileHover={{ scale: 1.05, y: -2 }}
-              style={{
-                textAlign: 'center',
-                background: 'rgba(255, 255, 255, 0.05)',
-                padding: '16px',
-                borderRadius: '12px',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                flex: 1
-              }}
+              className={styles.metricCard}
             >
-              <div style={{ fontSize: '24px', marginBottom: '8px' }}>{metric.icon}</div>
-              <div style={{ fontSize: '18px', fontWeight: 600, color: modeConfig[state.mode].color }}>{metric.value}</div>
-              <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.7)' }}>{metric.label}</div>
+              <div className={styles.metricIcon}>{metric.icon}</div>
+              <div className={styles.metricValue}>{metric.value}</div>
+              <div className={styles.metricLabel}>{metric.label}</div>
             </motion.div>
           ))}
         </motion.div>
       </motion.div>
-
-      {/* Ultra-fluid CSS animations */}
-      <style jsx>{`
-        @keyframes ultraFloat {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-            opacity: 0.7;
-          }
-          33% {
-            transform: translateY(-20px) rotate(120deg);
-            opacity: 1;
-          }
-          66% {
-            transform: translateY(10px) rotate(240deg);
-            opacity: 0.8;
-          }
-        }
-      `}</style>
     </section>
   );
 };

@@ -1,0 +1,57 @@
+/* UltraWebThinking – Vanilla CSS Base (No Tailwind, No PostCSS, No @meta) */
+
+:root {
+  --color-bg: #f8f8f8;
+  --color-text: #111;
+  --color-accent: #0050b3;
+  --font-main: 'Segoe UI', sans-serif;
+  --radius: 12px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.button {
+  border: none;
+  padding: 0.5rem 1rem;
+  background: var(--color-accent);
+  color: white;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.button:hover {
+  background: #003d80;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}

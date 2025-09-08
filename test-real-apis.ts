@@ -23,7 +23,8 @@ async function testNASA() {
       return false
     }
   } catch (error) {
-    console.log(`❌ NASA: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.log(`❌ NASA: ${errorMessage}`)
     return false
   }
 }
@@ -52,7 +53,8 @@ async function testOSM() {
       return false
     }
   } catch (error) {
-    console.log(`❌ OSM: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.log(`❌ OSM: ${errorMessage}`)
     return false
   }
 }
@@ -77,7 +79,8 @@ async function testWHO() {
       return false
     }
   } catch (error) {
-    console.log(`❌ WHO: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.log(`❌ WHO: ${errorMessage}`)
     return false
   }
 }
@@ -102,7 +105,8 @@ async function testOpenSky() {
       return false
     }
   } catch (error) {
-    console.log(`❌ OpenSky: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.log(`❌ OpenSky: ${errorMessage}`)
     return false
   }
 }
@@ -127,7 +131,8 @@ async function testCoinGecko() {
       return false
     }
   } catch (error) {
-    console.log(`❌ CoinGecko: ${error.message}`)
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.log(`❌ CoinGecko: ${errorMessage}`)
     return false
   }
 }

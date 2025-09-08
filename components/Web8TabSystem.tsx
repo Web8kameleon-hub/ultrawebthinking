@@ -1,7 +1,8 @@
+'use client'
+
 /**
- * EuroWeb Web8 Platform - Tab System Component (Simplified)
- * Pure TypeScript Industrial Architecture - No Hooks
- * Temporary inline styles for immediate build success
+ * EuroWeb Web8 Platform - Tab System Component
+ * CVA + CSS Modules - Industrial Architecture
  * 
  * @author Ledjan Ahmati (100% Owner)
  * @contact dealsjona@gmail.com
@@ -9,10 +10,43 @@
  * @license MIT
  */
 
-'use client'
-
 import React from 'react'
 import { motion } from 'framer-motion'
+import clsx from 'clsx'
+import {
+  containerVariants,
+  headerVariants,
+  logoVariants,
+  navVariants,
+  navButtonVariants,
+  statusIndicatorVariants,
+  tabBarVariants,
+  tabVariants,
+  tabSpinnerVariants,
+  tabTitleVariants,
+  tabCloseVariants,
+  newTabButtonVariants,
+  addressBarVariants,
+  addressControlsVariants,
+  navigationButtonsVariants,
+  navControlButtonVariants,
+  addressInputVariants,
+  secureButtonVariants,
+  mainVariants,
+  contentAreaVariants,
+  contentVariants,
+  contentTitleVariants,
+  contentSubtitleVariants,
+  metricsGridVariants,
+  metricCardVariants,
+  metricValueVariants,
+  metricLabelVariants,
+  comingSoonVariants
+} from './web8TabSystemVariants'
+import styles from './Web8TabSystem.module.css'
+import { SolanaIntegration } from './Web3/SolanaIntegration'
+import { UTTIntegration } from './UTT/UTTIntegration'
+import { ContinentalMeshDashboard } from './Mesh/ContinentalMeshDashboard'
 // import { AGIMedUltra } from './AGISheet/AGIMedUltra'
 // import { AGIOfficeUltra } from './AGISheet/AGIOfficeUltra'
 
@@ -53,6 +87,20 @@ const initialTabs: Tab[] = [
     isLoading: false
   },
   {
+    id: 'solana-web3',
+    title: '◎ Solana Web3',
+    url: 'euroweb://solana-phantom',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'utt-system',
+    title: '🧠 UltraThinking',
+    url: 'euroweb://utt-neural',
+    isActive: false,
+    isLoading: false
+  },
+  {
     id: 'agi-office',
     title: '💼 AGI×Office',
     url: 'euroweb://agi-office',
@@ -77,6 +125,13 @@ const initialTabs: Tab[] = [
     id: 'agi-eco',
     title: '🌱 AGI×Eco',
     url: 'euroweb://agi-eco',
+    isActive: false,
+    isLoading: false
+  },
+  {
+    id: 'continental-mesh',
+    title: '🌍 Continental Mesh',
+    url: 'euroweb://mesh-network',
     isActive: false,
     isLoading: false
   }
@@ -135,87 +190,37 @@ export const Web8TabSystem: React.FC = () => {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
+    <div className={clsx(styles.container, containerVariants())}>
       {/* Top Navigation Bar */}
       <motion.header
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        style={{
-          background: 'rgba(45, 52, 70, 0.9)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.3)',
-          padding: '12px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
+        className={clsx(styles.header, headerVariants())}
       >
         {/* Left side - Logo and navigation */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-          <div style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
+        <div className={styles.headerLeft}>
+          <div className={clsx(styles.logo, logoVariants())}>
             EuroWeb
           </div>
           
-          <nav style={{ display: 'flex', gap: '16px' }}>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: '1px solid #d4af37',
-              color: '#d4af37',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+          <nav className={clsx(styles.nav, navVariants())}>
+            <button className={clsx(styles.navButton, navButtonVariants({ variant: 'active' }))}>
               🧠 AGI Core
             </button>
-            <button style={{
-              background: 'transparent',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              color: '#cbd5e1',
-              padding: '6px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+            <button className={clsx(styles.navButton, navButtonVariants())}>
               📊 Analytics
             </button>
           </nav>
         </div>
 
         {/* Right side - Status and time */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px 12px',
-            background: 'rgba(34, 197, 94, 0.2)',
-            borderRadius: '6px',
-            fontSize: '14px'
-          }}>
-            <div style={{
-              width: '8px',
-              height: '8px',
-              background: '#22c55e',
-              borderRadius: '50%'
-            }} />
+        <div className={styles.headerRight}>
+          <div className={clsx(styles.statusIndicator, statusIndicatorVariants())}>
+            <div className={styles.statusDot} />
             AGI Active
           </div>
-          <div style={{ fontSize: '14px', color: '#cbd5e1' }}>
+          <div className={styles.timeDisplay}>
             {currentTime}
           </div>
         </div>
@@ -226,78 +231,28 @@ export const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        style={{
-          background: 'rgba(30, 34, 52, 0.8)',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)',
-          padding: '0 20px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          minHeight: '48px'
-        }}
+        className={clsx(styles.tabBar, tabBarVariants())}
       >
         {tabs.map((tab) => (
           <div
             key={tab.id}
             data-tab-id={tab.id}
             onClick={() => switchTab(tab.id)}
-            style={{
-              background: tab.isActive ? 'rgba(212, 175, 55, 0.2)' : 'transparent',
-              border: tab.isActive ? '1px solid #d4af37' : '1px solid transparent',
-              borderRadius: '8px',
-              padding: '8px 16px',
-              fontSize: '14px',
-              color: tab.isActive ? '#d4af37' : '#cbd5e1',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              maxWidth: '200px'
-            }}
+            className={clsx(styles.tab, tabVariants({ active: tab.isActive }))}
           >
             {tab.isLoading && (
-              <div style={{
-                width: '12px',
-                height: '12px',
-                border: '2px solid rgba(212, 175, 55, 0.3)',
-                borderTop: '2px solid #d4af37',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite'
-              }} />
+              <div className={styles.tabSpinner} />
             )}
-            <span style={{ 
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
-            }}>
+            <span className={styles.tabTitle}>
               {tab.title}
             </span>
-            <button style={{
-              background: 'none',
-              border: 'none',
-              color: 'inherit',
-              fontSize: '12px',
-              cursor: 'pointer',
-              opacity: 0.7,
-              padding: '0',
-              marginLeft: 'auto'
-            }}>
+            <button className={styles.tabClose}>
               ×
             </button>
           </div>
         ))}
         
-        <button style={{
-          background: 'none',
-          border: '1px solid rgba(212, 175, 55, 0.3)',
-          borderRadius: '6px',
-          color: '#cbd5e1',
-          padding: '6px 12px',
-          fontSize: '14px',
-          cursor: 'pointer',
-          marginLeft: '8px'
-        }}>
+        <button className={clsx(styles.newTabButton, newTabButtonVariants())}>
           + New Tab
         </button>
       </motion.div>
@@ -307,49 +262,17 @@ export const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        style={{
-          background: 'rgba(26, 29, 41, 0.9)',
-          padding: '12px 20px',
-          borderBottom: '1px solid rgba(212, 175, 55, 0.2)'
-        }}
+        className={clsx(styles.addressBar, addressBarVariants())}
       >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px'
-        }}>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+        <div className={clsx(styles.addressControls, addressControlsVariants())}>
+          <div className={styles.navigationButtons}>
+            <button className={clsx(styles.navControlButton, navControlButtonVariants())}>
               ←
             </button>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+            <button className={clsx(styles.navControlButton, navControlButtonVariants())}>
               →
             </button>
-            <button style={{
-              background: 'rgba(212, 175, 55, 0.2)',
-              border: 'none',
-              borderRadius: '4px',
-              color: '#d4af37',
-              padding: '6px 8px',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}>
+            <button className={clsx(styles.navControlButton, navControlButtonVariants())}>
               ↻
             </button>
           </div>
@@ -358,26 +281,12 @@ export const Web8TabSystem: React.FC = () => {
             type="text"
             value={activeTab.url}
             readOnly
-            style={{
-              flex: 1,
-              background: 'rgba(45, 52, 70, 0.8)',
-              border: '1px solid rgba(212, 175, 55, 0.3)',
-              borderRadius: '6px',
-              padding: '8px 12px',
-              color: '#f8fafc',
-              fontSize: '14px'
-            }}
+            placeholder="EuroWeb://address"
+            aria-label="Web address"
+            className={clsx(styles.addressInput, addressInputVariants())}
           />
 
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            borderRadius: '6px',
-            color: '#22c55e',
-            padding: '8px 12px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={clsx(styles.secureButton, secureButtonVariants())}>
             🛡️ Secure
           </button>
         </div>
@@ -388,57 +297,25 @@ export const Web8TabSystem: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        style={{
-          flex: 1,
-          display: 'flex',
-          overflow: 'hidden'
-        }}
+        className={clsx(styles.main, mainVariants())}
       >
         {/* Content Area */}
-        <div style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          background: 'rgba(15, 20, 25, 0.8)'
-        }}>
+        <div className={clsx(styles.contentArea, contentAreaVariants())}>
           {/* Dashboard Content */}
-          <div data-content-id="dashboard" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'block'
-          }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #d4af37, #f7e08b)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+          <div data-content-id="dashboard" className={clsx(styles.content, styles.contentActive, contentVariants())}>
+            <h1 className={clsx(styles.contentTitle, styles.dashboardTitle, contentTitleVariants())}>
               AGI Core Dashboard
             </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+            <p className={clsx(styles.contentSubtitle, contentSubtitleVariants())}>
               Advanced General Intelligence System - Industrial Grade TypeScript Architecture
             </p>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
-              maxWidth: '800px',
-              margin: '0 auto'
-            }}>
+            <div className={clsx(styles.metricsGrid, metricsGridVariants())}>
               {Object.entries(agiMetrics).map(([key, value]) => (
-                <motion.div key={key} whileHover={{ scale: 1.05 }} style={{
-                  background: 'rgba(45, 52, 70, 0.8)',
-                  border: '1px solid rgba(212, 175, 55, 0.3)',
-                  borderRadius: '12px',
-                  padding: '20px',
-                  textAlign: 'center'
-                }}>
-                  <div style={{ fontSize: '24px', fontWeight: 600, color: '#d4af37', marginBottom: '8px' }}>
+                <motion.div key={key} whileHover={{ scale: 1.05 }} className={clsx(styles.metricCard, metricCardVariants())}>
+                  <div className={clsx(styles.metricValue, metricValueVariants())}>
                     {value}
                   </div>
-                  <div style={{ fontSize: '14px', color: '#cbd5e1', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  <div className={clsx(styles.metricLabel, metricLabelVariants())}>
                     {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                   </div>
                 </motion.div>
@@ -447,103 +324,71 @@ export const Web8TabSystem: React.FC = () => {
           </div>
 
           {/* AGI Core Content */}
-          <div data-content-id="agi-core" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'none'
-          }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #6366f1, #8b5cf6)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+          <div data-content-id="agi-core" className={clsx(styles.content, contentVariants())}>
+            <h1 className={clsx(styles.contentTitle, styles.coreTitle, contentTitleVariants())}>
               🤖 AGI Core Engine
             </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+            <p className={clsx(styles.contentSubtitle, contentSubtitleVariants())}>
               Artificial General Intelligence - Pure Neural Processing
             </p>
           </div>
 
+          {/* Solana Web3 Content */}
+          <div data-content-id="solana-web3" className={clsx(styles.content, contentVariants())}>
+            <SolanaIntegration />
+          </div>
+
+          {/* UltraThinking UTT Content */}
+          <div data-content-id="utt-system" className={clsx(styles.content, contentVariants())}>
+            <UTTIntegration />
+          </div>
+
           {/* AGI×Office Content */}
-          <div data-content-id="agi-office" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
+          <div data-content-id="agi-office" className={clsx(styles.content, contentVariants())}>
             {/* <AGIOfficeUltra /> */}
-            <div style={{ padding: '40px', textAlign: 'center' }}>
+            <div className={clsx(styles.comingSoon, comingSoonVariants())}>
               <h2>🏢 AGI×Office Ultra</h2>
               <p>Professional Office AI - Coming Soon</p>
             </div>
           </div>
 
           {/* AGI×Med Content */}
-          <div data-content-id="agi-med" style={{
-            display: 'none',
-            height: '100%',
-            overflow: 'auto'
-          }}>
+          <div data-content-id="agi-med" className={clsx(styles.content, contentVariants())}>
             {/* <AGIMedUltra /> */}
-            <div style={{ padding: '40px', textAlign: 'center' }}>
+            <div className={clsx(styles.comingSoon, comingSoonVariants())}>
               <h2>⚕️ AGI×Med Ultra</h2>
               <p>Medical AI System - Coming Soon</p>
             </div>
           </div>
 
           {/* AGI×El Content */}
-          <div data-content-id="agi-el" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'none'
-          }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #facc15, #eab308)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+          <div data-content-id="agi-el" className={clsx(styles.content, contentVariants())}>
+            <h1 className={clsx(styles.contentTitle, styles.elTitle, contentTitleVariants())}>
               ⚡ AGI×El Energy
             </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+            <p className={clsx(styles.contentSubtitle, contentSubtitleVariants())}>
               Electrical Systems - Smart Grid & Automation
             </p>
           </div>
 
           {/* AGI×Eco Content */}
-          <div data-content-id="agi-eco" style={{
-            padding: '40px',
-            textAlign: 'center',
-            display: 'none'
-          }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: 800,
-              marginBottom: '20px',
-              background: 'linear-gradient(45deg, #22c55e, #16a34a)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent'
-            }}>
+          <div data-content-id="agi-eco" className={clsx(styles.content, contentVariants())}>
+            <h1 className={clsx(styles.contentTitle, styles.ecoTitle, contentTitleVariants())}>
               🌱 AGI×Eco Environment
             </h1>
-            <p style={{ fontSize: '20px', color: '#cbd5e1', marginBottom: '40px' }}>
+            <p className={clsx(styles.contentSubtitle, contentSubtitleVariants())}>
               Environmental AI - Climate & Sustainability
             </p>
+          </div>
+
+          {/* Continental Mesh Content */}
+          <div data-content-id="continental-mesh" className={clsx(styles.content, contentVariants())}>
+            <ContinentalMeshDashboard />
           </div>
         </div>
       </motion.main>
 
-      {/* CSS for animations */}
-      <style jsx>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
+
     </div>
   )
 }

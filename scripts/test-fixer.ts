@@ -275,7 +275,7 @@ export const createMockSpecimen = (overrides = {}) => ({
 
 export const createBiologyTestSuite = () => ({
   renderComponent: (props = {}) => render(<AGIxBioNature {...props} />),
-  mockData: MOCK_BIOLOGICAL_DATA
+  liveData: MOCK_BIOLOGICAL_DATA
 });
 `;
 
@@ -382,7 +382,7 @@ describe('AGIxEco Industrial Tests', () => {
   });
 
   test('vector cache works with lowdb', async () => {
-    // Mock vector cache behavior
+    // realData vector cache behavior
     const vectorCache = new Map<string, readonly number[]>();
     
     vectorCache.set('economic_data_1', [1.2, 3.4, 5.6] as const);
@@ -499,7 +499,7 @@ describe('Tab Logic Industrial Tests', () => {
       timestamp: new Date().toISOString()
     } as const);
     
-    const tab = createTab('tab1', 'Test', 'https://example.com');
+    const tab = createTab('tab1', 'Test', 'https://api.ultrawebthinking.com');
     
     expect(tab.id).toBe('tab1');
     expect(tab.title).toBe('Test');

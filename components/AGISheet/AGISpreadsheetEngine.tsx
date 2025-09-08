@@ -10,8 +10,95 @@
 
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { clsx } from 'clsx'
+
+// CVA Classes for styling
+const containerVariants = cva(
+  "min-h-screen p-6 font-sans text-white",
+  {
+    variants: {
+      theme: {
+        default: "bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900",
+        dark: "bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900",
+        industrial: "bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900"
+      }
+    },
+    defaultVariants: {
+      theme: "industrial"
+    }
+  }
+)
+
+const headerVariants = cva(
+  "mb-6 p-6 rounded-xl border backdrop-blur-sm",
+  {
+    variants: {
+      variant: {
+        default: "bg-white/5 border-blue-500/30",
+        glass: "bg-white/10 border-white/20",
+        solid: "bg-slate-800 border-slate-700"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+)
+
+const buttonVariants = cva(
+  "px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 cursor-pointer",
+  {
+    variants: {
+      variant: {
+        primary: "bg-blue-500/20 border border-blue-500 text-blue-400 hover:bg-blue-500/30",
+        success: "bg-green-500/20 border border-green-500 text-green-400 hover:bg-green-500/30",
+        purple: "bg-purple-500/20 border border-purple-500 text-purple-400 hover:bg-purple-500/30",
+        orange: "bg-orange-500/20 border border-orange-500 text-orange-400 hover:bg-orange-500/30",
+        gold: "bg-yellow-500/20 border border-yellow-500 text-yellow-400 hover:bg-yellow-500/30"
+      }
+    },
+    defaultVariants: {
+      variant: "primary"
+    }
+  }
+)
+
+const cardVariants = cva(
+  "p-4 rounded-xl border backdrop-blur-sm transition-all duration-300 cursor-pointer",
+  {
+    variants: {
+      variant: {
+        default: "bg-slate-800/80 border-blue-500/30 hover:bg-slate-700/80 hover:scale-105",
+        glass: "bg-white/5 border-white/20 hover:bg-white/10",
+        solid: "bg-slate-800 border-slate-700 hover:bg-slate-700"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+)
+
+const gridCellVariants = cva(
+  "flex items-center justify-center text-xs border border-blue-500/30",
+  {
+    variants: {
+      type: {
+        header: "w-12 h-9 bg-slate-700/90 font-semibold text-blue-400",
+        colHeader: "w-30 h-9 bg-slate-700/90 font-semibold text-blue-400",
+        cell: "w-30 h-9 cursor-pointer text-white",
+        evenRow: "bg-slate-900/80",
+        oddRow: "bg-slate-800/80"
+      }
+    },
+    defaultVariants: {
+      type: "cell"
+    }
+  }
+)
 
 // Interface definitions for Spreadsheet
 interface SpreadsheetCell {
@@ -73,7 +160,7 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
   {
     id: 'legal-case-tracker',
     name: 'Legal Case Management',
-    icon: '⚖️',
+    icon: '∞',
     description: 'Track legal cases, deadlines, and outcomes',
     category: 'legal',
     columns: ['Case ID', 'Client', 'Type', 'Status', 'Deadline', 'Priority'],
@@ -129,41 +216,30 @@ const spreadsheetTemplates: SpreadsheetTemplate[] = [
  * Excel-like functionality with AI enhancement
  */
 const AGISpreadsheetEngine: React.FC = () => {
-  const currentTime = new Date().toLocaleTimeString()
+  const [currentTime, setCurrentTime] = useState('')
 
-  // Generate spreadsheet grid (simplified view)
+  useEffect(() => {
+    const updateTime = () => {
+      setCurrentTime(new Date().toLocaleTimeString())
+    }
+    updateTime()
+    const interval = setInterval(updateTime, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Generate spreadsheet grid with CVA classes
   const generateGrid = (rows: number = 15, cols: number = 8): React.ReactElement[] => {
     const grid: React.ReactElement[] = []
     const colHeaders = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
     
     // Header row
     grid.push(
-      <div key="header" style={{ display: 'flex', background: 'rgba(45, 52, 70, 0.9)' }}>
-        <div style={{
-          width: '50px',
-          height: '35px',
-          border: '1px solid rgba(59, 130, 246, 0.3)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '12px',
-          fontWeight: 600,
-          color: '#3b82f6'
-        }}>
+      <div key="header" className="flex bg-slate-700/90">
+        <div className={gridCellVariants({ type: "header" })}>
           #
         </div>
         {colHeaders.slice(0, cols).map((col) => (
-          <div key={col} style={{
-            width: '120px',
-            height: '35px',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '12px',
-            fontWeight: 600,
-            color: '#3b82f6'
-          }}>
+          <div key={col} className={gridCellVariants({ type: "colHeader" })}>
             {col}
           </div>
         ))}
@@ -173,34 +249,18 @@ const AGISpreadsheetEngine: React.FC = () => {
     // Data rows
     for (let row = 1; row <= rows; row++) {
       const rowElement = (
-        <div key={row} style={{ display: 'flex' }}>
-          <div style={{
-            width: '50px',
-            height: '35px',
-            border: '1px solid rgba(59, 130, 246, 0.3)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '12px',
-            fontWeight: 600,
-            color: '#3b82f6',
-            background: 'rgba(45, 52, 70, 0.8)'
-          }}>
+        <div key={row} className="flex">
+          <div className={gridCellVariants({ type: "header" })}>
             {row}
           </div>
           {colHeaders.slice(0, cols).map((col, colIndex) => (
-            <div key={`${col}${row}`} style={{
-              width: '120px',
-              height: '35px',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '12px',
-              color: '#f8fafc',
-              background: row % 2 === 0 ? 'rgba(15, 20, 25, 0.8)' : 'rgba(30, 34, 52, 0.8)',
-              cursor: 'pointer'
-            }}>
+            <div
+              key={`${col}${row}`}
+              className={clsx(
+                gridCellVariants({ type: "cell" }),
+                row % 2 === 0 ? gridCellVariants({ type: "evenRow" }) : gridCellVariants({ type: "oddRow" })
+              )}
+            >
               {row === 1 && colIndex < 4 ? ['Sample', 'Data', 'Here', 'AI'][colIndex] : ''}
             </div>
           ))}
@@ -213,100 +273,36 @@ const AGISpreadsheetEngine: React.FC = () => {
   }
 
   return (
-    <div style={{
-      padding: '24px',
-      minHeight: '100%',
-      background: 'linear-gradient(135deg, #0f1419 0%, #1a1d29 25%, #2d2a45 50%, #1e2a4a 75%, #243447 100%)',
-      color: '#f8fafc',
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
-    }}>
+    <div className={containerVariants({ theme: "industrial" })}>
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        style={{
-          marginBottom: '24px'
-        }}
+        className={headerVariants()}
       >
-        <h1 style={{
-          fontSize: '32px',
-          fontWeight: 800,
-          marginBottom: '12px',
-          background: 'linear-gradient(45deg, #3b82f6, #1d4ed8)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
+        <h1 className="text-4xl font-extrabold mb-3 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
           📊 AGI Spreadsheet Engine
         </h1>
-        <p style={{ 
-          fontSize: '16px', 
-          color: '#cbd5e1', 
-          marginBottom: '16px' 
-        }}>
+        <p className="text-lg text-slate-300 mb-4">
           Universal Excel-like System with AI Enhancement - {currentTime}
         </p>
 
         {/* Toolbar */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          marginBottom: '16px',
-          flexWrap: 'wrap'
-        }}>
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            color: '#22c55e',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+        <div className="flex gap-2 mb-4 flex-wrap">
+          <button className={buttonVariants({ variant: "success" })}>
             📄 New Sheet
           </button>
-          <button style={{
-            background: 'rgba(59, 130, 246, 0.2)',
-            border: '1px solid #3b82f6',
-            color: '#3b82f6',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={buttonVariants({ variant: "primary" })}>
             💾 Save
           </button>
-          <button style={{
-            background: 'rgba(139, 92, 246, 0.2)',
-            border: '1px solid #8b5cf6',
-            color: '#8b5cf6',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={buttonVariants({ variant: "purple" })}>
             🤖 AI Assist
           </button>
-          <button style={{
-            background: 'rgba(249, 115, 22, 0.2)',
-            border: '1px solid #f97316',
-            color: '#f97316',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={buttonVariants({ variant: "orange" })}>
             📊 Charts
           </button>
-          <button style={{
-            background: 'rgba(212, 175, 55, 0.2)',
-            border: '1px solid #d4af37',
-            color: '#d4af37',
-            padding: '8px 16px',
-            borderRadius: '6px',
-            fontSize: '14px',
-            cursor: 'pointer'
-          }}>
+          <button className={buttonVariants({ variant: "gold" })}>
             🔗 Share
           </button>
         </div>
@@ -317,21 +313,12 @@ const AGISpreadsheetEngine: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.6 }}
-        style={{ marginBottom: '24px' }}
+        className="mb-6"
       >
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#3b82f6',
-          marginBottom: '16px'
-        }}>
+        <h3 className="text-xl font-semibold text-blue-400 mb-4">
           🏗️ Universal Templates
         </h3>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '16px'
-        }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {spreadsheetTemplates.map((template, index) => (
             <motion.div
               key={template.id}
@@ -339,45 +326,20 @@ const AGISpreadsheetEngine: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index, duration: 0.4 }}
               whileHover={{ scale: 1.03 }}
-              style={{
-                background: 'rgba(45, 52, 70, 0.8)',
-                border: '1px solid rgba(59, 130, 246, 0.3)',
-                borderRadius: '12px',
-                padding: '16px',
-                cursor: 'pointer'
-              }}
+              className={cardVariants()}
             >
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: '12px'
-              }}>
-                <span style={{ fontSize: '24px' }}>{template.icon}</span>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">{template.icon}</span>
                 <div>
-                  <h4 style={{
-                    fontSize: '16px',
-                    fontWeight: 600,
-                    color: '#f8fafc',
-                    margin: 0
-                  }}>
+                  <h4 className="text-lg font-semibold text-white m-0">
                     {template.name}
                   </h4>
-                  <div style={{
-                    fontSize: '12px',
-                    color: '#3b82f6',
-                    textTransform: 'uppercase'
-                  }}>
+                  <div className="text-xs text-blue-400 uppercase">
                     {template.category}
                   </div>
                 </div>
               </div>
-              <p style={{
-                fontSize: '14px',
-                color: '#cbd5e1',
-                margin: 0,
-                lineHeight: '1.4'
-              }}>
+              <p className="text-sm text-slate-300 m-0 leading-relaxed">
                 {template.description}
               </p>
             </motion.div>
@@ -390,74 +352,29 @@ const AGISpreadsheetEngine: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.6 }}
-        style={{
-          background: 'rgba(15, 20, 25, 0.9)',
-          border: '1px solid rgba(59, 130, 246, 0.3)',
-          borderRadius: '12px',
-          padding: '16px',
-          marginBottom: '24px'
-        }}
+        className="bg-slate-900/90 border border-blue-500/30 rounded-xl p-4 mb-6"
       >
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#3b82f6',
-          marginBottom: '16px'
-        }}>
+        <h3 className="text-xl font-semibold text-blue-400 mb-4">
           📋 Active Spreadsheet
         </h3>
         
         {/* Formula Bar */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-          marginBottom: '16px',
-          padding: '8px',
-          background: 'rgba(45, 52, 70, 0.8)',
-          borderRadius: '6px'
-        }}>
-          <div style={{
-            fontSize: '14px',
-            color: '#3b82f6',
-            fontWeight: 600,
-            width: '60px'
-          }}>
+        <div className="flex items-center gap-3 mb-4 p-2 bg-slate-700/80 rounded-md">
+          <div className="text-sm text-blue-400 font-semibold w-15">
             A1
           </div>
           <input
             type="text"
             placeholder="Enter formula or value..."
-            style={{
-              flex: 1,
-              background: 'rgba(30, 34, 52, 0.8)',
-              border: '1px solid rgba(59, 130, 246, 0.3)',
-              borderRadius: '4px',
-              padding: '6px 12px',
-              color: '#f8fafc',
-              fontSize: '14px'
-            }}
+            className="flex-1 bg-slate-800/80 border border-blue-500/30 rounded px-3 py-1.5 text-white text-sm"
           />
-          <button style={{
-            background: 'rgba(34, 197, 94, 0.2)',
-            border: '1px solid #22c55e',
-            color: '#22c55e',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            fontSize: '12px',
-            cursor: 'pointer'
-          }}>
+          <button className={buttonVariants({ variant: "success" })}>
             ✓
           </button>
         </div>
 
         {/* Spreadsheet Grid */}
-        <div style={{
-          border: '1px solid rgba(59, 130, 246, 0.3)',
-          borderRadius: '6px',
-          overflow: 'auto',
-          maxHeight: '400px'
-        }}>
+        <div className="border border-blue-500/30 rounded-md overflow-auto max-h-96">
           {generateGrid()}
         </div>
       </motion.div>
@@ -467,79 +384,45 @@ const AGISpreadsheetEngine: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.6 }}
-        style={{
-          background: 'rgba(15, 20, 25, 0.9)',
-          border: '1px solid rgba(139, 92, 246, 0.3)',
-          borderRadius: '12px',
-          padding: '16px'
-        }}
+        className="bg-slate-900/90 border border-purple-500/30 rounded-xl p-4"
       >
-        <h3 style={{
-          fontSize: '18px',
-          fontWeight: 600,
-          color: '#8b5cf6',
-          marginBottom: '16px'
-        }}>
+        <h3 className="text-xl font-semibold text-purple-400 mb-4">
           🤖 AI-Powered Features
         </h3>
         
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '16px'
-        }}>
-          <div style={{
-            background: 'rgba(34, 197, 94, 0.1)',
-            border: '1px solid #22c55e',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#22c55e', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-green-500/10 border border-green-500 rounded-lg p-4">
+            <div className="text-green-400 text-sm font-semibold mb-2">
               🧠 Smart Formulas
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className="text-white text-xs">
               AI suggests and auto-completes complex formulas
             </div>
           </div>
           
-          <div style={{
-            background: 'rgba(59, 130, 246, 0.1)',
-            border: '1px solid #3b82f6',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#3b82f6', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+          <div className="bg-blue-500/10 border border-blue-500 rounded-lg p-4">
+            <div className="text-blue-400 text-sm font-semibold mb-2">
               📊 Data Insights
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className="text-white text-xs">
               Automatic pattern recognition and trend analysis
             </div>
           </div>
           
-          <div style={{
-            background: 'rgba(139, 92, 246, 0.1)',
-            border: '1px solid #8b5cf6',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#8b5cf6', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+          <div className="bg-purple-500/10 border border-purple-500 rounded-lg p-4">
+            <div className="text-purple-400 text-sm font-semibold mb-2">
               🔮 Predictions
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className="text-white text-xs">
               Predictive modeling and future value forecasting
             </div>
           </div>
           
-          <div style={{
-            background: 'rgba(249, 115, 22, 0.1)',
-            border: '1px solid #f97316',
-            borderRadius: '8px',
-            padding: '16px'
-          }}>
-            <div style={{ color: '#f97316', fontSize: '14px', fontWeight: 600, marginBottom: '8px' }}>
+          <div className="bg-orange-500/10 border border-orange-500 rounded-lg p-4">
+            <div className="text-orange-400 text-sm font-semibold mb-2">
               🔍 Smart Search
             </div>
-            <div style={{ color: '#f8fafc', fontSize: '12px' }}>
+            <div className="text-white text-xs">
               Natural language queries across all data
             </div>
           </div>

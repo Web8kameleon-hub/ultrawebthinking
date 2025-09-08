@@ -1,0 +1,266 @@
+/**
+ * EuroWeb Design Tokens - CSS Custom Properties
+ * Colors from v8.0.1-stabil branch with vanilla CSS approach
+ * 
+ * @author Ledjan Ahmati (100% Owner)
+ * @contact dealsjona@gmail.com  
+ * @version 8.0.0 Industrial
+ * @license MIT
+ */
+
+:root {
+  /* EuroWeb Primary Colors */
+  --euroweb-primary: #d4af37;     /* Gold */
+  --euroweb-secondary: #1a2332;   /* Dark Blue */
+  --euroweb-accent: #f59e0b;      /* Amber */
+  --euroweb-background: #0f1419;  /* Deep Dark */
+  --euroweb-surface: #1e293b;     /* Slate */
+  --euroweb-text: #f1f5f9;        /* Light */
+  --euroweb-muted: #64748b;       /* Gray */
+
+  /* Gradient Stops */
+  --gradient-start: #0f1419;
+  --gradient-middle: #1a2332;
+  --gradient-end: #0f1419;
+
+  /* Status Colors */
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444; 
+  --status-info: #3b82f6;
+
+  /* Mesh Network Colors */
+  --mesh-primary: #f59e0b;
+  --mesh-secondary: #d97706;
+  --mesh-accent: #92400e;
+  --mesh-node: #1d4ed8;
+  --mesh-connection: #059669;
+
+  /* AGI Colors */
+  --agi-primary: #6366f1;
+  --agi-secondary: #8b5cf6;
+  --agi-accent: #06b6d4;
+  --agi-neural: #10b981;
+  --agi-quantum: #f59e0b;
+
+  /* Solana Colors */
+  --solana-primary: #9945ff;
+  --solana-secondary: #14f195;
+  --solana-accent: #7c3aed;
+
+  /* Industrial Colors */
+  --industrial-primary: #059669;
+  --industrial-secondary: #0d9488;
+  --industrial-accent: #0f766e;
+  --industrial-warning: #dc2626;
+
+  /* EuroWeb Gradients */
+  --gradient-euroweb-primary: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-middle) 50%, var(--gradient-end) 100%);
+  --gradient-euroweb-gold: linear-gradient(135deg, #f59e0b, #d97706, #92400e);
+  --gradient-mesh: linear-gradient(135deg, var(--mesh-primary) 0%, var(--mesh-secondary) 50%, var(--mesh-accent) 100%);
+  --gradient-agi: linear-gradient(135deg, var(--agi-primary), var(--agi-secondary), var(--agi-accent));
+  --gradient-solana: linear-gradient(135deg, var(--solana-primary), var(--solana-secondary));
+  --gradient-industrial: linear-gradient(135deg, var(--industrial-primary), var(--industrial-secondary), var(--industrial-accent));
+
+  /* Shadows with EuroWeb Theme */
+  --shadow-euroweb-sm: 0 1px 2px 0 rgba(245, 158, 11, 0.05);
+  --shadow-euroweb-md: 0 4px 6px -1px rgba(245, 158, 11, 0.1);
+  --shadow-euroweb-lg: 0 10px 15px -3px rgba(245, 158, 11, 0.1);
+  --shadow-euroweb-xl: 0 20px 25px -5px rgba(245, 158, 11, 0.1);
+  --shadow-euroweb-glow: 0 0 30px rgba(245, 158, 11, 0.3);
+
+  /* Spacing Scale */
+  --spacing-xs: 0.5rem;    /* 8px */
+  --spacing-sm: 1rem;      /* 16px */
+  --spacing-md: 1.5rem;    /* 24px */
+  --spacing-lg: 2rem;      /* 32px */
+  --spacing-xl: 3rem;      /* 48px */
+  --spacing-2xl: 4rem;     /* 64px */
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;   /* 6px */  
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+
+  /* Font Sizes */
+  --font-xs: 0.75rem;      /* 12px */
+  --font-sm: 0.875rem;     /* 14px */
+  --font-md: 1rem;         /* 16px */
+  --font-lg: 1.125rem;     /* 18px */
+  --font-xl: 1.25rem;      /* 20px */
+  --font-2xl: 1.5rem;      /* 24px */
+  --font-3xl: 1.875rem;    /* 30px */
+  --font-4xl: 2.25rem;     /* 36px */
+  --font-5xl: 3rem;        /* 48px */
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal: 1040;
+  --z-popover: 1050;
+  --z-tooltip: 1060;
+  --z-toast: 1070;
+
+  /* Opacity Scale */
+  --opacity-disabled: 0.6;
+  --opacity-loading: 0.8;
+  --opacity-overlay: 0.9;
+
+  /* Transition Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  /* Transition Easings */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Backdrop Filters */
+  --backdrop-blur-sm: blur(4px);
+  --backdrop-blur-md: blur(8px);
+  --backdrop-blur-lg: blur(16px);
+  --backdrop-blur-xl: blur(24px);
+}
+
+/* Global Styles with EuroWeb Theme */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: var(--gradient-euroweb-primary);
+  color: var(--euroweb-text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* Scrollbar Styling with EuroWeb Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--euroweb-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--euroweb-primary);
+  border-radius: var(--radius-md);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--euroweb-accent);
+}
+
+/* Selection Styling */
+::selection {
+  background: var(--euroweb-primary);
+  color: var(--euroweb-background);
+}
+
+::-moz-selection {
+  background: var(--euroweb-primary);
+  color: var(--euroweb-background);
+}
+
+/* Focus Outline with EuroWeb Theme */
+:focus-visible {
+  outline: 2px solid var(--euroweb-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Utility Classes for EuroWeb Components */
+.euroweb-container {
+  background: var(--gradient-euroweb-primary);
+  color: var(--euroweb-text);
+}
+
+.euroweb-surface {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: var(--backdrop-blur-md);
+  backdrop-filter: var(--backdrop-blur-md);
+}
+
+.euroweb-button {
+  background: var(--gradient-euroweb-gold);
+  color: var(--euroweb-background);
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.euroweb-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-euroweb-lg);
+}
+
+.euroweb-text-primary {
+  color: var(--euroweb-primary);
+}
+
+.euroweb-text-accent {
+  color: var(--euroweb-accent);
+}
+
+.euroweb-text-muted {
+  color: var(--euroweb-muted);
+}
+
+.euroweb-gradient-text {
+  background: var(--gradient-euroweb-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation Classes */
+@keyframes euroweb-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes euroweb-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes euroweb-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.euroweb-pulse {
+  animation: euroweb-pulse 2s infinite;
+}
+
+.euroweb-spin {
+  animation: euroweb-spin 1s linear infinite;
+}
+
+.euroweb-fade-in {
+  animation: euroweb-fade-in var(--duration-slow) var(--ease-out);
+}

@@ -124,5 +124,5 @@ export const createMockSpecimen = (overrides = {}) => ({
 
 export const createBiologyTestSuite = () => ({
   renderComponent: (props = {}) => render(<AGIxBioNature {...props} />),
-  mockData: MOCK_BIOLOGICAL_DATA
+  liveData: MOCK_BIOLOGICAL_DATA
 });

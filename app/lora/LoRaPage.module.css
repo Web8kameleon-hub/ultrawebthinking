@@ -1,0 +1,94 @@
+/* LoRaPage.module.css */
+.loraPage {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 800px;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #34d399, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #a7f3d0;
+  margin-bottom: 3rem;
+}
+
+.comingSoon {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 3rem;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.comingSoon h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #34d399;
+}
+
+.comingSoon p {
+  color: #a7f3d0;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.features {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.features h3 {
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+
+.features ul {
+  list-style: none;
+  padding: 0;
+}
+
+.features li {
+  padding: 0.5rem 0;
+  color: #d1fae5;
+}
+
+.backButton {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.backButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+}

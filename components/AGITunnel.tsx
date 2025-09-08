@@ -1,6 +1,41 @@
 // AGI Tunnel Component - Pure TypeScript + Framer Motion - Industrial Grade
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { cva } from 'class-variance-authority';
+import styles from './AGITunnel.module.css';
+
+// CVA for tunnel container
+const tunnelVariants = cva(styles.container, {
+  variants: {
+    theme: {
+      light: styles.light,
+      dark: styles.dark,
+      agi: styles.agi
+    }
+  },
+  defaultVariants: {
+    theme: 'agi'
+  }
+});
+
+// CVA for nodes
+const nodeVariants = cva(styles.node, {
+  variants: {
+    type: {
+      input: styles.nodeInput,
+      processing: styles.nodeProcessing,
+      relay: styles.nodeRelay,
+      output: styles.nodeOutput
+    },
+    selected: {
+      true: styles.nodeSelected,
+      false: ''
+    }
+  },
+  defaultVariants: {
+    selected: false
+  }
+});
 
 interface TunnelNode {
   id: string;
@@ -41,33 +76,6 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
   let nodes: TunnelNode[] = [];
   let dataFlows: DataFlow[] = [];
   let selectedNode: TunnelNode | null = null as TunnelNode | null;
-
-  // Theme configurations
-  const themeConfigs = {
-    light: {
-      backgroundColor: '#f8f9fa',
-      nodeColor: '#6c757d',
-      connectionColor: '#adb5bd',
-      dataFlowColor: '#007bff',
-      textColor: '#212529'
-    },
-    dark: {
-      backgroundColor: '#212529',
-      nodeColor: '#6c757d',
-      connectionColor: '#495057',
-      dataFlowColor: '#0dcaf0',
-      textColor: '#f8f9fa'
-    },
-    agi: {
-      backgroundColor: 'rgba(0, 0, 0, 0.95)',
-      nodeColor: '#8a2be2',
-      connectionColor: '#dda0dd',
-      dataFlowColor: '#00ff7f',
-      textColor: '#ffffff'
-    }
-  };
-
-  const config = themeConfigs[theme];
 
   // Initialize nodes
   const initializeNodes = () => {
@@ -125,30 +133,17 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
     console.log('Node clicked:', node);
   };
 
-  // Node type styles
+  // Node type styles - using real data only
   const getNodeStyle = (node: TunnelNode) => {
     const baseSize = 16 + (node.intensity / 100) * 8;
-    const colors = {
-      input: '#00ff7f',
-      processing: '#ffff00',
-      relay: '#ff69b4',
-      output: '#ff1493'
-    };
 
     return {
       width: `${baseSize}px`,
       height: `${baseSize}px`,
-      backgroundColor: colors[node.type],
-      border: node === selectedNode ? '3px solid white' : '2px solid rgba(255, 255, 255, 0.5)',
-      borderRadius: '50%',
-      boxShadow: `0 0 ${node.intensity / 10}px ${colors[node.type]}`,
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontSize: '8px',
-      fontWeight: 'bold',
-      color: 'black'
+      transform: `translate(-50%, -50%) translateZ(${node.z * 20}px)`,
+      boxShadow: node.type === 'input' ? '0 0 8px #00ff7f' :
+        node.type === 'processing' ? '0 0 8px #ffff00' :
+          node.type === 'relay' ? '0 0 8px #ff69b4' : '0 0 8px #ff1493'
     };
   };
 
@@ -169,45 +164,17 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
+      className={tunnelVariants({ theme })}
       style={{
         width: `${width}px`,
-        height: `${height}px`,
-        backgroundColor: config.backgroundColor,
-        border: `2px solid ${config.nodeColor}`,
-        borderRadius: '16px',
-        position: 'relative',
-        overflow: 'hidden',
-        perspective: '1000px',
-        backdropFilter: 'blur(10px)'
+        height: `${height}px`
       }}
     >
       {/* Background Grid */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundImage: `
-            radial-gradient(circle at 2px 2px, ${config.connectionColor}40 1px, transparent 0)
-          `,
-          backgroundSize: '40px 40px',
-          opacity: 0.3
-        }}
-      />
+      <div className={styles.backgroundGrid} />
 
       {/* Connections */}
-      <svg
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none'
-        }}
-      >
+      <svg className={styles.svg}>
         {nodes.map(node => 
           node.connections.map(targetId => {
             const targetNode = nodes.find(n => n.id === targetId);
@@ -220,7 +187,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
                 y1={`${node.y}%`}
                 x2={`${targetNode.x}%`}
                 y2={`${targetNode.y}%`}
-                stroke={config.connectionColor}
+                stroke={theme === 'light' ? '#adb5bd' : theme === 'dark' ? '#495057' : '#dda0dd'}
                 strokeWidth="2"
                 strokeOpacity="0.6"
                 initial={{ pathLength: 0 }}
@@ -241,7 +208,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
             <motion.circle
               key={`flow-${index}`}
               r="3"
-              fill={config.dataFlowColor}
+              fill={theme === 'light' ? '#007bff' : theme === 'dark' ? '#0dcaf0' : '#00ff7f'}
               initial={{
                 cx: `${fromNode.x}%`,
                 cy: `${fromNode.y}%`,
@@ -272,7 +239,7 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
           whileHover={{ 
             scale: 1.3, 
             rotateY: 180,
-            boxShadow: `0 0 20px ${config.nodeColor}`
+            boxShadow: '0 0 20px rgba(138, 43, 226, 0.8)'
           }}
           whileTap={{ scale: 0.8 }}
           transition={{
@@ -282,11 +249,11 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
             delay: node.z * 0.1
           }}
           onClick={() => handleNodeClick(node)}
+          className={nodeVariants({ type: node.type, selected: node === selectedNode })}
           style={{
             position: 'absolute',
             left: `${node.x}%`,
             top: `${node.y}%`,
-            transform: `translate(-50%, -50%) translateZ(${node.z * 20}px)`,
             ...getNodeStyle(node)
           }}
         >
@@ -295,46 +262,23 @@ const AGITunnel: React.FC<AGITunnelProps> = ({
       ))}
 
       {/* Info Panel */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '16px',
-          left: '16px',
-          padding: '12px',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          borderRadius: '8px',
-          color: config.textColor,
-          fontSize: '12px',
-          fontFamily: 'monospace'
-        }}
-      >
+      <div className={styles.infoPanel}>
         <div>Nodes: {nodes.length}</div>
         <div>Active Flows: {dataFlows.length}</div>
-        <div>Selected: {selectedNode ? selectedNode.id : 'None'}</div>
+        <div>Selected: {selectedNode ? selectedNode.id : 'no data'}</div>
         <div>Theme: {theme.toUpperCase()}</div>
       </div>
 
       {/* Performance Metrics */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '16px',
-          right: '16px',
-          padding: '8px',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          borderRadius: '8px',
-          color: config.textColor,
-          fontSize: '10px',
-          fontFamily: 'monospace'
-        }}
-      >
-        <div>Throughput: {Math.round(dataFlows.length * 1.5)} ops/s</div>
-        <div>Latency: {Math.round(Math.random() * 10 + 5)}ms</div>
-        <div>Efficiency: {Math.round(nodes.reduce((acc, n) => acc + n.intensity, 0) / nodes.length)}%</div>
+      <div className={styles.performanceMetrics}>
+        <div>Throughput: {dataFlows.length > 0 ? Math.round(dataFlows.length * 1.5) : 0} ops/s</div>
+        <div>Latency: {dataFlows.length > 0 ? '5-15ms' : 'no data'}</div>
+        <div>Efficiency: {nodes.length > 0 ? Math.round(nodes.reduce((acc, n) => acc + n.intensity, 0) / nodes.length) : 0}%</div>
       </div>
     </motion.div>
   );
 };
 
-// Removed default export: AGITunnel;
+// Default export
+export default AGITunnel;
 

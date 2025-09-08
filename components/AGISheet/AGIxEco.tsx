@@ -249,6 +249,8 @@ export const AGIxEco = ({
               className={styles.timeframeSelect}
               value={selectedTimeframe}
               onChange={(e) => setSelectedTimeframe(e.target.value as any)}
+              title="Select timeframe for analysis"
+              aria-label="Select timeframe for analysis"
             >
               <option value="1h">1 Hour</option>
               <option value="24h">24 Hours</option>

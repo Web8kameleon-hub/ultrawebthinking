@@ -1,0 +1,263 @@
+/* AviationDashboard.module.css - UltraWebThinking Aviation Intelligence */
+
+.container {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 2rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #212529;
+}
+
+.header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.formatToggle {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.formatToggle button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  color: #374151;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+}
+
+.active {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border-color: #3b82f6 !important;
+}
+
+.inactive:hover {
+  background-color: #f3f4f6;
+}
+
+.systemStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.statLabel {
+  display: block;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.tableContainer {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.flightTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.flightTable th {
+  background-color: #f9fafb;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+}
+
+.flightTable td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.875rem;
+  color: #1f2937;
+}
+
+.flightRow:hover {
+  background-color: #f9fafb;
+}
+
+.callsign {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.riskIndicator,
+.networkHealth {
+  text-align: center;
+}
+
+.lowRisk {
+  color: #059669;
+  background-color: #d1fae5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mediumRisk {
+  color: #d97706;
+  background-color: #fef3c7;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.highRisk {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.excellent {
+  color: #059669;
+  background-color: #d1fae5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.good {
+  color: #2563eb;
+  background-color: #dbeafe;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.degraded {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.encrypted {
+  color: #059669;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.inactive {
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+.active {
+  color: #059669;
+  background-color: #d1fae5;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.landed {
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.emergency {
+  color: #dc2626;
+  background-color: #fee2e2;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.noData {
+  padding: 3rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.noData p {
+  margin: 0.5rem 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .systemStats {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .flightTable {
+    font-size: 0.75rem;
+  }
+  
+  .flightTable th,
+  .flightTable td {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .systemStats {
+    grid-template-columns: 1fr;
+  }
+}

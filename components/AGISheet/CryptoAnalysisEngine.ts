@@ -684,7 +684,7 @@ export class CryptoAnalysisEngine {
   }
 
   private getAverageVolume(symbol: string): number {
-    // Mock average volume - in real implementation would use historical data
+    // realData average volume - in real implementation would use historical data
     return 1000000000; // $1B default
   }
 

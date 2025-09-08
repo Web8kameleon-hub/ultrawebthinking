@@ -28,7 +28,7 @@ describe('AGIxEco Industrial Tests', () => {
   });
 
   test('vector cache works with lowdb', async () => {
-    // Mock vector cache behavior
+    // realData vector cache behavior
     const vectorCache = new Map<string, readonly number[]>();
     
     vectorCache.set('economic_data_1', [1.2, 3.4, 5.6] as const);

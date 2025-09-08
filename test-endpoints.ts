@@ -10,25 +10,48 @@ const endpoints = [
   '/api/agi/core',
   '/api/agi/memory',
   '/api/agi/quantum',
+  '/api/agi/state',
   '/api/ai/quantization',
   '/api/edge/redistribute',
   '/api/energy/optimize',
   '/api/energy/renewable',
+  '/api/data/optimized',
+  '/api/global/health',
+  '/api/global/cities',
+  '/api/global/quantum',
   '/api/health',
   '/api/metrics',
   '/api/status'
 ];
 
-async function testEndpoint(endpoint) {
+async function testEndpoint(endpoint: string) {
   try {
     const response = await fetch(`http://localhost:3001${endpoint}`);
+
+    if (!response.ok) {
+      let errorData = 'No data available';
+      try {
+        const errorJson = await response.json();
+        errorData = errorJson.error || JSON.stringify(errorJson);
+      } catch (e) {
+        // Response body is not JSON or empty
+        errorData = await response.text();
+      }
+      return {
+        endpoint,
+        status: response.status,
+        success: false,
+        data: errorData,
+        hasRealData: false
+      };
+    }
+
     const data = await response.json();
-    
     return {
       endpoint,
       status: response.status,
-      success: response.ok,
-      data: response.ok ? 'OK' : data.error || 'Unknown error',
+      success: true,
+      data: 'OK',
       hasRealData: data.success !== false && !data.error
     };
   } catch (error) {
