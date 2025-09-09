@@ -1,38 +1,20 @@
-﻿/**
- * UTT Info API - App Router
- * EuroWeb Platform - Solana ALB Integration
- * 
- * @author Ledjan Ahmati (100% Owner)
- * @contact dealsjona@gmail.com
- * @version 8.1.0 Ultra
- * @license MIT
- */
+import { NextResponse } from "next/server";
 
-import { NextRequest, NextResponse } from 'next/server'
-import { uttInfo } from '../../../../backend/utt/bridge'
+export async function GET() {
+  const cluster   = process.env.NEXT_PUBLIC_CLUSTER ?? "devnet";
+  const enabled   = (process.env.UTT_BRIDGE_ENABLED ?? "false") === "true";
+  const mint      = process.env.NEXT_PUBLIC_UTT_MINT ?? process.env.UTT_MINT ?? null;
+  const authority = process.env.NEXT_PUBLIC_UTT_AUTHORITY ?? process.env.UTT_AUTHORITY ?? null;
 
-export async function GET(request: NextRequest) {
-  try {
-    console.log('📊 UTT Info API called')
-    
-    const info = await uttInfo()
-    
-    console.log('✅ UTT Info response:', {
-      network: info.network,
-      status: info.status,
-      transfersEnabled: info.transfersEnabled
-    })
-    
-    return NextResponse.json(info)
-  } catch (error: any) {
-    console.error('❌ UTT Info API error:', error)
-    
-    return NextResponse.json(
-      { 
-        error: 'Failed to get UTT info',
-        details: error.message 
-      },
-      { status: 500 }
-    )
-  }
+  // ✅ gjithmonë kthe numër
+  const bridgeBalanceALB = Number(process.env.UTT_BRIDGE_BALANCE_ALB ?? "0");
+
+  return NextResponse.json({
+    network: cluster,
+    status: enabled ? "ready" : "bridge_not_configured",
+    transfersEnabled: enabled,
+    mint,
+    authority,
+    bridgeBalanceALB,
+  });
 }
