@@ -1,0 +1,57 @@
+{
+  "extends": "./base.json",
+  "name": "@ultrawebthinking/monorepo",
+  "version": "8.0.0-industrial",
+  "private": true,
+  "packageManager": "yarn@4.10.3",
+  "workspaces": [
+    "app/*",
+    "components",
+    "lib",
+    "asi-saas-frontend",
+    "ultracom"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "ultra": "concurrently --names \"Frontend,Backend\" --prefix-colors \"green,blue\" \"next dev --port 3000\" \"cd ultracom && python -m uvicorn app.main:app --reload --port 8080\"",
+    "ultra:dev": "node ultra-saas-launcher.js",
+    "ultra:main": "next dev",
+    "ultra:frontend": "cd asi-saas-frontend && yarn dev -p 3111",
+    "ultra:platform": "concurrently \"npm run ultra:main\" \"npm run ultra:frontend\"",
+    "monorepo:info": "echo '🏗️ UltraWebThinking Monorepo (base.json integration)' && echo 'Modules: 50+ integrated via Next.js routing' && yarn workspaces list",
+    "base:info": "echo 'Base config loaded from base.json'",
+    "modules:list": "echo 'All 50+ modules available via Next.js dynamic routing'"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=4.0.0"
+  },
+  "monorepo": {
+    "type": "base-json-extended",
+    "architecture": "unified-single-app-with-workspaces",
+    "base_config": "./base.json",
+    "modules": "50+ via Next.js routing",
+    "backend": "ultracom workspace"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-query-devtools": "^5.90.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.546.0",
+    "next": "^15.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.3.1"
+  }
+}
