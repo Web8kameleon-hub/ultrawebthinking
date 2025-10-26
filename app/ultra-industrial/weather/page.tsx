@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { GLOBAL_CITIES, getCitiesByContinent, searchCities, getContinents, type GlobalCity } from '@/lib/global-cities-database';
 
 interface WeatherData {
   location: string;
@@ -13,6 +14,9 @@ interface WeatherData {
   country: string;
   lat: number;
   lon: number;
+  timezone: string;
+  population: number;
+  elevation: number;
 }
 
 interface GlobalWeatherData {

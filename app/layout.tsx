@@ -20,7 +20,20 @@ function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
-        <title>Web8 Platform - Real Data Architecture</title>
+        <title>UltraWebThinking NeuroSonix - Neural Enhanced AGI Platform</title>
+
+        {/* NeuroSonix Favicon System */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        {/* NeuroSonix Meta Tags */}
+        <meta name="description" content="Neural frequency enhanced cognitive processing with ASI and NeuroSonix integration" />
+        <meta name="theme-color" content="#6366f1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         {/* Web8 Critical CSS - NO metadata, ONLY performance */}
         <style>{`
           * { box-sizing: border-box; margin: 0; padding: 0; }
