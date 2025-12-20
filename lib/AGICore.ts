@@ -25,6 +25,8 @@ class AGICore {
   private memory: AGIMemoryStore;
   private listeners: Set<() => void> = new Set();
   private storageKey = 'web8-agi-memory';
+  private timeUpdateInterval: NodeJS.Timeout | null = null;
+  private statusUpdateInterval: NodeJS.Timeout | null = null;
 
   constructor() {
     this.memory = this.loadMemory();
@@ -121,16 +123,31 @@ class AGICore {
   private startTimeUpdate(): void {
     if (typeof window === 'undefined') {return;}
 
-    setInterval(() => {
+    // Clear existing intervals if any
+    this.stopTimeUpdate();
+
+    this.timeUpdateInterval = setInterval(() => {
       this.updateMemory('user.currentTime', new Date().toISOString());
     }, 1000);
 
     // AGI status simulation
-    setInterval(() => {
+    this.statusUpdateInterval = setInterval(() => {
       const currentStatus = this.memory.agi.status;
       const newStatus = currentStatus === 'ACTIVE' ? 'PROCESSING' : 'ACTIVE';
       this.updateMemory('agi.status', newStatus);
     }, 3000);
+  }
+
+  // Stop automatic time updates (cleanup method)
+  public stopTimeUpdate(): void {
+    if (this.timeUpdateInterval) {
+      clearInterval(this.timeUpdateInterval);
+      this.timeUpdateInterval = null;
+    }
+    if (this.statusUpdateInterval) {
+      clearInterval(this.statusUpdateInterval);
+      this.statusUpdateInterval = null;
+    }
   }
 
   // Utility methods for common operations

@@ -86,13 +86,19 @@ export class BiologyEngine {
   public async analyzeSpecimens(specimens: SpecimenData[]): Promise<BiologyAnalysisResult> {
     await this.simulateAnalysisDelay();
 
-    const healthScores = specimens.map(s => this.calculateHealthScore(s));
-    const overallHealthScore = healthScores.reduce((a, b) => a + b, 0) / healthScores.length;
+    // Optimize: Combine multiple map/reduce operations into a single pass
+    const { healthScoresSum, geneticDiversitySum, populations } = specimens.reduce(
+      (acc, specimen) => {
+        acc.healthScoresSum += this.calculateHealthScore(specimen);
+        acc.geneticDiversitySum += specimen.properties.geneticDiversity;
+        acc.populations.push(specimen.properties.population);
+        return acc;
+      },
+      { healthScoresSum: 0, geneticDiversitySum: 0, populations: [] as number[] }
+    );
 
-    const geneticDiversities = specimens.map(s => s.properties.geneticDiversity);
-    const avgGeneticDiversity = geneticDiversities.reduce((a, b) => a + b, 0) / geneticDiversities.length;
-
-    const populations = specimens.map(s => s.properties.population);
+    const overallHealthScore = healthScoresSum / specimens.length;
+    const avgGeneticDiversity = geneticDiversitySum / specimens.length;
     const populationTrend = this.analyzePopulationTrend(populations);
 
     const evolutionaryPressures = this.identifyEvolutionaryPressures(specimens);
@@ -175,15 +181,26 @@ export class BiologyEngine {
   private identifyEvolutionaryPressures(specimens: SpecimenData[]): string[] {
     const pressures: string[] = [];
     
-    const avgPollution = specimens.reduce((acc, s) => acc + s.environmentalFactors.pollution, 0) / specimens.length;
-    const avgTemp = specimens.reduce((acc, s) => acc + s.environmentalFactors.temperature, 0) / specimens.length;
-    const avgPH = specimens.reduce((acc, s) => acc + s.environmentalFactors.ph, 0) / specimens.length;
+    // Optimize: Combine multiple reduce operations into a single pass
+    const { pollutionSum, tempSum, phSum, endangeredCount } = specimens.reduce(
+      (acc, s) => {
+        acc.pollutionSum += s.environmentalFactors.pollution;
+        acc.tempSum += s.environmentalFactors.temperature;
+        acc.phSum += s.environmentalFactors.ph;
+        if (s.properties.healthStatus === 'endangered') acc.endangeredCount++;
+        return acc;
+      },
+      { pollutionSum: 0, tempSum: 0, phSum: 0, endangeredCount: 0 }
+    );
+    
+    const avgPollution = pollutionSum / specimens.length;
+    const avgTemp = tempSum / specimens.length;
+    const avgPH = phSum / specimens.length;
 
     if (avgPollution > 0.3) pressures.push('pollution_stress');
     if (avgTemp > 30 || avgTemp < 5) pressures.push('temperature_extremes');
     if (avgPH < 6 || avgPH > 8) pressures.push('ph_imbalance');
     
-    const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered').length;
     if (endangeredCount / specimens.length > 0.3) pressures.push('habitat_loss');
 
     pressures.push('resource_competition', 'climate_change', 'genetic_bottleneck');
@@ -223,8 +240,18 @@ export class BiologyEngine {
   }
 
   private calculateAdaptationPotential(specimens: SpecimenData[]): number {
-    const avgGeneticDiversity = specimens.reduce((acc, s) => acc + s.properties.geneticDiversity, 0) / specimens.length;
-    const avgMetabolicRate = specimens.reduce((acc, s) => acc + (s.properties.metabolicRate || 1), 0) / specimens.length;
+    // Optimize: Combine multiple reduce operations into a single pass
+    const { geneticDiversitySum, metabolicRateSum } = specimens.reduce(
+      (acc, s) => {
+        acc.geneticDiversitySum += s.properties.geneticDiversity;
+        acc.metabolicRateSum += s.properties.metabolicRate || 1;
+        return acc;
+      },
+      { geneticDiversitySum: 0, metabolicRateSum: 0 }
+    );
+    
+    const avgGeneticDiversity = geneticDiversitySum / specimens.length;
+    const avgMetabolicRate = metabolicRateSum / specimens.length;
     const environmentalVariability = this.calculateEnvironmentalVariability(specimens);
     
     return (avgGeneticDiversity * 0.5 + avgMetabolicRate * 0.3 + environmentalVariability * 0.2);

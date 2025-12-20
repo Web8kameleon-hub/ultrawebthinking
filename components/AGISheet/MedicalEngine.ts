@@ -205,51 +205,48 @@ export class MedicalEngine {
   }
 
   private generateLeadCandidates(specimens: SpecimenData[]): CompoundProfile[] {
-    const candidates: CompoundProfile[] = [];
-    
-    specimens.forEach((specimen, index) => {
-      if (specimen.medicalRelevance && specimen.medicalRelevance.therapeuticPotential > 0.7) {
-        specimen.medicalRelevance.drugCompounds.forEach((compound, compoundIndex) => {
-          const medicalData = specimen.medicalRelevance!; // Non-null assertion since we checked above
-          candidates.push({
-            name: compound,
-            source: specimen.species,
-            molecularFormula: this.generateMolecularFormula(compound),
-            molecularWeight: 200 + Math.random() * 800,
-            structure: {
-              rings: Math.floor(Math.random() * 5) + 1,
-              functionalGroups: this.generateFunctionalGroups(),
-              chirality: Math.random() > 0.5,
-              stereochemistry: Math.random() > 0.5 ? 'R' : 'S'
-            },
-            properties: {
-              solubility: Math.random(),
-              bioavailability: medicalData.therapeuticPotential,
-              halfLife: 2 + Math.random() * 20,
-              toxicity: medicalData.toxicity,
-              stability: 0.6 + Math.random() * 0.4
-            },
-            pharmacology: {
-              mechanism: this.generateMechanism(compound),
-              targets: this.generateTargets(compound),
-              metabolism: ['CYP450', 'phase_I', 'phase_II'],
-              interactions: this.generateInteractions()
-            },
-            clinicalData: {
-              phase: this.assignClinicalPhase(medicalData.therapeuticPotential),
-              efficacy: medicalData.therapeuticPotential,
-              sideEffects: this.generateSideEffects(medicalData.toxicity),
-              contraindications: this.generateContraindications(),
-              dosage: {
-                min: 10 + Math.random() * 90,
-                max: 100 + Math.random() * 400,
-                unit: 'mg'
-              }
+    // Optimize nested loops with flatMap for better performance
+    const candidates = specimens
+      .filter(specimen => specimen.medicalRelevance && specimen.medicalRelevance.therapeuticPotential > 0.7)
+      .flatMap(specimen => {
+        const medicalData = specimen.medicalRelevance!;
+        return medicalData.drugCompounds.map(compound => ({
+          name: compound,
+          source: specimen.species,
+          molecularFormula: this.generateMolecularFormula(compound),
+          molecularWeight: 200 + Math.random() * 800,
+          structure: {
+            rings: Math.floor(Math.random() * 5) + 1,
+            functionalGroups: this.generateFunctionalGroups(),
+            chirality: Math.random() > 0.5,
+            stereochemistry: Math.random() > 0.5 ? 'R' : 'S'
+          },
+          properties: {
+            solubility: Math.random(),
+            bioavailability: medicalData.therapeuticPotential,
+            halfLife: 2 + Math.random() * 20,
+            toxicity: medicalData.toxicity,
+            stability: 0.6 + Math.random() * 0.4
+          },
+          pharmacology: {
+            mechanism: this.generateMechanism(compound),
+            targets: this.generateTargets(compound),
+            metabolism: ['CYP450', 'phase_I', 'phase_II'],
+            interactions: this.generateInteractions()
+          },
+          clinicalData: {
+            phase: this.assignClinicalPhase(medicalData.therapeuticPotential),
+            efficacy: medicalData.therapeuticPotential,
+            sideEffects: this.generateSideEffects(medicalData.toxicity),
+            contraindications: this.generateContraindications(),
+            dosage: {
+              min: 10 + Math.random() * 90,
+              max: 100 + Math.random() * 400,
+              unit: 'mg'
             }
-          });
-        });
-      }
-    });
+          }
+        }));
+      });
 
     return candidates.slice(0, 5); // Return top 5 candidates
   }

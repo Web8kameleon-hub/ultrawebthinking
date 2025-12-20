@@ -277,9 +277,18 @@ export class EcologyEngine {
     const habitatGroups = this.groupSpecimensByHabitat(specimens);
     
     return Object.entries(habitatGroups).map(([habitat, habitatSpecimens]) => {
-      const quality = habitatSpecimens.reduce((sum, s) => sum + s.environmentalFactors.biodiversityIndex, 0) / habitatSpecimens.length;
+      // Optimize: Combine multiple reduce operations into a single pass
+      const { biodiversitySum, pollutionSum } = habitatSpecimens.reduce(
+        (acc, s) => ({
+          biodiversitySum: acc.biodiversitySum + s.environmentalFactors.biodiversityIndex,
+          pollutionSum: acc.pollutionSum + s.environmentalFactors.pollution
+        }),
+        { biodiversitySum: 0, pollutionSum: 0 }
+      );
+      
+      const quality = biodiversitySum / habitatSpecimens.length;
+      const humanImpact = pollutionSum / habitatSpecimens.length;
       const fragmentation = 1 - quality; // Simplified relationship
-      const humanImpact = habitatSpecimens.reduce((sum, s) => sum + s.environmentalFactors.pollution, 0) / habitatSpecimens.length;
       
       return {
         habitatType: habitat,
@@ -359,11 +368,21 @@ export class EcologyEngine {
   }
 
   private assessClimateVulnerability(specimens: SpecimenData[], ecosystemMetrics: EcosystemMetrics) {
-    const avgTemperature = specimens.reduce((sum, s) => sum + s.environmentalFactors.temperature, 0) / specimens.length;
+    // Optimize: Combine multiple reduce operations into a single pass
+    const { tempSum, geneticDiversitySum } = specimens.reduce(
+      (acc, s) => {
+        acc.tempSum += s.environmentalFactors.temperature;
+        acc.geneticDiversitySum += s.properties.geneticDiversity;
+        return acc;
+      },
+      { tempSum: 0, geneticDiversitySum: 0 }
+    );
+    
+    const avgTemperature = tempSum / specimens.length;
     const temperatureVariability = this.calculateTemperatureVariability(specimens);
     
     const exposureLevel = Math.min(1, temperatureVariability / 10); // Normalized
-    const sensitivity = 1 - (specimens.reduce((sum, s) => sum + s.properties.geneticDiversity, 0) / specimens.length);
+    const sensitivity = 1 - (geneticDiversitySum / specimens.length);
     const adaptiveCapacity = ecosystemMetrics.biodiversityIndex;
     
     const vulnerabilityIndex = (exposureLevel + sensitivity - adaptiveCapacity) / 2;
@@ -399,8 +418,18 @@ export class EcologyEngine {
   }
 
   private assessGeneticHealth(specimens: SpecimenData[]) {
-    const avgGeneticDiversity = specimens.reduce((sum, s) => sum + s.properties.geneticDiversity, 0) / specimens.length;
-    const totalPopulation = specimens.reduce((sum, s) => sum + s.properties.population, 0);
+    // Optimize: Combine multiple reduce operations into a single pass
+    const { geneticDiversitySum, populationSum } = specimens.reduce(
+      (acc, s) => {
+        acc.geneticDiversitySum += s.properties.geneticDiversity;
+        acc.populationSum += s.properties.population;
+        return acc;
+      },
+      { geneticDiversitySum: 0, populationSum: 0 }
+    );
+    
+    const avgGeneticDiversity = geneticDiversitySum / specimens.length;
+    const totalPopulation = populationSum;
     
     return {
       geneticDiversity: avgGeneticDiversity,
