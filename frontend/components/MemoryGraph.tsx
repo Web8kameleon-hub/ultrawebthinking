@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import { css } from "@styled-system/css"
 import * as d3 from "d3"
 
-interface Node {
+interface Node extends d3.SimulationNodeDatum {
   id: string
   label: string
 }

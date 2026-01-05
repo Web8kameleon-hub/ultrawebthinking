@@ -1,6 +1,6 @@
 "use client"
 
-import { css } from "../styled-system/css"
+import { css } from "@styled-system/css"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 
@@ -136,7 +136,7 @@ export default function Hero() {
               gradientFrom: "blue.400",
               gradientTo: "purple.500",
               bgClip: "text",
-              textTransparent: true,
+              color: "transparent",
               mb: "6",
             })}
           >
