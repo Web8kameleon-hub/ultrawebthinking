@@ -1,5 +1,7 @@
 // pages/api/agi/suggest.ts
-export default async function handler(req: any, res: any) {
+import type { NextApiRequest, NextApiResponse } from "next"
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { query } = req.body
   const base = query.toLowerCase()
 

@@ -20,6 +20,11 @@ type ServiceStatus = {
   api: boolean
 }
 
+type LogEntry = {
+  message: string
+  timestamp: string
+}
+
 export default function Maintenance() {
   const [systemStatus, setSystemStatus] = useState<SystemStatus>({
     status: "healthy",
@@ -36,11 +41,11 @@ export default function Maintenance() {
     api: true,
   })
 
-  const [logs, setLogs] = useState<string[]>([
-    "Sistema u startua me sukses",
-    "AGI Core u aktivizua",
-    "Mesh Network është gati",
-    "API në funksion",
+  const [logs, setLogs] = useState<LogEntry[]>([
+    { message: "Sistema u startua me sukses", timestamp: new Date().toLocaleTimeString("sq-AL") },
+    { message: "AGI Core u aktivizua", timestamp: new Date().toLocaleTimeString("sq-AL") },
+    { message: "Mesh Network është gati", timestamp: new Date().toLocaleTimeString("sq-AL") },
+    { message: "API në funksion", timestamp: new Date().toLocaleTimeString("sq-AL") },
   ])
 
   useEffect(() => {
@@ -93,7 +98,7 @@ export default function Maintenance() {
               <strong>Uptime:</strong> {systemStatus.uptime}
             </div>
             <div>
-              <strong>Përdorimi i Memories:</strong> {systemStatus.memory}
+              <strong>Përdorimi i Memorjes:</strong> {systemStatus.memory}
             </div>
             <div>
               <strong>Përdorimi i CPU:</strong> {systemStatus.cpu}
@@ -188,7 +193,7 @@ export default function Maintenance() {
                   opacity: 1 - (index * 0.1)
                 })}
               >
-                [{new Date().toLocaleTimeString("sq-AL")}] {log}
+                [{log.timestamp}] {log.message}
               </div>
             ))}
           </div>

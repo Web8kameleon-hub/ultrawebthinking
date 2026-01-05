@@ -1,10 +1,11 @@
 // pages/api/agi/memory.ts
 import fs from "fs"
 import path from "path"
+import type { NextApiRequest, NextApiResponse } from "next"
 
 const filePath = path.join(process.cwd(), "memory.json")
 
-export default function handler(req: any, res: any) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     if (!fs.existsSync(filePath)) return res.status(200).json({ history: [] })
     const raw = fs.readFileSync(filePath, "utf-8")
