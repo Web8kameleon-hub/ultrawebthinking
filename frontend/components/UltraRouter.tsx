@@ -9,6 +9,7 @@ const routes = [
   { name: "Ballina", path: "/" },
   { name: "Surfing", path: "/surfing" },
   { name: "AGI", path: "/agi" },
+  { name: "Mirëmbajtje", path: "/maintenance" },
   { name: "Memory", path: "/memory" },
   { name: "Navigator", path: "/navigator" },
   { name: "Settings", path: "/settings" },

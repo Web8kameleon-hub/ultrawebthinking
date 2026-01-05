@@ -10,6 +10,7 @@ const navItems = [
   { label: "🏠 Ballina", href: "/" },
   { label: "🌿 Surfing", href: "/surfing" },
   { label: "🧠 AGI", href: "/agi" },
+  { label: "🔧 Mirëmbajtje", href: "/maintenance" },
   { label: "⚙️ Rregullime", href: "/settings" },
 ]
 

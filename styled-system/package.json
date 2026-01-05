@@ -1,0 +1,19 @@
+{
+  "name": "styled-system",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./css": {
+      "import": "./css/index.mjs",
+      "types": "./css/index.d.ts"
+    },
+    "./tokens": {
+      "import": "./tokens/index.mjs",
+      "types": "./tokens/index.d.ts"
+    },
+    "./patterns": {
+      "import": "./patterns/index.mjs",
+      "types": "./patterns/index.d.ts"
+    }
+  }
+}
