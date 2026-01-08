@@ -1,0 +1,229 @@
+name: JONA Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Code Quality & Testing
+  test:
+    runs-on: ubuntu-latest
+    name: Test & Quality
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 jona/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 jona/ --count --exit-zero --max-complexity=10 --max-line-length=79 --statistics
+
+      - name: Type check with mypy
+        run: |
+          pip install mypy
+          mypy jona/ --ignore-missing-imports || true
+
+      - name: Run pytest
+        run: |
+          pip install pytest pytest-asyncio pytest-cov
+          pytest jona/ -v --cov=jona --cov-report=xml --cov-report=html
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+
+  # Build Docker Image
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    name: Build Docker Image
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Security Scanning
+  security:
+    runs-on: ubuntu-latest
+    name: Security Scan
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Check dependencies with Snyk
+        uses: snyk/actions/python-3.13@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # Deploy to Kubernetes
+  deploy:
+    needs: [test, build, security]
+    runs-on: ubuntu-latest
+    name: Deploy to Hetzner K8s
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest'
+
+      - name: Update Kubernetes manifests
+        run: |
+          # Update image in deployment
+          sed -i "s|web8kameleon-hub/jona:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|g" k8s-deployment.yaml
+          
+          # Apply manifests
+          kubectl apply -f k8s-deployment.yaml
+
+      - name: Wait for deployment rollout
+        run: |
+          kubectl rollout status deployment/jona-api \
+            -n jona-production \
+            --timeout=5m
+
+      - name: Verify pods are running
+        run: |
+          kubectl get pods -n jona-production
+          kubectl get svc -n jona-production
+
+      - name: Run smoke tests
+        run: |
+          # Wait for service to be ready
+          sleep 10
+          
+          # Test health endpoint
+          JONA_IP=$(kubectl get svc jona-api-service -n jona-production -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          curl -f http://$JONA_IP/health/live || exit 1
+          curl -f http://$JONA_IP/health/ready || exit 1
+
+      - name: Run integration tests
+        run: |
+          kubectl exec -n jona-production \
+            deployment/jona-api \
+            -- python -m pytest /app/jona/tests/integration/ -v
+
+      - name: Notify deployment success
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Deployment to Hetzner K8s completed successfully!\n\nImage: `${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}`\n\nEndpoint: `https://jona.yourdomain.com`'
+            })
+
+  # Post-deployment health check
+  healthcheck:
+    needs: deploy
+    runs-on: ubuntu-latest
+    name: Health Check
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Setup kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Check pod health
+        run: |
+          kubectl get pods -n jona-production
+          kubectl logs -n jona-production deployment/jona-api --tail=50
+
+      - name: Check database connectivity
+        run: |
+          kubectl exec -n jona-production \
+            deployment/jona-api \
+            -- python -c "from jona.persistence.storage import JONAStorage; s = JONAStorage(); print('Database OK')"
+
+      - name: Monitor metrics
+        run: |
+          kubectl port-forward -n jona-production svc/prometheus 9090:9090 &
+          sleep 5
+          curl -s http://localhost:9090/api/v1/health || true
