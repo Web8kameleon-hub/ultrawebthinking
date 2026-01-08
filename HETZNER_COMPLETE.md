@@ -10,7 +10,6 @@
 
 ### ✅ Completed Components
 
-```
 ✓ Docker containerization (multi-stage, optimized)
 ✓ Kubernetes K3s cluster configuration
 ✓ PostgreSQL 16 database setup
