@@ -1,81 +1,61 @@
-import crypto from "crypto";
+﻿import crypto from "crypto";
 
 /**
- * Web8 Encryption Manager - Functional Encryption Service
- * Pure functional approach to encryption/decryption without OOP patterns
- * 
- * @author Ledjan Ahmati 
- * @version 8.0.0 Web8
+ * EncryptionManager - Një klasë për menaxhimin e enkriptimit dhe dekriptimit.
+ * Siguron funksionalitete për të ruajtur dhe përdorur çelësat e enkriptimit.
  */
+export class EncryptionManager {
+  private readonly encryptionKey: Buffer;
+  private readonly iv: Buffer;
 
-// Web8 Encryption Types
-interface Web8EncryptionContext {
-  readonly encryptionKey: Buffer;
-  readonly iv: Buffer;
-}
-
-// Web8 Encryption Context Factory
-function createEncryptionContext(key: string): Web8EncryptionContext {
-  if (key.length !== 44) {
-    throw new Error("Çelësi duhet të jetë një string Base64 me gjatësi 44 karaktere.");
+  constructor(key: string) {
+    if (key.length !== 44) {
+      throw new Error("Çelësi duhet të jetë një string Base64 me gjatësi 44 karaktere.");
+    }
+    this.encryptionKey = Buffer.from(key, "base64");
+    this.iv = Buffer.alloc(16, 0); // Vektor inicializimi (IV) i paracaktuar
   }
-  
-  return {
-    encryptionKey: Buffer.from(key, "base64"),
-    iv: Buffer.alloc(16, 0) // Vektor inicializimi (IV) i paracaktuar
-  };
+
+  /**
+   * Enkripton një tekst të dhënë.
+   * @param text Teksti për enkriptim.
+   * @returns Teksti i enkriptuar në format Base64.
+   */
+  encrypt(text: string): string {
+    const cipher = crypto.createCipheriv("aes-256-cbc", this.encryptionKey, this.iv);
+    let encrypted = cipher.update(text, "utf8", "base64");
+    encrypted += cipher.final("base64");
+    return encrypted;
+  }
+
+  /**
+   * Dekripton një tekst të enkriptuar.
+   * @param encrypted Teksti i enkriptuar në format Base64.
+   * @returns Teksti i dekriptuar.
+   */
+  decrypt(encrypted: string): string {
+    const decipher = crypto.createDecipheriv("aes-256-cbc", this.encryptionKey, this.iv);
+    let decrypted = decipher.update(encrypted, "base64", "utf8");
+    decrypted += decipher.final("utf8");
+    return decrypted;
+  }
+
+  /**
+   * Gjeneron një çelës të ri enkriptimi në format Base64.
+   * @returns Një çelës i ri enkriptimi.
+   */
+  static generateKey(): string {
+    return crypto.randomBytes(32).toString("base64");
+  }
 }
 
-/**
- * Web8 Encryption Function
- * @param text Teksti për enkriptim
- * @param context Web8 encryption context
- * @returns Teksti i enkriptuar në format Base64
- */
-function encryptText(text: string, context: Web8EncryptionContext): string {
-  const cipher = crypto.createCipheriv("aes-256-cbc", context.encryptionKey, context.iv);
-  let encrypted = cipher.update(text, "utf8", "base64");
-  encrypted += cipher.final("base64");
-  return encrypted;
-}
-
-/**
- * Web8 Decryption Function
- * @param encrypted Teksti i enkriptuar në format Base64
- * @param context Web8 encryption context
- * @returns Teksti i dekriptuar
- */
-function decryptText(encrypted: string, context: Web8EncryptionContext): string {
-  const decipher = crypto.createDecipheriv("aes-256-cbc", context.encryptionKey, context.iv);
-  let decrypted = decipher.update(encrypted, "base64", "utf8");
-  decrypted += decipher.final("utf8");
-  return decrypted;
-}
-
-/**
- * Web8 Key Generation Function
- * @returns Një çelës i ri enkriptimi në format Base64
- */
-function generateEncryptionKey(): string {
-  return crypto.randomBytes(32).toString("base64");
-}
-
-// Web8 Functional Exports
-export {
-  createEncryptionContext,
-  encryptText,
-  decryptText,
-  generateEncryptionKey
-};
-
-export type {
-  Web8EncryptionContext
-};
-
-// Web8 Usage Example
-const encryptionKey = generateEncryptionKey();
-const context = createEncryptionContext(encryptionKey);
+// Shembull përdorimi
+const encryptionKey = EncryptionManager.generateKey(); // Gjenero një çelës të ri
+const manager = new EncryptionManager(encryptionKey);
 
 const text = "Ultrawebthinking është e ardhmja!";
-const encrypted = encryptText(text, context);
-const decrypted = decryptText(encrypted, context);
+const encrypted = manager.encrypt(text);
+console.log("Teksti i enkriptuar:", encrypted);
+
+const decrypted = manager.decrypt(encrypted);
+console.log("Teksti i dekriptuar:", decrypted);
