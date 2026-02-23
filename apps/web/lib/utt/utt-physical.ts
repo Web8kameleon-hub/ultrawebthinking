@@ -210,7 +210,7 @@ export class UTTPhysicalTokens {
       return physicalToken
 
     } catch (err) {
-      console.error("❌ Failed to create physical token:", _error)
+      console.error("❌ Failed to create physical token:", err)
       throw error
     }
   }
@@ -256,7 +256,7 @@ export class UTTPhysicalTokens {
       return true
 
     } catch (err) {
-      console.error("❌ Failed to activate physical token:", _error)
+      console.error("❌ Failed to activate physical token:", err)
       throw error
     }
   }
@@ -326,7 +326,7 @@ export class UTTPhysicalTokens {
       return result
 
     } catch (err) {
-      console.error("❌ Token scan failed:", _error)
+      console.error("❌ Token scan failed:", err)
       
       return {
         success: false,
@@ -397,7 +397,7 @@ export class UTTPhysicalTokens {
       return true
 
     } catch (err) {
-      console.error("❌ Failed to transfer to physical token:", _error)
+      console.error("❌ Failed to transfer to physical token:", err)
       throw error
     }
   }
@@ -457,7 +457,7 @@ export class UTTPhysicalTokens {
       return true
 
     } catch (err) {
-      console.error("❌ Failed to transfer from physical token:", _error)
+      console.error("❌ Failed to transfer from physical token:", err)
       throw error
     }
   }
@@ -530,7 +530,7 @@ export class UTTPhysicalTokens {
       return true
 
     } catch (err) {
-      console.error("❌ Failed to start scanner:", _error)
+      console.error("❌ Failed to start scanner:", err)
       throw error
     }
   }
@@ -586,7 +586,7 @@ export class UTTPhysicalTokens {
       return true
 
     } catch (err) {
-      console.error("❌ Failed to burn physical token:", _error)
+      console.error("❌ Failed to burn physical token:", err)
       throw error
     }
   }
@@ -645,7 +645,7 @@ export class UTTPhysicalTokens {
       console.log("📱 NFC scanner initialized")
 
     } catch (err) {
-      console.warn("⚠️ NFC scanner failed to initialize:", _error)
+      console.warn("⚠️ NFC scanner failed to initialize:", err)
     }
   }
 
@@ -655,7 +655,7 @@ export class UTTPhysicalTokens {
       console.log("📱 QR scanner initialized")
       
     } catch (err) {
-      console.warn("⚠️ QR scanner failed to initialize:", _error)
+      console.warn("⚠️ QR scanner failed to initialize:", err)
     }
   }
 

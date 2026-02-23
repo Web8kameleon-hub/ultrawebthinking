@@ -102,7 +102,7 @@ export class AGISheetCore extends EventEmitter {
     });
 
     // Command stream processing
-    this.commandStream.subscribe(command => {
+    this.commandStream.subscribe((command: OperationalCommand) => {
       this.processCommand(command);
     });
   }

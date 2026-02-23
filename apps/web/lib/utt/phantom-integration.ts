@@ -85,8 +85,8 @@ export class PhantomIntegration {
       }
 
     } catch (err) {
-      console.error("❌ Failed to initialize Phantom wallet:", _error)
-      this.emit('walletError', _error)
+      console.error("❌ Failed to initialize Phantom wallet:", err)
+      this.emit('walletError', err)
     }
   }
 
@@ -113,8 +113,8 @@ export class PhantomIntegration {
       return this.state
 
     } catch (err) {
-      console.error("❌ Failed to connect to Phantom:", _error)
-      this.emit('walletError', _error)
+      console.error("❌ Failed to connect to Phantom:", err)
+      this.emit('walletError', err)
       throw _error
     }
   }
@@ -141,8 +141,8 @@ export class PhantomIntegration {
       this.emit('walletDisconnected', null)
 
     } catch (err) {
-      console.error("❌ Failed to disconnect from Phantom:", _error)
-      this.emit('walletError', _error)
+      console.error("❌ Failed to disconnect from Phantom:", err)
+      this.emit('walletError', err)
     }
   }
 
@@ -209,7 +209,7 @@ export class PhantomIntegration {
       return result
 
     } catch (err) {
-      console.error("❌ Failed to create transfer transaction:", _error)
+      console.error("❌ Failed to create transfer transaction:", err)
       const errorResult: TransactionResult = {
         signature: '',
         success: false,
@@ -252,8 +252,8 @@ export class PhantomIntegration {
       return result
 
     } catch (err) {
-      console.error("❌ Failed to sign message:", _error)
-      this.emit('messageSignError', _error)
+      console.error("❌ Failed to sign message:", err)
+      this.emit('messageSignError', err)
       throw _error
     }
   }
@@ -280,7 +280,7 @@ export class PhantomIntegration {
       return isValid
 
     } catch (err) {
-      console.error("❌ Failed to verify signature:", _error)
+      console.error("❌ Failed to verify signature:", err)
       return false
     }
   }
@@ -368,7 +368,7 @@ export class PhantomIntegration {
       }
 
     } catch (err) {
-      console.error("❌ Failed to update wallet state:", _error)
+      console.error("❌ Failed to update wallet state:", err)
     }
   }
 
@@ -404,7 +404,7 @@ export class PhantomIntegration {
 
       } catch (err) {
         clearInterval(monitor)
-        console.error("❌ Error monitoring transaction:", _error)
+        console.error("❌ Error monitoring transaction:", err)
       }
     }, 1000) // Check every second
   }

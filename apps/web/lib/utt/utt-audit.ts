@@ -190,7 +190,7 @@ export class UTTAuditSystem {
       })
 
     } catch (err) {
-      console.error("❌ Failed to initialize audit system:", _error)
+      console.error("❌ Failed to initialize audit system:", err)
       throw error
     }
   }
@@ -239,7 +239,7 @@ export class UTTAuditSystem {
       return eventId
 
     } catch (err) {
-      console.error("❌ Failed to log audit event:", _error)
+      console.error("❌ Failed to log audit event:", err)
       throw error
     }
   }
@@ -303,7 +303,7 @@ export class UTTAuditSystem {
       return analysis
 
     } catch (err) {
-      console.error("❌ Transaction analysis failed:", _error)
+      console.error("❌ Transaction analysis failed:", err)
       throw error
     }
   }
@@ -381,7 +381,7 @@ export class UTTAuditSystem {
       return report
 
     } catch (err) {
-      console.error("❌ Failed to generate compliance report:", _error)
+      console.error("❌ Failed to generate compliance report:", err)
       throw error
     }
   }
@@ -494,7 +494,7 @@ export class UTTAuditSystem {
       }
 
     } catch (err) {
-      console.error("❌ Failed to export audit data:", _error)
+      console.error("❌ Failed to export audit data:", err)
       throw error
     }
   }

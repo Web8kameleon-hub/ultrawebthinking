@@ -102,7 +102,7 @@ export class AlbionConnection {
       
     } catch (err) {
       this.connectionAttempts++
-      console.error(`❌ Connection failed (attempt ${this.connectionAttempts}):`, _error)
+      console.error(`❌ Connection failed (attempt ${this.connectionAttempts}):`, err)
       
       if (this.connectionAttempts < this.maxConnectionAttempts) {
         console.log(`🔄 Retrying connection in ${SOLANA_CONFIG.retryDelay}ms...`)
@@ -138,7 +138,7 @@ export class AlbionConnection {
       return balance
       
     } catch (err) {
-      console.error("❌ Failed to get ALB balance:", _error)
+      console.error("❌ Failed to get ALB balance:", err)
       return {
         address,
         balance: 0,
@@ -183,7 +183,7 @@ export class AlbionConnection {
       return mockTransactions
       
     } catch (err) {
-      console.error("❌ Failed to get transactions:", _error)
+      console.error("❌ Failed to get transactions:", err)
       return []
     }
   }
@@ -209,7 +209,7 @@ export class AlbionConnection {
       return result
       
     } catch (err) {
-      console.error("❌ Failed to monitor transaction:", _error)
+      console.error("❌ Failed to monitor transaction:", err)
       return { status: "failed", confirmations: 0 }
     }
   }
@@ -243,7 +243,7 @@ export class AlbionConnection {
       return status
       
     } catch (err) {
-      console.error("❌ Failed to get network status:", _error)
+      console.error("❌ Failed to get network status:", err)
       throw _error
     }
   }

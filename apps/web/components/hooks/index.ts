@@ -17,8 +17,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       if (typeof window === 'undefined') {return initialValue}
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
-    } catch (_error) {
-      console.error(`Error reading localStorage key "${key}":`, _error)
+    } catch (err) {
+      console.error(`Error reading localStorage key "${key}":`, err)
       return initialValue
     }
   })
@@ -30,8 +30,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(valueToStore))
       }
-    } catch (_error) {
-      console.error(`Error setting localStorage key "${key}":`, _error)
+    } catch (err) {
+      console.error(`Error setting localStorage key "${key}":`, err)
     }
   }, [key, storedValue])
 
@@ -45,8 +45,8 @@ export function useSessionStorage<T>(key: string, initialValue: T) {
       if (typeof window === 'undefined') {return initialValue}
       const item = window.sessionStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
-    } catch (_error) {
-      console.error(`Error reading sessionStorage key "${key}":`, _error)
+    } catch (err) {
+      console.error(`Error reading sessionStorage key "${key}":`, err)
       return initialValue
     }
   })
@@ -58,8 +58,8 @@ export function useSessionStorage<T>(key: string, initialValue: T) {
       if (typeof window !== 'undefined') {
         window.sessionStorage.setItem(key, JSON.stringify(valueToStore))
       }
-    } catch (_error) {
-      console.error(`Error setting sessionStorage key "${key}":`, _error)
+    } catch (err) {
+      console.error(`Error setting sessionStorage key "${key}":`, err)
     }
   }, [key, storedValue])
 
@@ -324,8 +324,8 @@ export function useCopyToClipboard(): [string | null, (text: string) => Promise<
       await navigator.clipboard.writeText(text)
       setCopiedText(text)
       return true
-    } catch (_error) {
-      console.warn('Copy failed', _error)
+    } catch (err) {
+      console.warn('Copy failed', err)
       setCopiedText(null)
       return false
     }

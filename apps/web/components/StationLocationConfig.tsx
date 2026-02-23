@@ -60,7 +60,7 @@ export const StationLocationConfigComponent: React.FC<LocationConfigProps> = ({
                 onLocationChange?.(newLocation)
             }
         } catch (err) {
-            console.error('Failed to set station location:', _error)
+            console.error('Failed to set station location:', err)
         } finally {
             setIsLoading(false)
         }
@@ -81,7 +81,7 @@ export const StationLocationConfigComponent: React.FC<LocationConfigProps> = ({
             onLocationChange?.(newLocation)
             setShowCustomForm(false)
         } catch (err) {
-            console.error('Failed to set custom location:', _error)
+            console.error('Failed to set custom location:', err)
         } finally {
             setIsLoading(false)
         }

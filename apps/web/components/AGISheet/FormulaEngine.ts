@@ -270,7 +270,7 @@ export class FormulaEngine {
       
       return { isValid: true };
     } catch (err) {
-      return { isValid: false, error: String(_error) };
+      return { isValid: false, error: String(err) };
     }
   }
 

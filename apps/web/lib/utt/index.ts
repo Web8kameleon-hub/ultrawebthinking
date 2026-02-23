@@ -122,7 +122,7 @@ export async function initializeUTTSuite(): Promise<{
     }
 
   } catch (err) {
-    console.error("❌ Failed to initialize UTT-Albion Suite:", _error)
+    console.error("❌ Failed to initialize UTT-Albion Suite:", err)
     throw error
   }
 }
