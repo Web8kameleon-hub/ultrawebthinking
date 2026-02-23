@@ -202,7 +202,7 @@ export const ErrorHandlingExample = () => {
 
   const handleError = (error: Error) => {
     setError(error.message)
-    console.error('Lazy loading error:', _error)
+    console.error('Lazy loading error:', error)
   }
 
   return (
