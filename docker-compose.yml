@@ -1,42 +1,131 @@
-version: '3.8'
-
 services:
-  # EuroWeb Platform v9.0.1 - Main Application
-  euroweb-platform:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # 🦙 OLLAMA AI SERVICE (Primary AI Provider - Free)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: euroweb-ollama
     ports:
-      - "3000:3000"  # Updated to standard Next.js port
-    environment:
-      - NODE_ENV=production
-      - NEXT_TELEMETRY_DISABLED=1
-      - AGI_MODE=active
-      - AVIATION_MODE=enabled
-      - UTT_BLOCKCHAIN=enabled
-      - OFFICE_SUITE=enabled
+      - "11434:11434"
     volumes:
-      - ./public:/app/public:ro
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
       - euroweb-network
 
-  euroweb-backend:
+  # 🎯 EUROWEB FRONTEND (Next.js)
+  euroweb-platform:
     build:
-      context: ./backend
-      dockerfile: ../Dockerfile
-      target: backend
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - AGI_MODE=active
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=llama3.1:8b
+      - NEXT_PUBLIC_LOCALES=sq,en,de,fr,it,zh,ru,es,hi,ar,el,tr,he
+      - NEXT_PUBLIC_DEFAULT_LOCALE=sq
+      - AGI_PRIMARY_PROVIDER=ollama
+    volumes:
+      - ./public:/app/public
+      - ./locales:/app/locales
+    depends_on:
+      - ollama
+      - mongodb
+      - redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - euroweb-network
+
+  # 🔧 EUROWEB BACKEND (API Server)
+  euroweb-backend:
+    image: node:18-alpine
+    working_dir: /app
+    command: sh -c "npm install && npx ts-node backend/server.ts"
     ports:
       - "8080:8080"
+    volumes:
+      - .:/app
     environment:
       - NODE_ENV=production
       - PORT=8080
       - AGI_CORE=enabled
+      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_MODEL=llama3.1:8b
+      - MONGODB_URI=mongodb://mongodb:27017/ultrawebthinking
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - ollama
+      - mongodb
+      - redis
+    restart: unless-stopped
+    networks:
+      - euroweb-network
+
+  # 💾 MONGODB (Database)
+  mongodb:
+    image: mongo:7
+    container_name: euroweb-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=ultrawebthinking
+    restart: unless-stopped
+    networks:
+      - euroweb-network
+
+  # ⚡ REDIS (Cache & Sessions)
+  redis:
+    image: redis:7-alpine
+    container_name: euroweb-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - euroweb-network
+
+  # 🌐 NANOGRID NODE REGISTRY (Microservice)
+  nanogrid-registry:
+    image: node:18-alpine
+    container_name: euroweb-nanogrid
+    working_dir: /app
+    command: sh -c "npm install express && npx ts-node backend/nanogrid-registry.ts"
+    ports:
+      - "8081:8081"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=production
+      - NANOGRID_PORT=8081
+      - MONGODB_URI=mongodb://mongodb:27017/nanogrid
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongodb
+      - redis
     restart: unless-stopped
     networks:
       - euroweb-network
@@ -47,4 +136,10 @@ networks:
 
 volumes:
   euroweb-data:
+    driver: local
+  ollama_data:
+    driver: local
+  mongodb_data:
+    driver: local
+  redis_data:
     driver: local
