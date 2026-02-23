@@ -217,9 +217,9 @@ export class EcologyEngine {
     
     let overallAssessment: 'least_concern' | 'near_threatened' | 'vulnerable' | 'endangered' | 'critically_endangered' | 'extinct';
     
-    if (endangeredRatio > 0.7 ?? ecosystemMetrics.threatLevel === 'critical') {
+    if (endangeredRatio > 0.7 || ecosystemMetrics.threatLevel === 'critical') {
       overallAssessment = 'critically_endangered';
-    } else if (endangeredRatio > 0.5 ?? ecosystemMetrics.threatLevel === 'high') {
+    } else if (endangeredRatio > 0.5 || ecosystemMetrics.threatLevel === 'high') {
       overallAssessment = 'endangered';
     } else if (endangeredRatio > 0.3) {
       overallAssessment = 'vulnerable';
