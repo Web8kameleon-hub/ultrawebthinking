@@ -22,9 +22,10 @@ interface AGIMedResult {
 
 interface AGIResultsProps {
   result: AGIMedResult
+  onNewAnalysisAction?: () => void
 }
 
-export const AGIResults: React.FC<AGIResultsProps> = ({ result }) => {
+export const AGIResults: React.FC<AGIResultsProps> = ({ result, onNewAnalysisAction }) => {
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 80) return '#22c55e'
     if (confidence >= 60) return '#3b82f6'
@@ -167,6 +168,28 @@ export const AGIResults: React.FC<AGIResultsProps> = ({ result }) => {
         <span>AGI Version: {result.agiVersion}</span>
         <span>{new Date(result.timestamp).toLocaleString()}</span>
       </div>
+
+      {/* New Analysis Button */}
+      {onNewAnalysisAction && (
+        <button
+          onClick={onNewAnalysisAction}
+          style={{
+            marginTop: '20px',
+            width: '100%',
+            padding: '14px 24px',
+            background: 'linear-gradient(45deg, #3b82f6, #2563eb)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '12px',
+            fontSize: '16px',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          🔄 New Analysis
+        </button>
+      )}
     </motion.div>
   )
 }
