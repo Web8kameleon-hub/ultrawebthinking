@@ -11,8 +11,10 @@ export default function Page() {
     const dest = prompt("Dest publicKey (base58)?");
     if (!dest) return;
     const conn = getConnection();
-    const me = (await connectPhantom())?.publicKey;
-    if (!me) { alert("Phantom not connected"); return; }
+    const phantom = await connectPhantom();
+    const pubKeyStr = phantom?.publicKey?.toBase58();
+    if (!pubKeyStr) { alert("Phantom not connected"); return; }
+    const me = pubkeyFrom(pubKeyStr);
     const tx = await buildAlbTransferTx(conn, me, pubkeyFrom(dest), 0.1);
     const s = await signAndSendWithPhantom(conn, tx);
     setSig(s);
