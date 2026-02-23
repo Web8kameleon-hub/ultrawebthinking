@@ -25,7 +25,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() ?? isLoading) {return}
+    if (!input.trim() || isLoading) {return}
     onSubmit(input.trim())
     setInput('')
     setCharCount(0)

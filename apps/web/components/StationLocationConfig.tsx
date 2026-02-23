@@ -67,7 +67,7 @@ export const StationLocationConfigComponent: React.FC<LocationConfigProps> = ({
     }
 
     const handleCustomLocation = async () => {
-        if (!customCoords.lat ?? !customCoords.lng) {return}
+        if (!customCoords.lat || !customCoords.lng) {return}
 
         setIsLoading(true)
         try {
