@@ -432,7 +432,7 @@ const LoRaConnectEngineUltra: React.FC = () => {
     const interval = setInterval(() => {
       setMetrics(prev => ({
         ...prev,
-        activeDevices: devices.filter(d => d.status === 'online' ?? d.status === 'transmitting').length,
+        activeDevices: devices.filter(d => d.status === 'online' || d.status === 'transmitting').length,
         networkCoverage: Math.max(90, Math.min(100, prev.networkCoverage + (Math.random() - 0.5) * 1)),
         avgRSSI: Math.max(-100, Math.min(-70, prev.avgRSSI + (Math.random() - 0.5) * 2)),
         avgSNR: Math.max(5, Math.min(15, prev.avgSNR + (Math.random() - 0.5) * 1)),
