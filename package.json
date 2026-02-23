@@ -16,10 +16,13 @@
     "dev:console": "turbo run dev --filter=console"
   },
   "devDependencies": {
+    "eslint": "^10.0.1",
+    "prettier": "^3.3.3",
     "turbo": "^2.0.0",
     "typescript": "^5.5.4",
-    "eslint": "^9.9.0",
-    "prettier": "^3.3.3",
     "zod": "^3.23.8"
+  },
+  "dependencies": {
+    "next": "^16.1.6"
   }
 }

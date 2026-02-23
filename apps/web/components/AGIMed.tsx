@@ -121,7 +121,7 @@ export const AGIMed: React.FC = () => {
                         transition={{ duration: 0.5 }}
                     >
                         <AGIForm
-                            onSubmitAction={handleAnalyzeSymptoms}
+                            onSubmit={handleAnalyzeSymptoms}
                             isLoading={isLoading}
                         />
                     </motion.div>
