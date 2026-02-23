@@ -630,7 +630,7 @@ const SettingsView: React.FC<{ user: UserProfile }> = ({ user }) => {
               Merrni njoftime për konsultimet tuaja
             </p>
           </div>
-          <input type="checkbox" defaultChecked style={{ width: '20px', height: '20px' }} />
+          <input type="checkbox" defaultChecked style={{ width: '20px', height: '20px' }} aria-label="Njoftime" title="Njoftime" />
         </div>
 
         <div style={{
@@ -647,7 +647,7 @@ const SettingsView: React.FC<{ user: UserProfile }> = ({ user }) => {
               Kujtohuni për kontrollet mjekësore
             </p>
           </div>
-          <input type="checkbox" style={{ width: '20px', height: '20px' }} />
+          <input type="checkbox" style={{ width: '20px', height: '20px' }} aria-label="Email kujtues" title="Email kujtues" />
         </div>
 
         <div style={{
@@ -670,7 +670,7 @@ const SettingsView: React.FC<{ user: UserProfile }> = ({ user }) => {
             border: '1px solid rgba(34, 197, 94, 0.3)',
             borderRadius: '6px',
             color: '#f8fafc'
-          }}>
+          }} aria-label="Gjuha" title="Zgjidhni gjuhën e preferuar">
             <option value="sq">Shqip</option>
             <option value="en">English</option>
             <option value="de">Deutsch</option>

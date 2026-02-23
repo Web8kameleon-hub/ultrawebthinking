@@ -161,6 +161,7 @@ const AviationWeatherDashboard: React.FC = () => {
             <select
               value={selectedAirport}
               onChange={(e) => setSelectedAirport(e.target.value)}
+              aria-label="Select Airport"
               className="w-full bg-slate-900 text-white px-4 py-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none text-lg"
             >
               {airports.map(airport => (

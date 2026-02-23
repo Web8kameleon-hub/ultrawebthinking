@@ -204,8 +204,8 @@ export function useAsync<T>(asyncFunction: () => Promise<T>, immediate = true) {
       const response = await asyncFunction()
       setData(response)
       setStatus('success')
-    } catch (_error) {
-      setError(error instanceof Error ? error.message : 'An error occurred')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
       setStatus('error')
     }
   }, [asyncFunction])
