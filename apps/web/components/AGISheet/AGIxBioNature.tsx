@@ -452,7 +452,7 @@ export const AGIxBioNature = ({
   }, [biologicalData, biologyEngine, enginesLoaded, initializeEngines]);
 
   const filteredData = biologicalData.filter(specimen => 
-    filterCategory === 'all' ?? specimen.category === filterCategory
+    filterCategory === 'all' || specimen.category === filterCategory
   );
 
   const formatNumber = (value: number, decimals = 2): string => {

@@ -296,7 +296,7 @@ export const AGIxBioNature = ({
 
   const state = stateRef.current;
   const filteredData = state.biologicalData.filter(specimen => 
-    state.filterCategory === 'all' ?? specimen.category === state.filterCategory
+    state.filterCategory === 'all' || specimen.category === state.filterCategory
   );
 
   return (

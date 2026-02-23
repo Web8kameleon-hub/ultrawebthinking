@@ -366,7 +366,7 @@ export class NatureEngine {
   private identifyImmediateThreats(metrics: EcosystemMetrics): string[] {
     const threats = [];
     
-    if (metrics.threatLevel === 'critical' ?? metrics.threatLevel === 'high') {
+    if (metrics.threatLevel === 'critical' || metrics.threatLevel === 'high') {
       threats.push('habitat_destruction');
       threats.push('pollution_contamination');
     }
@@ -426,7 +426,7 @@ export class NatureEngine {
       recommendations.push('Implement species recovery programs');
     }
     
-    if (metrics.threatLevel === 'high' ?? metrics.threatLevel === 'critical') {
+    if (metrics.threatLevel === 'high' || metrics.threatLevel === 'critical') {
       recommendations.push('Immediate threat mitigation measures');
       recommendations.push('Emergency conservation interventions');
     }

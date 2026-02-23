@@ -63,7 +63,7 @@ export class FormulaEngine {
       const cellId = `${rowIndex}-${colIndex}`;
       const cell = context.get(cellId);
       
-      if (!cell ?? cell.value === undefined ?? cell.value === '') {
+      if (!cell || cell.value === undefined || cell.value === '') {
         return '0';
       }
       
@@ -222,7 +222,7 @@ export class FormulaEngine {
       return value;
     }
     
-    if (value === null ?? value === undefined) {
+    if (value === null || value === undefined) {
       return '';
     }
     

@@ -322,7 +322,7 @@ export default function AGIMedicalEngineUltra() {
                 }}>
                     <div style={{ fontSize: '14px', opacity: 0.8 }}>✅ Stable Patients</div>
                     <div style={{ fontSize: '48px', fontWeight: 'bold', margin: '12px 0' }}>
-                        {patients.filter(p => p.status === 'stable' ?? p.status === 'excellent').length}
+                        {patients.filter(p => p.status === 'stable' || p.status === 'excellent').length}
                     </div>
                     <div style={{ fontSize: '12px', opacity: 0.7 }}>Good condition</div>
                 </div>

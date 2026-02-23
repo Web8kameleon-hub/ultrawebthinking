@@ -209,7 +209,7 @@ export class EcologyEngine {
   }
 
   private evaluateConservationStatus(specimens: SpecimenData[], ecosystemMetrics: EcosystemMetrics) {
-    const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered' ?? s.properties.healthStatus === 'critical').length;
+    const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered' || s.properties.healthStatus === 'critical').length;
     const healthyCount = specimens.filter(s => s.properties.healthStatus === 'healthy').length;
     const totalSpecimens = specimens.length;
 
@@ -497,7 +497,7 @@ export class EcologyEngine {
   private generateConservationActions(specimens: SpecimenData[], ecosystemMetrics: EcosystemMetrics, status: string): ConservationStrategy[] {
     const actions: ConservationStrategy[] = [];
     
-    if (status === 'critically_endangered' ?? status === 'endangered') {
+    if (status === 'critically_endangered' || status === 'endangered') {
       actions.push({
         priority: 'critical',
         timeframe: 'immediate',
@@ -550,7 +550,7 @@ export class EcologyEngine {
     const lowDiversity = specimens.filter(s => s.properties.geneticDiversity < 0.3).length;
     if (lowDiversity > 0) {criteria.push('Low genetic diversity');}
     
-    if (ecosystemMetrics.threatLevel === 'high' ?? ecosystemMetrics.threatLevel === 'critical') {
+    if (ecosystemMetrics.threatLevel === 'high' || ecosystemMetrics.threatLevel === 'critical') {
       criteria.push('High threat level');
     }
     
@@ -571,7 +571,7 @@ export class EcologyEngine {
   }
 
   private determineTrophicRole(specimen: SpecimenData, trophicLevel: number): 'producer' | 'primary_consumer' | 'secondary_consumer' | 'tertiary_consumer' | 'decomposer' {
-    if (specimen.category === 'fungi' ?? specimen.category === 'microorganism') {return 'decomposer';}
+    if (specimen.category === 'fungi' || specimen.category === 'microorganism') {return 'decomposer';}
     if (trophicLevel <= 1.5) {return 'producer';}
     if (trophicLevel <= 2.5) {return 'primary_consumer';}
     if (trophicLevel <= 3.5) {return 'secondary_consumer';}
@@ -690,7 +690,7 @@ export class EcologyEngine {
   private generateConflictTypes(conflictLevel: string): string[] {
     const types = [];
     
-    if (conflictLevel === 'severe' ?? conflictLevel === 'high') {
+    if (conflictLevel === 'severe' || conflictLevel === 'high') {
       types.push('Crop damage', 'Livestock predation', 'Property damage');
     }
     

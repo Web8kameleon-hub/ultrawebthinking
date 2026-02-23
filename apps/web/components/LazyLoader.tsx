@@ -73,7 +73,7 @@ class NeuralLazyEngine {
     this.componentCache.set(config.name, LazyComponent)
 
     // Auto-preload high priority components
-    if (config.preload ?? config.priority === 'critical' ?? config.priority === 'high') {
+    if (config.preload || config.priority === 'critical' || config.priority === 'high') {
       this.preload(config.name)
     }
 

@@ -263,7 +263,7 @@ export class EconomicsEngine {
     if (health === 'excellent' && risk === 'low') {
       recommendations.push('Consider increasing portfolio allocation to growth assets');
       recommendations.push('Monitor for potential overheating signals');
-    } else if (health === 'poor' ?? risk === 'high') {
+    } else if (health === 'poor' || risk === 'high') {
       recommendations.push('Implement defensive investment strategies');
       recommendations.push('Increase cash reserves and reduce leverage');
       recommendations.push('Consider hedging strategies');
@@ -318,7 +318,7 @@ export class EconomicsEngine {
       risks.push(`High volatility in ${volatileIndicators.map(i => i.name).join(', ')}`);
     }
 
-    if (riskLevel === 'high' ?? riskLevel === 'extreme') {
+    if (riskLevel === 'high' || riskLevel === 'extreme') {
       risks.push('Elevated market uncertainty');
       risks.push('Potential for increased correlation during stress');
     }
@@ -339,7 +339,7 @@ export class EconomicsEngine {
       opportunities.push(`Potential value opportunities in ${oversoldIndicators.map(i => i.name).join(', ')}`);
     }
 
-    if (health === 'good' ?? health === 'excellent') {
+    if (health === 'good' || health === 'excellent') {
       opportunities.push('Favorable environment for growth investments');
     }
 
