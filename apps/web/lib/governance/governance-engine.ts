@@ -622,7 +622,7 @@ export class GovernanceEngine {
                     const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
                     const { start, end } = role.conditions.timeRestriction
 
-                    if (currentTime < start ?? currentTime > end) {
+                    if (currentTime < start || currentTime > end) {
                         await this.auditEvent({
                             userId: user.id,
                             sessionId,
