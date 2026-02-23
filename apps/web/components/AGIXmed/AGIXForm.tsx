@@ -14,6 +14,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { toast, Toaster } from 'react-hot-toast'
+import styles from './AGIXForm.module.css'
 
 // Types industrial
 export type PatientData = {
@@ -161,34 +162,28 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        style={styles.container}
+        className={styles.container}
       >
         {/* Header me Progress Bar */}
-        <div style={styles.header}>
-          <div style={styles.logoSection}>
-            <span style={styles.logo}>🏥 AGIXmed</span>
-            <span style={styles.version}>v9.0.0 PRODUCTION</span>
+        <div className={styles.header}>
+          <div className={styles.logoSection}>
+            <span className={styles.logo}>🏥 AGIXmed</span>
+            <span className={styles.version}>v9.0.0 PRODUCTION</span>
           </div>
           
-          <div style={styles.progressContainer}>
-            <div style={styles.progressSteps}>
-              <div style={{
-                ...styles.step,
-                background: currentStep >= 1 ? '#22c55e' : 'rgba(255,255,255,0.1)'
-              }}>1</div>
-              <div style={styles.stepLine} />
-              <div style={{
-                ...styles.step,
-                background: currentStep >= 2 ? '#22c55e' : 'rgba(255,255,255,0.1)'
-              }}>2</div>
+          <div className={styles.progressContainer}>
+            <div className={styles.progressSteps}>
+              <div className={`${styles.step} ${currentStep >= 1 ? styles.stepActive : styles.stepInactive}`}>1</div>
+              <div className={styles.stepLine} />
+              <div className={`${styles.step} ${currentStep >= 2 ? styles.stepActive : styles.stepInactive}`}>2</div>
             </div>
-            <div style={styles.stepText}>
+            <div className={styles.stepText}>
               Hapi {currentStep} nga 2: {currentStep === 1 ? 'Të dhënat personale' : 'Simptomat'}
             </div>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} style={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form}>
           <AnimatePresence mode="wait">
             {currentStep === 1 && (
               <motion.div
@@ -196,14 +191,14 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 20, opacity: 0 }}
-                style={styles.stepContent}
+                className={styles.stepContent}
               >
-                <h3 style={styles.sectionTitle}>📋 Të dhënat personale</h3>
+                <h3 className={styles.sectionTitle}>📋 Të dhënat personale</h3>
                 
                 {/* Mosha */}
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>
-                    Mosha <span style={styles.required}>*</span>
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>
+                    Mosha <span className={styles.required}>*</span>
                   </label>
                   <input
                     type="number"
@@ -214,33 +209,33 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                     })}
                     min="0"
                     max="130"
-                    style={styles.input}
+                    className={styles.input}
                     placeholder="P.sh. 35"
                   />
                   {validationErrors.mosha && (
-                    <span style={styles.error}>{validationErrors.mosha}</span>
+                    <span className={styles.error}>{validationErrors.mosha}</span>
                   )}
                 </div>
 
                 {/* Gjinia */}
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Gjinia</label>
-                  <div style={styles.radioGroup}>
-                    <label style={styles.radioLabel}>
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>Gjinia</label>
+                  <div className={styles.radioGroup}>
+                    <label className={styles.radioLabel}>
                       <input
                         type="radio"
                         checked={patientData.gjinia === 'M'}
                         onChange={() => setPatientData({...patientData, gjinia: 'M'})}
-                        style={styles.radio}
+                        className={styles.radio}
                       />
                       Mashkull
                     </label>
-                    <label style={styles.radioLabel}>
+                    <label className={styles.radioLabel}>
                       <input
                         type="radio"
                         checked={patientData.gjinia === 'F'}
                         onChange={() => setPatientData({...patientData, gjinia: 'F'})}
-                        style={styles.radio}
+                        className={styles.radio}
                       />
                       Femër
                     </label>
@@ -248,8 +243,8 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                 </div>
 
                 {/* Historiku mjekësor */}
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Historiku mjekësor</label>
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>Historiku mjekësor</label>
                   <input
                     type="text"
                     value={patientData.historikuMjekesor?.join(', ') || ''}
@@ -257,14 +252,14 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                       ...patientData,
                       historikuMjekesor: e.target.value.split(',').map(s => s.trim())
                     })}
-                    style={styles.input}
+                    className={styles.input}
                     placeholder="Diabet, tension, astmë..."
                   />
                 </div>
 
                 {/* Alergji */}
-                <div style={styles.inputGroup}>
-                  <label style={styles.label}>Alergji</label>
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>Alergji</label>
                   <input
                     type="text"
                     value={patientData.alergji?.join(', ') || ''}
@@ -272,7 +267,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                       ...patientData,
                       alergji: e.target.value.split(',').map(s => s.trim())
                     })}
-                    style={styles.input}
+                    className={styles.input}
                     placeholder="Penisilinë, ushqime, polen..."
                   />
                 </div>
@@ -281,7 +276,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  style={styles.nextButton}
+                  className={styles.nextButton}
                 >
                   Vazhdo →
                 </button>
@@ -294,11 +289,11 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 20, opacity: 0 }}
-                style={styles.stepContent}
+                className={styles.stepContent}
               >
-                <h3 style={styles.sectionTitle}>🩺 Përshkruani simptomat</h3>
+                <h3 className={styles.sectionTitle}>🩺 Përshkruani simptomat</h3>
                 
-                <div style={styles.textareaWrapper}>
+                <div className={styles.textareaWrapper}>
                   <textarea
                     value={patientData.simptomat}
                     onChange={(e) => {
@@ -315,23 +310,23 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
 - Çfarë i përmirëson?
 - A keni temperaturë?
 - A keni marrë ndonjë medikament?"
-                    style={styles.textarea}
+                    className={styles.textarea}
                     rows={8}
                   />
-                  <div style={styles.charCounter}>
+                  <div className={styles.charCounter}>
                     {charCount}/{maxChars}
                   </div>
                 </div>
 
                 {validationErrors.simptomat && (
-                  <span style={styles.error}>{validationErrors.simptomat}</span>
+                  <span className={styles.error}>{validationErrors.simptomat}</span>
                 )}
 
                 {/* Vital Signs */}
-                <div style={styles.vitalSigns}>
-                  <h4 style={styles.subtitle}>🩺 Shenjat vitale (opsionale)</h4>
+                <div className={styles.vitalSigns}>
+                  <h4 className={styles.subtitle}>🩺 Shenjat vitale (opsionale)</h4>
                   
-                  <div style={styles.vitalGrid}>
+                  <div className={styles.vitalGrid}>
                     <input
                       type="number"
                       placeholder="Temperatura °C"
@@ -339,7 +334,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                         ...patientData,
                         temperatura: parseFloat(e.target.value)
                       })}
-                      style={styles.vitalInput}
+                      className={styles.vitalInput}
                       step="0.1"
                     />
                     <input
@@ -349,17 +344,17 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                         ...patientData,
                         presioniGjakut: e.target.value
                       })}
-                      style={styles.vitalInput}
+                      className={styles.vitalInput}
                     />
                   </div>
                 </div>
 
                 {/* Butonat e navigimit */}
-                <div style={styles.buttonGroup}>
+                <div className={styles.buttonGroup}>
                   <button
                     type="button"
                     onClick={() => setCurrentStep(1)}
-                    style={styles.backButton}
+                    className={styles.backButton}
                   >
                     ← Kthehu
                   </button>
@@ -367,15 +362,11 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
                   <button
                     type="submit"
                     disabled={isLoading || isSaving}
-                    style={{
-                      ...styles.submitButton,
-                      opacity: (isLoading || isSaving) ? 0.6 : 1,
-                      cursor: (isLoading || isSaving) ? 'not-allowed' : 'pointer'
-                    }}
+                    className={`${styles.submitButton} ${(isLoading || isSaving) ? styles.submitDisabled : ''}`}
                   >
                     {(isLoading || isSaving) ? (
                       <>
-                        <div style={styles.spinner} />
+                        <div className={styles.spinner} />
                         Duke analizuar...
                       </>
                     ) : (
@@ -389,254 +380,18 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({
         </form>
 
         {/* Footer me informacion ligjor */}
-        <div style={styles.footer}>
-          <p style={styles.disclaimer}>
+        <div className={styles.footer}>
+          <p className={styles.disclaimer}>
             ⚕️ AGIXmed përdor të dhëna reale mjekësore dhe AI të avancuar. 
             Gjithmonë konsultohuni me mjekun tuaj për diagnozë definitive.
           </p>
-          <p style={styles.copyright}>
+          <p className={styles.copyright}>
             © 2024 AGIXmed nga Ledjan Ahmati. Të gjitha të drejtat e rezervuara.
           </p>
         </div>
       </motion.div>
     </>
   )
-}
-
-// Styles industrial
-const styles = {
-  container: {
-    maxWidth: '800px',
-    margin: '40px auto',
-    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-    borderRadius: '24px',
-    padding: '32px',
-    border: '1px solid rgba(34, 197, 94, 0.2)',
-    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-  },
-  header: {
-    marginBottom: '32px'
-  },
-  logoSection: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '24px'
-  },
-  logo: {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    color: '#22c55e',
-    letterSpacing: '-0.5px'
-  },
-  version: {
-    fontSize: '12px',
-    color: '#64748b',
-    background: 'rgba(255,255,255,0.1)',
-    padding: '4px 8px',
-    borderRadius: '20px'
-  },
-  progressContainer: {
-    marginBottom: '16px'
-  },
-  progressSteps: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px',
-    marginBottom: '8px'
-  },
-  step: {
-    width: '32px',
-    height: '32px',
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#fff',
-    fontSize: '14px',
-    fontWeight: 'bold'
-  },
-  stepLine: {
-    width: '60px',
-    height: '2px',
-    background: 'rgba(255,255,255,0.1)'
-  },
-  stepText: {
-    textAlign: 'center' as const,
-    color: '#94a3b8',
-    fontSize: '14px'
-  },
-  form: {
-    marginBottom: '24px'
-  },
-  stepContent: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '20px'
-  },
-  sectionTitle: {
-    fontSize: '20px',
-    color: '#f1f5f9',
-    marginBottom: '16px',
-    fontWeight: 600
-  },
-  inputGroup: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '8px'
-  },
-  label: {
-    color: '#e2e8f0',
-    fontSize: '14px',
-    fontWeight: 500
-  },
-  required: {
-    color: '#ef4444'
-  },
-  input: {
-    padding: '12px 16px',
-    background: 'rgba(15, 23, 42, 0.8)',
-    border: '1px solid rgba(34, 197, 94, 0.3)',
-    borderRadius: '12px',
-    color: '#fff',
-    fontSize: '15px',
-    outline: 'none',
-    transition: 'all 0.2s'
-  },
-  radioGroup: {
-    display: 'flex',
-    gap: '24px'
-  },
-  radioLabel: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    color: '#cbd5e1',
-    cursor: 'pointer'
-  },
-  radio: {
-    width: '18px',
-    height: '18px',
-    cursor: 'pointer',
-    accentColor: '#22c55e'
-  },
-  textareaWrapper: {
-    position: 'relative' as const
-  },
-  textarea: {
-    width: '100%',
-    padding: '16px',
-    background: 'rgba(15, 23, 42, 0.8)',
-    border: '1px solid rgba(34, 197, 94, 0.3)',
-    borderRadius: '12px',
-    color: '#fff',
-    fontSize: '15px',
-    lineHeight: '1.6',
-    resize: 'vertical' as const,
-    outline: 'none'
-  },
-  charCounter: {
-    position: 'absolute' as const,
-    bottom: '8px',
-    right: '12px',
-    fontSize: '12px',
-    color: '#64748b'
-  },
-  vitalSigns: {
-    background: 'rgba(0,0,0,0.2)',
-    padding: '16px',
-    borderRadius: '12px'
-  },
-  subtitle: {
-    color: '#cbd5e1',
-    fontSize: '16px',
-    marginBottom: '12px'
-  },
-  vitalGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '12px'
-  },
-  vitalInput: {
-    padding: '10px',
-    background: 'rgba(0,0,0,0.3)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '8px',
-    color: '#fff'
-  },
-  buttonGroup: {
-    display: 'flex',
-    gap: '12px',
-    marginTop: '24px'
-  },
-  nextButton: {
-    background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '12px',
-    padding: '14px 24px',
-    fontSize: '16px',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.2s',
-    marginTop: '16px'
-  },
-  backButton: {
-    flex: 1,
-    background: 'transparent',
-    border: '1px solid #475569',
-    color: '#cbd5e1',
-    borderRadius: '12px',
-    padding: '14px 24px',
-    fontSize: '16px',
-    fontWeight: 500,
-    cursor: 'pointer'
-  },
-  submitButton: {
-    flex: 2,
-    background: 'linear-gradient(135deg, #22c55e, #16a34a)',
-    border: 'none',
-    borderRadius: '12px',
-    color: '#fff',
-    padding: '14px 24px',
-    fontSize: '16px',
-    fontWeight: 600,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px',
-    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)'
-  },
-  spinner: {
-    width: '18px',
-    height: '18px',
-    border: '2px solid rgba(255,255,255,0.3)',
-    borderTop: '2px solid #fff',
-    borderRadius: '50%',
-    animation: 'spin 1s linear infinite'
-  },
-  error: {
-    color: '#ef4444',
-    fontSize: '13px',
-    marginTop: '4px'
-  },
-  footer: {
-    marginTop: '32px',
-    paddingTop: '24px',
-    borderTop: '1px solid rgba(255,255,255,0.1)',
-    textAlign: 'center' as const
-  },
-  disclaimer: {
-    color: '#94a3b8',
-    fontSize: '13px',
-    lineHeight: '1.5',
-    marginBottom: '8px'
-  },
-  copyright: {
-    color: '#64748b',
-    fontSize: '12px'
-  }
 }
 
 export default AGIXForm

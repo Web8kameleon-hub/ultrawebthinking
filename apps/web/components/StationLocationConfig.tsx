@@ -233,7 +233,7 @@ export const StationLocationConfigComponent: React.FC<LocationConfigProps> = ({
                             <button
                                 className="set-custom-btn"
                                 onClick={handleCustomLocation}
-                                disabled={!customCoords.lat ?? !customCoords.lng ?? isLoading}
+                                disabled={!customCoords.lat || !customCoords.lng || isLoading}
                             >
                                 {isLoading ? '⏳ Setting...' : '✅ Set Location'}
                             </button>
