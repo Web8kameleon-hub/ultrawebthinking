@@ -6,10 +6,9 @@ FROM node:18-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy package files for all workspaces
+# Copy root package files
 COPY package.json package-lock.json* ./
-COPY apps/web/package.json ./apps/web/
-COPY packages/ ./packages/ 2>/dev/null || true
+COPY apps/web/package.json ./apps/web/package.json
 
 # Install dependencies
 RUN npm install --legacy-peer-deps
