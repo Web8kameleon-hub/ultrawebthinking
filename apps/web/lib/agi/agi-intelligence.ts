@@ -608,7 +608,7 @@ export class AGIOrchestrator {
                 metadata: { taskId: task.id, agentId: agent.id }
             })
 
-            throw error
+            throw err
 
         } finally {
             // Release agent resources
