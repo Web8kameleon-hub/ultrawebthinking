@@ -1,26 +1,11 @@
-import { createNavigation } from 'next-intl/navigation';
-import { defineRouting } from 'next-intl/routing';
+// Stub for i18n routing (next-intl not installed)
+// This provides type exports and placeholder functions
+import type { FC, ReactNode } from 'react';
 
-export const routing = defineRouting({
+export const routing = {
   // A list of all locales that are supported
-  locales: ['sq', 'en', 'de', 'fr', 'it', 'zh', 'ru', 'es', 'hi', 'ar', 'el', 'tr', 'he'],
-
-  // Used when no locale matches
-  defaultLocale: 'sq',
-
-  // The prefix for the default locale when creating links
-  localePrefix: {
-    mode: 'as-needed',
-    prefixes: {
-      // Albanian as default (no prefix)
-      // English with /en prefix
-      // German with /de prefix
-      // French with /fr prefix
-      // Italian with /it prefix
-    }
-  },
-
-  // Pathnames that are localized
+  locales: ['sq', 'en', 'de', 'fr', 'it', 'zh', 'ru', 'es', 'hi', 'ar', 'el', 'tr', 'he'] as const,
+  defaultLocale: 'sq' as const,
   pathnames: {
     '/': '/',
     '/dashboard': {
@@ -144,10 +129,14 @@ export const routing = defineRouting({
       he: '/web8-tabs'
     }
   }
-});
+};
 
 export type Pathnames = keyof typeof routing.pathnames;
 export type Locale = (typeof routing.locales)[number];
 
-export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation(routing);
+// Stub navigation functions (next-intl not installed)
+export const Link = 'a' as unknown as FC<{ href: string; children: ReactNode }>;
+export const redirect = (path: string) => { if (typeof window !== 'undefined') window.location.href = path; };
+export const usePathname = () => typeof window !== 'undefined' ? window.location.pathname : '/';
+export const useRouter = () => ({ push: (path: string) => { if (typeof window !== 'undefined') window.location.href = path; } });
+export const getPathname = (path: string) => path;
