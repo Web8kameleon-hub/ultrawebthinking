@@ -49,7 +49,7 @@ export class FormulaEngine {
       
       return this.formatResult(result.result);
     } catch (err) {
-      throw new Error(`Formula evaluation failed: ${_error}`);
+      throw new Error(`Formula evaluation failed: ${err}`);
     }
   }
 

@@ -115,7 +115,7 @@ export class PhantomIntegration {
     } catch (err) {
       console.error("❌ Failed to connect to Phantom:", err)
       this.emit('walletError', err)
-      throw _error
+      throw err
     }
   }
 
@@ -213,11 +213,11 @@ export class PhantomIntegration {
       const errorResult: TransactionResult = {
         signature: '',
         success: false,
-        error: _error instanceof Error ? _error.message : 'Unknown error',
+        error: err instanceof Error ? err.message : 'Unknown error',
         timestamp: new Date()
       }
       this.emit('transactionError', errorResult)
-      throw _error
+      throw err
     }
   }
 
@@ -254,7 +254,7 @@ export class PhantomIntegration {
     } catch (err) {
       console.error("❌ Failed to sign message:", err)
       this.emit('messageSignError', err)
-      throw _error
+      throw err
     }
   }
 

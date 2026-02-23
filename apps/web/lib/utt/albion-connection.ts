@@ -244,7 +244,7 @@ export class AlbionConnection {
       
     } catch (err) {
       console.error("❌ Failed to get network status:", err)
-      throw _error
+      throw err
     }
   }
 

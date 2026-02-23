@@ -45,7 +45,7 @@ export class AGIFormulaEngine implements FormulaEngine {
             // Evaluate the expression
             return this.safeEval(processedFormula)
         } catch (err) {
-            return `#ERROR: ${_error}`
+            return `#ERROR: ${err}`
         }
     }
 
@@ -77,7 +77,7 @@ export class AGIFormulaEngine implements FormulaEngine {
 
             return { valid: true }
         } catch (err) {
-            return { valid: false, error: `Validation error: ${_error}` }
+            return { valid: false, error: `Validation error: ${err}` }
         }
     }
 
