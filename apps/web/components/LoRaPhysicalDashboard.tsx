@@ -55,7 +55,7 @@ export default function LoRaPhysicalDashboard({ autoRefresh = false }: { autoRef
   }
 
   const simulatePhysicalToken = async () => {
-    if (!testTokenId || !testNodeId) {
+    if (!testTokenId ?? !testNodeId) {
       setError('Please enter both Token ID and Node ID')
       return
     }

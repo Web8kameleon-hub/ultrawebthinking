@@ -22,7 +22,7 @@ function listFiles(dir: string): string[] {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
         const p = path.join(dir, entry.name);
         if (entry.isDirectory()) {out.push(...listFiles(p));}
-        else if (CANDIDATE_NAMES.some(n => p.endsWith(n)) ?? p.includes('AGI') ?? p.includes('Engine')) {out.push(p);}
+        else if (CANDIDATE_NAMES.some(n => p.endsWith(n)) ?? p.includes('AGI') || p.includes('Engine')) {out.push(p);}
     }
     return out;
 }

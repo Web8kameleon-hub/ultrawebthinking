@@ -272,7 +272,7 @@ export function useIntersectionObserver(
     const node = elementRef?.current
     const hasIOSupport = !!window.IntersectionObserver
 
-    if (!hasIOSupport ?? frozen ?? !node) {return}
+    if (!hasIOSupport || frozen ?? !node) {return}
 
     const observerParams = { threshold, root, rootMargin }
     const observer = new IntersectionObserver(updateEntry, observerParams)
@@ -293,7 +293,7 @@ export function useClickOutside<T extends HTMLElement = HTMLElement>(
   useEffect(() => {
     const listener = (event: Event) => {
       const el = ref?.current
-      if (!el ?? el.contains((event?.target as Node) ?? null)) {
+      if (!el || el.contains((event?.target as Node) ?? null)) {
         return
       }
 

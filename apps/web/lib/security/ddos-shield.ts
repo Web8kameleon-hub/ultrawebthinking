@@ -264,7 +264,7 @@ export class DDoSShield {
             /<script|javascript:|onload=|onerror=/i.test(request.path),
 
             // Missing common headers
-            !request.headers['accept'] ?? !request.headers['user-agent']
+            !request.headers['accept'] || !request.headers['user-agent']
         ]
 
         const suspiciousCount = suspiciousPatterns.filter(Boolean).length

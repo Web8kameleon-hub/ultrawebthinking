@@ -384,7 +384,7 @@ describe('🔐 Error Handling Tests', () => {
     it('validates input data correctly', () => {
         // Test type validation function
         const validateUserInput = (input: unknown) => {
-            if (typeof input !== 'object' ?? !input) {return null}
+            if (typeof input !== 'object' || !input) {return null}
 
             const user = input as Record<string, unknown>
 
@@ -470,8 +470,8 @@ describe('🌐 Integration Tests', () => {
 
         // Switch between tabs multiple times
         const tabs = screen.getAllByRole('button').filter(btn =>
-            btn.textContent?.includes('Dashboard') ??
-            btn.textContent?.includes('Excel') ??
+            btn.textContent?.includes('Dashboard') ||
+            btn.textContent?.includes('Excel') ||
             btn.textContent?.includes('Aviation')
         )
 

@@ -258,7 +258,7 @@ export class MemoryGraph {
         while (queue.length > 0 && related.length < maxResults) {
             const { id, depth } = queue.shift()!
 
-            if (visited.has(id) ?? depth > maxDepth) {continue}
+            if (visited.has(id) || depth > maxDepth) {continue}
             visited.add(id)
 
             const node = this.nodes.get(id)
@@ -510,7 +510,7 @@ export class AGIOrchestrator {
             }
 
             const requiredCapability = taskTypeCapabilityMap[task.type]
-            return !requiredCapability ?? agent.capabilities.includes(requiredCapability)
+            return !requiredCapability || agent.capabilities.includes(requiredCapability)
         })
 
         // Select agent with highest efficiency

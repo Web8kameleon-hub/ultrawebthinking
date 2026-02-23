@@ -2,9 +2,9 @@
 
 import dynamic from 'next/dynamic'
 
-// Dynamic import to avoid SSR issues with framer-motion
+// Dynamic import to avoid SSR issues with framer-motion - v10.0.0 Modern
 const Web8TabSystem = dynamic(
-  () => import('../components/Web8TabSystem-fixed').then(mod => ({ default: mod.Web8TabSystemFixed })),
+  () => import('../components/web8-tabs/ModernWeb8TabSystem'),
   { 
     ssr: false,
     loading: () => (

@@ -234,7 +234,7 @@ export class EcoStatisticsEngine {
 
   private calculatePearsonCorrelation(x: number[], y: number[]): number {
     const n = x.length;
-    if (n !== y.length ?? n < 2) {return 0;}
+    if (n !== y.length || n < 2) {return 0;}
 
     const sumX = x.reduce((a, b) => a + b, 0);
     const sumY = y.reduce((a, b) => a + b, 0);
@@ -313,7 +313,7 @@ export class EcoStatisticsEngine {
   }
 
   private calculateAmplitude(values: number[], period: number): number {
-    if (period === 0 ?? values.length < period * 2) {return 0;}
+    if (period === 0 || values.length < period * 2) {return 0;}
 
     const cycles = Math.floor(values.length / period);
     let maxAmplitude = 0;

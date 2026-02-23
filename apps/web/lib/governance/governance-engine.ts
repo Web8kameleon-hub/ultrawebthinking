@@ -593,7 +593,7 @@ export class GovernanceEngine {
 
         // Check if user has required permission
         const requiredPermission = `${resource}.${action}`
-        const hasPermission = user.permissions.includes(requiredPermission) ??
+        const hasPermission = user.permissions.includes(requiredPermission) ||
             user.permissions.includes('system.admin')
 
         if (!hasPermission) {
@@ -755,7 +755,7 @@ export class GovernanceEngine {
      */
     private async processAccessRequest(requestId: string): Promise<void> {
         const request = this.dataSubjectRequests.get(requestId)
-        if (!request ?? request.type !== 'access') {return}
+        if (!request || request.type !== 'access') {return}
 
         const user = this.users.get(request.dataSubject)
         if (!user) {return}
@@ -808,7 +808,7 @@ export class GovernanceEngine {
      */
     private async processErasureRequest(requestId: string): Promise<void> {
         const request = this.dataSubjectRequests.get(requestId)
-        if (!request ?? request.type !== 'erasure') {return}
+        if (!request || request.type !== 'erasure') {return}
 
         const user = this.users.get(request.dataSubject)
         if (!user) {return}
@@ -1014,7 +1014,7 @@ export class GovernanceEngine {
 
     private isIpInCidr(ip: string, cidr: string): boolean {
         // Simplified CIDR check (production would use proper IP library)
-        return cidr.includes(ip) ?? cidr === '0.0.0.0/0'
+        return cidr.includes(ip) || cidr === '0.0.0.0/0'
     }
 
     private startComplianceMonitoring(): void {

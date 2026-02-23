@@ -95,7 +95,7 @@ class RealEngine {
 
   // Process real input through AGI
   processInput(input: string): string {
-    if (!this.config.agiEnabled ?? !this.isRunning) {
+    if (!this.config.agiEnabled || !this.isRunning) {
       return 'AGI processing disabled';
     }
 
@@ -114,7 +114,7 @@ class RealEngine {
 
   // Real mesh network operations
   sendToMesh(data: any, target?: string): boolean {
-    if (!this.config.meshEnabled ?? !this.isRunning) {
+    if (!this.config.meshEnabled || !this.isRunning) {
       return false;
     }
 
@@ -137,7 +137,7 @@ class RealEngine {
 
   // Real LoRa network communication
   sendLoRa(message: string, frequency = 868): boolean {
-    if (!this.config.loraEnabled ?? !this.isRunning) {
+    if (!this.config.loraEnabled || !this.isRunning) {
       return false;
     }
 
@@ -152,7 +152,7 @@ class RealEngine {
 
   // Real DDoS protection
   checkDDoSProtection(sourceIP: string): boolean {
-    if (!this.config.ddosProtection ?? !this.isRunning) {
+    if (!this.config.ddosProtection || !this.isRunning) {
       return true;
     }
 
@@ -170,7 +170,7 @@ class RealEngine {
 
   // Real self-generating modules
   generateModule(type: string, requirements: any): any {
-    if (!this.config.selfGenerating ?? !this.isRunning) {
+    if (!this.config.selfGenerating || !this.isRunning) {
       return null;
     }
 

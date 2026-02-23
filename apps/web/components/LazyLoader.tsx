@@ -185,7 +185,7 @@ export const LazyLoader = memo<LazyLoaderProps>(({
   ...props
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [shouldLoad, setShouldLoad] = React.useState(!viewport ?? preload)
+  const [shouldLoad, setShouldLoad] = React.useState(!viewport || preload)
 
   // Viewport Intersection Logic
   useEffect(() => {

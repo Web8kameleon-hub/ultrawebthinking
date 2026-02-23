@@ -74,11 +74,11 @@ export class CellEngine {
     const normalizedCommand = command.toLowerCase().trim();
     
     // Detect command type
-    if (normalizedCommand.includes('analyze') ?? normalizedCommand.includes('analizo')) {
+    if (normalizedCommand.includes('analyze') || normalizedCommand.includes('analizo')) {
       return { type: 'analyze', input: command.replace(/^(analyze|analizo)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('translate') ?? normalizedCommand.includes('perkthe')) {
+    if (normalizedCommand.includes('translate') || normalizedCommand.includes('perkthe')) {
       const match = command.match(/(?:translate|perkthe)\s+(.+)\s+(?:to|ne)\s+(\w+)/i);
       if (match) {
         return { 
@@ -90,19 +90,19 @@ export class CellEngine {
       return { type: 'translate', input: command.replace(/^(translate|perkthe)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('summarize') ?? normalizedCommand.includes('permbledh')) {
+    if (normalizedCommand.includes('summarize') || normalizedCommand.includes('permbledh')) {
       return { type: 'summarize', input: command.replace(/^(summarize|permbledh)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('calculate') ?? normalizedCommand.includes('llogarit')) {
+    if (normalizedCommand.includes('calculate') || normalizedCommand.includes('llogarit')) {
       return { type: 'calculate', input: command.replace(/^(calculate|llogarit)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('generate') ?? normalizedCommand.includes('gjeneroj')) {
+    if (normalizedCommand.includes('generate') || normalizedCommand.includes('gjeneroj')) {
       return { type: 'generate', input: command.replace(/^(generate|gjeneroj)\s*/i, '') };
     }
     
-    if (normalizedCommand.includes('classify') ?? normalizedCommand.includes('klasifiko')) {
+    if (normalizedCommand.includes('classify') || normalizedCommand.includes('klasifiko')) {
       return { type: 'classify', input: command.replace(/^(classify|klasifiko)\s*/i, '') };
     }
     

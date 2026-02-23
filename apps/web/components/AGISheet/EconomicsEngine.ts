@@ -363,8 +363,8 @@ export class EconomicsEngine {
   private assessInflationRisk(indicators: MarketIndicator[]): number {
     // Look for inflation-sensitive indicators
     const commodityIndicators = indicators.filter(i => 
-      i.name.toLowerCase().includes('gold') ?? 
-      i.name.toLowerCase().includes('oil') ??
+      i.name.toLowerCase().includes('gold') || 
+      i.name.toLowerCase().includes('oil') ||
       i.name.toLowerCase().includes('commodity')
     );
 
@@ -376,8 +376,8 @@ export class EconomicsEngine {
 
   private assessGrowthPotential(indicators: MarketIndicator[]): number {
     const equityIndicators = indicators.filter(i => 
-      i.name.includes('S&P') ?? 
-      i.name.includes('NASDAQ') ??
+      i.name.includes('S&P') || 
+      i.name.includes('NASDAQ') ||
       i.name.includes('Dow')
     );
 
@@ -472,9 +472,9 @@ export class EconomicsEngine {
     for (const indicator of indicators) {
       let sector = 'General';
       
-      if (indicator.name.includes('S&P') ?? indicator.name.includes('NASDAQ')) {sector = 'Equities';}
-      else if (indicator.name.includes('USD') ?? indicator.name.includes('EUR')) {sector = 'Currencies';}
-      else if (indicator.name.includes('Gold') ?? indicator.name.includes('Oil')) {sector = 'Commodities';}
+      if (indicator.name.includes('S&P') || indicator.name.includes('NASDAQ')) {sector = 'Equities';}
+      else if (indicator.name.includes('USD') || indicator.name.includes('EUR')) {sector = 'Currencies';}
+      else if (indicator.name.includes('Gold') || indicator.name.includes('Oil')) {sector = 'Commodities';}
       else if (indicator.name.includes('Bond')) {sector = 'Fixed Income';}
       
       if (!sectors.has(sector)) {sectors.set(sector, []);}
@@ -533,7 +533,7 @@ export class EconomicsEngine {
   // Macroeconomic estimation methods
   private estimateGDPGrowth(indicators: MarketIndicator[]): number {
     const equityPerformance = indicators
-      .filter(i => i.name.includes('S&P') ?? i.name.includes('NASDAQ'))
+      .filter(i => i.name.includes('S&P') || i.name.includes('NASDAQ'))
       .reduce((sum, i) => sum + i.change, 0) / 2;
     
     return Math.max(-5, Math.min(8, 2.5 + equityPerformance * 0.3));
@@ -541,7 +541,7 @@ export class EconomicsEngine {
 
   private estimateInflation(indicators: MarketIndicator[]): number {
     const commodityChange = indicators
-      .filter(i => i.name.includes('Gold') ?? i.name.includes('Oil'))
+      .filter(i => i.name.includes('Gold') || i.name.includes('Oil'))
       .reduce((sum, i) => sum + i.change, 0);
     
     return Math.max(0, Math.min(10, 2.5 + commodityChange * 0.1));

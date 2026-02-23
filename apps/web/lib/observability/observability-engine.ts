@@ -328,7 +328,7 @@ export class ObservabilityEngine {
      */
     private checkAlertsForMetric(metricName: string, value: MetricValue): void {
         for (const alert of this.alerts.values()) {
-            if (alert.metric !== metricName ?? alert.status !== 'active') {continue}
+            if (alert.metric !== metricName || alert.status !== 'active') {continue}
 
             const shouldTrigger = this.evaluateAlertCondition(alert, value)
 

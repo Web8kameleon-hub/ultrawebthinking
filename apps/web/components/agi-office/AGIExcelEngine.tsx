@@ -214,7 +214,7 @@ class ExcelFormulaEngine {
         }
 
         // Handle simple arithmetic
-        if (expr.includes('+') ?? expr.includes('-') ?? expr.includes('*') ?? expr.includes('/')) {
+        if (expr.includes('+') || expr.includes('-') || expr.includes('*') || expr.includes('/')) {
             try {
                 // Replace cell references with values
                 let evalExpr = expr
@@ -311,7 +311,7 @@ export default function AGIExcelEngine() {
                 const activeSheet = workbook.sheets.find(sheet => sheet.id === workbook.activeSheetId)
                 if (activeSheet) {
                     const needsUpdate = Array.from(activeSheet.cells.values()).some(cell => 
-                        cell.formula?.includes('NOW()') ?? cell.formula?.includes('RAND()')
+                        cell.formula?.includes('NOW()') || cell.formula?.includes('RAND()')
                     )
                     if (needsUpdate) {
                         calculateFormulas(activeSheet.cells)

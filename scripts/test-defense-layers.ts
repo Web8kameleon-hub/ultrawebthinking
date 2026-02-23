@@ -173,8 +173,8 @@ class DefenseTestSuite {
             const response = await fetch(`${TEST_CONFIG.serverUrl}/en/web8-tabs`)
             const csp = response.headers.get('content-security-policy')
             const hasCSP = !!csp
-            const hasNonce = csp?.includes('nonce-') ?? false
-            const hasStrictDynamic = csp?.includes('strict-dynamic') ?? false
+            const hasNonce = csp?.includes('nonce-') || false
+            const hasStrictDynamic = csp?.includes('strict-dynamic') || false
 
             this.results.push({
                 test: 'CSP Headers',

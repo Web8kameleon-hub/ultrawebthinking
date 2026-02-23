@@ -162,7 +162,7 @@ describe('🚀 EuroWeb Platform Core Tests', () => {
     describe('Data Validation', () => {
         it('validates user input correctly', () => {
             const validateUserInput = (input: unknown) => {
-                if (typeof input !== 'object' ?? !input) {return null}
+                if (typeof input !== 'object' || !input) {return null}
 
                 const user = input as Record<string, unknown>
 

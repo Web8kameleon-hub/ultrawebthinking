@@ -1,0 +1,9 @@
+{
+  "name": "@euroweb/api-gateway",
+  "version": "1.0.0",
+  "description": "EuroWeb API Gateway - Routes requests to microservices",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"

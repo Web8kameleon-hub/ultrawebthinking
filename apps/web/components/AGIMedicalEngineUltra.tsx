@@ -504,25 +504,19 @@ export default function AGIMedicalEngineUltra() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2 style={{ color: '#60a5fa', margin: 0 }}>👥 MASSIVE PATIENT DATABASE - {patients.length} PATIENTS</h2>
                 <div style={{ display: 'flex', gap: '12px' }}>
-                    <select style={{
-                        background: 'rgba(59, 130, 246, 0.2)',
-                        color: 'white',
-                        border: '1px solid #3b82f6',
-                        borderRadius: '8px',
-                        padding: '8px 12px'
-                    }}>
+                    <select 
+                        aria-label="Filter by department"
+                        className="filter-select"
+                    >
                         <option>All Departments</option>
                         {departments.map(dept => (
                             <option key={dept.id}>{dept.name}</option>
                         ))}
                     </select>
-                    <select style={{
-                        background: 'rgba(59, 130, 246, 0.2)',
-                        color: 'white',
-                        border: '1px solid #3b82f6',
-                        borderRadius: '8px',
-                        padding: '8px 12px'
-                    }}>
+                    <select 
+                        aria-label="Filter by patient status"
+                        className="filter-select"
+                    >
                         <option>All Status</option>
                         <option>Critical</option>
                         <option>Stable</option>

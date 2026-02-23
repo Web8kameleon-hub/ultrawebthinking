@@ -59,7 +59,7 @@ async function analyzeCSSApproach(): Promise<CSSReport> {
       const content = readFileSync(file, 'utf-8')
 
       // Check for CVA usage
-      if (content.includes('class-variance-authority') ?? content.includes('cva')) {
+      if (content.includes('class-variance-authority') || content.includes('cva')) {
         report.cvaUsage.push(file)
       }
 
@@ -68,7 +68,7 @@ async function analyzeCSSApproach(): Promise<CSSReport> {
       const pandaUsageRegex = /(panda\(|pandaTokens\.|styled-system\/)/
       // Ignore self (css-check.ts) and comment/string contexts
       const isOwnFile = file.includes('css-check.ts')
-      if (!isOwnFile && (pandaImportRegex.test(content) ?? pandaUsageRegex.test(content))) {
+      if (!isOwnFile && (pandaImportRegex.test(content) || pandaUsageRegex.test(content))) {
         report.pandaUsage.push(file)
       }
 

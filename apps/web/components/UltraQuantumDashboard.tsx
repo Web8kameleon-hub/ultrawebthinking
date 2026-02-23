@@ -244,7 +244,7 @@ const UltraQuantumDashboard: React.FC = () => {
                     })
                 }
             } catch (_error) {
-                console.error('❌ Error updating dashboard:', _error)
+                console.error('❌ Error updating dashboard:', error)
                 setIsLive(false)
             }
         }, 2000)

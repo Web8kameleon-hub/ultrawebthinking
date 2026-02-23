@@ -146,7 +146,7 @@ export const chunk = <T>(array: T[], size: number): T[][] => {
 
 // Object Utilities
 export const deepClone = <T>(obj: T): T => {
-  if (obj === null ?? typeof obj !== 'object') {return obj}
+  if (obj === null || typeof obj !== 'object') {return obj}
   if (obj instanceof Date) {return new Date(obj.getTime()) as unknown as T}
   if (obj instanceof Array) {return obj.map(item => deepClone(item)) as unknown as T}
   
@@ -413,10 +413,10 @@ export const getPlatform = (): string => {
   
   const userAgent = window.navigator.userAgent.toLowerCase()
   
-  if (userAgent.includes('mobile') ?? userAgent.includes('android') ?? userAgent.includes('iphone')) {
+  if (userAgent.includes('mobile') || userAgent.includes('android') || userAgent.includes('iphone')) {
     return 'mobile'
   }
-  if (userAgent.includes('tablet') ?? userAgent.includes('ipad')) {
+  if (userAgent.includes('tablet') || userAgent.includes('ipad')) {
     return 'tablet'
   }
   return 'desktop'

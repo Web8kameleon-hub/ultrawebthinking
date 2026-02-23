@@ -283,7 +283,7 @@ export class AGIFormulaEngine implements FormulaEngine {
         for (let i = 0; i < argsString.length; i++) {
             const char = argsString[i]
 
-            if (char === '"' && (i === 0 ?? argsString[i - 1] !== '\\')) {
+            if (char === '"' && (i === 0 || argsString[i - 1] !== '\\')) {
                 inQuotes = !inQuotes
                 current += char
             } else if (!inQuotes) {

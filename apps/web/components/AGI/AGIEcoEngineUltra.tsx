@@ -491,7 +491,7 @@ const AGIEcoEngineUltra: React.FC = () => {
                       color: getMetricColor(key),
                       fontWeight: 600
                     }}>
-                      {key.includes('Percentage') ?? key.includes('Efficiency') ?? key.includes('Quality') ?
+                      {key.includes('Percentage') || key.includes('Efficiency') || key.includes('Quality') ?
                         `${value.toFixed(1)}%` :
                         key === 'biodiversityIndex' ? value.toFixed(3) :
                           key === 'treesCounted' ? value.toLocaleString() :
@@ -512,7 +512,7 @@ const AGIEcoEngineUltra: React.FC = () => {
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{
-                        width: `${key.includes('Percentage') ?? key.includes('Efficiency') ?? key.includes('Quality') ?
+                        width: `${key.includes('Percentage') || key.includes('Efficiency') || key.includes('Quality') ?
                           value :
                           key === 'biodiversityIndex' ? value * 100 :
                             key === 'carbonFootprint' ? Math.min(100, (value / 1000) * 100) :
@@ -544,7 +544,7 @@ const AGIEcoEngineUltra: React.FC = () => {
                                 key === 'waterUsage' ? '💧' :
                                   key === 'airQuality' ? '🌬️' :
                                     '🌳'}
-                      {key.includes('Efficiency') ?? key.includes('Quality') ?? key.includes('renewable') ?
+                      {key.includes('Efficiency') || key.includes('Quality') || key.includes('renewable') ?
                         (value > 90 ? ' Excellent' : value > 80 ? ' Good' : value > 70 ? ' Fair' : ' Needs Improvement') :
                         key === 'carbonFootprint' ?
                           (value < 850 ? ' Low Impact' : value < 900 ? ' Moderate' : ' High Impact') :

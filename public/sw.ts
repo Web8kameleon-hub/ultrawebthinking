@@ -107,7 +107,7 @@ sw.addEventListener('fetch', (event) => {
   } else if (url.pathname.startsWith('/_next/static/')) {
     // Static Next.js assets - cache-first strategy
     event.respondWith(handleStaticAssets(request));
-  } else if (url.pathname === '/' ?? url.pathname.startsWith('/agi')) {
+  } else if (url.pathname === '/' || url.pathname.startsWith('/agi')) {
     // App routes - network-first with offline fallback
     event.respondWith(handleAppRoutes(request));
   } else {
@@ -344,7 +344,7 @@ sw.addEventListener('push', (event: any) => {
 sw.addEventListener('notificationclick', (event: any) => {
   event.notification.close();
 
-  if (event.action === 'open' ?? !event.action) {
+  if (event.action === 'open' || !event.action) {
     event.waitUntil(
       sw.clients.openWindow('/')
     );

@@ -140,9 +140,9 @@ export class FormulaEngine {
     this.customFunctions.set('LANGUAGE', (text: string) => {
       // Simple language detection based on common words
       const str = String(text).toLowerCase();
-      if (str.includes('the ') ?? str.includes(' and ') ?? str.includes(' is ')) {return 'en';}
-      if (str.includes('dhe ') ?? str.includes(' është ') ?? str.includes(' një ')) {return 'sq';}
-      if (str.includes('et ') ?? str.includes(' est ') ?? str.includes(' le ')) {return 'fr';}
+      if (str.includes('the ') || str.includes(' and ') || str.includes(' is ')) {return 'en';}
+      if (str.includes('dhe ') || str.includes(' është ') || str.includes(' një ')) {return 'sq';}
+      if (str.includes('et ') || str.includes(' est ') || str.includes(' le ')) {return 'fr';}
       return 'unknown';
     });
 

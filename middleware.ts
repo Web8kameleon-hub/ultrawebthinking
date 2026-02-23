@@ -29,7 +29,7 @@ export function middleware(_request: NextRequest) {
 
   // Skip security for static assets but apply headers
   if (
-    pathname.startsWith('/_next/') ??
+    pathname.startsWith('/_next/') ||
     pathname.startsWith('/favicon.ico')
   ) {
     const response = NextResponse.next();
@@ -79,8 +79,8 @@ export function middleware(_request: NextRequest) {
 
   // Skip Guardian for API routes but add headers
   if (
-    pathname.startsWith('/api/') ??
-    pathname.startsWith('/api/_') ??
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/api/_') ||
     pathname === '/guardian'
   ) {
     const response = NextResponse.next();

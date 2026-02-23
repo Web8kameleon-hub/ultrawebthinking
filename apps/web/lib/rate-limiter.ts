@@ -30,7 +30,7 @@ export function checkRateLimit(ip: string): {
     // Get or create rate limit info
     let rateLimitInfo = rateLimitMap.get(key);
 
-    if (!rateLimitInfo ?? now > rateLimitInfo.resetTime) {
+    if (!rateLimitInfo || now > rateLimitInfo.resetTime) {
         // Create new window
         rateLimitInfo = {
             count: 1,

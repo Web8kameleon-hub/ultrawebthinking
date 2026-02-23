@@ -405,9 +405,9 @@ export class BiologyEngine {
     const queryLower = query.toLowerCase();
     
     return specimens.filter(specimen => 
-      specimen.species.toLowerCase().includes(queryLower) ??
-      specimen.category.toLowerCase().includes(queryLower) ??
-      specimen.location.habitat.toLowerCase().includes(queryLower) ??
+      specimen.species.toLowerCase().includes(queryLower) ||
+      specimen.category.toLowerCase().includes(queryLower) ||
+      specimen.location.habitat.toLowerCase().includes(queryLower) ||
       (specimen.medicalRelevance?.drugCompounds.some(compound => 
         compound.toLowerCase().includes(queryLower)
       ))

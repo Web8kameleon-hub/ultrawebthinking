@@ -265,7 +265,7 @@ export class EchoEngine {
    * Validate Navigation Parameters
    */
   private validateNavigationParams(params: Web8NavigationParams): void {
-    if (!params.url ?? typeof params.url !== 'string') {
+    if (!params.url || typeof params.url !== 'string') {
       throw new Error('Invalid URL parameter');
     }
     if (params.method && !['GET', 'POST', 'PUT', 'DELETE'].includes(params.method)) {
@@ -277,7 +277,7 @@ export class EchoEngine {
    * Validate Route Parameters
    */
   private validateRouteParams(params: OrchestrationParams): void {
-    if (!params.route ?? typeof params.route !== 'string') {
+    if (!params.route || typeof params.route !== 'string') {
       throw new Error('Invalid route parameter');
     }
     if (params.method && typeof params.method !== 'string') {

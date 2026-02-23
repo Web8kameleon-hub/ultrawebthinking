@@ -157,7 +157,7 @@ export class PhantomIntegration {
     try {
       this.ensureConnected()
 
-      if (amount < ALB_TOKEN.minTransferAmount ?? amount > ALB_TOKEN.maxTransferAmount) {
+      if (amount < ALB_TOKEN.minTransferAmount || amount > ALB_TOKEN.maxTransferAmount) {
         throw new Error(`Transfer amount must be between ${ALB_TOKEN.minTransferAmount} and ${ALB_TOKEN.maxTransferAmount} ALB`)
       }
 
@@ -376,7 +376,7 @@ export class PhantomIntegration {
    * Ensure wallet is connected
    */
   private ensureConnected(): void {
-    if (!this.state.connected ?? !this.state.publicKey) {
+    if (!this.state.connected || !this.state.publicKey) {
       throw new Error("Wallet not connected. Please connect to Phantom first.")
     }
   }

@@ -303,7 +303,7 @@ class RealValidator {
     }
 
     // Check if UI state is coherent
-    if (!memory.ui.activeTab ?? !memory.ui.theme) {
+    if (!memory.ui.activeTab || !memory.ui.theme) {
       errors.push('Missing essential UI state');
     }
 
@@ -360,13 +360,13 @@ class RealValidator {
 
   private validateResponseCoherence(response: any, memory: AGIMemoryStore): boolean {
     // Check if response aligns with current memory state
-    if (!response ?? typeof response !== 'object') {return false;}
+    if (!response || typeof response !== 'object') {return false;}
     
     // Check if response references known context
     const responseText = JSON.stringify(response);
     const hasContext = memory.agi.lastQuery && responseText.includes(memory.agi.lastQuery);
     
-    return hasContext ?? memory.agi.responses.length === 0;
+    return hasContext || memory.agi.responses.length === 0;
   }
 
   getValidationHistory(): ValidationResult[] {

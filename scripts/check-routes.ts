@@ -181,7 +181,7 @@ html, body {
 
         if (stat.isDirectory()) {
           this.scanDirectory(fullPath, itemRelativePath);
-        } else if (item.endsWith('.tsx') ?? item.endsWith('.ts')) {
+        } else if (item.endsWith('.tsx') || item.endsWith('.ts')) {
           const routeType = this.determineRouteType(item);
           if (routeType) {
             this.routes.push({
@@ -199,11 +199,11 @@ html, body {
   }
 
   private determineRouteType(filename: string): RouteInfo['type'] | null {
-    if (filename === 'page.tsx' ?? filename === 'page.ts') {return 'page';}
-    if (filename === 'layout.tsx' ?? filename === 'layout.ts') {return 'layout';}
-    if (filename === 'loading.tsx' ?? filename === 'loading.ts') {return 'loading';}
-    if (filename === 'error.tsx' ?? filename === 'error.ts') {return 'error';}
-    if (filename === 'not-found.tsx' ?? filename === 'not-found.ts') {return 'not-found';}
+    if (filename === 'page.tsx' || filename === 'page.ts') {return 'page';}
+    if (filename === 'layout.tsx' || filename === 'layout.ts') {return 'layout';}
+    if (filename === 'loading.tsx' || filename === 'loading.ts') {return 'loading';}
+    if (filename === 'error.tsx' || filename === 'error.ts') {return 'error';}
+    if (filename === 'not-found.tsx' || filename === 'not-found.ts') {return 'not-found';}
     return null;
   }
 
@@ -272,7 +272,7 @@ html, body {
     const loadingFile = join(this.appDir, 'loading.tsx');
     if (existsSync(loadingFile)) {
       const content = readFileSync(loadingFile, 'utf8');
-      if (content.includes('styled-jsx') ?? content.includes('style jsx')) {
+      if (content.includes('styled-jsx') || content.includes('style jsx')) {
         console.log(colors.red('❌ loading.tsx uses styled-jsx (not allowed in Server Components)'));
       } else {
         console.log(colors.green('✅ loading.tsx is Server Component compatible'));
@@ -336,7 +336,7 @@ html, body {
   }
 
   private autoFix(): void {
-    const shouldFix = process.argv.includes('--fix') ?? process.argv.includes('-f');
+    const shouldFix = process.argv.includes('--fix') || process.argv.includes('-f');
     
     if (!shouldFix) {
       console.log(colors.blue('\n💡 Add --fix flag to auto-repair issues'));
@@ -361,7 +361,7 @@ html, body {
     const hasRootPage = this.routes.some(r => r.type === 'page' && r.path === 'page.tsx');
     const hasRootLayout = this.routes.some(r => r.type === 'layout' && r.path === 'layout.tsx');
 
-    if (!hasRootLayout ?? !hasRootPage) {
+    if (!hasRootLayout || !hasRootPage) {
       this.createBasicFiles();
     }
   }
@@ -415,7 +415,7 @@ html, body {
     const loadingFile = join(this.appDir, 'loading.tsx');
     if (existsSync(loadingFile)) {
       const content = readFileSync(loadingFile, 'utf8');
-      if (content.includes('styled-jsx') ?? content.includes('style jsx')) {
+      if (content.includes('styled-jsx') || content.includes('style jsx')) {
         const fixedContent = `export default function Loading() {
   return (
     <div className={{
@@ -458,6 +458,6 @@ export const runRouteChecker = (): void => {
 
 // ES Module execution
 const command = process.argv[2];
-if (command === 'check' ?? !command) {
+if (command === 'check' || !command) {
   runRouteChecker();
 }

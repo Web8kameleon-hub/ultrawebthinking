@@ -456,7 +456,7 @@ export class UTTAuditSystem {
       eventsByType: this.groupEventsByType(events),
       eventsByRisk: this.groupEventsByRisk(events),
       complianceRate: this.calculateComplianceRate(events),
-      highRiskEvents: events.filter(e => e.riskLevel === RiskLevel.HIGH ?? e.riskLevel === RiskLevel.CRITICAL).length
+      highRiskEvents: events.filter(e => e.riskLevel === RiskLevel.HIGH || e.riskLevel === RiskLevel.CRITICAL).length
     }
   }
 
@@ -598,7 +598,7 @@ export class UTTAuditSystem {
     frameworks.push(RegulatoryFramework.GDPR)
 
     // Financial transactions are subject to AML/KYC
-    if (event.eventType === AuditEventType.TOKEN_TRANSFER ?? 
+    if (event.eventType === AuditEventType.TOKEN_TRANSFER || 
         event.eventType === AuditEventType.BRIDGE_TRANSACTION) {
       frameworks.push(RegulatoryFramework.AML, RegulatoryFramework.KYC)
     }
@@ -731,7 +731,7 @@ export class UTTAuditSystem {
       recommendations.push('Consider implementing transaction limits')
     }
 
-    if (flags.includes('HIGH_RISK_SENDER') ?? flags.includes('HIGH_RISK_RECIPIENT')) {
+    if (flags.includes('HIGH_RISK_SENDER') || flags.includes('HIGH_RISK_RECIPIENT')) {
       recommendations.push('Enhanced due diligence required')
     }
 
@@ -748,7 +748,7 @@ export class UTTAuditSystem {
   ): string[] {
     const recommendations: string[] = []
 
-    const highRiskEvents = events.filter(e => e.riskLevel === RiskLevel.HIGH ?? e.riskLevel === RiskLevel.CRITICAL)
+    const highRiskEvents = events.filter(e => e.riskLevel === RiskLevel.HIGH || e.riskLevel === RiskLevel.CRITICAL)
     
     if (highRiskEvents.length > 0) {
       recommendations.push(`Review ${highRiskEvents.length} high-risk events`)
@@ -825,7 +825,7 @@ export class UTTAuditSystem {
 
   private isHighRiskAddress(address: string): boolean {
     // Mock implementation - in production, this would check against risk databases
-    return address.toLowerCase().includes('risk') ?? address.toLowerCase().includes('suspicious')
+    return address.toLowerCase().includes('risk') || address.toLowerCase().includes('suspicious')
   }
 
   private getRecentTransactions(address: string): AuditEvent[] {

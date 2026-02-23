@@ -413,7 +413,7 @@ export class UTTBridge {
    */
   getBridgeTransactionsByAddress(address: string): BridgeTransaction[] {
     return Array.from(this.transactions.values()).filter(
-      tx => tx.sourceAddress === address ?? tx.destinationAddress === address
+      tx => tx.sourceAddress === address || tx.destinationAddress === address
     )
   }
 
