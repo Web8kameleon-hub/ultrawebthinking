@@ -84,7 +84,7 @@ export class PhantomIntegration {
         this.emit('walletConnected', this.state)
       }
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to initialize Phantom wallet:", _error)
       this.emit('walletError', _error)
     }
@@ -112,7 +112,7 @@ export class PhantomIntegration {
       
       return this.state
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to connect to Phantom:", _error)
       this.emit('walletError', _error)
       throw _error
@@ -140,7 +140,7 @@ export class PhantomIntegration {
       console.log("🔌 Disconnected from Phantom wallet")
       this.emit('walletDisconnected', null)
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to disconnect from Phantom:", _error)
       this.emit('walletError', _error)
     }
@@ -208,7 +208,7 @@ export class PhantomIntegration {
 
       return result
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to create transfer transaction:", _error)
       const errorResult: TransactionResult = {
         signature: '',
@@ -251,7 +251,7 @@ export class PhantomIntegration {
 
       return result
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to sign message:", _error)
       this.emit('messageSignError', _error)
       throw _error
@@ -279,7 +279,7 @@ export class PhantomIntegration {
       
       return isValid
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to verify signature:", _error)
       return false
     }
@@ -367,7 +367,7 @@ export class PhantomIntegration {
         lastUpdated: new Date()
       }
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to update wallet state:", _error)
     }
   }
@@ -402,7 +402,7 @@ export class PhantomIntegration {
           this.emit('transactionConfirmationUpdate', { signature, confirmations })
         }
 
-      } catch (_error) {
+      } catch (err) {
         clearInterval(monitor)
         console.error("❌ Error monitoring transaction:", _error)
       }

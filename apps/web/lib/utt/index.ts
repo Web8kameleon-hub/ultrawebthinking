@@ -121,7 +121,7 @@ export async function initializeUTTSuite(): Promise<{
       gateway
     }
 
-  } catch (_error) {
+  } catch (err) {
     console.error("❌ Failed to initialize UTT-Albion Suite:", _error)
     throw error
   }
@@ -154,7 +154,7 @@ export async function getUTTSuiteStatus(): Promise<{
       timestamp: new Date()
     }
 
-  } catch (_error) {
+  } catch (err) {
     return {
       suite: 'UTT-Albion',
       version: '1.0.0',

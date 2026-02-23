@@ -193,7 +193,7 @@ export class UTTGateway {
         riskLevel: RiskLevel.LOW
       })
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to initialize gateway:", _error)
       throw error
     }
@@ -226,10 +226,10 @@ export class UTTGateway {
 
       return response
 
-    } catch (_error) {
+    } catch (err) {
       const errorResponse: GatewayResponse = {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        error: err instanceof Error ? err.message : 'Unknown error',
         statusCode: this.getErrorStatusCode(error),
         timestamp: new Date(),
         requestId: request.requestId,
@@ -278,7 +278,7 @@ export class UTTGateway {
 
       return clientConfig
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to register client:", _error)
       throw error
     }
@@ -378,11 +378,11 @@ export class UTTGateway {
           timestamp: new Date()
         })
 
-      } catch (_error) {
+      } catch (err) {
         results.push({
           service: serviceType,
           status: 'unhealthy',
-          error: error instanceof Error ? error.message : 'Unknown error',
+          error: err instanceof Error ? err.message : 'Unknown error',
           timestamp: new Date()
         })
       }
@@ -843,10 +843,10 @@ export class UTTGateway {
   }
 
   private getErrorStatusCode(error: any): number {
-    if (error.message?.includes('Rate limit')) {return 429}
-    if (error.message?.includes('Authentication')) {return 401}
-    if (error.message?.includes('permissions')) {return 403}
-    if (error.message?.includes('not found')) {return 404}
+    if (err.message?.includes('Rate limit')) {return 429}
+    if (err.message?.includes('Authentication')) {return 401}
+    if (err.message?.includes('permissions')) {return 403}
+    if (err.message?.includes('not found')) {return 404}
     return 500
   }
 
@@ -865,7 +865,7 @@ export class UTTGateway {
         uptime: 99.9
       }
 
-    } catch (_error) {
+    } catch (err) {
       return {
         service: serviceType,
         status: 'unhealthy',

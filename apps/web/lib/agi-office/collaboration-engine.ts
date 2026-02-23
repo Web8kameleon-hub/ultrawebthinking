@@ -265,8 +265,8 @@ export class CollaborationEngine {
             if (userId !== excludeUserId && socket.readyState === WebSocket.OPEN) {
                 try {
                     socket.send(JSON.stringify(message))
-                } catch (_error) {
-                    console.error(`Failed to send message to user ${userId}:`, error)
+                } catch (err) {
+                    console.error(`Failed to send message to user ${userId}:`, err)
                     this.socketConnections.delete(userId)
                 }
             }
@@ -286,7 +286,7 @@ export class CollaborationEngine {
         }
 
         socket.onerror = (error) => {
-            console.error(`WebSocket error for user ${userId}:`, error)
+            console.error(`WebSocket error for user ${userId}:`, err)
             this.socketConnections.delete(userId)
         }
 

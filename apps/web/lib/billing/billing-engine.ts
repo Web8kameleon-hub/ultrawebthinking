@@ -398,8 +398,8 @@ export class BillingEngine {
             invoice.transactionHash = transactionHash
 
             console.log(`Auto-payment processed for invoice ${invoice.id}: ${transactionHash}`)
-        } catch (_error) {
-            console.error(`Auto-payment failed for invoice ${invoice.id}:`, error)
+        } catch (err) {
+            console.error(`Auto-payment failed for invoice ${invoice.id}:`, err)
             // Send payment reminder
             await this.sendPaymentReminder(invoice)
         }
@@ -449,8 +449,8 @@ export class BillingEngine {
                 if (customer.subscription.status === 'active') {
                     try {
                         await this.generateMonthlyInvoice(customerId, previousPeriod)
-                    } catch (_error) {
-                        console.error(`Failed to generate invoice for customer ${customerId}:`, error)
+                    } catch (err) {
+                        console.error(`Failed to generate invoice for customer ${customerId}:`, err)
                     }
                 }
             }

@@ -361,7 +361,7 @@ export default function AGIExcelEngine() {
                     const result = formulaEngine.current.evaluate(cell.formula, context)
                     cell.value = result
                     context.set(address, result)
-                } catch (_error) {
+                } catch (err) {
                     cell.value = '#ERROR'
                 }
             }

@@ -250,7 +250,7 @@ export class IndustrialPageService {
         success: true,
         loadTime: Date.now() - startTime
       };
-    } catch (_error) {
+    } catch (err) {
       return {
         page: await this.createErrorPage(pageId, error as Error),
         success: false,
@@ -302,7 +302,7 @@ export class IndustrialPageService {
         <div style={{ padding: '2rem', textAlign: 'center' }}>
           <h1>⚠️ Page Load Error</h1>
           <p>Failed to load page: {pageId}</p>
-          <p>Error: {error.message}</p>
+          <p>Error: {err.message}</p>
         </div>
       ),
       css: '',
@@ -344,8 +344,8 @@ export class IndustrialPageService {
       page.lastAccessed = Date.now();
       
       this.hydrationQueue.delete(pageId);
-    } catch (_error) {
-      console.error(`[HYDRATION ERROR] ${pageId}:`, error);
+    } catch (err) {
+      console.error(`[HYDRATION ERROR] ${pageId}:`, err);
       page.hydrationStatus = 'error';
     }
   }

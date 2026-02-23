@@ -100,7 +100,7 @@ export class AlbionConnection {
       this.connectionAttempts = 0
       console.log("✅ Connected to Solana network successfully")
       
-    } catch (_error) {
+    } catch (err) {
       this.connectionAttempts++
       console.error(`❌ Connection failed (attempt ${this.connectionAttempts}):`, _error)
       
@@ -137,7 +137,7 @@ export class AlbionConnection {
       console.log(`💰 ALB Balance for ${address}: ${balance.balance} ALB (€${balance.balanceEUR})`)
       return balance
       
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to get ALB balance:", _error)
       return {
         address,
@@ -182,7 +182,7 @@ export class AlbionConnection {
       console.log(`📜 Found ${mockTransactions.length} recent transactions for ${address}`)
       return mockTransactions
       
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to get transactions:", _error)
       return []
     }
@@ -208,7 +208,7 @@ export class AlbionConnection {
       console.log(`✅ Transaction ${txHash} status: ${result.status} (${result.confirmations} confirmations)`)
       return result
       
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to monitor transaction:", _error)
       return { status: "failed", confirmations: 0 }
     }
@@ -242,7 +242,7 @@ export class AlbionConnection {
       console.log(`📊 Network Status: Slot ${status.slot}, TPS ${status.tps}, Health: ${status.health}`)
       return status
       
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to get network status:", _error)
       throw _error
     }

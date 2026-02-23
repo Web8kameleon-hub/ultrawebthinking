@@ -62,7 +62,7 @@ export class CellEngine {
         default:
           throw new Error(`Unknown AGI command type: ${parsedCommand.type}`);
       }
-    } catch (_error) {
+    } catch (err) {
       throw new Error(`AGI processing failed: \${_error}`);
     }
   }
@@ -151,7 +151,7 @@ export class CellEngine {
       };
       
       return JSON.stringify(analysis, null, 2);
-    } catch (_error) {
+    } catch (err) {
       return `Analysis failed: \${_error}`;
     }
   }
@@ -172,7 +172,7 @@ export class CellEngine {
       
       // Fallback: basic language detection and response
       return `[Translation to ${targetLanguage}]: ${text}`;
-    } catch (_error) {
+    } catch (err) {
       return `[Translation to ${targetLanguage}]: ${text}`;
     }
   }
@@ -202,7 +202,7 @@ export class CellEngine {
       ].join(' ');
       
       return summary;
-    } catch (_error) {
+    } catch (err) {
       return `Summarization failed: \${_error}`;
     }
   }
@@ -228,7 +228,7 @@ export class CellEngine {
       // Basic math evaluation (be careful with eval in production)
       const result = this.safeEvaluate(processedExpression);
       return result.toString();
-    } catch (_error) {
+    } catch (err) {
       return `Calculation failed: \${_error}`;
     }
   }
@@ -253,7 +253,7 @@ export class CellEngine {
       
       // Fallback generation
       return `[Generated content for]: ${prompt}`;
-    } catch (_error) {
+    } catch (err) {
       return `Content generation failed: \${_error}`;
     }
   }
@@ -281,7 +281,7 @@ export class CellEngine {
       if (doc.places().length > 0) {categories.push('geographical');}
       
       return categories.length > 0 ? categories.join(', ') : 'general';
-    } catch (_error) {
+    } catch (err) {
       return `Classification failed: \${_error}`;
     }
   }

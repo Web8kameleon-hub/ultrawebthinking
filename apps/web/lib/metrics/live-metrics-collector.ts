@@ -152,8 +152,8 @@ export class LiveMetricsCollector {
             // Log important changes
             this.detectAndLogChanges(metrics)
 
-        } catch (_error) {
-            console.error('❌ Error collecting live metrics:', error)
+        } catch (err) {
+            console.error('❌ Error collecting live metrics:', err)
         }
     }
 

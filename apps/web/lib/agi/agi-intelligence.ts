@@ -587,11 +587,11 @@ export class AGIOrchestrator {
 
             return result
 
-        } catch (_error) {
+        } catch (err) {
             // Task failed
             task.status = 'failed'
             task.endTime = Date.now()
-            task.error = error instanceof Error ? error.message : String(error)
+            task.error = err instanceof Error ? err.message : String(error)
 
             // Update agent performance
             this.updateAgentPerformance(agent, task, false)

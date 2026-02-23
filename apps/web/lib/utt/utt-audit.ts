@@ -189,7 +189,7 @@ export class UTTAuditSystem {
         riskLevel: RiskLevel.LOW
       })
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to initialize audit system:", _error)
       throw error
     }
@@ -238,7 +238,7 @@ export class UTTAuditSystem {
 
       return eventId
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to log audit event:", _error)
       throw error
     }
@@ -302,7 +302,7 @@ export class UTTAuditSystem {
 
       return analysis
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Transaction analysis failed:", _error)
       throw error
     }
@@ -380,7 +380,7 @@ export class UTTAuditSystem {
 
       return report
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to generate compliance report:", _error)
       throw error
     }
@@ -493,7 +493,7 @@ export class UTTAuditSystem {
           throw new Error(`Unsupported export format: ${format}`)
       }
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to export audit data:", _error)
       throw error
     }

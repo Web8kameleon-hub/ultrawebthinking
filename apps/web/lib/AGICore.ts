@@ -42,8 +42,8 @@ class AGICore {
       if (stored) {
         return { ...this.getDefaultMemory(), ...JSON.parse(stored) };
       }
-    } catch (_error) {
-      console.warn('AGICore: Failed to load memory from storage', error);
+    } catch (err) {
+      console.warn('AGICore: Failed to load memory from storage', err);
     }
 
     return this.getDefaultMemory();
@@ -77,8 +77,8 @@ class AGICore {
 
     try {
       localStorage.setItem(this.storageKey, JSON.stringify(this.memory));
-    } catch (_error) {
-      console.warn('AGICore: Failed to save memory to storage', error);
+    } catch (err) {
+      console.warn('AGICore: Failed to save memory to storage', err);
     }
   }
 

@@ -172,7 +172,7 @@ export const AGIxBioNature = ({
       setMedicalEngine(medical);
       setEcologyEngine(ecology);
       setEnginesLoaded(true);
-    } catch (_error) {
+    } catch (err) {
       console.error('Failed to load analysis engines:', _error);
     }
   }, [enginesLoaded]);
@@ -410,7 +410,7 @@ export const AGIxBioNature = ({
         timestamp: new Date(),
         correlations: await calculateCrossCorrelations(biologyResults, natureResults, medicalResults, ecologyResults)
       });
-    } catch (_error) {
+    } catch (err) {
       console.error('Analysis failed:', _error);
     } finally {
       setIsAnalyzing(false);
@@ -444,7 +444,7 @@ export const AGIxBioNature = ({
       // Simulate research analysis
       const results = await biologyEngine.performResearch(query, biologicalData);
       setAnalysisResults((prev: any) => ({ ...(prev ?? {}), research: results }));
-    } catch (_error) {
+    } catch (err) {
       console.error('Research failed:', _error);
     } finally {
       setIsAnalyzing(false);

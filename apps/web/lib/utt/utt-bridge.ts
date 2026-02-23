@@ -235,7 +235,7 @@ export class UTTBridge {
 
       return bridgeTransaction
 
-    } catch (_error) {
+    } catch (err) {
       console.error("❌ Failed to initiate bridge transaction:", _error)
       throw error
     }
@@ -261,7 +261,7 @@ export class UTTBridge {
       // Phase 4: Complete transaction
       await this.completeBridgeTransaction(transaction)
 
-    } catch (_error) {
+    } catch (err) {
       console.error(`❌ Bridge transaction ${transactionId} failed:`, _error)
       await this.failBridgeTransaction(transactionId, _error)
     }
@@ -367,7 +367,7 @@ export class UTTBridge {
 
     transaction.status = BridgeStatus.FAILED
     transaction.updatedAt = new Date()
-    transaction.metadata = { error: error.message }
+    transaction.metadata = { error: err.message }
 
     console.log(`❌ Bridge transaction failed: ${transactionId}`)
     this.emit('bridgeFailed', transaction)

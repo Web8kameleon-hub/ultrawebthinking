@@ -48,7 +48,7 @@ export class FormulaEngine {
       }
       
       return this.formatResult(result.result);
-    } catch (_error) {
+    } catch (err) {
       throw new Error(`Formula evaluation failed: ${_error}`);
     }
   }
@@ -269,7 +269,7 @@ export class FormulaEngine {
       }
       
       return { isValid: true };
-    } catch (_error) {
+    } catch (err) {
       return { isValid: false, error: String(_error) };
     }
   }

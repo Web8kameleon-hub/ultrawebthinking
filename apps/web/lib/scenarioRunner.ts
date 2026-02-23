@@ -176,10 +176,10 @@ class RealScenarioRunner {
           default:
             throw new Error(`Unknown step action: ${step.action}`);
         }
-      } catch (_error) {
+      } catch (err) {
         result = {
           success: false,
-          data: { error: error instanceof Error ? error.message : 'Unknown error' },
+          data: { error: err instanceof Error ? err.message : 'Unknown error' },
         };
       }
 

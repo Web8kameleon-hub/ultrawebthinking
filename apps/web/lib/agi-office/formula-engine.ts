@@ -44,7 +44,7 @@ export class AGIFormulaEngine implements FormulaEngine {
 
             // Evaluate the expression
             return this.safeEval(processedFormula)
-        } catch (_error) {
+        } catch (err) {
             return `#ERROR: ${_error}`
         }
     }
@@ -76,7 +76,7 @@ export class AGIFormulaEngine implements FormulaEngine {
             }
 
             return { valid: true }
-        } catch (_error) {
+        } catch (err) {
             return { valid: false, error: `Validation error: ${_error}` }
         }
     }
@@ -266,7 +266,7 @@ export class AGIFormulaEngine implements FormulaEngine {
                 const parsedArgs = this.parseArguments(args)
                 const result = func(...parsedArgs)
                 return String(result)
-            } catch (_error) {
+            } catch (err) {
                 return `#VALUE!`
             }
         })

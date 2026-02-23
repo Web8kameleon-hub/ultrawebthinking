@@ -192,7 +192,7 @@ export const AGIxEco = ({
         crypto: cryptoAnalysis,
         timestamp: new Date()
       });
-    } catch (_error) {
+    } catch (err) {
       console.error('Analysis failed:', _error);
     } finally {
       setIsAnalyzing(false);
