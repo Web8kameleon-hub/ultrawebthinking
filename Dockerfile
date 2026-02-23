@@ -7,12 +7,10 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy package files
-COPY package.json yarn.lock* ./
-COPY .yarnrc.yml ./
-COPY .yarn ./.yarn
+COPY package.json package-lock.json* ./
 
-# Install dependencies with Yarn 4
-RUN corepack enable && yarn install
+# Install dependencies with npm
+RUN npm ci || npm install
 
 # Stage 2: Builder
 FROM node:18-alpine AS builder
@@ -20,7 +18,6 @@ WORKDIR /app
 
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/.yarn ./.yarn
 
 # Copy source code
 COPY . .
@@ -30,7 +27,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
 # Build the application
-RUN yarn build
+RUN npm run build
 
 # Stage 3: Runner (Production)
 FROM node:18-alpine AS runner
