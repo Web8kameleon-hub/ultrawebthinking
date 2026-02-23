@@ -43,12 +43,12 @@ export const Loader = (): ReactNode =>
     createElement('span', { className: styles.loaderText }, 'Loading...')
   );
 
-// Lazy loaded components - using named exports
-const LazyUltraDashboard = lazy(() => import("@/pages/ultra-dashboard").then(m => ({ default: (m as any).default ?? (m as any).UltraSystemIntegration })));
-const LazyLocationDemo = lazy(() => import("@/pages/location-demo").then(m => ({ default: (m as any).default ?? (m as any).LocationDemoPage })));
-const LazyAviationWeather = lazy(() => import("@/pages/aviation-weather").then(m => ({ default: (m as any).default ?? (m as any).AviationPage })));
-const LazyAGIOfficeSuite = lazy(() => import("@/pages/agi-office-suite").then(m => ({ default: (m as any).default ?? (m as any).AGIOfficeSuite })));
-const LazyNavigationTest = lazy(() => import("@/pages/navigation-test").then(m => ({ default: (m as any).default ?? (m as any).NavigationTest })));
+// Lazy loaded components - using named exports from existing components
+const LazyUltraDashboard = lazy(() => import("@/components/UltraQuantumDashboard").then(m => ({ default: (m as any).default ?? (m as any).UltraQuantumDashboard })));
+const LazyLocationDemo = lazy(() => import("@/components/LocationConfigDemo").then(m => ({ default: (m as any).default ?? (m as any).LocationConfigDemo })));
+const LazyAviationWeather = lazy(() => import("@/components/AviationWeatherDashboard").then(m => ({ default: (m as any).default ?? (m as any).AviationWeatherDashboard })));
+const LazyAGIOfficeSuite = lazy(() => import("@/components/agi-office/AGIOfficeSuite").then(m => ({ default: (m as any).default ?? (m as any).AGIOfficeSuite })));
+const LazyNavigationTest = lazy(() => import("@/components/web8-tabs/ModernWeb8TabSystem").then(m => ({ default: (m as any).default ?? (m as any).ModernWeb8TabSystem })));
 const LazyWeb8TabSystem = lazy(() => import("@/components/web8-tabs/ModernWeb8TabSystem").then(m => ({ default: (m as any).default ?? (m as any).ModernWeb8TabSystem })));
 
 // Motion wrapper for page transitions
