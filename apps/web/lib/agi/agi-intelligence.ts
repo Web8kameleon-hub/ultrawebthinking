@@ -591,7 +591,7 @@ export class AGIOrchestrator {
             // Task failed
             task.status = 'failed'
             task.endTime = Date.now()
-            task.error = err instanceof Error ? err.message : String(error)
+            task.error = err instanceof Error ? err.message : String(err)
 
             // Update agent performance
             this.updateAgentPerformance(agent, task, false)
