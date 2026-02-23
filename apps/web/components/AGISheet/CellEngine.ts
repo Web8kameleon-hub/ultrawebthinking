@@ -63,7 +63,7 @@ export class CellEngine {
           throw new Error(`Unknown AGI command type: ${parsedCommand.type}`);
       }
     } catch (_error) {
-      throw new Error(`AGI processing failed: ${error}`);
+      throw new Error(`AGI processing failed: \${_error}`);
     }
   }
 
@@ -152,7 +152,7 @@ export class CellEngine {
       
       return JSON.stringify(analysis, null, 2);
     } catch (_error) {
-      return `Analysis failed: ${error}`;
+      return `Analysis failed: \${_error}`;
     }
   }
 
@@ -177,7 +177,7 @@ export class CellEngine {
       // Fallback: basic language detection and response
       return `[Translation to ${targetLanguage}]: ${text}`;
     } catch (_error) {
-      return `Translation failed: ${error}`;
+      return `Translation failed: \${_error}`;
     }
   }
 
@@ -207,7 +207,7 @@ export class CellEngine {
       
       return summary;
     } catch (_error) {
-      return `Summarization failed: ${error}`;
+      return `Summarization failed: \${_error}`;
     }
   }
 
@@ -233,7 +233,7 @@ export class CellEngine {
       const result = this.safeEvaluate(processedExpression);
       return result.toString();
     } catch (_error) {
-      return `Calculation failed: ${error}`;
+      return `Calculation failed: \${_error}`;
     }
   }
 
@@ -258,7 +258,7 @@ export class CellEngine {
       // Fallback generation
       return `[Generated content for]: ${prompt}`;
     } catch (_error) {
-      return `Content generation failed: ${error}`;
+      return `Content generation failed: \${_error}`;
     }
   }
 
@@ -286,7 +286,7 @@ export class CellEngine {
       
       return categories.length > 0 ? categories.join(', ') : 'general';
     } catch (_error) {
-      return `Classification failed: ${error}`;
+      return `Classification failed: \${_error}`;
     }
   }
 
