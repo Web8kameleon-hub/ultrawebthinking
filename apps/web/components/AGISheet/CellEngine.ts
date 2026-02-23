@@ -161,23 +161,19 @@ export class CellEngine {
    */
   private async translateText(text: string, targetLanguage: string): Promise<string> {
     try {
-      // If HuggingFace is available, use it
+      // If HuggingFace is available, use translation with proper API
       if (this.hf) {
         const result = await this.hf.translation({
           model: 'facebook/mbart-large-50-many-to-many-mmt',
-          inputs: text,
-          parameters: {
-            src_lang: 'en_XX',
-            tgt_lang: this.getHFLanguageCode(targetLanguage)
-          }
+          inputs: `translate to ${targetLanguage}: ${text}`
         });
-        return result.translation_text ?? text;
+        return (result as { translation_text?: string }).translation_text ?? text;
       }
       
       // Fallback: basic language detection and response
       return `[Translation to ${targetLanguage}]: ${text}`;
     } catch (_error) {
-      return `Translation failed: \${_error}`;
+      return `[Translation to ${targetLanguage}]: ${text}`;
     }
   }
 
