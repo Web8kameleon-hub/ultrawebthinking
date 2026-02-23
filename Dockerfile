@@ -12,7 +12,7 @@ COPY .yarnrc.yml ./
 COPY .yarn ./.yarn
 
 # Install dependencies with Yarn 4
-RUN yarn --frozen-lockfile
+RUN corepack enable && yarn install
 
 # Stage 2: Builder
 FROM node:18-alpine AS builder
