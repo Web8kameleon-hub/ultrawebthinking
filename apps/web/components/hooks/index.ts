@@ -237,7 +237,7 @@ export function useFetch<T>(url: string, options?: RequestInit) {
         
         const result = await response.json()
         setData(result)
-      } catch (_err) {
+      } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred')
       } finally {
         setLoading(false)
