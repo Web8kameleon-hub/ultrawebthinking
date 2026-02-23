@@ -368,25 +368,6 @@ const OpenMindChat = createAsyncComponent(
     'OpenMind Chat'
 )
 
-const UniversalTranslator = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🌍</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">Universal Translator</h1>
-                    <p className="text-slate-400 mb-8">Real-time Universal Language Translation</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-indigo-400 mb-4">Language Translation</h3>
-                        <p className="text-slate-300">Real-time translation for all major world languages.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
-    'Universal Translator'
-)
-
 const EuroMeshDashboard = createAsyncComponent(
     () => Promise.resolve({
         default: () => (
@@ -879,24 +860,6 @@ export default function ModernWeb8TabSystem() {
             status: 'active',
             notifications: 21,
             lastAccessed: new Date(Date.now() - 4200000)
-        },
-        {
-            id: 'universal-translator',
-            title: 'Universal Translator',
-            icon: '🌍',
-            component: (
-                <SimpleErrorBoundary fallback={(error, reset) => <ErrorFallback error={error} resetErrorBoundary={reset} />}>
-                    <Suspense fallback={<ModernTabLoader name="Universal Translator" />}>
-                        <UniversalTranslator />
-                    </Suspense>
-                </SimpleErrorBoundary>
-            ),
-            category: 'translation',
-            priority: 'high',
-            description: 'Real-time Universal Language Translation',
-            status: 'active',
-            notifications: 5,
-            lastAccessed: new Date(Date.now() - 4500000)
         },
         {
             id: 'utt-dashboard',
