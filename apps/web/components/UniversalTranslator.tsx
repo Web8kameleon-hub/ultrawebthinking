@@ -280,7 +280,7 @@ const UniversalTranslator: React.FC = () => {
         >
           <button
             onClick={translateText}
-            disabled={!sourceText.trim() ?? isTranslating}
+            disabled={!sourceText.trim() || isTranslating}
             className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {isTranslating ? '🔄 Translating...' : '🚀 Translate'}

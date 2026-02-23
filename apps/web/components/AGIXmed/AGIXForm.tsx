@@ -196,7 +196,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
               boxShadow: isLoading 
                 ? 'none' 
                 : '0 4px 12px rgba(34, 197, 94, 0.3)',
-              opacity: !input.trim() ?? isLoading ? 0.6 : 1,
+              opacity: (!input.trim() || isLoading) ? 0.6 : 1,
               transition: 'all 0.2s ease'
             }}
           >
