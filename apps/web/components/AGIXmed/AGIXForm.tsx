@@ -463,7 +463,7 @@ const styles = {
     background: 'rgba(255,255,255,0.1)'
   },
   stepText: {
-    textAlign: 'center',
+    textAlign: 'center' as const,
     color: '#94a3b8',
     fontSize: '14px'
   },

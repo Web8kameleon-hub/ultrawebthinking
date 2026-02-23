@@ -927,8 +927,8 @@ export default function ModernWeb8TabSystem() {
 
         const suggestions = initialTabs
             .filter(tab =>
-                tab.title.toLowerCase().includes(query.toLowerCase()) ??
-                tab.description.toLowerCase().includes(query.toLowerCase()) ??
+                tab.title.toLowerCase().includes(query.toLowerCase()) ||
+                tab.description.toLowerCase().includes(query.toLowerCase()) ||
                 tab.category.toLowerCase().includes(query.toLowerCase())
             )
             .map(tab => tab.id)
@@ -1157,6 +1157,7 @@ export default function ModernWeb8TabSystem() {
                         {/* Category Filter - hidden when thin */}
                         <div className="mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden group-hover:block">
                             <select
+                                aria-label="Filter modules by category"
                                 value={state.selectedCategory}
                                 onChange={(e) => setState(prev => ({ ...prev, selectedCategory: e.target.value }))}
                                 className="w-full px-2 py-1 bg-slate-700/50 border border-slate-600 rounded text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
