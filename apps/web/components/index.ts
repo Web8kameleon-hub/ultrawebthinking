@@ -13,9 +13,9 @@ export { default as ModernWeb8TabSystem } from '@/components/web8-tabs/ModernWeb
 export { Web8TabSystemFixed as Web8TabSystem } from '@/components/Web8TabSystem-fixed'
 
 // AGI Office Components
-export { default as AGIExcelEngine } from '@/agi-office/AGIExcelEngine'
-export { default as AGIDocOffice } from '@/agi-office/AGIDocOffice'
-export { default as AGISheetOffice } from '@/agi-office/AGISheetOffice'
+export { default as AGIExcelEngine } from '@/components/agi-office/AGIExcelEngine'
+export { default as AGIDocOffice } from '@/components/agi-office/AGIDocOffice'
+export { default as AGISheetOffice } from '@/components/agi-office/AGISheetOffice'
 
 // AGI Sheet Components (existing)
 export { AGIMedUltra } from '@/components/AGISheet/AGIMedUltra'
@@ -42,7 +42,7 @@ export { ErrorBoundary } from '@/components/ui/ErrorBoundary'
 // import { ALB_TOKEN } from '@/utt/albion-token'
 
 // Other existing components
-export { default as LocationConfigDemo } from '@/location'
+export { default as LocationConfigDemo } from '@/components/LocationConfigDemo'
 
 // Settings
 export { default as Settings } from '@/components/settings/Settings'
