@@ -1054,11 +1054,11 @@ export default function ModernWeb8TabSystem() {
     // Filtered tabs based on search and category
     const filteredTabs = useMemo(() => {
         return state.tabs.filter(tab => {
-            const matchesSearch = state.searchQuery === '' ??
-                tab.title.toLowerCase().includes(state.searchQuery.toLowerCase()) ??
+            const matchesSearch = state.searchQuery === '' ||
+                tab.title.toLowerCase().includes(state.searchQuery.toLowerCase()) ||
                 tab.description.toLowerCase().includes(state.searchQuery.toLowerCase())
 
-            const matchesCategory = state.selectedCategory === 'all' ??
+            const matchesCategory = state.selectedCategory === 'all' ||
                 tab.category === state.selectedCategory
 
             return matchesSearch && matchesCategory

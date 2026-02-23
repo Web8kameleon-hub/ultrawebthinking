@@ -894,7 +894,7 @@ export class AGIOrchestrator {
         // Clean up old completed/failed tasks
         const oneHourAgo = Date.now() - 60 * 60 * 1000
         for (const [taskId, task] of this.tasks.entries()) {
-            if ((task.status === 'completed' ?? task.status === 'failed') &&
+            if ((task.status === 'completed' || task.status === 'failed') &&
                 (task.endTime ?? 0) < oneHourAgo) {
                 this.tasks.delete(taskId)
                 this.activeExecutions.delete(taskId)
