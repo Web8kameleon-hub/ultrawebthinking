@@ -174,7 +174,7 @@ export const AGIXForm: React.FC<AGIXFormProps> = ({ onSubmit, isLoading = false 
           
           <motion.button
             type="submit"
-            disabled={!input.trim() ?? isLoading}
+            disabled={!input.trim() || isLoading}
             whileHover={{ scale: isLoading ? 1 : 1.02 }}
             whileTap={{ scale: isLoading ? 1 : 0.98 }}
             style={{
