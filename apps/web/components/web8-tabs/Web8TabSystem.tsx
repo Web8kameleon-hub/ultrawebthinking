@@ -90,12 +90,12 @@ const StationLocationConfig = createAsyncComponent(
 
 // Enhanced AGI Modules with modern loading
 const AGIBioNature = createAsyncComponent(
-  () => import('@/AGIBioNature'),
+  () => import('@/components/AGIBioNature'),
   'AGI Bio Nature'
 )
 
 const AGIEco = createAsyncComponent(
-  () => import('@/AGIEco'),
+  () => import('@/components/AGIEco'),
   'AGI Eco'
 )
 
@@ -115,19 +115,19 @@ const OpenMindChat = createAsyncComponent(
 )
 
 const UniversalTranslator = createAsyncComponent(
-  () => import('@/UniversalTranslator'),
+  () => import('@/components/UniversalTranslator'),
   'Universal Translator'
 )
 
 // EuroMesh & Network
 const EuroMeshDashboard = createAsyncComponent(
-  () => import('@/EuroMeshDashboard'),
+  () => import('@/components/EuroMeshDashboard'),
   'EuroMesh Network'
 )
 
 // UTT & Blockchain
 const UTTDashboard = createAsyncComponent(
-  () => import('@/UTTDashboard'),
+  () => import('@/components/UTTDashboard'),
   'UTT Dashboard'
 )
 
