@@ -443,7 +443,7 @@ const LoRaConnectEngineUltra: React.FC = () => {
 
       // Update device metrics
       setDevices(prev => prev.map(device => {
-        if (device.status === 'online' ?? device.status === 'transmitting') {
+        if (device.status === 'online' || device.status === 'transmitting') {
           return {
             ...device,
             rssi: Math.max(-120, Math.min(-40, device.rssi + (Math.random() - 0.5) * 3)),
@@ -667,7 +667,7 @@ const LoRaConnectEngineUltra: React.FC = () => {
                       fontWeight: 700
                     }}>
                       {key.includes('Devices') ? value :
-                        key.includes('Coverage') ?? key.includes('Health') ?? key.includes('Success') ? `${value.toFixed(1)}%` :
+                        key.includes('Coverage') || key.includes('Health') || key.includes('Success') ? `${value.toFixed(1)}%` :
                           key.includes('RSSI') ? `${value.toFixed(1)} dBm` :
                             key.includes('SNR') ? `${value.toFixed(1)} dB` :
                               key.includes('Transmitted') ? `${value.toFixed(2)} GB` :
@@ -683,7 +683,7 @@ const LoRaConnectEngineUltra: React.FC = () => {
                     gap: '8px'
                   }}>
                     <span>
-                      {key === 'totalDevices' ?? key === 'activeDevices' ? '📱' :
+                      {key === 'totalDevices' || key === 'activeDevices' ? '📱' :
                         key === 'networkCoverage' ? '📡' :
                           key === 'avgRSSI' ? '📶' :
                             key === 'avgSNR' ? '📊' :
@@ -697,7 +697,7 @@ const LoRaConnectEngineUltra: React.FC = () => {
                           (value > -80 ? 'Strong' : value > -95 ? 'Moderate' : 'Weak') :
                           key.includes('SNR') ?
                             (value > 8 ? 'Excellent' : value > 5 ? 'Good' : 'Fair') :
-                            key.includes('Health') ?? key.includes('Success') ?
+                            key.includes('Health') || key.includes('Success') ?
                               (value > 90 ? 'Excellent' : value > 80 ? 'Good' : 'Needs Attention') :
                               'Monitored'}
                     </span>
