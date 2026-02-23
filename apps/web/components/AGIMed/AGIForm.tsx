@@ -9,17 +9,17 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 
 interface AGIFormProps {
-  onSubmit: (symptoms: string) => void
+  onSubmitAction: (symptoms: string) => void
   isLoading?: boolean
 }
 
-export const AGIForm: React.FC<AGIFormProps> = ({ onSubmit, isLoading = false }) => {
+export const AGIForm: React.FC<AGIFormProps> = ({ onSubmitAction, isLoading = false }) => {
   const [symptoms, setSymptoms] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (symptoms.trim()) {
-      onSubmit(symptoms)
+      onSubmitAction(symptoms)
     }
   }
 
