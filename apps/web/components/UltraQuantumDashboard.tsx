@@ -243,8 +243,8 @@ const UltraQuantumDashboard: React.FC = () => {
                         state: systemHealth.quantum_state
                     })
                 }
-            } catch (_error) {
-                console.error('❌ Error updating dashboard:', error)
+            } catch (err) {
+                console.error('❌ Error updating dashboard:', err)
                 setIsLive(false)
             }
         }, 2000)
