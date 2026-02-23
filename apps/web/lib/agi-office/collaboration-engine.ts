@@ -286,7 +286,7 @@ export class CollaborationEngine {
         }
 
         socket.onerror = (error) => {
-            console.error(`WebSocket error for user ${userId}:`, err)
+            console.error(`WebSocket error for user ${userId}:`, error)
             this.socketConnections.delete(userId)
         }
 
