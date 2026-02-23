@@ -92,336 +92,98 @@ const createAsyncComponent = (importFn: () => Promise<any>, name: string) =>
         ssr: false, // Client-side only for better performance
     })
 
-// Lazy load all components with modern patterns
+// Lazy load all components with real dynamic imports
 const AGIExcelEngine = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">📊</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Excel Engine</h1>
-                    <p className="text-slate-400 mb-8">Advanced AI-Powered Spreadsheet Processing</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-green-400 mb-4">Excel AI Processing</h3>
-                        <p className="text-slate-300">Intelligent data analysis and spreadsheet automation.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGISheet/AGISpreadsheetEngine'),
     'AGI Excel Engine'
 )
 
 const AviationWeatherDashboard = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">✈️</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">Aviation Weather Dashboard</h1>
-                    <p className="text-slate-400 mb-8">SAT + METAR/TAF + NWP → Airport Forecasts</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-blue-400 mb-4">Aviation Weather</h3>
-                        <p className="text-slate-300">Advanced aviation weather forecasting and monitoring system.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../aviation/AviationWeatherDashboard'),
     'Aviation Weather'
 )
 
-// Create fallback components for missing modules
+// Real component imports
 const AGIMedicalEngineUltra = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🏥</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Medical Engine Ultra</h1>
-                    <p className="text-slate-400 mb-8">Advanced Healthcare Intelligence & Medical Analytics</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-blue-400 mb-4">Coming Soon</h3>
-                        <p className="text-slate-300">Medical AI engine is being developed and will be available soon.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGIMedicalEngineUltra'),
     'AGI Medical Engine'
 )
 
 const LoRaPhysicalDashboard = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🛰️</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">LoRa Physical Dashboard</h1>
-                    <p className="text-slate-400 mb-8">IoT Integration for UTT-ALB Physical Token Management</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-green-400 mb-4">System Status</h3>
-                        <p className="text-slate-300">LoRa network is operational and ready for physical token verification.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../LoRaPhysicalDashboard'),
     'LoRa Physical'
 )
 
 const StationLocationConfig = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">📍</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">Station Location Config</h1>
-                    <p className="text-slate-400 mb-8">Configurable station locations and mesh networking</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-purple-400 mb-4">Location Services</h3>
-                        <p className="text-slate-300">Configure and manage station locations for optimal network coverage.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../StationLocationConfig'),
     'Location Config'
 )
 
-// Enhanced AGI Modules with modern loading
+// Enhanced AGI Modules with real imports
 const AGIBioNature = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🧬</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI BioNature</h1>
-                    <p className="text-slate-400 mb-8">Biological Intelligence & Nature Analysis System</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-emerald-400 mb-4">Bio Intelligence</h3>
-                        <p className="text-slate-300">Advanced biological analysis and nature intelligence systems.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGIBioNature'),
     'AGI BioNature'
 )
 
-// LoRa Connect Engine Ultra - Advanced LoRaWAN Management
+// LoRa Connect Engine Ultra - Real import
 const LoRaConnectEngineUltra = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">📡</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">LoRa Connect Engine Ultra</h1>
-                    <p className="text-slate-400 mb-8">Long Range Communication Intelligence & LoRaWAN Management</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-green-400 mb-4">LoRa Systems</h3>
-                        <p className="text-slate-300">Advanced LoRaWAN network management and communication systems.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGI/LoRaConnectEngineUltra'),
     'LoRa Connect Engine Ultra'
 )
 
-// AGI Core Engine Ultra - Master Intelligence System
+// AGI Core Engine Ultra - Real import
 const AGICoreEngineUltra = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🧠</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Core Engine Ultra</h1>
-                    <p className="text-slate-400 mb-8">Master Intelligence System - Central AGI Processing Core</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-purple-400 mb-4">Core Intelligence</h3>
-                        <p className="text-slate-300">Central artificial general intelligence processing and coordination.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGISheet/AGICoreUltra'),
     'AGI Core Engine Ultra'
 )
 
-// AGI Eco Engine Ultra - Advanced Ecological Intelligence
+// AGI Eco Engine Ultra - Real import
 const AGIEcoEngineUltra = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🌍</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Eco Engine Ultra</h1>
-                    <p className="text-slate-400 mb-8">Advanced Ecological Intelligence & Environmental AI Systems</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-emerald-400 mb-4">Eco Intelligence</h3>
-                        <p className="text-slate-300">Environmental AI and ecological monitoring systems.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGI/AGIEcoEngineUltra'),
     'AGI Eco Engine Ultra'
 )
 
-// AGI Electrical Engine Ultra - Smart Electrical Systems
+// AGI Electrical Engine Ultra - Real import
 const AGIElectricalEngineUltra = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">⚡</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Electrical Engine Ultra</h1>
-                    <p className="text-slate-400 mb-8">Smart Electrical Systems & Power Grid Intelligence</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-yellow-400 mb-4">Electrical Systems</h3>
-                        <p className="text-slate-300">Intelligent electrical systems and power grid management.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGISheet/AGIElUltra'),
     'AGI Electrical Engine Ultra'
 )
 
-// EuroMesh Network Engine Ultra - Advanced Mesh Networking
+// EuroMesh Network Engine Ultra - Real import
 const EuroMeshNetworkEngineUltra = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🌐</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">EuroMesh Network Engine Ultra</h1>
-                    <p className="text-slate-400 mb-8">Advanced Mesh Networking & Distributed Intelligence</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">Mesh Networks</h3>
-                        <p className="text-slate-300">Advanced European mesh networking and distributed systems.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../EuroMeshDashboard'),
     'EuroMesh Network Engine Ultra'
 )
 
 const AGIEco = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🌱</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Eco</h1>
-                    <p className="text-slate-400 mb-8">Ecological Intelligence & Environmental Monitoring</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-green-400 mb-4">Eco Monitoring</h3>
-                        <p className="text-slate-300">Environmental intelligence and ecological monitoring systems.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGIEco'),
     'AGI Eco'
 )
 
-// Modern office components
+// Modern office components - Real imports
 const AGISpreadsheetEngine = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">📋</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">AGI Spreadsheet Engine</h1>
-                    <p className="text-slate-400 mb-8">Core Universal Spreadsheet Engine with AGI Integration</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-blue-400 mb-4">Excel-like System</h3>
-                        <p className="text-slate-300">Universal spreadsheet engine with AI enhancement and automation.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../AGISheet/AGISpreadsheetEngine'),
     'AGI Spreadsheet Engine'
 )
 
-// Communication & Network modules
+// Communication & Network modules - Real imports
 const OpenMindChat = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🧠</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">OpenMind Chat</h1>
-                    <p className="text-slate-400 mb-8">Advanced AI Chat & Reasoning System</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-cyan-400 mb-4">AI Communication</h3>
-                        <p className="text-slate-300">Advanced artificial intelligence chat and reasoning platform.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../OpenMindChat'),
     'OpenMind Chat'
 )
 
 const EuroMeshDashboard = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🕸️</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">EuroMesh Network</h1>
-                    <p className="text-slate-400 mb-8">European Mesh Network Infrastructure - Advanced</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-pink-400 mb-4">Mesh Networking</h3>
-                        <p className="text-slate-300">Advanced European mesh network infrastructure and management.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../EuroMeshDashboard'),
     'EuroMesh Dashboard'
 )
 
 const UTTDashboard = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">🪙</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">UTT Dashboard</h1>
-                    <p className="text-slate-400 mb-8">Universal Token Transfer Dashboard</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-yellow-400 mb-4">Token Management</h3>
-                        <p className="text-slate-300">Universal token transfer and blockchain management system.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../UTTDashboard'),
     'UTT Dashboard'
 )
 
 const UltraQuantumDashboard = createAsyncComponent(
-    () => Promise.resolve({
-        default: () => (
-            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="text-6xl mb-6">⚡</div>
-                    <h1 className="text-3xl font-bold text-white mb-4">Ultra Quantum Dashboard</h1>
-                    <p className="text-slate-400 mb-8">Quantum Computing Dashboard</p>
-                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 className="text-xl font-semibold text-purple-400 mb-4">Quantum Computing</h3>
-                        <p className="text-slate-300">Advanced quantum computing interface and control systems.</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }),
+    () => import('../UltraQuantumDashboard'),
     'Ultra Quantum Dashboard'
 )
 
