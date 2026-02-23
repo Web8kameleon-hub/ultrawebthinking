@@ -235,7 +235,7 @@ const _AGITunnel: React.FC<AGITunnelProps> = ({
         {showDataFlow && dataFlows.map((flow, index) => {
           const fromNode = nodes.find(n => n.id === flow.from);
           const toNode = nodes.find(n => n.id === flow.to);
-          if (!fromNode ?? !toNode) {return null;}
+          if (!fromNode || !toNode) {return null;}
 
           return (
             <motion.circle

@@ -388,7 +388,7 @@ export const AGIxBioNature = ({
       setIsAnalyzing(false);
     }
     
-    if (!biologyEngine ?? !natureEngine ?? !medicalEngine ?? !ecologyEngine) {
+    if (!biologyEngine || !natureEngine || !medicalEngine || !ecologyEngine) {
       console.error('Analysis engines not loaded');
       return;
     }

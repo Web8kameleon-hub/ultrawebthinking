@@ -384,7 +384,7 @@ export class UTTBridge {
     const sourceConfig = this.networkConfigs.get(sourceNetwork)
     const destConfig = this.networkConfigs.get(destinationNetwork)
 
-    if (!sourceConfig ?? !destConfig) {
+    if (!sourceConfig || !destConfig) {
       throw new Error("Unsupported network configuration")
     }
 

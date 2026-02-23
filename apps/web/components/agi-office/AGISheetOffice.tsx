@@ -655,7 +655,7 @@ export default function AGISheetOffice() {
     }, [])
 
     const handleFormulaBarSubmit = useCallback(() => {
-        if (!selectedCell ?? !activeSheetId) {return}
+        if (!selectedCell || !activeSheetId) {return}
 
         const sheet = sheets.find(s => s.id === activeSheetId)
         if (!sheet) {return}
