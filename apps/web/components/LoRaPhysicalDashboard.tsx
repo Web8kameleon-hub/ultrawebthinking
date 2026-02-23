@@ -192,9 +192,9 @@ export default function LoRaPhysicalDashboard({ autoRefresh = false }: { autoRef
           </button>
           <button
             onClick={fetchStatus}
-            disabled={loading ?? !isActive}
+            disabled={loading || !isActive}
             style={{
-              background: (loading ?? !isActive) ? '#64748b' : '#0284c7',
+              background: (loading || !isActive) ? '#64748b' : '#0284c7',
               color: 'white',
               border: 'none',
               borderRadius: '8px',

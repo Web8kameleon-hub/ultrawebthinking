@@ -80,9 +80,10 @@ const AviationWeatherDashboard: React.FC = () => {
     // Simulate realistic API call with loading
     setLoading(true)
     setTimeout(() => {
+      const airportInfo = airports.find(a => a.code === selectedAirport)
       setWeatherData({
         ...mockWeatherData,
-        airport: `${airports.find(a => a.code === selectedAirport)?.name  } (${  selectedAirport  })` ?? mockWeatherData.airport
+        airport: airportInfo ? `${airportInfo.name} (${selectedAirport})` : mockWeatherData.airport
       })
       setLoading(false)
     }, 800)

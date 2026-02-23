@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "next": "^16.1.6",
-    "react-hot-toast": "^2.6.0"
+    "react-hot-toast": "^2.6.0",
+    "ws": "^8.19.0"
   }
 }
