@@ -11,7 +11,17 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@/station-config": ["./lib/config/station-location-config"],
+      "@/mesh-network": ["./lib/mesh/mesh-networking"],
+      "@euroweb/utt/*": ["../../packages/utt/*"],
+      "@euroweb/agi/*": ["../../packages/agi/src/*"],
+      "@euroweb/ui/*": ["../../packages/ui/src/*"],
+      "@euroweb/utils/*": ["../../packages/utils/src/*"]
+    }
   },
   "include": [
     "./**/*.ts",

@@ -10,8 +10,8 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { stationLocationManager, type StationLocation } from '@/station-config'
-import { meshNetwork } from '@/mesh-network'
+import { stationLocationManager, type StationLocation } from '../lib/config/station-location-config'
+import { meshNetwork } from '../lib/mesh/mesh-networking'
 
 const LocationConfigDemo: React.FC = () => {
     const [selectedLocation, setSelectedLocation] = useState<StationLocation | null>(null)
