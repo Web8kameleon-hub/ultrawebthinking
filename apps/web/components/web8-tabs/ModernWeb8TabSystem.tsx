@@ -94,7 +94,21 @@ const createAsyncComponent = (importFn: () => Promise<any>, name: string) =>
 
 // Lazy load all components with modern patterns
 const AGIExcelEngine = createAsyncComponent(
-    () => import('@/agi-office/AGIExcelEngine'),
+    () => Promise.resolve({
+        default: () => (
+            <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
+                <div className="max-w-4xl mx-auto text-center">
+                    <div className="text-6xl mb-6">📊</div>
+                    <h1 className="text-3xl font-bold text-white mb-4">AGI Excel Engine</h1>
+                    <p className="text-slate-400 mb-8">Advanced AI-Powered Spreadsheet Processing</p>
+                    <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <h3 className="text-xl font-semibold text-green-400 mb-4">Excel AI Processing</h3>
+                        <p className="text-slate-300">Intelligent data analysis and spreadsheet automation.</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }),
     'AGI Excel Engine'
 )
 
