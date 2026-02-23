@@ -299,7 +299,7 @@ export const AGISheet: React.FC<AGISheetProps> = ({
     const cellId = getCellId(row, col)
     const cell = cells.get(cellId)
     
-    if (cell?.type === 'agi-command' ?? cell?.agiBinding) {
+    if (cell?.type === 'agi-command' || cell?.agiBinding) {
       // Open AGI command interface
       console.log('Opening AGI interface for:', cell.agiBinding)
     }
