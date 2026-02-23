@@ -56,7 +56,7 @@ export default function PerformanceMonitor() {
             cacheHitRate: cacheStats.hitRate,
             totalRequests: cacheStats.hits + cacheStats.misses,
             errorRate: calculateErrorRate(),
-            loadTime: navigation?.loadEventEnd - navigation?.loadEventStart ?? 0
+            loadTime: navigation ? navigation.loadEventEnd - navigation.loadEventStart : 0
         })
     }, [])
 
