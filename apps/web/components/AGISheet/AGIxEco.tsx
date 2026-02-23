@@ -193,7 +193,7 @@ export const AGIxEco = ({
         timestamp: new Date()
       });
     } catch (_error) {
-      console.error('Analysis failed:', error);
+      console.error('Analysis failed:', _error);
     } finally {
       setIsAnalyzing(false);
     }

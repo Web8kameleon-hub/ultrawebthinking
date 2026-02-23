@@ -18,7 +18,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (_error) {
-      console.error(`Error reading localStorage key "${key}":`, error)
+      console.error(`Error reading localStorage key "${key}":`, _error)
       return initialValue
     }
   })
@@ -31,7 +31,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         window.localStorage.setItem(key, JSON.stringify(valueToStore))
       }
     } catch (_error) {
-      console.error(`Error setting localStorage key "${key}":`, error)
+      console.error(`Error setting localStorage key "${key}":`, _error)
     }
   }, [key, storedValue])
 
@@ -46,7 +46,7 @@ export function useSessionStorage<T>(key: string, initialValue: T) {
       const item = window.sessionStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (_error) {
-      console.error(`Error reading sessionStorage key "${key}":`, error)
+      console.error(`Error reading sessionStorage key "${key}":`, _error)
       return initialValue
     }
   })
@@ -59,7 +59,7 @@ export function useSessionStorage<T>(key: string, initialValue: T) {
         window.sessionStorage.setItem(key, JSON.stringify(valueToStore))
       }
     } catch (_error) {
-      console.error(`Error setting sessionStorage key "${key}":`, error)
+      console.error(`Error setting sessionStorage key "${key}":`, _error)
     }
   }, [key, storedValue])
 
@@ -325,7 +325,7 @@ export function useCopyToClipboard(): [string | null, (text: string) => Promise<
       setCopiedText(text)
       return true
     } catch (_error) {
-      console.warn('Copy failed', error)
+      console.warn('Copy failed', _error)
       setCopiedText(null)
       return false
     }
