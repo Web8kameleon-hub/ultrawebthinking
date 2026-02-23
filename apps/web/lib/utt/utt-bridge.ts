@@ -236,7 +236,7 @@ export class UTTBridge {
       return bridgeTransaction
 
     } catch (_error) {
-      console.error("❌ Failed to initiate bridge transaction:", error)
+      console.error("❌ Failed to initiate bridge transaction:", _error)
       throw error
     }
   }
@@ -262,8 +262,8 @@ export class UTTBridge {
       await this.completeBridgeTransaction(transaction)
 
     } catch (_error) {
-      console.error(`❌ Bridge transaction ${transactionId} failed:`, error)
-      await this.failBridgeTransaction(transactionId, error)
+      console.error(`❌ Bridge transaction ${transactionId} failed:`, _error)
+      await this.failBridgeTransaction(transactionId, _error)
     }
   }
 

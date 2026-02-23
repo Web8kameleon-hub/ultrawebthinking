@@ -194,7 +194,7 @@ export class UTTGateway {
       })
 
     } catch (_error) {
-      console.error("❌ Failed to initialize gateway:", error)
+      console.error("❌ Failed to initialize gateway:", _error)
       throw error
     }
   }
@@ -279,7 +279,7 @@ export class UTTGateway {
       return clientConfig
 
     } catch (_error) {
-      console.error("❌ Failed to register client:", error)
+      console.error("❌ Failed to register client:", _error)
       throw error
     }
   }

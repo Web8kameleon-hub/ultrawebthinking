@@ -263,7 +263,7 @@ export const AGIxBioNature = ({
       stateRef.current.enginesLoaded = true;
       rerenderRef.current();
     } catch (_error) {
-      console.error('Failed to load analysis engines:', error);
+      console.error('Failed to load analysis engines:', _error);
     }
   }, []);
 
