@@ -513,13 +513,10 @@ export default function AGIMedicalEngineUltra() {
                             <option key={dept.id}>{dept.name}</option>
                         ))}
                     </select>
-                    <select style={{
-                        background: 'rgba(59, 130, 246, 0.2)',
-                        color: 'white',
-                        border: '1px solid #3b82f6',
-                        borderRadius: '8px',
-                        padding: '8px 12px'
-                    }}>
+                    <select 
+                        aria-label="Filter by patient status"
+                        className="filter-select"
+                    >
                         <option>All Status</option>
                         <option>Critical</option>
                         <option>Stable</option>

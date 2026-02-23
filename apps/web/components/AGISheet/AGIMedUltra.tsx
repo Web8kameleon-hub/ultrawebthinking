@@ -114,7 +114,7 @@ export const AGIMedUltra: React.FC = () => {
   const [showAGIXForm, setShowAGIXForm] = useState<boolean>(false)
   const [agixResults, setAGIXResults] = useState<any>(null)
 
-  const handleAGIXSubmit = (data: any) => {
+  const handleAGIXSubmit = async (data: any): Promise<void> => {
     // Professional medical AI analysis
     const professionalAnalysis = {
       timestamp: new Date().toISOString(),

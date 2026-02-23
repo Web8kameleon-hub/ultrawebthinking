@@ -515,6 +515,7 @@ export const AGIxBioNature = ({
               className={styles.categoryFilter}
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
+              aria-label="Filter specimens by category"
             >
               <option value="all">All Categories</option>
               <option value="plant">Plants</option>

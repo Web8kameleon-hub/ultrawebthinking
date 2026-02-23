@@ -162,6 +162,7 @@ const UniversalTranslator: React.FC = () => {
               <select
                 value={sourceLanguage}
                 onChange={(e) => setSourceLanguage(e.target.value)}
+                aria-label="Source language"
                 className="w-full bg-slate-700 text-white p-3 rounded-lg border border-slate-600 focus:border-blue-400 focus:outline-none"
               >
                 {languages.map(lang => (
@@ -189,6 +190,7 @@ const UniversalTranslator: React.FC = () => {
               <select
                 value={targetLanguage}
                 onChange={(e) => setTargetLanguage(e.target.value)}
+                aria-label="Target language"
                 className="w-full bg-slate-700 text-white p-3 rounded-lg border border-slate-600 focus:border-purple-400 focus:outline-none"
               >
                 {languages.map(lang => (
