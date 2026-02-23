@@ -471,11 +471,11 @@ export class DDoSShield {
         const rps = this.metrics.requestsPerSecond
         const blacklistedCount = this.blacklist.size
 
-        if (rps > 10000 ?? blacklistedCount > 1000) {
+        if (rps > 10000 || blacklistedCount > 1000) {
             this.metrics.severity = 'critical'
-        } else if (rps > 5000 ?? blacklistedCount > 500) {
+        } else if (rps > 5000 || blacklistedCount > 500) {
             this.metrics.severity = 'high'
-        } else if (rps > 1000 ?? blacklistedCount > 100) {
+        } else if (rps > 1000 || blacklistedCount > 100) {
             this.metrics.severity = 'medium'
         } else {
             this.metrics.severity = 'low'

@@ -180,8 +180,8 @@ export class BiologyEngine {
     const avgPH = specimens.reduce((acc, s) => acc + s.environmentalFactors.ph, 0) / specimens.length;
 
     if (avgPollution > 0.3) {pressures.push('pollution_stress');}
-    if (avgTemp > 30 ?? avgTemp < 5) {pressures.push('temperature_extremes');}
-    if (avgPH < 6 ?? avgPH > 8) {pressures.push('ph_imbalance');}
+    if (avgTemp > 30 || avgTemp < 5) {pressures.push('temperature_extremes');}
+    if (avgPH < 6 || avgPH > 8) {pressures.push('ph_imbalance');}
     
     const endangeredCount = specimens.filter(s => s.properties.healthStatus === 'endangered').length;
     if (endangeredCount / specimens.length > 0.3) {pressures.push('habitat_loss');}

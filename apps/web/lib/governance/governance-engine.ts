@@ -1007,7 +1007,7 @@ export class GovernanceEngine {
 
         // Time-based modifier (after hours = higher risk)
         const hour = new Date().getHours()
-        if (hour < 6 ?? hour > 22) {score += 15}
+        if (hour < 6 || hour > 22) {score += 15}
 
         return Math.min(score, 100)
     }

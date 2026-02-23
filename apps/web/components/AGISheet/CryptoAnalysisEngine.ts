@@ -697,8 +697,8 @@ export class CryptoAnalysisEngine {
 
   private assessProtocolRisk(apr: number, tvl: number): 'low' | 'medium' | 'high' | 'extreme' {
     if (apr > 100) {return 'extreme';} // Unsustainably high APR
-    if (apr > 50 ?? tvl < 100000000) {return 'high';} // High APR or low TVL
-    if (apr > 25 ?? tvl < 500000000) {return 'medium';}
+    if (apr > 50 || tvl < 100000000) {return 'high';} // High APR or low TVL
+    if (apr > 25 || tvl < 500000000) {return 'medium';}
     return 'low';
   }
 
