@@ -46,8 +46,8 @@ export const Loader = (): ReactNode =>
 // Lazy loaded components - using named exports from existing components
 const LazyUltraDashboard = lazy(() => import("@/components/UltraQuantumDashboard").then(m => ({ default: (m as any).default ?? (m as any).UltraQuantumDashboard })));
 const LazyLocationDemo = lazy(() => import("@/components/LocationConfigDemo").then(m => ({ default: (m as any).default ?? (m as any).LocationConfigDemo })));
-const LazyAviationWeather = lazy(() => import("@/components/AviationWeatherDashboard").then(m => ({ default: (m as any).default ?? (m as any).AviationWeatherDashboard })));
-const LazyAGIOfficeSuite = lazy(() => import("@/components/agi-office/AGIOfficeSuite").then(m => ({ default: (m as any).default ?? (m as any).AGIOfficeSuite })));
+const LazyAviationWeather = lazy(() => import("@/components/aviation/AviationWeatherDashboard").then(m => ({ default: (m as any).default ?? (m as any).AviationWeatherDashboard })));
+const LazyAGIOfficeSuite = lazy(() => import("@/components/agi-office/AGIDocOffice").then(m => ({ default: (m as any).default ?? (m as any).AGIDocOffice })));
 const LazyNavigationTest = lazy(() => import("@/components/web8-tabs/ModernWeb8TabSystem").then(m => ({ default: (m as any).default ?? (m as any).ModernWeb8TabSystem })));
 const LazyWeb8TabSystem = lazy(() => import("@/components/web8-tabs/ModernWeb8TabSystem").then(m => ({ default: (m as any).default ?? (m as any).ModernWeb8TabSystem })));
 
