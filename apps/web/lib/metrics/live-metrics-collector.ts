@@ -241,20 +241,19 @@ export class LiveMetricsCollector {
      * Get mesh network metrics
      */
     private async getMeshMetrics(): Promise<LiveDashboardData['mesh_status']> {
-        const meshStatus = meshNetwork.getMeshStatus()
+        const meshStatus = meshNetwork.getNetworkStatus()
 
         // Calculate message throughput based on network activity
         const throughput = Math.max(0, 50 + Math.random() * 200 + Math.sin(Date.now() / 45000) * 100)
 
-        // Network quality based on link qualities
-        const avgLinkQuality = Array.from(meshStatus.linkQualities.values())
-            .reduce((sum, quality) => sum + quality.stability, 0) / meshStatus.linkQualities.size ?? 90
+        // Network quality based on network health
+        const avgLinkQuality = meshStatus.networkHealth * 100
 
         // Coverage area calculation (simulated)
-        const coverageArea = Math.max(0, meshStatus.knownNodes * 0.5 + Math.random() * 2) // km²
+        const coverageArea = Math.max(0, meshStatus.totalNodes * 0.5 + Math.random() * 2) // km²
 
         return {
-            connected_nodes: meshStatus.knownNodes,
+            connected_nodes: meshStatus.onlineNodes,
             message_throughput: throughput,
             network_quality: avgLinkQuality,
             coverage_area: coverageArea
